@@ -1,3 +1,4 @@
+import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -8,8 +9,13 @@ export class DOMHelper<T> {
   }
 
   singleText(tagName: string): string | undefined {
-    const h2Ele = this.fixture.debugElement.query(By.css(tagName));
-    return h2Ele ? h2Ele.nativeElement.textContent : undefined;
+    const el = this.fixture.debugElement.query(By.css(tagName));
+    return el ? el.nativeElement.textContent : undefined;
+  }
+
+  querySelector(query: string): string | undefined {
+    const el = this.fixture.nativeElement;
+    return el ? el.querySelector(query).textContent : undefined;
   }
 
   count(tagName: string): number {
@@ -45,7 +51,7 @@ export class DOMHelper<T> {
     return el.properties[attrName] === value;
   }
 
-  clickButton(buttonText: string) {
+  clickButton(buttonText: string): void {
     this.findAll('button').forEach((button) => {
       const buttonElement: HTMLButtonElement = button.nativeElement;
       if (buttonElement.textContent === buttonText) {
@@ -54,7 +60,7 @@ export class DOMHelper<T> {
     });
   }
 
-  findAll(tagName: string) {
+  findAll(tagName: string): DebugElement[] {
     return this.fixture.debugElement.queryAll(By.css(tagName));
   }
 }

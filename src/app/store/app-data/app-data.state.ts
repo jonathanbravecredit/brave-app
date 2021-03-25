@@ -20,7 +20,7 @@ export class AppDataState {
   constructor() {}
 
   @Selector([AppDataState])
-  static getAppData(state: AppDataStateModel) {
+  static getAppData(state: AppDataStateModel): AppData | undefined {
     return state.appData;
   }
 
@@ -28,7 +28,7 @@ export class AppDataState {
   deleteDispute(
     ctx: StateContext<AppDataStateModel>,
     {}: AppDataActions.Delete
-  ) {
+  ): void {
     const state = ctx.getState();
     const appData = new AppData();
     ctx.setState({
@@ -41,7 +41,7 @@ export class AppDataState {
   updateDispute(
     ctx: StateContext<AppDataStateModel>,
     { payload }: AppDataActions.Edit
-  ) {
+  ): void {
     const state = ctx.getState();
     const appData = {
       ...state,
@@ -56,7 +56,7 @@ export class AppDataState {
   addDispute(
     ctx: StateContext<AppDataStateModel>,
     { payload }: AppDataActions.Add
-  ) {
+  ): void {
     const state = ctx.getState();
     const appData = payload;
     ctx.setState({
