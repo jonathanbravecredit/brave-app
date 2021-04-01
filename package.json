@@ -4,7 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "startDev": "ng serve -c=dev --port=4201",
+    "startQA": "ng serve -c=qa --port=4202",
+    "build": "node --max_old_space_size=3072 ./node_modules/@angular/cli/bin/ng build -c=dev",
+    "buildQA": "node --max_old_space_size=3072 ./node_modules/@angular/cli/bin/ng build -c=qa",
+    "buildProd": "node --max_old_space_size=3072 ./node_modules/@angular/cli/bin/ng build --prod",
+    "buildSmall": "ng build --prod",
+    "amplifyDev": "amplify env checkout dev",
+    "amplifyQA": "amplify env checkout qa",
+    "amplifyProd": "amplify env checkout production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
