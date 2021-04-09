@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-braveapp-dev-110519-authRole",
+      "UnauthRoleArn": "arn:aws:iam::890995358345:role/amplify-braveapp-dev-110519-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::890995358345:role/amplify-braveapp-dev-110519-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-braveapp-dev-110519-deployment",
+      "UnauthRoleName": "amplify-braveapp-dev-110519-unauthRole",
+      "StackName": "amplify-braveapp-dev-110519",
+      "StackId": "arn:aws:cloudformation:us-east-2:890995358345:stack/amplify-braveapp-dev-110519/272b3250-995e-11eb-9b35-0a196f208d44",
+      "AmplifyAppId": "d3vym5isdd5k4u"
+    }
+  }
+}
