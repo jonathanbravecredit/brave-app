@@ -1,0 +1,17 @@
+{
+  "dev": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "amplify-development-v1"
+  },
+  "qa": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "amplify-qa-v1"
+  },
+  "prod": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "amplify-production-v1"
+  }
+}
