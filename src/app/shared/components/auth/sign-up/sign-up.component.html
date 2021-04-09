@@ -1,0 +1,92 @@
+<!-- <div class="c-flex flex-center">
+  <div class="form-container">
+    <form action="" [formGroup]="signUpForm">
+      <div>
+        <span class="brave-font-1">Start taking control of your credit!</span>
+      </div>
+      <h5 class="brave-font-0 m-0">
+        <span>Complete the information below to get started</span>
+      </h5>
+      <div>
+        <div class="brave-font-0 m-t-15 m-b-15">
+          <input
+            matInput
+            name="fullName"
+            [formControl]="signUpForm.controls['fullName']"
+            placeholder=""
+          />
+          <small
+            *ngIf="
+              signUpForm?.controls?.fullName?.touched &&
+              signUpForm.controls.fullName.errors?.required
+            "
+            class="form-error-msg"
+            >Name is required</small
+          >
+        </div>
+        <div class="brave-font-0 m-t-15 m-b-15">
+          <input
+            #userEmail
+            matInput
+            name="username"
+            [formControl]="signUpForm.controls['username']"
+            placeholder="Username"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <small
+            *ngIf="
+              signUpForm?.controls?.email?.touched &&
+              signUpForm.controls.email.errors?.required
+            "
+            class="form-error-msg"
+            >Email is required</small
+          >
+        </div>
+        <div class="brave-font-0 m-t-15 m-b-15">
+          <input
+            matInput
+            name="username"
+            [formControl]="signUpForm.controls['password']"
+            placeholder="Create a strong password"
+            [type]="hide ? 'password' : 'text'"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+        </div>
+        <div class="brave-font-5 warning-text">
+          <p *ngIf="error">&#9888;&nbsp;{{ errorMessage }}</p>
+          <p *ngIf="success">{{ successMessage }}</p>
+        </div>
+        <div>
+          <div>
+            <button
+              class="brave-btn-accent-raised brave-lgbtn"
+              type="submit"
+              [disabled]="!signUpForm.valid"
+              (click)="completeStep()"
+            >
+              Submit
+            </button>
+          </div>
+          <p class="brave-font-5 disclaimer">
+            <small
+              >By joining you are agreeing to our
+              <a [routerLink]="['/privacy/info']">Privacy Policy</a> and
+              <a [routerLink]="['/terms/info']">TOS</a></small
+            >
+          </p>
+          <p class="brave-font-0 signin-text">
+            Already a member? <a [routerLink]="['../signin']">Log in.</a>
+          </p>
+          <p class="brave-font-0 signin-text">
+            Forgot your password?
+            <a [routerLink]="['../forgot']">Click here.</a>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> -->

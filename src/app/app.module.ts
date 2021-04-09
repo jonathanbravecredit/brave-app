@@ -9,9 +9,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppDataState } from '@store/app-data/app-data.state';
 
+/* Add Amplify imports */
+import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
+import Amplify from 'aws-amplify';
+const awsconfig = require('../aws-exports');
+
+/* Configure Amplify resources */
+Amplify.configure(awsconfig);
+
+/* shared modules */
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AmplifyUIAngularModule,
     BrowserModule,
     NgxsModule.forRoot([AppDataState], {
       developmentMode: !environment.production,
@@ -20,6 +32,7 @@ import { AppDataState } from '@store/app-data/app-data.state';
     NgxsLoggerPluginModule.forRoot({
       disabled: environment.production,
     }),
+    SharedComponentsModule,
     AppRoutingModule,
   ],
   providers: [],

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bravewebapp-dev-182140-authRole",
+      "UnauthRoleArn": "arn:aws:iam::404810713530:role/amplify-bravewebapp-dev-182140-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::404810713530:role/amplify-bravewebapp-dev-182140-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-bravewebapp-dev-182140-deployment",
+      "UnauthRoleName": "amplify-bravewebapp-dev-182140-unauthRole",
+      "StackName": "amplify-bravewebapp-dev-182140",
+      "StackId": "arn:aws:cloudformation:us-east-2:404810713530:stack/amplify-bravewebapp-dev-182140/f1792f90-98d1-11eb-9d69-0ae9bf5eae56",
+      "AmplifyAppId": "d2vk7y4bejjyz9"
+    },
+    "categories": {
+      "auth": {
+        "bravewebapp2a8bd627": {}
+      }
+    }
+  }
+}

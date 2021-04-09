@@ -12,6 +12,15 @@
     },
     "array-type": false,
     "arrow-return-shorthand": true,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "extends",
+          "tailwind"
+        ]
+      }
+    ],
     "curly": true,
     "deprecation": {
       "severity": "warning"

@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "bravewebapp2a8bd627": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
