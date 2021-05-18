@@ -9,6 +9,7 @@ import { FilledOnlytextButtonComponent } from './buttons/filled-onlytext-button/
 import { LinksOnlytextButtonComponent } from './buttons/links-onlytext-button/links-onlytext-button.component';
 import { OutlineOnlytextButtonComponent } from './buttons/outline-onlytext-button/outline-onlytext-button.component';
 import { OutlineInputComponent } from './inputs/outline-input/outline-input.component';
+import { OutlineOnecolumnFormComponent } from './forms/outline-onecolumn-form/outline-onecolumn-form.component';
 
 // pipes
 import { FilledOnlytextButtonPipe } from './buttons/filled-onlytext-button/filled-onlytext-button.pipe';
@@ -23,6 +24,7 @@ const components = [
   LinksOnlytextButtonComponent,
   OutlineOnlytextButtonComponent,
   OutlineInputComponent,
+  OutlineOnecolumnFormComponent,
 ];
 
 // component specific pipes only
