@@ -1,0 +1,26 @@
+<form [formGroup]="componentFormGroup">
+  <div class="mb-5 pt-0">
+    <label for="input_field" class="block mb-2.5 text-sm text-blueGray-600">{{
+      config?.label
+    }}</label>
+    <input
+      type="text"
+      name="input_field"
+      formControlName="input"
+      [placeholder]="config?.placeholder || ''"
+      [autocomplete]="config?.autocomplete || 'off'"
+      [ngClass]="config | outlineInput"
+      class="
+        placeholder-blueGray-300
+        text-blueGray-600
+        relative
+        bg-white
+        rounded
+        border border-blueGray-300
+        outline-none
+        focus:ring-0 focus:ring-indigo-800
+        w-full
+      "
+    />
+  </div>
+</form>
