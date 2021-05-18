@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 // componenents
 import { SignUpComponent } from '@shared/components/auth/sign-up/sign-up.component';
@@ -10,12 +11,15 @@ import { LinksOnlytextButtonComponent } from './buttons/links-onlytext-button/li
 import { OutlineOnlytextButtonComponent } from './buttons/outline-onlytext-button/outline-onlytext-button.component';
 import { OutlineInputComponent } from './inputs/outline-input/outline-input.component';
 import { OutlineOnecolumnFormComponent } from './forms/outline-onecolumn-form/outline-onecolumn-form.component';
+import { GoogleIconsigninButtonComponent } from './buttons/google-iconsignin-button/google-iconsignin-button.component';
+import { FacebookOnlytextsigninButtonComponent } from './buttons/facebook-onlytextsignin-button/facebook-onlytextsignin-button.component';
 
 // pipes
 import { FilledOnlytextButtonPipe } from './buttons/filled-onlytext-button/filled-onlytext-button.pipe';
 import { LinksOnlytextButtonPipe } from './buttons/links-onlytext-button/links-onlytext-button.pipe';
 import { OutlineOnlytextButtonPipe } from './buttons/outline-onlytext-button/outline-onlytext-button.pipe';
 import { OutlineInputPipe } from './inputs/outline-input/outline-input.pipe';
+import { SimpleSignupFormComponent } from './forms/simple-signup-form/simple-signup-form.component';
 
 const components = [
   SignInComponent,
@@ -25,6 +29,8 @@ const components = [
   OutlineOnlytextButtonComponent,
   OutlineInputComponent,
   OutlineOnecolumnFormComponent,
+  GoogleIconsigninButtonComponent,
+  FacebookOnlytextsigninButtonComponent,
 ];
 
 // component specific pipes only
@@ -36,8 +42,8 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes],
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  declarations: [...components, ...pipes, SimpleSignupFormComponent],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes],
 })
 export class SharedComponentsModule {}

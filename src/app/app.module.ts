@@ -19,9 +19,10 @@ Amplify.configure(awsconfig);
 
 /* shared modules */
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SignupComponent } from './views/signup/signup.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SignupComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([AppDataState], {
