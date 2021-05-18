@@ -6,7 +6,7 @@ import {
 } from '@aws-amplify/ui-components';
 
 @Component({
-  selector: 'app-root',
+  selector: 'brave-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

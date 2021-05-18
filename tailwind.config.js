@@ -1,8 +1,6 @@
 module.exports = {
   purge: {
-    enabled:
-      process.env.WEBPACK_DEV_SERVER === "true" &&
-      process.argv.join(" ").indexOf("build") !== -1,
+    enabled: process.env.NODE_ENV === "production",
     content: ["./src/**/*.{html,ts}", "./projects/**/*.{html,ts}"],
   },
   darkMode: false, // or 'media' or 'class'
