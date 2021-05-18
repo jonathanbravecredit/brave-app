@@ -1,4 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .brave-h1 {
+    @apply font-headings font-extrabold text-5xl text-coolGray-900;
+  }
+  .brave-h2 {
+    @apply font-headings font-extrabold text-4xl text-coolGray-900;
+  }
+  .brave-h3 {
+    @apply font-headings font-extrabold text-3xl text-coolGray-900;
+  }
+  .brave-h4 {
+    @apply font-headings font-extrabold text-2xl text-coolGray-900;
+  }
+  .brave-h5 {
+    @apply font-headings font-extrabold text-xl text-coolGray-900;
+  }
+  .brave-h6 {
+    @apply font-headings font-extrabold text-lg text-coolGray-900;
+  }
+  .brave-body1 {
+    @apply font-sans text-base text-coolGray-700;
+  }
+  .brave-body1-semibold {
+    @apply font-sans font-semibold text-base text-coolGray-700;
+  }
+  .brave-body2 {
+    @apply font-sans text-sm text-coolGray-700;
+  }
+  .brave-body2-semibold {
+    @apply font-sans font-semibold text-sm text-coolGray-700;
+  }
+}
