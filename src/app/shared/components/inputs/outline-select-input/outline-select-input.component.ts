@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface IOutlineSelectInputConfig {
@@ -11,7 +11,7 @@ export interface IOutlineSelectInputConfig {
   selector: 'brave-outline-select-input',
   templateUrl: './outline-select-input.component.html',
 })
-export class OutlineSelectInputComponent {
+export class OutlineSelectInputComponent implements OnInit {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
   public selected: string | undefined;
@@ -55,11 +55,15 @@ export class OutlineSelectInputComponent {
   @Output()
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-  public componentFormGroup: FormGroup;
+  public componentFormGroup: FormGroup = new FormBuilder().group({
+    input: [''],
+  });
   public locked: boolean = false;
   public hidden: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
     const validators = [];
     if (this.required) {
       validators.push(Validators.required);

@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface IOutlineInputeConfig {
   size: string;
   label: string;
+  type: string;
   placeholder: string;
   autocomplete: string;
   value?: string;
@@ -13,7 +14,7 @@ export interface IOutlineInputeConfig {
   selector: 'brave-outline-input',
   templateUrl: './outline-input.component.html',
 })
-export class OutlineInputComponent {
+export class OutlineInputComponent implements OnInit {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
 
@@ -28,6 +29,7 @@ export class OutlineInputComponent {
   @Input() config: IOutlineInputeConfig = {
     size: 'base',
     label: 'Input label',
+    type: 'text',
     placeholder: 'Input text',
     autocomplete: 'off',
     value: '',
@@ -59,11 +61,15 @@ export class OutlineInputComponent {
   @Output()
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
-  public componentFormGroup: FormGroup;
+  public componentFormGroup: FormGroup = new FormBuilder().group({
+    input: [''],
+  });
   public locked: boolean = false;
   public hidden: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
     const validators = [];
     if (this.required) {
       validators.push(Validators.required);

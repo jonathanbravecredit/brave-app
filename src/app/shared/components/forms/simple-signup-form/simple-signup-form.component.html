@@ -18,7 +18,7 @@
       <a
         [routerLink]="['/']"
         class="text-xs text-blueGray-600 hover:cursor-pointer"
-        (click)="goToForgot()"
+        (click)="forgotClick.emit($event)"
         >Forgot password?</a
       >
     </div>
@@ -26,7 +26,11 @@
 
   <div class="mt-5">
     <div class="flex justify-center items-center">
-      <brave-filled-onlytext-button>Sign Up</brave-filled-onlytext-button>
+      <brave-filled-onlytext-button
+        [disabled]="!parentForm.valid"
+        (click)="signupClick.emit(signupUser(parentForm))"
+        >Sign Up</brave-filled-onlytext-button
+      >
     </div>
   </div>
 </form>

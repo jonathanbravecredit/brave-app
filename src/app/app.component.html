@@ -1,8 +1,10 @@
-<amplify-authenticator *ngIf="authState !== 'signedin'"></amplify-authenticator>
+<!-- <amplify-authenticator *ngIf="authState !== 'signedin'"></amplify-authenticator>
+<brave-authentication *ngIf="authState !== 'signedin'"></brave-authentication>
 
 <div *ngIf="authState === 'signedin' && user" class="App">
   <amplify-sign-out></amplify-sign-out>
   <div>Hello, {{ user.username }}</div>
   <router-outlet></router-outlet>
-  <!-- This is where you application template code goes -->
-</div>
+
+</div> -->
+<router-outlet></router-outlet>

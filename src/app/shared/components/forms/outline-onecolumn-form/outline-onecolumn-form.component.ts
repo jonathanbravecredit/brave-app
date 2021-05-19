@@ -11,6 +11,7 @@ export class OutlineOnecolumnFormComponent implements OnInit {
   childFieldConfig: IOutlineInputeConfig = {
     size: 'sm',
     label: 'Input Label',
+    type: 'text',
     placeholder: 'Input text',
     autocomplete: 'off',
   };

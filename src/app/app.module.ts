@@ -20,7 +20,9 @@ Amplify.configure(awsconfig);
 /* shared modules */
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { SharedServicesModule } from '@shared/services/shared-services.module';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { LayoutsModule } from '@layouts/layouts.module';
 import { ViewsModule } from '@views/views.module';
 
 @NgModule({
@@ -37,7 +39,9 @@ import { ViewsModule } from '@views/views.module';
     AmplifyUIAngularModule,
     SharedComponentsModule,
     SharedDirectivesModule,
+    SharedServicesModule,
     SharedPipesModule,
+    LayoutsModule,
     ViewsModule,
     AppRoutingModule,
   ],

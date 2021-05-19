@@ -1126,6 +1126,10 @@ select {
   font-weight: 700;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -1235,6 +1239,10 @@ select {
   max-width: 20rem;
 }
 
+.min-h-screen {
+  min-height: 100vh;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -1251,6 +1259,10 @@ select {
 
 .overflow-auto {
   overflow: auto;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .py-1 {
@@ -1301,6 +1313,11 @@ select {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.py-40 {
+  padding-top: 10rem;
+  padding-bottom: 10rem;
 }
 
 .pt-0 {
@@ -1560,10 +1577,6 @@ select {
 }
 
 @media (min-width: 1024px) {
-  .lg\:px-6 {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
 }
 
 @media (min-width: 1280px) {

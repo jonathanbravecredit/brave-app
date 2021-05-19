@@ -26,5 +26,7 @@ export class FilledOnlytextButtonComponent {
     color: 'text-white',
   };
 
+  @Input() disabled: boolean = false;
+
   constructor() {}
 }

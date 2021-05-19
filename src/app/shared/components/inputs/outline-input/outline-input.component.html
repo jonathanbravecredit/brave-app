@@ -9,8 +9,8 @@
       ></label
     >
     <input
-      type="text"
       name="input_field"
+      [type]="config?.type || 'text'"
       formControlName="input"
       [placeholder]="config?.placeholder || ''"
       [autocomplete]="config?.autocomplete || 'off'"
