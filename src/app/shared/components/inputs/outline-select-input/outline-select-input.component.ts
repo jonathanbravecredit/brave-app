@@ -1,36 +1,32 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-export interface IOutlineInputeConfig {
+export interface IOutlineSelectInputConfig {
   size: string;
   label: string;
-  placeholder: string;
-  autocomplete: string;
-  value?: string;
+  options: string[];
 }
 
 @Component({
-  selector: 'brave-outline-input',
-  templateUrl: './outline-input.component.html',
+  selector: 'brave-outline-select-input',
+  templateUrl: './outline-select-input.component.html',
 })
-export class OutlineInputComponent {
+export class OutlineSelectInputComponent {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
+  public selected: string | undefined;
+  public isOpen: boolean = false;
 
   /**
    * @param Config Object to pass in component params
    * @param config.size 'sm', 'base', 'lg'
    * @param config.label Label text (default: 'Input label')
-   * @param config.placeholder Placeholder text (default: 'Input text')
-   * @param config.autocomplete Any HTML Input autocomplete value
-   * @param config.value (optional) Pre-load the input with a value
+   * @param config.options select options to choose from
    */
-  @Input() config: IOutlineInputeConfig = {
+  @Input() config: IOutlineSelectInputConfig = {
     size: 'base',
     label: 'Input label',
-    placeholder: 'Input text',
-    autocomplete: 'off',
-    value: '',
+    options: ['one', 'two', 'three'],
   };
 
   /**
@@ -69,11 +65,28 @@ export class OutlineInputComponent {
       validators.push(Validators.required);
     }
     this.componentFormGroup = this.fb.group({
-      input: [this.config.value, validators],
+      input: [this.config.label, validators], // default to first item in array
     });
-    this.componentFormGroup.controls.input.valueChanges.subscribe((value) =>
-      this.valueChanged.emit(value)
-    );
+    this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
+      this.valueChanged.emit(value);
+    });
     this.onComponentReady.emit(this.componentFormGroup);
+  }
+
+  /**
+   * Toggles open and close select options
+   * @param e MouseEvent to stop propagation.
+   */
+  toggleOpen(e: MouseEvent): void {
+    e.stopPropagation();
+    this.isOpen = !this.isOpen;
+  }
+
+  /**
+   * Updates the form with the selected option value
+   * @param idx index of the select option clicked on
+   */
+  updateForm(idx: number): void {
+    this.componentFormGroup.setValue({ input: this.config.options[idx] });
   }
 }

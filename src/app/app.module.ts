@@ -19,10 +19,12 @@ Amplify.configure(awsconfig);
 
 /* shared modules */
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SignupComponent } from './views/signup/signup.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { ViewsModule } from '@views/views.module';
 
 @NgModule({
-  declarations: [AppComponent, SignupComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([AppDataState], {
@@ -34,6 +36,9 @@ import { SignupComponent } from './views/signup/signup.component';
     }),
     AmplifyUIAngularModule,
     SharedComponentsModule,
+    SharedDirectivesModule,
+    SharedPipesModule,
+    ViewsModule,
     AppRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

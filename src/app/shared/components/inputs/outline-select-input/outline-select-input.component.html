@@ -1,0 +1,75 @@
+<form [formGroup]="componentFormGroup">
+  <div class="mb-5 pt-0">
+    <label
+      for="select_field"
+      class="block mb-2.5 text-sm text-blueGray-600 whitespace-nowrap"
+      >{{ config?.label
+      }}<span *ngIf="required && !asteriskOverride" class="-mt-1"
+        >&#42;</span
+      ></label
+    >
+    <div
+      [ngClass]="config | outlineSelectInput"
+      class="
+        relative
+        bg-white
+        rounded
+        border border-blueGray-300
+        outline-none
+        w-full
+      "
+      (click)="toggleOpen($event)"
+    >
+      <input
+        #selectInput
+        name="select_field"
+        formControlName="input"
+        style="width: 0px; height: 0px"
+        class="absolute"
+      />
+      <div
+        class="flex justify-between items-center w-full hover:cursor-pointer"
+      >
+        <span
+          [ngClass]="{
+            'text-blueGray-300': selectInput.value === config.label,
+            'text-blueGray-600': selectInput.value !== config.label
+          }"
+          >{{ selectInput.value || "Select item" }}</span
+        >
+        <span class="material-icons text-blueGray-600">expand_more</span>
+      </div>
+      <ul
+        *ngIf="isOpen"
+        class="
+          absolute
+          z-10
+          mt-2
+          -ml-1
+          w-full
+          bg-white
+          text-blueGray-600
+          shadow-lg
+          max-h-56
+          rounded-md
+          py-1
+          text-base
+          ring-1 ring-black ring-opacity-5
+          overflow-auto
+          focus:outline-none
+          sm:text-sm
+        "
+      >
+        <li
+          *ngFor="let opt of config.options; index as i"
+          (click)="toggleOpen($event); updateForm(i)"
+          class="bg-white hover:bg-gray-50 hover:cursor-pointer my-2"
+        >
+          <div class="flex items-center">
+            <span class="font-normal ml-3 block truncate"> {{ opt }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</form>

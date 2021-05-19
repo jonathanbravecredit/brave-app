@@ -13,13 +13,17 @@ import { OutlineInputComponent } from './inputs/outline-input/outline-input.comp
 import { OutlineOnecolumnFormComponent } from './forms/outline-onecolumn-form/outline-onecolumn-form.component';
 import { GoogleIconsigninButtonComponent } from './buttons/google-iconsignin-button/google-iconsignin-button.component';
 import { FacebookOnlytextsigninButtonComponent } from './buttons/facebook-onlytextsignin-button/facebook-onlytextsignin-button.component';
+import { SimpleSignupFormComponent } from './forms/simple-signup-form/simple-signup-form.component';
+import { OutlineSelectInputComponent } from './inputs/outline-select-input/outline-select-input.component';
+import { DateofbirthFormComponent } from './forms/dateofbirth-form/dateofbirth-form.component';
+import { KnowYouFormComponent } from './forms/know-you-form/know-you-form.component';
 
 // pipes
 import { FilledOnlytextButtonPipe } from './buttons/filled-onlytext-button/filled-onlytext-button.pipe';
 import { LinksOnlytextButtonPipe } from './buttons/links-onlytext-button/links-onlytext-button.pipe';
 import { OutlineOnlytextButtonPipe } from './buttons/outline-onlytext-button/outline-onlytext-button.pipe';
 import { OutlineInputPipe } from './inputs/outline-input/outline-input.pipe';
-import { SimpleSignupFormComponent } from './forms/simple-signup-form/simple-signup-form.component';
+import { OutlineSelectInputPipe } from './inputs/outline-select-input/outline-select-input.pipe';
 
 const components = [
   SignInComponent,
@@ -31,6 +35,10 @@ const components = [
   OutlineOnecolumnFormComponent,
   GoogleIconsigninButtonComponent,
   FacebookOnlytextsigninButtonComponent,
+  SimpleSignupFormComponent,
+  OutlineSelectInputComponent,
+  DateofbirthFormComponent,
+  KnowYouFormComponent,
 ];
 
 // component specific pipes only
@@ -39,10 +47,11 @@ const pipes = [
   LinksOnlytextButtonPipe,
   OutlineOnlytextButtonPipe,
   OutlineInputPipe,
+  OutlineSelectInputPipe,
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes, SimpleSignupFormComponent],
+  declarations: [...components, ...pipes],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes],
 })

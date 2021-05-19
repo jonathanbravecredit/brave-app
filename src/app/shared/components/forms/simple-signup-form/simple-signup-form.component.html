@@ -2,13 +2,15 @@
   <brave-outline-input
     [config]="emailConfig"
     (onComponentReady)="addChild('email', $event)"
-    required="true"
+    [required]="true"
+    [asteriskOverride]="true"
   >
   </brave-outline-input>
   <brave-outline-input
     [config]="passwordConfig"
     (onComponentReady)="addChild('password', $event)"
-    required="true"
+    [required]="true"
+    [asteriskOverride]="true"
   >
   </brave-outline-input>
   <div class="-mt-2">
