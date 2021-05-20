@@ -7,7 +7,20 @@ const awsmobile = {
     "aws_cognito_region": "us-east-2",
     "aws_user_pools_id": "us-east-2_beTcykTM9",
     "aws_user_pools_web_client_id": "5ig184k6ps2qf7577g2qnk4mjl",
-    "oauth": {},
+    "oauth": {
+        "domain": "braveappa3b93ee9-a3b93ee9-dev.auth.us-east-2.amazoncognito.com",
+        "scope": [
+            "phone",
+            "email",
+            "openid",
+            "profile",
+            "aws.cognito.signin.user.admin"
+        ],
+        "redirectSignIn": "http://localhost:4200/,https://app.brave.credit/",
+        "redirectSignOut": "http://localhost:4200/,https://app.brave.credit/",
+        "responseType": "code"
+    },
+    "federationTarget": "COGNITO_USER_POOLS",
     "aws_appsync_graphqlEndpoint": "https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql",
     "aws_appsync_region": "us-east-2",
     "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",

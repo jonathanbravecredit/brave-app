@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 
 @Component({
   selector: 'brave-signup',
@@ -29,8 +30,14 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  /**
+   * Method to sign user up/in with Facebook
+   */
   signUpWithFacebook(): void {
-    // add method for federated login or service
+    let provider = CognitoHostedUIIdentityProvider.Facebook;
+    this.auth.socialSignIn(provider).then((value) => {
+      console.log('signed in under', value);
+    });
   }
 
   signUpWithGoogle(): void {

@@ -26,12 +26,18 @@ export class AuthService {
   constructor() {
     Hub.listen('auth', (data) => {
       const { channel, payload } = data;
+      console.log('auth change', channel, payload);
       if (channel === 'auth') {
         this.authState.next(payload.data);
       }
     });
   }
 
+  /**
+   * Cognito sign up method
+   * @param user
+   * @returns
+   */
   signUp(user: NewUser): Promise<ISignUpResult> {
     return Auth.signUp({
       username: user.username,
@@ -42,7 +48,12 @@ export class AuthService {
     });
   }
 
-  //TODO eventually swap these for the local component methods
+  /**
+   * Cognito sign in method
+   * @param username
+   * @param password
+   * @returns
+   */
   signIn(username: string, password: string): Promise<CognitoUser | any> {
     return new Promise((resolve, reject) => {
       Auth.signIn(username, password)
@@ -53,12 +64,19 @@ export class AuthService {
     });
   }
 
-  //TODO eventually swap these for the local component methods
+  /**
+   * Simple sign out method
+   * @returns
+   */
   signOut(): Promise<any> {
     return Auth.signOut();
   }
 
-  //TODO eventually swap these for the local component methods
+  /**
+   * Social signin (supports facebook and google)
+   * @param provider
+   * @returns
+   */
   socialSignIn(
     provider: CognitoHostedUIIdentityProvider
   ): Promise<ICredentials> {

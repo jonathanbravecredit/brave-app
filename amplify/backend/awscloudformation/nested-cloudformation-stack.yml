@@ -71,7 +71,7 @@
     "authbraveapp0ea8ea07": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
         "Parameters": {
           "identityPoolName": "braveapp0ea8ea07_identitypool_0ea8ea07",
           "allowUnauthenticatedIdentities": false,
@@ -109,7 +109,7 @@
               "Arn"
             ]
           },
-          "useDefault": "default",
+          "useDefault": "defaultSocial",
           "usernameAttributes": "email",
           "triggers": "{}",
           "userPoolGroupList": "",
@@ -120,14 +120,21 @@
           },
           "permissions": "",
           "dependsOn": "",
-          "env": "prod"
+          "hostedUI": true,
+          "hostedUIDomainName": "braveappa3b93ee9-a3b93ee9",
+          "authProvidersUserPool": "Facebook",
+          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}}]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}",
+          "authProviders": "",
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"471833254092966\",\"client_secret\":\"bce7e4e1080f8cd87402c528c5b37531\"}]",
+          "env": "dev"
         }
       }
     },
     "apibraveapp": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "CreateAPIKey": 0,
           "AppSyncApiName": "braveapp",
@@ -139,27 +146,27 @@
               "Outputs.UserPoolId"
             ]
           },
-          "S3DeploymentBucket": "amplify-braveapp-prod-115121-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/9945c26718ccc99c1dac3cf908eda478459e40fb",
-          "env": "prod"
+          "S3DeploymentBucket": "amplify-braveapp-dev-110519-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/149cd0515c9adaff14270b1fea6055f52bfb2e77",
+          "env": "dev"
         }
       }
     },
     "functionS3Trigger3c67af6a": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/function/S3Trigger3c67af6a-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/function/S3Trigger3c67af6a-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-braveapp-prod-115121-deployment",
+          "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
           "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "storages3b5dd189d": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
         "Parameters": {
           "bucketName": "braveapp7123270838f144d09004f496c2f9ef0f",
           "authPolicyName": "s3_amplify_b5dd189d",
@@ -204,7 +211,7 @@
               "Outputs.LambdaExecutionRole"
             ]
           },
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
