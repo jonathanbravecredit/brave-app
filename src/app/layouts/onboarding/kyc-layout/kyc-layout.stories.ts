@@ -4,6 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KycLayoutComponent } from '@layouts/onboarding/kyc-layout/kyc-layout.component';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { ViewsModule } from '@views/views.module';
 
 export default {
   title: 'app/layouts/onboarding/kyc-layout',
@@ -11,7 +12,12 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule, FormsModule, ReactiveFormsModule],
+      imports: [
+        ViewsModule,
+        SharedComponentsModule,
+        FormsModule,
+        ReactiveFormsModule,
+      ],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],

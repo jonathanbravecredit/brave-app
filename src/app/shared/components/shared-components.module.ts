@@ -44,7 +44,6 @@ import { OutlinePhoneFormComponent } from '@shared/components/forms/outline-phon
 import { OutlineVerificationcodeFormComponent } from '@shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.component';
 import { SsnFullFormComponent } from '@shared/components/forms/ssn-full-form/ssn-full-form.component';
 import { SsnLastfourFormComponent } from '@shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.component';
-import { HeaderStatsComponent } from '@shared/components/headers/header-stats/header-stats.component';
 import { HiddenAsteriskInputComponent } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 import { HiddenAsteriskInputDirective } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.directive';
 import { BaseModalRegularComponent } from '@shared/components/modals/base-modal-regular/base-modal-regular.component';
@@ -94,7 +93,6 @@ const components = [
   OutlineVerificationcodeFormComponent,
   SsnFullFormComponent,
   SsnLastfourFormComponent,
-  HeaderStatsComponent,
   HiddenAsteriskInputComponent,
   BaseModalRegularComponent,
   BaseModalSmallComponent,
