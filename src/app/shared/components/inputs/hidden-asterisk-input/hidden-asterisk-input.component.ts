@@ -31,7 +31,7 @@ export class HiddenAsteriskInputComponent implements OnInit {
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   private _masked: boolean = false;
-  public componentFormGroup: FormGroup | undefined;
+  public componentFormGroup!: FormGroup;
   public formSub$: Subscription | undefined;
 
   get masked() {

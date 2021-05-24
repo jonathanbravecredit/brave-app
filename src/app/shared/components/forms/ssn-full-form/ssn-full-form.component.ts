@@ -59,7 +59,6 @@ export class SsnFullFormComponent implements OnInit {
    * @param idx
    */
   moveNext(idx: number): void {
-    console.log('hidden fields ==>', this.hiddenFields);
     const comp = this.hiddenFields?.find((c, i) => i === idx + 1);
     if (comp) {
       setTimeout(() => {
