@@ -1,0 +1,18 @@
+<form [formGroup]="componentFormGroup">
+  <span class="flex flex-shrink p-1">
+    <input
+      #hiddenInput
+      [ngClass]="size"
+      class="text-center w-4 h-6 block mb-1 border-0 border-b-2 text-sm text-blueGray-600 whitespace-nowrap bg-coolGray-100"
+      braveHiddenAsteriskInput
+      formControlName="input"
+      type="text"
+      size="1"
+      maxLength="1"
+      autocorrect="off"
+      autocapitalize="off"
+      autocomplete="off"
+      spellcheck="false"
+    />
+  </span>
+</form>

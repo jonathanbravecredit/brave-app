@@ -1,0 +1,11 @@
+<form [formGroup]="parentFormGroup" class="flex justify-center items-center">
+  <!-- Passing parent form to the child component -->
+  <div *ngFor="let x of slots; index as idx" class="flex w-4 h-6 mr-1">
+    <brave-hidden-asterisk-input
+      [index]="idx"
+      (onComponentReady)="addChild(childName, $event, x)"
+      (onMoveNext)="moveNext(idx)"
+    >
+    </brave-hidden-asterisk-input>
+  </div>
+</form>

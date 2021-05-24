@@ -3,12 +3,19 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationComponent } from '@layouts/authentication/authentication.component';
 import { OnboardingComponent } from '@layouts/onboarding/onboarding.component';
 import { RouterModule } from '@angular/router';
+import { KycLayoutComponent } from '@layouts/onboarding/kyc-layout/kyc-layout.component';
+import { SignupLayoutComponent } from '@layouts/onboarding/signup-layout/signup-layout.component';
 
-const components = [AuthenticationComponent, OnboardingComponent];
+const layouts = [
+  AuthenticationComponent,
+  OnboardingComponent,
+  KycLayoutComponent,
+  SignupLayoutComponent,
+];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...layouts],
   imports: [CommonModule, RouterModule],
-  exports: [...components],
+  exports: [...layouts],
 })
 export class LayoutsModule {}

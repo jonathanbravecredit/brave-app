@@ -9,18 +9,34 @@ import { SignupComponent } from '@views/signup/signup.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { KycAddressComponent } from '@views/kyc-address/kyc-address.component';
+import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-congratulations.component';
+import { KycIdverificationComponent } from '@views/kyc-idverification/kyc-idverification.component';
+import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions.component';
+import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber.component';
+import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn.component';
+import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full.component';
+import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback.component';
 
-const components = [
+const views = [
   SignupComponent,
   SignupErrorComponent,
   SignupErrorValidationComponent,
   SignupKnowyouComponent,
   SignupThankyouComponent,
+  KycAddressComponent,
+  KycCongratulationsComponent,
+  KycIdverificationComponent,
+  KycKbaquestionsComponent,
+  KycPhonenumberComponent,
+  KycSsnComponent,
+  KycSsnFullComponent,
   KycWelcomeComponent,
+  KycWelcomebackComponent,
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...views],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,6 +44,6 @@ const components = [
     SharedComponentsModule,
     RouterModule,
   ],
-  exports: [...components],
+  exports: [...views],
 })
 export class ViewsModule {}

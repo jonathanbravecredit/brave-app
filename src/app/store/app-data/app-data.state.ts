@@ -2,6 +2,7 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import * as AppDataActions from './app-data.actions';
 import { Injectable } from '@angular/core';
 import { AppData } from '@shared/models/app-data.model';
+import { User } from '@shared/models/user.model';
 
 export class AppDataStateModel {
   appData: AppData | undefined;
@@ -11,7 +12,7 @@ export class AppDataStateModel {
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
-    appData: new AppData(),
+    appData: new AppData({} as User),
     loaded: false,
   },
 })
@@ -30,7 +31,7 @@ export class AppDataState {
     {}: AppDataActions.Delete
   ): void {
     const state = ctx.getState();
-    const appData = new AppData();
+    const appData = new AppData({} as User);
     ctx.setState({
       ...state,
       appData,

@@ -3,6 +3,10 @@ import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { Subject, Observable } from 'rxjs';
 import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
+import { Store } from '@ngxs/store';
+import * as AppDataActions from '@store/app-data/app-data.actions';
+import { AppData } from '@shared/models/app-data.model';
+import { User } from '@shared/models/user.model';
 
 export interface NewUser {
   username: string;
@@ -23,12 +27,23 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor() {
+  constructor(private store: Store) {
     Hub.listen('auth', (data) => {
       const { channel, payload } = data;
       console.log('auth change', channel, payload);
-      if (channel === 'auth') {
-        this.authState.next(payload.data);
+      switch (payload.event) {
+        case 'signIn':
+          this.authState.next(payload.data);
+          let user: CognitoUser = payload.data;
+          let appData = new AppData(new User('abc', true));
+          this.store.dispatch(new AppDataActions.Add(appData));
+          break;
+        case 'signOut':
+          // handle sign out
+          break;
+        default:
+          // do something by default
+          break;
       }
     });
   }

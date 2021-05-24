@@ -122,11 +122,11 @@
           "dependsOn": "",
           "hostedUI": true,
           "hostedUIDomainName": "braveappa3b93ee9-a3b93ee9",
-          "authProvidersUserPool": "Facebook",
-          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}}]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}",
+          "authProvidersUserPool": "Facebook,Google",
+          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
           "authProviders": "",
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"471833254092966\",\"client_secret\":\"bce7e4e1080f8cd87402c528c5b37531\"}]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}",
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"471833254092966\",\"client_secret\":\"bce7e4e1080f8cd87402c528c5b37531\"},{\"ProviderName\":\"Google\",\"client_id\":\"256186603323-61hge7mp58cs3n5m770r3hcnd2kpf2ei.apps.googleusercontent.com\",\"client_secret\":\"a7iuv2J5FodSTXWmnvebNNxo\"}]",
           "env": "dev"
         }
       }

@@ -35,14 +35,15 @@ export class SignupComponent implements OnInit {
    */
   signUpWithFacebook(): void {
     let provider = CognitoHostedUIIdentityProvider.Facebook;
-    this.auth.socialSignIn(provider).then((value) => {
-      console.log('signed in under', value);
-    });
+    this.auth.socialSignIn(provider);
   }
 
+  /**
+   * Method to sign user up/in with Google
+   */
   signUpWithGoogle(): void {
-    console.log('google clicked');
-    // add method for federated login or service
+    let provider = CognitoHostedUIIdentityProvider.Google;
+    this.auth.socialSignIn(provider);
   }
 
   /**
