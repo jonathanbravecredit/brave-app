@@ -30,6 +30,7 @@ const Template: Story<OutlineInputComponent> = (args: any) => ({
 export const Small = Template.bind({});
 const smallConfig: IOutlineInputeConfig = {
   size: 'sm',
+  type: 'text',
   label: 'Input label',
   placeholder: 'Input text',
   autocomplete: 'off',
@@ -46,6 +47,7 @@ Default.parameters;
 export const Large = Template.bind({});
 const largeConfig: IOutlineInputeConfig = {
   size: 'lg',
+  type: 'text',
   label: 'Input label',
   placeholder: 'Input text',
   autocomplete: 'off',

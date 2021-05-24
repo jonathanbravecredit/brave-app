@@ -4,13 +4,17 @@ import { moduleMetadata } from '@storybook/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HiddenCodeFormComponent } from '@shared/components/forms/hidden-code-form/hidden-code-form.component';
 import { HiddenAsteriskInputDirective } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.directive';
+import { HiddenAsteriskInputComponent } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 
 export default {
   title: 'app/components/forms/hidden-code-form',
   component: HiddenCodeFormComponent,
   decorators: [
     moduleMetadata({
-      declarations: [HiddenAsteriskInputDirective],
+      declarations: [
+        HiddenAsteriskInputComponent,
+        HiddenAsteriskInputDirective,
+      ],
       imports: [FormsModule, ReactiveFormsModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),

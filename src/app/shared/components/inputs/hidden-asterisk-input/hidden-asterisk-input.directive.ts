@@ -11,20 +11,20 @@ import {
   selector: '[braveHiddenAsteriskInput]',
 })
 export class HiddenAsteriskInputDirective {
-  private _host: HTMLInputElement;
-  private _mask: HTMLDivElement;
+  private _host: HTMLInputElement | undefined;
+  private _mask: HTMLDivElement | undefined;
 
   get host() {
     return this._host;
   }
-  set host(value: HTMLInputElement) {
+  set host(value: HTMLInputElement | undefined) {
     this._host = value;
   }
 
   get mask() {
     return this._mask;
   }
-  set mask(value: HTMLDivElement) {
+  set mask(value: HTMLDivElement | undefined) {
     this._mask = value;
   }
 
@@ -33,11 +33,15 @@ export class HiddenAsteriskInputDirective {
   }
 
   @HostListener('focus') onFocus() {
-    if (this.mask) this.removeMaskElement(this.host);
+    if (this.mask && this.host) {
+      this.removeMaskElement(this.host);
+    }
   }
 
   @HostListener('click') onClick() {
-    if (this.mask) this.removeMaskElement(this.host);
+    if (this.mask && this.host) {
+      this.removeMaskElement(this.host);
+    }
   }
 
   @HostListener('blur') onBlur() {
@@ -50,7 +54,7 @@ export class HiddenAsteriskInputDirective {
     this.renderer.setStyle(div, 'position', 'relative');
     /** wrap the host in the div */
     const el = this.host;
-    const parent = el.parentNode;
+    const parent = el?.parentNode;
     this.renderer.insertBefore(parent, div, el);
     /** insert the element into the div */
     this.renderer.appendChild(div, el);
@@ -93,7 +97,7 @@ export class HiddenAsteriskInputDirective {
     el.insertAdjacentElement('afterend', div);
     /** keep track of the mask element */
     this.mask = div;
-    this.mask.addEventListener('click', (event) => {
+    this.mask?.addEventListener('click', (event) => {
       this.removeMaskElement(el);
       el.focus();
     });
@@ -102,9 +106,9 @@ export class HiddenAsteriskInputDirective {
   removeMaskElement(el: HTMLInputElement) {
     /** remove and rest the input element when the mask is clicked */
     let parent: HTMLElement = this.renderer.parentNode(el);
-    let child: HTMLElement = parent.querySelector('div');
+    let child: HTMLElement | null = parent.querySelector('div');
     this.renderer.removeChild(parent, child);
     this.renderer.setStyle(el, 'opacity', '1');
-    this.mask = null;
+    this.mask = undefined;
   }
 }

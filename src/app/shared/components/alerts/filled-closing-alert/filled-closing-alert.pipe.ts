@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IFilledClosingAlertConfig } from 'src/app/components/alerts/filled-closing-alert/filled-closing-alert.component';
+import { IFilledClosingAlertConfig } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
 
 @Pipe({
   name: 'filledClosingAlert',
@@ -12,7 +12,7 @@ export class FilledClosingAlertPipe implements PipeTransform {
   }
 }
 
-const sizeSpecificClass = {
+const sizeSpecificClass: Record<string, any> = {
   xs: 'max-w-xs',
   sm: 'max-w-sm',
   base: 'max-w-md',

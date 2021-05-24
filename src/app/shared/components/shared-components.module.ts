@@ -28,14 +28,6 @@ import { OutlineSelectInputPipe } from './inputs/outline-select-input/outline-se
 import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
 import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
 import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
-import { CardBarChartComponent } from '@shared/components/cards/card-bar-chart/card-bar-chart.component';
-import { CardLineChartComponent } from '@shared/components/cards/card-line-chart/card-line-chart.component';
-import { CardPageVisitsComponent } from '@shared/components/cards/card-page-visits/card-page-visits.component';
-import { CardProfileComponent } from '@shared/components/cards/card-profile/card-profile.component';
-import { CardSettingsComponent } from '@shared/components/cards/card-settings/card-settings.component';
-import { CardSocialTrafficComponent } from '@shared/components/cards/card-social-traffic/card-social-traffic.component';
-import { CardStatsComponent } from '@shared/components/cards/card-stats/card-stats.component';
-import { CardTableComponent } from '@shared/components/cards/card-table/card-table.component';
 import { IndexDropdownComponent } from '@shared/components/dropdowns/popdowns/index-dropdown/index-dropdown.component';
 import { MenuDropdownComponent } from '@shared/components/dropdowns/popdowns/menu-dropdown/menu-dropdown.component';
 import { NotificationDropdownComponent } from '@shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.component';
@@ -55,7 +47,6 @@ import { SsnLastfourFormComponent } from '@shared/components/forms/ssn-lastfour-
 import { HeaderStatsComponent } from '@shared/components/headers/header-stats/header-stats.component';
 import { HiddenAsteriskInputComponent } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 import { HiddenAsteriskInputDirective } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.directive';
-import { MapExampleComponent } from '@shared/components/maps/map-example/map-example.component';
 import { BaseModalRegularComponent } from '@shared/components/modals/base-modal-regular/base-modal-regular.component';
 import { BaseModalSmallComponent } from '@shared/components/modals/base-modal-small/base-modal-small.component';
 import { AdminNavbarComponent } from '@shared/components/navbars/admin-navbar/admin-navbar.component';
@@ -86,14 +77,6 @@ const components = [
   KnowYouFormComponent,
   FilledClosingAlertComponent,
   FilledOnlytextBadgeComponent,
-  CardBarChartComponent,
-  CardLineChartComponent,
-  CardPageVisitsComponent,
-  CardProfileComponent,
-  CardSettingsComponent,
-  CardSocialTrafficComponent,
-  CardStatsComponent,
-  CardTableComponent,
   IndexDropdownComponent,
   MenuDropdownComponent,
   NotificationDropdownComponent,
@@ -105,6 +88,7 @@ const components = [
   FooterAdminComponent,
   FooterSmallComponent,
   HiddenCodeFormComponent,
+  HiddenAsteriskInputComponent,
   OutlineAddressFormComponent,
   OutlinePhoneFormComponent,
   OutlineVerificationcodeFormComponent,
@@ -112,7 +96,6 @@ const components = [
   SsnLastfourFormComponent,
   HeaderStatsComponent,
   HiddenAsteriskInputComponent,
-  MapExampleComponent,
   BaseModalRegularComponent,
   BaseModalSmallComponent,
   AdminNavbarComponent,

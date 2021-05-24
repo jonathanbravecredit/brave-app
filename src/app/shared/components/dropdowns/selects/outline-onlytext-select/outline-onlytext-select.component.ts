@@ -11,7 +11,7 @@ export interface IOutlineOnlyTextItem {
 export class OutlineOnlytextSelectComponent implements OnInit {
   @Input() items: IOutlineOnlyTextItem[] = [];
 
-  public selected: IOutlineOnlyTextItem;
+  public selected: IOutlineOnlyTextItem | undefined;
   public isOpen: boolean = false;
 
   constructor() {}

@@ -50,7 +50,7 @@ export class FilledChecktextProgressbarComponent {
    *  - last step in the stack is the current step
    * @returns {IProgressStep}
    */
-  moveNext(): IProgressStep {
+  moveNext(): IProgressStep | undefined {
     this.config.steps[this.stack.length].active = true;
     this.stack.push(this.config.steps[this.stack.length]);
     return this.config.steps[this.stack.length];
@@ -60,7 +60,7 @@ export class FilledChecktextProgressbarComponent {
    * Pops the last step off the stack and sets it to inactive in the steps
    * @returns {IProgressStep} Of the one removed
    */
-  moveBack(): IProgressStep {
+  moveBack(): IProgressStep | undefined {
     let step = this.stack.pop();
     return step;
   }

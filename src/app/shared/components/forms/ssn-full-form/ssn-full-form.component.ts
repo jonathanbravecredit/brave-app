@@ -8,8 +8,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HiddenAsteriskInputComponent } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 import { Subscription } from 'rxjs';
-import { HiddenAsteriskInputComponent } from 'src/app/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 
 @Component({
   selector: 'brave-ssn-full-form',
@@ -17,11 +17,11 @@ import { HiddenAsteriskInputComponent } from 'src/app/components/inputs/hidden-a
 })
 export class SsnFullFormComponent implements OnInit {
   @ViewChildren(HiddenAsteriskInputComponent)
-  hiddenFields: QueryList<HiddenAsteriskInputComponent>;
+  hiddenFields: QueryList<HiddenAsteriskInputComponent> | undefined;
 
   parentFormGroup: FormGroup;
   childName: string = 'input';
-  private formSub$: Subscription;
+  private formSub$: Subscription | undefined;
 
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
   @Output()
@@ -60,7 +60,7 @@ export class SsnFullFormComponent implements OnInit {
    */
   moveNext(idx: number): void {
     console.log('hidden fields ==>', this.hiddenFields);
-    const comp = this.hiddenFields.find((c, i) => i === idx + 1);
+    const comp = this.hiddenFields?.find((c, i) => i === idx + 1);
     if (comp) {
       setTimeout(() => {
         comp.focusMe();
@@ -72,9 +72,9 @@ export class SsnFullFormComponent implements OnInit {
    * Clears out all the values from the form
    */
   clearForm(): void {
-    this.hiddenFields.forEach((c) => {
+    this.hiddenFields?.forEach((c) => {
       c.clearMe();
     });
-    this.hiddenFields.first.focusMe(); // set the cursor to the first one
+    this.hiddenFields?.first.focusMe(); // set the cursor to the first one
   }
 }

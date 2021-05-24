@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { IOutlineInputeConfig } from 'src/app/components/inputs/outline-input/outline-input.component';
+import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 
 @Component({
   selector: 'brave-outline-phone-form',
@@ -10,6 +10,7 @@ export class OutlinePhoneFormComponent implements OnInit {
   public parentForm: FormGroup;
   public phoneConfig: IOutlineInputeConfig = {
     size: 'sm',
+    type: 'text',
     label: 'Phone Number',
     placeholder: 'Phone Number',
     autocomplete: 'phone',

@@ -7,11 +7,13 @@ import { createPopper } from '@popperjs/core';
 })
 export class PagesDropdownComponent implements OnInit {
   dropdownPopoverShow = false;
-  @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef: ElementRef;
+  @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef:
+    | ElementRef
+    | undefined;
   @ViewChild('popoverDropdownRef', { static: false })
-  popoverDropdownRef: ElementRef;
+  popoverDropdownRef: ElementRef | undefined;
   ngOnInit() {}
-  toggleDropdown(event) {
+  toggleDropdown(event: { preventDefault: () => void }) {
     event.preventDefault();
     if (this.dropdownPopoverShow) {
       this.dropdownPopoverShow = false;
@@ -22,8 +24,8 @@ export class PagesDropdownComponent implements OnInit {
   }
   createPoppper() {
     createPopper(
-      this.btnDropdownRef.nativeElement,
-      this.popoverDropdownRef.nativeElement,
+      this.btnDropdownRef?.nativeElement,
+      this.popoverDropdownRef?.nativeElement,
       {
         placement: 'bottom-start',
       }

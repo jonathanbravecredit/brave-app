@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './hidden-asterisk-input.component.html',
 })
 export class HiddenAsteriskInputComponent implements OnInit {
-  @ViewChild('hiddenInput') hiddenInput: ElementRef;
+  @ViewChild('hiddenInput') hiddenInput: ElementRef | undefined;
 
   @Input() size: string = 'text-sm';
   @Input() index: number = 0;
@@ -31,8 +31,8 @@ export class HiddenAsteriskInputComponent implements OnInit {
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   private _masked: boolean = false;
-  public componentFormGroup: FormGroup;
-  public formSub$: Subscription;
+  public componentFormGroup: FormGroup | undefined;
+  public formSub$: Subscription | undefined;
 
   get masked() {
     return this._masked;
@@ -64,7 +64,7 @@ export class HiddenAsteriskInputComponent implements OnInit {
    * Sets the focus to the hiddien input native element
    */
   focusMe() {
-    const el: HTMLInputElement = this.hiddenInput.nativeElement;
+    const el: HTMLInputElement = this.hiddenInput?.nativeElement;
     if (el) el.focus();
   }
 
@@ -72,7 +72,7 @@ export class HiddenAsteriskInputComponent implements OnInit {
    * Removes any value stored in the input element
    */
   clearMe() {
-    const el: HTMLInputElement = this.hiddenInput.nativeElement;
+    const el: HTMLInputElement = this.hiddenInput?.nativeElement;
     if (el) {
       el.value = '';
       el.click();

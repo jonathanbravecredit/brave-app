@@ -9,8 +9,8 @@ import {
   QueryList,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HiddenAsteriskInputComponent } from '@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 import { Subscription } from 'rxjs';
-import { HiddenAsteriskInputComponent } from 'src/app/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component';
 
 @Component({
   selector: 'brave-hidden-code-form',
@@ -18,12 +18,12 @@ import { HiddenAsteriskInputComponent } from 'src/app/components/inputs/hidden-a
 })
 export class HiddenCodeFormComponent implements OnInit {
   @ViewChildren(HiddenAsteriskInputComponent)
-  hiddenFields: QueryList<HiddenAsteriskInputComponent>;
+  hiddenFields: QueryList<HiddenAsteriskInputComponent> | undefined;
 
   parentFormGroup: FormGroup;
   childName: string = 'input';
   private _slots: number[] = [];
-  private formSub$: Subscription;
+  private formSub$: Subscription | undefined;
 
   @Input()
   get slots() {
@@ -69,7 +69,7 @@ export class HiddenCodeFormComponent implements OnInit {
    * @param idx
    */
   moveNext(idx: number): void {
-    const comp = this.hiddenFields.find((c) => c.index === idx + 1);
+    const comp = this.hiddenFields?.find((c) => c.index === idx + 1);
     if (comp) {
       setTimeout(() => {
         comp.focusMe();
@@ -81,9 +81,9 @@ export class HiddenCodeFormComponent implements OnInit {
    * Clears out all the values from the form
    */
   clearForm(): void {
-    this.hiddenFields.forEach((c) => {
+    this.hiddenFields?.forEach((c) => {
       c.clearMe();
     });
-    this.hiddenFields.first.focusMe(); // set the cursor to the first one
+    this.hiddenFields?.first.focusMe(); // set the cursor to the first one
   }
 }

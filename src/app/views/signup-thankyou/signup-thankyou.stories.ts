@@ -4,6 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SignupThankyouComponent } from '@views/signup-thankyou/signup-thankyou.component';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
 
 export default {
   title: 'app/views/onboarding/signup-thankyou',
@@ -11,7 +12,11 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
+      imports: [
+        SharedComponentsModule,
+        HttpClientModule,
+        RouterModule.forRoot([], { useHash: true }),
+      ],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],

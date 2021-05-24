@@ -9,21 +9,21 @@ export class OutlineTooltipDirective {
   @Input() body: string = 'Message body';
   @Input() position: Placement = 'top';
 
-  private _host: HTMLElement;
-  private _tooltip: HTMLDivElement;
+  private _host: HTMLElement | undefined;
+  private _tooltip: HTMLDivElement | undefined;
   private popoverShow: boolean = false;
 
   get host() {
     return this._host;
   }
-  set host(value: HTMLElement) {
+  set host(value: HTMLElement | undefined) {
     this._host = value;
   }
 
   get tooltip() {
     return this._tooltip;
   }
-  set tooltip(value: HTMLDivElement) {
+  set tooltip(value: HTMLDivElement | undefined) {
     this._tooltip = value;
   }
 
@@ -41,18 +41,20 @@ export class OutlineTooltipDirective {
   }
 
   ngAfterViewInit() {
-    this.tooltip.innerHTML = `
-    <div class="bg-white border border-solid border-blueGray-300 m-4 block z-50 font-normal leading-normal max-w-xs text-left no-underline break-words rounded-lg">
-      <div>
-        <p class="bg-white font-sans font-semibold text-sm text-coolGray-700 p-3 mb-0 border-b border-solid border-blueGray-300 rounded-t-lg">
-          ${this.title}
-        </p>
-        <p class="font-sans text-sm text-coolGray-700 p-3 mb-4">
-        ${this.body}
-        </p>
+    if (this.tooltip) {
+      this.tooltip.innerHTML = `
+      <div class="bg-white border border-solid border-blueGray-300 m-4 block z-50 font-normal leading-normal max-w-xs text-left no-underline break-words rounded-lg">
+        <div>
+          <p class="bg-white font-sans font-semibold text-sm text-coolGray-700 p-3 mb-0 border-b border-solid border-blueGray-300 rounded-t-lg">
+            ${this.title}
+          </p>
+          <p class="font-sans text-sm text-coolGray-700 p-3 mb-4">
+          ${this.body}
+          </p>
+        </div>
       </div>
-    </div>
-    `;
+      `;
+    }
   }
 
   toggleTooltip() {
@@ -65,12 +67,14 @@ export class OutlineTooltipDirective {
     }
   }
   destroyPopper() {
-    this.tooltip.parentNode.removeChild(this.tooltip);
+    this.tooltip?.parentNode?.removeChild(this.tooltip);
   }
   createPoppper() {
-    createPopper(this.host, this.tooltip, {
-      placement: this.position,
-    });
-    this.host.parentNode.insertBefore(this.tooltip, this.host.nextSibling);
+    if (this.host && this.tooltip) {
+      createPopper(this.host, this.tooltip, {
+        placement: this.position,
+      });
+      this.host.parentNode?.insertBefore(this.tooltip, this.host.nextSibling);
+    }
   }
 }

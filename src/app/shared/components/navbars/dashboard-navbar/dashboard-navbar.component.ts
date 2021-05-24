@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IOutlineOnlyTextButtonConfig } from 'src/app/components/buttons/outline-onlytext-button/outline-onlytext-button.component';
-import { IMenuDropdown } from 'src/app/components/dropdowns/popdowns/menu-dropdown/menu-dropdown.component';
+import { IMenuDropdown } from '@shared/components/dropdowns/popdowns/menu-dropdown/menu-dropdown.component';
 
 @Component({
   selector: 'brave-dashboard-navbar',

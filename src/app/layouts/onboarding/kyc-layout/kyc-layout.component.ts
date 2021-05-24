@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FilledChecktextProgressbarComponent,
   IFilledChecktextProgressbarConfig,
-} from 'src/app/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
+} from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 
 @Component({
   selector: 'brave-kyc-layout',
@@ -10,7 +10,7 @@ import {
 })
 export class KycLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild(FilledChecktextProgressbarComponent)
-  progressBar: FilledChecktextProgressbarComponent;
+  progressBar: FilledChecktextProgressbarComponent | undefined;
   public progressConfig: IFilledChecktextProgressbarConfig = {
     size: 'base',
     steps: [
@@ -26,6 +26,6 @@ export class KycLayoutComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.progressBar.goToFirst();
+    this.progressBar?.goToFirst();
   }
 }

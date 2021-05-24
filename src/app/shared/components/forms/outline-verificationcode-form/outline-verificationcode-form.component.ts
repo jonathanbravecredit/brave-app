@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { IOutlineInputeConfig } from 'src/app/components/inputs/outline-input/outline-input.component';
+import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 
 @Component({
   selector: 'brave-outline-verificationcode-form',
@@ -10,6 +10,7 @@ export class OutlineVerificationcodeFormComponent implements OnInit {
   public parentForm: FormGroup;
   public codeConfig: IOutlineInputeConfig = {
     size: 'sm',
+    type: 'text',
     label: 'Code',
     placeholder: '5-digit Code',
     autocomplete: 'off',

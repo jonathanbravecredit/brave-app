@@ -7,19 +7,21 @@ import { createPopper } from '@popperjs/core';
 })
 export class UserDropdownComponent implements AfterViewInit {
   dropdownPopoverShow = false;
-  @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef: ElementRef;
+  @ViewChild('btnDropdownRef', { static: false }) btnDropdownRef:
+    | ElementRef
+    | undefined;
   @ViewChild('popoverDropdownRef', { static: false })
-  popoverDropdownRef: ElementRef;
+  popoverDropdownRef: ElementRef | undefined;
   ngAfterViewInit() {
     createPopper(
-      this.btnDropdownRef.nativeElement,
-      this.popoverDropdownRef.nativeElement,
+      this.btnDropdownRef?.nativeElement,
+      this.popoverDropdownRef?.nativeElement,
       {
         placement: 'bottom-start',
       }
     );
   }
-  toggleDropdown(event) {
+  toggleDropdown(event: { preventDefault: () => void }) {
     event.preventDefault();
     if (this.dropdownPopoverShow) {
       this.dropdownPopoverShow = false;
