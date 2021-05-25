@@ -24,11 +24,15 @@ const isLocalhost = Boolean(
 );
 
 // for two redirects (local host and production)
-const [localRedirectSignIn, productionRedirectSignIn] =
-  awsconfig.oauth.redirectSignIn.split(',');
+const [
+  localRedirectSignIn,
+  productionRedirectSignIn,
+] = awsconfig.oauth.redirectSignIn.split(',');
 
-const [localRedirectSignOut, productionRedirectSignOut] =
-  awsconfig.oauth.redirectSignOut.split(',');
+const [
+  localRedirectSignOut,
+  productionRedirectSignOut,
+] = awsconfig.oauth.redirectSignOut.split(',');
 
 const updatedAwsConfig = {
   ...awsconfig,
@@ -50,11 +54,14 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { SharedServicesModule } from '@shared/services/shared-services.module';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
-import { LayoutsModule } from '@layouts/layouts.module';
 import { ViewsModule } from '@views/views.module';
+import { AuthenticationModule } from './layouts/authentication/authentication.module';
+import { OnboardingModule } from './layouts/onboarding/onboarding.module';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+// import { LayoutsModule } from '@layouts/layouts.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DashboardComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([AppDataState], {
@@ -69,7 +76,8 @@ import { ViewsModule } from '@views/views.module';
     SharedDirectivesModule,
     SharedServicesModule,
     SharedPipesModule,
-    LayoutsModule,
+    AuthenticationModule,
+    OnboardingModule,
     ViewsModule,
     AppRoutingModule,
   ],

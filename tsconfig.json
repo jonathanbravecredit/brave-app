@@ -28,8 +28,10 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
   },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "amplify", "storybook-static", "**/*.spec.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 
@@ -8,7 +8,11 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -22,6 +26,7 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         let cognitoUser = await this.auth.signUp(user);
+        this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err) {
         console.log('err:', err);
       }

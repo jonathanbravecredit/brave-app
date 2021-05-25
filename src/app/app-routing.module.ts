@@ -1,28 +1,33 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// layouts
-import { AuthenticationComponent } from '@layouts/authentication/authentication.component';
-
-// authentication views
-import { SignupComponent } from '@views/signup/signup.component';
-
 const routes: Routes = [
-  // authentication views
   {
-    path: 'authentication',
-    component: AuthenticationComponent,
-    children: [
-      { path: 'signup', component: SignupComponent },
-      { path: '', redirectTo: 'signup', pathMatch: 'full' },
-    ],
+    path: 'auth',
+    loadChildren: () =>
+      import('./layouts/authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
   },
-  { path: '', component: AuthenticationComponent }, // TODO: replace with better page
+  {
+    path: 'onboarding',
+    loadChildren: () =>
+      import('./layouts/onboarding/onboarding.module').then(
+        (m) => m.OnboardingModule
+      ),
+  },
+  // { path: '', component: IndexComponent }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      useHash: false,
+      anchorScrolling: 'enabled',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

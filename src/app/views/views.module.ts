@@ -17,6 +17,7 @@ import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber.
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn.component';
 import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full.component';
 import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback.component';
+import { SignupResendComponent } from './signup-resend/signup-resend.component';
 
 const views = [
   SignupComponent,
@@ -33,6 +34,7 @@ const views = [
   KycSsnFullComponent,
   KycWelcomeComponent,
   KycWelcomebackComponent,
+  SignupResendComponent,
 ];
 
 @NgModule({
