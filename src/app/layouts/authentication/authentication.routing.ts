@@ -6,7 +6,9 @@ import { SignupKnowyouComponent } from '@views/signup-knowyou/signup-knowyou.com
 import { SignupErrorComponent } from '@views/signup-error/signup-error.component';
 import { SignupErrorValidationComponent } from '@views/signup-error-validation/signup-error-validation.component';
 import { SignupComponent } from '@views/signup/signup.component';
+import { SigninComponent } from '@views/signin/signin.component';
 import { SignupResendComponent } from '@views/signup-resend/signup-resend.component';
+import { SigninForgotComponent } from '@views/signin-forgot/signin-forgot.component';
 
 const AuthenticationRoutes: Routes = [
   {
@@ -14,6 +16,8 @@ const AuthenticationRoutes: Routes = [
     component: AuthenticationComponent,
     children: [
       { path: 'signup', component: SignupComponent },
+      { path: 'signin', component: SigninComponent },
+      { path: 'forgot', component: SigninForgotComponent },
       { path: 'thankyou', component: SignupThankyouComponent },
       { path: 'name', component: SignupKnowyouComponent },
       { path: 'error', component: SignupErrorComponent },

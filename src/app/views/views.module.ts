@@ -19,6 +19,9 @@ import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber.
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn.component';
 import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full.component';
 import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback.component';
+import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
+import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
+import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
 
 const views = [
   SignupComponent,
@@ -28,6 +31,7 @@ const views = [
   SignupThankyouComponent,
   SignupResendComponent,
   SigninComponent,
+  SigninForgotComponent,
   KycAddressComponent,
   KycCongratulationsComponent,
   KycIdverificationComponent,
@@ -37,6 +41,8 @@ const views = [
   KycSsnFullComponent,
   KycWelcomeComponent,
   KycWelcomebackComponent,
+  CompliancePrivacyComponent,
+  ComplianceTosComponent,
 ];
 
 @NgModule({

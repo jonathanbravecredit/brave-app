@@ -28,10 +28,10 @@ export class SignupComponent implements OnInit {
         let cognitoUser = await this.auth.signUp(user);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err) {
-        console.log('err:', err);
+        this.router.navigate(['../error'], { relativeTo: this.route });
       }
     } else {
-      console.log('invalid email');
+      // TODO: need to provide feedback to the user on the invalid email
     }
   }
 
@@ -55,27 +55,27 @@ export class SignupComponent implements OnInit {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/forgot']);
   }
 
   /**
    * Method to route user to login
    */
   goToLogin(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/signin']);
   }
 
   /**
    * Method to route user to privacy policy
    */
   goToPrivacy(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/legal/privacy']);
   }
 
   /**
    * Method to route user to terms of service
    */
   goToTerms(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/legal/tos']);
   }
 }

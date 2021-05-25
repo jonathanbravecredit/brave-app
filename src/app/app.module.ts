@@ -57,11 +57,10 @@ import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { ViewsModule } from '@views/views.module';
 import { AuthenticationModule } from './layouts/authentication/authentication.module';
 import { OnboardingModule } from './layouts/onboarding/onboarding.module';
-import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([AppDataState], {
