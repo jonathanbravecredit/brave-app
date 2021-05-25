@@ -6,6 +6,7 @@ import { SignupErrorComponent } from '@views/signup-error/signup-error.component
 import { SignupKnowyouComponent } from '@views/signup-knowyou/signup-knowyou.component';
 import { SignupThankyouComponent } from '@views/signup-thankyou/signup-thankyou.component';
 import { SignupComponent } from '@views/signup/signup.component';
+import { SignupResendComponent } from '@views/signup-resend/signup-resend.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
@@ -17,7 +18,6 @@ import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber.
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn.component';
 import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full.component';
 import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback.component';
-import { SignupResendComponent } from './signup-resend/signup-resend.component';
 
 const views = [
   SignupComponent,
@@ -25,6 +25,7 @@ const views = [
   SignupErrorValidationComponent,
   SignupKnowyouComponent,
   SignupThankyouComponent,
+  SignupResendComponent,
   KycAddressComponent,
   KycCongratulationsComponent,
   KycIdverificationComponent,
@@ -34,7 +35,6 @@ const views = [
   KycSsnFullComponent,
   KycWelcomeComponent,
   KycWelcomebackComponent,
-  SignupResendComponent,
 ];
 
 @NgModule({
