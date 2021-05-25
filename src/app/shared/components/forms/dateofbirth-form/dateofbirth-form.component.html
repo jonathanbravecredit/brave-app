@@ -1,0 +1,38 @@
+<form [formGroup]="parentForm">
+  <div class="grid grid-cols-3 gap-2">
+    <div>
+      <brave-outline-select-input
+        [config]="monthConfig"
+        (onComponentReady)="addChild('month', $event)"
+        [required]="true"
+        [asteriskOverride]="true"
+      >
+      </brave-outline-select-input>
+      <div class="-mt-2">
+        <div class="flex justify-start items-start text-xs text-blueGray-600">
+          <span class="-mt-1">&#42;</span>&nbsp;Required
+        </div>
+      </div>
+    </div>
+    <div>
+      <brave-outline-select-input
+        [config]="dayConfig"
+        (onComponentReady)="addChild('day', $event)"
+        [required]="true"
+        [asteriskOverride]="true"
+      >
+      </brave-outline-select-input>
+    </div>
+    <div>
+      <div>
+        <brave-outline-select-input
+          [config]="yearConfig"
+          (onComponentReady)="addChild('year', $event)"
+          [required]="true"
+          [asteriskOverride]="true"
+        >
+        </brave-outline-select-input>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,111 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-braveapp-dev-110519-authRole",
+      "UnauthRoleArn": "arn:aws:iam::890995358345:role/amplify-braveapp-dev-110519-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::890995358345:role/amplify-braveapp-dev-110519-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-braveapp-dev-110519-deployment",
+      "UnauthRoleName": "amplify-braveapp-dev-110519-unauthRole",
+      "StackName": "amplify-braveapp-dev-110519",
+      "StackId": "arn:aws:cloudformation:us-east-2:890995358345:stack/amplify-braveapp-dev-110519/272b3250-995e-11eb-9b35-0a196f208d44",
+      "AmplifyAppId": "d3vym5isdd5k4u"
+    }
+  },
+  "auth": {
+    "braveapp0ea8ea07": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "output": {
+        "UserPoolId": "us-east-2_beTcykTM9",
+        "AppClientIDWeb": "5ig184k6ps2qf7577g2qnk4mjl",
+        "AppClientID": "1isj7pi952benpu937pqdm57st",
+        "IdentityPoolId": "us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612",
+        "IdentityPoolName": "braveapp0ea8ea07_identitypool_0ea8ea07__dev",
+        "UserPoolName": "braveapp0ea8ea07_userpool_0ea8ea07",
+        "HostedUIDomain": "braveappa3b93ee9-a3b93ee9-dev",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}"
+      },
+      "lastPushTimeStamp": "2021-05-20T01:03:59.780Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
+        "logicalId": "authbraveapp0ea8ea07"
+      },
+      "lastPushDirHash": "hdAKoSTOMvoCKCZ26y2woa90QZ4="
+    }
+  },
+  "api": {
+    "braveapp": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authbraveapp0ea8ea07"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "rr5wtr4ev5exlbutrkih3r5lhq",
+        "GraphQLAPIEndpointOutput": "https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql"
+      },
+      "lastPushTimeStamp": "2021-05-20T01:03:59.767Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apibraveapp"
+      }
+    }
+  },
+  "function": {
+    "S3Trigger3c67af6a": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "output": {
+        "Region": "us-east-2",
+        "Arn": "arn:aws:lambda:us-east-2:890995358345:function:S3Trigger3c67af6a-dev",
+        "Name": "S3Trigger3c67af6a-dev",
+        "LambdaExecutionRole": "S3Trigger3c67af6aLambdaRole3c67af6a-dev"
+      },
+      "lastPushTimeStamp": "2021-05-20T01:03:59.770Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/function/S3Trigger3c67af6a-cloudformation-template.json",
+        "logicalId": "functionS3Trigger3c67af6a"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
+        "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
+      }
+    }
+  },
+  "storage": {
+    "s3b5dd189d": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger3c67af6a",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ],
+      "output": {
+        "BucketName": "braveapp7123270838f144d09004f496c2f9ef0f110519-dev",
+        "Region": "us-east-2"
+      },
+      "lastPushTimeStamp": "2021-05-20T01:03:59.773Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+        "logicalId": "storages3b5dd189d"
+      }
+    }
+  }
+}

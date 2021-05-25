@@ -1,0 +1,148 @@
+type AppData {
+  id: ID!
+  version: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelAppDataConnection {
+  items: [AppData]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelAppDataFilterInput {
+  id: ModelIDInput
+  version: ModelStringInput
+  and: [ModelAppDataFilterInput]
+  or: [ModelAppDataFilterInput]
+  not: ModelAppDataFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getAppData(id: ID!): AppData
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
+}
+
+input CreateAppDataInput {
+  id: ID
+  version: String!
+}
+
+input UpdateAppDataInput {
+  id: ID!
+  version: String
+}
+
+input DeleteAppDataInput {
+  id: ID
+}
+
+type Mutation {
+  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData
+  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData
+  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData
+}
+
+input ModelAppDataConditionInput {
+  version: ModelStringInput
+  and: [ModelAppDataConditionInput]
+  or: [ModelAppDataConditionInput]
+  not: ModelAppDataConditionInput
+}
+
+type Subscription {
+  onCreateAppData: AppData @aws_subscribe(mutations: ["createAppData"])
+  onUpdateAppData: AppData @aws_subscribe(mutations: ["updateAppData"])
+  onDeleteAppData: AppData @aws_subscribe(mutations: ["deleteAppData"])
+}

@@ -1,0 +1,4 @@
+type AppData @model {
+  id: ID!
+  version: String!
+}

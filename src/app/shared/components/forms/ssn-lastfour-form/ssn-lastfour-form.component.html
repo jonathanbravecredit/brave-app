@@ -1,0 +1,47 @@
+<div class="flex">
+  <!-- first three digits -->
+  <span *ngFor="let number of [0, 1, 2]" class="flex justify-center p-1">
+    <div style="position: relative">
+      <div
+        class="flex text-3xl w-4 h-full pt-1 justify-center items-center text-blueGray-600"
+      >
+        <p>&#42;</p>
+      </div>
+    </div>
+  </span>
+
+  <!-- hyphen -->
+  <span class="flex justify-center items-center -mt-2 p-1">&#8212; </span>
+
+  <!-- second two digits -->
+  <span *ngFor="let number of [0, 1]" class="flex justify-center p-1">
+    <div style="position: relative">
+      <div
+        class="flex text-3xl w-4 h-full pt-1 justify-center items-center text-blueGray-600"
+      >
+        <p>&#42;</p>
+      </div>
+    </div>
+  </span>
+
+  <!-- hyphen -->
+  <span class="flex justify-center items-center -mt-2 p-1">&#8212; </span>
+
+  <!-- last four to populate -->
+  <span class="flex flex-shrink border-0 rounded bg-coolGray-100">
+    <form
+      [formGroup]="parentFormGroup"
+      class="flex justify-center items-center"
+    >
+      <!-- Passing parent form to the child component -->
+      <div *ngFor="let x of slots; index as idx" class="flex">
+        <brave-hidden-asterisk-input
+          [index]="idx"
+          (onComponentReady)="addChild(childName, $event, x)"
+          (onMoveNext)="moveNext(idx)"
+        >
+        </brave-hidden-asterisk-input>
+      </div>
+    </form>
+  </span>
+</div>

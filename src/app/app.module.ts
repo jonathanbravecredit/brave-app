@@ -14,14 +14,54 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 
+/* social sign in configuration */
+const isLocalhost = Boolean(
+  window.location.hostname === 'localhost' ||
+    window.location.hostname === '[::1]' ||
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
+);
+
+// for two redirects (local host and production)
+const [
+  localRedirectSignIn,
+  productionRedirectSignIn,
+] = awsconfig.oauth.redirectSignIn.split(',');
+
+const [
+  localRedirectSignOut,
+  productionRedirectSignOut,
+] = awsconfig.oauth.redirectSignOut.split(',');
+
+const updatedAwsConfig = {
+  ...awsconfig,
+  oauth: {
+    ...awsconfig.oauth,
+    redirectSignIn: isLocalhost
+      ? localRedirectSignIn
+      : productionRedirectSignIn,
+    redirectSignOut: isLocalhost
+      ? localRedirectSignOut
+      : productionRedirectSignOut,
+  },
+};
 /* Configure Amplify resources */
-Amplify.configure(awsconfig);
+Amplify.configure(updatedAwsConfig);
 
 /* shared modules */
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { SharedServicesModule } from '@shared/services/shared-services.module';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { ViewsModule } from '@views/views.module';
+import { AuthenticationModule } from './layouts/authentication/authentication.module';
+import { OnboardingModule } from './layouts/onboarding/onboarding.module';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+// import { LayoutsModule } from '@layouts/layouts.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DashboardComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot([AppDataState], {
@@ -33,6 +73,12 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
     }),
     AmplifyUIAngularModule,
     SharedComponentsModule,
+    SharedDirectivesModule,
+    SharedServicesModule,
+    SharedPipesModule,
+    AuthenticationModule,
+    OnboardingModule,
+    ViewsModule,
     AppRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
