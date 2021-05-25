@@ -42,7 +42,9 @@
           <div class="text-sm text-blueGray-600">
             <span>Already have an account?&nbsp;</span>
             <span>
-              <a (click)="goToLogin()"> Login here. </a>
+              <a (click)="goToLogin()" class="hover:cursor-pointer">
+                Login here.
+              </a>
             </span>
           </div>
         </div>
@@ -52,11 +54,15 @@
           <div class="text-sm text-blueGray-600 text-center">
             <small>
               By joining you are agreeing to our&nbsp;<span
-                ><a (click)="goToPrivacy()" class="underline"
+                ><a
+                  (click)="goToPrivacy()"
+                  class="underline hover:cursor-pointer"
                   >Privacy Policy</a
                 ></span
               >&nbsp;and&nbsp;<span
-                ><a (click)="goToTerms()" class="underline">TOS</a></span
+                ><a (click)="goToTerms()" class="underline hover:cursor-pointer"
+                  >TOS</a
+                ></span
               >
             </small>
           </div>

@@ -50,13 +50,14 @@
         <div class="mt-5">
           <div class="flex justify-between items-center">
             <brave-links-onlytext-button
+              (click)="goBack()"
               [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
             >
               <span class="flex items-center">
                 <span class="material-icons px-1">arrow_back</span>&nbsp;Back
               </span>
             </brave-links-onlytext-button>
-            <brave-filled-onlytext-button
+            <brave-filled-onlytext-button (click)="goToNext()"
               ><span class="flex items-center"
                 >Continue<span class="material-icons px-1"
                   >arrow_forward</span

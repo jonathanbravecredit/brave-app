@@ -9,6 +9,7 @@ import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber.
 import { KycIdverificationComponent } from '@views/kyc-idverification/kyc-idverification.component';
 import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions.component';
 import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback.component';
+import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-congratulations.component';
 
 const OnboardingRoutes: Routes = [
   {
@@ -22,7 +23,7 @@ const OnboardingRoutes: Routes = [
       { path: 'verify', component: KycPhonenumberComponent },
       { path: 'code', component: KycIdverificationComponent },
       { path: 'kba', component: KycKbaquestionsComponent },
-      { path: 'congratulations', component: KycIdverificationComponent },
+      { path: 'congratulations', component: KycCongratulationsComponent },
       { path: 'returning', component: KycWelcomebackComponent },
     ],
   },

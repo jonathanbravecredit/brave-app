@@ -55,14 +55,14 @@ export class SignupComponent implements OnInit {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate(['/auth/forgot']);
+    this.router.navigate(['../forgot'], { relativeTo: this.route });
   }
 
   /**
    * Method to route user to login
    */
   goToLogin(): void {
-    this.router.navigate(['/auth/signin']);
+    this.router.navigate(['../signin'], { relativeTo: this.route });
   }
 
   /**
