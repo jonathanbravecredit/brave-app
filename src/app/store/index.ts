@@ -6,4 +6,4 @@ import { OnboardingState } from '@store/onboarding/onboarding.state';
 export * from './onboarding';
 
 // rolls up our states into one const
-export const ecologyState = [AppDataState, OnboardingState];
+export const braveState = [AppDataState, OnboardingState];

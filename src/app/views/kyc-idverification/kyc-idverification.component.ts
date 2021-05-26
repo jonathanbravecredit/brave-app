@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { KycService } from '@shared/services/kyc/kyc.service';
 
 type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -14,7 +15,8 @@ export class KycIdverificationComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private kycService: KycService
   ) {}
 
   ngOnInit(): void {}
@@ -25,11 +27,13 @@ export class KycIdverificationComponent implements OnInit {
   }
 
   goBack(): void {
+    this.kycService.inactivateStep(3);
     this.location.back();
   }
 
   goToNext(): void {
     // need to add form validation or submit to backend before moving forward
+    this.kycService.completeStep(3);
     this.router.navigate(['../congratulations'], { relativeTo: this.route });
   }
 }

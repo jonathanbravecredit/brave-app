@@ -95,14 +95,14 @@ export class KycService implements OnDestroy {
     state: { active: boolean } | { complete: boolean }
   ): Onboarding | undefined {
     let onboarding = this.onboarding;
-    let welcome: OnboardingStep | undefined = onboarding.steps.find(
+    let welcome: OnboardingStep | undefined = onboarding?.steps?.find(
       (step: OnboardingStep) => {
         return step.id === id;
       }
     );
     if (welcome !== undefined) {
       welcome = { ...welcome, ...state };
-      const steps: OnboardingStep[] = onboarding.steps.map(
+      const steps: OnboardingStep[] = onboarding?.steps?.map(
         (step: OnboardingStep) => {
           return step.id === welcome?.id ? welcome : step;
         }

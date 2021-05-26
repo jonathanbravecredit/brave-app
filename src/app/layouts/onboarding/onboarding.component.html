@@ -1,10 +1,10 @@
 <div>
   <div
-    *ngIf="onboarding$ | async as onboarding"
+    *ngIf="onboarding$ | async as data"
     class="container mx-auto max-w-xs h-full"
   >
     <brave-filled-checktext-progressbar
-      [steps]="onboarding.steps"
+      [steps]="data.steps"
     ></brave-filled-checktext-progressbar>
   </div>
   <main>

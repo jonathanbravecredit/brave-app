@@ -17,15 +17,16 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class OnboardingComponent implements OnInit, OnDestroy {
   @ViewChild(FilledChecktextProgressbarComponent)
-  public onboarding: Onboarding = {} as Onboarding;
-  public onboarding$: Observable<Onboarding> = this.store.select(
-    OnboardingSelectors.getOnboarding
-  );
-  public onboardingSub$: Subscription;
-  public progressBar: FilledChecktextProgressbarComponent | undefined;
-  public progressConfig: IFilledChecktextProgressbarConfig = {
+  progressBar: FilledChecktextProgressbarComponent | undefined;
+  progressConfig: IFilledChecktextProgressbarConfig = {
     size: 'base',
   };
+
+  onboarding: Onboarding = {} as Onboarding;
+  onboarding$: Observable<Onboarding> = this.store.select(
+    OnboardingSelectors.getOnboarding
+  );
+  onboardingSub$: Subscription;
 
   constructor(private store: Store) {
     this.onboardingSub$ = this.onboarding$
@@ -47,9 +48,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  ngAfterViewInit(): void {
-    this.progressBar?.goToFirst();
-  }
+  ngAfterViewInit(): void {}
 
   /**
    * When the user first lands on welcome seed the onboarding data
@@ -61,7 +60,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
         started: true,
         steps: steps,
       };
-      this.store.dispatch(new OnboardingAction.Add(onboarding));
+      this.store.dispatch(new OnboardingAction.Edit(onboarding));
     }
   }
 }

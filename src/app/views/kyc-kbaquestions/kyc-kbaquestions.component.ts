@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { KbaquestionsFormComponent } from '@shared/components/forms/kbaquestions-form/kbaquestions-form.component';
+import { KycService } from '@shared/services/kyc/kyc.service';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -18,7 +19,8 @@ export class KycKbaquestionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private kycService: KycService
   ) {}
 
   ngOnInit(): void {}
@@ -30,6 +32,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.questions = [question, ...this.questions];
       this.kba?.scroll(25);
     } else {
+      this.kycService.inactivateStep(3);
       this.location.back();
       return;
     }
@@ -41,6 +44,7 @@ export class KycKbaquestionsComponent implements OnInit {
     if (this.questions.length) {
       this.kba?.scroll(-25);
     } else {
+      this.kycService.completeStep(3);
       this.router.navigate(['../congratulations'], { relativeTo: this.route });
     }
   }

@@ -37,9 +37,7 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     { payload }: OnboardingActions.Edit
   ): void {
-    const state = ctx.getState();
     const onboarding = {
-      ...state,
       ...payload,
     };
     ctx.patchState({
