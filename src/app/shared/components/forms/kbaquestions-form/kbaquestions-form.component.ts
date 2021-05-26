@@ -27,7 +27,11 @@ export class KbaquestionsFormComponent implements AfterViewInit {
     this.setSliderWidth(this.sliderWidth);
   }
 
-  setSliderWindowWidth(width: number) {
+  /**
+   * Sets the slider window width so only a portion is showing
+   * @param width
+   */
+  setSliderWindowWidth(width: number): void {
     // TODO need to set floor to width of containing elements
     this.renderer.setStyle(
       this.sliderWindow.nativeElement,
@@ -36,12 +40,20 @@ export class KbaquestionsFormComponent implements AfterViewInit {
     );
   }
 
-  setSliderWidth(width: number) {
+  /**
+   * Sets the slider width to hold all the items
+   * @param width
+   */
+  setSliderWidth(width: number): void {
     // TODO need to set floor to width of containing elements x 3
     this.renderer.setStyle(this.slider.nativeElement, 'width', `${width}px`);
   }
 
-  scroll(value: number) {
+  /**
+   * Method to scroll the carousel by a percentage value
+   * @param value percentage to move the carousel over by
+   */
+  scroll(value: number): void {
     if (this.carouselXAxis + value > 0 || this.carouselXAxis + value < -75) {
       return;
     }

@@ -106,6 +106,7 @@ const components = [
   SidebarComponent,
   FilledOnlytextTabsComponent,
   OutlineTooltipComponent,
+  KbaquestionsFormComponent,
 ];
 
 // component specific pipes only
@@ -123,7 +124,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives, KbaquestionsFormComponent],
+  declarations: [...components, ...pipes, ...directives],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
