@@ -5,8 +5,8 @@ import { Subject, Observable } from 'rxjs';
 import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data/app-data.actions';
-import { AppData } from '@shared/models/app-data.model';
-import { User } from '@shared/models/user.model';
+import { AppData } from '@store/app-data/app-data.model';
+import { User } from '@store/user/user.model';
 
 export interface NewUser {
   username: string;
@@ -35,7 +35,7 @@ export class AuthService {
         case 'signIn':
           this.authState.next(payload.data);
           let user: CognitoUser = payload.data;
-          let appData = new AppData(new User('abc', true));
+          let appData = new AppData();
           this.store.dispatch(new AppDataActions.Add(appData));
           break;
         case 'signOut':

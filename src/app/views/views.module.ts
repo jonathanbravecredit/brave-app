@@ -45,6 +45,9 @@ const views = [
   ComplianceTosComponent,
 ];
 
+// const services = [
+// ]
+
 @NgModule({
   declarations: [...views],
   imports: [
@@ -55,5 +58,6 @@ const views = [
     RouterModule,
   ],
   exports: [...views],
+  providers: [],
 })
 export class ViewsModule {}

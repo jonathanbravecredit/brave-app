@@ -4,6 +4,7 @@ import { OnboardingComponent } from '@layouts/onboarding/onboarding.component';
 import { OnboardingRoutingModule } from '@layouts/onboarding/onboarding.routing';
 import { ViewsModule } from '@views/views.module';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { OnboardingService } from '@layouts/onboarding/onboarding.service';
 
 const components = [OnboardingComponent];
 
@@ -16,5 +17,6 @@ const components = [OnboardingComponent];
     OnboardingRoutingModule,
   ],
   exports: [...components],
+  providers: [OnboardingService],
 })
 export class OnboardingModule {}

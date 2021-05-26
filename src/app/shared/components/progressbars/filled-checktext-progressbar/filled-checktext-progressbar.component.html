@@ -1,13 +1,8 @@
 <div>
-  <div class="p-4">
+  <div class="py-6">
     <div class="flex items-center">
       <ng-container
-        *ngFor="
-          let step of config.steps;
-          index as i;
-          first as isFirst;
-          last as isLast
-        "
+        *ngFor="let step of steps; index as i; first as isFirst; last as isLast"
       >
         <div
           [ngClass]="{

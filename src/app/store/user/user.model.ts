@@ -1,6 +1,4 @@
-import { IUser } from '@shared/interfaces/user.interface';
-
-export class User implements IUser {
+export class User {
   public id: string;
   public signedIn: boolean;
   constructor(id: string, signedIn: boolean = false) {
