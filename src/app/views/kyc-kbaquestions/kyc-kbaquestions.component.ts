@@ -38,7 +38,11 @@ export class KycKbaquestionsComponent implements OnInit {
       // stay on page if still questions remaining
     } else {
       // no more questions and success
+      // call a TU service to validate the questions
+      // if not correction go to verification error
+
       this.router.navigate(['../congratulations'], { relativeTo: this.route });
     }
   }
+
 }

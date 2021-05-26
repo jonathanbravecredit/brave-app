@@ -59,6 +59,7 @@ import { SidebarComponent } from '@shared/components/sidebar/sidebar.component';
 import { FilledOnlytextTabsComponent } from '@shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.component';
 import { OutlineTooltipComponent } from '@shared/components/tooltips/outline-tooltip/outline-tooltip.component';
 import { OutlineTooltipDirective } from '@shared/components/tooltips/outline-tooltip/outline-tooltip.directive';
+import { KbaquestionsFormComponent } from './forms/kbaquestions-form/kbaquestions-form.component';
 
 const components = [
   SignInComponent,
@@ -122,7 +123,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, KbaquestionsFormComponent],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

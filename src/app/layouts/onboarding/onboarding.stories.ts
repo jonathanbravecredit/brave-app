@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OnboardingComponent } from '@layouts/onboarding/onboarding.component';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { ViewsModule } from '@views/views.module';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 export default {
   title: 'app/layouts/onboarding/onboarding-layout',
@@ -17,6 +19,8 @@ export default {
         SharedComponentsModule,
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
+        RouterModule.forRoot([], { useHash: true }),
       ],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),

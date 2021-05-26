@@ -1,0 +1,25 @@
+<!-- Display Container (not part of component) START -->
+<div class="window-wrapper flex justify-center items-center w-full">
+  <!-- Carousel Body -->
+  <div #sliderWindow class="window justify-center overflow-hidden">
+    <div #slider class="slider transition-all">
+      <!-- put the questions here -->
+      <div class="items flex overflow-x-hidden">
+        <div *ngFor="let question of [0, 1, 2, 3]">
+          <p class="item" [ngStyle]="{ 'width.px': itemWidth }">
+            Question number {{ question + 1 }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex justify-center">
+  <!-- put the # / 4 here -->
+  <p class="text-center">{{ tracker.length }} / 4</p>
+</div>
+
+<!-- buttons for testing -->
+<button [disabled]="carouselXAxis === 0" (click)="scroll(25)">left</button>
+
+<button [disabled]="carouselXAxis === -75" (click)="scroll(-25)">right</button>
