@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export interface IOutlineSelectInputConfig {
   size: string;
   label: string;
+  autocomplete: string;
   options: string[];
 }
 
@@ -26,6 +27,7 @@ export class OutlineSelectInputComponent implements OnInit {
   @Input() config: IOutlineSelectInputConfig = {
     size: 'base',
     label: 'Input label',
+    autocomplete: 'off',
     options: ['one', 'two', 'three'],
   };
 

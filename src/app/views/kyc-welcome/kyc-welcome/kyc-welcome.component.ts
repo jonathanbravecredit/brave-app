@@ -19,10 +19,10 @@ export class KycWelcomeComponent implements OnInit {
   }
 
   goToNext(form: FormGroup): void {
-    // need to add form validation before moving forward
-    console.log('forms submit', form);
-    // this.kycService.completeStep(0);
-    // this.router.navigate(['../address'], { relativeTo: this.route });
+    if (form.valid) {
+      this.kycService.completeStep(0);
+      this.router.navigate(['../address'], { relativeTo: this.route });
+    }
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {

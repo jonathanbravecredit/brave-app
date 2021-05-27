@@ -15,25 +15,26 @@ export class OutlineAddressFormComponent extends BaseFormComponent {
     type: 'text',
     label: 'Street Address',
     placeholder: 'Street Address',
-    autocomplete: 'address',
+    autocomplete: 'address-line1',
   };
   public addressTwoConfig: IOutlineInputeConfig = {
     size: 'sm',
     type: 'text',
     label: '',
     placeholder: 'Apt, Suite, Building, etc.',
-    autocomplete: 'address',
+    autocomplete: 'address-line2',
   };
   public cityConfig: IOutlineInputeConfig = {
     size: 'sm',
     type: 'text',
     label: 'City',
     placeholder: 'City',
-    autocomplete: 'address',
+    autocomplete: 'address-level2',
   };
   public stateConfig: IOutlineSelectInputConfig = {
     size: 'sm',
     label: 'State',
+    autocomplete: 'address-level3',
     options: states,
   };
   public zipConfig: IOutlineInputeConfig = {
@@ -41,7 +42,7 @@ export class OutlineAddressFormComponent extends BaseFormComponent {
     type: 'text',
     label: 'Zip',
     placeholder: 'Zip',
-    autocomplete: 'address',
+    autocomplete: 'postal-code',
   };
 
   constructor(fb: FormBuilder) {
