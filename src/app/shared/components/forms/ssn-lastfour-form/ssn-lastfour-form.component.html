@@ -29,15 +29,12 @@
 
   <!-- last four to populate -->
   <span class="flex flex-shrink border-0 rounded bg-coolGray-100">
-    <form
-      [formGroup]="parentFormGroup"
-      class="flex justify-center items-center"
-    >
+    <form [formGroup]="parentForm" class="flex justify-center items-center">
       <!-- Passing parent form to the child component -->
-      <div *ngFor="let x of slots; index as idx" class="flex">
+      <div *ngFor="let x of [0, 1, 2, 3]; index as idx" class="flex">
         <brave-hidden-asterisk-input
           [index]="idx"
-          (onComponentReady)="addChild(childName, $event, x)"
+          (onComponentReady)="addChild(formatChildName(childName, x), $event)"
           (onMoveNext)="moveNext(idx)"
         >
         </brave-hidden-asterisk-input>

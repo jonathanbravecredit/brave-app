@@ -6,12 +6,17 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 
 @Component({
   selector: 'brave-kbaquestions-form',
   templateUrl: './kbaquestions-form.component.html',
+  providers: [{ provide: 'name', useValue: 'kba-form' }],
 })
-export class KbaquestionsFormComponent implements AfterViewInit {
+export class KbaquestionsFormComponent
+  extends BaseFormComponent
+  implements AfterViewInit {
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
@@ -20,7 +25,9 @@ export class KbaquestionsFormComponent implements AfterViewInit {
   carouselXAxis: number = 0;
   tracker: any[] = [0];
 
-  constructor(private renderer: Renderer2) {}
+  constructor(fb: FormBuilder, private renderer: Renderer2) {
+    super(fb, 'kba-form');
+  }
 
   ngAfterViewInit(): void {
     this.setSliderWindowWidth(this.itemWidth);

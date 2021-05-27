@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KnowYouFormComponent } from './know-you-form.component';
+import { OutlineNameFormComponent } from './outline-name-form.component';
 
-describe('KnowYouFormComponent', () => {
-  let component: KnowYouFormComponent;
-  let fixture: ComponentFixture<KnowYouFormComponent>;
+describe('OutlineNameFormComponent', () => {
+  let component: OutlineNameFormComponent;
+  let fixture: ComponentFixture<OutlineNameFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KnowYouFormComponent ]
+      declarations: [ OutlineNameFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KnowYouFormComponent);
+    fixture = TestBed.createComponent(OutlineNameFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,13 +4,13 @@ import { moduleMetadata } from '@storybook/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilledOnlytextButtonComponent } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
-import { KnowYouFormComponent } from '@shared/components/forms/know-you-form/know-you-form.component';
 import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
 import { OutlineInputPipe } from '@shared/components/inputs/outline-input/outline-input.pipe';
+import { OutlineNameFormComponent } from '@shared/components/forms/outline-name-form/outline-name-form.component';
 
 export default {
-  title: 'app/components/forms/know-you-form',
-  component: KnowYouFormComponent,
+  title: 'app/components/forms/outline-name-form',
+  component: OutlineNameFormComponent,
   decorators: [
     moduleMetadata({
       declarations: [
@@ -25,8 +25,8 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<KnowYouFormComponent> = (args: any) => ({
-  component: KnowYouFormComponent,
+const Template: Story<OutlineNameFormComponent> = (args: any) => ({
+  component: OutlineNameFormComponent,
   props: {
     ...args,
   },

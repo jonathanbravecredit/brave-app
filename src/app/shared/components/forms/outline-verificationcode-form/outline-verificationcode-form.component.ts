@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 
 @Component({
   selector: 'brave-outline-verificationcode-form',
   templateUrl: './outline-verificationcode-form.component.html',
+  providers: [{ provide: 'name', useValue: 'code-form' }],
 })
-export class OutlineVerificationcodeFormComponent implements OnInit {
-  public parentForm: FormGroup;
+export class OutlineVerificationcodeFormComponent extends BaseFormComponent {
   public codeConfig: IOutlineInputeConfig = {
     size: 'sm',
     type: 'text',
@@ -16,25 +17,7 @@ export class OutlineVerificationcodeFormComponent implements OnInit {
     autocomplete: 'off',
   };
 
-  /**
-   * @param hideHint flag to show 'required' hint or not
-   */
-  @Input() hideHint: boolean = false;
-
-  constructor(private fb: FormBuilder) {
-    this.parentForm = this.fb.group({
-      name: ['code-form'],
-    }); // simple parent form with name of form
-  }
-
-  ngOnInit(): void {}
-
-  /**
-   * Method to create the parent form from the child inputs
-   * @param childName
-   * @param childGroup
-   */
-  addChild(childName: string, childGroup: FormGroup) {
-    this.parentForm.addControl(childName, childGroup);
+  constructor(fb: FormBuilder) {
+    super(fb, 'code-form');
   }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateofbirthFormComponent } from './dateofbirth-form.component';
+import { SelectDobFormComponent } from './select-dob-form.component';
 
-describe('DateofbirthFormComponent', () => {
-  let component: DateofbirthFormComponent;
-  let fixture: ComponentFixture<DateofbirthFormComponent>;
+describe('SelectDobFormComponent', () => {
+  let component: SelectDobFormComponent;
+  let fixture: ComponentFixture<SelectDobFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DateofbirthFormComponent ]
+      declarations: [ SelectDobFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateofbirthFormComponent);
+    fixture = TestBed.createComponent(SelectDobFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
