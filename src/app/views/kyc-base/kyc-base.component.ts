@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-interface FlatForm {
+export interface FlatForm {
   [key: string]: string;
 }
 

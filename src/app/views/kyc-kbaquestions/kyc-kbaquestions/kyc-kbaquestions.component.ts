@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { KbaquestionsFormComponent } from '@shared/components/forms/kbaquestions-form/kbaquestions-form.component';
 import { KycService } from '@shared/services/kyc/kyc.service';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -38,7 +39,8 @@ export class KycKbaquestionsComponent implements OnInit {
     }
   }
 
-  goToNext(): void {
+  goToNext(form: FormGroup): void {
+    // TODO need to extract the answers and save
     this.answers = [...this.answers, this.questions[0]];
     this.questions = [...this.questions.slice(1)];
     if (this.questions.length) {
@@ -47,5 +49,9 @@ export class KycKbaquestionsComponent implements OnInit {
       this.kycService.completeStep(3);
       this.router.navigate(['../congratulations'], { relativeTo: this.route });
     }
+  }
+
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    console.log('form errors', errors);
   }
 }

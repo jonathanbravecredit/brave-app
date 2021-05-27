@@ -18,6 +18,10 @@ export interface IUserAttributes {
   };
   ssn: {
     lastfour: string;
+    full: string;
+  };
+  phone: {
+    primary: string;
   };
 }
 
