@@ -1,25 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { IUserAttributes } from '@store/user';
-
-interface FlatForm {
-  [key: string]: string;
-}
+import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 
 @Component({
   selector: 'brave-kyc-address',
   templateUrl: './kyc-address.component.html',
 })
-export class KycAddressComponent implements OnInit {
+export class KycAddressComponent extends KycBaseComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     private kycService: KycService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.kycService.activateStep(1);
@@ -27,37 +24,25 @@ export class KycAddressComponent implements OnInit {
 
   goBack(): void {
     this.kycService.inactivateStep(1);
-    this.location.back();
+    this.router.navigate(['../name'], { relativeTo: this.route });
   }
 
   goToNext(form: FormGroup): void {
     // need to add form validation before moving forward
-    this.kycService.updateUserAttributes(this.formatAttributes(form));
-    this.kycService.completeStep(1);
-    this.router.navigate(['../identity'], { relativeTo: this.route });
+    if (form.valid) {
+      const attrs = {
+        address: {
+          ...this.formatAttributes(form, address),
+        },
+      } as IUserAttributes;
+      this.kycService.updateUserAttributes(attrs);
+      this.kycService.completeStep(1);
+      this.router.navigate(['../identity'], { relativeTo: this.route });
+    }
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
     console.log('form errors', errors);
-  }
-
-  formatAttributes(form: FormGroup): IUserAttributes {
-    const flatForm: Record<string, any> = this.flattenAttributes(form.value);
-    return {
-      address: {
-        ...flatForm,
-      },
-    } as IUserAttributes;
-  }
-
-  flattenAttributes(formValues: any): FlatForm {
-    let values: FlatForm = {};
-    Object.keys(formValues).forEach((key) => {
-      if (address[key]) {
-        values[key] = formValues[key].input;
-      }
-    });
-    return values;
   }
 }
 
