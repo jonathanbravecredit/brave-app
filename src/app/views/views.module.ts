@@ -4,13 +4,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { SigninComponent } from './signin/signin.component';
+import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
+import { SignupComponent } from '@views/signup-temp/signup/signup.component';
+import { SignupPureComponent } from './signup-temp/signup-pure/signup-pure.component';
 import { SignupErrorValidationComponent } from '@views/signup-error-validation/signup-error-validation.component';
 import { SignupErrorComponent } from '@views/signup-error/signup-error.component';
 import { SignupKnowyouComponent } from '@views/signup-knowyou/signup-knowyou.component';
 import { SignupThankyouComponent } from '@views/signup-thankyou/signup-thankyou.component';
-import { SignupComponent } from '@views/signup/signup.component';
 import { SignupResendComponent } from '@views/signup-resend/signup-resend.component';
-import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
 import { KycBaseComponent } from './kyc-base/kyc-base.component';
 import { KycAddressComponent } from '@views/kyc-address/kyc-address/kyc-address.component';
 import { KycAddressPureComponent } from '@views/kyc-address/kyc-address-pure/kyc-address-pure.component';
@@ -35,6 +36,7 @@ import { ComplianceTosComponent } from './compliance-tos/compliance-tos.componen
 
 const views = [
   SignupComponent,
+  SignupPureComponent,
   SignupErrorComponent,
   SignupErrorValidationComponent,
   SignupKnowyouComponent,
