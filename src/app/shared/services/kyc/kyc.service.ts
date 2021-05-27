@@ -1,10 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { Store } from '@ngxs/store';
 import { Onboarding, OnboardingStep } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import * as OnboardingAction from '@store/onboarding';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import * as UserAction from '@store/user';
+import { IUserAttributes, User, UserSelectors } from '@store/user';
 
 @Injectable({
   providedIn: 'root',
@@ -16,16 +18,27 @@ export class KycService implements OnDestroy {
   );
   public onboardingSub$: Subscription;
 
+  user: User = new User();
+  user$: Observable<User> = this.store.select(UserSelectors.getUser);
+  userSub$: Subscription;
+
   constructor(private store: Store) {
     this.onboardingSub$ = this.onboarding$
       .pipe(filter((onboarding: Onboarding) => onboarding !== undefined))
       .subscribe((onboarding: Onboarding) => {
         this.onboarding = onboarding;
       });
+
+    this.userSub$ = this.user$
+      .pipe(filter((user: User) => user !== undefined))
+      .subscribe((user: User) => {
+        this.user = user;
+      });
   }
 
   ngOnDestroy(): void {
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
+    if (this.userSub$) this.userSub$.unsubscribe();
   }
 
   /**
@@ -111,5 +124,17 @@ export class KycService implements OnDestroy {
     } else {
       return;
     }
+  }
+
+  /**
+   * Takes the attributes and updates the state with them
+   * @param {IUserAttributes} attributes
+   */
+  updateUserAttributes(attrs: IUserAttributes): void {
+    const user: User = {
+      ...this.user,
+      attributes: { ...this.user.attributes, ...attrs },
+    };
+    this.store.dispatch(new UserAction.Edit(user));
   }
 }

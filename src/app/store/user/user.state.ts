@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import * as UserActions from './user.actions';
-import { User } from '@store/user/user.model';
+import { IUserAttributes, User } from '@store/user/user.model';
 
 export class UserStateModel {
   id!: string | null;
+  attributes!: IUserAttributes | null;
   signedIn!: boolean;
 }
 
@@ -12,6 +13,7 @@ export class UserStateModel {
   name: 'user',
   defaults: {
     id: null,
+    attributes: null,
     signedIn: false,
   },
 })

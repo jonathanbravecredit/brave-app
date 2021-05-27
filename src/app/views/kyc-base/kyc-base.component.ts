@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'brave-kyc-base',
