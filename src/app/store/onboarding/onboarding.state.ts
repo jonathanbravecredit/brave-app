@@ -1,18 +1,18 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import * as OnboardingActions from './onboarding.actions';
-import { Onboarding } from '@store/onboarding/onboarding.model';
+import { Onboarding, OnboardingStep } from '@store/onboarding/onboarding.model';
 
 export class OnboardingStateModel {
-  onboarding!: Onboarding;
-  loaded!: boolean;
+  started!: boolean;
+  steps!: OnboardingStep[];
 }
 
 @State<OnboardingStateModel>({
   name: 'onboarding',
   defaults: {
-    onboarding: new Onboarding(),
-    loaded: false,
+    started: false,
+    steps: [],
   },
 })
 @Injectable()
@@ -24,11 +24,8 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     { payload }: OnboardingActions.Add
   ): void {
-    const state = ctx.getState();
-    const onboarding = payload;
-    ctx.setState({
-      ...state,
-      onboarding,
+    ctx.patchState({
+      ...payload,
     });
   }
 
@@ -37,11 +34,8 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     { payload }: OnboardingActions.Edit
   ): void {
-    const onboarding = {
-      ...payload,
-    };
     ctx.patchState({
-      onboarding,
+      ...payload,
     });
   }
 
@@ -50,11 +44,9 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     {}: OnboardingActions.Delete
   ): void {
-    const state = ctx.getState();
-    const onboarding = new Onboarding();
-    ctx.setState({
-      ...state,
-      onboarding,
+    const payload = new Onboarding();
+    ctx.patchState({
+      ...payload,
     });
   }
 }

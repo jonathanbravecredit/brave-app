@@ -2,18 +2,21 @@ import { State, Action, StateContext } from '@ngxs/store';
 import * as AppDataActions from './app-data.actions';
 import { Injectable } from '@angular/core';
 import { AppData } from '@store/app-data/app-data.model';
+import { OnboardingState } from '@store/onboarding';
+import { UserState } from '@store/user';
 
 export class AppDataStateModel {
-  appData!: AppData;
+  version!: string;
   loaded!: boolean;
 }
 
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
-    appData: new AppData(),
+    version: 'v1',
     loaded: false,
   },
+  children: [OnboardingState, UserState],
 })
 @Injectable()
 export class AppDataState {
@@ -24,11 +27,8 @@ export class AppDataState {
     ctx: StateContext<AppDataStateModel>,
     { payload }: AppDataActions.Add
   ): void {
-    const state = ctx.getState();
-    const appData = payload;
-    ctx.setState({
-      ...state,
-      appData,
+    ctx.patchState({
+      ...payload,
     });
   }
 
@@ -37,13 +37,8 @@ export class AppDataState {
     ctx: StateContext<AppDataStateModel>,
     { payload }: AppDataActions.Edit
   ): void {
-    const state = ctx.getState();
-    const appData = {
-      ...state,
-      ...payload,
-    };
     ctx.patchState({
-      appData,
+      ...payload,
     });
   }
 
@@ -53,10 +48,10 @@ export class AppDataState {
     {}: AppDataActions.Delete
   ): void {
     const state = ctx.getState();
-    const appData = new AppData();
+    const payload = new AppData();
     ctx.setState({
       ...state,
-      appData,
+      ...payload,
     });
   }
 }

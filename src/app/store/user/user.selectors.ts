@@ -3,12 +3,12 @@ import { UserState, UserStateModel } from '@store/user/user.state';
 
 export class OnboardingSelectors {
   @Selector([UserState])
-  static getUser(state: UserStateModel) {
-    return state.user;
+  static getUserId(state: UserStateModel): string | null {
+    return state.id;
   }
 
   @Selector([UserState])
-  static loaded(state: UserStateModel) {
-    return state.loaded;
+  static signedIn(state: UserStateModel): boolean {
+    return state.signedIn;
   }
 }

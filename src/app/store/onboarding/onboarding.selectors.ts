@@ -1,13 +1,13 @@
 import { Selector } from '@ngxs/store';
+import { Onboarding } from '@store/onboarding/onboarding.model';
 import {
-  Onboarding,
   OnboardingState,
   OnboardingStateModel,
-} from '@store/onboarding';
+} from '@store/onboarding/onboarding.state';
 
 export class OnboardingSelectors {
   @Selector([OnboardingState])
   static getOnboarding(state: OnboardingStateModel): Onboarding {
-    return state.onboarding;
+    return state;
   }
 }

@@ -8,6 +8,6 @@ import { AppData } from '@store/app-data/app-data.model';
 export class AppDataSelectors {
   @Selector([AppDataState])
   static getAppData(state: AppDataStateModel): AppData {
-    return state.appData;
+    return state;
   }
 }
