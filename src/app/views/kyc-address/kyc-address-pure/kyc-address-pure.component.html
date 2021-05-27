@@ -1,0 +1,44 @@
+<div class="flex content-center items-center justify-center h-full">
+  <div class="w-full max-w-xs">
+    <div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
+      <!-- header -->
+      <div class="py-3">
+        <h4 class="brave-h4 text-indigo-800">Your Address</h4>
+      </div>
+
+      <!-- subheader -->
+      <div class="py-3">
+        <div class="text-base">
+          <p class="mb-6 text-blueGray-600">
+            What is your most recent home address?
+          </p>
+        </div>
+      </div>
+
+      <!-- form -->
+      <div class="py-3 pt-0">
+        <brave-outline-address-form></brave-outline-address-form>
+      </div>
+
+      <div class="mt-5">
+        <div class="flex justify-between items-center">
+          <brave-links-onlytext-button
+            (click)="backClick.emit()"
+            [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+          >
+            <span class="flex items-center">
+              <span class="material-icons px-1">arrow_back</span>&nbsp;Back
+            </span>
+          </brave-links-onlytext-button>
+          <brave-filled-onlytext-button (click)="nextClick.emit()"
+            ><span class="flex items-center"
+              >Continue<span class="material-icons px-1"
+                >arrow_forward</span
+              ></span
+            ></brave-filled-onlytext-button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
