@@ -60,8 +60,11 @@ import { FilledOnlytextTabsComponent } from '@shared/components/tabs/filled-only
 import { OutlineTooltipComponent } from '@shared/components/tooltips/outline-tooltip/outline-tooltip.component';
 import { OutlineTooltipDirective } from '@shared/components/tooltips/outline-tooltip/outline-tooltip.directive';
 import { KbaquestionsFormComponent } from './forms/kbaquestions-form/kbaquestions-form.component';
+import { OutlineNamedobFormComponent } from './forms/outline-namedob-form/outline-namedob-form.component';
+import { BaseFormComponent } from './forms/base-form/base-form.component';
 
 const components = [
+  BaseFormComponent,
   SignInComponent,
   SignUpComponent,
   FilledOnlytextButtonComponent,
@@ -107,6 +110,7 @@ const components = [
   FilledOnlytextTabsComponent,
   OutlineTooltipComponent,
   KbaquestionsFormComponent,
+  OutlineNamedobFormComponent,
 ];
 
 // component specific pipes only

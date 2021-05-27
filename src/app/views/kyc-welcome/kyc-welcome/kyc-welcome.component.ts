@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 
@@ -17,9 +18,14 @@ export class KycWelcomeComponent implements OnInit {
     this.kycService.activateStep(0);
   }
 
-  goToNext(): void {
+  goToNext(form: FormGroup): void {
     // need to add form validation before moving forward
-    this.kycService.completeStep(0);
-    this.router.navigate(['../address'], { relativeTo: this.route });
+    console.log('forms submit', form);
+    // this.kycService.completeStep(0);
+    // this.router.navigate(['../address'], { relativeTo: this.route });
+  }
+
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    console.log('form errors', errors);
   }
 }

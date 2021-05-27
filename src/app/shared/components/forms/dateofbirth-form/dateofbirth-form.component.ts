@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder, ValidationErrors } from '@angular/forms';
 import { IOutlineSelectInputConfig } from '@shared/components/inputs/outline-select-input/outline-select-input.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-dateofbirth-form',
   templateUrl: './dateofbirth-form.component.html',
 })
 export class DateofbirthFormComponent implements OnInit {
+  @Output() onChanges: EventEmitter<any> = new EventEmitter();
+  @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter();
+  @Output()
+  onSubmitError: EventEmitter<ValidationErrors | null> = new EventEmitter();
+
+  changesSub$: Subscription;
   parentForm: FormGroup;
   monthConfig: IOutlineSelectInputConfig = {
     size: 'sm',
@@ -28,9 +35,21 @@ export class DateofbirthFormComponent implements OnInit {
     this.parentForm = fb.group({
       name: ['dateofbirth-form'],
     }); // simple parent form with name of form
+    this.changesSub$ = this.parentForm.valueChanges.subscribe((values) => {
+      this.onChanges.emit(values);
+    });
   }
 
   ngOnInit(): void {}
+  ngOnDestroy(): void {
+    if (this.changesSub$) this.changesSub$.unsubscribe();
+  }
+
+  submitForm(): void {
+    this.parentForm.valid
+      ? this.onSubmit.emit(this.parentForm)
+      : this.onSubmitError.emit(this.parentForm.errors);
+  }
 
   addChild(childName: string, childGroup: FormGroup) {
     this.parentForm.addControl(childName, childGroup);

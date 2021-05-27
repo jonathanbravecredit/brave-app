@@ -1,3 +1,6 @@
 <div class="container mx-auto max-w-xs h-full">
-  <brave-kyc-welcome-pure (nextClick)="goToNext()"></brave-kyc-welcome-pure>
+  <brave-kyc-welcome-pure
+    (formSubmit)="goToNext($event)"
+    (formError)="handleError($event)"
+  ></brave-kyc-welcome-pure>
 </div>
