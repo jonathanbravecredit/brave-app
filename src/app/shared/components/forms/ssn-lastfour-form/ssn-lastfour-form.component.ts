@@ -16,7 +16,6 @@ export class SsnLastfourFormComponent extends BaseFormComponent {
 
   constructor(fb: FormBuilder) {
     super(fb, 'lastfour-form');
-    this;
   }
 
   formatChildName(childName: string, digit: number): string {

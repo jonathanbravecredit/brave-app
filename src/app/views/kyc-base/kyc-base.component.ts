@@ -20,15 +20,23 @@ export class KycBaseComponent {
 
   constructor() {}
 
-  formatAttributes(form: FormGroup, mapObj: Record<string, any>): FlatForm {
-    return this.flattenAttributes(form.value, mapObj);
+  formatAttributes(
+    form: FormGroup,
+    mapObj: Record<string, any>,
+    inputType: string = 'input'
+  ): FlatForm {
+    return this.flattenAttributes(form.value, mapObj, inputType);
   }
 
-  flattenAttributes(formValues: any, mapObj: Record<string, any>): FlatForm {
+  flattenAttributes(
+    formValues: any,
+    mapObj: Record<string, any>,
+    inputType: string
+  ): FlatForm {
     let values: FlatForm = {};
     Object.keys(formValues).forEach((key) => {
       if (mapObj[key]) {
-        values[key] = formValues[key].input;
+        values[key] = formValues[key][`${inputType}`];
       }
     });
     return values;

@@ -44,7 +44,11 @@
 
       <!-- form -->
       <div class="py-3 pt-0">
-        <brave-ssn-lastfour-form></brave-ssn-lastfour-form>
+        <brave-ssn-lastfour-form
+          #form
+          (onSubmit)="formSubmit.emit($event)"
+          (onSubmitError)="formError.emit($event)"
+        ></brave-ssn-lastfour-form>
       </div>
 
       <div class="mt-5">
@@ -57,7 +61,7 @@
               <span class="material-icons px-1">arrow_back</span>&nbsp;Back
             </span>
           </brave-links-onlytext-button>
-          <brave-filled-onlytext-button (click)="nextClick.emit()"
+          <brave-filled-onlytext-button (click)="form.submitForm()"
             ><span class="flex items-center"
               >Continue<span class="material-icons px-1"
                 >arrow_forward</span
