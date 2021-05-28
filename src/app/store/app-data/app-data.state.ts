@@ -8,6 +8,7 @@ import { UserState } from '@store/user';
 export class AppDataStateModel {
   version!: string;
   loaded!: boolean;
+  id!: string;
 }
 
 @State<AppDataStateModel>({
@@ -15,6 +16,7 @@ export class AppDataStateModel {
   defaults: {
     version: 'v1',
     loaded: false,
+    id: '',
   },
   children: [OnboardingState, UserState],
 })

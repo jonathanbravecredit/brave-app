@@ -14,18 +14,3 @@ export class Delete {
   static readonly type = '[User] Delete';
   constructor() {}
 }
-
-// export class AddAttributes {
-//   static readonly type = '[User] Add Attributes';
-//   constructor(public payload: IUserAttributes) {}
-// }
-
-// export class EditAttributes {
-//   static readonly type = '[User] Edit Attributes';
-//   constructor(public payload: IUserAttributes | Partial<IUserAttributes>) {}
-// }
-
-// export class DeleteAttributes {
-//   static readonly type = '[User] Delete Attributes';
-//   constructor() {}
-// }

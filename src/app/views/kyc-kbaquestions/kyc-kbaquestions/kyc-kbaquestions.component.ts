@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { KbaquestionsFormComponent } from '@shared/components/forms/kbaquestions-form/kbaquestions-form.component';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -20,7 +19,6 @@ export class KycKbaquestionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     private kycService: KycService
   ) {}
 
@@ -34,7 +32,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.kba?.scroll(25);
     } else {
       this.kycService.inactivateStep(3);
-      this.location.back();
+      this.router.navigate(['../identity'], { relativeTo: this.route });
       return;
     }
   }

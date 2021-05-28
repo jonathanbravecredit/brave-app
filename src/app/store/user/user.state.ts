@@ -6,7 +6,6 @@ import { IUserAttributes, User } from '@store/user/user.model';
 export class UserStateModel {
   id!: string | null;
   attributes!: IUserAttributes | null;
-  signedIn!: boolean;
 }
 
 @State<UserStateModel>({
@@ -14,7 +13,6 @@ export class UserStateModel {
   defaults: {
     id: null,
     attributes: null,
-    signedIn: false,
   },
 })
 @Injectable()

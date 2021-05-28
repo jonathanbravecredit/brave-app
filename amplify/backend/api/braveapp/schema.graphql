@@ -1,4 +1,39 @@
 type AppData @model {
   id: ID!
-  version: String!
+  user: User!
+}
+type User {
+  id: ID!
+  userAttributes: UserAttributes
+  onboarding: Onboarding
+}
+type Name {
+  first: String!
+  middle: String
+  last: String!
+}
+type UserAttributes {
+  name: Name
+  address: Address
+  phone: Phone
+  dob: Dob
+}
+type Address {
+  addressOne: String!
+  addressTwo: String
+  city: String!
+  state: String!
+  zip: String!
+}
+type Phone {
+  primary: String!
+}
+type Dob {
+  year: String!
+  month: String!
+  day: String!
+}
+type Onboarding {
+  lastActive: Int!
+  lastComplete: Int!
 }

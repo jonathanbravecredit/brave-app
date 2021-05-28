@@ -27,7 +27,6 @@ export interface IUserAttributes {
 
 export class User {
   public id: string | null = null;
-  public signedIn: boolean = false;
   public attributes: IUserAttributes | null = null;
   constructor() {}
 }
