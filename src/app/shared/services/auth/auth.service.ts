@@ -39,20 +39,21 @@ export class AuthService {
   constructor(private store: Store, private api: APIService) {
     Hub.listen('auth', (data) => {
       const { channel, payload } = data;
-      console.log('auth change', channel, payload);
+      // console.log('auth change', channel, payload);
       switch (payload.event) {
         case 'signIn':
           // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
-          let user: CognitoUser = payload.data;
-          let appData = new AppData();
-          this.getAuthCredentials().then((creds: ICredentials | null) => {
-            console.log('creds in hub', creds);
-            if (creds) {
-              this.seedAppData(creds);
-            }
-          });
-          this.store.dispatch(new AppDataActions.Add(appData));
+          this.getAuthCredentials()
+            .then((creds: ICredentials | null) => {
+              if (creds) {
+                this.seedAppData(creds); //possibly update to async
+              }
+              return creds;
+            })
+            .then((creds) => {
+              // need to pull down the state
+            });
 
           break;
         case 'signOut':
@@ -197,36 +198,3 @@ export class AuthService {
       .catch((err) => console.log(err));
   }
 }
-
-// const creds: ICredentials | null = await this.auth.getAuthCredentials();
-// if (creds) {
-//   const input: CreateAppDataInput = {
-//     user: {
-//       id: creds.identityId,
-//       onboarding: {
-//         lastActive: -1,
-//         lastComplete: -1,
-//       },
-//     },
-//   };
-//   this.api
-//     .CreateAppData(input)
-//     .then((value) => null)
-//     .catch((err) => console.log(err));
-//   this.router.navigate(['../thankyou'], { relativeTo: this.route });
-
-// .then((creds: ICredentials) => {
-//   const input: CreateAppDataInput = {
-//     user: {
-//       id: creds.identityId,
-//       onboarding: {
-//         lastActive: -1,
-//         lastComplete: -1,
-//       },
-//     },
-//   };
-//   this.api
-//     .CreateAppData(input)
-//     .then((value) => null)
-//     .catch((err) => console.log(err));
-// });
