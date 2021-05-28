@@ -1,6 +1,7 @@
 type AppData @model {
   id: ID!
   user: User!
+  agencies: Agencies!
 }
 type User {
   id: ID!
@@ -36,4 +37,18 @@ type Dob {
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!
+}
+type Agencies {
+  transunion: Transunion
+  equifax: Equifax
+  experian: Experian
+}
+type Transunion {
+  authenticated: Boolean
+}
+type Equifax {
+  authenticated: Boolean
+}
+type Experian {
+  authenticated: Boolean
 }

@@ -2,11 +2,20 @@ import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { Subject, Observable } from 'rxjs';
-import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
+import {
+  CognitoUser,
+  CognitoUserSession,
+  ISignUpResult,
+} from 'amazon-cognito-identity-js';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppData } from '@store/app-data/app-data.model';
 import { User } from '@store/user/user.model';
+import {
+  APIService,
+  CreateAppDataInput,
+  ModelAppDataConditionInput,
+} from '@shared/services/aws/api.service';
 
 export interface NewUser {
   username: string;
@@ -27,16 +36,17 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private api: APIService) {
     Hub.listen('auth', (data) => {
       const { channel, payload } = data;
-      console.log('auth change', channel, payload);
+      // console.log('auth change', channel, payload);
       switch (payload.event) {
         case 'signIn':
+          // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
-          let user: CognitoUser = payload.data;
-          let appData = new AppData();
-          this.store.dispatch(new AppDataActions.Add(appData));
+          this.getAuthCredentials().then((creds: ICredentials | null) => {
+            if (creds) this.seedAppData(creds); //possibly update to async
+          });
           break;
         case 'signOut':
           // handle sign out
@@ -50,7 +60,7 @@ export class AuthService {
 
   /**
    * Cognito sign up method
-   * @param user
+   * @param {NewUser} user
    * @returns
    */
   signUp(user: NewUser): Promise<ISignUpResult> {
@@ -65,8 +75,8 @@ export class AuthService {
 
   /**
    * Cognito sign in method
-   * @param username
-   * @param password
+   * @param {string} username
+   * @param {string} password
    * @returns
    */
   signIn(username: string, password: string): Promise<CognitoUser | any> {
@@ -89,7 +99,7 @@ export class AuthService {
 
   /**
    * Social signin (supports facebook and google)
-   * @param provider
+   * @param {CognitoHostedUIIdentityProvider} provider
    * @returns
    */
   socialSignIn(
@@ -100,6 +110,11 @@ export class AuthService {
     });
   }
 
+  /**
+   *
+   * @param {string} email
+   * @returns
+   */
   resendSignUp(email: string): Promise<string> | undefined {
     return email ? Auth.resendSignUp(email) : undefined;
   }
@@ -114,6 +129,35 @@ export class AuthService {
       : undefined;
   }
 
+  /**
+   *
+   * @returns
+   */
+  getCurrentAuthenticatedUser(): Promise<any> {
+    return Auth.currentAuthenticatedUser();
+  }
+
+  /**
+   *
+   * @returns
+   */
+  getAuthState(): Observable<CognitoUser | any> {
+    return this.authState$;
+  }
+
+  /**
+   *
+   * @returns
+   */
+  refreshSession(): Promise<CognitoUserSession> {
+    return Auth.currentSession();
+  }
+
+  /**
+   *
+   * @param {CognitoUser} user
+   * @returns
+   */
   async refreshAuthState(user?: CognitoUser): Promise<void> {
     if (user) {
       this.authState.next(user);
@@ -128,6 +172,9 @@ export class AuthService {
     }
   }
 
+  /**
+   *
+   */
   async getAuthTokens(): Promise<string> {
     try {
       const user: CognitoUser = await Auth.currentAuthenticatedUser();
@@ -138,7 +185,36 @@ export class AuthService {
     }
   }
 
-  getAuthState(): Observable<CognitoUser | any> {
-    return this.authState$;
+  /**
+   *
+   */
+  async getAuthCredentials(): Promise<ICredentials | null> {
+    try {
+      const creds: ICredentials = await Auth.currentUserCredentials();
+      return creds;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /**
+   *
+   * @param {ICredentials} creds
+   */
+  async seedAppData(creds: ICredentials): Promise<void> {
+    const input: CreateAppDataInput = {
+      id: creds.identityId,
+      user: {
+        id: creds.identityId,
+        onboarding: {
+          lastActive: 0,
+          lastComplete: -1,
+        },
+      },
+    };
+    this.api
+      .CreateAppData(input)
+      .then((value) => null)
+      .catch((err) => console.log(err));
   }
 }
