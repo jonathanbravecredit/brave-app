@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SignupPureComponent } from '@views/signup-temp/signup-pure/signup-pure.component';
+import { SignupPureComponent } from '@views/signup/signup-pure/signup-pure.component';
 
 export default {
   title: 'app/views/onboarding/signup',

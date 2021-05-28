@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { ICredentials } from '@aws-amplify/core';
 
 @Component({
   selector: 'brave-signup',
@@ -48,7 +49,9 @@ export class SignupComponent implements OnInit {
    */
   signUpWithGoogle(): void {
     let provider = CognitoHostedUIIdentityProvider.Google;
-    this.auth.socialSignIn(provider);
+    this.auth.socialSignIn(provider).then((creds: ICredentials) => {
+      // write user ID to DB.
+    });
   }
 
   /**

@@ -9,20 +9,133 @@ export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
 }
 
-export type CreateBlogInput = {
+export type CreateAppDataInput = {
   id?: string | null;
-  name: string;
-  _version?: number | null;
+  user: UserInput;
 };
 
-export type ModelBlogConditionInput = {
-  name?: ModelStringInput | null;
-  and?: Array<ModelBlogConditionInput | null> | null;
-  or?: Array<ModelBlogConditionInput | null> | null;
-  not?: ModelBlogConditionInput | null;
+export type UserInput = {
+  id: string;
+  userAttributes?: UserAttributesInput | null;
+  onboarding?: OnboardingInput | null;
 };
 
-export type ModelStringInput = {
+export type UserAttributesInput = {
+  name?: NameInput | null;
+  address?: AddressInput | null;
+  phone?: PhoneInput | null;
+  dob?: DobInput | null;
+};
+
+export type NameInput = {
+  first: string;
+  middle?: string | null;
+  last: string;
+};
+
+export type AddressInput = {
+  addressOne: string;
+  addressTwo?: string | null;
+  city: string;
+  state: string;
+  zip: string;
+};
+
+export type PhoneInput = {
+  primary: string;
+};
+
+export type DobInput = {
+  year: string;
+  month: string;
+  day: string;
+};
+
+export type OnboardingInput = {
+  lastActive: number;
+  lastComplete: number;
+};
+
+export type ModelAppDataConditionInput = {
+  and?: Array<ModelAppDataConditionInput | null> | null;
+  or?: Array<ModelAppDataConditionInput | null> | null;
+  not?: ModelAppDataConditionInput | null;
+};
+
+export type AppData = {
+  __typename: "AppData";
+  id?: string;
+  user?: User;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type User = {
+  __typename: "User";
+  id?: string;
+  userAttributes?: UserAttributes;
+  onboarding?: Onboarding;
+};
+
+export type UserAttributes = {
+  __typename: "UserAttributes";
+  name?: Name;
+  address?: Address;
+  phone?: Phone;
+  dob?: Dob;
+};
+
+export type Name = {
+  __typename: "Name";
+  first?: string;
+  middle?: string | null;
+  last?: string;
+};
+
+export type Address = {
+  __typename: "Address";
+  addressOne?: string;
+  addressTwo?: string | null;
+  city?: string;
+  state?: string;
+  zip?: string;
+};
+
+export type Phone = {
+  __typename: "Phone";
+  primary?: string;
+};
+
+export type Dob = {
+  __typename: "Dob";
+  year?: string;
+  month?: string;
+  day?: string;
+};
+
+export type Onboarding = {
+  __typename: "Onboarding";
+  lastActive?: number;
+  lastComplete?: number;
+};
+
+export type UpdateAppDataInput = {
+  id: string;
+  user?: UserInput | null;
+};
+
+export type DeleteAppDataInput = {
+  id: string;
+};
+
+export type ModelAppDataFilterInput = {
+  id?: ModelIDInput | null;
+  and?: Array<ModelAppDataFilterInput | null> | null;
+  or?: Array<ModelAppDataFilterInput | null> | null;
+  not?: ModelAppDataFilterInput | null;
+};
+
+export type ModelIDInput = {
   ne?: string | null;
   eq?: string | null;
   le?: string | null;
@@ -61,1087 +174,356 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
-export type Blog = {
-  __typename: "Blog";
-  id?: string;
-  name?: string;
-  posts?: ModelPostConnection;
-  _version?: number;
-  _deleted?: boolean | null;
-  _lastChangedAt?: number;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection";
-  items?: Array<Post | null> | null;
+export type ModelAppDataConnection = {
+  __typename: "ModelAppDataConnection";
+  items?: Array<AppData | null> | null;
   nextToken?: string | null;
-  startedAt?: number | null;
 };
 
-export type Post = {
-  __typename: "Post";
-  id?: string;
-  title?: string;
-  blogID?: string;
-  blog?: Blog;
-  comments?: ModelCommentConnection;
-  _version?: number;
-  _deleted?: boolean | null;
-  _lastChangedAt?: number;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type ModelCommentConnection = {
-  __typename: "ModelCommentConnection";
-  items?: Array<Comment | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type Comment = {
-  __typename: "Comment";
-  id?: string;
-  postID?: string;
-  post?: Post;
-  content?: string;
-  _version?: number;
-  _deleted?: boolean | null;
-  _lastChangedAt?: number;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type UpdateBlogInput = {
+export type CreateAppDataMutation = {
+  __typename: "AppData";
   id: string;
-  name?: string | null;
-  _version?: number | null;
-};
-
-export type DeleteBlogInput = {
-  id?: string | null;
-  _version?: number | null;
-};
-
-export type CreatePostInput = {
-  id?: string | null;
-  title: string;
-  blogID: string;
-  _version?: number | null;
-};
-
-export type ModelPostConditionInput = {
-  title?: ModelStringInput | null;
-  blogID?: ModelIDInput | null;
-  and?: Array<ModelPostConditionInput | null> | null;
-  or?: Array<ModelPostConditionInput | null> | null;
-  not?: ModelPostConditionInput | null;
-};
-
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
-export type UpdatePostInput = {
-  id: string;
-  title?: string | null;
-  blogID?: string | null;
-  _version?: number | null;
-};
-
-export type DeletePostInput = {
-  id?: string | null;
-  _version?: number | null;
-};
-
-export type CreateCommentInput = {
-  id?: string | null;
-  postID: string;
-  content: string;
-  _version?: number | null;
-};
-
-export type ModelCommentConditionInput = {
-  postID?: ModelIDInput | null;
-  content?: ModelStringInput | null;
-  and?: Array<ModelCommentConditionInput | null> | null;
-  or?: Array<ModelCommentConditionInput | null> | null;
-  not?: ModelCommentConditionInput | null;
-};
-
-export type UpdateCommentInput = {
-  id: string;
-  postID?: string | null;
-  content?: string | null;
-  _version?: number | null;
-};
-
-export type DeleteCommentInput = {
-  id?: string | null;
-  _version?: number | null;
-};
-
-export type ModelBlogFilterInput = {
-  id?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  and?: Array<ModelBlogFilterInput | null> | null;
-  or?: Array<ModelBlogFilterInput | null> | null;
-  not?: ModelBlogFilterInput | null;
-};
-
-export type ModelBlogConnection = {
-  __typename: "ModelBlogConnection";
-  items?: Array<Blog | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type ModelPostFilterInput = {
-  id?: ModelIDInput | null;
-  title?: ModelStringInput | null;
-  blogID?: ModelIDInput | null;
-  and?: Array<ModelPostFilterInput | null> | null;
-  or?: Array<ModelPostFilterInput | null> | null;
-  not?: ModelPostFilterInput | null;
-};
-
-export type ModelCommentFilterInput = {
-  id?: ModelIDInput | null;
-  postID?: ModelIDInput | null;
-  content?: ModelStringInput | null;
-  and?: Array<ModelCommentFilterInput | null> | null;
-  or?: Array<ModelCommentFilterInput | null> | null;
-  not?: ModelCommentFilterInput | null;
-};
-
-export type CreateBlogMutation = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateBlogMutation = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteBlogMutation = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreatePostMutation = {
-  __typename: "Post";
-  id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
+  user: {
+    __typename: "User";
     id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
     } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
 
-export type UpdatePostMutation = {
-  __typename: "Post";
+export type UpdateAppDataMutation = {
+  __typename: "AppData";
   id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
+  user: {
+    __typename: "User";
     id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
     } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
 
-export type DeletePostMutation = {
-  __typename: "Post";
+export type DeleteAppDataMutation = {
+  __typename: "AppData";
   id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
+  user: {
+    __typename: "User";
     id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
     } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
 
-export type CreateCommentMutation = {
-  __typename: "Comment";
+export type GetAppDataQuery = {
+  __typename: "AppData";
   id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
+  user: {
+    __typename: "User";
     id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
     } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
     } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+  };
   createdAt: string;
   updatedAt: string;
 };
 
-export type UpdateCommentMutation = {
-  __typename: "Comment";
-  id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteCommentMutation = {
-  __typename: "Comment";
-  id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type SyncBlogsQuery = {
-  __typename: "ModelBlogConnection";
+export type ListAppDatasQuery = {
+  __typename: "ModelAppDataConnection";
   items?: Array<{
-    __typename: "Blog";
+    __typename: "AppData";
     id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
+    user: {
+      __typename: "User";
+      id: string;
+      userAttributes?: {
+        __typename: "UserAttributes";
+        name?: {
+          __typename: "Name";
+          first: string;
+          middle?: string | null;
+          last: string;
+        } | null;
+        address?: {
+          __typename: "Address";
+          addressOne: string;
+          addressTwo?: string | null;
+          city: string;
+          state: string;
+          zip: string;
+        } | null;
+        phone?: {
+          __typename: "Phone";
+          primary: string;
+        } | null;
+        dob?: {
+          __typename: "Dob";
+          year: string;
+          month: string;
+          day: string;
+        } | null;
+      } | null;
+      onboarding?: {
+        __typename: "Onboarding";
+        lastActive: number;
+        lastComplete: number;
+      } | null;
+    };
     createdAt: string;
     updatedAt: string;
   } | null> | null;
   nextToken?: string | null;
-  startedAt?: number | null;
 };
 
-export type GetBlogQuery = {
-  __typename: "Blog";
+export type OnCreateAppDataSubscription = {
+  __typename: "AppData";
   id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+  user: {
+    __typename: "User";
+    id: string;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
+    } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
 
-export type ListBlogsQuery = {
-  __typename: "ModelBlogConnection";
-  items?: Array<{
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type SyncPostsQuery = {
-  __typename: "ModelPostConnection";
-  items?: Array<{
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type GetPostQuery = {
-  __typename: "Post";
+export type OnUpdateAppDataSubscription = {
+  __typename: "AppData";
   id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
+  user: {
+    __typename: "User";
     id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
     } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
 
-export type ListPostsQuery = {
-  __typename: "ModelPostConnection";
-  items?: Array<{
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type SyncCommentsQuery = {
-  __typename: "ModelCommentConnection";
-  items?: Array<{
-    __typename: "Comment";
-    id: string;
-    postID: string;
-    post?: {
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    content: string;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type GetCommentQuery = {
-  __typename: "Comment";
+export type OnDeleteAppDataSubscription = {
+  __typename: "AppData";
   id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
+  user: {
+    __typename: "User";
     id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
     } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
     } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListCommentsQuery = {
-  __typename: "ModelCommentConnection";
-  items?: Array<{
-    __typename: "Comment";
-    id: string;
-    postID: string;
-    post?: {
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    content: string;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
-};
-
-export type OnCreateBlogSubscription = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateBlogSubscription = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteBlogSubscription = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreatePostSubscription = {
-  __typename: "Post";
-  id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdatePostSubscription = {
-  __typename: "Post";
-  id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeletePostSubscription = {
-  __typename: "Post";
-  id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
-      id: string;
-      postID: string;
-      content: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-    startedAt?: number | null;
-  } | null;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateCommentSubscription = {
-  __typename: "Comment";
-  id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateCommentSubscription = {
-  __typename: "Comment";
-  id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteCommentSubscription = {
-  __typename: "Comment";
-  id: string;
-  postID: string;
-  post?: {
-    __typename: "Post";
-    id: string;
-    title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      _version: number;
-      _deleted?: boolean | null;
-      _lastChangedAt: number;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    comments?: {
-      __typename: "ModelCommentConnection";
-      nextToken?: string | null;
-      startedAt?: number | null;
-    } | null;
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  content: string;
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -1150,179 +532,50 @@ export type OnDeleteCommentSubscription = {
   providedIn: "root"
 })
 export class APIService {
-  async CreateBlog(
-    input: CreateBlogInput,
-    condition?: ModelBlogConditionInput
-  ): Promise<CreateBlogMutation> {
-    const statement = `mutation CreateBlog($input: CreateBlogInput!, $condition: ModelBlogConditionInput) {
-        createBlog(input: $input, condition: $condition) {
+  async CreateAppData(
+    input: CreateAppDataInput,
+    condition?: ModelAppDataConditionInput
+  ): Promise<CreateAppDataMutation> {
+    const statement = `mutation CreateAppData($input: CreateAppDataInput!, $condition: ModelAppDataConditionInput) {
+        createAppData(input: $input, condition: $condition) {
           __typename
           id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateBlogMutation>response.data.createBlog;
-  }
-  async UpdateBlog(
-    input: UpdateBlogInput,
-    condition?: ModelBlogConditionInput
-  ): Promise<UpdateBlogMutation> {
-    const statement = `mutation UpdateBlog($input: UpdateBlogInput!, $condition: ModelBlogConditionInput) {
-        updateBlog(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateBlogMutation>response.data.updateBlog;
-  }
-  async DeleteBlog(
-    input: DeleteBlogInput,
-    condition?: ModelBlogConditionInput
-  ): Promise<DeleteBlogMutation> {
-    const statement = `mutation DeleteBlog($input: DeleteBlogInput!, $condition: ModelBlogConditionInput) {
-        deleteBlog(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteBlogMutation>response.data.deleteBlog;
-  }
-  async CreatePost(
-    input: CreatePostInput,
-    condition?: ModelPostConditionInput
-  ): Promise<CreatePostMutation> {
-    const statement = `mutation CreatePost($input: CreatePostInput!, $condition: ModelPostConditionInput) {
-        createPost(input: $input, condition: $condition) {
-          __typename
-          id
-          title
-          blogID
-          blog {
+          user {
             __typename
             id
-            name
-            posts {
+            userAttributes {
               __typename
-              nextToken
-              startedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
+            onboarding {
               __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              lastActive
+              lastComplete
             }
-            nextToken
-            startedAt
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1336,52 +589,52 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <CreatePostMutation>response.data.createPost;
+    return <CreateAppDataMutation>response.data.createAppData;
   }
-  async UpdatePost(
-    input: UpdatePostInput,
-    condition?: ModelPostConditionInput
-  ): Promise<UpdatePostMutation> {
-    const statement = `mutation UpdatePost($input: UpdatePostInput!, $condition: ModelPostConditionInput) {
-        updatePost(input: $input, condition: $condition) {
+  async UpdateAppData(
+    input: UpdateAppDataInput,
+    condition?: ModelAppDataConditionInput
+  ): Promise<UpdateAppDataMutation> {
+    const statement = `mutation UpdateAppData($input: UpdateAppDataInput!, $condition: ModelAppDataConditionInput) {
+        updateAppData(input: $input, condition: $condition) {
           __typename
           id
-          title
-          blogID
-          blog {
+          user {
             __typename
             id
-            name
-            posts {
+            userAttributes {
               __typename
-              nextToken
-              startedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
+            onboarding {
               __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              lastActive
+              lastComplete
             }
-            nextToken
-            startedAt
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1395,52 +648,52 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <UpdatePostMutation>response.data.updatePost;
+    return <UpdateAppDataMutation>response.data.updateAppData;
   }
-  async DeletePost(
-    input: DeletePostInput,
-    condition?: ModelPostConditionInput
-  ): Promise<DeletePostMutation> {
-    const statement = `mutation DeletePost($input: DeletePostInput!, $condition: ModelPostConditionInput) {
-        deletePost(input: $input, condition: $condition) {
+  async DeleteAppData(
+    input: DeleteAppDataInput,
+    condition?: ModelAppDataConditionInput
+  ): Promise<DeleteAppDataMutation> {
+    const statement = `mutation DeleteAppData($input: DeleteAppDataInput!, $condition: ModelAppDataConditionInput) {
+        deleteAppData(input: $input, condition: $condition) {
           __typename
           id
-          title
-          blogID
-          blog {
+          user {
             __typename
             id
-            name
-            posts {
+            userAttributes {
               __typename
-              nextToken
-              startedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
+            onboarding {
               __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              lastActive
+              lastComplete
             }
-            nextToken
-            startedAt
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1454,241 +707,49 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <DeletePostMutation>response.data.deletePost;
+    return <DeleteAppDataMutation>response.data.deleteAppData;
   }
-  async CreateComment(
-    input: CreateCommentInput,
-    condition?: ModelCommentConditionInput
-  ): Promise<CreateCommentMutation> {
-    const statement = `mutation CreateComment($input: CreateCommentInput!, $condition: ModelCommentConditionInput) {
-        createComment(input: $input, condition: $condition) {
+  async GetAppData(id: string): Promise<GetAppDataQuery> {
+    const statement = `query GetAppData($id: ID!) {
+        getAppData(id: $id) {
           __typename
           id
-          postID
-          post {
+          user {
             __typename
             id
-            title
-            blogID
-            blog {
+            userAttributes {
               __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            comments {
+            onboarding {
               __typename
-              nextToken
-              startedAt
+              lastActive
+              lastComplete
             }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
           }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateCommentMutation>response.data.createComment;
-  }
-  async UpdateComment(
-    input: UpdateCommentInput,
-    condition?: ModelCommentConditionInput
-  ): Promise<UpdateCommentMutation> {
-    const statement = `mutation UpdateComment($input: UpdateCommentInput!, $condition: ModelCommentConditionInput) {
-        updateComment(input: $input, condition: $condition) {
-          __typename
-          id
-          postID
-          post {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateCommentMutation>response.data.updateComment;
-  }
-  async DeleteComment(
-    input: DeleteCommentInput,
-    condition?: ModelCommentConditionInput
-  ): Promise<DeleteCommentMutation> {
-    const statement = `mutation DeleteComment($input: DeleteCommentInput!, $condition: ModelCommentConditionInput) {
-        deleteComment(input: $input, condition: $condition) {
-          __typename
-          id
-          postID
-          post {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteCommentMutation>response.data.deleteComment;
-  }
-  async SyncBlogs(
-    filter?: ModelBlogFilterInput,
-    limit?: number,
-    nextToken?: string,
-    lastSync?: number
-  ): Promise<SyncBlogsQuery> {
-    const statement = `query SyncBlogs($filter: ModelBlogFilterInput, $limit: Int, $nextToken: String, $lastSync: AWSTimestamp) {
-        syncBlogs(filter: $filter, limit: $limit, nextToken: $nextToken, lastSync: $lastSync) {
-          __typename
-          items {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          nextToken
-          startedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    if (lastSync) {
-      gqlAPIServiceArguments.lastSync = lastSync;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <SyncBlogsQuery>response.data.syncBlogs;
-  }
-  async GetBlog(id: string): Promise<GetBlogQuery> {
-    const statement = `query GetBlog($id: ID!) {
-        getBlog(id: $id) {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1699,33 +760,59 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetBlogQuery>response.data.getBlog;
+    return <GetAppDataQuery>response.data.getAppData;
   }
-  async ListBlogs(
-    filter?: ModelBlogFilterInput,
+  async ListAppDatas(
+    filter?: ModelAppDataFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ListBlogsQuery> {
-    const statement = `query ListBlogs($filter: ModelBlogFilterInput, $limit: Int, $nextToken: String) {
-        listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ListAppDatasQuery> {
+    const statement = `query ListAppDatas($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String) {
+        listAppDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
             id
-            name
-            posts {
+            user {
               __typename
-              nextToken
-              startedAt
+              id
+              userAttributes {
+                __typename
+                name {
+                  __typename
+                  first
+                  middle
+                  last
+                }
+                address {
+                  __typename
+                  addressOne
+                  addressTwo
+                  city
+                  state
+                  zip
+                }
+                phone {
+                  __typename
+                  primary
+                }
+                dob {
+                  __typename
+                  year
+                  month
+                  day
+                }
+              }
+              onboarding {
+                __typename
+                lastActive
+                lastComplete
+              }
             }
-            _version
-            _deleted
-            _lastChangedAt
             createdAt
             updatedAt
           }
           nextToken
-          startedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -1741,714 +828,158 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListBlogsQuery>response.data.listBlogs;
+    return <ListAppDatasQuery>response.data.listAppDatas;
   }
-  async SyncPosts(
-    filter?: ModelPostFilterInput,
-    limit?: number,
-    nextToken?: string,
-    lastSync?: number
-  ): Promise<SyncPostsQuery> {
-    const statement = `query SyncPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String, $lastSync: AWSTimestamp) {
-        syncPosts(filter: $filter, limit: $limit, nextToken: $nextToken, lastSync: $lastSync) {
-          __typename
-          items {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          nextToken
-          startedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    if (lastSync) {
-      gqlAPIServiceArguments.lastSync = lastSync;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <SyncPostsQuery>response.data.syncPosts;
-  }
-  async GetPost(id: string): Promise<GetPostQuery> {
-    const statement = `query GetPost($id: ID!) {
-        getPost(id: $id) {
-          __typename
-          id
-          title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetPostQuery>response.data.getPost;
-  }
-  async ListPosts(
-    filter?: ModelPostFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListPostsQuery> {
-    const statement = `query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
-        listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          nextToken
-          startedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListPostsQuery>response.data.listPosts;
-  }
-  async SyncComments(
-    filter?: ModelCommentFilterInput,
-    limit?: number,
-    nextToken?: string,
-    lastSync?: number
-  ): Promise<SyncCommentsQuery> {
-    const statement = `query SyncComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String, $lastSync: AWSTimestamp) {
-        syncComments(filter: $filter, limit: $limit, nextToken: $nextToken, lastSync: $lastSync) {
-          __typename
-          items {
-            __typename
-            id
-            postID
-            post {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            content
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          nextToken
-          startedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    if (lastSync) {
-      gqlAPIServiceArguments.lastSync = lastSync;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <SyncCommentsQuery>response.data.syncComments;
-  }
-  async GetComment(id: string): Promise<GetCommentQuery> {
-    const statement = `query GetComment($id: ID!) {
-        getComment(id: $id) {
-          __typename
-          id
-          postID
-          post {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetCommentQuery>response.data.getComment;
-  }
-  async ListComments(
-    filter?: ModelCommentFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListCommentsQuery> {
-    const statement = `query ListComments($filter: ModelCommentFilterInput, $limit: Int, $nextToken: String) {
-        listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            postID
-            post {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            content
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          nextToken
-          startedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListCommentsQuery>response.data.listComments;
-  }
-  OnCreateBlogListener: Observable<
-    SubscriptionResponse<OnCreateBlogSubscription>
+  OnCreateAppDataListener: Observable<
+    SubscriptionResponse<OnCreateAppDataSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateBlog {
-        onCreateBlog {
+      `subscription OnCreateAppData {
+        onCreateAppData {
           __typename
           id
-          name
-          posts {
+          user {
             __typename
-            items {
+            id
+            userAttributes {
               __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            nextToken
-            startedAt
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<SubscriptionResponse<OnCreateBlogSubscription>>;
+  ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
 
-  OnUpdateBlogListener: Observable<
-    SubscriptionResponse<OnUpdateBlogSubscription>
+  OnUpdateAppDataListener: Observable<
+    SubscriptionResponse<OnUpdateAppDataSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateBlog {
-        onUpdateBlog {
+      `subscription OnUpdateAppData {
+        onUpdateAppData {
           __typename
           id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateBlogSubscription>>;
-
-  OnDeleteBlogListener: Observable<
-    SubscriptionResponse<OnDeleteBlogSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteBlog {
-        onDeleteBlog {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteBlogSubscription>>;
-
-  OnCreatePostListener: Observable<
-    SubscriptionResponse<OnCreatePostSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreatePost {
-        onCreatePost {
-          __typename
-          id
-          title
-          blogID
-          blog {
+          user {
             __typename
             id
-            name
-            posts {
+            userAttributes {
               __typename
-              nextToken
-              startedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
+            onboarding {
               __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              lastActive
+              lastComplete
             }
-            nextToken
-            startedAt
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<SubscriptionResponse<OnCreatePostSubscription>>;
+  ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
 
-  OnUpdatePostListener: Observable<
-    SubscriptionResponse<OnUpdatePostSubscription>
+  OnDeleteAppDataListener: Observable<
+    SubscriptionResponse<OnDeleteAppDataSubscription>
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdatePost {
-        onUpdatePost {
+      `subscription OnDeleteAppData {
+        onDeleteAppData {
           __typename
           id
-          title
-          blogID
-          blog {
+          user {
             __typename
             id
-            name
-            posts {
+            userAttributes {
               __typename
-              nextToken
-              startedAt
+              name {
+                __typename
+                first
+                middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
+              }
+              phone {
+                __typename
+                primary
+              }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
             }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
+            onboarding {
               __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
+              lastActive
+              lastComplete
             }
-            nextToken
-            startedAt
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<SubscriptionResponse<OnUpdatePostSubscription>>;
-
-  OnDeletePostListener: Observable<
-    SubscriptionResponse<OnDeletePostSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeletePost {
-        onDeletePost {
-          __typename
-          id
-          title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          comments {
-            __typename
-            items {
-              __typename
-              id
-              postID
-              content
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeletePostSubscription>>;
-
-  OnCreateCommentListener: Observable<
-    SubscriptionResponse<OnCreateCommentSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateComment {
-        onCreateComment {
-          __typename
-          id
-          postID
-          post {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnCreateCommentSubscription>>;
-
-  OnUpdateCommentListener: Observable<
-    SubscriptionResponse<OnUpdateCommentSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateComment {
-        onUpdateComment {
-          __typename
-          id
-          postID
-          post {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateCommentSubscription>>;
-
-  OnDeleteCommentListener: Observable<
-    SubscriptionResponse<OnDeleteCommentSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteComment {
-        onDeleteComment {
-          __typename
-          id
-          postID
-          post {
-            __typename
-            id
-            title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            comments {
-              __typename
-              nextToken
-              startedAt
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          content
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteCommentSubscription>>;
+  ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
 }
