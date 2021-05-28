@@ -26,6 +26,7 @@ export type UserAttributesInput = {
   address?: AddressInput | null;
   phone?: PhoneInput | null;
   dob?: DobInput | null;
+  ssn?: SsnInput | null;
 };
 
 export type NameInput = {
@@ -50,6 +51,11 @@ export type DobInput = {
   year: string;
   month: string;
   day: string;
+};
+
+export type SsnInput = {
+  lastfour: string;
+  full?: string | null;
 };
 
 export type OnboardingInput = {
@@ -103,6 +109,7 @@ export type UserAttributes = {
   address?: Address;
   phone?: Phone;
   dob?: Dob;
+  ssn?: Ssn;
 };
 
 export type Name = {
@@ -131,6 +138,12 @@ export type Dob = {
   year?: string;
   month?: string;
   day?: string;
+};
+
+export type Ssn = {
+  __typename: "Ssn";
+  lastfour?: string;
+  full?: string | null;
 };
 
 export type Onboarding = {
@@ -255,6 +268,11 @@ export type CreateAppDataMutation = {
         month: string;
         day: string;
       } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
+      } | null;
     } | null;
     onboarding?: {
       __typename: "Onboarding";
@@ -312,6 +330,11 @@ export type UpdateAppDataMutation = {
         year: string;
         month: string;
         day: string;
+      } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
     onboarding?: {
@@ -371,6 +394,11 @@ export type DeleteAppDataMutation = {
         month: string;
         day: string;
       } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
+      } | null;
     } | null;
     onboarding?: {
       __typename: "Onboarding";
@@ -428,6 +456,11 @@ export type GetAppDataQuery = {
         year: string;
         month: string;
         day: string;
+      } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
     onboarding?: {
@@ -489,6 +522,11 @@ export type ListAppDatasQuery = {
           month: string;
           day: string;
         } | null;
+        ssn?: {
+          __typename: "Ssn";
+          lastfour: string;
+          full?: string | null;
+        } | null;
       } | null;
       onboarding?: {
         __typename: "Onboarding";
@@ -549,6 +587,11 @@ export type OnCreateAppDataSubscription = {
         month: string;
         day: string;
       } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
+      } | null;
     } | null;
     onboarding?: {
       __typename: "Onboarding";
@@ -607,6 +650,11 @@ export type OnUpdateAppDataSubscription = {
         month: string;
         day: string;
       } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
+      } | null;
     } | null;
     onboarding?: {
       __typename: "Onboarding";
@@ -664,6 +712,11 @@ export type OnDeleteAppDataSubscription = {
         year: string;
         month: string;
         day: string;
+      } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
     onboarding?: {
@@ -731,6 +784,11 @@ export class APIService {
                 year
                 month
                 day
+              }
+              ssn {
+                __typename
+                lastfour
+                full
               }
             }
             onboarding {
@@ -806,6 +864,11 @@ export class APIService {
                 month
                 day
               }
+              ssn {
+                __typename
+                lastfour
+                full
+              }
             }
             onboarding {
               __typename
@@ -880,6 +943,11 @@ export class APIService {
                 month
                 day
               }
+              ssn {
+                __typename
+                lastfour
+                full
+              }
             }
             onboarding {
               __typename
@@ -950,6 +1018,11 @@ export class APIService {
                 year
                 month
                 day
+              }
+              ssn {
+                __typename
+                lastfour
+                full
               }
             }
             onboarding {
@@ -1024,6 +1097,11 @@ export class APIService {
                   year
                   month
                   day
+                }
+                ssn {
+                  __typename
+                  lastfour
+                  full
                 }
               }
               onboarding {
@@ -1105,6 +1183,11 @@ export class APIService {
                 month
                 day
               }
+              ssn {
+                __typename
+                lastfour
+                full
+              }
             }
             onboarding {
               __typename
@@ -1171,6 +1254,11 @@ export class APIService {
                 month
                 day
               }
+              ssn {
+                __typename
+                lastfour
+                full
+              }
             }
             onboarding {
               __typename
@@ -1236,6 +1324,11 @@ export class APIService {
                 year
                 month
                 day
+              }
+              ssn {
+                __typename
+                lastfour
+                full
               }
             }
             onboarding {

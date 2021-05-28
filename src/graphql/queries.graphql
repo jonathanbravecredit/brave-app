@@ -25,6 +25,10 @@ query GetAppData($id: ID!) {
           month
           day
         }
+        ssn {
+          lastfour
+          full
+        }
       }
       onboarding {
         lastActive
@@ -76,6 +80,10 @@ query ListAppDatas(
             year
             month
             day
+          }
+          ssn {
+            lastfour
+            full
           }
         }
         onboarding {
