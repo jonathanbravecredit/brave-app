@@ -4,10 +4,11 @@ import {
   UserAttributes,
 } from '@shared/services/aws/api.service';
 
+type typename = 'User';
+
 export class UserStateModel implements User {
-  [x: string]: any;
-  __typename!: 'User';
-  id?: string | undefined;
-  userAttributes?: UserAttributes | undefined;
-  onboarding?: Onboarding | undefined;
+  __typename: typename = 'User';
+  id?: string;
+  userAttributes?: UserAttributes;
+  onboarding?: Onboarding;
 }

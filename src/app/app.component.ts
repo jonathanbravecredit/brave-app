@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {
   APIService,
   OnCreateAppDataSubscription,
+  OnUpdateAppDataSubscription,
   SubscriptionResponse,
 } from '@shared/services/aws/api.service';
 import { ZenObservable } from 'zen-observable-ts';
 import { Store } from '@ngxs/store';
+import * as AppDataActions from '@store/app-data';
+import { AppDataStateModel } from '@store/app-data';
 
 @Component({
   selector: 'brave-root',
@@ -23,15 +26,20 @@ export class AppComponent implements OnInit {
 
   constructor(private api: APIService, private store: Store) {
     this.apiCreateListener$ = this.api.OnCreateAppDataListener.subscribe(
-      (resp: SubscriptionResponse<OnCreateAppDataSubscription>) => {
-        // // create state
-        // const appData: AppData = { ...value };
-        // this.store.dispatch(new AppDataActions.Add(value));
-        console.log('on create listener', resp.value.data);
+      (resp: any) => {
+        // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
+        const data: any = resp.value?.data?.onCreateAppData;
+        if (data) {
+          console.log('data', data);
+          const appData: AppDataStateModel = { ...data } as AppDataStateModel;
+          console.log('appData', appData);
+          this.store.dispatch(new AppDataActions.Add(appData));
+          console.log('on create listener', resp.value.data);
+        }
       }
     );
     this.apiUpdateListener$ = this.api.OnUpdateAppDataListener.subscribe(
-      (resp) => {
+      (resp: SubscriptionResponse<OnUpdateAppDataSubscription>) => {
         // update state
         console.log('on update listener', resp);
       }
