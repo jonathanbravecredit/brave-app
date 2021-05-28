@@ -3,6 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { ICredentials } from '@aws-amplify/core';
+import {
+  APIService,
+  CreateAppDataInput,
+} from '@shared/services/aws/api.service';
 
 @Component({
   selector: 'brave-signup',
@@ -12,7 +16,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private api: APIService
   ) {}
 
   ngOnInit(): void {}
@@ -26,13 +31,32 @@ export class SignupComponent implements OnInit {
     let isValid = true;
     if (isValid) {
       try {
-        let cognitoUser = await this.auth.signUp(user);
-        this.router.navigate(['../thankyou'], { relativeTo: this.route });
+        await this.auth.signUp(user);
+        const creds: ICredentials | null = await this.auth.getAuthCredentials();
+        if (creds) {
+          const input: CreateAppDataInput = {
+            user: {
+              id: creds.identityId,
+              onboarding: {
+                lastActive: -1,
+                lastComplete: -1,
+              },
+            },
+          };
+          this.api
+            .CreateAppData(input)
+            .then((value) => null)
+            .catch((err) => console.log(err));
+          this.router.navigate(['../thankyou'], { relativeTo: this.route });
+        } else {
+          this.router.navigate(['../error'], { relativeTo: this.route });
+        }
       } catch (err) {
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     } else {
       // TODO: need to provide feedback to the user on the invalid email
+      this.router.navigate(['../error'], { relativeTo: this.route });
     }
   }
 
@@ -41,7 +65,21 @@ export class SignupComponent implements OnInit {
    */
   signUpWithFacebook(): void {
     let provider = CognitoHostedUIIdentityProvider.Facebook;
-    this.auth.socialSignIn(provider);
+    this.auth.socialSignIn(provider).then((creds: ICredentials) => {
+      const input: CreateAppDataInput = {
+        user: {
+          id: creds.identityId,
+          onboarding: {
+            lastActive: -1,
+            lastComplete: -1,
+          },
+        },
+      };
+      this.api
+        .CreateAppData(input)
+        .then((value) => null)
+        .catch((err) => console.log(err));
+    });
   }
 
   /**
@@ -50,7 +88,19 @@ export class SignupComponent implements OnInit {
   signUpWithGoogle(): void {
     let provider = CognitoHostedUIIdentityProvider.Google;
     this.auth.socialSignIn(provider).then((creds: ICredentials) => {
-      // write user ID to DB.
+      const input: CreateAppDataInput = {
+        user: {
+          id: creds.identityId,
+          onboarding: {
+            lastActive: -1,
+            lastComplete: -1,
+          },
+        },
+      };
+      this.api
+        .CreateAppData(input)
+        .then((value) => null)
+        .catch((err) => console.log(err));
     });
   }
 

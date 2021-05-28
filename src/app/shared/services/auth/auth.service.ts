@@ -50,7 +50,7 @@ export class AuthService {
 
   /**
    * Cognito sign up method
-   * @param user
+   * @param {NewUser} user
    * @returns
    */
   signUp(user: NewUser): Promise<ISignUpResult> {
@@ -65,8 +65,8 @@ export class AuthService {
 
   /**
    * Cognito sign in method
-   * @param username
-   * @param password
+   * @param {string} username
+   * @param {string} password
    * @returns
    */
   signIn(username: string, password: string): Promise<CognitoUser | any> {
@@ -89,7 +89,7 @@ export class AuthService {
 
   /**
    * Social signin (supports facebook and google)
-   * @param provider
+   * @param {CognitoHostedUIIdentityProvider} provider
    * @returns
    */
   socialSignIn(
@@ -100,6 +100,11 @@ export class AuthService {
     });
   }
 
+  /**
+   *
+   * @param {string} email
+   * @returns
+   */
   resendSignUp(email: string): Promise<string> | undefined {
     return email ? Auth.resendSignUp(email) : undefined;
   }
@@ -112,6 +117,10 @@ export class AuthService {
     return email
       ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw)
       : undefined;
+  }
+
+  getAuthState(): Observable<CognitoUser | any> {
+    return this.authState$;
   }
 
   async refreshAuthState(user?: CognitoUser): Promise<void> {
@@ -138,7 +147,12 @@ export class AuthService {
     }
   }
 
-  getAuthState(): Observable<CognitoUser | any> {
-    return this.authState$;
+  async getAuthCredentials(): Promise<ICredentials | null> {
+    try {
+      const creds: ICredentials = await Auth.currentCredentials();
+      return creds;
+    } catch {
+      return null;
+    }
   }
 }
