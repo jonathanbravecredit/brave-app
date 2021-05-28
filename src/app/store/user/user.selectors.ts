@@ -12,9 +12,4 @@ export class UserSelectors {
   static getUserId(state: UserStateModel): string | null {
     return state.id;
   }
-
-  @Selector([UserState])
-  static signedIn(state: UserStateModel): boolean {
-    return state.signedIn;
-  }
 }
