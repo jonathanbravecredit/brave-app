@@ -22,19 +22,20 @@ export default {
 
 const config: IFilledChecktextProgressbarConfig = {
   size: 'base',
-  steps: [
-    { active: false, complete: false, name: 'step 1' },
-    { active: false, complete: false, name: 'step 2' },
-    { active: false, complete: false, name: 'step 3' },
-    { active: false, complete: false, name: 'step 4' },
-    { active: false, complete: false, name: 'step 5' },
-  ],
 };
 
+const steps: IProgressStep[] = [
+  { id: 0, active: true, complete: true, name: 'step 1' },
+  { id: 1, active: true, complete: true, name: 'step 2' },
+  { id: 2, active: true, complete: false, name: 'step 3' },
+  { id: 3, active: false, complete: false, name: 'step 4' },
+  { id: 4, active: false, complete: false, name: 'step 5' },
+]; // pre-populated only for storybook visuals
+
 const stack: IProgressStep[] = [
-  { active: true, complete: true, name: 'step 1' },
-  { active: true, complete: true, name: 'step 2' },
-  { active: true, complete: false, name: 'step 3' },
+  { id: 0, active: true, complete: true, name: 'step 1' },
+  { id: 1, active: true, complete: true, name: 'step 2' },
+  { id: 2, active: true, complete: false, name: 'step 3' },
 ]; // pre-populated only for storybook visuals
 
 const Template: Story<FilledChecktextProgressbarComponent> = (args: any) => ({
@@ -43,7 +44,7 @@ const Template: Story<FilledChecktextProgressbarComponent> = (args: any) => ({
     stack,
     config,
   },
-  template: `<brave-filled-checktext-progressbar [config]="config"><brave-filled-checktext-progressbar>`,
+  template: `<brave-filled-checktext-progressbar [config]="config" [steps]="steps"><brave-filled-checktext-progressbar>`,
 });
 
 export const Default = Template.bind({});

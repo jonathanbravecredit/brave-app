@@ -1864,11 +1864,6 @@ select {
   padding-right: 2rem;
 }
 
-.py-40 {
-  padding-top: 10rem;
-  padding-bottom: 10rem;
-}
-
 .pt-0 {
   padding-top: 0px;
 }
@@ -2321,6 +2316,10 @@ select {
 
 .w-1\/5 {
   width: 20%;
+}
+
+.w-4\/5 {
+  width: 80%;
 }
 
 .w-6\/12 {

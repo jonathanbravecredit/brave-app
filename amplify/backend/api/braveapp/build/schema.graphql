@@ -1,8 +1,92 @@
 type AppData {
   id: ID!
-  version: String!
+  user: User!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+}
+
+type User {
+  id: ID!
+  userAttributes: UserAttributes
+  onboarding: Onboarding
+}
+
+type Name {
+  first: String!
+  middle: String
+  last: String!
+}
+
+type UserAttributes {
+  name: Name
+  address: Address
+  phone: Phone
+  dob: Dob
+}
+
+type Address {
+  addressOne: String!
+  addressTwo: String
+  city: String!
+  state: String!
+  zip: String!
+}
+
+type Phone {
+  primary: String!
+}
+
+type Dob {
+  year: String!
+  month: String!
+  day: String!
+}
+
+type Onboarding {
+  lastActive: Int!
+  lastComplete: Int!
+}
+
+input UserInput {
+  id: ID!
+  userAttributes: UserAttributesInput
+  onboarding: OnboardingInput
+}
+
+input UserAttributesInput {
+  name: NameInput
+  address: AddressInput
+  phone: PhoneInput
+  dob: DobInput
+}
+
+input NameInput {
+  first: String!
+  middle: String
+  last: String!
+}
+
+input AddressInput {
+  addressOne: String!
+  addressTwo: String
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input PhoneInput {
+  primary: String!
+}
+
+input DobInput {
+  year: String!
+  month: String!
+  day: String!
+}
+
+input OnboardingInput {
+  lastActive: Int!
+  lastComplete: Int!
 }
 
 enum ModelSortDirection {
@@ -90,7 +174,6 @@ input ModelSizeInput {
 
 input ModelAppDataFilterInput {
   id: ModelIDInput
-  version: ModelStringInput
   and: [ModelAppDataFilterInput]
   or: [ModelAppDataFilterInput]
   not: ModelAppDataFilterInput
@@ -116,12 +199,12 @@ type Query {
 
 input CreateAppDataInput {
   id: ID
-  version: String!
+  user: UserInput!
 }
 
 input UpdateAppDataInput {
   id: ID!
-  version: String
+  user: UserInput
 }
 
 input DeleteAppDataInput {
@@ -135,7 +218,6 @@ type Mutation {
 }
 
 input ModelAppDataConditionInput {
-  version: ModelStringInput
   and: [ModelAppDataConditionInput]
   or: [ModelAppDataConditionInput]
   not: ModelAppDataConditionInput

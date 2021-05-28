@@ -1,7 +1,10 @@
 <div>
-  <div>
+  <div
+    *ngIf="onboarding$ | async as data"
+    class="container mx-auto max-w-xs h-full"
+  >
     <brave-filled-checktext-progressbar
-      [config]="progressConfig"
+      [steps]="data.steps"
     ></brave-filled-checktext-progressbar>
   </div>
   <main>

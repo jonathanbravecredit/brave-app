@@ -1,4 +1,4 @@
-import { AppData } from 'src/app/shared/models/app-data.model';
+import { AppData } from '@store/app-data/app-data.model';
 
 export class Add {
   static readonly type = '[AppData] Add';
@@ -7,11 +7,6 @@ export class Add {
 
 export class Edit {
   static readonly type = '[AppData] Edit';
-  constructor(public payload: AppData) {}
-}
-
-export class Fetch {
-  static readonly type = '[AppData] Fetch';
   constructor(public payload: AppData) {}
 }
 

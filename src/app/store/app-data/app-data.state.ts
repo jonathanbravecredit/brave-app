@@ -1,68 +1,59 @@
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext } from '@ngxs/store';
 import * as AppDataActions from './app-data.actions';
 import { Injectable } from '@angular/core';
-import { AppData } from '@shared/models/app-data.model';
-import { User } from '@shared/models/user.model';
+import { AppData } from '@store/app-data/app-data.model';
+import { OnboardingState } from '@store/onboarding';
+import { UserState } from '@store/user';
 
 export class AppDataStateModel {
-  appData: AppData | undefined;
-  loaded: boolean | undefined;
+  version!: string;
+  loaded!: boolean;
+  id!: string;
 }
 
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
-    appData: new AppData({} as User),
+    version: 'v1',
     loaded: false,
+    id: '',
   },
+  children: [OnboardingState, UserState],
 })
 @Injectable()
 export class AppDataState {
   constructor() {}
 
-  @Selector([AppDataState])
-  static getAppData(state: AppDataStateModel): AppData | undefined {
-    return state.appData;
-  }
-
-  @Action(AppDataActions.Delete)
-  deleteDispute(
+  @Action(AppDataActions.Add)
+  addAppData(
     ctx: StateContext<AppDataStateModel>,
-    {}: AppDataActions.Delete
+    { payload }: AppDataActions.Add
   ): void {
-    const state = ctx.getState();
-    const appData = new AppData({} as User);
-    ctx.setState({
-      ...state,
-      appData,
+    ctx.patchState({
+      ...payload,
     });
   }
 
   @Action(AppDataActions.Edit)
-  updateDispute(
+  updateAppData(
     ctx: StateContext<AppDataStateModel>,
     { payload }: AppDataActions.Edit
   ): void {
-    const state = ctx.getState();
-    const appData = {
-      ...state,
-      ...payload,
-    };
     ctx.patchState({
-      appData,
+      ...payload,
     });
   }
 
-  @Action(AppDataActions.Add)
-  addDispute(
+  @Action(AppDataActions.Delete)
+  deleteAppData(
     ctx: StateContext<AppDataStateModel>,
-    { payload }: AppDataActions.Add
+    {}: AppDataActions.Delete
   ): void {
     const state = ctx.getState();
-    const appData = payload;
+    const payload = new AppData();
     ctx.setState({
       ...state,
-      appData,
+      ...payload,
     });
   }
 }
