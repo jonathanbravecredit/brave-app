@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { IUserAttributes } from '@store/user';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
+import { UserAttributes } from '@shared/services/aws/api.service';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -33,11 +32,11 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
     if (form.valid) {
       const temp = this.formatAttributes(form, ssn);
       const lastFour = `${temp['input-0']}${temp['input-1']}${temp['input-2']}${temp['input-3']}`;
-      const attrs = {
+      const attrs = ({
         ssn: {
           lastfour: lastFour,
         },
-      } as IUserAttributes;
+      } as unknown) as UserAttributes;
       this.kycService.updateUserAttributes(attrs);
       this.kycService.completeStep(2);
       this.router.navigate(['../verify'], { relativeTo: this.route });

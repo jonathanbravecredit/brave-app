@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserAttributes } from '@shared/services/aws/api.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
-import { IUserAttributes } from '@store/user';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 
 interface FlatForm {
@@ -36,7 +36,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
         dob: {
           ...this.formatAttributes(form, dob),
         },
-      } as IUserAttributes;
+      } as UserAttributes;
       this.kycService.updateUserAttributes(attrs);
       this.kycService.completeStep(0);
       this.router.navigate(['../address'], { relativeTo: this.route });

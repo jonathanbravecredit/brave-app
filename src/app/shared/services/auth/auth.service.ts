@@ -8,13 +8,9 @@ import {
   ISignUpResult,
 } from 'amazon-cognito-identity-js';
 import { Store } from '@ngxs/store';
-import * as AppDataActions from '@store/app-data/app-data.actions';
-import { AppData } from '@store/app-data/app-data.model';
-import { User } from '@store/user/user.model';
 import {
   APIService,
   CreateAppDataInput,
-  ModelAppDataConditionInput,
 } from '@shared/services/aws/api.service';
 
 export interface NewUser {
@@ -210,6 +206,11 @@ export class AuthService {
           lastActive: 0,
           lastComplete: -1,
         },
+      },
+      agencies: {
+        transunion: { authenticated: false },
+        experian: { authenticated: false },
+        equifax: { authenticated: false },
       },
     };
     this.api

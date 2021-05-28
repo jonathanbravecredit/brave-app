@@ -1,13 +1,13 @@
-import { IUserAttributes, User } from '@store/user';
+import { UserStateModel } from '@store/user/user.model';
 
 export class Add {
   static readonly type = '[User] Add';
-  constructor(public payload: User) {}
+  constructor(public payload: UserStateModel) {}
 }
 
 export class Edit {
   static readonly type = '[User] Edit';
-  constructor(public payload: User | Partial<User>) {}
+  constructor(public payload: UserStateModel | Partial<UserStateModel>) {}
 }
 
 export class Delete {

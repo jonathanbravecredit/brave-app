@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { IUserAttributes } from '@store/user';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
+import { UserAttributes } from '@shared/services/aws/api.service';
 
 @Component({
   selector: 'brave-kyc-address',
@@ -34,7 +34,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit {
         address: {
           ...this.formatAttributes(form, address),
         },
-      } as IUserAttributes;
+      } as UserAttributes;
       this.kycService.updateUserAttributes(attrs);
       this.kycService.completeStep(1);
       this.router.navigate(['../identity'], { relativeTo: this.route });

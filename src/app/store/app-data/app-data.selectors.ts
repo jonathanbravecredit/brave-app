@@ -1,13 +1,10 @@
 import { Selector } from '@ngxs/store';
-import {
-  AppDataState,
-  AppDataStateModel,
-} from '@store/app-data/app-data.state';
-import { AppData } from '@store/app-data/app-data.model';
+import { AppDataStateModel } from '@store/app-data/app-data.model';
+import { AppDataState } from '@store/app-data/app-data.state';
 
 export class AppDataSelectors {
   @Selector([AppDataState])
-  static getAppData(state: AppDataStateModel): AppData {
+  static getAppData(state: AppDataStateModel): AppDataStateModel {
     return state;
   }
 }

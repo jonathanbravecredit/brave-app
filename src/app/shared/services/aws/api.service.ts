@@ -12,6 +12,7 @@ export interface SubscriptionResponse<T> {
 export type CreateAppDataInput = {
   id?: string | null;
   user: UserInput;
+  agencies: AgenciesInput;
 };
 
 export type UserInput = {
@@ -56,6 +57,24 @@ export type OnboardingInput = {
   lastComplete: number;
 };
 
+export type AgenciesInput = {
+  transunion?: TransunionInput | null;
+  equifax?: EquifaxInput | null;
+  experian?: ExperianInput | null;
+};
+
+export type TransunionInput = {
+  authenticated?: boolean | null;
+};
+
+export type EquifaxInput = {
+  authenticated?: boolean | null;
+};
+
+export type ExperianInput = {
+  authenticated?: boolean | null;
+};
+
 export type ModelAppDataConditionInput = {
   and?: Array<ModelAppDataConditionInput | null> | null;
   or?: Array<ModelAppDataConditionInput | null> | null;
@@ -66,6 +85,7 @@ export type AppData = {
   __typename: "AppData";
   id?: string;
   user?: User;
+  agencies?: Agencies;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -119,9 +139,32 @@ export type Onboarding = {
   lastComplete?: number;
 };
 
+export type Agencies = {
+  __typename: "Agencies";
+  transunion?: Transunion;
+  equifax?: Equifax;
+  experian?: Experian;
+};
+
+export type Transunion = {
+  __typename: "Transunion";
+  authenticated?: boolean | null;
+};
+
+export type Equifax = {
+  __typename: "Equifax";
+  authenticated?: boolean | null;
+};
+
+export type Experian = {
+  __typename: "Experian";
+  authenticated?: boolean | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
+  agencies?: AgenciesInput | null;
 };
 
 export type DeleteAppDataInput = {
@@ -219,6 +262,21 @@ export type CreateAppDataMutation = {
       lastComplete: number;
     } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -260,6 +318,21 @@ export type UpdateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+    } | null;
+  };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -305,6 +378,21 @@ export type DeleteAppDataMutation = {
       lastComplete: number;
     } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -346,6 +434,21 @@ export type GetAppDataQuery = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+    } | null;
+  };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -393,6 +496,21 @@ export type ListAppDatasQuery = {
         lastComplete: number;
       } | null;
     };
+    agencies: {
+      __typename: "Agencies";
+      transunion?: {
+        __typename: "Transunion";
+        authenticated?: boolean | null;
+      } | null;
+      equifax?: {
+        __typename: "Equifax";
+        authenticated?: boolean | null;
+      } | null;
+      experian?: {
+        __typename: "Experian";
+        authenticated?: boolean | null;
+      } | null;
+    };
     createdAt: string;
     updatedAt: string;
   } | null> | null;
@@ -438,6 +556,21 @@ export type OnCreateAppDataSubscription = {
       lastComplete: number;
     } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -481,6 +614,21 @@ export type OnUpdateAppDataSubscription = {
       lastComplete: number;
     } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -522,6 +670,21 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+    } | null;
+  };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -574,6 +737,21 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+            }
+          }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
             }
           }
           createdAt
@@ -635,6 +813,21 @@ export class APIService {
               lastComplete
             }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
           createdAt
           updatedAt
         }
@@ -694,6 +887,21 @@ export class APIService {
               lastComplete
             }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
           createdAt
           updatedAt
         }
@@ -748,6 +956,21 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+            }
+          }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
             }
           }
           createdAt
@@ -807,6 +1030,21 @@ export class APIService {
                 __typename
                 lastActive
                 lastComplete
+              }
+            }
+            agencies {
+              __typename
+              transunion {
+                __typename
+                authenticated
+              }
+              equifax {
+                __typename
+                authenticated
+              }
+              experian {
+                __typename
+                authenticated
               }
             }
             createdAt
@@ -874,6 +1112,21 @@ export class APIService {
               lastComplete
             }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
           createdAt
           updatedAt
         }
@@ -925,6 +1178,21 @@ export class APIService {
               lastComplete
             }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
           createdAt
           updatedAt
         }
@@ -974,6 +1242,21 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+            }
+          }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
             }
           }
           createdAt

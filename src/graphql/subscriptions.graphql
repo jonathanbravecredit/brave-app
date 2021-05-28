@@ -31,6 +31,17 @@ subscription OnCreateAppData {
         lastComplete
       }
     }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
     createdAt
     updatedAt
   }
@@ -67,6 +78,17 @@ subscription OnUpdateAppData {
         lastComplete
       }
     }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
     createdAt
     updatedAt
   }
@@ -101,6 +123,17 @@ subscription OnDeleteAppData {
       onboarding {
         lastActive
         lastComplete
+      }
+    }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
       }
     }
     createdAt

@@ -34,6 +34,17 @@ mutation CreateAppData(
         lastComplete
       }
     }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
     createdAt
     updatedAt
   }
@@ -73,6 +84,17 @@ mutation UpdateAppData(
         lastComplete
       }
     }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
     createdAt
     updatedAt
   }
@@ -110,6 +132,17 @@ mutation DeleteAppData(
       onboarding {
         lastActive
         lastComplete
+      }
+    }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
       }
     }
     createdAt

@@ -18,6 +18,7 @@ type UserAttributes {
   address: Address
   phone: Phone
   dob: Dob
+  ssn: Ssn
 }
 type Address {
   addressOne: String!
@@ -33,6 +34,10 @@ type Dob {
   year: String!
   month: String!
   day: String!
+}
+type Ssn {
+  lastfour: String!
+  full: String
 }
 type Onboarding {
   lastActive: Int!

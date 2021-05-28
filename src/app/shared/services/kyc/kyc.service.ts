@@ -6,7 +6,8 @@ import { Onboarding, OnboardingStep } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import * as OnboardingAction from '@store/onboarding';
 import * as UserAction from '@store/user';
-import { IUserAttributes, User, UserSelectors } from '@store/user';
+import { UserStateModel, UserSelectors } from '@store/user';
+import { UserAttributes } from '@shared/services/aws/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class KycService implements OnDestroy {
   );
   public onboardingSub$: Subscription;
 
-  user: User = new User();
-  user$: Observable<User> = this.store.select(UserSelectors.getUser);
+  user: UserStateModel = new UserStateModel();
+  user$: Observable<UserStateModel> = this.store.select(UserSelectors.getUser);
   userSub$: Subscription;
 
   constructor(private store: Store) {
@@ -30,8 +31,8 @@ export class KycService implements OnDestroy {
       });
 
     this.userSub$ = this.user$
-      .pipe(filter((user: User) => user !== undefined))
-      .subscribe((user: User) => {
+      .pipe(filter((user: UserStateModel) => user !== undefined))
+      .subscribe((user: UserStateModel) => {
         this.user = user;
       });
   }
@@ -128,10 +129,10 @@ export class KycService implements OnDestroy {
 
   /**
    * Takes the attributes and updates the state with them
-   * @param {IUserAttributes} attributes
+   * @param {UserAttributes} attributes
    */
-  updateUserAttributes(attrs: IUserAttributes): void {
-    const user: User = {
+  updateUserAttributes(attrs: UserAttributes): void {
+    const user: UserStateModel = {
       ...this.user,
       attributes: { ...this.user.attributes, ...attrs },
     };

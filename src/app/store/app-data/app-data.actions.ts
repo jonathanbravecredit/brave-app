@@ -1,13 +1,13 @@
-import { AppData } from '@store/app-data/app-data.model';
+import { AppDataStateModel } from '@store/app-data/app-data.model';
 
 export class Add {
   static readonly type = '[AppData] Add';
-  constructor(public payload: AppData) {}
+  constructor(public payload: AppDataStateModel) {}
 }
 
 export class Edit {
   static readonly type = '[AppData] Edit';
-  constructor(public payload: AppData) {}
+  constructor(public payload: AppDataStateModel) {}
 }
 
 export class Delete {

@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
-import { IUserAttributes } from '@store/user';
 import { FormGroup, AbstractControl } from '@angular/forms';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';

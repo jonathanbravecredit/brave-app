@@ -10,6 +10,7 @@
       "@layouts/*": ["src/app/layouts/*"],
       "@views/*": ["src/app/views/*"],
       "@stories/*": ["src/stories/*"],
+      "@src/*": ["src/*"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

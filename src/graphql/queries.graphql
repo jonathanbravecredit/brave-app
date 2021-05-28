@@ -31,6 +31,17 @@ query GetAppData($id: ID!) {
         lastComplete
       }
     }
+    agencies {
+      transunion {
+        authenticated
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
     createdAt
     updatedAt
   }
@@ -70,6 +81,17 @@ query ListAppDatas(
         onboarding {
           lastActive
           lastComplete
+        }
+      }
+      agencies {
+        transunion {
+          authenticated
+        }
+        equifax {
+          authenticated
+        }
+        experian {
+          authenticated
         }
       }
       createdAt
