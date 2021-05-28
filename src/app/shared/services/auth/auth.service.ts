@@ -44,17 +44,9 @@ export class AuthService {
         case 'signIn':
           // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
-          this.getAuthCredentials()
-            .then((creds: ICredentials | null) => {
-              if (creds) {
-                this.seedAppData(creds); //possibly update to async
-              }
-              return creds;
-            })
-            .then((creds) => {
-              // need to pull down the state
-            });
-
+          this.getAuthCredentials().then((creds: ICredentials | null) => {
+            if (creds) this.seedAppData(creds); //possibly update to async
+          });
           break;
         case 'signOut':
           // handle sign out
@@ -137,17 +129,35 @@ export class AuthService {
       : undefined;
   }
 
+  /**
+   *
+   * @returns
+   */
   getCurrentAuthenticatedUser(): Promise<any> {
     return Auth.currentAuthenticatedUser();
   }
+
+  /**
+   *
+   * @returns
+   */
   getAuthState(): Observable<CognitoUser | any> {
     return this.authState$;
   }
 
+  /**
+   *
+   * @returns
+   */
   refreshSession(): Promise<CognitoUserSession> {
     return Auth.currentSession();
   }
 
+  /**
+   *
+   * @param {CognitoUser} user
+   * @returns
+   */
   async refreshAuthState(user?: CognitoUser): Promise<void> {
     if (user) {
       this.authState.next(user);
@@ -162,6 +172,9 @@ export class AuthService {
     }
   }
 
+  /**
+   *
+   */
   async getAuthTokens(): Promise<string> {
     try {
       const user: CognitoUser = await Auth.currentAuthenticatedUser();
@@ -172,6 +185,9 @@ export class AuthService {
     }
   }
 
+  /**
+   *
+   */
   async getAuthCredentials(): Promise<ICredentials | null> {
     try {
       const creds: ICredentials = await Auth.currentUserCredentials();
@@ -181,6 +197,10 @@ export class AuthService {
     }
   }
 
+  /**
+   *
+   * @param {ICredentials} creds
+   */
   async seedAppData(creds: ICredentials): Promise<void> {
     const input: CreateAppDataInput = {
       id: creds.identityId,
