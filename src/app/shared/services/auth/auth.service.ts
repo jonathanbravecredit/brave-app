@@ -150,8 +150,10 @@ export class AuthService {
   async getAuthCredentials(): Promise<ICredentials | null> {
     try {
       const creds: ICredentials = await Auth.currentCredentials();
+      console.log('creds', creds);
       return creds;
-    } catch {
+    } catch (err) {
+      console.log('getAuthCredentials', err);
       return null;
     }
   }
