@@ -32,25 +32,6 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         await this.auth.signUp(user);
-        const creds: ICredentials | null = await this.auth.getAuthCredentials();
-        if (creds) {
-          const input: CreateAppDataInput = {
-            user: {
-              id: creds.identityId,
-              onboarding: {
-                lastActive: -1,
-                lastComplete: -1,
-              },
-            },
-          };
-          this.api
-            .CreateAppData(input)
-            .then((value) => null)
-            .catch((err) => console.log(err));
-          this.router.navigate(['../thankyou'], { relativeTo: this.route });
-        } else {
-          this.router.navigate(['../error'], { relativeTo: this.route });
-        }
       } catch (err) {
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
@@ -65,21 +46,7 @@ export class SignupComponent implements OnInit {
    */
   signUpWithFacebook(): void {
     let provider = CognitoHostedUIIdentityProvider.Facebook;
-    this.auth.socialSignIn(provider).then((creds: ICredentials) => {
-      const input: CreateAppDataInput = {
-        user: {
-          id: creds.identityId,
-          onboarding: {
-            lastActive: -1,
-            lastComplete: -1,
-          },
-        },
-      };
-      this.api
-        .CreateAppData(input)
-        .then((value) => null)
-        .catch((err) => console.log(err));
-    });
+    this.auth.socialSignIn(provider);
   }
 
   /**
@@ -87,21 +54,7 @@ export class SignupComponent implements OnInit {
    */
   signUpWithGoogle(): void {
     let provider = CognitoHostedUIIdentityProvider.Google;
-    this.auth.socialSignIn(provider).then((creds: ICredentials) => {
-      const input: CreateAppDataInput = {
-        user: {
-          id: creds.identityId,
-          onboarding: {
-            lastActive: -1,
-            lastComplete: -1,
-          },
-        },
-      };
-      this.api
-        .CreateAppData(input)
-        .then((value) => null)
-        .catch((err) => console.log(err));
-    });
+    this.auth.socialSignIn(provider);
   }
 
   /**

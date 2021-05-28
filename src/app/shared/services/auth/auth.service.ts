@@ -2,11 +2,20 @@ import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { Subject, Observable } from 'rxjs';
-import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
+import {
+  CognitoUser,
+  CognitoUserSession,
+  ISignUpResult,
+} from 'amazon-cognito-identity-js';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppData } from '@store/app-data/app-data.model';
 import { User } from '@store/user/user.model';
+import {
+  APIService,
+  CreateAppDataInput,
+  ModelAppDataConditionInput,
+} from '@shared/services/aws/api.service';
 
 export interface NewUser {
   username: string;
@@ -27,16 +36,24 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private api: APIService) {
     Hub.listen('auth', (data) => {
       const { channel, payload } = data;
       console.log('auth change', channel, payload);
       switch (payload.event) {
         case 'signIn':
+          // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
           let user: CognitoUser = payload.data;
           let appData = new AppData();
+          this.getAuthCredentials().then((creds: ICredentials | null) => {
+            console.log('creds in hub', creds);
+            if (creds) {
+              this.seedAppData(creds);
+            }
+          });
           this.store.dispatch(new AppDataActions.Add(appData));
+
           break;
         case 'signOut':
           // handle sign out
@@ -119,8 +136,15 @@ export class AuthService {
       : undefined;
   }
 
+  getCurrentAuthenticatedUser(): Promise<any> {
+    return Auth.currentAuthenticatedUser();
+  }
   getAuthState(): Observable<CognitoUser | any> {
     return this.authState$;
+  }
+
+  refreshSession(): Promise<CognitoUserSession> {
+    return Auth.currentSession();
   }
 
   async refreshAuthState(user?: CognitoUser): Promise<void> {
@@ -149,12 +173,60 @@ export class AuthService {
 
   async getAuthCredentials(): Promise<ICredentials | null> {
     try {
-      const creds: ICredentials = await Auth.currentCredentials();
-      console.log('creds', creds);
+      const creds: ICredentials = await Auth.currentUserCredentials();
       return creds;
     } catch (err) {
-      console.log('getAuthCredentials', err);
       return null;
     }
   }
+
+  async seedAppData(creds: ICredentials): Promise<void> {
+    const input: CreateAppDataInput = {
+      id: creds.identityId,
+      user: {
+        id: creds.identityId,
+        onboarding: {
+          lastActive: 0,
+          lastComplete: -1,
+        },
+      },
+    };
+    this.api
+      .CreateAppData(input)
+      .then((value) => null)
+      .catch((err) => console.log(err));
+  }
 }
+
+// const creds: ICredentials | null = await this.auth.getAuthCredentials();
+// if (creds) {
+//   const input: CreateAppDataInput = {
+//     user: {
+//       id: creds.identityId,
+//       onboarding: {
+//         lastActive: -1,
+//         lastComplete: -1,
+//       },
+//     },
+//   };
+//   this.api
+//     .CreateAppData(input)
+//     .then((value) => null)
+//     .catch((err) => console.log(err));
+//   this.router.navigate(['../thankyou'], { relativeTo: this.route });
+
+// .then((creds: ICredentials) => {
+//   const input: CreateAppDataInput = {
+//     user: {
+//       id: creds.identityId,
+//       onboarding: {
+//         lastActive: -1,
+//         lastComplete: -1,
+//       },
+//     },
+//   };
+//   this.api
+//     .CreateAppData(input)
+//     .then((value) => null)
+//     .catch((err) => console.log(err));
+// });
