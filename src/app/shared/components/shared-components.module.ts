@@ -3,6 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+// pipes
+import { FilledOnlytextButtonPipe } from './buttons/filled-onlytext-button/filled-onlytext-button.pipe';
+import { LinksOnlytextButtonPipe } from './buttons/links-onlytext-button/links-onlytext-button.pipe';
+import { OutlineOnlytextButtonPipe } from './buttons/outline-onlytext-button/outline-onlytext-button.pipe';
+import { OutlineInputPipe } from './inputs/outline-input/outline-input.pipe';
+import { OutlineSelectInputPipe } from './inputs/outline-select-input/outline-select-input.pipe';
+import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
+import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
+import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
+
 // componenents
 import { SignUpComponent } from '@shared/components/auth/sign-up/sign-up.component';
 import { SignInComponent } from '@shared/components/auth/sign-in/sign-in.component';
@@ -15,19 +25,7 @@ import { GoogleIconsigninButtonComponent } from './buttons/google-iconsignin-but
 import { FacebookOnlytextsigninButtonComponent } from './buttons/facebook-onlytextsignin-button/facebook-onlytextsignin-button.component';
 import { SimpleSignupFormComponent } from './forms/simple-signup-form/simple-signup-form.component';
 import { OutlineSelectInputComponent } from './inputs/outline-select-input/outline-select-input.component';
-import { DateofbirthFormComponent } from './forms/dateofbirth-form/dateofbirth-form.component';
-import { KnowYouFormComponent } from './forms/know-you-form/know-you-form.component';
 import { FilledClosingAlertComponent } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
-
-// pipes
-import { FilledOnlytextButtonPipe } from './buttons/filled-onlytext-button/filled-onlytext-button.pipe';
-import { LinksOnlytextButtonPipe } from './buttons/links-onlytext-button/links-onlytext-button.pipe';
-import { OutlineOnlytextButtonPipe } from './buttons/outline-onlytext-button/outline-onlytext-button.pipe';
-import { OutlineInputPipe } from './inputs/outline-input/outline-input.pipe';
-import { OutlineSelectInputPipe } from './inputs/outline-select-input/outline-select-input.pipe';
-import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
-import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
-import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
 import { IndexDropdownComponent } from '@shared/components/dropdowns/popdowns/index-dropdown/index-dropdown.component';
 import { MenuDropdownComponent } from '@shared/components/dropdowns/popdowns/menu-dropdown/menu-dropdown.component';
 import { NotificationDropdownComponent } from '@shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.component';
@@ -38,7 +36,6 @@ import { OutlineOnlytextSelectComponent } from '@shared/components/dropdowns/sel
 import { FooterComponent } from '@shared/components/footers/footer/footer.component';
 import { FooterAdminComponent } from '@shared/components/footers/footer-admin/footer-admin.component';
 import { FooterSmallComponent } from '@shared/components/footers/footer-small/footer-small.component';
-import { HiddenCodeFormComponent } from '@shared/components/forms/hidden-code-form/hidden-code-form.component';
 import { OutlineAddressFormComponent } from '@shared/components/forms/outline-address-form/outline-address-form.component';
 import { OutlinePhoneFormComponent } from '@shared/components/forms/outline-phone-form/outline-phone-form.component';
 import { OutlineVerificationcodeFormComponent } from '@shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.component';
@@ -59,8 +56,14 @@ import { SidebarComponent } from '@shared/components/sidebar/sidebar.component';
 import { FilledOnlytextTabsComponent } from '@shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.component';
 import { OutlineTooltipComponent } from '@shared/components/tooltips/outline-tooltip/outline-tooltip.component';
 import { OutlineTooltipDirective } from '@shared/components/tooltips/outline-tooltip/outline-tooltip.directive';
+import { KbaquestionsFormComponent } from './forms/kbaquestions-form/kbaquestions-form.component';
+import { OutlineNamedobFormComponent } from './forms/outline-namedob-form/outline-namedob-form.component';
+import { BaseFormComponent } from './forms/base-form/base-form.component';
+import { SelectDobFormComponent } from './forms/select-dob-form/select-dob-form.component';
+import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name-form.component';
 
 const components = [
+  BaseFormComponent,
   SignInComponent,
   SignUpComponent,
   FilledOnlytextButtonComponent,
@@ -72,8 +75,6 @@ const components = [
   FacebookOnlytextsigninButtonComponent,
   SimpleSignupFormComponent,
   OutlineSelectInputComponent,
-  DateofbirthFormComponent,
-  KnowYouFormComponent,
   FilledClosingAlertComponent,
   FilledOnlytextBadgeComponent,
   IndexDropdownComponent,
@@ -86,7 +87,6 @@ const components = [
   FooterComponent,
   FooterAdminComponent,
   FooterSmallComponent,
-  HiddenCodeFormComponent,
   HiddenAsteriskInputComponent,
   OutlineAddressFormComponent,
   OutlinePhoneFormComponent,
@@ -105,6 +105,10 @@ const components = [
   SidebarComponent,
   FilledOnlytextTabsComponent,
   OutlineTooltipComponent,
+  KbaquestionsFormComponent,
+  OutlineNamedobFormComponent,
+  SelectDobFormComponent,
+  OutlineNameFormComponent,
 ];
 
 // component specific pipes only

@@ -10,5 +10,5 @@
         ]
     },
     "S3DeploymentBucket": "amplify-braveapp-dev-110519-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/149cd0515c9adaff14270b1fea6055f52bfb2e77"
+    "S3DeploymentRootKey": "amplify-appsync-files/5c789c3191c83b7367ffc536a22afcbc65a47387"
 }

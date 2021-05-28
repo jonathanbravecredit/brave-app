@@ -1,0 +1,43 @@
+<div class="flex content-center items-center justify-center h-full">
+  <div class="w-full max-w-xs">
+    <div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
+      <!-- image -->
+      <div class="flex justify-center mb-6">
+        <img class="w-full" src="assets/img/undraw_welcoming_xvuq.svg" />
+      </div>
+
+      <!-- header -->
+      <div class="py-3">
+        <h4 class="brave-h4">Congratulations!</h4>
+      </div>
+
+      <!-- subheader -->
+      <div class="py-3">
+        <div class="text-base">
+          <p class="mb-6 text-blueGray-600">You are verified.</p>
+        </div>
+      </div>
+
+      <!-- subheader -->
+      <div class="py-3">
+        <div class="text-base">
+          <p class="mb-6 text-blueGray-600">
+            You are being redirected to the BraveCredit dashboard.
+          </p>
+        </div>
+      </div>
+
+      <div class="py-3 pt-0">
+        <div class="-ml-3">
+          <brave-links-onlytext-button
+            (click)="nextClick.emit()"
+            [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+            ><span class="underline"
+              >Not being redirected? Click here</span
+            ></brave-links-onlytext-button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
