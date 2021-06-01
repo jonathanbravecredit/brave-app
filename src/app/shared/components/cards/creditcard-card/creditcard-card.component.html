@@ -1,36 +1,82 @@
 <div
-  class="relative flex break-words w-full py-5 pr-5 rounded-lg border border-blueGray-300"
+  class="relative flex flex-col break-words w-full py-5 rounded-lg border border-blueGray-300"
 >
-  <div class="px-4 w-13">
-    <!-- left column  section 1 -->
-    <div class="rounded-full bg-amber-300 border-none w-5 h-5"></div>
+  <div class="flex pr-5">
+    <div class="px-4 w-13">
+      <!-- left column  section 1 -->
+      <div class="rounded-full bg-amber-300 border-none w-5 h-5"></div>
+    </div>
+    <div class="flex flex-col w-full">
+      <!--  right column section 2 -->
+      <div class="flex flex-row justify-between p-0 -mt-1 mb-1">
+        <!-- header  -->
+        <span><p class="brave-body1-semibold">CITI</p></span>
+        <span
+          ><p class="brave-body1-semibold"></p>
+          80%</span
+        >
+      </div>
+
+      <div class="flex flex-row">
+        <!-- credit balance  -->
+        <span><p class="brave-body1">Credit Balance:&nbsp;</p></span>
+        <span><p class="brave-body1">$800</p></span>
+      </div>
+
+      <div class="flex flex-row">
+        <!-- credit limit  -->
+        <span><p class="brave-body1">Credit Limit:&nbsp;</p></span>
+        <span><p class="brave-body1">$2000</p></span>
+      </div>
+
+      <div class="mt-1">
+        <!-- buttons goes here -->
+        <brave-viewdetail-button>View Details</brave-viewdetail-button>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-col w-full">
-    <!--  right column section 2 -->
-    <div class="flex flex-row justify-between p-0 -mt-1 mb-1">
-      <!-- header  -->
-      <span><p class="brave-body1-semibold">CITI</p></span>
-      <span
-        ><p class="brave-body1-semibold"></p>
-        80%</span
-      >
-    </div>
 
-    <div class="flex flex-row">
-      <!-- credit balance  -->
-      <span><p class="brave-body1">Credit Balance:&nbsp;</p></span>
-      <span><p class="brave-body1">$800</p></span>
-    </div>
+  <div *ngIf="open$ | async as open" class="flex flex-col w-full py-5 px-4">
+    <div class="border-t border-blueGray-300"></div>
+  </div>
 
-    <div class="flex flex-row">
-      <!-- credit limit  -->
-      <span><p class="brave-body1">Credit Limit:&nbsp;</p></span>
-      <span><p class="brave-body1">$2000</p></span>
+  <div *ngIf="open$ | async as open" class="flex flex-row pr-5">
+    <div class="px-4 w-13">
+      <!-- left column  section 1 -->
+      <div class="w-5 h-5"></div>
     </div>
+    <div class="flex flex-col w-full pr-1">
+      <!--  right column section 2 -->
 
-    <div class="mt-1">
-      <!-- buttons goes here -->
-      <brave-viewdetail-button>View Details</brave-viewdetail-button>
+      <div class="flex flex-row justify-between">
+        <!-- min payment  -->
+        <span><p class="brave-body1">Minimum Payment:&nbsp;</p></span>
+        <span><p class="brave-body1">$50</p></span>
+      </div>
+
+      <div class="flex flex-row justify-between">
+        <!-- date opened TODO swith to pipe  -->
+        <span><p class="brave-body1">Date Opened:&nbsp;</p></span>
+        <span><p class="brave-body1">02/01/2020</p></span>
+      </div>
+
+      <div class="flex flex-row justify-between">
+        <!-- account status  -->
+        <span><p class="brave-body1">Account Status:&nbsp;</p></span>
+        <span><p class="brave-body1">In good standing</p></span>
+      </div>
+
+      <div class="flex flex-row justify-between">
+        <!-- ownership of account  -->
+        <span><p class="brave-body1">Ownership of account:&nbsp;</p></span>
+        <span><p class="brave-body1">Self</p></span>
+      </div>
+
+      <div class="flex flex-row justify-between">
+        <!-- credit limit  -->
+        <span><p class="brave-body1">Days 30/60/90 Late:&nbsp;</p></span>
+        <span><p class="brave-body1">1/0/0</p></span>
+      </div>
     </div>
   </div>
 </div>
