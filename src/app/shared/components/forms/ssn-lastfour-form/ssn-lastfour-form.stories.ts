@@ -21,17 +21,13 @@ export default {
   ],
 } as Meta;
 
-const slots: number[] = [1, 2, 3, 4];
 const Template: Story<SsnLastfourFormComponent> = (args: any) => ({
   props: {
     ...args,
-    slots,
   },
-  template: `<brave-ssn-lastfour-form [slots]="slots"></brave-ssn-lastfour-form>`,
+  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,
 });
 
 export const Default = Template.bind({});
-Default.args = {
-  slots,
-};
+Default.args = {};
 Default.parameters;

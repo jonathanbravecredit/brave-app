@@ -61,6 +61,8 @@ import { OutlineNamedobFormComponent } from './forms/outline-namedob-form/outlin
 import { BaseFormComponent } from './forms/base-form/base-form.component';
 import { SelectDobFormComponent } from './forms/select-dob-form/select-dob-form.component';
 import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name-form.component';
+import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card.component';
+import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
 
 const components = [
   BaseFormComponent,
@@ -109,6 +111,8 @@ const components = [
   OutlineNamedobFormComponent,
   SelectDobFormComponent,
   OutlineNameFormComponent,
+  CreditcardCardComponent,
+  ViewdetailButtonComponent,
 ];
 
 // component specific pipes only
