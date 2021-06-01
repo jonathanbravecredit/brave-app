@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'brave-creditcard-card',
-  templateUrl: './creditcard-card.component.html',
+  selector: 'brave-loan-card',
+  templateUrl: './loan-card.component.html',
 })
-export class CreditcardCardComponent implements AfterViewInit {
+export class LoanCardComponent implements AfterViewInit {
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
   open$: Observable<boolean> | undefined = of(false);

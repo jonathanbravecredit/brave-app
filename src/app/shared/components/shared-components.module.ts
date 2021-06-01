@@ -63,6 +63,7 @@ import { SelectDobFormComponent } from './forms/select-dob-form/select-dob-form.
 import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name-form.component';
 import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card.component';
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
+import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 
 const components = [
   BaseFormComponent,
@@ -130,7 +131,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, LoanCardComponent],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
