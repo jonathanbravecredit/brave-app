@@ -64,6 +64,7 @@ import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name
 import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card.component';
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
 import { LoanCardComponent } from './cards/loan-card/loan-card.component';
+import { AccountStatusPipe } from './cards/creditcard-card/account-status.pipe';
 
 const components = [
   BaseFormComponent,
@@ -114,6 +115,7 @@ const components = [
   OutlineNameFormComponent,
   CreditcardCardComponent,
   ViewdetailButtonComponent,
+  LoanCardComponent,
 ];
 
 // component specific pipes only
@@ -126,12 +128,13 @@ const pipes = [
   FilledClosingAlertPipe,
   FilledOnlytextBadgePipe,
   FilledChecktextProgressbarPipe,
+  AccountStatusPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives, LoanCardComponent],
+  declarations: [...components, ...pipes, ...directives],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

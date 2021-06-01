@@ -1,12 +1,12 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
-import { CreditcardCardComponent } from '@shared/components/cards/creditcard-card/creditcard-card.component';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { LoanCardComponent } from '@shared/components/cards/loan-card/loan-card.component';
 
 export default {
-  title: 'app/components/cards/creditcard-card',
-  component: CreditcardCardComponent,
+  title: 'app/components/cards/loan-card',
+  component: LoanCardComponent,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -19,14 +19,16 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<CreditcardCardComponent> = (args: any) => ({
-  component: CreditcardCardComponent,
+const Template: Story<LoanCardComponent> = (args: any) => ({
+  component: LoanCardComponent,
   props: {
     ...args,
-    status: 'excellent',
+    status: 'good',
   },
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  status: 'okay',
+};
 Default.parameters;
