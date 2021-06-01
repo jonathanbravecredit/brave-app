@@ -1,0 +1,13 @@
+<button
+  type="button"
+  class="relative flex bg-transparent font-sans text-sm text-coolGray-700 text-left hover:cursor-pointer focus:outline-none"
+  (click)="open = !open; open$.next(open)"
+>
+  <span class="flex items-center mr-2">
+    <p *ngIf="!open"><ng-content></ng-content></p>
+    <p *ngIf="open">Close</p>
+  </span>
+  <!-- TODO replace with material icon and add transform rotation-->
+  <span *ngIf="!open" style="transform: rotate(90deg)"> &#10095; </span>
+  <span *ngIf="open" style="transform: rotate(270deg)"> &#10095; </span>
+</button>

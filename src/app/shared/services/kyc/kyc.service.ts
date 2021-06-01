@@ -134,7 +134,7 @@ export class KycService implements OnDestroy {
   updateUserAttributes(attrs: UserAttributes): void {
     const user: UserStateModel = {
       ...this.user,
-      attributes: { ...this.user.attributes, ...attrs },
+      userAttributes: { ...this.user.userAttributes, ...attrs },
     };
     this.store.dispatch(new UserAction.Edit(user));
   }

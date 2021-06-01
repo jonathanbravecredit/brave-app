@@ -28,6 +28,10 @@ mutation CreateAppData(
           month
           day
         }
+        ssn {
+          lastfour
+          full
+        }
       }
       onboarding {
         lastActive
@@ -78,6 +82,10 @@ mutation UpdateAppData(
           month
           day
         }
+        ssn {
+          lastfour
+          full
+        }
       }
       onboarding {
         lastActive
@@ -127,6 +135,10 @@ mutation DeleteAppData(
           year
           month
           day
+        }
+        ssn {
+          lastfour
+          full
         }
       }
       onboarding {

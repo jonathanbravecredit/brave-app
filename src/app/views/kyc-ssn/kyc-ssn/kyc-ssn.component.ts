@@ -32,11 +32,11 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
     if (form.valid) {
       const temp = this.formatAttributes(form, ssn);
       const lastFour = `${temp['input-0']}${temp['input-1']}${temp['input-2']}${temp['input-3']}`;
-      const attrs = ({
+      const attrs = {
         ssn: {
           lastfour: lastFour,
         },
-      } as unknown) as UserAttributes;
+      } as UserAttributes;
       this.kycService.updateUserAttributes(attrs);
       this.kycService.completeStep(2);
       this.router.navigate(['../verify'], { relativeTo: this.route });

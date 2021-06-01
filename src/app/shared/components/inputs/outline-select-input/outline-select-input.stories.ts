@@ -37,6 +37,7 @@ export const Small = Template.bind({});
 const smallConfig: IOutlineSelectInputConfig = {
   size: 'sm',
   label: 'Input label',
+  autocomplete: 'off',
   options: ['one', 'two', 'three'],
 };
 Small.args = {
@@ -51,6 +52,7 @@ export const Large = Template.bind({});
 const largeConfig: IOutlineSelectInputConfig = {
   size: 'lg',
   label: 'Input label',
+  autocomplete: 'off',
   options: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],
 };
 Large.args = {
