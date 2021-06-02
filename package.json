@@ -20,6 +20,7 @@
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
+    "build-storybook-big": "node --max_old_space_size=4096 ./node_modules/@storybook/angular/bin/index.js -p 6006 -c .storybook",
     "chromatic": "npx chromatic --project-token 897995d581ea --exit-zero-on-changes -d storybook-static/"
   },
   "private": true,
