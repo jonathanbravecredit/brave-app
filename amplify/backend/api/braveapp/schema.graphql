@@ -50,6 +50,7 @@ type Agencies {
 }
 type Transunion {
   authenticated: Boolean
+  indicativeEnrichmentSuccess: Boolean
 }
 type Equifax {
   authenticated: Boolean
