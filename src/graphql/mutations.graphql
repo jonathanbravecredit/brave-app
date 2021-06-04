@@ -1,18 +1,31 @@
 # this is an auto generated file. This will be overwritten
 mutation CreateAppData(
+  $condition: ModelAppDataConditionInput
   $input: CreateAppDataInput!
-  $condition: ModelAppDataConditionInput
 ) {
-  createAppData(input: $input, condition: $condition) {
+  createAppData(condition: $condition, input: $input) {
+    agencies {
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+      }
+    }
+    createdAt
     id
+    updatedAt
     user {
       id
+      onboarding {
+        lastActive
+        lastComplete
+      }
       userAttributes {
-        name {
-          first
-          middle
-          last
-        }
         address {
           addressOne
           addressTwo
@@ -20,107 +33,54 @@ mutation CreateAppData(
           state
           zip
         }
-        phone {
-          primary
-        }
         dob {
-          year
-          month
           day
+          month
+          year
         }
-        ssn {
-          lastfour
-          full
-        }
-      }
-      onboarding {
-        lastActive
-        lastComplete
-      }
-    }
-    agencies {
-      transunion {
-        authenticated
-      }
-      equifax {
-        authenticated
-      }
-      experian {
-        authenticated
-      }
-    }
-    createdAt
-    updatedAt
-  }
-}
-mutation UpdateAppData(
-  $input: UpdateAppDataInput!
-  $condition: ModelAppDataConditionInput
-) {
-  updateAppData(input: $input, condition: $condition) {
-    id
-    user {
-      id
-      userAttributes {
         name {
           first
-          middle
           last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
+          middle
         }
         phone {
           primary
         }
-        dob {
-          year
-          month
-          day
-        }
         ssn {
-          lastfour
           full
+          lastfour
         }
       }
-      onboarding {
-        lastActive
-        lastComplete
-      }
     }
-    agencies {
-      transunion {
-        authenticated
-      }
-      equifax {
-        authenticated
-      }
-      experian {
-        authenticated
-      }
-    }
-    createdAt
-    updatedAt
   }
 }
 mutation DeleteAppData(
-  $input: DeleteAppDataInput!
   $condition: ModelAppDataConditionInput
+  $input: DeleteAppDataInput!
 ) {
-  deleteAppData(input: $input, condition: $condition) {
+  deleteAppData(condition: $condition, input: $input) {
+    agencies {
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+      }
+    }
+    createdAt
     id
+    updatedAt
     user {
       id
+      onboarding {
+        lastActive
+        lastComplete
+      }
       userAttributes {
-        name {
-          first
-          middle
-          last
-        }
         address {
           addressOne
           addressTwo
@@ -128,36 +88,79 @@ mutation DeleteAppData(
           state
           zip
         }
+        dob {
+          day
+          month
+          year
+        }
+        name {
+          first
+          last
+          middle
+        }
         phone {
           primary
         }
-        dob {
-          year
-          month
-          day
-        }
         ssn {
-          lastfour
           full
+          lastfour
         }
-      }
-      onboarding {
-        lastActive
-        lastComplete
       }
     }
+  }
+}
+mutation UpdateAppData(
+  $condition: ModelAppDataConditionInput
+  $input: UpdateAppDataInput!
+) {
+  updateAppData(condition: $condition, input: $input) {
     agencies {
-      transunion {
-        authenticated
-      }
       equifax {
         authenticated
       }
       experian {
         authenticated
       }
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+      }
     }
     createdAt
+    id
     updatedAt
+    user {
+      id
+      onboarding {
+        lastActive
+        lastComplete
+      }
+      userAttributes {
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        dob {
+          day
+          month
+          year
+        }
+        name {
+          first
+          last
+          middle
+        }
+        phone {
+          primary
+        }
+        ssn {
+          full
+          lastfour
+        }
+      }
+    }
   }
 }

@@ -1,9 +1,25 @@
-schema {
-  query: Query
-  mutation: Mutation
-  subscription: Subscription
+type AppData @model {
+  id: ID!
+  user: User!
+  agencies: Agencies!
 }
-
+type User {
+  id: ID!
+  userAttributes: UserAttributes
+  onboarding: Onboarding
+}
+type Name {
+  first: String!
+  middle: String
+  last: String!
+}
+type UserAttributes {
+  name: Name
+  address: Address
+  phone: Phone
+  dob: Dob
+  ssn: Ssn
+}
 type Address {
   addressOne: String!
   addressTwo: String
@@ -11,292 +27,34 @@ type Address {
   state: String!
   zip: String!
 }
-
-type Agencies {
-  equifax: Equifax
-  experian: Experian
-  transunion: Transunion
+type Phone {
+  primary: String!
 }
-
-type AppData {
-  agencies: Agencies!
-  createdAt: AWSDateTime!
-  id: ID!
-  updatedAt: AWSDateTime!
-  user: User!
-}
-
 type Dob {
-  day: String!
-  month: String!
   year: String!
+  month: String!
+  day: String!
 }
-
-type Equifax {
-  authenticated: Boolean
+type Ssn {
+  lastfour: String!
+  full: String
 }
-
-type Experian {
-  authenticated: Boolean
-}
-
-type ModelAppDataConnection {
-  items: [AppData]
-  nextToken: String
-}
-
-type Mutation {
-  createAppData(
-    condition: ModelAppDataConditionInput
-    input: CreateAppDataInput!
-  ): AppData
-  deleteAppData(
-    condition: ModelAppDataConditionInput
-    input: DeleteAppDataInput!
-  ): AppData
-  updateAppData(
-    condition: ModelAppDataConditionInput
-    input: UpdateAppDataInput!
-  ): AppData
-}
-
-type Name {
-  first: String!
-  last: String!
-  middle: String
-}
-
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!
 }
-
-type Phone {
-  primary: String!
+type Agencies {
+  transunion: Transunion
+  equifax: Equifax
+  experian: Experian
 }
-
-type Query {
-  getAppData(id: ID!): AppData
-  getTUData(id: ID!): String
-  listAppDatas(
-    filter: ModelAppDataFilterInput
-    limit: Int
-    nextToken: String
-  ): ModelAppDataConnection
-}
-
-type Ssn {
-  full: String
-  lastfour: String!
-}
-
-type Subscription {
-  onCreateAppData: AppData @aws_subscribe(mutations: ["createAppData"])
-  onDeleteAppData: AppData @aws_subscribe(mutations: ["deleteAppData"])
-  onUpdateAppData: AppData @aws_subscribe(mutations: ["updateAppData"])
-}
-
 type Transunion {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
 }
-
-type User {
-  id: ID!
-  onboarding: Onboarding
-  userAttributes: UserAttributes
-}
-
-type UserAttributes {
-  address: Address
-  dob: Dob
-  name: Name
-  phone: Phone
-  ssn: Ssn
-}
-
-enum ModelAttributeTypes {
-  _null
-  binary
-  binarySet
-  bool
-  list
-  map
-  number
-  numberSet
-  string
-  stringSet
-}
-
-enum ModelSortDirection {
-  ASC
-  DESC
-}
-
-input AddressInput {
-  addressOne: String!
-  addressTwo: String
-  city: String!
-  state: String!
-  zip: String!
-}
-
-input AgenciesInput {
-  equifax: EquifaxInput
-  experian: ExperianInput
-  transunion: TransunionInput
-}
-
-input CreateAppDataInput {
-  agencies: AgenciesInput!
-  id: ID
-  user: UserInput!
-}
-
-input DeleteAppDataInput {
-  id: ID!
-}
-
-input DobInput {
-  day: String!
-  month: String!
-  year: String!
-}
-
-input EquifaxInput {
+type Equifax {
   authenticated: Boolean
 }
-
-input ExperianInput {
+type Experian {
   authenticated: Boolean
-}
-
-input ModelAppDataConditionInput {
-  and: [ModelAppDataConditionInput]
-  not: ModelAppDataConditionInput
-  or: [ModelAppDataConditionInput]
-}
-
-input ModelAppDataFilterInput {
-  and: [ModelAppDataFilterInput]
-  id: ModelIDInput
-  not: ModelAppDataFilterInput
-  or: [ModelAppDataFilterInput]
-}
-
-input ModelBooleanInput {
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  eq: Boolean
-  ne: Boolean
-}
-
-input ModelFloatInput {
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  between: [Float]
-  eq: Float
-  ge: Float
-  gt: Float
-  le: Float
-  lt: Float
-  ne: Float
-}
-
-input ModelIDInput {
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  beginsWith: ID
-  between: [ID]
-  contains: ID
-  eq: ID
-  ge: ID
-  gt: ID
-  le: ID
-  lt: ID
-  ne: ID
-  notContains: ID
-  size: ModelSizeInput
-}
-
-input ModelIntInput {
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  between: [Int]
-  eq: Int
-  ge: Int
-  gt: Int
-  le: Int
-  lt: Int
-  ne: Int
-}
-
-input ModelSizeInput {
-  between: [Int]
-  eq: Int
-  ge: Int
-  gt: Int
-  le: Int
-  lt: Int
-  ne: Int
-}
-
-input ModelStringInput {
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  beginsWith: String
-  between: [String]
-  contains: String
-  eq: String
-  ge: String
-  gt: String
-  le: String
-  lt: String
-  ne: String
-  notContains: String
-  size: ModelSizeInput
-}
-
-input NameInput {
-  first: String!
-  last: String!
-  middle: String
-}
-
-input OnboardingInput {
-  lastActive: Int!
-  lastComplete: Int!
-}
-
-input PhoneInput {
-  primary: String!
-}
-
-input SsnInput {
-  full: String
-  lastfour: String!
-}
-
-input TransunionInput {
-  authenticated: Boolean
-}
-
-input UpdateAppDataInput {
-  agencies: AgenciesInput
-  id: ID!
-  user: UserInput
-}
-
-input UserAttributesInput {
-  address: AddressInput
-  dob: DobInput
-  name: NameInput
-  phone: PhoneInput
-  ssn: SsnInput
-}
-
-input UserInput {
-  id: ID!
-  onboarding: OnboardingInput
-  userAttributes: UserAttributesInput
 }
