@@ -123,7 +123,7 @@
           ]
         },
         "TypeName": "Query",
-        "FieldName": "echo",
+        "FieldName": "transunion",
         "RequestMappingTemplateS3Location": {
           "Fn::Sub": [
             "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.transunion.req.vtl",
