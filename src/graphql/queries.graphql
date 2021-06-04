@@ -50,6 +50,9 @@ query GetAppData($id: ID!) {
     updatedAt
   }
 }
+query GetTUData($id: ID!) {
+  getTUData(id: $id)
+}
 query ListAppDatas(
   $filter: ModelAppDataFilterInput
   $limit: Int
