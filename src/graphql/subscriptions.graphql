@@ -1,28 +1,15 @@
 # this is an auto generated file. This will be overwritten
 subscription OnCreateAppData {
   onCreateAppData {
-    agencies {
-      equifax {
-        authenticated
-      }
-      experian {
-        authenticated
-      }
-      transunion {
-        authenticated
-        indicativeEnrichmentSuccess
-      }
-    }
-    createdAt
     id
-    updatedAt
     user {
       id
-      onboarding {
-        lastActive
-        lastComplete
-      }
       userAttributes {
+        name {
+          first
+          middle
+          last
+        }
         address {
           addressOne
           addressTwo
@@ -30,103 +17,54 @@ subscription OnCreateAppData {
           state
           zip
         }
-        dob {
-          day
-          month
-          year
-        }
-        name {
-          first
-          last
-          middle
-        }
         phone {
           primary
         }
+        dob {
+          year
+          month
+          day
+        }
         ssn {
-          full
           lastfour
+          full
         }
       }
+      onboarding {
+        lastActive
+        lastComplete
+      }
     }
-  }
-}
-subscription OnDeleteAppData {
-  onDeleteAppData {
     agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+      }
       equifax {
         authenticated
       }
       experian {
         authenticated
       }
-      transunion {
-        authenticated
-        indicativeEnrichmentSuccess
-      }
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
-    id
     updatedAt
-    user {
-      id
-      onboarding {
-        lastActive
-        lastComplete
-      }
-      userAttributes {
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        dob {
-          day
-          month
-          year
-        }
-        name {
-          first
-          last
-          middle
-        }
-        phone {
-          primary
-        }
-        ssn {
-          full
-          lastfour
-        }
-      }
-    }
   }
 }
 subscription OnUpdateAppData {
   onUpdateAppData {
-    agencies {
-      equifax {
-        authenticated
-      }
-      experian {
-        authenticated
-      }
-      transunion {
-        authenticated
-        indicativeEnrichmentSuccess
-      }
-    }
-    createdAt
     id
-    updatedAt
     user {
       id
-      onboarding {
-        lastActive
-        lastComplete
-      }
       userAttributes {
+        name {
+          first
+          middle
+          last
+        }
         address {
           addressOne
           addressTwo
@@ -134,24 +72,95 @@ subscription OnUpdateAppData {
           state
           zip
         }
-        dob {
-          day
-          month
-          year
+        phone {
+          primary
         }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
+      }
+      onboarding {
+        lastActive
+        lastComplete
+      }
+    }
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteAppData {
+  onDeleteAppData {
+    id
+    user {
+      id
+      userAttributes {
         name {
           first
-          last
           middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
         }
         phone {
           primary
         }
+        dob {
+          year
+          month
+          day
+        }
         ssn {
-          full
           lastfour
+          full
         }
       }
+      onboarding {
+        lastActive
+        lastComplete
+      }
     }
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
   }
 }
