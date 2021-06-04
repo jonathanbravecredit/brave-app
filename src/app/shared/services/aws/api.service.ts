@@ -1058,6 +1058,18 @@ export class APIService {
     )) as any;
     return <GetAppDataQuery>response.data.getAppData;
   }
+  async GetTUData(id: string): Promise<string | null> {
+    const statement = `query GetTUData($id: ID!) {
+        getTUData(id: $id)
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <string | null>response.data.getTUData;
+  }
   async ListAppDatas(
     filter?: ModelAppDataFilterInput,
     limit?: number,
