@@ -27,24 +27,24 @@
     }
   },
   "Resources": {
-    "EchoLambdaDataSource": {
+    "TransunionLambdaDataSource": {
       "Type": "AWS::AppSync::DataSource",
       "Properties": {
         "ApiId": {
           "Ref": "AppSyncApiId"
         },
-        "Name": "EchoFunction",
+        "Name": "TransunionFunction",
         "Type": "AWS_LAMBDA",
         "ServiceRoleArn": {
           "Fn::GetAtt": [
-            "EchoLambdaDataSourceRole",
+            "TransunionLambdaDataSourceRole",
             "Arn"
           ]
         },
         "LambdaConfig": {
           "LambdaFunctionArn": {
             "Fn::Sub": [
-              "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:agency-services-transunion-${env}-testGraphQL",
+              "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:agency-services-transunion-${env}-graphql",
               {
                 "env": {
                   "Ref": "env"
@@ -55,12 +55,12 @@
         }
       }
     },
-    "EchoLambdaDataSourceRole": {
+    "TransunionLambdaDataSourceRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "RoleName": {
           "Fn::Sub": [
-            "EchoLambdaDataSourceRole-${env}",
+            "TransunionLambdaDataSourceRole-${env}",
             {
               "env": {
                 "Ref": "env"
@@ -94,7 +94,7 @@
                   "Resource": [
                     {
                       "Fn::Sub": [
-                        "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:agency-services-transunion-${env}-testGraphQL",
+                        "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:agency-services-transunion-${env}-graphql",
                         {
                           "env": {
                             "Ref": "env"
@@ -110,7 +110,7 @@
         ]
       }
     },
-    "QueryEchoResolver": {
+    "QueryTransunionResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
@@ -118,7 +118,7 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "EchoLambdaDataSource",
+            "TransunionLambdaDataSource",
             "Name"
           ]
         },
@@ -126,7 +126,7 @@
         "FieldName": "echo",
         "RequestMappingTemplateS3Location": {
           "Fn::Sub": [
-            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.echo.req.vtl",
+            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.transunion.req.vtl",
             {
               "S3DeploymentBucket": {
                 "Ref": "S3DeploymentBucket"
@@ -139,7 +139,7 @@
         },
         "ResponseMappingTemplateS3Location": {
           "Fn::Sub": [
-            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.echo.res.vtl",
+            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.transunion.res.vtl",
             {
               "S3DeploymentBucket": {
                 "Ref": "S3DeploymentBucket"
