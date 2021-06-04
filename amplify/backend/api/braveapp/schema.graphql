@@ -58,3 +58,6 @@ type Equifax {
 type Experian {
   authenticated: Boolean
 }
+type Query {
+  echo(msg: String): String
+}

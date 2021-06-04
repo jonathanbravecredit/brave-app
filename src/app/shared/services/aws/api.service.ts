@@ -9,53 +9,31 @@ export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
 }
 
-export type ModelAppDataConditionInput = {
-  and?: Array<ModelAppDataConditionInput | null> | null;
-  not?: ModelAppDataConditionInput | null;
-  or?: Array<ModelAppDataConditionInput | null> | null;
-};
-
 export type CreateAppDataInput = {
-  agencies: AgenciesInput;
   id?: string | null;
   user: UserInput;
-};
-
-export type AgenciesInput = {
-  equifax?: EquifaxInput | null;
-  experian?: ExperianInput | null;
-  transunion?: TransunionInput | null;
-};
-
-export type EquifaxInput = {
-  authenticated?: boolean | null;
-};
-
-export type ExperianInput = {
-  authenticated?: boolean | null;
-};
-
-export type TransunionInput = {
-  authenticated?: boolean | null;
+  agencies: AgenciesInput;
+  _version?: number | null;
 };
 
 export type UserInput = {
   id: string;
-  onboarding?: OnboardingInput | null;
   userAttributes?: UserAttributesInput | null;
-};
-
-export type OnboardingInput = {
-  lastActive: number;
-  lastComplete: number;
+  onboarding?: OnboardingInput | null;
 };
 
 export type UserAttributesInput = {
-  address?: AddressInput | null;
-  dob?: DobInput | null;
   name?: NameInput | null;
+  address?: AddressInput | null;
   phone?: PhoneInput | null;
+  dob?: DobInput | null;
   ssn?: SsnInput | null;
+};
+
+export type NameInput = {
+  first: string;
+  middle?: string | null;
+  last: string;
 };
 
 export type AddressInput = {
@@ -66,41 +44,130 @@ export type AddressInput = {
   zip: string;
 };
 
-export type DobInput = {
-  day: string;
-  month: string;
-  year: string;
-};
-
-export type NameInput = {
-  first: string;
-  last: string;
-  middle?: string | null;
-};
-
 export type PhoneInput = {
   primary: string;
 };
 
+export type DobInput = {
+  year: string;
+  month: string;
+  day: string;
+};
+
 export type SsnInput = {
-  full?: string | null;
   lastfour: string;
+  full?: string | null;
+};
+
+export type OnboardingInput = {
+  lastActive: number;
+  lastComplete: number;
+};
+
+export type AgenciesInput = {
+  transunion?: TransunionInput | null;
+  equifax?: EquifaxInput | null;
+  experian?: ExperianInput | null;
+};
+
+export type TransunionInput = {
+  authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+};
+
+export type EquifaxInput = {
+  authenticated?: boolean | null;
+};
+
+export type ExperianInput = {
+  authenticated?: boolean | null;
+};
+
+export type ModelAppDataConditionInput = {
+  and?: Array<ModelAppDataConditionInput | null> | null;
+  or?: Array<ModelAppDataConditionInput | null> | null;
+  not?: ModelAppDataConditionInput | null;
 };
 
 export type AppData = {
   __typename: "AppData";
-  agencies?: Agencies;
-  createdAt?: string;
   id?: string;
-  updatedAt?: string;
   user?: User;
+  agencies?: Agencies;
+  _version?: number;
+  _deleted?: boolean | null;
+  _lastChangedAt?: number;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type User = {
+  __typename: "User";
+  id?: string;
+  userAttributes?: UserAttributes;
+  onboarding?: Onboarding;
+};
+
+export type UserAttributes = {
+  __typename: "UserAttributes";
+  name?: Name;
+  address?: Address;
+  phone?: Phone;
+  dob?: Dob;
+  ssn?: Ssn;
+};
+
+export type Name = {
+  __typename: "Name";
+  first?: string;
+  middle?: string | null;
+  last?: string;
+};
+
+export type Address = {
+  __typename: "Address";
+  addressOne?: string;
+  addressTwo?: string | null;
+  city?: string;
+  state?: string;
+  zip?: string;
+};
+
+export type Phone = {
+  __typename: "Phone";
+  primary?: string;
+};
+
+export type Dob = {
+  __typename: "Dob";
+  year?: string;
+  month?: string;
+  day?: string;
+};
+
+export type Ssn = {
+  __typename: "Ssn";
+  lastfour?: string;
+  full?: string | null;
+};
+
+export type Onboarding = {
+  __typename: "Onboarding";
+  lastActive?: number;
+  lastComplete?: number;
 };
 
 export type Agencies = {
   __typename: "Agencies";
+  transunion?: Transunion;
   equifax?: Equifax;
   experian?: Experian;
-  transunion?: Transunion;
+};
+
+export type Transunion = {
+  __typename: "Transunion";
+  authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
 };
 
 export type Equifax = {
@@ -113,103 +180,42 @@ export type Experian = {
   authenticated?: boolean | null;
 };
 
-export type Transunion = {
-  __typename: "Transunion";
-  authenticated?: boolean | null;
-  indicativeEnrichmentSuccess?: boolean | null;
-};
-
-export type User = {
-  __typename: "User";
-  id?: string;
-  onboarding?: Onboarding;
-  userAttributes?: UserAttributes;
-};
-
-export type Onboarding = {
-  __typename: "Onboarding";
-  lastActive?: number;
-  lastComplete?: number;
-};
-
-export type UserAttributes = {
-  __typename: "UserAttributes";
-  address?: Address;
-  dob?: Dob;
-  name?: Name;
-  phone?: Phone;
-  ssn?: Ssn;
-};
-
-export type Address = {
-  __typename: "Address";
-  addressOne?: string;
-  addressTwo?: string | null;
-  city?: string;
-  state?: string;
-  zip?: string;
-};
-
-export type Dob = {
-  __typename: "Dob";
-  day?: string;
-  month?: string;
-  year?: string;
-};
-
-export type Name = {
-  __typename: "Name";
-  first?: string;
-  last?: string;
-  middle?: string | null;
-};
-
-export type Phone = {
-  __typename: "Phone";
-  primary?: string;
-};
-
-export type Ssn = {
-  __typename: "Ssn";
-  full?: string | null;
-  lastfour?: string;
+export type UpdateAppDataInput = {
+  id: string;
+  user?: UserInput | null;
+  agencies?: AgenciesInput | null;
+  _version?: number | null;
 };
 
 export type DeleteAppDataInput = {
   id: string;
-};
-
-export type UpdateAppDataInput = {
-  agencies?: AgenciesInput | null;
-  id: string;
-  user?: UserInput | null;
+  _version?: number | null;
 };
 
 export type ModelAppDataFilterInput = {
-  and?: Array<ModelAppDataFilterInput | null> | null;
   id?: ModelIDInput | null;
-  not?: ModelAppDataFilterInput | null;
+  and?: Array<ModelAppDataFilterInput | null> | null;
   or?: Array<ModelAppDataFilterInput | null> | null;
+  not?: ModelAppDataFilterInput | null;
 };
 
 export type ModelIDInput = {
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  beginsWith?: string | null;
-  between?: Array<string | null> | null;
-  contains?: string | null;
+  ne?: string | null;
   eq?: string | null;
-  ge?: string | null;
-  gt?: string | null;
   le?: string | null;
   lt?: string | null;
-  ne?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
   notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
   size?: ModelSizeInput | null;
 };
 
 export enum ModelAttributeTypes {
-  _null = "_null",
   binary = "binary",
   binarySet = "binarySet",
   bool = "bool",
@@ -218,56 +224,41 @@ export enum ModelAttributeTypes {
   number = "number",
   numberSet = "numberSet",
   string = "string",
-  stringSet = "stringSet"
+  stringSet = "stringSet",
+  _null = "_null"
 }
 
 export type ModelSizeInput = {
-  between?: Array<number | null> | null;
+  ne?: number | null;
   eq?: number | null;
-  ge?: number | null;
-  gt?: number | null;
   le?: number | null;
   lt?: number | null;
-  ne?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
 };
 
 export type ModelAppDataConnection = {
   __typename: "ModelAppDataConnection";
   items?: Array<AppData | null> | null;
   nextToken?: string | null;
+  startedAt?: number | null;
 };
 
 export type CreateAppDataMutation = {
   __typename: "AppData";
-  agencies: {
-    __typename: "Agencies";
-    equifax?: {
-      __typename: "Equifax";
-      authenticated?: boolean | null;
-    } | null;
-    experian?: {
-      __typename: "Experian";
-      authenticated?: boolean | null;
-    } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
-  };
-  createdAt: string;
   id: string;
-  updatedAt: string;
   user: {
     __typename: "User";
     id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
     userAttributes?: {
       __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
       address?: {
         __typename: "Address";
         addressOne: string;
@@ -276,35 +267,35 @@ export type CreateAppDataMutation = {
         state: string;
         zip: string;
       } | null;
-      dob?: {
-        __typename: "Dob";
-        day: string;
-        month: string;
-        year: string;
-      } | null;
-      name?: {
-        __typename: "Name";
-        first: string;
-        last: string;
-        middle?: string | null;
-      } | null;
       phone?: {
         __typename: "Phone";
         primary: string;
       } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
       ssn?: {
         __typename: "Ssn";
-        full?: string | null;
         lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
   };
-};
-
-export type DeleteAppDataMutation = {
-  __typename: "AppData";
   agencies: {
     __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
     equifax?: {
       __typename: "Equifax";
       authenticated?: boolean | null;
@@ -313,89 +304,28 @@ export type DeleteAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
   };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
   createdAt: string;
-  id: string;
   updatedAt: string;
-  user: {
-    __typename: "User";
-    id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        day: string;
-        month: string;
-        year: string;
-      } | null;
-      name?: {
-        __typename: "Name";
-        first: string;
-        last: string;
-        middle?: string | null;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        full?: string | null;
-        lastfour: string;
-      } | null;
-    } | null;
-  };
 };
 
 export type UpdateAppDataMutation = {
   __typename: "AppData";
-  agencies: {
-    __typename: "Agencies";
-    equifax?: {
-      __typename: "Equifax";
-      authenticated?: boolean | null;
-    } | null;
-    experian?: {
-      __typename: "Experian";
-      authenticated?: boolean | null;
-    } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
-  };
-  createdAt: string;
   id: string;
-  updatedAt: string;
   user: {
     __typename: "User";
     id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
     userAttributes?: {
       __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
       address?: {
         __typename: "Address";
         addressOne: string;
@@ -404,62 +334,65 @@ export type UpdateAppDataMutation = {
         state: string;
         zip: string;
       } | null;
-      dob?: {
-        __typename: "Dob";
-        day: string;
-        month: string;
-        year: string;
-      } | null;
-      name?: {
-        __typename: "Name";
-        first: string;
-        last: string;
-        middle?: string | null;
-      } | null;
       phone?: {
         __typename: "Phone";
         primary: string;
       } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
       ssn?: {
         __typename: "Ssn";
-        full?: string | null;
         lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type GetAppDataQuery = {
+export type DeleteAppDataMutation = {
   __typename: "AppData";
-  agencies: {
-    __typename: "Agencies";
-    equifax?: {
-      __typename: "Equifax";
-      authenticated?: boolean | null;
-    } | null;
-    experian?: {
-      __typename: "Experian";
-      authenticated?: boolean | null;
-    } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
-  };
-  createdAt: string;
   id: string;
-  updatedAt: string;
   user: {
     __typename: "User";
     id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
     userAttributes?: {
       __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
       address?: {
         __typename: "Address";
         addressOne: string;
@@ -468,64 +401,67 @@ export type GetAppDataQuery = {
         state: string;
         zip: string;
       } | null;
-      dob?: {
-        __typename: "Dob";
-        day: string;
-        month: string;
-        year: string;
-      } | null;
-      name?: {
-        __typename: "Name";
-        first: string;
-        last: string;
-        middle?: string | null;
-      } | null;
       phone?: {
         __typename: "Phone";
         primary: string;
       } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
       ssn?: {
         __typename: "Ssn";
-        full?: string | null;
         lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type ListAppDatasQuery = {
+export type SyncAppDataQuery = {
   __typename: "ModelAppDataConnection";
   items?: Array<{
     __typename: "AppData";
-    agencies: {
-      __typename: "Agencies";
-      equifax?: {
-        __typename: "Equifax";
-        authenticated?: boolean | null;
-      } | null;
-      experian?: {
-        __typename: "Experian";
-        authenticated?: boolean | null;
-      } | null;
-      transunion?: {
-        __typename: "Transunion";
-        authenticated?: boolean | null;
-        indicativeEnrichmentSuccess?: boolean | null;
-      } | null;
-    };
-    createdAt: string;
     id: string;
-    updatedAt: string;
     user: {
       __typename: "User";
       id: string;
-      onboarding?: {
-        __typename: "Onboarding";
-        lastActive: number;
-        lastComplete: number;
-      } | null;
       userAttributes?: {
         __typename: "UserAttributes";
+        name?: {
+          __typename: "Name";
+          first: string;
+          middle?: string | null;
+          last: string;
+        } | null;
         address?: {
           __typename: "Address";
           addressOne: string;
@@ -534,64 +470,207 @@ export type ListAppDatasQuery = {
           state: string;
           zip: string;
         } | null;
+        phone?: {
+          __typename: "Phone";
+          primary: string;
+        } | null;
         dob?: {
           __typename: "Dob";
-          day: string;
-          month: string;
           year: string;
+          month: string;
+          day: string;
         } | null;
+        ssn?: {
+          __typename: "Ssn";
+          lastfour: string;
+          full?: string | null;
+        } | null;
+      } | null;
+      onboarding?: {
+        __typename: "Onboarding";
+        lastActive: number;
+        lastComplete: number;
+      } | null;
+    };
+    agencies: {
+      __typename: "Agencies";
+      transunion?: {
+        __typename: "Transunion";
+        authenticated?: boolean | null;
+        indicativeEnrichmentSuccess?: boolean | null;
+      } | null;
+      equifax?: {
+        __typename: "Equifax";
+        authenticated?: boolean | null;
+      } | null;
+      experian?: {
+        __typename: "Experian";
+        authenticated?: boolean | null;
+      } | null;
+    };
+    _version: number;
+    _deleted?: boolean | null;
+    _lastChangedAt: number;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+  startedAt?: number | null;
+};
+
+export type GetAppDataQuery = {
+  __typename: "AppData";
+  id: string;
+  user: {
+    __typename: "User";
+    id: string;
+    userAttributes?: {
+      __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
+      } | null;
+    } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListAppDatasQuery = {
+  __typename: "ModelAppDataConnection";
+  items?: Array<{
+    __typename: "AppData";
+    id: string;
+    user: {
+      __typename: "User";
+      id: string;
+      userAttributes?: {
+        __typename: "UserAttributes";
         name?: {
           __typename: "Name";
           first: string;
-          last: string;
           middle?: string | null;
+          last: string;
+        } | null;
+        address?: {
+          __typename: "Address";
+          addressOne: string;
+          addressTwo?: string | null;
+          city: string;
+          state: string;
+          zip: string;
         } | null;
         phone?: {
           __typename: "Phone";
           primary: string;
         } | null;
+        dob?: {
+          __typename: "Dob";
+          year: string;
+          month: string;
+          day: string;
+        } | null;
         ssn?: {
           __typename: "Ssn";
-          full?: string | null;
           lastfour: string;
+          full?: string | null;
         } | null;
       } | null;
+      onboarding?: {
+        __typename: "Onboarding";
+        lastActive: number;
+        lastComplete: number;
+      } | null;
     };
+    agencies: {
+      __typename: "Agencies";
+      transunion?: {
+        __typename: "Transunion";
+        authenticated?: boolean | null;
+        indicativeEnrichmentSuccess?: boolean | null;
+      } | null;
+      equifax?: {
+        __typename: "Equifax";
+        authenticated?: boolean | null;
+      } | null;
+      experian?: {
+        __typename: "Experian";
+        authenticated?: boolean | null;
+      } | null;
+    };
+    _version: number;
+    _deleted?: boolean | null;
+    _lastChangedAt: number;
+    createdAt: string;
+    updatedAt: string;
   } | null> | null;
   nextToken?: string | null;
+  startedAt?: number | null;
 };
 
 export type OnCreateAppDataSubscription = {
   __typename: "AppData";
-  agencies: {
-    __typename: "Agencies";
-    equifax?: {
-      __typename: "Equifax";
-      authenticated?: boolean | null;
-    } | null;
-    experian?: {
-      __typename: "Experian";
-      authenticated?: boolean | null;
-    } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
-  };
-  createdAt: string;
   id: string;
-  updatedAt: string;
   user: {
     __typename: "User";
     id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
     userAttributes?: {
       __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
       address?: {
         __typename: "Address";
         addressOne: string;
@@ -600,35 +679,35 @@ export type OnCreateAppDataSubscription = {
         state: string;
         zip: string;
       } | null;
-      dob?: {
-        __typename: "Dob";
-        day: string;
-        month: string;
-        year: string;
-      } | null;
-      name?: {
-        __typename: "Name";
-        first: string;
-        last: string;
-        middle?: string | null;
-      } | null;
       phone?: {
         __typename: "Phone";
         primary: string;
       } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
       ssn?: {
         __typename: "Ssn";
-        full?: string | null;
         lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
   };
-};
-
-export type OnDeleteAppDataSubscription = {
-  __typename: "AppData";
   agencies: {
     __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
     equifax?: {
       __typename: "Equifax";
       authenticated?: boolean | null;
@@ -637,89 +716,28 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
   };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
   createdAt: string;
-  id: string;
   updatedAt: string;
-  user: {
-    __typename: "User";
-    id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        day: string;
-        month: string;
-        year: string;
-      } | null;
-      name?: {
-        __typename: "Name";
-        first: string;
-        last: string;
-        middle?: string | null;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        full?: string | null;
-        lastfour: string;
-      } | null;
-    } | null;
-  };
 };
 
 export type OnUpdateAppDataSubscription = {
   __typename: "AppData";
-  agencies: {
-    __typename: "Agencies";
-    equifax?: {
-      __typename: "Equifax";
-      authenticated?: boolean | null;
-    } | null;
-    experian?: {
-      __typename: "Experian";
-      authenticated?: boolean | null;
-    } | null;
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-    } | null;
-  };
-  createdAt: string;
   id: string;
-  updatedAt: string;
   user: {
     __typename: "User";
     id: string;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-    } | null;
     userAttributes?: {
       __typename: "UserAttributes";
+      name?: {
+        __typename: "Name";
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
       address?: {
         __typename: "Address";
         addressOne: string;
@@ -728,29 +746,116 @@ export type OnUpdateAppDataSubscription = {
         state: string;
         zip: string;
       } | null;
+      phone?: {
+        __typename: "Phone";
+        primary: string;
+      } | null;
       dob?: {
         __typename: "Dob";
-        day: string;
-        month: string;
         year: string;
+        month: string;
+        day: string;
       } | null;
+      ssn?: {
+        __typename: "Ssn";
+        lastfour: string;
+        full?: string | null;
+      } | null;
+    } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
+  };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteAppDataSubscription = {
+  __typename: "AppData";
+  id: string;
+  user: {
+    __typename: "User";
+    id: string;
+    userAttributes?: {
+      __typename: "UserAttributes";
       name?: {
         __typename: "Name";
         first: string;
-        last: string;
         middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: "Address";
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
       } | null;
       phone?: {
         __typename: "Phone";
         primary: string;
       } | null;
+      dob?: {
+        __typename: "Dob";
+        year: string;
+        month: string;
+        day: string;
+      } | null;
       ssn?: {
         __typename: "Ssn";
-        full?: string | null;
         lastfour: string;
+        full?: string | null;
       } | null;
     } | null;
+    onboarding?: {
+      __typename: "Onboarding";
+      lastActive: number;
+      lastComplete: number;
+    } | null;
   };
+  agencies: {
+    __typename: "Agencies";
+    transunion?: {
+      __typename: "Transunion";
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+    } | null;
+    equifax?: {
+      __typename: "Equifax";
+      authenticated?: boolean | null;
+    } | null;
+    experian?: {
+      __typename: "Experian";
+      authenticated?: boolean | null;
+    } | null;
+  };
+  _version: number;
+  _deleted?: boolean | null;
+  _lastChangedAt: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 @Injectable({
@@ -761,38 +866,21 @@ export class APIService {
     input: CreateAppDataInput,
     condition?: ModelAppDataConditionInput
   ): Promise<CreateAppDataMutation> {
-    const statement = `mutation CreateAppData($condition: ModelAppDataConditionInput, $input: CreateAppDataInput!) {
-        createAppData(condition: $condition, input: $input) {
+    const statement = `mutation CreateAppData($input: CreateAppDataInput!, $condition: ModelAppDataConditionInput) {
+        createAppData(input: $input, condition: $condition) {
           __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
           id
-          updatedAt
           user {
             __typename
             id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
             userAttributes {
               __typename
+              name {
+                __typename
+                first
+                middle
+                last
+              }
               address {
                 __typename
                 addressOne
@@ -801,29 +889,49 @@ export class APIService {
                 state
                 zip
               }
-              dob {
-                __typename
-                day
-                month
-                year
-              }
-              name {
-                __typename
-                first
-                last
-                middle
-              }
               phone {
                 __typename
                 primary
               }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
               ssn {
                 __typename
-                full
                 lastfour
+                full
               }
             }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -837,122 +945,25 @@ export class APIService {
     )) as any;
     return <CreateAppDataMutation>response.data.createAppData;
   }
-  async DeleteAppData(
-    input: DeleteAppDataInput,
-    condition?: ModelAppDataConditionInput
-  ): Promise<DeleteAppDataMutation> {
-    const statement = `mutation DeleteAppData($condition: ModelAppDataConditionInput, $input: DeleteAppDataInput!) {
-        deleteAppData(condition: $condition, input: $input) {
-          __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
-          id
-          updatedAt
-          user {
-            __typename
-            id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
-            userAttributes {
-              __typename
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              dob {
-                __typename
-                day
-                month
-                year
-              }
-              name {
-                __typename
-                first
-                last
-                middle
-              }
-              phone {
-                __typename
-                primary
-              }
-              ssn {
-                __typename
-                full
-                lastfour
-              }
-            }
-          }
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteAppDataMutation>response.data.deleteAppData;
-  }
   async UpdateAppData(
     input: UpdateAppDataInput,
     condition?: ModelAppDataConditionInput
   ): Promise<UpdateAppDataMutation> {
-    const statement = `mutation UpdateAppData($condition: ModelAppDataConditionInput, $input: UpdateAppDataInput!) {
-        updateAppData(condition: $condition, input: $input) {
+    const statement = `mutation UpdateAppData($input: UpdateAppDataInput!, $condition: ModelAppDataConditionInput) {
+        updateAppData(input: $input, condition: $condition) {
           __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
           id
-          updatedAt
           user {
             __typename
             id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
             userAttributes {
               __typename
+              name {
+                __typename
+                first
+                middle
+                last
+              }
               address {
                 __typename
                 addressOne
@@ -961,29 +972,49 @@ export class APIService {
                 state
                 zip
               }
-              dob {
-                __typename
-                day
-                month
-                year
-              }
-              name {
-                __typename
-                first
-                last
-                middle
-              }
               phone {
                 __typename
                 primary
               }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
               ssn {
                 __typename
-                full
                 lastfour
+                full
               }
             }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -997,39 +1028,25 @@ export class APIService {
     )) as any;
     return <UpdateAppDataMutation>response.data.updateAppData;
   }
-  async GetAppData(id: string): Promise<GetAppDataQuery> {
-    const statement = `query GetAppData($id: ID!) {
-        getAppData(id: $id) {
+  async DeleteAppData(
+    input: DeleteAppDataInput,
+    condition?: ModelAppDataConditionInput
+  ): Promise<DeleteAppDataMutation> {
+    const statement = `mutation DeleteAppData($input: DeleteAppDataInput!, $condition: ModelAppDataConditionInput) {
+        deleteAppData(input: $input, condition: $condition) {
           __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
           id
-          updatedAt
           user {
             __typename
             id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
             userAttributes {
               __typename
+              name {
+                __typename
+                first
+                middle
+                last
+              }
               address {
                 __typename
                 addressOne
@@ -1038,29 +1055,226 @@ export class APIService {
                 state
                 zip
               }
+              phone {
+                __typename
+                primary
+              }
               dob {
                 __typename
-                day
-                month
                 year
+                month
+                day
               }
+              ssn {
+                __typename
+                lastfour
+                full
+              }
+            }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
+          }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteAppDataMutation>response.data.deleteAppData;
+  }
+  async SyncAppData(
+    filter?: ModelAppDataFilterInput,
+    limit?: number,
+    nextToken?: string,
+    lastSync?: number
+  ): Promise<SyncAppDataQuery> {
+    const statement = `query SyncAppData($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String, $lastSync: AWSTimestamp) {
+        syncAppData(filter: $filter, limit: $limit, nextToken: $nextToken, lastSync: $lastSync) {
+          __typename
+          items {
+            __typename
+            id
+            user {
+              __typename
+              id
+              userAttributes {
+                __typename
+                name {
+                  __typename
+                  first
+                  middle
+                  last
+                }
+                address {
+                  __typename
+                  addressOne
+                  addressTwo
+                  city
+                  state
+                  zip
+                }
+                phone {
+                  __typename
+                  primary
+                }
+                dob {
+                  __typename
+                  year
+                  month
+                  day
+                }
+                ssn {
+                  __typename
+                  lastfour
+                  full
+                }
+              }
+              onboarding {
+                __typename
+                lastActive
+                lastComplete
+              }
+            }
+            agencies {
+              __typename
+              transunion {
+                __typename
+                authenticated
+                indicativeEnrichmentSuccess
+              }
+              equifax {
+                __typename
+                authenticated
+              }
+              experian {
+                __typename
+                authenticated
+              }
+            }
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+          startedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    if (lastSync) {
+      gqlAPIServiceArguments.lastSync = lastSync;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <SyncAppDataQuery>response.data.syncAppData;
+  }
+  async GetAppData(id: string): Promise<GetAppDataQuery> {
+    const statement = `query GetAppData($id: ID!) {
+        getAppData(id: $id) {
+          __typename
+          id
+          user {
+            __typename
+            id
+            userAttributes {
+              __typename
               name {
                 __typename
                 first
-                last
                 middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
               }
               phone {
                 __typename
                 primary
               }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
               ssn {
                 __typename
-                full
                 lastfour
+                full
               }
             }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1070,18 +1284,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <GetAppDataQuery>response.data.getAppData;
-  }
-  async GetTUData(id: string): Promise<string | null> {
-    const statement = `query GetTUData($id: ID!) {
-        getTUData(id: $id)
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <string | null>response.data.getTUData;
   }
   async ListAppDatas(
     filter?: ModelAppDataFilterInput,
@@ -1093,35 +1295,18 @@ export class APIService {
           __typename
           items {
             __typename
-            agencies {
-              __typename
-              equifax {
-                __typename
-                authenticated
-              }
-              experian {
-                __typename
-                authenticated
-              }
-              transunion {
-                __typename
-                authenticated
-                indicativeEnrichmentSuccess
-              }
-            }
-            createdAt
             id
-            updatedAt
             user {
               __typename
               id
-              onboarding {
-                __typename
-                lastActive
-                lastComplete
-              }
               userAttributes {
                 __typename
+                name {
+                  __typename
+                  first
+                  middle
+                  last
+                }
                 address {
                   __typename
                   addressOne
@@ -1130,31 +1315,52 @@ export class APIService {
                   state
                   zip
                 }
-                dob {
-                  __typename
-                  day
-                  month
-                  year
-                }
-                name {
-                  __typename
-                  first
-                  last
-                  middle
-                }
                 phone {
                   __typename
                   primary
                 }
+                dob {
+                  __typename
+                  year
+                  month
+                  day
+                }
                 ssn {
                   __typename
-                  full
                   lastfour
+                  full
                 }
               }
+              onboarding {
+                __typename
+                lastActive
+                lastComplete
+              }
             }
+            agencies {
+              __typename
+              transunion {
+                __typename
+                authenticated
+                indicativeEnrichmentSuccess
+              }
+              equifax {
+                __typename
+                authenticated
+              }
+              experian {
+                __typename
+                authenticated
+              }
+            }
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
           }
           nextToken
+          startedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -1179,35 +1385,18 @@ export class APIService {
       `subscription OnCreateAppData {
         onCreateAppData {
           __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
           id
-          updatedAt
           user {
             __typename
             id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
             userAttributes {
               __typename
+              name {
+                __typename
+                first
+                middle
+                last
+              }
               address {
                 __typename
                 addressOne
@@ -1216,105 +1405,53 @@ export class APIService {
                 state
                 zip
               }
-              dob {
-                __typename
-                day
-                month
-                year
-              }
-              name {
-                __typename
-                first
-                last
-                middle
-              }
               phone {
                 __typename
                 primary
               }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
               ssn {
                 __typename
-                full
                 lastfour
+                full
               }
             }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }`
     )
   ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
-
-  OnDeleteAppDataListener: Observable<
-    SubscriptionResponse<OnDeleteAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteAppData {
-        onDeleteAppData {
-          __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
-          id
-          updatedAt
-          user {
-            __typename
-            id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
-            userAttributes {
-              __typename
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              dob {
-                __typename
-                day
-                month
-                year
-              }
-              name {
-                __typename
-                first
-                last
-                middle
-              }
-              phone {
-                __typename
-                primary
-              }
-              ssn {
-                __typename
-                full
-                lastfour
-              }
-            }
-          }
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
 
   OnUpdateAppDataListener: Observable<
     SubscriptionResponse<OnUpdateAppDataSubscription>
@@ -1323,35 +1460,18 @@ export class APIService {
       `subscription OnUpdateAppData {
         onUpdateAppData {
           __typename
-          agencies {
-            __typename
-            equifax {
-              __typename
-              authenticated
-            }
-            experian {
-              __typename
-              authenticated
-            }
-            transunion {
-              __typename
-              authenticated
-              indicativeEnrichmentSuccess
-            }
-          }
-          createdAt
           id
-          updatedAt
           user {
             __typename
             id
-            onboarding {
-              __typename
-              lastActive
-              lastComplete
-            }
             userAttributes {
               __typename
+              name {
+                __typename
+                first
+                middle
+                last
+              }
               address {
                 __typename
                 addressOne
@@ -1360,31 +1480,126 @@ export class APIService {
                 state
                 zip
               }
+              phone {
+                __typename
+                primary
+              }
               dob {
                 __typename
-                day
-                month
                 year
+                month
+                day
               }
+              ssn {
+                __typename
+                lastfour
+                full
+              }
+            }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
+          }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+
+  OnDeleteAppDataListener: Observable<
+    SubscriptionResponse<OnDeleteAppDataSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteAppData {
+        onDeleteAppData {
+          __typename
+          id
+          user {
+            __typename
+            id
+            userAttributes {
+              __typename
               name {
                 __typename
                 first
-                last
                 middle
+                last
+              }
+              address {
+                __typename
+                addressOne
+                addressTwo
+                city
+                state
+                zip
               }
               phone {
                 __typename
                 primary
               }
+              dob {
+                __typename
+                year
+                month
+                day
+              }
               ssn {
                 __typename
-                full
                 lastfour
+                full
               }
             }
+            onboarding {
+              __typename
+              lastActive
+              lastComplete
+            }
           }
+          agencies {
+            __typename
+            transunion {
+              __typename
+              authenticated
+              indicativeEnrichmentSuccess
+            }
+            equifax {
+              __typename
+              authenticated
+            }
+            experian {
+              __typename
+              authenticated
+            }
+          }
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }`
     )
-  ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+  ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
 }
