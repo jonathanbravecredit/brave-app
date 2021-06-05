@@ -2,33 +2,6 @@
 query Transunion($action: String!, $message: String!) {
   transunion(action: $action, message: $message)
 }
-query SyncAppData(
-  $filter: ModelAppDataFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncAppData(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      user {
-        id
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
-}
 query GetAppData($id: ID!) {
   getAppData(id: $id) {
     id
@@ -52,9 +25,6 @@ query GetAppData($id: ID!) {
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -70,13 +40,9 @@ query ListAppDatas(
       user {
         id
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
     nextToken
-    startedAt
   }
 }
