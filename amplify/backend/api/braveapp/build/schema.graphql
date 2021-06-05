@@ -2,9 +2,6 @@ type AppData {
   id: ID!
   user: User!
   agencies: Agencies!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -55,6 +52,14 @@ type Ssn {
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!
+  started: Boolean
+}
+
+type OnboardingStep {
+  id: Int
+  active: Boolean
+  complete: Boolean
+  name: String
 }
 
 type Agencies {
@@ -74,6 +79,12 @@ type Equifax {
 
 type Experian {
   authenticated: Boolean
+}
+
+type Query {
+  transunion(action: String!, message: String!): String
+  getAppData(id: ID!): AppData
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
 }
 
 input UserInput {
@@ -122,6 +133,7 @@ input SsnInput {
 input OnboardingInput {
   lastActive: Int!
   lastComplete: Int!
+  started: Boolean
 }
 
 input AgenciesInput {
@@ -151,7 +163,6 @@ enum ModelSortDirection {
 type ModelAppDataConnection {
   items: [AppData]
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelStringInput {
@@ -247,29 +258,20 @@ enum ModelAttributeTypes {
   _null
 }
 
-type Query {
-  syncAppData(filter: ModelAppDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAppDataConnection
-  getAppData(id: ID!): AppData
-  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
-}
-
 input CreateAppDataInput {
   id: ID
   user: UserInput!
   agencies: AgenciesInput!
-  _version: Int
 }
 
 input UpdateAppDataInput {
   id: ID!
   user: UserInput
   agencies: AgenciesInput
-  _version: Int
 }
 
 input DeleteAppDataInput {
   id: ID
-  _version: Int
 }
 
 type Mutation {

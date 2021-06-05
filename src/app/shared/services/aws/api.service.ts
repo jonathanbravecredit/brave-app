@@ -63,14 +63,6 @@ export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
   started?: boolean | null;
-  steps?: Array<OnboardingStepInput | null> | null;
-};
-
-export type OnboardingStepInput = {
-  id?: number | null;
-  active?: boolean | null;
-  complete?: boolean | null;
-  name?: string | null;
 };
 
 export type AgenciesInput = {
@@ -165,15 +157,6 @@ export type Onboarding = {
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
-  steps?: Array<OnboardingStep | null> | null;
-};
-
-export type OnboardingStep = {
-  __typename: "OnboardingStep";
-  id?: number | null;
-  active?: boolean | null;
-  complete?: boolean | null;
-  name?: string | null;
 };
 
 export type Agencies = {

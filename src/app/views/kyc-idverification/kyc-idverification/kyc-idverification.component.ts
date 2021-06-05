@@ -14,6 +14,7 @@ export class KycIdverificationComponent
   extends KycBaseComponent
   implements OnInit {
   @Input() state: KycIdverificationState = 'init';
+  stepID = 3;
 
   constructor(
     private router: Router,
@@ -31,7 +32,7 @@ export class KycIdverificationComponent
   }
 
   goBack(): void {
-    this.kycService.inactivateStep(3);
+    this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../verify'], { relativeTo: this.route });
   }
 
@@ -39,7 +40,7 @@ export class KycIdverificationComponent
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
       // TODO submit code to backed
-      this.kycService.completeStep(3);
+      this.kycService.completeStep(this.stepID);
       // this.router.navigate(['../congratulations'], { relativeTo: this.route });
     }
   }

@@ -10,6 +10,7 @@ import { UserAttributesInput } from '@shared/services/aws/api.service';
   templateUrl: './kyc-ssn.component.html',
 })
 export class KycSsnComponent extends KycBaseComponent implements OnInit {
+  stepID = 2;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -19,11 +20,11 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.kycService.activateStep(2);
+    this.kycService.activateStep(this.stepID);
   }
 
   goBack(): void {
-    this.kycService.inactivateStep(2);
+    this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../address'], { relativeTo: this.route });
   }
 
@@ -38,7 +39,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
         },
       } as UserAttributesInput;
       this.kycService.updateUserAttributes(attrs);
-      this.kycService.completeStep(2);
+      this.kycService.completeStep(this.stepID);
       this.router.navigate(['../verify'], { relativeTo: this.route });
     }
   }
