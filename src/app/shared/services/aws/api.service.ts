@@ -1111,9 +1111,9 @@ export class APIService {
     )) as any;
     return <DeleteAppDataMutation>response.data.deleteAppData;
   }
-  async Echo(msg?: string): Promise<string | null> {
-    const statement = `query Echo($msg: String) {
-        echo(msg: $msg)
+  async Transunion(msg?: string): Promise<string | null> {
+    const statement = `query Transunion($msg: String) {
+        transunion(msg: $msg)
       }`;
     const gqlAPIServiceArguments: any = {};
     if (msg) {
@@ -1122,7 +1122,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <string | null>response.data.echo;
+    return <string | null>response.data.transunion;
   }
   async SyncAppData(
     filter?: ModelAppDataFilterInput,
