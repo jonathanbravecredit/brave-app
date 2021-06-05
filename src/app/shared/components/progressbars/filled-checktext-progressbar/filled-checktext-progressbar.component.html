@@ -7,27 +7,29 @@
         <div
           [ngClass]="{
             rounded: isFirst,
-            'bg-lightBlue-100': step.active,
-            'bg-coolGray-200': !step.active
+            'bg-lightBlue-100': i >= activatedStep,
+            'bg-coolGray-200': i < activatedStep
           }"
           class="flex-auto h-2 w-1/5 rounded-r-none transition duration-500 ease-in-out"
         ></div>
         <div class="flex items-center text-white relative">
           <div
             [ngClass]="{
-              'bg-lightBlue-100': step.active,
-              'bg-coolGray-200': !step.active
+              'bg-lightBlue-100': i >= activatedStep,
+              'bg-coolGray-200': i < activatedStep
             }"
             class="flex justify-center items-center text-center rounded-full transition duration-500 ease-in-out h-8 w-8 -ml-0.5"
           >
-            <span class="material-icons text-coolGray-700" *ngIf="step.complete"
+            <span
+              class="material-icons text-coolGray-700"
+              *ngIf="i > completedStep"
               >done</span
             >
           </div>
           <div
             [ngClass]="{
-              'text-coolGray-700': step.complete,
-              'text-coolGray-200': !step.complete
+              'text-coolGray-700': i > completedStep,
+              'text-coolGray-200': i <= completedStep
             }"
             class="absolute top-0 -ml-12 text-center mt-9 w-32 font-sans text-xs"
           >
@@ -38,8 +40,8 @@
         <div
           *ngIf="isLast"
           [ngClass]="{
-            'bg-lightBlue-100': step.active,
-            'bg-coolGray-200': !step.active
+            'bg-lightBlue-100': i >= activatedStep,
+            'bg-coolGray-200': i < activatedStep
           }"
           class="flex-auto h-2 w-1/5 rounded rounded-l-none transition duration-500 ease-in-out"
         ></div>

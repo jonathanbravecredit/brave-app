@@ -33,10 +33,8 @@ export class KycService implements OnDestroy {
 
   constructor(private store: Store, private api: APIService) {
     this.stateSub$ = this.store.subscribe((state) => {
-      console.log('state has changed ===>', state);
       this.state$.next(state);
       const input = { ...state.appData } as UpdateAppDataInput;
-      console.log('input ===> ', input);
       this.api
         .UpdateAppData(input)
         .then((res) => {
@@ -73,9 +71,11 @@ export class KycService implements OnDestroy {
    * @param {number} id the progress step ID
    */
   activateStep(id: number): void {
-    const onboarding: OnboardingStateModel | undefined = this.updateStep(id, {
-      active: true,
-    });
+    const { lastActive, lastComplete } = this.onboarding;
+    const onboarding: OnboardingStateModel | undefined = this.updateStep(
+      lastActive + 1,
+      lastComplete
+    );
     if (onboarding) {
       this.store.dispatch(new OnboardingAction.Edit(onboarding));
     }
@@ -87,9 +87,11 @@ export class KycService implements OnDestroy {
    * @param {number} id the progress step ID
    */
   inactivateStep(id: number): void {
-    const onboarding: OnboardingStateModel | undefined = this.updateStep(id, {
-      active: false,
-    });
+    const { lastActive, lastComplete } = this.onboarding;
+    const onboarding: OnboardingStateModel | undefined = this.updateStep(
+      lastActive - 1,
+      lastComplete
+    );
     if (onboarding) {
       this.store.dispatch(new OnboardingAction.Edit(onboarding));
     }
@@ -101,9 +103,11 @@ export class KycService implements OnDestroy {
    * @param {number} id the progress step ID
    */
   completeStep(id: number): void {
-    const onboarding: OnboardingStateModel | undefined = this.updateStep(id, {
-      complete: true,
-    });
+    const { lastActive, lastComplete } = this.onboarding;
+    const onboarding: OnboardingStateModel | undefined = this.updateStep(
+      lastActive,
+      lastComplete + 1
+    );
     if (onboarding) {
       this.store.dispatch(new OnboardingAction.Edit(onboarding));
     }
@@ -115,9 +119,11 @@ export class KycService implements OnDestroy {
    * @param {number} id the progress step ID
    */
   incompleteStep(id: number): void {
-    const onboarding: OnboardingStateModel | undefined = this.updateStep(id, {
-      complete: false,
-    });
+    const { lastActive, lastComplete } = this.onboarding;
+    const onboarding: OnboardingStateModel | undefined = this.updateStep(
+      lastActive,
+      lastComplete - 1
+    );
     if (onboarding) {
       this.store.dispatch(new OnboardingAction.Edit(onboarding));
     }
@@ -130,26 +136,11 @@ export class KycService implements OnDestroy {
    * @returns
    */
   updateStep(
-    id: number,
-    state: { active: boolean } | { complete: boolean }
+    lastActive: number,
+    lastComplete: number,
+    started: boolean = true
   ): OnboardingStateModel | undefined {
-    let onboarding = this.onboarding;
-    let welcome: OnboardingStep | undefined = onboarding?.steps?.find(
-      (step: OnboardingStep) => {
-        return step.id === id;
-      }
-    );
-    if (welcome !== undefined) {
-      welcome = { ...welcome, ...state };
-      const steps: OnboardingStep[] = onboarding?.steps?.map(
-        (step: OnboardingStep) => {
-          return step.id === welcome?.id ? welcome : step;
-        }
-      );
-      return { ...onboarding, steps };
-    } else {
-      return;
-    }
+    return { ...this.onboarding, lastActive, lastComplete, started };
   }
 
   /**

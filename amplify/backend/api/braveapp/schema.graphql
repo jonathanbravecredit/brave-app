@@ -43,7 +43,6 @@ type Onboarding {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
-  steps: [OnboardingStep]
 }
 type OnboardingStep {
   id: Int

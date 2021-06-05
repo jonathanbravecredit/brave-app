@@ -9,7 +9,6 @@ import { OnboardingStateModel } from '@store/onboarding/onboarding.model';
     lastActive: 0,
     lastComplete: -1,
     started: false,
-    steps: [],
   },
 })
 @Injectable()

@@ -62,6 +62,15 @@ export type SsnInput = {
 export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
+  started?: boolean | null;
+  steps?: Array<OnboardingStepInput | null> | null;
+};
+
+export type OnboardingStepInput = {
+  id?: number | null;
+  active?: boolean | null;
+  complete?: boolean | null;
+  name?: string | null;
 };
 
 export type AgenciesInput = {
@@ -155,6 +164,16 @@ export type Onboarding = {
   __typename: "Onboarding";
   lastActive?: number;
   lastComplete?: number;
+  started?: boolean | null;
+  steps?: Array<OnboardingStep | null> | null;
+};
+
+export type OnboardingStep = {
+  __typename: "OnboardingStep";
+  id?: number | null;
+  active?: boolean | null;
+  complete?: boolean | null;
+  name?: string | null;
 };
 
 export type Agencies = {
@@ -255,6 +274,7 @@ export type CreateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -290,6 +310,7 @@ export type UpdateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -325,6 +346,7 @@ export type DeleteAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -379,6 +401,7 @@ export type GetAppDataQuery = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -433,6 +456,7 @@ export type OnCreateAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -468,6 +492,7 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -503,6 +528,7 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -547,6 +573,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -598,6 +625,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -649,6 +677,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -754,6 +783,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -842,6 +872,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -885,6 +916,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -928,6 +960,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
