@@ -1,16 +1,13 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import * as OnboardingActions from './onboarding.actions';
-import { Onboarding, OnboardingStep } from '@store/onboarding/onboarding.model';
-
-export class OnboardingStateModel {
-  started!: boolean;
-  steps!: OnboardingStep[];
-}
+import { OnboardingStateModel } from '@store/onboarding/onboarding.model';
 
 @State<OnboardingStateModel>({
   name: 'onboarding',
   defaults: {
+    lastActive: 0,
+    lastComplete: -1,
     started: false,
     steps: [],
   },
@@ -44,7 +41,7 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     {}: OnboardingActions.Delete
   ): void {
-    const payload = new Onboarding();
+    const payload = new OnboardingStateModel();
     ctx.patchState({
       ...payload,
     });

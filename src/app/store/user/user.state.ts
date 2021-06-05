@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import * as UserActions from './user.actions';
 import { UserStateModel } from '@store/user/user.model';
+import { OnboardingState } from '@store/onboarding';
 
 @State<UserStateModel>({
   name: 'user',
   defaults: {
-    __typename: 'User',
+    id: '',
   },
+  children: [OnboardingState],
 })
 @Injectable()
 export class UserState {

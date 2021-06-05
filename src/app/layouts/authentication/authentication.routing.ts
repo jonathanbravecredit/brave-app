@@ -6,7 +6,7 @@ import { SignupKnowyouComponent } from '@views/signup-knowyou/signup-knowyou.com
 import { SignupErrorComponent } from '@views/signup-error/signup-error.component';
 import { SignupErrorValidationComponent } from '@views/signup-error-validation/signup-error-validation.component';
 import { SignupComponent } from '@views/signup/signup/signup.component';
-import { SigninComponent } from '@views/signin/signin.component';
+import { SigninComponent } from '@views/signin/signin/signin.component';
 import { SignupResendComponent } from '@views/signup-resend/signup-resend.component';
 import { SigninForgotComponent } from '@views/signin-forgot/signin-forgot.component';
 

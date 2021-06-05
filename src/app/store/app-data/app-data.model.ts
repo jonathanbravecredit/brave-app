@@ -1,13 +1,14 @@
-import { Agencies, AppData, User } from '@shared/services/aws/api.service';
-import { UserStateModel } from '@store/user';
+import {
+  AgenciesInput,
+  UpdateAppDataInput,
+  UserInput,
+} from '@shared/services/aws/api.service';
 
 type typename = 'AppData';
 
-export class AppDataStateModel implements AppData {
-  __typename: typename = 'AppData';
-  id?: string;
-  user?: UserStateModel;
-  agencies?: Agencies;
-  createdAt?: string;
-  updatedAt?: string;
+export class AppDataStateModel implements UpdateAppDataInput {
+  id!: string;
+  user?: UserInput | null | undefined;
+  agencies?: AgenciesInput | null | undefined;
+  _version?: number | null | undefined;
 }

@@ -12,6 +12,8 @@ import {
   APIService,
   CreateAppDataInput,
 } from '@shared/services/aws/api.service';
+import * as AppDataActions from '@store/app-data/app-data.actions';
+import * as UserActions from '@store/user/user.actions';
 
 export interface NewUser {
   username: string;
@@ -41,7 +43,16 @@ export class AuthService {
           // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
           this.getAuthCredentials().then((creds: ICredentials | null) => {
-            if (creds) this.seedAppData(creds); //possibly update to async
+            if (creds) {
+              console.log('creds ==> ', creds);
+              this.store.dispatch(
+                new AppDataActions.Edit({ id: creds.identityId })
+              );
+              this.store.dispatch(
+                new UserActions.Edit({ id: creds.identityId })
+              );
+              this.seedAppData(creds); //possibly update to async
+            }
           });
           break;
         case 'signOut':

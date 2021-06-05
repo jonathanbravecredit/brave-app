@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SigninComponent } from './signin/signin.component';
+import { SigninComponent } from './signin/signin/signin.component';
+import { SigninPureComponent } from './signin/signin-pure/signin-pure.component';
 import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
 import { SignupComponent } from '@views/signup/signup/signup.component';
 import { SignupPureComponent } from './signup/signup-pure/signup-pure.component';
@@ -43,6 +44,7 @@ const views = [
   SignupThankyouComponent,
   SignupResendComponent,
   SigninComponent,
+  SigninPureComponent,
   SigninForgotComponent,
   KycBaseComponent,
   KycAddressComponent,

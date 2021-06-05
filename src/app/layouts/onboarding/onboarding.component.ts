@@ -4,7 +4,7 @@ import {
   FilledChecktextProgressbarComponent,
   IFilledChecktextProgressbarConfig,
 } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
-import { Onboarding, OnboardingStep } from '@store/onboarding';
+import { OnboardingStateModel, OnboardingStep } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import * as OnboardingAction from '@store/onboarding';
 import { Store } from '@ngxs/store';
@@ -22,16 +22,18 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     size: 'base',
   };
 
-  onboarding: Onboarding = {} as Onboarding;
-  onboarding$: Observable<Onboarding> = this.store.select(
+  onboarding: OnboardingStateModel = {} as OnboardingStateModel;
+  onboarding$: Observable<OnboardingStateModel> = this.store.select(
     OnboardingSelectors.getOnboarding
   );
   onboardingSub$: Subscription;
 
   constructor(private store: Store) {
     this.onboardingSub$ = this.onboarding$
-      .pipe(filter((onboarding: Onboarding) => onboarding !== undefined))
-      .subscribe((onboarding: Onboarding) => {
+      .pipe(
+        filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
+      )
+      .subscribe((onboarding: OnboardingStateModel) => {
         this.onboarding = onboarding;
       });
   }
@@ -56,7 +58,9 @@ export class OnboardingComponent implements OnInit, OnDestroy {
    */
   initiateOnboarding(steps: OnboardingStep[]): void {
     if (!this.onboarding.started) {
-      const onboarding: Onboarding = {
+      const onboarding: OnboardingStateModel = {
+        lastActive: 0,
+        lastComplete: -1,
         started: true,
         steps: steps,
       };
