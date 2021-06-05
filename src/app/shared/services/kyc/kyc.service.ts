@@ -1,18 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
-import { OnboardingStateModel, OnboardingStep } from '@store/onboarding';
+import { OnboardingStateModel } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import * as OnboardingAction from '@store/onboarding';
 import * as UserAction from '@store/user';
 import { UserStateModel, UserSelectors } from '@store/user';
-import {
-  APIService,
-  UpdateAppDataInput,
-  UserAttributesInput,
-} from '@shared/services/aws/api.service';
-import { AppDataStateModel } from '@store/app-data';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,22 +23,7 @@ export class KycService implements OnDestroy {
   user$: Observable<UserStateModel> = this.store.select(UserSelectors.getUser);
   userSub$: Subscription;
 
-  state$: Subject<AppDataStateModel> = new Subject();
-  stateSub$: Subscription;
-
-  constructor(private store: Store, private api: APIService) {
-    this.stateSub$ = this.store.subscribe((state) => {
-      this.state$.next(state);
-      const input = { ...state.appData } as UpdateAppDataInput;
-      this.api
-        .UpdateAppData(input)
-        .then((res) => {
-          console.log('graphql res ===> ', res);
-        })
-        .catch((err) => {
-          console.log('graphql err ===> ', err);
-        });
-    });
+  constructor(private store: Store) {
     this.onboardingSub$ = this.onboarding$
       .pipe(
         filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
@@ -60,7 +40,6 @@ export class KycService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.stateSub$) this.stateSub$.unsubscribe();
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
     if (this.userSub$) this.userSub$.unsubscribe();
   }
@@ -68,12 +47,12 @@ export class KycService implements OnDestroy {
   /**
    * Takes a progress step ID and sets the status to true
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  activateStep(id: number): void {
-    const { lastActive, lastComplete } = this.onboarding;
+  activateStep(step: number): void {
+    const { lastComplete } = this.onboarding;
     const onboarding: OnboardingStateModel | undefined = this.updateStep(
-      lastActive + 1,
+      step,
       lastComplete
     );
     if (onboarding) {
@@ -84,12 +63,12 @@ export class KycService implements OnDestroy {
   /**
    * Takes a progress step ID and sets the status to false
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  inactivateStep(id: number): void {
-    const { lastActive, lastComplete } = this.onboarding;
+  inactivateStep(step: number): void {
+    const { lastComplete } = this.onboarding;
     const onboarding: OnboardingStateModel | undefined = this.updateStep(
-      lastActive - 1,
+      step,
       lastComplete
     );
     if (onboarding) {
@@ -100,13 +79,13 @@ export class KycService implements OnDestroy {
   /**
    * Takes a progress step ID and sets the complete status to true
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  completeStep(id: number): void {
-    const { lastActive, lastComplete } = this.onboarding;
+  completeStep(step: number): void {
+    const { lastActive } = this.onboarding;
     const onboarding: OnboardingStateModel | undefined = this.updateStep(
       lastActive,
-      lastComplete + 1
+      step
     );
     if (onboarding) {
       this.store.dispatch(new OnboardingAction.Edit(onboarding));
@@ -116,13 +95,13 @@ export class KycService implements OnDestroy {
   /**
    * Takes a progress step ID and sets the complete status to false
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  incompleteStep(id: number): void {
-    const { lastActive, lastComplete } = this.onboarding;
+  incompleteStep(step: number): void {
+    const { lastActive } = this.onboarding;
     const onboarding: OnboardingStateModel | undefined = this.updateStep(
       lastActive,
-      lastComplete - 1
+      step
     );
     if (onboarding) {
       this.store.dispatch(new OnboardingAction.Edit(onboarding));

@@ -6,7 +6,7 @@ import { OnboardingStateModel } from '@store/onboarding/onboarding.model';
 @State<OnboardingStateModel>({
   name: 'onboarding',
   defaults: {
-    lastActive: 0,
+    lastActive: -1,
     lastComplete: -1,
     started: false,
   },

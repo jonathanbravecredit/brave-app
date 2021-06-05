@@ -59,7 +59,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   initiateOnboarding(): void {
     if (!this.onboarding.started) {
       const onboarding: OnboardingStateModel = {
-        lastActive: 0,
+        lastActive: -1,
         lastComplete: -1,
         started: true,
       };

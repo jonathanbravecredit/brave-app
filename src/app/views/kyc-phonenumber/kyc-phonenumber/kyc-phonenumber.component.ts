@@ -12,6 +12,7 @@ import { UserAttributesInput } from '@shared/services/aws/api.service';
 export class KycPhonenumberComponent
   extends KycBaseComponent
   implements OnInit {
+  stepID = 3;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -21,11 +22,11 @@ export class KycPhonenumberComponent
   }
 
   ngOnInit(): void {
-    this.kycService.activateStep(3);
+    this.kycService.activateStep(this.stepID);
   }
 
   goBack(): void {
-    this.kycService.inactivateStep(3);
+    this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../identity'], { relativeTo: this.route });
   }
   goToNext(form: FormGroup): void {

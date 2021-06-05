@@ -15,6 +15,7 @@ export class KycKbaquestionsComponent implements OnInit {
 
   questions: any[] = [0, 1, 2, 3]; // TODO replace with KBA question interface
   answers: any[] = []; // TODO replace with KBA answers interface
+  stepID = 3;
 
   constructor(
     private router: Router,
@@ -31,7 +32,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.questions = [question, ...this.questions];
       this.kba?.scroll(25);
     } else {
-      this.kycService.inactivateStep(3);
+      this.kycService.inactivateStep(this.stepID);
       this.router.navigate(['../identity'], { relativeTo: this.route });
       return;
     }
@@ -44,7 +45,7 @@ export class KycKbaquestionsComponent implements OnInit {
     if (this.questions.length) {
       this.kba?.scroll(-25);
     } else {
-      this.kycService.completeStep(3);
+      this.kycService.completeStep(this.stepID);
       this.router.navigate(['../congratulations'], { relativeTo: this.route });
     }
   }

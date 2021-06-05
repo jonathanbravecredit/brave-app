@@ -1,29 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-address',
   templateUrl: './kyc-address.component.html',
 })
-export class KycAddressComponent extends KycBaseComponent implements OnInit {
+export class KycAddressComponent
+  extends KycBaseComponent
+  implements OnInit, AfterViewInit {
+  stepID = 1;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private syncService: SyncService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.kycService.activateStep(1);
+    this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.syncService.syncStateToBackend();
   }
 
   goBack(): void {
-    this.kycService.inactivateStep(1);
+    this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../name'], { relativeTo: this.route });
   }
 
@@ -36,7 +45,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit {
         },
       } as UserAttributesInput;
       this.kycService.updateUserAttributes(attrs);
-      this.kycService.completeStep(1);
+      this.kycService.completeStep(this.stepID);
       this.router.navigate(['../identity'], { relativeTo: this.route });
     }
   }
