@@ -1,26 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-ssn',
   templateUrl: './kyc-ssn.component.html',
 })
-export class KycSsnComponent extends KycBaseComponent implements OnInit {
+export class KycSsnComponent
+  extends KycBaseComponent
+  implements OnInit, AfterViewInit {
   stepID = 2;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private syncService: SyncService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.syncService.syncStateToBackend();
   }
 
   goBack(): void {

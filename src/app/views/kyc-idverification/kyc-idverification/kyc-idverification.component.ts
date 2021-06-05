@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -12,19 +13,24 @@ export type KycIdverificationState = 'init' | 'sent' | 'error';
 })
 export class KycIdverificationComponent
   extends KycBaseComponent
-  implements OnInit {
+  implements OnInit, AfterViewInit {
   @Input() state: KycIdverificationState = 'init';
   stepID = 3;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private syncService: SyncService
   ) {
     super();
   }
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.syncService.syncStateToBackend();
+  }
 
   resendCode(): void {
     // TODO resubmit code to backend

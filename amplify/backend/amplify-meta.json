@@ -28,7 +28,7 @@
         "HostedUIDomain": "braveappa3b93ee9-a3b93ee9-dev",
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}"
       },
-      "lastPushTimeStamp": "2021-05-28T00:09:10.765Z",
+      "lastPushTimeStamp": "2021-06-05T20:47:55.004Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
         "logicalId": "authbraveapp0ea8ea07"

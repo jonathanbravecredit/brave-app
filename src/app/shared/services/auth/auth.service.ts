@@ -14,6 +14,7 @@ import {
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import * as UserActions from '@store/user/user.actions';
+import { Router } from '@angular/router';
 
 export interface NewUser {
   username: string;
@@ -34,26 +35,18 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private store: Store, private api: APIService) {
+  constructor(
+    private router: Router,
+    private store: Store,
+    private api: APIService
+  ) {
     Hub.listen('auth', (data) => {
       const { channel, payload } = data;
       // console.log('auth change', channel, payload);
       switch (payload.event) {
         case 'signIn':
-          // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
-          this.getAuthCredentials().then((creds: ICredentials | null) => {
-            if (creds) {
-              console.log('creds ==> ', creds);
-              this.store.dispatch(
-                new AppDataActions.Edit({ id: creds.identityId })
-              );
-              this.store.dispatch(
-                new UserActions.Edit({ id: creds.identityId })
-              );
-              this.seedAppData(creds); //possibly update to async
-            }
-          });
+          // need to determine if first time and if so write record to db
           break;
         case 'signOut':
           // handle sign out
@@ -216,6 +209,7 @@ export class AuthService {
         onboarding: {
           lastActive: 0,
           lastComplete: -1,
+          started: true,
         },
       },
       agencies: {
