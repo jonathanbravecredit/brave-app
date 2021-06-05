@@ -37,6 +37,7 @@ query GetAppData($id: ID!) {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {

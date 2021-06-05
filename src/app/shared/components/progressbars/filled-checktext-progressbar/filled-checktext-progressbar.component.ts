@@ -17,6 +17,8 @@ export interface IFilledChecktextProgressbarConfig {
 export class FilledChecktextProgressbarComponent {
   @Input() config: IFilledChecktextProgressbarConfig = { size: 'base' };
   @Input() steps: IProgressStep[] = [];
+  @Input() activatedStep: number = 0;
+  @Input() completedStep: number = -1;
 
   constructor() {}
 }

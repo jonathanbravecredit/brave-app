@@ -10,6 +10,7 @@ mutation CreateAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
@@ -42,6 +43,7 @@ mutation UpdateAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
@@ -74,6 +76,7 @@ mutation DeleteAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {

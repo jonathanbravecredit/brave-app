@@ -27,6 +27,12 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     OnboardingSelectors.getOnboarding
   );
   onboardingSub$: Subscription;
+  steps: OnboardingStep[] = [
+    { id: 0, active: false, complete: false, name: 'Name' },
+    { id: 1, active: false, complete: false, name: 'Address' },
+    { id: 2, active: false, complete: false, name: 'Identity' },
+    { id: 3, active: false, complete: false, name: 'Verify' },
+  ];
 
   constructor(private store: Store) {
     this.onboardingSub$ = this.onboarding$
@@ -39,13 +45,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const steps: OnboardingStep[] = [
-      { id: 0, active: false, complete: false, name: 'Name' },
-      { id: 1, active: false, complete: false, name: 'Address' },
-      { id: 2, active: false, complete: false, name: 'Identity' },
-      { id: 3, active: false, complete: false, name: 'Verify' },
-    ];
-    this.initiateOnboarding(steps);
+    this.initiateOnboarding();
   }
 
   ngOnDestroy(): void {}
@@ -56,13 +56,12 @@ export class OnboardingComponent implements OnInit, OnDestroy {
    * When the user first lands on welcome seed the onboarding data
    * @param {OnboardingStep} steps
    */
-  initiateOnboarding(steps: OnboardingStep[]): void {
+  initiateOnboarding(): void {
     if (!this.onboarding.started) {
       const onboarding: OnboardingStateModel = {
         lastActive: 0,
         lastComplete: -1,
         started: true,
-        steps: steps,
       };
       this.store.dispatch(new OnboardingAction.Edit(onboarding));
     }

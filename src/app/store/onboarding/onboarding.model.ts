@@ -7,7 +7,5 @@ export class OnboardingStateModel implements OnboardingInput {
   lastActive: number = 0;
   lastComplete: number = -1;
   started: boolean = false;
-  steps: OnboardingStep[] = [];
-
   constructor() {}
 }
