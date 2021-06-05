@@ -13,7 +13,6 @@ export type CreateAppDataInput = {
   id?: string | null;
   user: UserInput;
   agencies: AgenciesInput;
-  _version?: number | null;
 };
 
 export type UserInput = {
@@ -95,9 +94,6 @@ export type AppData = {
   id?: string;
   user?: User;
   agencies?: Agencies;
-  _version?: number;
-  _deleted?: boolean | null;
-  _lastChangedAt?: number;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -186,12 +182,10 @@ export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
-  _version?: number | null;
 };
 
 export type DeleteAppDataInput = {
   id: string;
-  _version?: number | null;
 };
 
 export type ModelAppDataFilterInput = {
@@ -244,7 +238,6 @@ export type ModelAppDataConnection = {
   __typename: "ModelAppDataConnection";
   items?: Array<AppData | null> | null;
   nextToken?: string | null;
-  startedAt?: number | null;
 };
 
 export type CreateAppDataMutation = {
@@ -276,9 +269,6 @@ export type CreateAppDataMutation = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -312,9 +302,6 @@ export type UpdateAppDataMutation = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -348,30 +335,8 @@ export type DeleteAppDataMutation = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
-};
-
-export type SyncAppDataQuery = {
-  __typename: "ModelAppDataConnection";
-  items?: Array<{
-    __typename: "AppData";
-    id: string;
-    user: {
-      __typename: "User";
-      id: string;
-    };
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-  startedAt?: number | null;
 };
 
 export type GetAppDataQuery = {
@@ -403,9 +368,6 @@ export type GetAppDataQuery = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -419,14 +381,10 @@ export type ListAppDatasQuery = {
       __typename: "User";
       id: string;
     };
-    _version: number;
-    _deleted?: boolean | null;
-    _lastChangedAt: number;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
   nextToken?: string | null;
-  startedAt?: number | null;
 };
 
 export type OnCreateAppDataSubscription = {
@@ -458,9 +416,6 @@ export type OnCreateAppDataSubscription = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -494,9 +449,6 @@ export type OnUpdateAppDataSubscription = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -530,9 +482,6 @@ export type OnDeleteAppDataSubscription = {
       authenticated?: boolean | null;
     } | null;
   };
-  _version: number;
-  _deleted?: boolean | null;
-  _lastChangedAt: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -575,9 +524,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -627,9 +573,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -679,9 +622,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -709,50 +649,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <string | null>response.data.transunion;
-  }
-  async SyncAppData(
-    filter?: ModelAppDataFilterInput,
-    limit?: number,
-    nextToken?: string,
-    lastSync?: number
-  ): Promise<SyncAppDataQuery> {
-    const statement = `query SyncAppData($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String, $lastSync: AWSTimestamp) {
-        syncAppData(filter: $filter, limit: $limit, nextToken: $nextToken, lastSync: $lastSync) {
-          __typename
-          items {
-            __typename
-            id
-            user {
-              __typename
-              id
-            }
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-          }
-          nextToken
-          startedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    if (lastSync) {
-      gqlAPIServiceArguments.lastSync = lastSync;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <SyncAppDataQuery>response.data.syncAppData;
   }
   async GetAppData(id: string): Promise<GetAppDataQuery> {
     const statement = `query GetAppData($id: ID!) {
@@ -785,9 +681,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -815,14 +708,10 @@ export class APIService {
               __typename
               id
             }
-            _version
-            _deleted
-            _lastChangedAt
             createdAt
             updatedAt
           }
           nextToken
-          startedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -874,9 +763,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -918,9 +804,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -962,9 +845,6 @@ export class APIService {
               authenticated
             }
           }
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }

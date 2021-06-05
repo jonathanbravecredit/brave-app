@@ -25,9 +25,6 @@ mutation CreateAppData(
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -58,9 +55,6 @@ mutation UpdateAppData(
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -91,9 +85,6 @@ mutation DeleteAppData(
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }

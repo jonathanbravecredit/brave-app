@@ -22,9 +22,6 @@ subscription OnCreateAppData {
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -52,9 +49,6 @@ subscription OnUpdateAppData {
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -82,9 +76,6 @@ subscription OnDeleteAppData {
         authenticated
       }
     }
-    _version
-    _deleted
-    _lastChangedAt
     createdAt
     updatedAt
   }
