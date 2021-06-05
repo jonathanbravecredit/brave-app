@@ -7,6 +7,7 @@ import { UserState } from '@store/user';
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
+    __typename: 'AppData',
     id: '',
   },
   children: [UserState],

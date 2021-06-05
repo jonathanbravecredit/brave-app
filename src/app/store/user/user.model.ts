@@ -1,11 +1,14 @@
 import {
-  OnboardingInput,
-  UserAttributesInput,
-  UserInput,
+  User,
+  Onboarding,
+  UserAttributes,
 } from '@shared/services/aws/api.service';
 
-export class UserStateModel implements UserInput {
-  id!: string;
-  userAttributes?: UserAttributesInput | null | undefined;
-  onboarding?: OnboardingInput | null | undefined;
+type typename = 'User';
+
+export class UserStateModel implements User {
+  __typename!: typename;
+  id?: string | undefined;
+  userAttributes?: UserAttributes | undefined;
+  onboarding?: Onboarding | undefined;
 }

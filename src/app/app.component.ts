@@ -29,25 +29,32 @@ export class AppComponent implements OnInit {
       (resp: any) => {
         // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
         const data: any = resp.value?.data?.onCreateAppData;
+        console.log('on create listener', data);
         if (data) {
-          console.log('data', data);
-          const appData: AppDataStateModel = { ...data } as AppDataStateModel;
-          console.log('appData', appData);
-          this.store.dispatch(new AppDataActions.Add(appData));
-          console.log('on create listener', resp.value.data);
+          const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+          this.syncUpDBandState(payload);
         }
       }
     );
     this.apiUpdateListener$ = this.api.OnUpdateAppDataListener.subscribe(
-      (resp: SubscriptionResponse<OnUpdateAppDataSubscription>) => {
+      (resp: any) => {
         // update state
-        console.log('on update listener', resp);
+        const data: any = resp.value?.data?.onUpdateAppData;
+        console.log('on update listener', data);
+        if (data) {
+          const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+          this.syncUpDBandState(payload);
+        }
       }
     );
     this.apiDeleteListener$ = this.api.OnDeleteAppDataListener.subscribe(
-      (resp) => {
-        // delete state
-        console.log('on delete listener', resp);
+      (resp: any) => {
+        const data: any = resp.value?.data?.onDeleteAppData;
+        console.log('on create listener', data);
+        if (data) {
+          const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+          this.syncUpDBandState(payload);
+        }
       }
     );
   }
@@ -58,5 +65,9 @@ export class AppComponent implements OnInit {
     if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
     if (this.apiUpdateListener$) this.apiUpdateListener$.unsubscribe();
     if (this.apiDeleteListener$) this.apiDeleteListener$.unsubscribe();
+  }
+
+  syncUpDBandState(payload: AppDataStateModel): void {
+    this.store.dispatch(new AppDataActions.Edit(payload));
   }
 }

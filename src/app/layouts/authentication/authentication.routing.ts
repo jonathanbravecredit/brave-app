@@ -9,6 +9,7 @@ import { SignupComponent } from '@views/signup/signup/signup.component';
 import { SigninComponent } from '@views/signin/signin/signin.component';
 import { SignupResendComponent } from '@views/signup-resend/signup-resend.component';
 import { SigninForgotComponent } from '@views/signin-forgot/signin-forgot.component';
+import { SigninRedirectComponent } from '@views/signin-redirect/signin-redirect.component';
 
 const AuthenticationRoutes: Routes = [
   {
@@ -18,6 +19,7 @@ const AuthenticationRoutes: Routes = [
       { path: 'signup', component: SignupComponent },
       { path: 'signin', component: SigninComponent },
       { path: 'forgot', component: SigninForgotComponent },
+      { path: 'redirect', component: SigninRedirectComponent },
       { path: 'thankyou', component: SignupThankyouComponent },
       { path: 'name', component: SignupKnowyouComponent },
       { path: 'error', component: SignupErrorComponent },

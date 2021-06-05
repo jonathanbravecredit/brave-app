@@ -7,7 +7,7 @@ import { OnboardingState } from '@store/onboarding';
 @State<UserStateModel>({
   name: 'user',
   defaults: {
-    id: '',
+    __typename: 'User',
   },
   children: [OnboardingState],
 })
