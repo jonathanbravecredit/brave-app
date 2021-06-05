@@ -1,6 +1,6 @@
 # this is an auto generated file. This will be overwritten
-query Echo($msg: String) {
-  echo(msg: $msg)
+query Transunion($msg: String) {
+  transunion(msg: $msg)
 }
 query SyncAppData(
   $filter: ModelAppDataFilterInput
