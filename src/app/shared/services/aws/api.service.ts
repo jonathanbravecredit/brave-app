@@ -251,38 +251,6 @@ export type CreateAppDataMutation = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -318,38 +286,6 @@ export type UpdateAppDataMutation = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -385,38 +321,6 @@ export type DeleteAppDataMutation = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -454,59 +358,6 @@ export type SyncAppDataQuery = {
     user: {
       __typename: "User";
       id: string;
-      userAttributes?: {
-        __typename: "UserAttributes";
-        name?: {
-          __typename: "Name";
-          first: string;
-          middle?: string | null;
-          last: string;
-        } | null;
-        address?: {
-          __typename: "Address";
-          addressOne: string;
-          addressTwo?: string | null;
-          city: string;
-          state: string;
-          zip: string;
-        } | null;
-        phone?: {
-          __typename: "Phone";
-          primary: string;
-        } | null;
-        dob?: {
-          __typename: "Dob";
-          year: string;
-          month: string;
-          day: string;
-        } | null;
-        ssn?: {
-          __typename: "Ssn";
-          lastfour: string;
-          full?: string | null;
-        } | null;
-      } | null;
-      onboarding?: {
-        __typename: "Onboarding";
-        lastActive: number;
-        lastComplete: number;
-      } | null;
-    };
-    agencies: {
-      __typename: "Agencies";
-      transunion?: {
-        __typename: "Transunion";
-        authenticated?: boolean | null;
-        indicativeEnrichmentSuccess?: boolean | null;
-      } | null;
-      equifax?: {
-        __typename: "Equifax";
-        authenticated?: boolean | null;
-      } | null;
-      experian?: {
-        __typename: "Experian";
-        authenticated?: boolean | null;
-      } | null;
     };
     _version: number;
     _deleted?: boolean | null;
@@ -524,38 +375,6 @@ export type GetAppDataQuery = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -593,59 +412,6 @@ export type ListAppDatasQuery = {
     user: {
       __typename: "User";
       id: string;
-      userAttributes?: {
-        __typename: "UserAttributes";
-        name?: {
-          __typename: "Name";
-          first: string;
-          middle?: string | null;
-          last: string;
-        } | null;
-        address?: {
-          __typename: "Address";
-          addressOne: string;
-          addressTwo?: string | null;
-          city: string;
-          state: string;
-          zip: string;
-        } | null;
-        phone?: {
-          __typename: "Phone";
-          primary: string;
-        } | null;
-        dob?: {
-          __typename: "Dob";
-          year: string;
-          month: string;
-          day: string;
-        } | null;
-        ssn?: {
-          __typename: "Ssn";
-          lastfour: string;
-          full?: string | null;
-        } | null;
-      } | null;
-      onboarding?: {
-        __typename: "Onboarding";
-        lastActive: number;
-        lastComplete: number;
-      } | null;
-    };
-    agencies: {
-      __typename: "Agencies";
-      transunion?: {
-        __typename: "Transunion";
-        authenticated?: boolean | null;
-        indicativeEnrichmentSuccess?: boolean | null;
-      } | null;
-      equifax?: {
-        __typename: "Equifax";
-        authenticated?: boolean | null;
-      } | null;
-      experian?: {
-        __typename: "Experian";
-        authenticated?: boolean | null;
-      } | null;
     };
     _version: number;
     _deleted?: boolean | null;
@@ -663,38 +429,6 @@ export type OnCreateAppDataSubscription = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -730,38 +464,6 @@ export type OnUpdateAppDataSubscription = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -797,38 +499,6 @@ export type OnDeleteAppDataSubscription = {
   user: {
     __typename: "User";
     id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
     onboarding?: {
       __typename: "Onboarding";
       lastActive: number;
@@ -873,38 +543,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive
@@ -956,38 +594,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive
@@ -1039,38 +645,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive
@@ -1111,14 +685,14 @@ export class APIService {
     )) as any;
     return <DeleteAppDataMutation>response.data.deleteAppData;
   }
-  async Transunion(msg?: string): Promise<string | null> {
-    const statement = `query Transunion($msg: String) {
-        transunion(msg: $msg)
+  async Transunion(action: string, message: string): Promise<string | null> {
+    const statement = `query Transunion($action: String!, $message: String!) {
+        transunion(action: $action, message: $message)
       }`;
-    const gqlAPIServiceArguments: any = {};
-    if (msg) {
-      gqlAPIServiceArguments.msg = msg;
-    }
+    const gqlAPIServiceArguments: any = {
+      action,
+      message
+    };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
@@ -1139,59 +713,6 @@ export class APIService {
             user {
               __typename
               id
-              userAttributes {
-                __typename
-                name {
-                  __typename
-                  first
-                  middle
-                  last
-                }
-                address {
-                  __typename
-                  addressOne
-                  addressTwo
-                  city
-                  state
-                  zip
-                }
-                phone {
-                  __typename
-                  primary
-                }
-                dob {
-                  __typename
-                  year
-                  month
-                  day
-                }
-                ssn {
-                  __typename
-                  lastfour
-                  full
-                }
-              }
-              onboarding {
-                __typename
-                lastActive
-                lastComplete
-              }
-            }
-            agencies {
-              __typename
-              transunion {
-                __typename
-                authenticated
-                indicativeEnrichmentSuccess
-              }
-              equifax {
-                __typename
-                authenticated
-              }
-              experian {
-                __typename
-                authenticated
-              }
             }
             _version
             _deleted
@@ -1229,38 +750,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive
@@ -1312,59 +801,6 @@ export class APIService {
             user {
               __typename
               id
-              userAttributes {
-                __typename
-                name {
-                  __typename
-                  first
-                  middle
-                  last
-                }
-                address {
-                  __typename
-                  addressOne
-                  addressTwo
-                  city
-                  state
-                  zip
-                }
-                phone {
-                  __typename
-                  primary
-                }
-                dob {
-                  __typename
-                  year
-                  month
-                  day
-                }
-                ssn {
-                  __typename
-                  lastfour
-                  full
-                }
-              }
-              onboarding {
-                __typename
-                lastActive
-                lastComplete
-              }
-            }
-            agencies {
-              __typename
-              transunion {
-                __typename
-                authenticated
-                indicativeEnrichmentSuccess
-              }
-              equifax {
-                __typename
-                authenticated
-              }
-              experian {
-                __typename
-                authenticated
-              }
             }
             _version
             _deleted
@@ -1402,38 +838,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive
@@ -1477,38 +881,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive
@@ -1552,38 +924,6 @@ export class APIService {
           user {
             __typename
             id
-            userAttributes {
-              __typename
-              name {
-                __typename
-                first
-                middle
-                last
-              }
-              address {
-                __typename
-                addressOne
-                addressTwo
-                city
-                state
-                zip
-              }
-              phone {
-                __typename
-                primary
-              }
-              dob {
-                __typename
-                year
-                month
-                day
-              }
-              ssn {
-                __typename
-                lastfour
-                full
-              }
-            }
             onboarding {
               __typename
               lastActive

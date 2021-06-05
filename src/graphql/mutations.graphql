@@ -7,32 +7,6 @@ mutation CreateAppData(
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete
@@ -65,32 +39,6 @@ mutation UpdateAppData(
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete
@@ -123,32 +71,6 @@ mutation DeleteAppData(
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete

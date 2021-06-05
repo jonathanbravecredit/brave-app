@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
-import { UserAttributes } from '@shared/services/aws/api.service';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -36,7 +36,7 @@ export class KycPhonenumberComponent
         phone: {
           primary: phone,
         },
-      } as UserAttributes;
+      } as UserAttributesInput;
       console.log('attrs', attrs);
       this.kycService.updateUserAttributes(attrs);
       this.router.navigate(['../code'], { relativeTo: this.route });

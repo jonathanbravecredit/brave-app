@@ -1,6 +1,6 @@
 # this is an auto generated file. This will be overwritten
-query Transunion($msg: String) {
-  transunion(msg: $msg)
+query Transunion($action: String!, $message: String!) {
+  transunion(action: $action, message: $message)
 }
 query SyncAppData(
   $filter: ModelAppDataFilterInput
@@ -18,48 +18,6 @@ query SyncAppData(
       id
       user {
         id
-        userAttributes {
-          name {
-            first
-            middle
-            last
-          }
-          address {
-            addressOne
-            addressTwo
-            city
-            state
-            zip
-          }
-          phone {
-            primary
-          }
-          dob {
-            year
-            month
-            day
-          }
-          ssn {
-            lastfour
-            full
-          }
-        }
-        onboarding {
-          lastActive
-          lastComplete
-        }
-      }
-      agencies {
-        transunion {
-          authenticated
-          indicativeEnrichmentSuccess
-        }
-        equifax {
-          authenticated
-        }
-        experian {
-          authenticated
-        }
       }
       _version
       _deleted
@@ -76,32 +34,6 @@ query GetAppData($id: ID!) {
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete
@@ -136,48 +68,6 @@ query ListAppDatas(
       id
       user {
         id
-        userAttributes {
-          name {
-            first
-            middle
-            last
-          }
-          address {
-            addressOne
-            addressTwo
-            city
-            state
-            zip
-          }
-          phone {
-            primary
-          }
-          dob {
-            year
-            month
-            day
-          }
-          ssn {
-            lastfour
-            full
-          }
-        }
-        onboarding {
-          lastActive
-          lastComplete
-        }
-      }
-      agencies {
-        transunion {
-          authenticated
-          indicativeEnrichmentSuccess
-        }
-        equifax {
-          authenticated
-        }
-        experian {
-          authenticated
-        }
       }
       _version
       _deleted

@@ -4,32 +4,6 @@ subscription OnCreateAppData {
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete
@@ -59,32 +33,6 @@ subscription OnUpdateAppData {
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete
@@ -114,32 +62,6 @@ subscription OnDeleteAppData {
     id
     user {
       id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
       onboarding {
         lastActive
         lastComplete
