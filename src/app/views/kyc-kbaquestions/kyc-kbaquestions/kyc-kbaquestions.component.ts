@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KbaquestionsFormComponent } from '@shared/components/forms/kbaquestions-form/kbaquestions-form.component';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
   templateUrl: './kyc-kbaquestions.component.html',
 })
-export class KycKbaquestionsComponent implements OnInit {
+export class KycKbaquestionsComponent implements OnInit, AfterViewInit {
   @ViewChild(KbaquestionsFormComponent) kba:
     | KbaquestionsFormComponent
     | undefined;
@@ -20,10 +21,15 @@ export class KycKbaquestionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private syncService: SyncService
   ) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.syncService.syncStateToBackend();
+  }
 
   goBack(): void {
     if (this.answers.length) {

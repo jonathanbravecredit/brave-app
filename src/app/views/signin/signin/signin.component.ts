@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
+import { ICredentials } from '@aws-amplify/core';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { APIService } from '@shared/services/aws/api.service';
+import { Store } from '@ngxs/store';
+import * as AppDataActions from '@store/app-data/app-data.actions';
+import * as UserActions from '@store/user/user.actions';
 
 @Component({
   selector: 'brave-signin',
@@ -12,6 +16,7 @@ export class SigninComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private store: Store,
     private auth: AuthService,
     private api: APIService
   ) {}
@@ -45,9 +50,22 @@ export class SigninComponent {
           // this.auth.setupTOTP(user);
         } else {
           // TODO go to dashboard...default to assume no data for now
-          this.router.navigate(['/onboarding/name'], {
-            relativeTo: this.route,
-          });
+          // handled by auth listener for SignIn event
+
+          const creds = await this.auth.getAuthCredentials();
+          if (creds) {
+            await this.store
+              .dispatch(new AppDataActions.Edit({ id: creds.identityId }))
+              .toPromise();
+            await this.store
+              .dispatch(new UserActions.Edit({ id: creds.identityId }))
+              .toPromise();
+            this.auth.seedAppData(creds); //possibly update to async
+          }
+          // TODO add condition to check if onboarding is complete
+          // need to get the results from the database
+          //   ...check onboarding status and then route accordingly
+          this.router.navigate(['/onboarding/name']);
         }
       } catch (err) {
         if (err.code === 'UserNotConfirmedException') {
