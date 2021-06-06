@@ -1,5 +1,6 @@
-export interface IIndicativeEnrichmentMsg {
-  AdditionalInputs: {
+
+export interface IGetAuthenticationQuestionsMsg {
+  AdditionalInputs?: {
     Data: {
       Name: string;
       Value: string;
@@ -26,13 +27,20 @@ export interface IIndicativeEnrichmentMsg {
     FullName: {
       FirstName: string;
       LastName: string;
+      MiddleName?: string;
+      Prefix?: string;
+      Suffix?: string;
     };
+    PhoneNumber?: string;
     Ssn: string;
   };
+  Email?: string;
+  Language?: string;
   ServiceBundleCode: string;
+  TrustSessionId?: string;
 }
 
-export interface IIndicativeEnrichmentResponseSuccess {
+export interface IGetAuthenticationQuestionsResponse {
   's:Envelope': {
     _attributes: {
       'xmlns:s': string;

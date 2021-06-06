@@ -3,13 +3,14 @@ import * as AppDataActions from './app-data.actions';
 import { Injectable } from '@angular/core';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { UserState } from '@store/user';
+import { AgenciesState } from '@store/agencies';
 
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
     id: '',
   },
-  children: [UserState],
+  children: [UserState, AgenciesState],
 })
 @Injectable()
 export class AppDataState {
