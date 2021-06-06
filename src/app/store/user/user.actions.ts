@@ -1,3 +1,4 @@
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { UserStateModel } from '@store/user/user.model';
 
 export class Add {
@@ -13,4 +14,9 @@ export class Edit {
 export class Delete {
   static readonly type = '[User] Delete';
   constructor() {}
+}
+
+export class UpdateAttributes {
+  static readonly type = '[UserAttributes] Edit';
+  constructor(public payload: UserAttributesInput) {}
 }

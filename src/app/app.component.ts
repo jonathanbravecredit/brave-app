@@ -28,33 +28,21 @@ export class AppComponent implements OnInit {
     this.apiCreateListener$ = this.api.OnCreateAppDataListener.subscribe(
       (resp: any) => {
         // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
-        const data: any = resp.value?.data?.onCreateAppData;
-        console.log('on create listener', data);
-        // if (data) {
-        //   const payload: AppDataStateModel = { ...data } as AppDataStateModel;
-        //   this.syncUpDBandState(payload);
-        // }
+        // const data: any = resp.value?.data?.onCreateAppData;
+        // console.log('on create listener', data);
       }
     );
     this.apiUpdateListener$ = this.api.OnUpdateAppDataListener.subscribe(
       (resp: any) => {
         // update state
-        const data: any = resp.value?.data?.onUpdateAppData;
-        console.log('on update listener', data);
-        // if (data) {
-        //   const payload: AppDataStateModel = { ...data } as AppDataStateModel;
-        //   this.syncUpDBandState(payload);
-        // }
+        // const data: any = resp.value?.data?.onUpdateAppData;
+        // console.log('on update listener', data);
       }
     );
     this.apiDeleteListener$ = this.api.OnDeleteAppDataListener.subscribe(
       (resp: any) => {
-        const data: any = resp.value?.data?.onDeleteAppData;
-        console.log('on create listener', data);
-        // if (data) {
-        //   const payload: AppDataStateModel = { ...data } as AppDataStateModel;
-        //   this.syncUpDBandState(payload);
-        // }
+        // const data: any = resp.value?.data?.onDeleteAppData;
+        // console.log('on create listener', data);
       }
     );
   }

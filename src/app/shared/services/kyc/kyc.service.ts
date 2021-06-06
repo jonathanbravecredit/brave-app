@@ -11,7 +11,7 @@ import {
   UserAttributesInput,
 } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
-import { UserStateModel } from '@store/user';
+import { UserSelectors, UserStateModel } from '@store/user';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { left } from '@popperjs/core';
@@ -127,12 +127,16 @@ export class KycService implements OnDestroy {
    * @param {UserAttributesInput} attributes
    */
   updateUserAttributes(attrs: UserAttributesInput): void {
-    const state = this.store.snapshot();
-    if (!state) return;
-    const user: UserStateModel = {
-      ...state.user,
-      userAttributes: { ...state.user?.userAttributes, ...attrs },
-    };
-    this.store.dispatch(new UserActions.Edit(user));
+    this.store
+      .dispatch(new UserActions.UpdateAttributes(attrs))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.remedyCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
+      });
   }
 }

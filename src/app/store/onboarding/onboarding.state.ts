@@ -61,7 +61,6 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     { payload }: OnboardingActions.UpdateLastComplete
   ): void {
-    console.log('update lastcomplete', payload);
     ctx.patchState({
       lastComplete: payload,
     });
