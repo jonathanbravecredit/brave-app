@@ -11,6 +11,7 @@ export const updateNestedObject = (o: any, k: string, v: any): any => {
   return obj;
 };
 const _updateNestedRecurse = (o: any, k: string, v: any) => {
+  if (!o) return;
   Object.keys(o).forEach((key) => {
     if (key == k) o[k] = v;
     if (typeof o[key] === 'object') {
@@ -32,7 +33,8 @@ export const deleteKeyNestedObject = (o: any, k: string) => {
   return obj;
 };
 const _deleteKeyNestedObject = (o: any, k: string) => {
-  console.log('delete', o, o[k], k);
+  // console.log('delete', o, o[k], k);
+  if (!o) return;
   delete o[k];
   Object.keys(o).forEach((key) => {
     if (typeof o[key] === 'object') {

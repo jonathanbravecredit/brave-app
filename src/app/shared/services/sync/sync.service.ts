@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
-import { AuthService } from '@shared/services/auth/auth.service';
 import {
   APIService,
   CreateAppDataInput,
   CreateAppDataMutation,
+  GetAppDataQuery,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
+import { deleteKeyNestedObject } from '@shared/utils/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,8 @@ export class SyncService {
     const { identityId: id } = creds;
     // check if db has data
     const data = await this.api.GetAppData(id);
-    console.log('id', id);
-    console.log('res', data);
+    const clean = this.cleanBackendData(data);
+    console.log('clean data', clean);
 
     if (!data) {
       // new user...seed database
@@ -40,7 +41,8 @@ export class SyncService {
       return;
     } else {
       // existing user...check where last left off
-      const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+      const payload: AppDataStateModel = { ...clean } as AppDataStateModel;
+      console.log('payload', payload);
       this.store
         .dispatch(new AppDataActions.Add(payload))
         .subscribe((state: { appData: AppDataStateModel }) => {
@@ -99,6 +101,13 @@ export class SyncService {
       console.log('initApp error', err);
       return;
     }
+  }
+
+  cleanBackendData(data: GetAppDataQuery): AppDataStateModel {
+    let clean = deleteKeyNestedObject(data, '__typename');
+    delete clean.createdAt; // this is a graphql managed field
+    delete clean.updatedAt; // this is a graphql managed field
+    return clean;
   }
 
   /**

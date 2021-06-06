@@ -1,11 +1,10 @@
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
-import { Onboarding } from '@shared/services/aws/api.service';
+import { OnboardingInput } from '@shared/services/aws/api.service';
 
 export interface OnboardingStep extends IProgressStep {}
 type typename = 'Onboarding';
-export class OnboardingStateModel implements Onboarding {
-  __typename!: typename;
-  lastActive?: number | undefined;
-  lastComplete?: number | undefined;
+export class OnboardingStateModel implements OnboardingInput {
+  lastActive: number = -1;
+  lastComplete: number = -1;
   started?: boolean | null | undefined;
 }

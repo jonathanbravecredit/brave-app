@@ -4,6 +4,7 @@ import { ZenObservable } from 'zen-observable-ts';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data';
 import { AppDataStateModel } from '@store/app-data';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 @Component({
   selector: 'brave-root',
@@ -19,16 +20,20 @@ export class AppComponent implements OnInit {
   apiUpdateListener$: ZenObservable.Subscription;
   apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(private api: APIService, private store: Store) {
+  constructor(
+    private api: APIService,
+    private auth: AuthService,
+    private store: Store
+  ) {
     this.apiCreateListener$ = this.api.OnCreateAppDataListener.subscribe(
       (resp: any) => {
         // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
         const data: any = resp.value?.data?.onCreateAppData;
         console.log('on create listener', data);
-        if (data) {
-          const payload: AppDataStateModel = { ...data } as AppDataStateModel;
-          this.syncUpDBandState(payload);
-        }
+        // if (data) {
+        //   const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+        //   this.syncUpDBandState(payload);
+        // }
       }
     );
     this.apiUpdateListener$ = this.api.OnUpdateAppDataListener.subscribe(
@@ -36,25 +41,28 @@ export class AppComponent implements OnInit {
         // update state
         const data: any = resp.value?.data?.onUpdateAppData;
         console.log('on update listener', data);
-        if (data) {
-          const payload: AppDataStateModel = { ...data } as AppDataStateModel;
-          this.syncUpDBandState(payload);
-        }
+        // if (data) {
+        //   const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+        //   this.syncUpDBandState(payload);
+        // }
       }
     );
     this.apiDeleteListener$ = this.api.OnDeleteAppDataListener.subscribe(
       (resp: any) => {
         const data: any = resp.value?.data?.onDeleteAppData;
         console.log('on create listener', data);
-        if (data) {
-          const payload: AppDataStateModel = { ...data } as AppDataStateModel;
-          this.syncUpDBandState(payload);
-        }
+        // if (data) {
+        //   const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+        //   this.syncUpDBandState(payload);
+        // }
       }
     );
   }
 
-  ngOnInit() {}
+  async ngOnInit(): Promise<void> {
+    console.log('app is re-initializing');
+    await this.auth.remedyCredentials();
+  }
 
   ngOnDestroy() {
     if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();

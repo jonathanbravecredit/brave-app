@@ -28,17 +28,17 @@ export class AuthService {
     CognitoUser | any
   >();
   authState$: Observable<CognitoUser | any> = this.authState.asObservable();
-  store$: Subscription;
 
   public static SIGN_IN = 'signIn';
   public static SIGN_OUT = 'signOut';
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private store: Store, private sync: SyncService, private router: Router) {
-    this.store$ = this.store.subscribe((state) => {
-      console.log('state sub', state);
-    });
+  constructor(
+    private store: Store,
+    private sync: SyncService,
+    private router: Router
+  ) {
     Hub.listen('auth', async (data) => {
       const { channel, payload } = data;
       switch (payload.event) {
@@ -144,7 +144,9 @@ export class AuthService {
    */
   async remedyCredentials(): Promise<void> {
     const creds = await this.getCredentials();
-    if (creds) { this.sync.hallMonitor(creds) } else {
+    if (creds) {
+      await this.sync.hallMonitor(creds);
+    } else {
       switch (this.router.url) {
         case '/auth/signin':
           break;
@@ -158,8 +160,8 @@ export class AuthService {
           this.router.navigate(['/auth/signin']);
           break;
       }
-    };
-  };
+    }
+  }
 
   getCredentials(): Promise<ICredentials> {
     return Auth.currentCredentials();

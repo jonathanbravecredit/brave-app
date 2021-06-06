@@ -6,7 +6,6 @@ import { OnboardingStateModel } from '@store/onboarding/onboarding.model';
 @State<OnboardingStateModel>({
   name: 'onboarding',
   defaults: {
-    __typename: 'Onboarding',
     lastActive: -1,
     lastComplete: -1,
     started: false,
@@ -62,6 +61,7 @@ export class OnboardingState {
     ctx: StateContext<OnboardingStateModel>,
     { payload }: OnboardingActions.UpdateLastComplete
   ): void {
+    console.log('update lastcomplete', payload);
     ctx.patchState({
       lastComplete: payload,
     });

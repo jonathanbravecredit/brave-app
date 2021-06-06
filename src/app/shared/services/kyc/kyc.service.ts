@@ -4,18 +4,27 @@ import { filter } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
 import * as OnboardingActions from '@store/onboarding/onboarding.actions';
+import * as UserActions from '@store/user/user.actions';
 import {
   APIService,
   UpdateAppDataInput,
   UserAttributesInput,
 } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
+import { UserStateModel } from '@store/user';
+import { SyncService } from '@shared/services/sync/sync.service';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { left } from '@popperjs/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KycService implements OnDestroy {
-  constructor(private api: APIService, private store: Store) {}
+  constructor(
+    private api: APIService,
+    private store: Store,
+    private auth: AuthService
+  ) {}
 
   ngOnDestroy(): void {
     // if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
@@ -31,32 +40,13 @@ export class KycService implements OnDestroy {
     this.store
       .dispatch(new OnboardingActions.UpdateLastActive(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
-        const data = { ...state.appData };
-        // console.log('data', data);
-        // const input = deleteKeyNestedObject(
-        //   data,
-        //   '__typename'
-        // ) as UpdateAppDataInput; // If set to undefined and strigified then parsed...removes it
-        // console.log('input', input);
-        // console.log();
-        const input = {
-          id: data?.id,
-          user: {
-            id: data?.user?.id,
-            userAttributes: data?.user?.userAttributes,
-            onboarding: {
-              lastActive: data?.user?.onboarding?.lastActive,
-              lastComplete: data?.user?.onboarding?.lastComplete,
-              started: data?.user?.onboarding?.started,
-            },
-          },
-          agencies: {
-            transunion: data?.agencies?.transunion,
-            equifax: data?.agencies?.equifax,
-            experian: data?.agencies?.experian,
-          },
-        } as UpdateAppDataInput;
-        this.api.UpdateAppData(input); // the listener will update the state.
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.remedyCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
       });
   }
 
@@ -69,25 +59,13 @@ export class KycService implements OnDestroy {
     this.store
       .dispatch(new OnboardingActions.UpdateLastActive(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
-        const data = { ...state.appData };
-        const input = {
-          id: data?.id,
-          user: {
-            id: data?.user?.id,
-            userAttributes: data?.user?.userAttributes,
-            onboarding: {
-              lastActive: data?.user?.onboarding?.lastActive,
-              lastComplete: data?.user?.onboarding?.lastComplete,
-              started: data?.user?.onboarding?.started,
-            },
-          },
-          agencies: {
-            transunion: data?.agencies?.transunion,
-            equifax: data?.agencies?.equifax,
-            experian: data?.agencies?.experian,
-          },
-        } as UpdateAppDataInput;
-        this.api.UpdateAppData(input); // the listener will update the state.
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.remedyCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
       });
   }
 
@@ -100,25 +78,13 @@ export class KycService implements OnDestroy {
     this.store
       .dispatch(new OnboardingActions.UpdateLastComplete(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
-        const data = { ...state.appData };
-        const input = {
-          id: data?.id,
-          user: {
-            id: data?.user?.id,
-            userAttributes: data?.user?.userAttributes,
-            onboarding: {
-              lastActive: data?.user?.onboarding?.lastActive,
-              lastComplete: data?.user?.onboarding?.lastComplete,
-              started: data?.user?.onboarding?.started,
-            },
-          },
-          agencies: {
-            transunion: data?.agencies?.transunion,
-            equifax: data?.agencies?.equifax,
-            experian: data?.agencies?.experian,
-          },
-        } as UpdateAppDataInput;
-        this.api.UpdateAppData(input); // the listener will update the state.
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.remedyCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
       });
   }
 
@@ -131,25 +97,13 @@ export class KycService implements OnDestroy {
     this.store
       .dispatch(new OnboardingActions.UpdateLastComplete(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
-        const data = { ...state.appData };
-        const input = {
-          id: data?.id,
-          user: {
-            id: data?.user?.id,
-            userAttributes: data?.user?.userAttributes,
-            onboarding: {
-              lastActive: data?.user?.onboarding?.lastActive,
-              lastComplete: data?.user?.onboarding?.lastComplete,
-              started: data?.user?.onboarding?.started,
-            },
-          },
-          agencies: {
-            transunion: data?.agencies?.transunion,
-            equifax: data?.agencies?.equifax,
-            experian: data?.agencies?.experian,
-          },
-        } as UpdateAppDataInput;
-        this.api.UpdateAppData(input); // the listener will update the state.
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.remedyCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
       });
   }
 
@@ -164,7 +118,8 @@ export class KycService implements OnDestroy {
     lastComplete: number,
     started: boolean = true
   ): OnboardingStateModel | undefined | void {
-    // return { ...this.onboarding, lastActive, lastComplete, started };
+    const state = this.store.snapshot();
+    return { ...state.user?.onboarding, lastActive, lastComplete, started };
   }
 
   /**
@@ -172,12 +127,12 @@ export class KycService implements OnDestroy {
    * @param {UserAttributesInput} attributes
    */
   updateUserAttributes(attrs: UserAttributesInput): void {
-    // const state = this.store.snapshot();
-    // const user: UserStateModel = {
-    //   ...this.user,
-    //   userAttributes: { ...this.user.userAttributes, ...attrs },
-    // };
-    // this.store.dispatch(new UserAction.Edit(user));
-    //!!!! will be updated by listeners now
+    const state = this.store.snapshot();
+    if (!state) return;
+    const user: UserStateModel = {
+      ...state.user,
+      userAttributes: { ...state.user?.userAttributes, ...attrs },
+    };
+    this.store.dispatch(new UserActions.Edit(user));
   }
 }
