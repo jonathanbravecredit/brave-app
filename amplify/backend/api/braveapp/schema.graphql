@@ -68,3 +68,19 @@ type Experian {
 type Query {
   transunion(action: String!, message: String!): String
 }
+type UpdateOnboardingInput {
+  lastActive: Int!
+  lastComplete: Int!
+  started: Boolean
+}
+
+mutation UpdateOnboarding(
+  $input: UpdateOnboardingInput!
+  $condition: UpdateOnboardingInput
+) {
+  updateAppData(input: $input, condition: $condition) {
+    lastActive
+    lastComplete
+    started
+  }
+}

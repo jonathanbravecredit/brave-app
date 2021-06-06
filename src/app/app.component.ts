@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  APIService,
-  OnCreateAppDataSubscription,
-  OnUpdateAppDataSubscription,
-  SubscriptionResponse,
-} from '@shared/services/aws/api.service';
+import { APIService } from '@shared/services/aws/api.service';
 import { ZenObservable } from 'zen-observable-ts';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data';

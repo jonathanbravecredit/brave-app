@@ -5,8 +5,8 @@
   >
     <brave-filled-checktext-progressbar
       [steps]="steps"
-      [activatedStep]="data.lastActive"
-      [completedStep]="data.lastComplete"
+      [activatedStep]="data.lastActive || 0"
+      [completedStep]="data.lastComplete || -1"
     ></brave-filled-checktext-progressbar>
   </div>
   <main>

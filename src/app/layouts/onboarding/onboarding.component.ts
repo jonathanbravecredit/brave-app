@@ -45,7 +45,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initiateOnboarding();
+    // this.initiateOnboarding(); TODO delete
   }
 
   ngOnDestroy(): void {}
@@ -57,13 +57,14 @@ export class OnboardingComponent implements OnInit, OnDestroy {
    * @param {OnboardingStep} steps
    */
   initiateOnboarding(): void {
-    if (!this.onboarding.started) {
-      const onboarding: OnboardingStateModel = {
-        lastActive: -1,
-        lastComplete: -1,
-        started: true,
-      };
-      this.store.dispatch(new OnboardingAction.Edit(onboarding));
-    }
+    // TODO Delete
+    // if (!this.onboarding.started) {
+    //   const onboarding: OnboardingStateModel = {
+    //     lastActive: -1,
+    //     lastComplete: -1,
+    //     started: true,
+    //   };
+    //   this.store.dispatch(new OnboardingAction.Edit(onboarding));
+    // }
   }
 }

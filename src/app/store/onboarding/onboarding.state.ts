@@ -46,4 +46,24 @@ export class OnboardingState {
       ...payload,
     });
   }
+
+  @Action(OnboardingActions.UpdateLastActive)
+  updateLastActive(
+    ctx: StateContext<OnboardingStateModel>,
+    { payload }: OnboardingActions.UpdateLastActive
+  ): void {
+    ctx.patchState({
+      lastActive: payload,
+    });
+  }
+
+  @Action(OnboardingActions.UpdateLastComplete)
+  updateLastComplete(
+    ctx: StateContext<OnboardingStateModel>,
+    { payload }: OnboardingActions.UpdateLastComplete
+  ): void {
+    ctx.patchState({
+      lastComplete: payload,
+    });
+  }
 }

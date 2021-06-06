@@ -1,43 +1,137 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
+import { AuthService } from '@shared/services/auth/auth.service';
 import {
   APIService,
-  UpdateAppDataInput,
+  CreateAppDataInput,
+  CreateAppDataMutation,
 } from '@shared/services/aws/api.service';
-import * as AppDataAction from '@store/app-data/app-data.actions';
-// import * as subscriptions from '@src/graphql/subscriptions.graphql';
+import * as AppDataActions from '@store/app-data/app-data.actions';
+import { AppDataStateModel } from '@store/app-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SyncService {
-  constructor(private store: Store, private api: APIService) {}
+  constructor(
+    private api: APIService,
+    private store: Store,
+    private router: Router
+  ) {}
 
-  syncStateToBackend(): void {
-    const state = this.store.snapshot();
-    const input = { ...state.appData } as UpdateAppDataInput;
-    console.log('data to input', input);
-    this.api
-      .UpdateAppData(input)
-      .then((res) => {
-        console.log('graphql res ===> ', res);
-      })
-      .catch((err) => {
-        console.log('graphql err ===> ', err);
-      });
+  /**
+   * Hall monitor. Checks the user and tells them where to go when they come back
+   *   to the app for the first and subsequent times.
+   * @returns
+   */
+  async hallMonitor(creds: ICredentials): Promise<void> {
+    const { identityId: id } = creds;
+    // check if db has data
+    const data = await this.api.GetAppData(id);
+    console.log('id', id);
+    console.log('res', data);
+
+    if (!data) {
+      // new user...seed database
+      await this.initAppData({ identityId: id } as ICredentials);
+      this.router.navigate(['/onboarding/name']);
+      return;
+    } else {
+      // existing user...check where last left off
+      const payload: AppDataStateModel = { ...data } as AppDataStateModel;
+      this.store
+        .dispatch(new AppDataActions.Add(payload))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          if (state.appData.user?.onboarding?.lastComplete === 3) {
+            this.router.navigate(['/dashboard/']);
+          } else {
+            switch (state.appData.user?.onboarding?.lastComplete) {
+              case -1:
+                this.router.navigate(['/onboarding/name']);
+                break;
+              case 0:
+                this.router.navigate(['/onboarding/address']);
+                break;
+              case 1:
+                this.router.navigate(['/onboarding/identity']);
+                break;
+              case 2:
+                this.router.navigate(['/onboarding/verify']);
+                break;
+              default:
+                this.router.navigate(['/dashboard/']);
+                break;
+            }
+          }
+        });
+    }
   }
 
+  /**
+   *
+   * @param {ICredentials} creds
+   */
+  async initAppData(
+    creds: ICredentials
+  ): Promise<CreateAppDataMutation | undefined> {
+    const input: CreateAppDataInput = {
+      id: creds.identityId,
+      user: {
+        id: creds.identityId,
+        onboarding: {
+          lastActive: 0,
+          lastComplete: -1,
+          started: true,
+        },
+      },
+      agencies: {
+        transunion: { authenticated: false },
+        experian: { authenticated: false },
+        equifax: { authenticated: false },
+      },
+    };
+    try {
+      const data = await this.api.CreateAppData(input);
+      return data;
+    } catch (err) {
+      console.log('initApp error', err);
+      return;
+    }
+  }
+
+  /**
+   * DO NOT USE. Currently syncing up with the listeners
+   */
+  syncStateToBackend(): void {
+    // const state = this.store.snapshot();
+    // const input = { ...state.appData } as UpdateAppDataInput;
+    // console.log('data to input', input);
+    // this.api
+    //   .UpdateAppData(input)
+    //   .then((res) => {
+    //     console.log('graphql res ===> ', res);
+    //   })
+    //   .catch((err) => {
+    //     console.log('graphql err ===> ', err);
+    //   });
+  }
+
+  /**
+   * DO NOT USE. Currently syncing up with the listeners
+   */
   syncBackendToState(): void {
-    const { state } = this.store.snapshot();
-    const { id } = { ...state.appData } as UpdateAppDataInput;
-    this.api
-      .GetAppData(id)
-      .then((res) => {
-        this.store.dispatch(new AppDataAction.Edit(res));
-        console.log('graphql res ===> ', res);
-      })
-      .catch((err) => {
-        console.log('graphql err ===> ', err);
-      });
+    // const { state } = this.store.snapshot();
+    // const { id } = { ...state.appData } as UpdateAppDataInput;
+    // this.api
+    //   .GetAppData(id)
+    //   .then((res) => {
+    //     this.store.dispatch(new AppDataAction.Edit(res));
+    //     console.log('graphql res ===> ', res);
+    //   })
+    //   .catch((err) => {
+    //     console.log('graphql err ===> ', err);
+    //   });
   }
 }
