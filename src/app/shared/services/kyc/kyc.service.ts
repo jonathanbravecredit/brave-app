@@ -3,7 +3,9 @@ import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
 import * as OnboardingActions from '@store/onboarding/onboarding.actions';
 import * as UserActions from '@store/user/user.actions';
+import * as AgenciesActions from '@store/agencies/agencies.actions';
 import {
+  AgenciesInput,
   APIService,
   UpdateAppDataInput,
   UserAttributesInput,
@@ -152,5 +154,20 @@ export class KycService {
           }
         });
     });
+  }
+
+  updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
+    this.store
+      .dispatch(new AgenciesActions.Edit(agency))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        console.log('after agency update', input);
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input);
+        }
+      });
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
 import { AppDataStateModel } from '@store/app-data';
 
@@ -11,7 +12,7 @@ export class TransunionService {
   createIndicativeEnrichmentPayload(
     data: AppDataStateModel
   ): IIndicativeEnrichmentMsg | undefined {
-    const id = data.id;
+    const id = data.id.split(':').pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
 
@@ -53,6 +54,52 @@ export class TransunionService {
       },
       ServiceBundleCode: 'CC2BraveCreditIndicativeEnrichment',
     } as IIndicativeEnrichmentMsg;
+  }
+
+  createGetAuthenticationQuestionsPayload(
+    data: AppDataStateModel,
+    ssn: string
+  ) {
+    const id = data.id.split(':').pop();
+    const attrs = data.user?.userAttributes;
+    const dob = attrs?.dob;
+
+    if (!attrs || !id || !dob) {
+      console.log(`no attrs, id, or dob: attrs=${attrs}; id=${id}; dob=${dob}`);
+      return;
+    }
+
+    return {
+      AdditionalInputs: {
+        Data: {
+          Name: 'CreditReportVersion',
+          Value: '1',
+        },
+      },
+      RequestKey: '',
+      ClientKey: id,
+      Customer: {
+        CurrentAddress: {
+          AddressLine1: attrs.address?.addressOne || '',
+          AddressLine2: attrs.address?.addressTwo || '',
+          City: attrs.address?.city || '',
+          State: attrs.address?.state || '',
+          Zipcode: attrs.address?.zip || '',
+        },
+        PreviousAddress: {},
+        DateOfBirth:
+          `${attrs.dob?.year}-${
+            monthMap[dob.month.toLowerCase()]
+          }-${`0${dob.day}`.slice(-2)}` || '',
+        FullName: {
+          FirstName: attrs.name?.first || '',
+          LastName: attrs.name?.last || '',
+          MiddleName: attrs.name?.middle || '',
+        },
+        Ssn: ssn || '',
+      },
+      ServiceBundleCode: 'CC2BraveCreditAuthentication',
+    } as IGetAuthenticationQuestionsMsg;
   }
 }
 
