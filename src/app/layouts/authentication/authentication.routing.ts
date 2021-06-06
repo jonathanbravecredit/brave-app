@@ -27,7 +27,7 @@ const AuthenticationRoutes: Routes = [
       { path: 'resend', component: SignupResendComponent },
       {
         path: '',
-        redirectTo: 'signup',
+        redirectTo: 'auth/signup',
         pathMatch: 'full',
       },
     ],

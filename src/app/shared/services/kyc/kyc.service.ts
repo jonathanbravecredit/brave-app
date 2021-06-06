@@ -32,7 +32,7 @@ export class KycService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          this.auth.remedyCredentials();
+          this.auth.reloadCredentials();
           return;
         } else {
           this.api.UpdateAppData(input); // the listener will update the state.
@@ -51,7 +51,7 @@ export class KycService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          this.auth.remedyCredentials();
+          this.auth.reloadCredentials();
           return;
         } else {
           this.api.UpdateAppData(input); // the listener will update the state.
@@ -70,7 +70,7 @@ export class KycService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          this.auth.remedyCredentials();
+          this.auth.reloadCredentials();
           return;
         } else {
           this.api.UpdateAppData(input); // the listener will update the state.
@@ -89,7 +89,7 @@ export class KycService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          this.auth.remedyCredentials();
+          this.auth.reloadCredentials();
           return;
         } else {
           this.api.UpdateAppData(input); // the listener will update the state.
@@ -122,7 +122,7 @@ export class KycService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          this.auth.remedyCredentials();
+          this.auth.reloadCredentials();
           return;
         } else {
           this.api.UpdateAppData(input);

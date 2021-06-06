@@ -27,11 +27,13 @@ export class SyncService {
    *   to the app for the first and subsequent times.
    * @returns
    */
-  async hallMonitor(creds: ICredentials): Promise<void> {
+  async hallmonitor(creds: ICredentials): Promise<void> {
+    console.log('calling hallmonitor');
     const { identityId: id } = creds;
     // check if db has data
     const data = await this.api.GetAppData(id);
     const clean = this.cleanBackendData(data);
+    console.log('clean data', clean);
 
     if (!data) {
       // new user...seed database
@@ -44,6 +46,7 @@ export class SyncService {
       this.store
         .dispatch(new AppDataActions.Add(payload))
         .subscribe((state: { appData: AppDataStateModel }) => {
+          console.log('data being updated to state', state);
           if (state.appData.user?.onboarding?.lastComplete === 3) {
             this.router.navigate(['/dashboard/']);
           } else {

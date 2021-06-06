@@ -6,7 +6,6 @@ import {
 } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 import { OnboardingStateModel, OnboardingStep } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
-import * as OnboardingAction from '@store/onboarding';
 import { Store } from '@ngxs/store';
 import { filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
@@ -16,7 +15,7 @@ import { AuthService } from '@shared/services/auth/auth.service';
   selector: 'brave-onboarding',
   templateUrl: './onboarding.component.html',
 })
-export class OnboardingComponent implements OnInit, OnDestroy {
+export class OnboardingComponent {
   @ViewChild(FilledChecktextProgressbarComponent)
   progressBar: FilledChecktextProgressbarComponent | undefined;
   progressConfig: IFilledChecktextProgressbarConfig = {
@@ -46,27 +45,6 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.auth.remedyCredentials();
-    // this.initiateOnboarding(); TODO delete
-  }
-
-  ngOnDestroy(): void {}
-
-  ngAfterViewInit(): void {}
-
-  /**
-   * When the user first lands on welcome seed the onboarding data
-   * @param {OnboardingStep} steps
-   */
-  initiateOnboarding(): void {
-    // TODO Delete
-    // if (!this.onboarding.started) {
-    //   const onboarding: OnboardingStateModel = {
-    //     lastActive: -1,
-    //     lastComplete: -1,
-    //     started: true,
-    //   };
-    //   this.store.dispatch(new OnboardingAction.Edit(onboarding));
-    // }
+    await this.auth.reloadCredentials();
   }
 }

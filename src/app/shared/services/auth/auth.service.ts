@@ -41,7 +41,7 @@ export class AuthService {
         case 'signIn':
           this.authState.next(payload.data);
           const creds: ICredentials = await this.getCredentials();
-          this.sync.hallMonitor(creds);
+          this.sync.hallmonitor(creds);
           break;
         case 'signOut':
           // handle sign out
@@ -58,6 +58,36 @@ export class AuthService {
         this.authState.next(user);
       })
       .catch(() => console.log('Not signed in'));
+  }
+
+  /**
+   * This method is designed to help reload the user if the ID ever goes null
+   * will perform the following:
+   *  1. Get current credentials (if the token is still valid)
+   *  2. If no token available, and on a different page...go back to login
+   *  3. If on sign in or sign up...do nothing
+   * @returns
+   */
+  async reloadCredentials(): Promise<void> {
+    console.log('calling reload');
+    const creds = await this.getCredentials();
+    if (creds) {
+      await this.sync.hallmonitor(creds);
+    } else {
+      switch (this.router.url) {
+        case '/auth/signin':
+          break;
+        case '/auth/signup':
+          break;
+        case '/signin':
+          break;
+        case '/signin':
+          break;
+        default:
+          this.router.navigate(['/auth/signin']);
+          break;
+      }
+    }
   }
 
   /**
@@ -121,6 +151,13 @@ export class AuthService {
     return email ? Auth.resendSignUp(email) : undefined;
   }
 
+  /**
+   *
+   * @param email
+   * @param code
+   * @param pw
+   * @returns
+   */
   forgotPasswordSubmit(
     email: string,
     code: string,
@@ -132,36 +169,13 @@ export class AuthService {
   }
 
   /**
-   * This method is designed to help reload the user if the ID ever goes null
-   * will perform the following:
-   *  1. Get current credentials (if the token is still valid)
-   *  2. If no token available, and on a different page...go back to login
-   *  3. If on sign in or sign up...do nothing
+   *
+   * @returns
    */
-  async remedyCredentials(): Promise<void> {
-    const creds = await this.getCredentials();
-    if (creds) {
-      await this.sync.hallMonitor(creds);
-    } else {
-      switch (this.router.url) {
-        case '/auth/signin':
-          break;
-        case '/auth/signup':
-          break;
-        case '/signin':
-          break;
-        case '/signin':
-          break;
-        default:
-          this.router.navigate(['/auth/signin']);
-          break;
-      }
-    }
-  }
-
   getCredentials(): Promise<ICredentials> {
     return Auth.currentCredentials();
   }
+
   /**
    *
    * @returns

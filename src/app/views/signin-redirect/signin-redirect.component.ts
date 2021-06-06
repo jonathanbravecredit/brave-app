@@ -13,7 +13,7 @@ export class SigninRedirectComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       const creds: ICredentials = await this.auth.getCredentials();
-      await this.sync.hallMonitor(creds);
+      await this.sync.hallmonitor(creds);
     } catch (err) {
       console.log('hall monitor error', err);
     }
