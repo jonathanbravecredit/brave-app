@@ -9,7 +9,7 @@ import { SyncService } from '@shared/services/sync/sync.service';
   selector: 'brave-kyc-kbaquestions',
   templateUrl: './kyc-kbaquestions.component.html',
 })
-export class KycKbaquestionsComponent implements OnInit, AfterViewInit {
+export class KycKbaquestionsComponent {
   @ViewChild(KbaquestionsFormComponent) kba:
     | KbaquestionsFormComponent
     | undefined;
@@ -21,15 +21,8 @@ export class KycKbaquestionsComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService,
-    private syncService: SyncService
+    private kycService: KycService
   ) {}
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    this.syncService.syncStateToBackend();
-  }
 
   goBack(): void {
     if (this.answers.length) {

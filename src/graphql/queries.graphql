@@ -12,6 +12,31 @@ query GetAppData($id: ID!) {
         lastComplete
         started
       }
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+        }
+      }
     }
     agencies {
       transunion {

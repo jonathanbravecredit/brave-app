@@ -129,4 +129,28 @@ export class KycService {
         }
       });
   }
+
+  /**
+   * Takes the attributes and updates the state with them
+   * @param {UserAttributesInput} attributes
+   */
+  async updateUserAttributesSync(
+    attrs: UserAttributesInput
+  ): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new UserActions.UpdateAttributes(attrs))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          if (!input.id) {
+            this.auth.reloadCredentials();
+            reject();
+            return;
+          } else {
+            this.api.UpdateAppData(input);
+            resolve(input);
+          }
+        });
+    });
+  }
 }

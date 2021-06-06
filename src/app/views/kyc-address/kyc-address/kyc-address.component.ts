@@ -10,9 +10,7 @@ import { SyncService } from '@shared/services/sync/sync.service';
   selector: 'brave-kyc-address',
   templateUrl: './kyc-address.component.html',
 })
-export class KycAddressComponent
-  extends KycBaseComponent
-  implements OnInit, AfterViewInit {
+export class KycAddressComponent extends KycBaseComponent implements OnInit {
   stepID = 1;
   constructor(
     private router: Router,
@@ -25,10 +23,6 @@ export class KycAddressComponent
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
-  }
-
-  ngAfterViewInit(): void {
-    this.syncService.syncStateToBackend();
   }
 
   goBack(): void {

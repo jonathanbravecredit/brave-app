@@ -10,9 +10,7 @@ import { SyncService } from '@shared/services/sync/sync.service';
   selector: 'brave-kyc-ssn-full',
   templateUrl: './kyc-ssn-full.component.html',
 })
-export class KycSsnFullComponent
-  extends KycBaseComponent
-  implements OnInit, AfterViewInit {
+export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
   stepID = 2;
   constructor(
     private router: Router,
@@ -25,10 +23,6 @@ export class KycSsnFullComponent
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
-  }
-
-  ngAfterViewInit(): void {
-    this.syncService.syncStateToBackend();
   }
 
   goBack(): void {

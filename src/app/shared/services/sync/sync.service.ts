@@ -110,38 +110,4 @@ export class SyncService {
     delete clean.updatedAt; // this is a graphql managed field
     return clean;
   }
-
-  /**
-   * DO NOT USE. Currently syncing up with the listeners
-   */
-  syncStateToBackend(): void {
-    // const state = this.store.snapshot();
-    // const input = { ...state.appData } as UpdateAppDataInput;
-    // console.log('data to input', input);
-    // this.api
-    //   .UpdateAppData(input)
-    //   .then((res) => {
-    //     console.log('graphql res ===> ', res);
-    //   })
-    //   .catch((err) => {
-    //     console.log('graphql err ===> ', err);
-    //   });
-  }
-
-  /**
-   * DO NOT USE. Currently syncing up with the listeners
-   */
-  syncBackendToState(): void {
-    // const { state } = this.store.snapshot();
-    // const { id } = { ...state.appData } as UpdateAppDataInput;
-    // this.api
-    //   .GetAppData(id)
-    //   .then((res) => {
-    //     this.store.dispatch(new AppDataAction.Edit(res));
-    //     console.log('graphql res ===> ', res);
-    //   })
-    //   .catch((err) => {
-    //     console.log('graphql err ===> ', err);
-    //   });
-  }
 }

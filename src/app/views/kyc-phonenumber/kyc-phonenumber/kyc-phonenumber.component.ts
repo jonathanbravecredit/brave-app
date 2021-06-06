@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
-import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -12,23 +11,18 @@ import { SyncService } from '@shared/services/sync/sync.service';
 })
 export class KycPhonenumberComponent
   extends KycBaseComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit {
   stepID = 3;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService,
-    private syncService: SyncService
+    private kycService: KycService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
-  }
-
-  ngAfterViewInit(): void {
-    this.syncService.syncStateToBackend();
   }
 
   goBack(): void {
