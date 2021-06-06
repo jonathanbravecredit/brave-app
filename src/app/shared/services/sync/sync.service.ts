@@ -32,7 +32,6 @@ export class SyncService {
     // check if db has data
     const data = await this.api.GetAppData(id);
     const clean = this.cleanBackendData(data);
-    console.log('clean data', clean);
 
     if (!data) {
       // new user...seed database
@@ -42,7 +41,6 @@ export class SyncService {
     } else {
       // existing user...check where last left off
       const payload: AppDataStateModel = { ...clean } as AppDataStateModel;
-      console.log('payload', payload);
       this.store
         .dispatch(new AppDataActions.Add(payload))
         .subscribe((state: { appData: AppDataStateModel }) => {

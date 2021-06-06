@@ -7,10 +7,6 @@ import {
   CognitoUserSession,
   ISignUpResult,
 } from 'amazon-cognito-identity-js';
-import {
-  APIService,
-  CreateAppDataInput,
-} from '@shared/services/aws/api.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';

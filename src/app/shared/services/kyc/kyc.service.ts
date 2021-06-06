@@ -1,6 +1,4 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
 import * as OnboardingActions from '@store/onboarding/onboarding.actions';
@@ -11,25 +9,17 @@ import {
   UserAttributesInput,
 } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
-import { UserSelectors, UserStateModel } from '@store/user';
-import { SyncService } from '@shared/services/sync/sync.service';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { left } from '@popperjs/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class KycService implements OnDestroy {
+export class KycService {
   constructor(
     private api: APIService,
     private store: Store,
     private auth: AuthService
   ) {}
-
-  ngOnDestroy(): void {
-    // if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
-    // if (this.userSub$) this.userSub$.unsubscribe();
-  }
 
   /**
    * Takes a progress step ID and sets the status to true
@@ -135,7 +125,7 @@ export class KycService implements OnDestroy {
           this.auth.remedyCredentials();
           return;
         } else {
-          this.api.UpdateAppData(input); // the listener will update the state.
+          this.api.UpdateAppData(input);
         }
       });
   }

@@ -10,6 +10,7 @@ import * as OnboardingAction from '@store/onboarding';
 import { Store } from '@ngxs/store';
 import { filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 @Component({
   selector: 'brave-onboarding',
@@ -34,7 +35,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     { id: 3, active: false, complete: false, name: 'Verify' },
   ];
 
-  constructor(private store: Store) {
+  constructor(private auth: AuthService, private store: Store) {
     this.onboardingSub$ = this.onboarding$
       .pipe(
         filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
@@ -44,7 +45,8 @@ export class OnboardingComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.auth.remedyCredentials();
     // this.initiateOnboarding(); TODO delete
   }
 
