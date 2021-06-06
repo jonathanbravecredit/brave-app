@@ -1,4 +1,3 @@
-
 export interface IGetAuthenticationQuestionsMsg {
   AdditionalInputs?: {
     Data: {
@@ -40,17 +39,17 @@ export interface IGetAuthenticationQuestionsMsg {
   TrustSessionId?: string;
 }
 
-export interface IGetAuthenticationQuestionsResponse {
+export interface IGetAuthenticationQuestionsResponseSuccess {
   's:Envelope': {
     _attributes: {
       'xmlns:s': string;
     };
     's:Body': {
-      IndicativeEnrichmentResponse: {
+      GetAuthenticationQuestionsResponse: {
         _attributes: {
           xmlns: string;
         };
-        IndicativeEnrichmentResult: {
+        GetAuthenticationQuestionsResult: {
           _attributes: {
             'xmlns:a': string;
             'xmlns:i': string;
@@ -72,10 +71,10 @@ export interface IGetAuthenticationQuestionsResponse {
           'a:ClientKey': {
             _text: string;
           };
-          'a:Customer': {
+          'a:Questions': {
             _text: string;
           };
-          'a:SSN': {
+          'a:ServiceBundleFulfillmentKey': {
             _text: string;
           };
         };

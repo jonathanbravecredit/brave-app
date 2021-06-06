@@ -73,6 +73,7 @@ export type AgenciesInput = {
 export type TransunionInput = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestions?: boolean | null;
 };
 
 export type EquifaxInput = {

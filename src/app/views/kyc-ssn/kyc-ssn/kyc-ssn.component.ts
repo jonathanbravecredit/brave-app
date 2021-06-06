@@ -10,6 +10,7 @@ import {
 } from '@shared/services/aws/api.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
+import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -40,6 +41,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
   }
 
   /**
+   * TODO !!!!! THIS NEEDS MAJOR REFACTORING !!!!
    * Method to take the form inputs and move to the next step
    * @param form
    */
@@ -79,9 +81,16 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
         data,
         ssn?._text
       );
+      if (!questionResponse)
+        this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
-      this.kycService.completeStep(this.stepID);
-      this.router.navigate(['../verify'], { relativeTo: this.route });
+      // parse authorization data (contains questions)
+      const questions = await this.processGetAutthenticationQuestionsResponse(
+        questionResponse
+      );
+
+      // this.kycService.completeStep(this.stepID);
+      // this.router.navigate(['../verify'], { relativeTo: this.route });
     }
   }
 
@@ -157,6 +166,36 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
       });
       // now do the authentication
       return enrichment;
+    } else {
+      return;
+    }
+  }
+
+  /**
+   * Process and clean the indicative enrichment response back from Transunion
+   * @param {string} resp this is the JSON string back from the Transunion service
+   * @returns
+   */
+  async processGetAutthenticationQuestionsResponse(
+    resp: string
+  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
+    const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
+      JSON.parse(resp)['GetAuthenticationQuestions']
+    );
+    console.log('questions', questions);
+    if (
+      questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+        .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
+    ) {
+      // update indicative enrichment as success
+      await this.kycService.updateTransunionIndicativeEnrichment({
+        transunion: {
+          authenticated: false,
+          indicativeEnrichmentSuccess: true,
+        },
+      });
+      // now do the authentication
+      return questions;
     } else {
       return;
     }
