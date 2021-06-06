@@ -14,3 +14,13 @@ export class Delete {
   static readonly type = '[Onboarding] Delete';
   constructor() {}
 }
+
+export class UpdateLastActive {
+  static readonly type = '[Onboarding] UpdateLastActive';
+  constructor(public payload: number) {}
+}
+
+export class UpdateLastComplete {
+  static readonly type = '[Onboarding] UpdateLastComplete';
+  constructor(public payload: number) {}
+}

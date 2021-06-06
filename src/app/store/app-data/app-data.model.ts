@@ -7,8 +7,7 @@ import {
 type typename = 'AppData';
 
 export class AppDataStateModel implements UpdateAppDataInput {
-  id!: string;
+  id: string = 'AppData';
   user?: UserInput | null | undefined;
   agencies?: AgenciesInput | null | undefined;
-  _version?: number | null | undefined;
 }

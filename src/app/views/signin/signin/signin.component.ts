@@ -54,13 +54,13 @@ export class SigninComponent {
 
           const creds = await this.auth.getAuthCredentials();
           if (creds) {
-            await this.store
-              .dispatch(new AppDataActions.Edit({ id: creds.identityId }))
-              .toPromise();
-            await this.store
-              .dispatch(new UserActions.Edit({ id: creds.identityId }))
-              .toPromise();
-            this.auth.seedAppData(creds); //possibly update to async
+            // await this.store
+            //   .dispatch(new AppDataActions.Edit({ id: creds.identityId }))
+            //   .toPromise();
+            // await this.store
+            //   .dispatch(new UserActions.Edit({ id: creds.identityId }))
+            //   .toPromise();
+            // this.auth.seedAppData(creds); //possibly update to async
           }
           // TODO add condition to check if onboarding is complete
           // need to get the results from the database

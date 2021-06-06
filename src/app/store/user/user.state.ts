@@ -37,4 +37,18 @@ export class UserState {
       ...payload,
     });
   }
+
+  @Action(UserActions.UpdateAttributes)
+  updateAttributes(
+    ctx: StateContext<UserStateModel>,
+    { payload }: UserActions.UpdateAttributes
+  ): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      userAttributes: {
+        ...state.userAttributes,
+        ...payload,
+      },
+    });
+  }
 }
