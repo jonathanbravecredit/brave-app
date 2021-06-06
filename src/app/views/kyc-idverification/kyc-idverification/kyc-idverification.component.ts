@@ -11,9 +11,7 @@ export type KycIdverificationState = 'init' | 'sent' | 'error';
   selector: 'brave-kyc-idverification',
   templateUrl: './kyc-idverification.component.html',
 })
-export class KycIdverificationComponent
-  extends KycBaseComponent
-  implements OnInit, AfterViewInit {
+export class KycIdverificationComponent extends KycBaseComponent {
   @Input() state: KycIdverificationState = 'init';
   stepID = 3;
 
@@ -24,12 +22,6 @@ export class KycIdverificationComponent
     private syncService: SyncService
   ) {
     super();
-  }
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    this.syncService.syncStateToBackend();
   }
 
   resendCode(): void {
