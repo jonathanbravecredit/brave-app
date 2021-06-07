@@ -60,6 +60,7 @@ type Transunion {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
   getAuthenticationQuestionsSuccess: Boolean
+  serviceBundleFulfillmentKey: String
 }
 type Equifax {
   authenticated: Boolean

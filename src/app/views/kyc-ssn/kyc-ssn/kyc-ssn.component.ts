@@ -77,6 +77,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
       if (!questionResponse)
         this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
+      console.log('questionResponse ===> ', questionResponse);
       // parse authorization data (contains questions)
       const questions = await this.kycService.processGetAutthenticationQuestionsResponse(
         questionResponse

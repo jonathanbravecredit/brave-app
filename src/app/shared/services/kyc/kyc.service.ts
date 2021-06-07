@@ -303,12 +303,17 @@ export class KycService {
       questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
         .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
     ) {
+      const fulillmentKey =
+        questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+          .GetAuthenticationQuestionsResult['a:ServiceBundleFulfillmentKey']
+          ._text;
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           authenticated: false,
           indicativeEnrichmentSuccess: true,
           getAuthenticationQuestionsSuccess: true,
+          // serviceBundleFulfillmentKey: fulillmentKey
         },
       });
       // now do the authentication
