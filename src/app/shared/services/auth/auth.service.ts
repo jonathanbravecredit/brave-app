@@ -69,7 +69,6 @@ export class AuthService {
    * @returns
    */
   async reloadCredentials(): Promise<void> {
-    console.log('calling reload');
     const creds = await this.getCredentials();
     if (creds) {
       await this.sync.hallmonitor(creds);

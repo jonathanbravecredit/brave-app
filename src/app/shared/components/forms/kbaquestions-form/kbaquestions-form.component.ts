@@ -42,8 +42,13 @@ export class KbaquestionsFormComponent
   }
 
   ngAfterViewInit(): void {
+    console.log('init parent form', this.parentForm);
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
+    this.parentForm.valueChanges.subscribe((value) => {
+      console.log('form', this.parentForm);
+      console.log('value', value);
+    });
   }
 
   formatChildName(childName: string, digit: number): string {
@@ -75,9 +80,12 @@ export class KbaquestionsFormComponent
   /**
    * Method to scroll the carousel by a percentage value
    * @param value percentage to move the carousel over by
+   * @param min the floor that the scroll should go to (i.e. 0)
+   * @param max the max translation the scrill should go to (e.g. -75...if 4 items)
    */
-  scroll(value: number): void {
-    if (this.carouselXAxis + value > 0 || this.carouselXAxis + value < -75) {
+  scroll(value: number, min: number, max: number): void {
+    console.log('scorll called', value, this.carouselXAxis);
+    if (this.carouselXAxis + value > min || this.carouselXAxis + value < max) {
       return;
     }
     // pop and push tracker to know which question we are on

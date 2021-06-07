@@ -266,6 +266,7 @@ export class KycService {
   async processIndicativeEnrichmentResponse(
     resp: string
   ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
+    console.log('resp', resp);
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
       JSON.parse(resp)['IndicativeEnrichmentResults']
     );
