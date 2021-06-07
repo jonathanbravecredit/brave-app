@@ -54,13 +54,13 @@ type Agencies {
   transunion: Transunion
   equifax: Equifax
   experian: Experian
-  currentRawQuestions: String
 }
 type Transunion {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
   getAuthenticationQuestionsSuccess: Boolean
   serviceBundleFulfillmentKey: String
+  currentRawQuestions: String
 }
 type Equifax {
   authenticated: Boolean

@@ -44,6 +44,7 @@ mutation CreateAppData(
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
       }
       equifax {
         authenticated
@@ -102,6 +103,7 @@ mutation UpdateAppData(
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
       }
       equifax {
         authenticated
@@ -160,6 +162,7 @@ mutation DeleteAppData(
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
       }
       equifax {
         authenticated

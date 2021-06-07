@@ -41,6 +41,7 @@ subscription OnCreateAppData {
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
       }
       equifax {
         authenticated
@@ -96,6 +97,7 @@ subscription OnUpdateAppData {
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
       }
       equifax {
         authenticated
@@ -151,6 +153,7 @@ subscription OnDeleteAppData {
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
       }
       equifax {
         authenticated

@@ -75,6 +75,7 @@ export type TransunionInput = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
 };
 
 export type EquifaxInput = {
@@ -170,6 +171,7 @@ export type Transunion = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
 };
 
 export type Equifax = {
@@ -296,6 +298,7 @@ export type CreateAppDataMutation = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -363,6 +366,7 @@ export type UpdateAppDataMutation = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -430,6 +434,7 @@ export type DeleteAppDataMutation = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -497,6 +502,7 @@ export type GetAppDataQuery = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -566,6 +572,7 @@ export type ListAppDatasQuery = {
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
+        serviceBundleFulfillmentKey?: string | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -635,6 +642,7 @@ export type OnCreateAppDataSubscription = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -702,6 +710,7 @@ export type OnUpdateAppDataSubscription = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -769,6 +778,7 @@ export type OnDeleteAppDataSubscription = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -845,6 +855,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename
@@ -928,6 +939,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename
@@ -1011,6 +1023,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename
@@ -1104,6 +1117,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename
@@ -1187,6 +1201,7 @@ export class APIService {
                 authenticated
                 indicativeEnrichmentSuccess
                 getAuthenticationQuestionsSuccess
+                serviceBundleFulfillmentKey
               }
               equifax {
                 __typename
@@ -1276,6 +1291,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename
@@ -1351,6 +1367,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename
@@ -1426,6 +1443,7 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
             }
             equifax {
               __typename

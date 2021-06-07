@@ -35,7 +35,8 @@ export class KycKbaquestionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private store: Store
   ) {
     this.agenciesSub$ = this.agencies$
       .pipe(take(1))
@@ -93,6 +94,17 @@ export class KycKbaquestionsComponent implements OnInit {
 
   handleSubmit(form: FormGroup) {
     // need to submit the answers back to TU.
+    // this.store.selectOnce().subscribe((state: {appData: }))
+    // const answers: IVerifyAuthenticationAnswer[]  = this.answers.map(answer => {
+    //   return   VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+    //             QuestionId: answer.
+    //             SelectedAnswerChoice: {
+    //               AnswerChoiceId: string;
+    //             };
+    //   };
+    // })
+    // this.store.dispatch
+    // this.kycService.sendVerifyAuthenticationQuestions()
     this.kycService.completeStep(this.stepID);
     this.router.navigate(['../congratulations'], { relativeTo: this.route });
   }

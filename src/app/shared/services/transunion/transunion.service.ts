@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
+import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
 import { AppDataStateModel } from '@store/app-data';
+import { domainToASCII } from 'url';
 
 @Injectable({
   providedIn: 'root',
@@ -100,6 +103,28 @@ export class TransunionService {
       },
       ServiceBundleCode: 'CC2BraveCreditAuthentication',
     } as IGetAuthenticationQuestionsMsg;
+  }
+
+  createVerifyAuthenticationQuestionsPayload(
+    data: AppDataStateModel,
+    answers: IVerifyAuthenticationAnswer[]
+  ) {
+    const id = data.id.split(':').pop();
+
+    if (!id || !answers.length) {
+      console.log(
+        `no id or answers provided: id=${id}; answers=${answers.length}`
+      );
+      return;
+    }
+
+    return {
+      RequestKey: '',
+      ClientKey: id,
+      Answers: answers,
+      ServiceBundleFulfillmentKey:
+        data.agencies?.transunion?.serviceBundleFulfillmentKey || '',
+    } as IVerifyAuthenticationQuestionsMsg;
   }
 }
 
