@@ -43,6 +43,7 @@ query GetAppData($id: ID!) {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
       }
       equifax {
         authenticated
@@ -101,6 +102,7 @@ query ListAppDatas(
         transunion {
           authenticated
           indicativeEnrichmentSuccess
+          getAuthenticationQuestionsSuccess
         }
         equifax {
           authenticated

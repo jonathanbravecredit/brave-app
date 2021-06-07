@@ -12,6 +12,7 @@ import {
 } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { state } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root',
@@ -136,7 +137,7 @@ export class KycService {
    * Takes the attributes and updates the state with them
    * @param {UserAttributesInput} attributes
    */
-  async updateUserAttributesSync(
+  async updateUserAttributesAsync(
     attrs: UserAttributesInput
   ): Promise<UpdateAppDataInput> {
     return await new Promise((resolve, reject) => {
@@ -156,6 +157,10 @@ export class KycService {
     });
   }
 
+  /**
+   * Takes the agency status and updates the state with them
+   * @param {AgenciesInput} agency the new agency input data to write to db and state
+   */
   updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
     this.store
       .dispatch(new AgenciesActions.Edit(agency))
@@ -169,5 +174,32 @@ export class KycService {
           this.api.UpdateAppData(input);
         }
       });
+  }
+
+  /**
+   * Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  updateCurrentRawQuestions(questions: string): void {
+    this.store.dispatch(new AgenciesActions.EditQuestions(questions));
+  }
+
+  /**
+   * (Synchronous) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateCurrentRawQuestionsAsync(
+    questions: string
+  ): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new AgenciesActions.EditQuestions(questions))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
   }
 }

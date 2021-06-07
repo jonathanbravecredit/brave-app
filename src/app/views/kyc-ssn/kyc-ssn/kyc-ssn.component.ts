@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as convert from 'xml-js';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
@@ -55,7 +56,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
           lastfour: lastFour,
         },
       } as UserAttributesInput;
-      const data = await this.kycService.updateUserAttributesSync(attrs);
+      const data = await this.kycService.updateUserAttributesAsync(attrs);
 
       // IndicativeEnrichment response from TU service
       const enrichmentResponse = await this.sendIndicativeEnrichment(data);
@@ -88,9 +89,18 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
       const questions = await this.processGetAutthenticationQuestionsResponse(
         questionResponse
       );
+      if (!questions)
+        this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
-      // this.kycService.completeStep(this.stepID);
-      // this.router.navigate(['../verify'], { relativeTo: this.route });
+      // Sucess...parse questions and pass to question component
+      const xml =
+        questions?.['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+          .GetAuthenticationQuestionsResult['a:Questions'];
+      if (!xml?._text)
+        this.router.navigate(['../identityfull'], { relativeTo: this.route });
+      await this.kycService.updateCurrentRawQuestionsAsync(xml?._text || '');
+      this.kycService.completeStep(this.stepID);
+      this.router.navigate(['../kba'], { relativeTo: this.route });
     }
   }
 
@@ -162,6 +172,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
         transunion: {
           authenticated: false,
           indicativeEnrichmentSuccess: true,
+          getAuthenticationQuestionsSuccess: true,
         },
       });
       // now do the authentication
@@ -182,7 +193,6 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
     const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
       JSON.parse(resp)['GetAuthenticationQuestions']
     );
-    console.log('questions', questions);
     if (
       questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
         .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
@@ -200,28 +210,6 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
       return;
     }
   }
-
-  // async processIndicativeEnrichmentResponse(resp: string): Promise<boolean> {
-  //   const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
-  //     JSON.parse(resp)['IndicativeEnrichmentResults']
-  //   );
-  //   if (
-  //     enrichment['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
-  //       .IndicativeEnrichmentResult['a:ResponseType']._text === 'Success'
-  //   ) {
-  //     // update indicative enrichment as success
-  //     await this.kycService.updateTransunionIndicativeEnrichment({
-  //       transunion: {
-  //         authenticated: false,
-  //         indicativeEnrichmentSuccess: true,
-  //       },
-  //     });
-  //     // now do the authentication
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   /**
    * Handle the form errors gracefully

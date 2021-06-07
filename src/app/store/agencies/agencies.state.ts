@@ -38,4 +38,12 @@ export class AgenciesState {
       ...payload,
     });
   }
+
+  @Action(AgenciesActions.Delete)
+  updateQuestions(
+    ctx: StateContext<AgenciesStateModel>,
+    { payload }: AgenciesActions.EditQuestions
+  ) {
+    ctx.patchState({ currentRawQuestions: payload });
+  }
 }

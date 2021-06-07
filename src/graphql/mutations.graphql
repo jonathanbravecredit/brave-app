@@ -43,6 +43,7 @@ mutation CreateAppData(
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
       }
       equifax {
         authenticated
@@ -99,6 +100,7 @@ mutation UpdateAppData(
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
       }
       equifax {
         authenticated
@@ -155,6 +157,7 @@ mutation DeleteAppData(
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
       }
       equifax {
         authenticated
