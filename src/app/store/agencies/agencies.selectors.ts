@@ -6,4 +6,9 @@ export class AgenciesSelectors {
   static getAgencies(state: AgenciesStateModel): AgenciesStateModel {
     return state;
   }
+
+  @Selector([AgenciesStateModel])
+  static getRawQuestions(state: AgenciesStateModel): string {
+    return state.currentRawQuestions || 'test';
+  }
 }

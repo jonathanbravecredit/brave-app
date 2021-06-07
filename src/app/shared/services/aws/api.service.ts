@@ -68,6 +68,7 @@ export type AgenciesInput = {
   transunion?: TransunionInput | null;
   equifax?: EquifaxInput | null;
   experian?: ExperianInput | null;
+  currentRawQuestions?: string | null;
 };
 
 export type TransunionInput = {
@@ -161,6 +162,7 @@ export type Agencies = {
   transunion?: Transunion;
   equifax?: Equifax;
   experian?: Experian;
+  currentRawQuestions?: string | null;
 };
 
 export type Transunion = {
@@ -303,6 +305,7 @@ export type CreateAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -369,6 +372,7 @@ export type UpdateAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -435,6 +439,7 @@ export type DeleteAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -501,6 +506,7 @@ export type GetAppDataQuery = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -569,6 +575,7 @@ export type ListAppDatasQuery = {
         __typename: "Experian";
         authenticated?: boolean | null;
       } | null;
+      currentRawQuestions?: string | null;
     };
     createdAt: string;
     updatedAt: string;
@@ -637,6 +644,7 @@ export type OnCreateAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -703,6 +711,7 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -769,6 +778,7 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
+    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -844,6 +854,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -926,6 +937,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1008,6 +1020,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1100,6 +1113,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1182,6 +1196,7 @@ export class APIService {
                 __typename
                 authenticated
               }
+              currentRawQuestions
             }
             createdAt
             updatedAt
@@ -1270,6 +1285,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1344,6 +1360,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1418,6 +1435,7 @@ export class APIService {
               __typename
               authenticated
             }
+            currentRawQuestions
           }
           createdAt
           updatedAt

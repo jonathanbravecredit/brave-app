@@ -205,7 +205,6 @@ export class KycService {
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
-          console.log('questions after update', input);
           resolve(input);
         });
     });
@@ -267,6 +266,7 @@ export class KycService {
   async processIndicativeEnrichmentResponse(
     resp: string
   ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
+    console.log('resp', resp);
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
       JSON.parse(resp)['IndicativeEnrichmentResults']
     );

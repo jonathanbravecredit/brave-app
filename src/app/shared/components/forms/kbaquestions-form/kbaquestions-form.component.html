@@ -4,17 +4,25 @@
   <div #sliderWindow class="window justify-center overflow-hidden">
     <div #slider class="slider transition-all">
       <!-- put the questions here -->
-      <div class="items flex overflow-x-hidden">
-        <div *ngFor="let question of [0, 1, 2, 3]">
-          <p class="item" [ngStyle]="{ 'width.px': itemWidth }">
-            Question number {{ question + 1 }}
-          </p>
+      <form [formGroup]="parentForm">
+        <div class="items flex overflow-x-hidden">
+          <div *ngFor="let question of kbas; index as i">
+            <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
+              <brave-kba-multiplechoice-input
+                (onComponentReady)="
+                  addChild(formatChildName('question', i), $event)
+                "
+                [required]="true"
+                [question]="question"
+              ></brave-kba-multiplechoice-input>
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
 <div class="flex justify-center">
   <!-- put the # / 4 here -->
-  <p class="text-center">{{ tracker.length }} / 4</p>
+  <p class="text-center">{{ tracker.length }} / {{ kbas?.length }}</p>
 </div>

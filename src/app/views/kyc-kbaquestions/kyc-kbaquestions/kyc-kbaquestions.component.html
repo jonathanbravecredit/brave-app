@@ -1,7 +1,11 @@
 <div class="container mx-auto max-w-xs h-full">
-  <brave-kyc-kbaquestions-pure
-    (formSubmit)="goToNext($event)"
-    (formError)="handleError($event)"
-    (backClick)="goBack()"
-  ></brave-kyc-kbaquestions-pure>
+  <div *ngIf="agencies$ | async as agencies">
+    <brave-kyc-kbaquestions-pure
+      (formSubmit)="handleSubmit($event)"
+      (formError)="handleError($event)"
+      (nextClick)="goToNext()"
+      (backClick)="goBack()"
+      [kbas]="agencies.currentRawQuestions | kycKbaquestions"
+    ></brave-kyc-kbaquestions-pure>
+  </div>
 </div>
