@@ -12,7 +12,7 @@ import {
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { take } from 'rxjs/operators';
-import * as convert from 'xml-js';
+import * as parser from 'fast-xml-parser';
 import { KycKbaquestionsPureComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 
 @Component({
@@ -41,8 +41,9 @@ export class KycKbaquestionsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((agencies: AgenciesStateModel) => {
         if (!agencies.currentRawQuestions) return;
-        const xml: ITransunionKBAQuestions = JSON.parse(
-          convert.xml2json(agencies.currentRawQuestions, { compact: true })
+        console.log('xml', agencies.currentRawQuestions);
+        const xml: ITransunionKBAQuestions = parser.parse(
+          agencies.currentRawQuestions
         );
         this.questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
         this.numberOfQuestions = this.questions.length;

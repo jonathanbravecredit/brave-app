@@ -49,16 +49,16 @@ export class SyncService {
             this.router.navigate(['/dashboard/']);
           } else {
             switch (state.appData.user?.onboarding?.lastComplete) {
-              case 0:
+              case -1:
                 this.router.navigate(['/onboarding/name']);
                 break;
-              case 1:
+              case 0:
                 this.router.navigate(['/onboarding/address']);
                 break;
-              case 2:
+              case 1:
                 this.router.navigate(['/onboarding/identity']);
                 break;
-              case 3:
+              case 2:
                 this.router.navigate(['/onboarding/verify']);
                 break;
               default:

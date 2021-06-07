@@ -46,7 +46,6 @@
     "chart.js": "^2.9.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "xml-js": "^1.6.11",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

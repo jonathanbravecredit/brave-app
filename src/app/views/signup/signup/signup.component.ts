@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         await this.auth.signUp(user);
-        this.router.navigate(['/onboarding/name'], { relativeTo: this.route });
+        this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err) {
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
