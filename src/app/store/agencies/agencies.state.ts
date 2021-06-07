@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
-import { AgenciesStateModel } from '@store/agencies';
-import * as AgenciesActions from './agencies.actions';
+import { AgenciesStateModel } from '@store/agencies/agencies.model';
+import * as AgenciesActions from '@store/agencies/agencies.actions';
 
 @State<AgenciesStateModel>({
   name: 'agencies',
@@ -34,6 +34,16 @@ export class AgenciesState {
   @Action(AgenciesActions.Delete)
   deleteUser(ctx: StateContext<AgenciesStateModel>) {
     const payload = new AgenciesStateModel();
+    ctx.patchState({
+      ...payload,
+    });
+  }
+
+  @Action(AgenciesActions.EditQuestions)
+  updateQuestions(
+    ctx: StateContext<AgenciesStateModel>,
+    { payload }: AgenciesActions.EditQuestions
+  ) {
     ctx.patchState({
       ...payload,
     });

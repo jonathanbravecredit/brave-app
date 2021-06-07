@@ -54,6 +54,7 @@ type Agencies {
   transunion: Transunion
   equifax: Equifax
   experian: Experian
+  currentRawQuestions: String
 }
 type Transunion {
   authenticated: Boolean

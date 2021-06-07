@@ -16,3 +16,8 @@ export class Delete {
   static readonly type = '[Agencies] Delete';
   constructor() {}
 }
+
+export class EditQuestions {
+  static readonly type = '[Agencies] EditQuestions';
+  constructor(public payload: Partial<AgenciesStateModel>) {}
+}

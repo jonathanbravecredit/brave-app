@@ -1,16 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
-import {
-  APIService,
-  UpdateAppDataInput,
-  UserAttributesInput,
-} from '@shared/services/aws/api.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
-import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -19,11 +12,9 @@ import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-a
 export class KycSsnComponent extends KycBaseComponent implements OnInit {
   stepID = 2;
   constructor(
-    private api: APIService,
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService,
-    private transunion: TransunionService
+    private kycService: KycService
   ) {
     super();
   }
@@ -41,7 +32,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
   }
 
   /**
-   * TODO !!!!! THIS NEEDS MAJOR REFACTORING !!!!
+   * TODO !!!!! THIS NEEDS MAJOR REFACTORING !!!! USE A RxJS PIPE
    * Method to take the form inputs and move to the next step
    * @param form
    */
@@ -55,15 +46,17 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
           lastfour: lastFour,
         },
       } as UserAttributesInput;
-      const data = await this.kycService.updateUserAttributesSync(attrs);
+      const data = await this.kycService.updateUserAttributesAsync(attrs);
 
       // IndicativeEnrichment response from TU service
-      const enrichmentResponse = await this.sendIndicativeEnrichment(data);
+      const enrichmentResponse = await this.kycService.sendIndicativeEnrichment(
+        data
+      );
       if (!enrichmentResponse)
         this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
       // parsed enrichment data (contains ssn)
-      const enrichment = await this.processIndicativeEnrichmentResponse(
+      const enrichment = await this.kycService.processIndicativeEnrichmentResponse(
         enrichmentResponse
       );
       if (!enrichment)
@@ -77,7 +70,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
         this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
       // GetAuthorizationQuestions response from TU service
-      const questionResponse = await this.sendGetAuthenticationQuestions(
+      const questionResponse = await this.kycService.sendGetAuthenticationQuestions(
         data,
         ssn?._text
       );
@@ -85,143 +78,24 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
         this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
       // parse authorization data (contains questions)
-      const questions = await this.processGetAutthenticationQuestionsResponse(
+      const questions = await this.kycService.processGetAutthenticationQuestionsResponse(
         questionResponse
       );
+      if (!questions)
+        this.router.navigate(['../identityfull'], { relativeTo: this.route });
 
-      // this.kycService.completeStep(this.stepID);
-      // this.router.navigate(['../verify'], { relativeTo: this.route });
+      // Sucess...parse questions and pass to question component
+      const xml =
+        questions?.['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+          .GetAuthenticationQuestionsResult['a:Questions'];
+      if (!xml?._text)
+        this.router.navigate(['../identityfull'], { relativeTo: this.route });
+
+      await this.kycService.updateCurrentRawQuestionsAsync(xml?._text || '');
+      this.kycService.completeStep(this.stepID);
+      this.router.navigate(['../kba'], { relativeTo: this.route });
     }
   }
-
-  /**
-   * Send the indicative enrichment message to the Transunion backend and await a response
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendIndicativeEnrichment(
-    data: UpdateAppDataInput
-  ): Promise<any | undefined> {
-    try {
-      const msg = this.transunion.createIndicativeEnrichmentPayload(data);
-      const res = await this.api.Transunion(
-        'IndicativeEnrichment',
-        JSON.stringify(msg)
-      );
-      return res ? res : undefined;
-    } catch (err) {
-      console.log('err ', err);
-      return;
-    }
-  }
-
-  /**
-   * Send the full ssn to the Transunion backend and await the KBA questions
-   *   - questions can be actual questions or a passcode for the phone
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendGetAuthenticationQuestions(
-    data: UpdateAppDataInput,
-    ssn: string = ''
-  ): Promise<any | undefined> {
-    if (!ssn) return;
-    try {
-      const msg = this.transunion.createGetAuthenticationQuestionsPayload(
-        data,
-        ssn
-      );
-      const res = await this.api.Transunion(
-        'GetAuthenticationQuestions',
-        JSON.stringify(msg)
-      );
-      return res ? res : undefined;
-    } catch (err) {
-      console.log('err ', err);
-      return;
-    }
-  }
-
-  /**
-   * Process and clean the indicative enrichment response back from Transunion
-   * @param {string} resp this is the JSON string back from the Transunion service
-   * @returns
-   */
-  async processIndicativeEnrichmentResponse(
-    resp: string
-  ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
-    const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
-      JSON.parse(resp)['IndicativeEnrichmentResults']
-    );
-    if (
-      enrichment['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
-        .IndicativeEnrichmentResult['a:ResponseType']._text === 'Success'
-    ) {
-      // update indicative enrichment as success
-      await this.kycService.updateTransunionIndicativeEnrichment({
-        transunion: {
-          authenticated: false,
-          indicativeEnrichmentSuccess: true,
-        },
-      });
-      // now do the authentication
-      return enrichment;
-    } else {
-      return;
-    }
-  }
-
-  /**
-   * Process and clean the indicative enrichment response back from Transunion
-   * @param {string} resp this is the JSON string back from the Transunion service
-   * @returns
-   */
-  async processGetAutthenticationQuestionsResponse(
-    resp: string
-  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
-    const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
-      JSON.parse(resp)['GetAuthenticationQuestions']
-    );
-    console.log('questions', questions);
-    if (
-      questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
-        .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
-    ) {
-      // update indicative enrichment as success
-      await this.kycService.updateTransunionIndicativeEnrichment({
-        transunion: {
-          authenticated: false,
-          indicativeEnrichmentSuccess: true,
-        },
-      });
-      // now do the authentication
-      return questions;
-    } else {
-      return;
-    }
-  }
-
-  // async processIndicativeEnrichmentResponse(resp: string): Promise<boolean> {
-  //   const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
-  //     JSON.parse(resp)['IndicativeEnrichmentResults']
-  //   );
-  //   if (
-  //     enrichment['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
-  //       .IndicativeEnrichmentResult['a:ResponseType']._text === 'Success'
-  //   ) {
-  //     // update indicative enrichment as success
-  //     await this.kycService.updateTransunionIndicativeEnrichment({
-  //       transunion: {
-  //         authenticated: false,
-  //         indicativeEnrichmentSuccess: true,
-  //       },
-  //     });
-  //     // now do the authentication
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   /**
    * Handle the form errors gracefully
