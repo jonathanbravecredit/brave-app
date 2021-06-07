@@ -48,6 +48,7 @@ subscription OnCreateAppData {
       experian {
         authenticated
       }
+      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -102,6 +103,7 @@ subscription OnUpdateAppData {
       experian {
         authenticated
       }
+      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -156,6 +158,7 @@ subscription OnDeleteAppData {
       experian {
         authenticated
       }
+      currentRawQuestions
     }
     createdAt
     updatedAt

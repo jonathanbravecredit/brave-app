@@ -1,28 +1,38 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KbaquestionsFormComponent } from '@shared/components/forms/kbaquestions-form/kbaquestions-form.component';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { SyncService } from '@shared/services/sync/sync.service';
+import { Select, Store } from '@ngxs/store';
+import { AgenciesState, AgenciesStateModel } from '@store/agencies';
+import { Observable } from 'rxjs';
+import { ITransunionKBAQuestion, ITransunionKBAAnswer } from '@shared/interfaces/tu-kba-questions.interface';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
   templateUrl: './kyc-kbaquestions.component.html',
 })
-export class KycKbaquestionsComponent {
+export class KycKbaquestionsComponent implements OnInit {
   @ViewChild(KbaquestionsFormComponent) kba:
     | KbaquestionsFormComponent
     | undefined;
 
-  questions: any[] = [0, 1, 2, 3]; // TODO replace with KBA question interface
-  answers: any[] = []; // TODO replace with KBA answers interface
+  questions: (ITransunionKBAQuestion | ITransunionKBAAnswer | undefined)[] = []; // TODO replace with KBA question interface
+  answers: (ITransunionKBAQuestion | ITransunionKBAAnswer | undefined)[] = []; // TODO replace with KBA answers interface
   stepID = 3;
+
+  @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private store: Store
   ) {}
+
+  ngOnInit(): void {
+    this.kycService.activateStep(this.stepID);
+  }
 
   goBack(): void {
     if (this.answers.length) {

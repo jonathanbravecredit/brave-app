@@ -1,10 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
-import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-address',
@@ -15,8 +14,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService,
-    private syncService: SyncService
+    private kycService: KycService
   ) {
     super();
   }

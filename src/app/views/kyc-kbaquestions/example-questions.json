@@ -1,0 +1,492 @@
+{
+  "_declaration": {
+    "_attributes": {
+      "version": "1.0",
+      "encoding": "utf-8"
+    }
+  },
+  "ChallengeConfigurationType": {
+    "_attributes": {
+      "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+      "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+      "xmlns": "com/truelink/ds/sch/srv/iv/ccs"
+    },
+    "RulesApp": {
+      "_text": "IDMA"
+    },
+    "CorrectAnswersNeeded": {
+      "_text": "0"
+    },
+    "AnswerAttemptsAllowed": {
+      "_text": "0"
+    },
+    "MultiChoiceQuestion": [
+      {
+        "QuestionType": {
+          "_text": "IDMA"
+        },
+        "SequenceNumber": {
+          "_text": "1"
+        },
+        "LastChanceQuestion": {
+          "_text": "false"
+        },
+        "FakeQuestion": {
+          "_text": "false"
+        },
+        "FullQuestionText": {
+          "_text": "What year was your most recent auto loan or lease established?"
+        },
+        "KeyQuestionText": {
+          "PromptDate": {
+            "_text": "2021-06-06T18:44:11-07:00"
+          }
+        },
+        "AnswerChoice": [
+          {
+            "SequenceNumber": {
+              "_text": "1"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "1996"
+            },
+            "Key": {
+              "_text": "1996"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835888"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "2"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "1998"
+            },
+            "Key": {
+              "_text": "1998"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835890"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "3"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "2000"
+            },
+            "Key": {
+              "_text": "2000"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835892"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "4"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "2001"
+            },
+            "Key": {
+              "_text": "2001"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835894"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "5"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "None of the Above"
+            },
+            "Key": {
+              "_text": "!(1996^1998^2000^2001)"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835896"
+            }
+          }
+        ],
+        "Key": {
+          "_text": "AUTO_YR"
+        },
+        "QuestionId": {
+          "_text": "48442366"
+        }
+      },
+      {
+        "QuestionType": {
+          "_text": "IDMA"
+        },
+        "SequenceNumber": {
+          "_text": "2"
+        },
+        "LastChanceQuestion": {
+          "_text": "false"
+        },
+        "FakeQuestion": {
+          "_text": "false"
+        },
+        "FullQuestionText": {
+          "_text": "What is the term (in months) of your most recent auto loan or lease?"
+        },
+        "KeyQuestionText": {
+          "PromptDate": {
+            "_text": "2021-06-06T18:44:11-07:00"
+          }
+        },
+        "AnswerChoice": [
+          {
+            "SequenceNumber": {
+              "_text": "1"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "25 -  36"
+            },
+            "Key": {
+              "_text": "25 -  36"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835898"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "2"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "37 -  48"
+            },
+            "Key": {
+              "_text": "37 -  48"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835900"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "3"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "49 -  60"
+            },
+            "Key": {
+              "_text": "49 -  60"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835902"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "4"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "61 -  72"
+            },
+            "Key": {
+              "_text": "61 -  72"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835904"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "5"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "None of the Above"
+            },
+            "Key": {
+              "_text": "!(25 -  36^37 -  48^49 -  60^61 -  72)"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835906"
+            }
+          }
+        ],
+        "Key": {
+          "_text": "AUTO_TERM"
+        },
+        "QuestionId": {
+          "_text": "48442368"
+        }
+      },
+      {
+        "QuestionType": {
+          "_text": "IDMA"
+        },
+        "SequenceNumber": {
+          "_text": "3"
+        },
+        "LastChanceQuestion": {
+          "_text": "false"
+        },
+        "FakeQuestion": {
+          "_text": "false"
+        },
+        "FullQuestionText": {
+          "_text": "What state was your social security number issued (this could be the state in which you were born or had your first job)?"
+        },
+        "KeyQuestionText": {
+          "PromptDate": {
+            "_text": "2021-06-06T18:44:11-07:00"
+          }
+        },
+        "AnswerChoice": [
+          {
+            "SequenceNumber": {
+              "_text": "1"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "Idaho"
+            },
+            "Key": {
+              "_text": "Idaho"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835908"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "2"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "Illinois"
+            },
+            "Key": {
+              "_text": "Illinois"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835910"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "3"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "Kentucky"
+            },
+            "Key": {
+              "_text": "Kentucky"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835912"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "4"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "New Hampshire"
+            },
+            "Key": {
+              "_text": "New Hampshire"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835914"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "5"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "None of the Above"
+            },
+            "Key": {
+              "_text": "!(Idaho^Illinois^Kentucky^New Hampshire)"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835916"
+            }
+          }
+        ],
+        "Key": {
+          "_text": "SSN_ISSUED"
+        },
+        "QuestionId": {
+          "_text": "48442370"
+        }
+      },
+      {
+        "QuestionType": {
+          "_text": "IDMA"
+        },
+        "SequenceNumber": {
+          "_text": "4"
+        },
+        "LastChanceQuestion": {
+          "_text": "false"
+        },
+        "FakeQuestion": {
+          "_text": "false"
+        },
+        "FullQuestionText": {
+          "_text": "Which of the following is a current or previous employer?"
+        },
+        "KeyQuestionText": {
+          "PromptDate": {
+            "_text": "2021-06-06T18:44:11-07:00"
+          }
+        },
+        "AnswerChoice": [
+          {
+            "SequenceNumber": {
+              "_text": "1"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "American Fidelity Assurance"
+            },
+            "Key": {
+              "_text": "American Fidelity Assurance"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835918"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "2"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "Boston Consulting Group"
+            },
+            "Key": {
+              "_text": "Boston Consulting Group"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835920"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "3"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "Iec"
+            },
+            "Key": {
+              "_text": "Iec"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835922"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "4"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "Jones Lang Lasalle"
+            },
+            "Key": {
+              "_text": "Jones Lang Lasalle"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835924"
+            }
+          },
+          {
+            "SequenceNumber": {
+              "_text": "5"
+            },
+            "IsCorrectAnswer": {
+              "_text": "false"
+            },
+            "AnswerChoiceText": {
+              "_text": "None of the Above"
+            },
+            "Key": {
+              "_text": "!(American Fidelity Assurance^Boston Consulting Group^Iec^Jones Lang Lasalle)"
+            },
+            "AnswerChoiceId": {
+              "_text": "3076835926"
+            }
+          }
+        ],
+        "Key": {
+          "_text": "EMPLOYER"
+        },
+        "QuestionId": {
+          "_text": "48442372"
+        }
+      }
+    ],
+    "ApplicantChallengeId": {
+      "_text": "878151676"
+    },
+    "ApplicantId": {
+      "_text": "34991534"
+    }
+  }
+}

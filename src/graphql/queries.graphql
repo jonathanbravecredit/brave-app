@@ -51,6 +51,7 @@ query GetAppData($id: ID!) {
       experian {
         authenticated
       }
+      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -110,6 +111,7 @@ query ListAppDatas(
         experian {
           authenticated
         }
+        currentRawQuestions
       }
       createdAt
       updatedAt

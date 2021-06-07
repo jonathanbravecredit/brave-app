@@ -205,7 +205,6 @@ export class KycService {
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
-          console.log('questions after update', input);
           resolve(input);
         });
     });

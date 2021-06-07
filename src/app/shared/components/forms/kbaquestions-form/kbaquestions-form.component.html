@@ -5,9 +5,9 @@
     <div #slider class="slider transition-all">
       <!-- put the questions here -->
       <div class="items flex overflow-x-hidden">
-        <div *ngFor="let question of [0, 1, 2, 3]">
+        <div *ngFor="let question of kbas; index as i">
           <p class="item" [ngStyle]="{ 'width.px': itemWidth }">
-            Question number {{ question + 1 }}
+            Question number {{ i + 1 }}
           </p>
         </div>
       </div>

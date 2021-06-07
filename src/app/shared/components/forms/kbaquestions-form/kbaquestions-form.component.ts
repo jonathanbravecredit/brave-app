@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
+  Input,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -19,6 +19,8 @@ export class KbaquestionsFormComponent
   implements AfterViewInit {
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
+
+  @Input() kbas: any[] = [];
 
   sliderWidth: number = 1200;
   itemWidth: number = 300;

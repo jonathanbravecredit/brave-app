@@ -35,6 +35,7 @@ import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeb
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
+import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 
 const views = [
   SignupComponent,
@@ -71,11 +72,10 @@ const views = [
   ComplianceTosComponent,
 ];
 
-// const services = [
-// ]
+const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views],
+  declarations: [...views, ...pipes],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -83,7 +83,7 @@ const views = [
     SharedComponentsModule,
     RouterModule,
   ],
-  exports: [...views],
+  exports: [...views, ...pipes],
   providers: [],
 })
 export class ViewsModule {}
