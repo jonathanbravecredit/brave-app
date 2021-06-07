@@ -9,7 +9,6 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 import { IKbaMultipleChoiceConfig } from '@shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
-import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
 
 @Component({
@@ -33,9 +32,9 @@ export class KbaquestionsFormComponent
   public kbaConfig: IKbaMultipleChoiceConfig = {
     size: 'sm',
     type: 'text',
-    label: 'Street Address',
-    placeholder: 'Street Address',
-    autocomplete: 'address-line1',
+    label: '',
+    placeholder: '',
+    autocomplete: 'off',
   };
 
   constructor(fb: FormBuilder, private renderer: Renderer2) {
@@ -45,7 +44,6 @@ export class KbaquestionsFormComponent
   ngAfterViewInit(): void {
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
-    console.log('kba questions', this.kbas);
   }
 
   formatChildName(childName: string, digit: number): string {

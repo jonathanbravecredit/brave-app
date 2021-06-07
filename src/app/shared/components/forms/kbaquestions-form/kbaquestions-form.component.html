@@ -9,7 +9,6 @@
           <div *ngFor="let question of kbas; index as i">
             <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
               <brave-kba-multiplechoice-input
-                [config]="kbaConfig"
                 (onComponentReady)="
                   addChild(formatChildName('question', i), $event)
                 "
