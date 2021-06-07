@@ -6,7 +6,10 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { Observable } from 'rxjs';
-import { ITransunionKBAQuestion, ITransunionKBAAnswer } from '@shared/interfaces/tu-kba-questions.interface';
+import {
+  ITransunionKBAQuestion,
+  ITransunionKBAAnswer,
+} from '@shared/interfaces/tu-kba-questions.interface';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -26,8 +29,7 @@ export class KycKbaquestionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService,
-    private store: Store
+    private kycService: KycService
   ) {}
 
   ngOnInit(): void {

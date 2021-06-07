@@ -1,20 +1,29 @@
 <!-- Display Container (not part of component) START -->
 <div class="window-wrapper flex justify-center items-center w-full">
   <!-- Carousel Body -->
-  <div #sliderWindow class="window justify-center overflow-hidden">
-    <div #slider class="slider transition-all">
-      <!-- put the questions here -->
-      <div class="items flex overflow-x-hidden">
-        <div *ngFor="let question of kbas; index as i">
-          <p class="item" [ngStyle]="{ 'width.px': itemWidth }">
-            Question number {{ i + 1 }}
-          </p>
+  <form [formGroup]="parentForm">
+    <div #sliderWindow class="window justify-center overflow-hidden">
+      <div #slider class="slider transition-all">
+        <!-- put the questions here -->
+        <div class="items flex overflow-x-hidden">
+          <div *ngFor="let question of kbas; index as i">
+            <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
+              <brave-kba-multiplechoice-input
+                [config]="kbaConfig"
+                (onComponentReady)="
+                  addChild(formatChildName('question', i), $event)
+                "
+                [required]="true"
+                [question]="question"
+              ></brave-kba-multiplechoice-input>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 <div class="flex justify-center">
   <!-- put the # / 4 here -->
-  <p class="text-center">{{ tracker.length }} / 4</p>
+  <p class="text-center">{{ tracker.length }} / {{ kbas?.length }}</p>
 </div>

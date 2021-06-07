@@ -11,22 +11,22 @@ export interface ITransunionKBAQuestions {
       'xmlns:xsi': string;
       xmlns: string;
     };
-  };
-  RulesApp: {
-    _text: string;
-  };
-  CorrectAnswersNeeded: {
-    _text: string;
-  };
-  AnswerAttemptsAllowed: {
-    _text: string;
-  };
-  MultiChoiceQuestion: ITransunionKBAQuestion[];
-  ApplicantChallengeId: {
-    _text: string;
-  };
-  ApplicantId: {
-    _text: string;
+    RulesApp: {
+      _text: string;
+    };
+    CorrectAnswersNeeded: {
+      _text: string;
+    };
+    AnswerAttemptsAllowed: {
+      _text: string;
+    };
+    MultiChoiceQuestion: ITransunionKBAQuestion[];
+    ApplicantChallengeId: {
+      _text: string;
+    };
+    ApplicantId: {
+      _text: string;
+    };
   };
 }
 

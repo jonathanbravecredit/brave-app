@@ -8,6 +8,9 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
+import { IKbaMultipleChoiceConfig } from '@shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
+import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
+import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
 
 @Component({
   selector: 'brave-kbaquestions-form',
@@ -20,12 +23,20 @@ export class KbaquestionsFormComponent
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
-  @Input() kbas: any[] = [];
+  @Input() kbas: ITransunionKBAQuestion[] = [];
 
   sliderWidth: number = 1200;
   itemWidth: number = 300;
   carouselXAxis: number = 0;
   tracker: any[] = [0];
+
+  public kbaConfig: IKbaMultipleChoiceConfig = {
+    size: 'sm',
+    type: 'text',
+    label: 'Street Address',
+    placeholder: 'Street Address',
+    autocomplete: 'address-line1',
+  };
 
   constructor(fb: FormBuilder, private renderer: Renderer2) {
     super(fb, 'kba-form');
@@ -34,6 +45,11 @@ export class KbaquestionsFormComponent
   ngAfterViewInit(): void {
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
+    console.log('kba questions', this.kbas);
+  }
+
+  formatChildName(childName: string, digit: number): string {
+    return `${childName}-${digit}`;
   }
 
   /**
