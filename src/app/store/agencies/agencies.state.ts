@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
-import { AgenciesStateModel } from '@store/agencies';
-import * as AgenciesActions from './agencies.actions';
+import { AgenciesStateModel } from '@store/agencies/agencies.model';
+import * as AgenciesActions from '@store/agencies/agencies.actions';
 
 @State<AgenciesStateModel>({
   name: 'agencies',
@@ -39,11 +39,13 @@ export class AgenciesState {
     });
   }
 
-  @Action(AgenciesActions.Delete)
+  @Action(AgenciesActions.EditQuestions)
   updateQuestions(
     ctx: StateContext<AgenciesStateModel>,
     { payload }: AgenciesActions.EditQuestions
   ) {
-    ctx.patchState({ currentRawQuestions: payload });
+    ctx.patchState({
+      ...payload,
+    });
   }
 }
