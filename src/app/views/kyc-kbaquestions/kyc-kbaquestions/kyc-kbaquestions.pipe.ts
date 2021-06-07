@@ -3,7 +3,7 @@ import {
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
-import * as convert from 'xml-js';
+import * as parser from 'fast-xml-parser';
 
 @Pipe({
   name: 'kycKbaquestions',
@@ -14,9 +14,8 @@ export class KycKbaquestionsPipe implements PipeTransform {
     ...args: unknown[]
   ): ITransunionKBAQuestion[] {
     if (!xmlString) return [];
-    const xml: ITransunionKBAQuestions = JSON.parse(
-      convert.xml2json(xmlString, { compact: true })
-    );
+    console.log('xmlString', xmlString);
+    const xml: ITransunionKBAQuestions = parser.parse(xmlString);
     return xml.ChallengeConfigurationType.MultiChoiceQuestion;
   }
 }

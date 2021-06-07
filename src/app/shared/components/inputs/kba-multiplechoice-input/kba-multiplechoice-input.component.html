@@ -2,7 +2,7 @@
   <div class="mt-4">
     <div class="pl-1 mt-2">
       <p class="font-sans mb-4 font-semibold text-base text-coolGray-700">
-        {{ question?.FullQuestionText?._text }}
+        {{ question?.FullQuestionText }}
       </p>
       <fieldset>
         <div *ngFor="let choice of question?.AnswerChoice; index as i">
@@ -12,10 +12,10 @@
               type="radio"
               formControlName="input"
               class="form-radio text-indigo-800 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-              [value]="choice.SequenceNumber._text"
+              [value]="choice.SequenceNumber"
             />
             <span class="font-sans text-sm text-coolGray-700 ml-4">{{
-              choice.AnswerChoiceText._text
+              choice.AnswerChoiceText
             }}</span>
           </label>
         </div>
