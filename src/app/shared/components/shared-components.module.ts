@@ -124,7 +124,9 @@ const components = [
   ViewdetailButtonComponent,
   LoanCardComponent,
   SnapshotDisplayCardComponent,
-  CreditBuilderCardComponent
+  CreditBuilderCardComponent,
+  KbaMultiplechoiceInputComponent,
+  SnapshotDisplayCardComponent,
 ];
 
 // component specific pipes only
@@ -139,7 +141,7 @@ const pipes = [
   FilledChecktextProgressbarPipe,
   AccountStatusPipe,
   SnapshotLabelPipe,
-  SnapshotStatusPipe
+  SnapshotStatusPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
