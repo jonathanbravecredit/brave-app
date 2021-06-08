@@ -1,6 +1,7 @@
 type AppData {
   id: ID!
   user: User!
+  agencies: Agencies!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -22,6 +23,7 @@ type UserAttributes {
   address: Address
   phone: Phone
   dob: Dob
+  ssn: Ssn
 }
 
 type Address {
@@ -42,9 +44,47 @@ type Dob {
   day: String!
 }
 
+type Ssn {
+  lastfour: String!
+  full: String
+}
+
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!
+  started: Boolean
+}
+
+type OnboardingStep {
+  id: Int
+  active: Boolean
+  complete: Boolean
+  name: String
+}
+
+type Agencies {
+  transunion: Transunion
+  equifax: Equifax
+  experian: Experian
+}
+
+type Transunion {
+  authenticated: Boolean
+  indicativeEnrichmentSuccess: Boolean
+}
+
+type Equifax {
+  authenticated: Boolean
+}
+
+type Experian {
+  authenticated: Boolean
+}
+
+type Query {
+  transunion(action: String!, message: String!): String
+  getAppData(id: ID!): AppData
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
 }
 
 input UserInput {
@@ -58,6 +98,7 @@ input UserAttributesInput {
   address: AddressInput
   phone: PhoneInput
   dob: DobInput
+  ssn: SsnInput
 }
 
 input NameInput {
@@ -84,9 +125,34 @@ input DobInput {
   day: String!
 }
 
+input SsnInput {
+  lastfour: String!
+  full: String
+}
+
 input OnboardingInput {
   lastActive: Int!
   lastComplete: Int!
+  started: Boolean
+}
+
+input AgenciesInput {
+  transunion: TransunionInput
+  equifax: EquifaxInput
+  experian: ExperianInput
+}
+
+input TransunionInput {
+  authenticated: Boolean
+  indicativeEnrichmentSuccess: Boolean
+}
+
+input EquifaxInput {
+  authenticated: Boolean
+}
+
+input ExperianInput {
+  authenticated: Boolean
 }
 
 enum ModelSortDirection {
@@ -192,19 +258,16 @@ enum ModelAttributeTypes {
   _null
 }
 
-type Query {
-  getAppData(id: ID!): AppData
-  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
-}
-
 input CreateAppDataInput {
   id: ID
   user: UserInput!
+  agencies: AgenciesInput!
 }
 
 input UpdateAppDataInput {
   id: ID!
   user: UserInput
+  agencies: AgenciesInput
 }
 
 input DeleteAppDataInput {

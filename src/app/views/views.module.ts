@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SigninComponent } from './signin/signin.component';
+import { SigninComponent } from './signin/signin/signin.component';
+import { SigninPureComponent } from './signin/signin-pure/signin-pure.component';
 import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
 import { SignupComponent } from '@views/signup/signup/signup.component';
 import { SignupPureComponent } from './signup/signup-pure/signup-pure.component';
@@ -34,6 +35,8 @@ import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeb
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
 import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
+import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
+import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 
 const views = [
   SignupComponent,
@@ -44,7 +47,9 @@ const views = [
   SignupThankyouComponent,
   SignupResendComponent,
   SigninComponent,
+  SigninPureComponent,
   SigninForgotComponent,
+  SigninRedirectComponent,
   KycBaseComponent,
   KycAddressComponent,
   KycAddressPureComponent,
@@ -69,11 +74,10 @@ const views = [
   DashboardInitComponent
 ];
 
-// const services = [
-// ]
+const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views],
+  declarations: [...views, ...pipes],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -81,7 +85,7 @@ const views = [
     SharedComponentsModule,
     RouterModule,
   ],
-  exports: [...views],
+  exports: [...views, ...pipes],
   providers: [],
 })
 export class ViewsModule {}

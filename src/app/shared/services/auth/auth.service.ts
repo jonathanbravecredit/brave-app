@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import {
   CognitoUser,
   CognitoUserSession,
   ISignUpResult,
 } from 'amazon-cognito-identity-js';
+import { SyncService } from '@shared/services/sync/sync.service';
 import { Store } from '@ngxs/store';
-import {
-  APIService,
-  CreateAppDataInput,
-} from '@shared/services/aws/api.service';
+import { Router } from '@angular/router';
 
 export interface NewUser {
   username: string;
@@ -32,17 +30,18 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private store: Store, private api: APIService) {
-    Hub.listen('auth', (data) => {
+  constructor(
+    private store: Store,
+    private sync: SyncService,
+    private router: Router
+  ) {
+    Hub.listen('auth', async (data) => {
       const { channel, payload } = data;
-      // console.log('auth change', channel, payload);
       switch (payload.event) {
         case 'signIn':
-          // need to determine if first time and if so write record to db
           this.authState.next(payload.data);
-          this.getAuthCredentials().then((creds: ICredentials | null) => {
-            if (creds) this.seedAppData(creds); //possibly update to async
-          });
+          const creds: ICredentials = await this.getCredentials();
+          this.sync.hallmonitor(creds);
           break;
         case 'signOut':
           // handle sign out
@@ -52,6 +51,42 @@ export class AuthService {
           break;
       }
     });
+
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        console.log('authenticated user');
+        this.authState.next(user);
+      })
+      .catch(() => console.log('Not signed in'));
+  }
+
+  /**
+   * This method is designed to help reload the user if the ID ever goes null
+   * will perform the following:
+   *  1. Get current credentials (if the token is still valid)
+   *  2. If no token available, and on a different page...go back to login
+   *  3. If on sign in or sign up...do nothing
+   * @returns
+   */
+  async reloadCredentials(): Promise<void> {
+    const creds = await this.getCredentials();
+    if (creds) {
+      await this.sync.hallmonitor(creds);
+    } else {
+      switch (this.router.url) {
+        case '/auth/signin':
+          break;
+        case '/auth/signup':
+          break;
+        case '/signin':
+          break;
+        case '/signin':
+          break;
+        default:
+          this.router.navigate(['/auth/signin']);
+          break;
+      }
+    }
   }
 
   /**
@@ -115,6 +150,13 @@ export class AuthService {
     return email ? Auth.resendSignUp(email) : undefined;
   }
 
+  /**
+   *
+   * @param email
+   * @param code
+   * @param pw
+   * @returns
+   */
   forgotPasswordSubmit(
     email: string,
     code: string,
@@ -129,7 +171,15 @@ export class AuthService {
    *
    * @returns
    */
-  getCurrentAuthenticatedUser(): Promise<any> {
+  getCredentials(): Promise<ICredentials> {
+    return Auth.currentCredentials();
+  }
+
+  /**
+   *
+   * @returns
+   */
+  getCurrentAuthenticatedUser(): Promise<CognitoUser> {
     return Auth.currentAuthenticatedUser();
   }
 
@@ -191,31 +241,5 @@ export class AuthService {
     } catch (err) {
       return null;
     }
-  }
-
-  /**
-   *
-   * @param {ICredentials} creds
-   */
-  async seedAppData(creds: ICredentials): Promise<void> {
-    const input: CreateAppDataInput = {
-      id: creds.identityId,
-      user: {
-        id: creds.identityId,
-        onboarding: {
-          lastActive: 0,
-          lastComplete: -1,
-        },
-      },
-      agencies: {
-        transunion: { authenticated: false },
-        experian: { authenticated: false },
-        equifax: { authenticated: false },
-      },
-    };
-    this.api
-      .CreateAppData(input)
-      .then((value) => null)
-      .catch((err) => console.log(err));
   }
 }

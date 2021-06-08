@@ -66,3 +66,5 @@ amplifytools.xcconfig
 
 #storybook
 /storybook-static
+
+*.js

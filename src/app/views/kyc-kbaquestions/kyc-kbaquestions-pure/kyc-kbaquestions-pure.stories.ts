@@ -2,6 +2,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { KycKbaquestionsPureComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
+import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
 
 export default {
   title: 'app/views/onboarding/kyc-kbaquestions',
@@ -21,9 +22,12 @@ const Template: Story<KycKbaquestionsPureComponent> = (args: any) => ({
   component: KycKbaquestionsPureComponent,
   props: {
     ...args,
+    kbas,
   },
 });
 
 export const Default = Template.bind({});
 Default.args = {};
 Default.parameters;
+
+const kbas: ITransunionKBAQuestion[] = [];

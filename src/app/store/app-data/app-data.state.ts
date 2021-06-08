@@ -2,15 +2,15 @@ import { State, Action, StateContext } from '@ngxs/store';
 import * as AppDataActions from './app-data.actions';
 import { Injectable } from '@angular/core';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
-import { OnboardingState } from '@store/onboarding';
 import { UserState } from '@store/user';
+import { AgenciesState } from '@store/agencies';
 
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
-    __typename: 'AppData',
+    id: '',
   },
-  children: [OnboardingState, UserState],
+  children: [UserState, AgenciesState],
 })
 @Injectable()
 export class AppDataState {

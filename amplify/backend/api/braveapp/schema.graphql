@@ -42,6 +42,13 @@ type Ssn {
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!
+  started: Boolean
+}
+type OnboardingStep {
+  id: Int
+  active: Boolean
+  complete: Boolean
+  name: String
 }
 type Agencies {
   transunion: Transunion
@@ -50,10 +57,17 @@ type Agencies {
 }
 type Transunion {
   authenticated: Boolean
+  indicativeEnrichmentSuccess: Boolean
+  getAuthenticationQuestionsSuccess: Boolean
+  serviceBundleFulfillmentKey: String
+  currentRawQuestions: String
 }
 type Equifax {
   authenticated: Boolean
 }
 type Experian {
   authenticated: Boolean
+}
+type Query {
+  transunion(action: String!, message: String!): String
 }

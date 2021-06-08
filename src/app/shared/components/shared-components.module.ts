@@ -65,6 +65,7 @@ import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
 import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 import { AccountStatusPipe } from './cards/creditcard-card/account-status.pipe';
+import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
 import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
 import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
 import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
@@ -145,7 +146,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, KbaMultiplechoiceInputComponent],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

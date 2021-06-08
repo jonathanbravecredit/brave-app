@@ -28,7 +28,7 @@
         "HostedUIDomain": "braveappa3b93ee9-a3b93ee9-dev",
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}"
       },
-      "lastPushTimeStamp": "2021-05-28T00:09:10.765Z",
+      "lastPushTimeStamp": "2021-06-07T17:40:15.971Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
         "logicalId": "authbraveapp0ea8ea07"
@@ -53,7 +53,7 @@
         "GraphQLAPIIdOutput": "rr5wtr4ev5exlbutrkih3r5lhq",
         "GraphQLAPIEndpointOutput": "https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql"
       },
-      "lastPushTimeStamp": "2021-05-28T00:12:38.043Z",
+      "lastPushTimeStamp": "2021-06-05T19:58:06.390Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apibraveapp"

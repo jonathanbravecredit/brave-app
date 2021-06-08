@@ -33,11 +33,16 @@ subscription OnCreateAppData {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -84,11 +89,16 @@ subscription OnUpdateAppData {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -135,11 +145,16 @@ subscription OnDeleteAppData {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated

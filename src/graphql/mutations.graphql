@@ -36,11 +36,16 @@ mutation CreateAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -90,11 +95,16 @@ mutation UpdateAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -144,11 +154,16 @@ mutation DeleteAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 export interface IProgressStep {
   id: number;
@@ -17,6 +17,8 @@ export interface IFilledChecktextProgressbarConfig {
 export class FilledChecktextProgressbarComponent {
   @Input() config: IFilledChecktextProgressbarConfig = { size: 'base' };
   @Input() steps: IProgressStep[] = [];
+  @Input() activatedStep: number = -1;
+  @Input() completedStep: number = -1;
 
   constructor() {}
 }

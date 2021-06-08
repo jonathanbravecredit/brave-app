@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { FlatForm, KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { UserAttributes } from '@shared/services/aws/api.service';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-ssn-full',
   templateUrl: './kyc-ssn-full.component.html',
 })
 export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
+  stepID = 2;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private syncService: SyncService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.kycService.activateStep(2);
+    this.kycService.activateStep(this.stepID);
   }
 
   goBack(): void {
-    this.kycService.inactivateStep(2);
+    this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../address'], { relativeTo: this.route });
   }
 
@@ -37,9 +40,9 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
           lastfour: `${temp['input-0']}${temp['input-1']}${temp['input-2']}${temp['input-3']}`,
           full: full,
         },
-      } as UserAttributes;
+      } as UserAttributesInput;
       this.kycService.updateUserAttributes(attrs);
-      this.kycService.completeStep(2);
+      this.kycService.completeStep(this.stepID);
       this.router.navigate(['../verify'], { relativeTo: this.route });
     }
   }
