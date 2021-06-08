@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LabelOfSnapshot } from './snapshot-label.pipe';
 export type Status = 'excellent' | 'good' | 'okay' | 'poor';
-export type TypeOfSnapshot = 'date' | 'percentage' | 'digit' | 'tag';
+export type TypeOfSnapshot = 'date' | 'percentage' | 'digit' | 'tag' | 'time';
 export type TypeOfDate = 'Years' | 'Months' | 'Days';
 export type SnapshotTendency = 'up' | 'down' | 'no-tendency';
 
@@ -9,12 +9,12 @@ export enum SnapshotStatus {
   Critical = 'critical',
   Danger = 'danger',
   Safe = 'safe',
-  Default = 'default'
+  Default = 'default',
 }
 
 @Component({
   selector: 'brave-snapshot-display-card',
-  templateUrl: './snapshot-display-card.component.html'
+  templateUrl: './snapshot-display-card.component.html',
 })
 export class SnapshotDisplayCardComponent implements OnInit {
   @Input() status: SnapshotStatus = SnapshotStatus.Default;
@@ -25,8 +25,7 @@ export class SnapshotDisplayCardComponent implements OnInit {
   @Input() typeOfDate: TypeOfDate = 'Years';
   @Input() label: LabelOfSnapshot = LabelOfSnapshot.NoLabel;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
