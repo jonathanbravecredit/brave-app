@@ -8,12 +8,16 @@ import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/
   styleUrls: ['./dashboard-init.component.css'],
 })
 export class DashboardInitComponent implements OnInit {
+  name = 'Emily';
+  defaultStrMessage = 'Welcome back!';
+  initStrMessage = 'Welcome back, ' + this.name;
   hidden = 'hidden' as LabelOfSnapshot;
   update = 'update' as LabelOfSnapshot;
   new = 'new' as LabelOfSnapshot;
   critical = 'critical ' as SnapshotStatus;
   safe = 'safe ' as SnapshotStatus;
   danger = 'danger ' as SnapshotStatus;
+  lastUpdated = 'Today';
 
   constructor() {}
 

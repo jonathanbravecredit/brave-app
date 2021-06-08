@@ -125,7 +125,6 @@ const components = [
   LoanCardComponent,
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
-  KbaMultiplechoiceInputComponent,
   SnapshotDisplayCardComponent,
 ];
 

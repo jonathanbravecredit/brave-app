@@ -17,13 +17,13 @@ export enum SnapshotStatus {
   templateUrl: './snapshot-display-card.component.html',
 })
 export class SnapshotDisplayCardComponent implements OnInit {
-  @Input() status: SnapshotStatus = SnapshotStatus.Default;
+  @Input() status: SnapshotStatus | string = SnapshotStatus.Default;
   @Input() title = '';
   @Input() tendency: SnapshotTendency = 'no-tendency';
   @Input() typeOfSnapshot: TypeOfSnapshot = 'tag';
   @Input() value: string | number = '';
   @Input() typeOfDate: TypeOfDate = 'Years';
-  @Input() label: LabelOfSnapshot = LabelOfSnapshot.NoLabel;
+  @Input() label: LabelOfSnapshot | string = LabelOfSnapshot.NoLabel;
 
   constructor() {}
 
