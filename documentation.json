@@ -391,6 +391,100 @@
             ],
             "ngname": "outlineSelectInput",
             "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { IOutlineSelectInputConfig } from '@shared/components/inputs/outline-select-input/outline-select-input.component';\n\n@Pipe({\n  name: 'outlineSelectInput',\n})\nexport class OutlineSelectInputPipe implements PipeTransform {\n  transform(value: IOutlineSelectInputConfig, ...args: unknown[]): string {\n    let cls = `${sizeSpecificClass[value.size]}`;\n    return cls;\n  }\n}\n\nconst sizeSpecificClass: Record<string, any> = {\n  sm: 'text-sm px-1 py-1',\n  base: 'text-sm px-1 py-3',\n  lg: 'text-base px-1 py-4',\n};\n"
+        },
+        {
+            "name": "SnapshotLabelPipe",
+            "id": "pipe-SnapshotLabelPipe-ddaddf6d76f5e11a765907c6e6a98f5a",
+            "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts",
+            "type": "pipe",
+            "description": "",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "LabelOfSnapshot"
+                        },
+                        {
+                            "name": "args",
+                            "type": "any[]",
+                            "dotDotDotToken": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 21,
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "LabelOfSnapshot",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "args",
+                            "type": "any[]",
+                            "dotDotDotToken": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ngname": "snapshotLabel",
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\n\nexport enum LabelOfSnapshot {\n  Update = 'update',\n  Hidden = 'hidden',\n  New = 'new',\n  NoLabel = 'no-label'\n}\n\nconst enumStrNameOfLabel = {\n  [LabelOfSnapshot.Update]: { text: 'Update', colorClass: 'text-brave-magenta' },\n  [LabelOfSnapshot.Hidden]: { text: 'Hidden', colorClass: 'text-lt-gray' },\n  [LabelOfSnapshot.New]: { text: 'New', colorClass: 'text-brave-blurple' },\n  [LabelOfSnapshot.NoLabel]: { text: '', colorClass: '' }\n};\n\n@Pipe({\n  name: 'snapshotLabel'\n})\nexport class SnapshotLabelPipe implements PipeTransform {\n  transform(value: LabelOfSnapshot, ...args: any[]): string {\n    let result = '';\n    const typeOfOutput: 'color-class' | 'text' | undefined = args[0];\n    if (typeOfOutput !== undefined) {\n      const labelValue = enumStrNameOfLabel[value];\n      result = typeOfOutput === 'text' ? labelValue.text : labelValue.colorClass;\n    }\n    return result;\n  }\n}\n"
+        },
+        {
+            "name": "SnapshotStatusPipe",
+            "id": "pipe-SnapshotStatusPipe-ee2304a5cdd73ab9ceeb28a9b4f8ed8d",
+            "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-status.pipe.ts",
+            "type": "pipe",
+            "description": "",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "transform",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "SnapshotStatus"
+                        },
+                        {
+                            "name": "args",
+                            "type": "any[]",
+                            "dotDotDotToken": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 15,
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "SnapshotStatus",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "args",
+                            "type": "any[]",
+                            "dotDotDotToken": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "ngname": "snapshotStatus",
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { SnapshotStatus } from './snapshot-display-card.component';\n\nconst enumStrColorCLassIndicator = {\n  [SnapshotStatus.Danger]: 'brave-danger',\n  [SnapshotStatus.Safe]: 'teal-500',\n  [SnapshotStatus.Critical]: 'red-500',\n  [SnapshotStatus.Default]: 'lt-gray'\n};\n\n@Pipe({\n  name: 'snapshotStatus'\n})\nexport class SnapshotStatusPipe implements PipeTransform {\n  transform(value: SnapshotStatus, ...args: any[]): string {\n    let result = '';\n    const outputStyle = args[0];\n    if (outerHeight !== undefined) {\n      const prefix = outputStyle === 'text' ? 'text-' : 'bg-';\n      result = prefix + enumStrColorCLassIndicator[value];\n      if (outputStyle === 'text') {\n        result += ' text-3.5';\n      }\n    }\n    return result;\n  }\n}\n"
         }
     ],
     "interfaces": [
@@ -7041,6 +7135,62 @@
             "templateData": "<p>dashboard works!</p>\n"
         },
         {
+            "name": "DashboardInitComponent",
+            "id": "component-DashboardInitComponent-e5a4740f22989ceebd460f99ca0a6dd0",
+            "file": "src/app/views/dashboard-init/dashboard-init.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-dashboard-init",
+            "styleUrls": [
+                "./dashboard-init.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./dashboard-init.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 12
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-dashboard-init',\n  templateUrl: './dashboard-init.component.html',\n  styleUrls: ['./dashboard-init.component.css']\n})\nexport class DashboardInitComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./dashboard-init.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 8
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\n\t<brave-admin-navbar></brave-admin-navbar>\n\t<div style=\"margin-top: 3.5rem;padding-bottom: 4.5rem\">\n\t\t<h2 class=\"mb-1 text-lg font-semibold\">Your Credit Snapshot</h2>\n\t\t<p class=\"text-xs mb-1\">Last Updated Today</p>\n\t\t<brave-snapshot-display-card tendency=\"up\" label=\"hidden\" status=\"critical\" title=\"New Negative Accounts\" typeOfSnapshot=\"time\" value=\"5\"></brave-snapshot-display-card>\n\t\t<brave-snapshot-display-card tendency=\"down\" label=\"update\" status=\"safe\" title=\"Age of Credit\" typeOfSnapshot=\"time\" value=\"3\" typeOfDate=\"Years\"></brave-snapshot-display-card>\n\t\t<brave-snapshot-display-card tendency=\"down\" label=\"update\" status=\"danger\" title=\"Credit Mix\" typeOfSnapshot=\"tag\" value=\"Not Bad\" typeOfDate=\"Years\"></brave-snapshot-display-card>\n\t\t<brave-snapshot-display-card tendency=\"no-tendency\" label=\"new\" status=\"safe\" title=\"Credit Card Utilization\" typeOfSnapshot=\"percentage\" value=\"40\"></brave-snapshot-display-card>\n\t\t<brave-links-onlytext-button class=\"w-full\">View Full Credit Report</brave-links-onlytext-button>\n\t\t<h5 class=\"mb-2 font-semibold text-lg\">Take Control</h5>\n\t\t<h6 class=\"text-sm\">Trusted, affordable products no matter your credit situation</h6>\n\t\t<brave-credit-builder-card class=\"mt-2\"></brave-credit-builder-card>\n\t</div>\n\t<brave-navigation-tabs></brave-navigation-tabs>\n</div>\n"
+        },
+        {
             "name": "DashboardNavbarComponent",
             "id": "component-DashboardNavbarComponent-0bd774f67b4e7891887b1608c514350a",
             "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.component.ts",
@@ -7493,7 +7643,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"flex flex-wrap\">\n  <div class=\"w-full\">\n    <ul class=\"flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row\">\n      <li class=\"-mb-px mr-2 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"font-sans text-sm px-5 py-3 rounded block leading-normal\"\n          (click)=\"toggleTabs(1)\"\n          [ngClass]=\"{\n            'bg-coolGray-200 text-coolGray-700': openTab !== 1,\n            'text-white font-bold bg-indigo-800 shadow-lg': openTab === 1\n          }\"\n        >\n          Tab 1\n        </a>\n      </li>\n      <li class=\"-mb-px mr-2 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"font-sans text-sm px-5 py-3 rounded block leading-normal\"\n          (click)=\"toggleTabs(2)\"\n          [ngClass]=\"{\n            'bg-coolGray-200 text-coolGray-700': openTab !== 2,\n            'text-white font-bold bg-indigo-800 shadow-lg': openTab === 2\n          }\"\n        >\n          Tab 2\n        </a>\n      </li>\n      <li class=\"-mb-px mr-2 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"font-sans text-sm px-5 py-3 rounded block leading-normal\"\n          (click)=\"toggleTabs(3)\"\n          [ngClass]=\"{\n            'bg-coolGray-200 text-coolGray-700': openTab !== 3,\n            'text-white font-bold bg-indigo-800 shadow-lg': openTab === 3\n          }\"\n        >\n          Tab 3\n        </a>\n      </li>\n    </ul>\n    <div\n      class=\"relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded\"\n    >\n      <div class=\"px-4 py-5 flex-auto\">\n        <div class=\"tab-content tab-space\">\n          <div [ngClass]=\"{ hidden: openTab !== 1, block: openTab === 1 }\">\n            <p>\n              Collaboratively administrate empowered markets via plug-and-play\n              networks. Dynamically procrastinate B2C users after installed base\n              benefits.\n              <br />\n              <br />\n              Dramatically visualize customer directed convergence without\n              revolutionary ROI.\n            </p>\n          </div>\n          <div [ngClass]=\"{ hidden: openTab !== 2, block: openTab === 2 }\">\n            <p>\n              Completely synergize resource taxing relationships via premier\n              niche markets. Professionally cultivate one-to-one customer\n              service with robust ideas.\n              <br />\n              <br />\n              Dynamically innovate resource-leveling customer service for state\n              of the art customer service.\n            </p>\n          </div>\n          <div [ngClass]=\"{ hidden: openTab !== 3, block: openTab === 3 }\">\n            <p>\n              Efficiently unleash cross-media information without cross-media\n              value. Quickly maximize timely deliverables for real-time schemas.\n              <br />\n              <br />\n              Dramatically maintain clicks-and-mortar solutions without\n              functional solutions.\n            </p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+            "templateData": "<div class=\"flex flex-wrap\">\n  <div class=\"w-full\">\n\n    <ul class=\"flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row\">\n      <li class=\"-mb-px mr-2 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"font-sans text-sm px-5 py-3 rounded block leading-normal\"\n          (click)=\"toggleTabs(1)\"\n          [ngClass]=\"{\n            'bg-coolGray-200 text-coolGray-700': openTab !== 1,\n            'text-white font-bold bg-indigo-800 shadow-lg': openTab === 1\n          }\"\n        >\n          Tab 1\n        </a>\n      </li>\n      <li class=\"-mb-px mr-2 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"font-sans text-sm px-5 py-3 rounded block leading-normal\"\n          (click)=\"toggleTabs(2)\"\n          [ngClass]=\"{\n            'bg-coolGray-200 text-coolGray-700': openTab !== 2,\n            'text-white font-bold bg-indigo-800 shadow-lg': openTab === 2\n          }\"\n        >\n          Tab 2\n        </a>\n      </li>\n      <li class=\"-mb-px mr-2 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"font-sans text-sm px-5 py-3 rounded block leading-normal\"\n          (click)=\"toggleTabs(3)\"\n          [ngClass]=\"{\n            'bg-coolGray-200 text-coolGray-700': openTab !== 3,\n            'text-white font-bold bg-indigo-800 shadow-lg': openTab === 3\n          }\"\n        >\n          Tab 3\n        </a>\n      </li>\n    </ul>\n    <div\n      class=\"relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded\"\n    >\n      <div class=\"px-4 py-5 flex-auto\">\n        <div class=\"tab-content tab-space\">\n          <div [ngClass]=\"{ hidden: openTab !== 1, block: openTab === 1 }\">\n            <p>\n              Hello World\n            </p>\n          </div>\n          <div [ngClass]=\"{ hidden: openTab !== 2, block: openTab === 2 }\">\n            <p>\n              ACDC FOR LIFE\n            </p>\n          </div>\n          <div [ngClass]=\"{ hidden: openTab !== 3, block: openTab === 3 }\">\n            <p>\n              Efficiently unleash cross-media information without cross-media\n              value. Quickly maximize timely deliverables for real-time schemas.\n              <br />\n              <br />\n              Dramatically maintain clicks-and-mortar solutions without\n              functional solutions.\n            </p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
         },
         {
             "name": "FooterAdminComponent",
@@ -12659,7 +12809,7 @@
                 "args": [],
                 "line": 21
             },
-            "templateData": "<button\n  [ngClass]=\"config | linksOnlytextButton\"\n  class=\"\n    background-transparent\n    font-bold\n    outline-none\n    focus:outline-none\n    mr-1\n    mb-1\n    ease-linear\n    transition-all\n    duration-150\n  \"\n  type=\"button\"\n>\n  <ng-content></ng-content>\n</button>\n"
+            "templateData": "<button\n  [ngClass]=\"config | linksOnlytextButton\"\n  class=\"\n    background-transparent\n    font-bold\n    outline-none\n    focus:outline-none\n    mr-1\n    w-full\n    mb-1\n    ease-linear\n    transition-all\n    duration-150\n  \"\n  type=\"button\"\n>\n  <ng-content></ng-content>\n</button>\n"
         },
         {
             "name": "LoanCardComponent",
@@ -12853,6 +13003,93 @@
                 "OnInit"
             ],
             "templateData": "<a\n  class=\"font-sans text-sm uppercase hover:text-coolGray-500 text-coolGray-700 px-3 py-2 flex items-center\"\n  href=\"#\"\n  (click)=\"toggleDropdown($event)\"\n  #btnDropdownRef\n>\n  {{ config.menu }}\n</a>\n<div\n  class=\"bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48\"\n  [ngClass]=\"dropdownPopoverShow ? 'block' : 'hidden'\"\n  #popoverDropdownRef\n>\n  <ng-container *ngFor=\"let submenu of config.submenus\">\n    <span\n      *ngIf=\"submenu.group\"\n      class=\"text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400\"\n    >\n      {{ submenu.group }}\n    </span>\n    <a\n      [routerLink]=\"[submenu.route]\"\n      class=\"text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700\"\n    >\n      {{ submenu.submenu }}\n    </a>\n    <div\n      *ngIf=\"submenu.break\"\n      class=\"h-0 mx-4 my-2 border border-solid border-blueGray-100\"\n    ></div>\n  </ng-container>\n</div>\n"
+        },
+        {
+            "name": "NavigationTabsComponent",
+            "id": "component-NavigationTabsComponent-73a4b481aed1aa6382e61d277d287abf",
+            "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-navigation-tabs",
+            "styleUrls": [
+                "./navigation-tabs.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./navigation-tabs.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "openTab",
+                    "defaultValue": "1",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 12
+                },
+                {
+                    "name": "toggleTabs",
+                    "args": [
+                        {
+                            "name": "$tabNumber",
+                            "type": "number"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 14,
+                    "jsdoctags": [
+                        {
+                            "name": "$tabNumber",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-navigation-tabs',\n  templateUrl: './navigation-tabs.component.html',\n  styleUrls: ['./navigation-tabs.component.css']\n})\nexport class NavigationTabsComponent implements OnInit {\n  openTab = 1;\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  toggleTabs($tabNumber: number) {\n    this.openTab = $tabNumber;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./navigation-tabs.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 9
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"flex flex-wrap\">\n  <div class=\"w-full bottom-0 left-0 upper-shadow bg-white\">\n    <ul class=\"flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row\">\n      <li class=\"-mb-px mr-1 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"text-coolGray-700 flex flex-col items-center font-sans text-sm px-2 py-1 rounded block leading-normal\"\n          (click)=\"toggleTabs(1)\">\n          <span class=\"material-icons\">home</span>\n          <span class=\"text-2.5\">Home</span>\n        </a>\n      </li>\n      <li class=\"-mb-px mr-1 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"text-coolGray-700 flex flex-col items-center font-sans text-sm px-2 py-1 rounded block leading-normal\"\n          (click)=\"toggleTabs(2)\">\n\t        <span class=\"material-icons\">credit_card</span>\n\t        <span class=\"text-2.5\">Credit</span>\n        </a>\n      </li>\n      <li class=\"-mb-px mr-1 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"text-coolGray-700 flex flex-col items-center font-sans text-sm px-2 py-1 rounded block leading-normal\"\n          (click)=\"toggleTabs(3)\">\n\t\t    \t<span class=\"material-icons\">store</span>\n\t\t    \t<span class=\"text-2.5\">Marketplace</span>\n        </a>\n      </li>\n      <li class=\"-mb-px mr-1 last:mr-0 flex-auto text-center\">\n        <a\n          class=\"text-coolGray-700 flex flex-col items-center font-sans text-sm px-2 py-1 rounded block leading-normal\"\n          (click)=\"toggleTabs(3)\">\n\t        <span class=\"material-icons\">account_box</span>\n\t        <span class=\"text-2.5\">Account</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
         },
         {
             "name": "NotificationDropdownComponent",
@@ -15474,7 +15711,7 @@
         },
         {
             "name": "SignInComponent",
-            "id": "component-SignInComponent-798bd05135b93d29ab7bded816164b4e",
+            "id": "component-SignInComponent-cb37e4e55922ae7036d7fbb1c55e607c",
             "file": "src/app/shared/components/auth/sign-in/sign-in.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -15508,7 +15745,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-sign-in',\n  templateUrl: './sign-in.component.html',\n  styleUrls: ['./sign-in.component.css'],\n})\nexport class SignInComponent implements OnInit {\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-sign-in',\n  templateUrl: './sign-in.component.html',\n  styleUrls: ['./sign-in.component.css'],\n})\nexport class SignInComponent implements OnInit {\n  constructor() {}\n\n  ngOnInit(): void {\n\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -16549,6 +16786,97 @@
                 ]
             },
             "templateData": "<form [formGroup]=\"parentForm\">\n  <brave-outline-input\n    [config]=\"emailConfig\"\n    (onComponentReady)=\"addChild('email', $event)\"\n    [required]=\"true\"\n    [asteriskOverride]=\"true\"\n  >\n  </brave-outline-input>\n  <brave-outline-input\n    [config]=\"passwordConfig\"\n    (onComponentReady)=\"addChild('password', $event)\"\n    [required]=\"true\"\n    [asteriskOverride]=\"true\"\n  >\n  </brave-outline-input>\n  <div class=\"-mt-2\">\n    <div class=\"flex justify-end items-end\">\n      <a\n        class=\"text-xs text-blueGray-600 hover:cursor-pointer\"\n        (click)=\"forgotClick.emit($event)\"\n        >Forgot password?</a\n      >\n    </div>\n  </div>\n\n  <div class=\"mt-5\">\n    <div class=\"flex justify-center items-center\">\n      <brave-filled-onlytext-button\n        [disabled]=\"!parentForm.valid\"\n        (click)=\"signupClick.emit(signupUser(parentForm))\"\n        >Sign Up</brave-filled-onlytext-button\n      >\n    </div>\n  </div>\n</form>\n"
+        },
+        {
+            "name": "SnapshotDisplayCardComponent",
+            "id": "component-SnapshotDisplayCardComponent-63b30592455773537aaa303f7eb7df60",
+            "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-snapshot-display-card",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./snapshot-display-card.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "label",
+                    "defaultValue": "LabelOfSnapshot.NoLabel",
+                    "line": 26,
+                    "type": "LabelOfSnapshot"
+                },
+                {
+                    "name": "status",
+                    "defaultValue": "SnapshotStatus.Default",
+                    "line": 20,
+                    "type": "SnapshotStatus"
+                },
+                {
+                    "name": "tendency",
+                    "defaultValue": "'no-tendency'",
+                    "line": 22,
+                    "type": "SnapshotTendency"
+                },
+                {
+                    "name": "title",
+                    "defaultValue": "''",
+                    "line": 21
+                },
+                {
+                    "name": "typeOfDate",
+                    "defaultValue": "'Years'",
+                    "line": 25,
+                    "type": "TypeOfDate"
+                },
+                {
+                    "name": "typeOfSnapshot",
+                    "defaultValue": "'tag'",
+                    "line": 23,
+                    "type": "TypeOfSnapshot"
+                },
+                {
+                    "name": "value",
+                    "defaultValue": "''",
+                    "line": 24,
+                    "type": "string | number"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 30
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input, OnInit } from '@angular/core';\nimport { LabelOfSnapshot } from './snapshot-label.pipe';\nexport type Status = 'excellent' | 'good' | 'okay' | 'poor';\nexport type TypeOfSnapshot = 'date' | 'percentage' | 'digit' | 'tag';\nexport type TypeOfDate = 'Years' | 'Months' | 'Days';\nexport type SnapshotTendency = 'up' | 'down' | 'no-tendency';\n\nexport enum SnapshotStatus {\n  Critical = 'critical',\n  Danger = 'danger',\n  Safe = 'safe',\n  Default = 'default'\n}\n\n@Component({\n  selector: 'brave-snapshot-display-card',\n  templateUrl: './snapshot-display-card.component.html'\n})\nexport class SnapshotDisplayCardComponent implements OnInit {\n  @Input() status: SnapshotStatus = SnapshotStatus.Default;\n  @Input() title = '';\n  @Input() tendency: SnapshotTendency = 'no-tendency';\n  @Input() typeOfSnapshot: TypeOfSnapshot = 'tag';\n  @Input() value: string | number = '';\n  @Input() typeOfDate: TypeOfDate = 'Years';\n  @Input() label: LabelOfSnapshot = LabelOfSnapshot.NoLabel;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 26
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<!-- no-purge for component -->\n<div class=\"text-brave-danger bg-brave-danger\" *ngIf=\"false\"></div>\n\n<div class=\"relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-2\">\n  <!-- tag div: Display of current type of snapshot -->\n  <div class=\"absolute -mt-5 ml-3 px-1 font-semibold bg-white\" *ngIf=\"label !== undefined\"><span class=\"font-sans\" [ngClass]=\"label | snapshotLabel:'color-class'\">{{ label | snapshotLabel:'text' }}</span></div>\n  <!-- left column  section 1: Display of current snapshot status indicator-->\n  <div class=\"flex items-center ml-3 mr-6\">\n    <div class=\"rounded-full border-none w-4 h-4\" [ngClass]=\"status | snapshotStatus:'background'\"></div>\n  </div>\n  <div class=\"flex flex-col mr-auto justify-center\">\n    <!--  center column section 2: Display of snapshot card information -->\n    <div class=\"flex flex-row items-center\">\n      <p class=\"text-base font-semibold font-sans text-dk-gray\">{{ title }}</p>\n      <div class=\"ml-2\" *ngIf=\"tendency !== 'no-tendency'\">  \n        <span class=\"transform rotate-45\"  *ngIf=\"tendency === 'down'\">&darr;</span>\n        <span *ngIf=\"tendency === 'up'\">&uarr;</span>\n      </div>\n    </div>\n    <div class=\"flex flex-row items-center\">\n      <p class=\"text-2.5 text-opacity-50 font-sans text-dk-gray\">Learn More</p>\n      <span class=\"ml-2 text-little-card-icon text-md-gray\">&#10095;</span>\n    </div>\n  </div>\n  <!-- right column section 3: Display of values -->\n  <div class=\"flex flex-col items-center mr-8 text-center\">\n    <span class=\"text-xl m-auto\">\n      <p class=\"font-bold font-headings\" *ngIf=\"typeOfSnapshot === 'tag'\" [ngClass]=\"status | snapshotStatus: 'text'\">{{ value }}</p>\n      <p class=\"font-bold font-headings text-dk-gray\" *ngIf=\"typeOfSnapshot !== 'tag'\">{{ value }}<span *ngIf=\"typeOfSnapshot === 'percentage'\">%</span></p>\n    </span>\n    <span class=\"text-2.5 -mt-1\" *ngIf=\"typeOfSnapshot === 'date'\">\n      <p class=\"font-sans text-dk-gray\">{{ typeOfDate }}</p>\n    </span>\n  </div>\n</div>\n\n"
         },
         {
             "name": "SsnFullFormComponent",
@@ -17719,6 +18047,51 @@
                         },
                         {
                             "name": "OutlineTooltipDirective"
+                        },
+                        {
+                            "name": "OutlineVerificationcodeFormComponent"
+                        },
+                        {
+                            "name": "PagesDropdownComponent"
+                        },
+                        {
+                            "name": "SelectDobFormComponent"
+                        },
+                        {
+                            "name": "SidebarComponent"
+                        },
+                        {
+                            "name": "SignInComponent"
+                        },
+                        {
+                            "name": "SignUpComponent"
+                        },
+                        {
+                            "name": "SimpleSignupFormComponent"
+                        },
+                        {
+                            "name": "SnapshotDisplayCardComponent"
+                        },
+                        {
+                            "name": "SnapshotLabelPipe"
+                        },
+                        {
+                            "name": "SnapshotStatusPipe"
+                        },
+                        {
+                            "name": "SsnFullFormComponent"
+                        },
+                        {
+                            "name": "SsnLastfourFormComponent"
+                        },
+                        {
+                            "name": "TableDropdownComponent"
+                        },
+                        {
+                            "name": "UserDropdownComponent"
+                        },
+                        {
+                            "name": "ViewdetailButtonComponent"
                         }
                     ]
                 },
@@ -17740,6 +18113,51 @@
                         },
                         {
                             "name": "OutlineTooltipDirective"
+                        },
+                        {
+                            "name": "OutlineVerificationcodeFormComponent"
+                        },
+                        {
+                            "name": "PagesDropdownComponent"
+                        },
+                        {
+                            "name": "SelectDobFormComponent"
+                        },
+                        {
+                            "name": "SidebarComponent"
+                        },
+                        {
+                            "name": "SignInComponent"
+                        },
+                        {
+                            "name": "SignUpComponent"
+                        },
+                        {
+                            "name": "SimpleSignupFormComponent"
+                        },
+                        {
+                            "name": "SnapshotDisplayCardComponent"
+                        },
+                        {
+                            "name": "SnapshotLabelPipe"
+                        },
+                        {
+                            "name": "SnapshotStatusPipe"
+                        },
+                        {
+                            "name": "SsnFullFormComponent"
+                        },
+                        {
+                            "name": "SsnLastfourFormComponent"
+                        },
+                        {
+                            "name": "TableDropdownComponent"
+                        },
+                        {
+                            "name": "UserDropdownComponent"
+                        },
+                        {
+                            "name": "ViewdetailButtonComponent"
                         }
                     ]
                 },
@@ -17879,6 +18297,9 @@
                             "name": "ComplianceTosComponent"
                         },
                         {
+                            "name": "DashboardInitComponent"
+                        },
+                        {
                             "name": "KycAddressComponent"
                         },
                         {
@@ -17985,6 +18406,9 @@
                         },
                         {
                             "name": "ComplianceTosComponent"
+                        },
+                        {
+                            "name": "DashboardInitComponent"
                         },
                         {
                             "name": "KycAddressComponent"
@@ -18162,9 +18586,9 @@
                 "name": "accentConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-fuchsia-500',\n}"
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "IFilledOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  activeColor: 'bg-fuchsia-600',\n  color: 'text-white',\n}"
             },
             {
                 "name": "accentConfig",
@@ -18282,6 +18706,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/views/dashboard-init/dashboard-init.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/views/signup-error/signup-error.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -18370,7 +18802,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
+                "file": "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -18418,7 +18850,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -18682,7 +19114,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -18690,7 +19122,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -18718,6 +19150,22 @@
                 "file": "src/app/views/kyc-welcome/kyc-welcome/kyc-welcome.component.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  year: true,\n  month: true,\n  day: true,\n}"
+            },
+            {
+                "name": "enumStrColorCLassIndicator",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-status.pipe.ts",
+                "type": "object",
+                "defaultValue": "{\n  [SnapshotStatus.Danger]: 'brave-danger',\n  [SnapshotStatus.Safe]: 'teal-500',\n  [SnapshotStatus.Critical]: 'red-500',\n  [SnapshotStatus.Default]: 'lt-gray'\n}"
+            },
+            {
+                "name": "enumStrNameOfLabel",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts",
+                "type": "object",
+                "defaultValue": "{\n  [LabelOfSnapshot.Update]: { text: 'Update', colorClass: 'text-brave-magenta' },\n  [LabelOfSnapshot.Hidden]: { text: 'Hidden', colorClass: 'text-lt-gray' },\n  [LabelOfSnapshot.New]: { text: 'New', colorClass: 'text-brave-blurple' },\n  [LabelOfSnapshot.NoLabel]: { text: '', colorClass: '' }\n}"
             },
             {
                 "name": "environment",
@@ -18835,23 +19283,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Large",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Large",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -18880,6 +19312,22 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Large",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Large",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "largeConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -18891,25 +19339,9 @@
                 "name": "largeConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
-                "type": "IFilledOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'lg',\n  backgroundColor: 'bg-fuchsia-500',\n  activeColor: 'bg-fuchsia-600',\n  color: 'text-white',\n}"
-            },
-            {
-                "name": "largeConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "ILinksOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'lg',\n  color: 'text-indigo-800',\n}"
-            },
-            {
-                "name": "largeConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "largeConfig",
@@ -18926,6 +19358,22 @@
                 "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "IOutlineSelectInputConfig",
                 "defaultValue": "{\n  size: 'lg',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],\n}"
+            },
+            {
+                "name": "largeConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "IFilledOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'lg',\n  backgroundColor: 'bg-fuchsia-500',\n  activeColor: 'bg-fuchsia-600',\n  color: 'text-white',\n}"
+            },
+            {
+                "name": "largeConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "Left",
@@ -19059,9 +19507,9 @@
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "IFilledOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'base',\n  backgroundColor: 'bg-indigo-800',\n  activeColor: 'bg-indigo-900',\n  color: 'text-white',\n}"
             },
             {
                 "name": "primaryConfig",
@@ -19156,31 +19604,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe.ts",
                 "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-4 py-2 hover:shadow-md',\n  base: 'text-sm px-6 py-3 hover:shadow-lg',\n  lg: 'text-base px-8 py-3 hover:shadow-lg',\n}"
-            },
-            {
-                "name": "sizeSpecificClass",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts",
-                "type": "Record<string, any>",
                 "defaultValue": "{\n  sm: 'text-xs px-3 py-1',\n  base: 'text-sm px-6 py-2',\n  lg: 'text-base px-8 py-3',\n}"
-            },
-            {
-                "name": "sizeSpecificClass",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
-                "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
-            },
-            {
-                "name": "sizeSpecificClass",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
-                "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
             },
             {
                 "name": "sizeSpecificClass",
@@ -19199,6 +19623,30 @@
                 "defaultValue": "{\n  sm: 'text-sm px-1 py-1',\n  base: 'text-sm px-1 py-3',\n  lg: 'text-base px-1 py-4',\n}"
             },
             {
+                "name": "sizeSpecificClass",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
+                "type": "Record<string, any>",
+                "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
+            },
+            {
+                "name": "sizeSpecificClass",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts",
+                "type": "Record<string, any>",
+                "defaultValue": "{\n  sm: 'text-xs px-4 py-2 hover:shadow-md',\n  base: 'text-sm px-6 py-3 hover:shadow-lg',\n  lg: 'text-base px-8 py-3 hover:shadow-lg',\n}"
+            },
+            {
+                "name": "sizeSpecificClass",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
+                "type": "Record<string, any>",
+                "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
+            },
+            {
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -19210,23 +19658,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Small",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Small",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19255,6 +19687,22 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Small",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Small",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "smallConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -19266,25 +19714,9 @@
                 "name": "smallConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
-                "type": "IFilledOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'sm',\n  backgroundColor: 'bg-fuchsia-500',\n  activeColor: 'bg-fuchsia-600',\n  color: 'text-white',\n}"
-            },
-            {
-                "name": "smallConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "ILinksOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'sm',\n  color: 'text-indigo-800',\n}"
-            },
-            {
-                "name": "smallConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "smallConfig",
@@ -19301,6 +19733,22 @@
                 "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "IOutlineSelectInputConfig",
                 "defaultValue": "{\n  size: 'sm',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['one', 'two', 'three'],\n}"
+            },
+            {
+                "name": "smallConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "IFilledOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'sm',\n  backgroundColor: 'bg-fuchsia-500',\n  activeColor: 'bg-fuchsia-600',\n  color: 'text-white',\n}"
+            },
+            {
+                "name": "smallConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "ssn",
@@ -19365,6 +19813,22 @@
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "IFilledOnlytextBadgeConfig",
                 "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-lightBlue-100',\n}"
+            },
+            {
+                "name": "Tag",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/dashboard-init/dashboard-init.stories.ts",
+                "type": "Story<DashboardInitComponent>",
+                "defaultValue": "(args: any) => ({\n  component: DashboardInitComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -19458,6 +19922,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts",
+                "type": "Story<KycKbaquestionsPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycKbaquestionsPureComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
                 "type": "Story<KycIdverificationPureComponent>",
                 "defaultValue": "(args: any) => ({\n  component: KycIdverificationPureComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -19482,9 +19954,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
-                "type": "Story<KycSsnFullPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "type": "Story<KycWelcomebackPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -19538,6 +20010,30 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "Story<CreditcardCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "type": "Story<LoanCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                "type": "Story<SnapshotDisplayCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "Story<LinksOnlytextButtonComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
@@ -19546,9 +20042,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "Story<OutlineOnlytextButtonComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-outline-onlytext-button>Default</brave-outline-onlytext-button>`,\n})"
+                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                "type": "Story<ViewdetailButtonComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
             },
             {
                 "name": "Template",
@@ -19770,17 +20266,25 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                "type": "Story<UserDropdownComponent>",
-                "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "type": "Story<OutlineOnlytextSelectComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                "type": "Story<OutlineOnlytextSelectComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
+                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "type": "Story<UserDropdownComponent>",
+                "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Time",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Top",
@@ -20151,6 +20655,15 @@
                 "kind": 165
             },
             {
+                "name": "SnapshotTendency",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"up\" | \"down\" | \"no-tendency\"",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.component.ts",
+                "description": "",
+                "kind": 168
+            },
+            {
                 "name": "Ssn",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
@@ -20288,6 +20801,31 @@
         ],
         "enumerations": [
             {
+                "name": "LabelOfSnapshot",
+                "childs": [
+                    {
+                        "name": "Update",
+                        "value": "update"
+                    },
+                    {
+                        "name": "Hidden",
+                        "value": "hidden"
+                    },
+                    {
+                        "name": "New",
+                        "value": "new"
+                    },
+                    {
+                        "name": "NoLabel",
+                        "value": "no-label"
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "description": "",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts"
+            },
+            {
                 "name": "ModelAttributeTypes",
                 "childs": [
                     {
@@ -20335,6 +20873,31 @@
                 "subtype": "enum",
                 "description": "",
                 "file": "src/app/shared/services/aws/api.service.ts"
+            },
+            {
+                "name": "SnapshotStatus",
+                "childs": [
+                    {
+                        "name": "Critical",
+                        "value": "critical"
+                    },
+                    {
+                        "name": "Danger",
+                        "value": "danger"
+                    },
+                    {
+                        "name": "Safe",
+                        "value": "safe"
+                    },
+                    {
+                        "name": "Default",
+                        "value": "default"
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "description": "",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.component.ts"
             }
         ],
         "groupedVariables": {
@@ -20493,6 +21056,88 @@
                     "name": "Accent",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "accentConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "ILinksOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-fuchsia-500',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "largeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "ILinksOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'lg',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "primaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "ILinksOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "smallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "ILinksOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'sm',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                    "type": "Story<LinksOnlytextButtonComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
+                }
+            ],
+            "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
                     "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
@@ -20584,88 +21229,6 @@
                     "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                     "type": "Story<FilledOnlytextButtonComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-button>Default</brave-filled-onlytext-button>`,\n})"
-                }
-            ],
-            "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts": [
-                {
-                    "name": "Accent",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "accentConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "ILinksOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-fuchsia-500',\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "largeConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "ILinksOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'lg',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "primaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "ILinksOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "smallConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "ILinksOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'sm',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                    "type": "Story<LinksOnlytextButtonComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
                 }
             ],
             "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts": [
@@ -21007,6 +21570,24 @@
                     "type": "literal type"
                 }
             ],
+            "src/app/views/dashboard-init/dashboard-init.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/dashboard-init/dashboard-init.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/dashboard-init/dashboard-init.stories.ts",
+                    "type": "Story<DashboardInitComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: DashboardInitComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/views/signup-error/signup-error.stories.ts": [
                 {
                     "name": "Default",
@@ -21205,6 +21786,24 @@
                     "defaultValue": "(args: any) => ({\n  component: KycCongratulationsPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts",
+                    "type": "Story<KycKbaquestionsPureComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: KycKbaquestionsPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -21357,70 +21956,90 @@
                     "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts": [
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "largeConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "IOutlineOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "primaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "IOutlineOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "smallConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "IOutlineOnlyTextButtonConfig",
-                    "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
                 },
                 {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                    "type": "Story<OutlineOnlytextButtonComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-outline-onlytext-button>Default</brave-outline-onlytext-button>`,\n})"
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "Story<CreditcardCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                    "type": "Story<LoanCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Digit",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Percentage",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Tag",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "Story<SnapshotDisplayCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
+                },
+                {
+                    "name": "Time",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
                 }
             ],
             "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts": [
@@ -21431,6 +22050,140 @@
                     "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                    "type": "Story<ViewdetailButtonComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
+                }
+            ],
+            "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
+                    "type": "Story<HiddenAsteriskInputComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: HiddenAsteriskInputComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/inputs/outline-input/outline-input.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "largeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                    "type": "IOutlineInputeConfig",
+                    "defaultValue": "{\n  size: 'lg',\n  type: 'text',\n  label: 'Input label',\n  placeholder: 'Input text',\n  autocomplete: 'off',\n  value: '',\n}"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "smallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                    "type": "IOutlineInputeConfig",
+                    "defaultValue": "{\n  size: 'sm',\n  type: 'text',\n  label: 'Input label',\n  placeholder: 'Input text',\n  autocomplete: 'off',\n  value: '',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                    "type": "Story<OutlineInputComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "largeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "IOutlineSelectInputConfig",
+                    "defaultValue": "{\n  size: 'lg',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],\n}"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "smallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "IOutlineSelectInputConfig",
+                    "defaultValue": "{\n  size: 'sm',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['one', 'two', 'three'],\n}"
                 },
                 {
                     "name": "Template",
@@ -21677,7 +22430,7 @@
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "Template",
+                    "name": "Primary",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
@@ -21879,6 +22632,24 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  component: NavigationTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
                 {
                     "name": "Default",
@@ -21915,24 +22686,6 @@
                     "defaultValue": "(args: any) => ({\n  component: TableDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                    "type": "Story<UserDropdownComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
                 {
                     "name": "Default",
@@ -21959,6 +22712,24 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
                 }
             ],
+            "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                    "type": "Story<UserDropdownComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/views/kyc-welcome/kyc-welcome/kyc-welcome.component.ts": [
                 {
                     "name": "dob",
@@ -21975,6 +22746,26 @@
                     "file": "src/app/views/kyc-welcome/kyc-welcome/kyc-welcome.component.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  first: true,\n  middle: true,\n  last: true,\n}"
+                }
+            ],
+            "src/app/shared/components/cards/snapshot-display-card/snapshot-status.pipe.ts": [
+                {
+                    "name": "enumStrColorCLassIndicator",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-status.pipe.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  [SnapshotStatus.Danger]: 'brave-danger',\n  [SnapshotStatus.Safe]: 'teal-500',\n  [SnapshotStatus.Critical]: 'red-500',\n  [SnapshotStatus.Default]: 'lt-gray'\n}"
+                }
+            ],
+            "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts": [
+                {
+                    "name": "enumStrNameOfLabel",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  [LabelOfSnapshot.Update]: { text: 'Update', colorClass: 'text-brave-magenta' },\n  [LabelOfSnapshot.Hidden]: { text: 'Hidden', colorClass: 'text-lt-gray' },\n  [LabelOfSnapshot.New]: { text: 'New', colorClass: 'text-brave-blurple' },\n  [LabelOfSnapshot.NoLabel]: { text: '', colorClass: '' }\n}"
                 }
             ],
             "src/environments/environment.dev.ts": [
@@ -22152,39 +22943,9 @@
                     "name": "sizeSpecificClass",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  sm: 'text-xs px-4 py-2 hover:shadow-md',\n  base: 'text-sm px-6 py-3 hover:shadow-lg',\n  lg: 'text-base px-8 py-3 hover:shadow-lg',\n}"
-                }
-            ],
-            "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
                     "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  sm: 'text-xs px-3 py-1',\n  base: 'text-sm px-6 py-2',\n  lg: 'text-base px-8 py-3',\n}"
-                }
-            ],
-            "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
-                }
-            ],
-            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
@@ -22205,6 +22966,36 @@
                     "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  sm: 'text-sm px-1 py-1',\n  base: 'text-sm px-1 py-3',\n  lg: 'text-base px-1 py-4',\n}"
+                }
+            ],
+            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
+                }
+            ],
+            "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  sm: 'text-xs px-4 py-2 hover:shadow-md',\n  base: 'text-sm px-6 py-3 hover:shadow-lg',\n  lg: 'text-base px-8 py-3 hover:shadow-lg',\n}"
+                }
+            ],
+            "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
                 }
             ],
             "src/app/views/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component.ts": [
@@ -22273,6 +23064,33 @@
             ]
         },
         "groupedEnumerations": {
+            "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts": [
+                {
+                    "name": "LabelOfSnapshot",
+                    "childs": [
+                        {
+                            "name": "Update",
+                            "value": "update"
+                        },
+                        {
+                            "name": "Hidden",
+                            "value": "hidden"
+                        },
+                        {
+                            "name": "New",
+                            "value": "new"
+                        },
+                        {
+                            "name": "NoLabel",
+                            "value": "no-label"
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "description": "",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts"
+                }
+            ],
             "src/app/shared/services/aws/api.service.ts": [
                 {
                     "name": "ModelAttributeTypes",
@@ -22322,6 +23140,33 @@
                     "subtype": "enum",
                     "description": "",
                     "file": "src/app/shared/services/aws/api.service.ts"
+                }
+            ],
+            "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.component.ts": [
+                {
+                    "name": "SnapshotStatus",
+                    "childs": [
+                        {
+                            "name": "Critical",
+                            "value": "critical"
+                        },
+                        {
+                            "name": "Danger",
+                            "value": "danger"
+                        },
+                        {
+                            "name": "Safe",
+                            "value": "safe"
+                        },
+                        {
+                            "name": "Default",
+                            "value": "default"
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "description": "",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.component.ts"
                 }
             ]
         },
@@ -25127,6 +25972,35 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "NavigationTabsComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -25858,6 +26732,35 @@
                 "name": "ComplianceTosComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/dashboard-init/dashboard-init.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "DashboardInitComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/dashboard-init/dashboard-init.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/dashboard-init/dashboard-init.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
