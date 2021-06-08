@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { KbaquestionsFormComponent } from '@shared/components/forms/kbaquestions-form/kbaquestions-form.component';
 import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
@@ -12,6 +18,9 @@ export class KycKbaquestionsPureComponent extends KycBaseComponent {
     | KbaquestionsFormComponent
     | undefined;
   @Input() kbas: ITransunionKBAQuestion[] = [];
+  @Output()
+  onClickAnswer: EventEmitter<ITransunionKBAQuestion> = new EventEmitter();
+
   constructor() {
     super();
   }

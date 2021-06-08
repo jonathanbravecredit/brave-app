@@ -30,3 +30,15 @@ export interface ITransunionKBAAnswer {
   Key: string;
   AnswerChoiceId: string;
 }
+
+export interface ITransunionBAAnsweredQuestion {
+  VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+    QuestionId: number;
+    SelectedAnswerChoice: {
+      AnswerChoiceId: string;
+    };
+    AnswerChoiceText: string;
+    IsCorrectAnswer?: boolean;
+    Key: string;
+  };
+}

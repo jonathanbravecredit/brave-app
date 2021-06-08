@@ -5,7 +5,7 @@
       (formError)="handleError($event)"
       (nextClick)="goToNext()"
       (backClick)="goBack()"
-      [kbas]="agencies.currentRawQuestions | kycKbaquestions"
+      [kbas]="agencies.transunion?.currentRawQuestions | kycKbaquestions"
     ></brave-kyc-kbaquestions-pure>
   </div>
 </div>

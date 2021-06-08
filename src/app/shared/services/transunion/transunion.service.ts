@@ -109,7 +109,7 @@ export class TransunionService {
     data: AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[]
   ) {
-    const id = data.id.split(':').pop();
+    const id = data.id?.split(':')?.pop();
 
     if (!id || !answers.length) {
       console.log(

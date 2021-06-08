@@ -8,7 +8,7 @@ export class AgenciesSelectors {
   }
 
   @Selector([AgenciesStateModel])
-  static getRawQuestions(state: AgenciesStateModel): string {
-    return state.currentRawQuestions || 'test';
+  static getTransunionRawQuestions(state: AgenciesStateModel): string {
+    return state.transunion?.currentRawQuestions || '';
   }
 }

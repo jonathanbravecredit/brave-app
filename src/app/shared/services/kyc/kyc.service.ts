@@ -187,7 +187,9 @@ export class KycService {
    */
   updateCurrentRawQuestions(questions: string): void {
     this.store.dispatch(
-      new AgenciesActions.EditQuestions({ currentRawQuestions: questions })
+      new AgenciesActions.EditTransunionQuestions({
+        currentRawQuestions: questions,
+      })
     );
   }
 
@@ -202,7 +204,9 @@ export class KycService {
     return await new Promise((resolve, reject) => {
       this.store
         .dispatch(
-          new AgenciesActions.EditQuestions({ currentRawQuestions: questions })
+          new AgenciesActions.EditTransunionQuestions({
+            currentRawQuestions: questions,
+          })
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
@@ -275,8 +279,9 @@ export class KycService {
         data,
         answers
       );
+      console.log('msg to send and verify', msg);
       const res = await this.api.Transunion(
-        'GetAuthenticationQuestions',
+        'VerifyAuthenticationQuestions',
         JSON.stringify(msg)
       );
       return res ? res : undefined;
@@ -294,7 +299,6 @@ export class KycService {
   async processIndicativeEnrichmentResponse(
     resp: string
   ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
-    console.log('resp', resp);
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
       JSON.parse(resp)['IndicativeEnrichmentResults']
     );

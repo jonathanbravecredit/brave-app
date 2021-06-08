@@ -21,6 +21,7 @@
         <div class="flex justify-center items-center">
           <brave-kbaquestions-form
             #form
+            (clickAnswer)="onClickAnswer.emit($event)"
             (onSubmit)="formSubmit.emit($event)"
             (onSubmitError)="formError.emit($event)"
             [kbas]="kbas"

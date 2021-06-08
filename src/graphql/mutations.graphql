@@ -45,6 +45,7 @@ mutation CreateAppData(
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -52,7 +53,6 @@ mutation CreateAppData(
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -104,6 +104,7 @@ mutation UpdateAppData(
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -111,7 +112,6 @@ mutation UpdateAppData(
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -163,6 +163,7 @@ mutation DeleteAppData(
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -170,7 +171,6 @@ mutation DeleteAppData(
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt

@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -23,6 +25,8 @@ export class KbaquestionsFormComponent
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
   @Input() kbas: ITransunionKBAQuestion[] = [];
+  @Output()
+  clickAnswer: EventEmitter<ITransunionKBAQuestion> = new EventEmitter();
 
   sliderWidth: number = 1200;
   itemWidth: number = 300;
@@ -42,13 +46,8 @@ export class KbaquestionsFormComponent
   }
 
   ngAfterViewInit(): void {
-    console.log('init parent form', this.parentForm);
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
-    this.parentForm.valueChanges.subscribe((value) => {
-      console.log('form', this.parentForm);
-      console.log('value', value);
-    });
   }
 
   formatChildName(childName: string, digit: number): string {
@@ -84,7 +83,6 @@ export class KbaquestionsFormComponent
    * @param max the max translation the scrill should go to (e.g. -75...if 4 items)
    */
   scroll(value: number, min: number, max: number): void {
-    console.log('scorll called', value, this.carouselXAxis);
     if (this.carouselXAxis + value > min || this.carouselXAxis + value < max) {
       return;
     }

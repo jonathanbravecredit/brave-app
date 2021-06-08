@@ -42,6 +42,7 @@ subscription OnCreateAppData {
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -49,7 +50,6 @@ subscription OnCreateAppData {
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -98,6 +98,7 @@ subscription OnUpdateAppData {
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -105,7 +106,6 @@ subscription OnUpdateAppData {
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -154,6 +154,7 @@ subscription OnDeleteAppData {
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -161,7 +162,6 @@ subscription OnDeleteAppData {
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt
