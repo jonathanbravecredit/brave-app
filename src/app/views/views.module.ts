@@ -33,6 +33,7 @@ import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/
 import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.component';
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
+import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
 
 const views = [
   SignupComponent,
@@ -65,6 +66,7 @@ const views = [
   KycWelcomebackPureComponent,
   CompliancePrivacyComponent,
   ComplianceTosComponent,
+  DashboardInitComponent
 ];
 
 // const services = [
