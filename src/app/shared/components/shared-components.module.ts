@@ -66,6 +66,11 @@ import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetai
 import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 import { AccountStatusPipe } from './cards/creditcard-card/account-status.pipe';
 import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
+import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
+import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
+import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
+import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
+import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
 
 const components = [
   BaseFormComponent,
@@ -109,6 +114,7 @@ const components = [
   FilledChecktextProgressbarComponent,
   SidebarComponent,
   FilledOnlytextTabsComponent,
+  NavigationTabsComponent,
   OutlineTooltipComponent,
   KbaquestionsFormComponent,
   OutlineNamedobFormComponent,
@@ -117,6 +123,9 @@ const components = [
   CreditcardCardComponent,
   ViewdetailButtonComponent,
   LoanCardComponent,
+  SnapshotDisplayCardComponent,
+  CreditBuilderCardComponent,
+  SnapshotDisplayCardComponent,
 ];
 
 // component specific pipes only
@@ -130,6 +139,8 @@ const pipes = [
   FilledOnlytextBadgePipe,
   FilledChecktextProgressbarPipe,
   AccountStatusPipe,
+  SnapshotLabelPipe,
+  SnapshotStatusPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
