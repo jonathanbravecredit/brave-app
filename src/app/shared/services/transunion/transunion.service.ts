@@ -3,8 +3,8 @@ import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentic
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
+import { SsnInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
-import { domainToASCII } from 'url';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +13,9 @@ export class TransunionService {
   constructor() {}
 
   createIndicativeEnrichmentPayload(
-    data: AppDataStateModel
+    data: UpdateAppDataInput | AppDataStateModel
   ): IIndicativeEnrichmentMsg | undefined {
-    const id = data.id.split(':').pop();
+    const id = data.id?.split(':').pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
 
@@ -60,10 +60,10 @@ export class TransunionService {
   }
 
   createGetAuthenticationQuestionsPayload(
-    data: AppDataStateModel,
-    ssn: string
+    data: UpdateAppDataInput | AppDataStateModel,
+    ssn: string = ''
   ) {
-    const id = data.id.split(':').pop();
+    const id = data.id?.split(':').pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
 
@@ -92,7 +92,7 @@ export class TransunionService {
         PreviousAddress: {},
         DateOfBirth:
           `${attrs.dob?.year}-${
-            monthMap[dob.month.toLowerCase()]
+            monthMap[dob?.month?.toLowerCase() || '']
           }-${`0${dob.day}`.slice(-2)}` || '',
         FullName: {
           FirstName: attrs.name?.first || '',
@@ -106,7 +106,7 @@ export class TransunionService {
   }
 
   createVerifyAuthenticationQuestionsPayload(
-    data: AppDataStateModel,
+    data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[]
   ) {
     const id = data.id?.split(':')?.pop();

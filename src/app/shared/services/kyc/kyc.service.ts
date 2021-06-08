@@ -18,6 +18,11 @@ import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 
+export const enum KYCResponse {
+  Failed = 'failed',
+  Success = 'success',
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -221,67 +226,12 @@ export class KycService {
    * @returns
    */
   async sendIndicativeEnrichment(
-    data: UpdateAppDataInput
+    data: UpdateAppDataInput | AppDataStateModel
   ): Promise<any | undefined> {
     try {
       const msg = this.transunion.createIndicativeEnrichmentPayload(data);
       const res = await this.api.Transunion(
         'IndicativeEnrichment',
-        JSON.stringify(msg)
-      );
-      return res ? res : undefined;
-    } catch (err) {
-      console.log('err ', err);
-      return;
-    }
-  }
-
-  /**
-   * Send the full ssn to the Transunion backend and await the KBA questions
-   *   - questions can be actual questions or a passcode for the phone
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendGetAuthenticationQuestions(
-    data: UpdateAppDataInput,
-    ssn: string = ''
-  ): Promise<any | undefined> {
-    if (!ssn) return;
-    try {
-      const msg = this.transunion.createGetAuthenticationQuestionsPayload(
-        data,
-        ssn
-      );
-      const res = await this.api.Transunion(
-        'GetAuthenticationQuestions',
-        JSON.stringify(msg)
-      );
-      return res ? res : undefined;
-    } catch (err) {
-      console.log('err ', err);
-      return;
-    }
-  }
-
-  /**
-   * Send the full ssn to the Transunion backend and await the KBA questions
-   *   - questions can be actual questions or a passcode for the phone
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendVerifyAuthenticationQuestions(
-    data: UpdateAppDataInput,
-    answers: IVerifyAuthenticationAnswer[]
-  ): Promise<any | undefined> {
-    if (!answers.length) return;
-    try {
-      const msg = this.transunion.createVerifyAuthenticationQuestionsPayload(
-        data,
-        answers
-      );
-      console.log('msg to send and verify', msg);
-      const res = await this.api.Transunion(
-        'VerifyAuthenticationQuestions',
         JSON.stringify(msg)
       );
       return res ? res : undefined;
@@ -321,6 +271,63 @@ export class KycService {
   }
 
   /**
+   * Method to send and process the indicative enrichment request and response.
+   * @param {UpdateAppDataInput} data
+   * @returns Full ssn or a failure (TODO: handle failures)
+   */
+  async getIndicativeEnrichmentResults(
+    data: UpdateAppDataInput
+  ): Promise<KYCResponse | string> {
+    let enrichmentResponse;
+    let enrichment;
+    let ssn;
+
+    try {
+      enrichmentResponse = await this.sendIndicativeEnrichment(data);
+      if (!enrichmentResponse) return KYCResponse.Failed;
+      enrichment = await this.processIndicativeEnrichmentResponse(
+        enrichmentResponse
+      );
+      if (!enrichment) return KYCResponse.Failed;
+      // parse ssn for getting the authentication questions (NEVER STORE IN DB!!!);
+      ssn =
+        enrichment?.['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
+          .IndicativeEnrichmentResult['a:SSN'];
+
+      return !ssn?._text ? KYCResponse.Failed : ssn?._text;
+    } catch {
+      return KYCResponse.Failed;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendGetAuthenticationQuestions(
+    data: UpdateAppDataInput | AppDataStateModel,
+    ssn: string = ''
+  ): Promise<any | undefined> {
+    if (!ssn) return;
+    try {
+      const msg = this.transunion.createGetAuthenticationQuestionsPayload(
+        data,
+        ssn
+      );
+      const res = await this.api.Transunion(
+        'GetAuthenticationQuestions',
+        JSON.stringify(msg)
+      );
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
    * Process and clean the indicative enrichment response back from Transunion
    * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
@@ -351,6 +358,67 @@ export class KycService {
       // now do the authentication
       return questions;
     } else {
+      return;
+    }
+  }
+
+  /**
+   * Method to send and process the authentication questions request and response
+   *   - Does not verify the accuracy of the methods...see (sendVerifyAuthenticationQuestions)
+   * @param {UpdateAppDataInput} data
+   * @returns
+   */
+  async getGetAuthenticationQuestionsResults(
+    data: UpdateAppDataInput
+  ): Promise<KYCResponse> {
+    let questionResponse;
+    let questions;
+    let xml;
+    const ssn = data.user?.userAttributes?.ssn?.full;
+    if (!ssn) return KYCResponse.Failed;
+    // GetAuthorizationQuestions response from TU service
+    try {
+      questionResponse = await this.sendGetAuthenticationQuestions(data, ssn);
+      if (!questionResponse) return KYCResponse.Failed;
+      questions = await this.processGetAutthenticationQuestionsResponse(
+        questionResponse
+      );
+      if (!questions) return KYCResponse.Failed;
+      // Sucess...parse questions and pass to question component
+      xml =
+        questions?.['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+          .GetAuthenticationQuestionsResult['a:Questions'];
+      if (!xml?._text) return KYCResponse.Failed;
+      await this.updateCurrentRawQuestionsAsync(xml?._text || '');
+      return KYCResponse.Success;
+    } catch {
+      return KYCResponse.Failed;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendVerifyAuthenticationQuestions(
+    data: UpdateAppDataInput | AppDataStateModel,
+    answers: IVerifyAuthenticationAnswer[]
+  ): Promise<any | undefined> {
+    if (!answers.length) return;
+    try {
+      const msg = this.transunion.createVerifyAuthenticationQuestionsPayload(
+        data,
+        answers
+      );
+      const res = await this.api.Transunion(
+        'VerifyAuthenticationQuestions',
+        JSON.stringify(msg)
+      );
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
       return;
     }
   }

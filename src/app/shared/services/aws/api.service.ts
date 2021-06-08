@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
-import { Injectable } from "@angular/core";
-import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
-import { Observable } from "zen-observable-ts";
+import { Injectable } from '@angular/core';
+import API, { graphqlOperation, GraphQLResult } from '@aws-amplify/api-graphql';
+import { Observable } from 'zen-observable-ts';
 
 export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
@@ -93,7 +93,7 @@ export type ModelAppDataConditionInput = {
 };
 
 export type AppData = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id?: string;
   user?: User;
   agencies?: Agencies;
@@ -102,14 +102,14 @@ export type AppData = {
 };
 
 export type User = {
-  __typename: "User";
+  __typename: 'User';
   id?: string;
   userAttributes?: UserAttributes;
   onboarding?: Onboarding;
 };
 
 export type UserAttributes = {
-  __typename: "UserAttributes";
+  __typename: 'UserAttributes';
   name?: Name;
   address?: Address;
   phone?: Phone;
@@ -118,14 +118,14 @@ export type UserAttributes = {
 };
 
 export type Name = {
-  __typename: "Name";
+  __typename: 'Name';
   first?: string;
   middle?: string | null;
   last?: string;
 };
 
 export type Address = {
-  __typename: "Address";
+  __typename: 'Address';
   addressOne?: string;
   addressTwo?: string | null;
   city?: string;
@@ -134,39 +134,39 @@ export type Address = {
 };
 
 export type Phone = {
-  __typename: "Phone";
+  __typename: 'Phone';
   primary?: string;
 };
 
 export type Dob = {
-  __typename: "Dob";
+  __typename: 'Dob';
   year?: string;
   month?: string;
   day?: string;
 };
 
 export type Ssn = {
-  __typename: "Ssn";
+  __typename: 'Ssn';
   lastfour?: string;
   full?: string | null;
 };
 
 export type Onboarding = {
-  __typename: "Onboarding";
+  __typename: 'Onboarding';
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
 };
 
 export type Agencies = {
-  __typename: "Agencies";
+  __typename: 'Agencies';
   transunion?: Transunion;
   equifax?: Equifax;
   experian?: Experian;
 };
 
 export type Transunion = {
-  __typename: "Transunion";
+  __typename: 'Transunion';
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -175,12 +175,12 @@ export type Transunion = {
 };
 
 export type Equifax = {
-  __typename: "Equifax";
+  __typename: 'Equifax';
   authenticated?: boolean | null;
 };
 
 export type Experian = {
-  __typename: "Experian";
+  __typename: 'Experian';
   authenticated?: boolean | null;
 };
 
@@ -218,16 +218,16 @@ export type ModelIDInput = {
 };
 
 export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null"
+  binary = 'binary',
+  binarySet = 'binarySet',
+  bool = 'bool',
+  list = 'list',
+  map = 'map',
+  number = 'number',
+  numberSet = 'numberSet',
+  string = 'string',
+  stringSet = 'stringSet',
+  _null = '_null',
 }
 
 export type ModelSizeInput = {
@@ -241,27 +241,27 @@ export type ModelSizeInput = {
 };
 
 export type ModelAppDataConnection = {
-  __typename: "ModelAppDataConnection";
+  __typename: 'ModelAppDataConnection';
   items?: Array<AppData | null> | null;
   nextToken?: string | null;
 };
 
 export type CreateAppDataMutation = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -269,32 +269,32 @@ export type CreateAppDataMutation = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -302,11 +302,11 @@ export type CreateAppDataMutation = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -315,21 +315,21 @@ export type CreateAppDataMutation = {
 };
 
 export type UpdateAppDataMutation = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -337,32 +337,32 @@ export type UpdateAppDataMutation = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -370,11 +370,11 @@ export type UpdateAppDataMutation = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -383,21 +383,21 @@ export type UpdateAppDataMutation = {
 };
 
 export type DeleteAppDataMutation = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -405,32 +405,32 @@ export type DeleteAppDataMutation = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -438,11 +438,11 @@ export type DeleteAppDataMutation = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -451,21 +451,21 @@ export type DeleteAppDataMutation = {
 };
 
 export type GetAppDataQuery = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -473,32 +473,32 @@ export type GetAppDataQuery = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -506,11 +506,11 @@ export type GetAppDataQuery = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -519,23 +519,23 @@ export type GetAppDataQuery = {
 };
 
 export type ListAppDatasQuery = {
-  __typename: "ModelAppDataConnection";
+  __typename: 'ModelAppDataConnection';
   items?: Array<{
-    __typename: "AppData";
+    __typename: 'AppData';
     id: string;
     user: {
-      __typename: "User";
+      __typename: 'User';
       id: string;
       userAttributes?: {
-        __typename: "UserAttributes";
+        __typename: 'UserAttributes';
         name?: {
-          __typename: "Name";
+          __typename: 'Name';
           first: string;
           middle?: string | null;
           last: string;
         } | null;
         address?: {
-          __typename: "Address";
+          __typename: 'Address';
           addressOne: string;
           addressTwo?: string | null;
           city: string;
@@ -543,32 +543,32 @@ export type ListAppDatasQuery = {
           zip: string;
         } | null;
         phone?: {
-          __typename: "Phone";
+          __typename: 'Phone';
           primary: string;
         } | null;
         dob?: {
-          __typename: "Dob";
+          __typename: 'Dob';
           year: string;
           month: string;
           day: string;
         } | null;
         ssn?: {
-          __typename: "Ssn";
+          __typename: 'Ssn';
           lastfour: string;
           full?: string | null;
         } | null;
       } | null;
       onboarding?: {
-        __typename: "Onboarding";
+        __typename: 'Onboarding';
         lastActive: number;
         lastComplete: number;
         started?: boolean | null;
       } | null;
     };
     agencies: {
-      __typename: "Agencies";
+      __typename: 'Agencies';
       transunion?: {
-        __typename: "Transunion";
+        __typename: 'Transunion';
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
@@ -576,11 +576,11 @@ export type ListAppDatasQuery = {
         currentRawQuestions?: string | null;
       } | null;
       equifax?: {
-        __typename: "Equifax";
+        __typename: 'Equifax';
         authenticated?: boolean | null;
       } | null;
       experian?: {
-        __typename: "Experian";
+        __typename: 'Experian';
         authenticated?: boolean | null;
       } | null;
     };
@@ -591,21 +591,21 @@ export type ListAppDatasQuery = {
 };
 
 export type OnCreateAppDataSubscription = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -613,32 +613,32 @@ export type OnCreateAppDataSubscription = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -646,11 +646,11 @@ export type OnCreateAppDataSubscription = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -659,21 +659,21 @@ export type OnCreateAppDataSubscription = {
 };
 
 export type OnUpdateAppDataSubscription = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -681,32 +681,32 @@ export type OnUpdateAppDataSubscription = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -714,11 +714,11 @@ export type OnUpdateAppDataSubscription = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -727,21 +727,21 @@ export type OnUpdateAppDataSubscription = {
 };
 
 export type OnDeleteAppDataSubscription = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -749,32 +749,32 @@ export type OnDeleteAppDataSubscription = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -782,11 +782,11 @@ export type OnDeleteAppDataSubscription = {
       currentRawQuestions?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
@@ -795,7 +795,7 @@ export type OnDeleteAppDataSubscription = {
 };
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class APIService {
   async CreateAppData(
@@ -872,7 +872,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
     if (condition) {
       gqlAPIServiceArguments.condition = condition;
@@ -956,7 +956,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
     if (condition) {
       gqlAPIServiceArguments.condition = condition;
@@ -1040,7 +1040,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      input
+      input,
     };
     if (condition) {
       gqlAPIServiceArguments.condition = condition;
@@ -1056,7 +1056,7 @@ export class APIService {
       }`;
     const gqlAPIServiceArguments: any = {
       action,
-      message
+      message,
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -1134,7 +1134,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      id,
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
