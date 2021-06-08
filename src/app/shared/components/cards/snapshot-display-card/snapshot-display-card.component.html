@@ -13,7 +13,7 @@
     <div class="flex flex-row items-center">
       <p class="text-base font-semibold font-sans text-dk-gray">{{ title }}</p>
       <div class="ml-2" *ngIf="tendency !== 'no-tendency'">
-        <span class="transform rotate-45"  *ngIf="tendency === 'down'">&darr;</span>
+        <span *ngIf="tendency === 'down'">&darr;</span>
         <span *ngIf="tendency === 'up'">&uarr;</span>
       </div>
     </div>

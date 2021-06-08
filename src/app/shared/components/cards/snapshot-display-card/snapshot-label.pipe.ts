@@ -18,11 +18,11 @@ const enumStrNameOfLabel = {
   name: 'snapshotLabel'
 })
 export class SnapshotLabelPipe implements PipeTransform {
-  transform(value: LabelOfSnapshot, ...args: any[]): string {
+  transform(value: any, ...args: any[]): string {
     let result = '';
     const typeOfOutput: 'color-class' | 'text' | undefined = args[0];
     if (typeOfOutput !== undefined) {
-      const labelValue = enumStrNameOfLabel[value];
+      const labelValue = enumStrNameOfLabel[value as LabelOfSnapshot];
       result = typeOfOutput === 'text' ? labelValue.text : labelValue.colorClass;
     }
     return result;

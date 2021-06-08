@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'brave-navigation-tabs',
@@ -6,12 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation-tabs.component.css']
 })
 export class NavigationTabsComponent implements OnInit {
-  openTab = 1;
+  private $currentTab: BehaviorSubject<number> = new BehaviorSubject(1);
+  currentTab = this.$currentTab.asObservable();
   constructor() {}
 
   ngOnInit(): void {}
 
-  toggleTabs($tabNumber: number) {
-    this.openTab = $tabNumber;
+  toggleTabs(tabNumber: number) {
+    this.$currentTab.next(tabNumber);
   }
 }
