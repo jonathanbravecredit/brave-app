@@ -44,6 +44,8 @@ query GetAppData($id: ID!) {
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -51,7 +53,6 @@ query GetAppData($id: ID!) {
       experian {
         authenticated
       }
-      currentRawQuestions
     }
     createdAt
     updatedAt
@@ -104,6 +105,8 @@ query ListAppDatas(
           authenticated
           indicativeEnrichmentSuccess
           getAuthenticationQuestionsSuccess
+          serviceBundleFulfillmentKey
+          currentRawQuestions
         }
         equifax {
           authenticated
@@ -111,7 +114,6 @@ query ListAppDatas(
         experian {
           authenticated
         }
-        currentRawQuestions
       }
       createdAt
       updatedAt

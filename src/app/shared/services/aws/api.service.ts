@@ -68,13 +68,14 @@ export type AgenciesInput = {
   transunion?: TransunionInput | null;
   equifax?: EquifaxInput | null;
   experian?: ExperianInput | null;
-  currentRawQuestions?: string | null;
 };
 
 export type TransunionInput = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
 };
 
 export type EquifaxInput = {
@@ -162,7 +163,6 @@ export type Agencies = {
   transunion?: Transunion;
   equifax?: Equifax;
   experian?: Experian;
-  currentRawQuestions?: string | null;
 };
 
 export type Transunion = {
@@ -170,6 +170,8 @@ export type Transunion = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
 };
 
 export type Equifax = {
@@ -296,6 +298,8 @@ export type CreateAppDataMutation = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -305,7 +309,6 @@ export type CreateAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -363,6 +366,8 @@ export type UpdateAppDataMutation = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -372,7 +377,6 @@ export type UpdateAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -430,6 +434,8 @@ export type DeleteAppDataMutation = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -439,7 +445,6 @@ export type DeleteAppDataMutation = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -497,6 +502,8 @@ export type GetAppDataQuery = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -506,7 +513,6 @@ export type GetAppDataQuery = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -566,6 +572,8 @@ export type ListAppDatasQuery = {
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
+        serviceBundleFulfillmentKey?: string | null;
+        currentRawQuestions?: string | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -575,7 +583,6 @@ export type ListAppDatasQuery = {
         __typename: "Experian";
         authenticated?: boolean | null;
       } | null;
-      currentRawQuestions?: string | null;
     };
     createdAt: string;
     updatedAt: string;
@@ -635,6 +642,8 @@ export type OnCreateAppDataSubscription = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -644,7 +653,6 @@ export type OnCreateAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -702,6 +710,8 @@ export type OnUpdateAppDataSubscription = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -711,7 +721,6 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -769,6 +778,8 @@ export type OnDeleteAppDataSubscription = {
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -778,7 +789,6 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Experian";
       authenticated?: boolean | null;
     } | null;
-    currentRawQuestions?: string | null;
   };
   createdAt: string;
   updatedAt: string;
@@ -845,6 +855,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -854,7 +866,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -928,6 +939,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -937,7 +950,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1011,6 +1023,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1020,7 +1034,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1104,6 +1117,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1113,7 +1128,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1187,6 +1201,8 @@ export class APIService {
                 authenticated
                 indicativeEnrichmentSuccess
                 getAuthenticationQuestionsSuccess
+                serviceBundleFulfillmentKey
+                currentRawQuestions
               }
               equifax {
                 __typename
@@ -1196,7 +1212,6 @@ export class APIService {
                 __typename
                 authenticated
               }
-              currentRawQuestions
             }
             createdAt
             updatedAt
@@ -1276,6 +1291,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1285,7 +1302,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1351,6 +1367,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1360,7 +1378,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt
@@ -1426,6 +1443,8 @@ export class APIService {
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1435,7 +1454,6 @@ export class APIService {
               __typename
               authenticated
             }
-            currentRawQuestions
           }
           createdAt
           updatedAt

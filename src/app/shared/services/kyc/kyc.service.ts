@@ -16,6 +16,7 @@ import { state } from '@angular/animations';
 import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -186,7 +187,9 @@ export class KycService {
    */
   updateCurrentRawQuestions(questions: string): void {
     this.store.dispatch(
-      new AgenciesActions.EditQuestions({ currentRawQuestions: questions })
+      new AgenciesActions.EditTransunionQuestions({
+        currentRawQuestions: questions,
+      })
     );
   }
 
@@ -201,7 +204,9 @@ export class KycService {
     return await new Promise((resolve, reject) => {
       this.store
         .dispatch(
-          new AgenciesActions.EditQuestions({ currentRawQuestions: questions })
+          new AgenciesActions.EditTransunionQuestions({
+            currentRawQuestions: questions,
+          })
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
@@ -259,6 +264,34 @@ export class KycService {
   }
 
   /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendVerifyAuthenticationQuestions(
+    data: UpdateAppDataInput,
+    answers: IVerifyAuthenticationAnswer[]
+  ): Promise<any | undefined> {
+    if (!answers.length) return;
+    try {
+      const msg = this.transunion.createVerifyAuthenticationQuestionsPayload(
+        data,
+        answers
+      );
+      console.log('msg to send and verify', msg);
+      const res = await this.api.Transunion(
+        'VerifyAuthenticationQuestions',
+        JSON.stringify(msg)
+      );
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
    * Process and clean the indicative enrichment response back from Transunion
    * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
@@ -266,7 +299,6 @@ export class KycService {
   async processIndicativeEnrichmentResponse(
     resp: string
   ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
-    console.log('resp', resp);
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
       JSON.parse(resp)['IndicativeEnrichmentResults']
     );
@@ -303,12 +335,17 @@ export class KycService {
       questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
         .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
     ) {
+      const fulillmentKey =
+        questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+          .GetAuthenticationQuestionsResult['a:ServiceBundleFulfillmentKey']
+          ._text;
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           authenticated: false,
           indicativeEnrichmentSuccess: true,
           getAuthenticationQuestionsSuccess: true,
+          serviceBundleFulfillmentKey: fulillmentKey,
         },
       });
       // now do the authentication

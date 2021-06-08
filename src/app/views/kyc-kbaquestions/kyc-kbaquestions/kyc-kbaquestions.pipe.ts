@@ -14,7 +14,6 @@ export class KycKbaquestionsPipe implements PipeTransform {
     ...args: unknown[]
   ): ITransunionKBAQuestion[] {
     if (!xmlString) return [];
-    console.log('xmlString', xmlString);
     const xml: ITransunionKBAQuestions = parser.parse(xmlString);
     return xml.ChallengeConfigurationType.MultiChoiceQuestion;
   }
