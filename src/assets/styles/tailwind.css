@@ -1122,6 +1122,16 @@ select {
   background-color: rgba(30, 41, 59, var(--tw-bg-opacity));
 }
 
+.bg-brave-safe {
+  --tw-bg-opacity: 1;
+  background-color: rgba(75, 210, 105, var(--tw-bg-opacity));
+}
+
+.bg-brave-critical {
+  --tw-bg-opacity: 1;
+  background-color: rgba(233, 60, 37, var(--tw-bg-opacity));
+}
+
 .bg-brave-danger {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 162, 31, var(--tw-bg-opacity));
@@ -1541,6 +1551,10 @@ select {
   list-style-type: none;
 }
 
+.list-disc {
+  list-style-type: disc;
+}
+
 .m-0 {
   margin: 0px;
 }
@@ -1624,6 +1638,10 @@ select {
 
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .mr-3 {
@@ -2260,6 +2278,16 @@ select {
 .text-brave-blurple {
   --tw-text-opacity: 1;
   color: rgba(34, 44, 157, var(--tw-text-opacity));
+}
+
+.text-brave-safe {
+  --tw-text-opacity: 1;
+  color: rgba(75, 210, 105, var(--tw-text-opacity));
+}
+
+.text-brave-critical {
+  --tw-text-opacity: 1;
+  color: rgba(233, 60, 37, var(--tw-text-opacity));
 }
 
 .text-brave-danger {

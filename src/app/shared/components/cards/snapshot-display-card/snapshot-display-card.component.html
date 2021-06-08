@@ -1,7 +1,7 @@
 <!-- no-purge for component -->
-<div class="text-brave-danger bg-brave-danger" *ngIf="false"></div>
+<div class="text-brave-danger bg-brave-danger bg-brave-critical bg-brave-safe text-brave-danger text-brave-critical text-brave-safe mt-4 mt-3" *ngIf="false"></div>
 
-<div class="relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-2">
+<div class="relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-3">
   <!-- tag div: Display of current type of snapshot -->
   <div class="absolute -mt-5 ml-3 px-1 font-semibold bg-white" *ngIf="label !== undefined"><span class="font-sans" [ngClass]="label | snapshotLabel:'color-class'">{{ label | snapshotLabel:'text' }}</span></div>
   <!-- left column  section 1: Display of current snapshot status indicator-->
@@ -12,7 +12,7 @@
     <!--  center column section 2: Display of snapshot card information -->
     <div class="flex flex-row items-center">
       <p class="text-base font-semibold font-sans text-dk-gray">{{ title }}</p>
-      <div class="ml-2" *ngIf="tendency !== 'no-tendency'">  
+      <div class="ml-2" *ngIf="tendency !== 'no-tendency'">
         <span class="transform rotate-45"  *ngIf="tendency === 'down'">&darr;</span>
         <span *ngIf="tendency === 'up'">&uarr;</span>
       </div>
