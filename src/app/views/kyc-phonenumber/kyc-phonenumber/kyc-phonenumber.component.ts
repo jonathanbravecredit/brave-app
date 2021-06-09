@@ -71,6 +71,8 @@ export class KycPhonenumberComponent
           } else {
             this.router.navigate(['../error'], { relativeTo: this.route });
           }
+        } else {
+          this.router.navigate(['../kba'], { relativeTo: this.route });
         }
       } catch {
         this.router.navigate(['../error'], { relativeTo: this.route });
