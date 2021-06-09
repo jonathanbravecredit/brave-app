@@ -4,6 +4,8 @@ import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { SyncService } from '@shared/services/sync/sync.service';
+import { Store } from '@ngxs/store';
+import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -18,8 +20,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService,
-    private syncService: SyncService
+    private store: Store,
+    private kycService: KycService
   ) {
     super();
   }
@@ -34,14 +36,48 @@ export class KycIdverificationComponent extends KycBaseComponent {
     this.router.navigate(['../verify'], { relativeTo: this.route });
   }
 
-  goToNext(form: FormGroup): void {
+  async goToNext(form: FormGroup): Promise<void> {
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
       // TODO submit code to backed
-      this.kycService.completeStep(this.stepID);
-      // this.router.navigate(['../congratulations'], { relativeTo: this.route });
+      try {
+        const { appData: state } = this.store.snapshot();
+        const xmlString = await this.kycService.getGetAuthenticationQuestionsResults(
+          state
+        );
+        const questions = this.kycService.parseCurrentRawQuestions(xmlString);
+        const codeQuestion = this.kycService.getPassCodeQuestion(questions);
+        if (codeQuestion) {
+          // get the OTP  send text answer
+          const codeAnswer = this.kycService.getPassCodeAnswer(
+            codeQuestion,
+            code
+          );
+          const authenticated: IVerifyAuthenticationResponseSuccess = await this.kycService.sendVerifyAuthenticationQuestions(
+            state,
+            [codeAnswer]
+          );
+          const success =
+            authenticated.VerifyAuthenticationQuestions['s:Envelope'][
+              's:Body'
+            ].VerifyAuthenticationQuestionsResponse.VerifyAuthenticationQuestionsResult[
+              'a:ResponseType'
+            ].toLowerCase() === 'success';
+          if (success) {
+            this.kycService.completeStep(this.stepID);
+            this.router.navigate(['../congratulations'], {
+              relativeTo: this.route,
+            });
+          } else {
+            this.router.navigate(['../error'], { relativeTo: this.route });
+          }
+        }
+      } catch {
+        this.router.navigate(['../error'], { relativeTo: this.route });
+      }
     }
   }
+
   handleError(errors: { [key: string]: AbstractControl }): void {
     console.log('form errors', errors);
   }

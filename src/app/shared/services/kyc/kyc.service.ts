@@ -39,6 +39,11 @@ export const enum OTPReponse {
   PartialOne = 'via Text Message',
 }
 
+export const enum PassCodeQuestion {
+  FullText = 'Enter the passcode you received',
+  PartialOne = 'passcode',
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -458,6 +463,48 @@ export class KycService {
         QuestionId: question?.QuestionId,
         SelectedAnswerChoice: {
           AnswerChoiceId: answer?.AnswerChoiceId || '',
+        },
+      },
+    };
+  }
+
+  /**
+   * Runs a series of tests to see if the question is for the passcode
+   * @param {ITransunionKBAQuestions} questions
+   * @returns
+   */
+  getPassCodeQuestion(
+    questions: ITransunionKBAQuestions
+  ): ITransunionKBAQuestion | undefined {
+    const series: ITransunionKBAQuestion[] =
+      questions.ChallengeConfigurationType.MultiChoiceQuestion;
+    return series.find(
+      (q) =>
+        q.FullQuestionText === PassCodeQuestion.FullText ||
+        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
+    );
+  }
+
+  /**
+   * Runs a series of test to find the 'Send text message' answer for OTP
+   * @param {ITransunionKBAQuestion} question
+   * @returns
+   */
+  getPassCodeAnswer(
+    question: ITransunionKBAQuestion,
+    input: string
+  ): IVerifyAuthenticationAnswer {
+    const answer: ITransunionKBAAnswer | undefined = question.AnswerChoice.find(
+      (c) =>
+        c.AnswerChoiceText === OTPReponse.FullText ||
+        c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0
+    );
+    return {
+      VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+        QuestionId: question?.QuestionId,
+        SelectedAnswerChoice: {
+          AnswerChoiceId: answer?.AnswerChoiceId || '',
+          UserInputAnswer: input,
         },
       },
     };
