@@ -6,6 +6,7 @@ import { IamService } from '@shared/services/auth/iam.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { APIService } from '@shared/services/aws/api.service';
 import { SyncService } from '@shared/services/sync/sync.service';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 const services = [
   AuthService,
@@ -14,6 +15,7 @@ const services = [
   GuestService,
   IamService,
   KycService,
+  TransunionService,
 ];
 
 @NgModule({

@@ -61,6 +61,7 @@ export type SsnInput = {
 export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
+  started?: boolean | null;
 };
 
 export type AgenciesInput = {
@@ -71,6 +72,10 @@ export type AgenciesInput = {
 
 export type TransunionInput = {
   authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
 };
 
 export type EquifaxInput = {
@@ -150,6 +155,7 @@ export type Onboarding = {
   __typename: "Onboarding";
   lastActive?: number;
   lastComplete?: number;
+  started?: boolean | null;
 };
 
 export type Agencies = {
@@ -162,6 +168,10 @@ export type Agencies = {
 export type Transunion = {
   __typename: "Transunion";
   authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
 };
 
 export type Equifax = {
@@ -278,6 +288,7 @@ export type CreateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -285,6 +296,10 @@ export type CreateAppDataMutation = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -341,6 +356,7 @@ export type UpdateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -348,6 +364,10 @@ export type UpdateAppDataMutation = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -404,6 +424,7 @@ export type DeleteAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -411,6 +432,10 @@ export type DeleteAppDataMutation = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -467,6 +492,7 @@ export type GetAppDataQuery = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -474,6 +500,10 @@ export type GetAppDataQuery = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -532,6 +562,7 @@ export type ListAppDatasQuery = {
         __typename: "Onboarding";
         lastActive: number;
         lastComplete: number;
+        started?: boolean | null;
       } | null;
     };
     agencies: {
@@ -539,6 +570,10 @@ export type ListAppDatasQuery = {
       transunion?: {
         __typename: "Transunion";
         authenticated?: boolean | null;
+        indicativeEnrichmentSuccess?: boolean | null;
+        getAuthenticationQuestionsSuccess?: boolean | null;
+        serviceBundleFulfillmentKey?: string | null;
+        currentRawQuestions?: string | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -597,6 +632,7 @@ export type OnCreateAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -604,6 +640,10 @@ export type OnCreateAppDataSubscription = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -660,6 +700,7 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -667,6 +708,10 @@ export type OnUpdateAppDataSubscription = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -723,6 +768,7 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -730,6 +776,10 @@ export type OnDeleteAppDataSubscription = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -795,6 +845,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -802,6 +853,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -874,6 +929,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -881,6 +937,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -953,6 +1013,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -960,6 +1021,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -984,6 +1049,19 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteAppDataMutation>response.data.deleteAppData;
+  }
+  async Transunion(action: string, message: string): Promise<string | null> {
+    const statement = `query Transunion($action: String!, $message: String!) {
+        transunion(action: $action, message: $message)
+      }`;
+    const gqlAPIServiceArguments: any = {
+      action,
+      message
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <string | null>response.data.transunion;
   }
   async GetAppData(id: string): Promise<GetAppDataQuery> {
     const statement = `query GetAppData($id: ID!) {
@@ -1029,6 +1107,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1036,6 +1115,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1108,6 +1191,7 @@ export class APIService {
                 __typename
                 lastActive
                 lastComplete
+                started
               }
             }
             agencies {
@@ -1115,6 +1199,10 @@ export class APIService {
               transunion {
                 __typename
                 authenticated
+                indicativeEnrichmentSuccess
+                getAuthenticationQuestionsSuccess
+                serviceBundleFulfillmentKey
+                currentRawQuestions
               }
               equifax {
                 __typename
@@ -1193,6 +1281,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1200,6 +1289,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1264,6 +1357,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1271,6 +1365,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename
@@ -1335,6 +1433,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1342,6 +1441,10 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
             }
             equifax {
               __typename

@@ -2,12 +2,16 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnInit,
+  EventEmitter,
+  Input,
+  Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
+import { IKbaMultipleChoiceConfig } from '@shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
+import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
 
 @Component({
   selector: 'brave-kbaquestions-form',
@@ -20,10 +24,22 @@ export class KbaquestionsFormComponent
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
+  @Input() kbas: ITransunionKBAQuestion[] = [];
+  @Output()
+  clickAnswer: EventEmitter<ITransunionKBAQuestion> = new EventEmitter();
+
   sliderWidth: number = 1200;
   itemWidth: number = 300;
   carouselXAxis: number = 0;
   tracker: any[] = [0];
+
+  public kbaConfig: IKbaMultipleChoiceConfig = {
+    size: 'sm',
+    type: 'text',
+    label: '',
+    placeholder: '',
+    autocomplete: 'off',
+  };
 
   constructor(fb: FormBuilder, private renderer: Renderer2) {
     super(fb, 'kba-form');
@@ -32,6 +48,10 @@ export class KbaquestionsFormComponent
   ngAfterViewInit(): void {
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
+  }
+
+  formatChildName(childName: string, digit: number): string {
+    return `${childName}-${digit}`;
   }
 
   /**
@@ -59,9 +79,11 @@ export class KbaquestionsFormComponent
   /**
    * Method to scroll the carousel by a percentage value
    * @param value percentage to move the carousel over by
+   * @param min the floor that the scroll should go to (i.e. 0)
+   * @param max the max translation the scrill should go to (e.g. -75...if 4 items)
    */
-  scroll(value: number): void {
-    if (this.carouselXAxis + value > 0 || this.carouselXAxis + value < -75) {
+  scroll(value: number, min: number, max: number): void {
+    if (this.carouselXAxis + value > min || this.carouselXAxis + value < max) {
       return;
     }
     // pop and push tracker to know which question we are on

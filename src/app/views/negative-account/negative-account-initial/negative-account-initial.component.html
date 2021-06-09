@@ -1,0 +1,39 @@
+<div class="container mx-auto max-w-xs h-full">
+  <div class="mb-2">
+    <h2 class="font-semibold text-lg">New Negative Accounts</h2>
+    <span><p class="text-brave-danger text-xs">High Score Impact</p></span>
+  </div>
+  <span><p class="text-sm mb-1">These are new negative accounts in the last 30 days that are in collections, have been charged off, or have late payments.</p></span>
+  <span><p class="text-sm mb-1">Review the accounts for accuracy, and if you see an error, you can dispute them.</p></span>
+  <brave-negative-account-card
+  creditorName="Hj National Collections"
+  lastReported="29/09/2020"
+  accountTypeDescription="Collections Account"
+  accountTypeDescriptionValue="Open"
+  originalCreditor="Original Creditor"
+  originalCreditorValue="Wells Fargo Bank, N.A."
+  disputeFlag="Previously Disputed?"
+  disputeFlagValue="No"
+  accountNumber="066611222"
+  typeOfCollection="Collections"
+  [amountPastDue]="700"
+  dateOpened="04/12/2018"
+  dateLastPayment="04/21/2018"
+  ></brave-negative-account-card>
+  <brave-negative-account-card
+  creditorName="A.R.M. Solutions"
+  lastReported="29/09/2020"
+  accountTypeDescription="90-Day Late Payment"
+  accountTypeDescriptionValue="Open"
+  originalCreditor="Original Creditor"
+  originalCreditorValue="Bank Of America"
+  disputeFlag="Previously Disputed?"
+  disputeFlagValue="No"
+  accountNumber="066611222"
+  typeOfCollection="Collections"
+  [amountPastDue]="700"
+  dateOpened="04/12/2018"
+  dateLastPayment="04/21/2018"
+  ></brave-negative-account-card>
+  <brave-navigation-tabs></brave-navigation-tabs>
+</div>

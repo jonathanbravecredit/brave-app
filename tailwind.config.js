@@ -9,18 +9,62 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    boxShadow: {
+      'upper-shadow': '0px -25px 53px -42px #1b1b1b'
+    },
     colors: {
       ...colors,
+      'brave-magenta': '#D714DB',
+      'brave-blurple': '#222C9D',
+      'brave-safe': '#4BD269',
+      'brave-critical': '#E93C25',
+      'brave-danger': '#F9A21F',
+      'lt-gray': '#DADADA',
+      'md-gray': '#4F4F4F',
+      'dk-gray': '#333333'
     },
+   backgroundColor: theme => ({
+     ...theme('colors'),
+     'brave-magenta': '#D714DB',
+      'brave-blurple': '#222C9D',
+      'brave-safe': '#4BD269',
+      'brave-critical': '#E93C25',
+      'brave-danger': '#F9A21F',
+      'lt-gray': '#DADADA',
+      'md-gray': '#4F4F4F',
+      'dk-gray': '#333333'
+    }),
+    textColor: theme => theme('colors'),
+     textColor: {
+       ...colors,
+      'brave-magenta': '#D714DB',
+      'brave-blurple': '#222C9D',
+      'brave-safe': '#4BD269',
+      'brave-critical': '#E93C25',
+      'brave-danger': '#F9A21F',
+      'lt-gray': '#DADADA',
+      'md-gray': '#4F4F4F',
+      'dk-gray': '#333333'
+     },
     extend: {
+      rotate: {
+        '45': '45deg'
+      },
+      margin: {
+        '-5': "-1.25rem",
+         '6': "1.5rem"
+      },
       minHeight: {
         "screen-75": "75vh",
       },
       fontFamily: {
-        sans: ["Opensans", ...defaultTheme.fontFamily.sans],
-        headings: ["Biryani", "Opensans", ...defaultTheme.fontFamily.sans],
+        sans: ["Open Sans", ...defaultTheme.fontFamily.sans],
+        headings: ["Biryani", "Open Sans", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        '2.5': '0.625rem',
+        '3.5': '0.875rem',
+        'little-card-icon': '6.67px',
         55: "55rem",
       },
       opacity: {

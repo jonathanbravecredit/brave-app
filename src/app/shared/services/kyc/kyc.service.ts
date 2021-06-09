@@ -1,101 +1,108 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
-import { Onboarding, OnboardingStep } from '@store/onboarding';
-import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
-import * as OnboardingAction from '@store/onboarding';
-import * as UserAction from '@store/user';
-import { UserStateModel, UserSelectors } from '@store/user';
-import { UserAttributes } from '@shared/services/aws/api.service';
+import { OnboardingStateModel } from '@store/onboarding';
+import * as OnboardingActions from '@store/onboarding/onboarding.actions';
+import * as UserActions from '@store/user/user.actions';
+import * as AgenciesActions from '@store/agencies/agencies.actions';
+import {
+  AgenciesInput,
+  APIService,
+  UpdateAppDataInput,
+  UserAttributesInput,
+} from '@shared/services/aws/api.service';
+import { AppDataStateModel } from '@store/app-data';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { state } from '@angular/animations';
+import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
+import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class KycService implements OnDestroy {
-  public onboarding: Onboarding = {} as Onboarding;
-  public onboarding$: Observable<Onboarding> = this.store.select(
-    OnboardingSelectors.getOnboarding
-  );
-  public onboardingSub$: Subscription;
-
-  user: UserStateModel = new UserStateModel();
-  user$: Observable<UserStateModel> = this.store.select(UserSelectors.getUser);
-  userSub$: Subscription;
-
-  constructor(private store: Store) {
-    this.onboardingSub$ = this.onboarding$
-      .pipe(filter((onboarding: Onboarding) => onboarding !== undefined))
-      .subscribe((onboarding: Onboarding) => {
-        this.onboarding = onboarding;
-      });
-
-    this.userSub$ = this.user$
-      .pipe(filter((user: UserStateModel) => user !== undefined))
-      .subscribe((user: UserStateModel) => {
-        this.user = user;
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
-    if (this.userSub$) this.userSub$.unsubscribe();
-  }
+export class KycService {
+  constructor(
+    private api: APIService,
+    private store: Store,
+    private auth: AuthService,
+    private transunion: TransunionService
+  ) {}
 
   /**
    * Takes a progress step ID and sets the status to true
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  activateStep(id: number): void {
-    const onboarding: Onboarding | undefined = this.updateStep(id, {
-      active: true,
-    });
-    if (onboarding) {
-      this.store.dispatch(new OnboardingAction.Edit(onboarding));
-    }
+  activateStep(step: number): void {
+    this.store
+      .dispatch(new OnboardingActions.UpdateLastActive(step))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
+      });
   }
 
   /**
    * Takes a progress step ID and sets the status to false
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  inactivateStep(id: number): void {
-    const onboarding: Onboarding | undefined = this.updateStep(id, {
-      active: false,
-    });
-    if (onboarding) {
-      this.store.dispatch(new OnboardingAction.Edit(onboarding));
-    }
+  async inactivateStep(step: number): Promise<void> {
+    this.store
+      .dispatch(new OnboardingActions.UpdateLastActive(step))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
+      });
   }
 
   /**
    * Takes a progress step ID and sets the complete status to true
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  completeStep(id: number): void {
-    const onboarding: Onboarding | undefined = this.updateStep(id, {
-      complete: true,
-    });
-    if (onboarding) {
-      this.store.dispatch(new OnboardingAction.Edit(onboarding));
-    }
+  completeStep(step: number): void {
+    this.store
+      .dispatch(new OnboardingActions.UpdateLastComplete(step))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
+      });
   }
 
   /**
    * Takes a progress step ID and sets the complete status to false
    * Then updates the state
-   * @param {number} id the progress step ID
+   * @param {number} step the progress step ID
    */
-  incompleteStep(id: number): void {
-    const onboarding: Onboarding | undefined = this.updateStep(id, {
-      complete: false,
-    });
-    if (onboarding) {
-      this.store.dispatch(new OnboardingAction.Edit(onboarding));
-    }
+  incompleteStep(step: number): void {
+    this.store
+      .dispatch(new OnboardingActions.UpdateLastComplete(step))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input); // the listener will update the state.
+        }
+      });
   }
 
   /**
@@ -105,37 +112,246 @@ export class KycService implements OnDestroy {
    * @returns
    */
   updateStep(
-    id: number,
-    state: { active: boolean } | { complete: boolean }
-  ): Onboarding | undefined {
-    let onboarding = this.onboarding;
-    let welcome: OnboardingStep | undefined = onboarding?.steps?.find(
-      (step: OnboardingStep) => {
-        return step.id === id;
-      }
-    );
-    if (welcome !== undefined) {
-      welcome = { ...welcome, ...state };
-      const steps: OnboardingStep[] = onboarding?.steps?.map(
-        (step: OnboardingStep) => {
-          return step.id === welcome?.id ? welcome : step;
+    lastActive: number,
+    lastComplete: number,
+    started: boolean = true
+  ): OnboardingStateModel | undefined | void {
+    const state = this.store.snapshot();
+    return { ...state.user?.onboarding, lastActive, lastComplete, started };
+  }
+
+  /**
+   * Takes the attributes and updates the state with them
+   * @param {UserAttributesInput} attributes
+   */
+  updateUserAttributes(attrs: UserAttributesInput): void {
+    this.store
+      .dispatch(new UserActions.UpdateAttributes(attrs))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input);
         }
+      });
+  }
+
+  /**
+   * Takes the attributes and updates the state with them
+   * @param {UserAttributesInput} attributes
+   */
+  async updateUserAttributesAsync(
+    attrs: UserAttributesInput
+  ): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new UserActions.UpdateAttributes(attrs))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          if (!input.id) {
+            this.auth.reloadCredentials();
+            reject();
+            return;
+          } else {
+            this.api.UpdateAppData(input);
+            resolve(input);
+          }
+        });
+    });
+  }
+
+  /**
+   * Takes the agency status and updates the state with them
+   * @param {AgenciesInput} agency the new agency input data to write to db and state
+   */
+  updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
+    this.store
+      .dispatch(new AgenciesActions.Edit(agency))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input);
+        }
+      });
+  }
+
+  /**
+   * Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  updateCurrentRawQuestions(questions: string): void {
+    this.store.dispatch(
+      new AgenciesActions.EditTransunionQuestions({
+        currentRawQuestions: questions,
+      })
+    );
+  }
+
+  /**
+   * (Synchronous) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateCurrentRawQuestionsAsync(
+    questions: string
+  ): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(
+          new AgenciesActions.EditTransunionQuestions({
+            currentRawQuestions: questions,
+          })
+        )
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
+  }
+
+  /**
+   * Send the indicative enrichment message to the Transunion backend and await a response
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendIndicativeEnrichment(
+    data: UpdateAppDataInput
+  ): Promise<any | undefined> {
+    try {
+      const msg = this.transunion.createIndicativeEnrichmentPayload(data);
+      const res = await this.api.Transunion(
+        'IndicativeEnrichment',
+        JSON.stringify(msg)
       );
-      return { ...onboarding, steps };
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendGetAuthenticationQuestions(
+    data: UpdateAppDataInput,
+    ssn: string = ''
+  ): Promise<any | undefined> {
+    if (!ssn) return;
+    try {
+      const msg = this.transunion.createGetAuthenticationQuestionsPayload(
+        data,
+        ssn
+      );
+      const res = await this.api.Transunion(
+        'GetAuthenticationQuestions',
+        JSON.stringify(msg)
+      );
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendVerifyAuthenticationQuestions(
+    data: UpdateAppDataInput,
+    answers: IVerifyAuthenticationAnswer[]
+  ): Promise<any | undefined> {
+    if (!answers.length) return;
+    try {
+      const msg = this.transunion.createVerifyAuthenticationQuestionsPayload(
+        data,
+        answers
+      );
+      console.log('msg to send and verify', msg);
+      const res = await this.api.Transunion(
+        'VerifyAuthenticationQuestions',
+        JSON.stringify(msg)
+      );
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Process and clean the indicative enrichment response back from Transunion
+   * @param {string} resp this is the JSON string back from the Transunion service
+   * @returns
+   */
+  async processIndicativeEnrichmentResponse(
+    resp: string
+  ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
+    const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
+      JSON.parse(resp)['IndicativeEnrichmentResults']
+    );
+    if (
+      enrichment['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
+        .IndicativeEnrichmentResult['a:ResponseType']._text === 'Success'
+    ) {
+      // update indicative enrichment as success
+      await this.updateTransunionIndicativeEnrichment({
+        transunion: {
+          authenticated: false,
+          indicativeEnrichmentSuccess: true,
+        },
+      });
+      // now do the authentication
+      return enrichment;
     } else {
       return;
     }
   }
 
   /**
-   * Takes the attributes and updates the state with them
-   * @param {UserAttributes} attributes
+   * Process and clean the indicative enrichment response back from Transunion
+   * @param {string} resp this is the JSON string back from the Transunion service
+   * @returns
    */
-  updateUserAttributes(attrs: UserAttributes): void {
-    const user: UserStateModel = {
-      ...this.user,
-      userAttributes: { ...this.user.userAttributes, ...attrs },
-    };
-    this.store.dispatch(new UserAction.Edit(user));
+  async processGetAutthenticationQuestionsResponse(
+    resp: string
+  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
+    const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
+      JSON.parse(resp)['GetAuthenticationQuestions']
+    );
+    if (
+      questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+        .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
+    ) {
+      const fulillmentKey =
+        questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
+          .GetAuthenticationQuestionsResult['a:ServiceBundleFulfillmentKey']
+          ._text;
+      // update indicative enrichment as success
+      await this.updateTransunionIndicativeEnrichment({
+        transunion: {
+          authenticated: false,
+          indicativeEnrichmentSuccess: true,
+          getAuthenticationQuestionsSuccess: true,
+          serviceBundleFulfillmentKey: fulillmentKey,
+        },
+      });
+      // now do the authentication
+      return questions;
+    } else {
+      return;
+    }
   }
 }

@@ -1,4 +1,7 @@
 # this is an auto generated file. This will be overwritten
+query Transunion($action: String!, $message: String!) {
+  transunion(action: $action, message: $message)
+}
 query GetAppData($id: ID!) {
   getAppData(id: $id) {
     id
@@ -33,11 +36,16 @@ query GetAppData($id: ID!) {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
       }
       equifax {
         authenticated
@@ -89,11 +97,16 @@ query ListAppDatas(
         onboarding {
           lastActive
           lastComplete
+          started
         }
       }
       agencies {
         transunion {
           authenticated
+          indicativeEnrichmentSuccess
+          getAuthenticationQuestionsSuccess
+          serviceBundleFulfillmentKey
+          currentRawQuestions
         }
         equifax {
           authenticated

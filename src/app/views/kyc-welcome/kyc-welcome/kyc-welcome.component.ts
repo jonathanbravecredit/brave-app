@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserAttributes } from '@shared/services/aws/api.service';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 
@@ -14,6 +14,7 @@ interface FlatForm {
   templateUrl: './kyc-welcome.component.html',
 })
 export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
+  stepID = 0;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -23,7 +24,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.kycService.activateStep(0);
+    this.kycService.activateStep(this.stepID);
   }
 
   goToNext(form: FormGroup): void {
@@ -36,9 +37,9 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
         dob: {
           ...this.formatAttributes(form, dob),
         },
-      } as UserAttributes;
+      } as UserAttributesInput;
       this.kycService.updateUserAttributes(attrs);
-      this.kycService.completeStep(0);
+      this.kycService.completeStep(this.stepID);
       this.router.navigate(['../address'], { relativeTo: this.route });
     }
   }

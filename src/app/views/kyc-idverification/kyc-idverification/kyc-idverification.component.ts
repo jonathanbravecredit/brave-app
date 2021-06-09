@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -10,20 +11,18 @@ export type KycIdverificationState = 'init' | 'sent' | 'error';
   selector: 'brave-kyc-idverification',
   templateUrl: './kyc-idverification.component.html',
 })
-export class KycIdverificationComponent
-  extends KycBaseComponent
-  implements OnInit {
+export class KycIdverificationComponent extends KycBaseComponent {
   @Input() state: KycIdverificationState = 'init';
+  stepID = 3;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private kycService: KycService
+    private kycService: KycService,
+    private syncService: SyncService
   ) {
     super();
   }
-
-  ngOnInit(): void {}
 
   resendCode(): void {
     // TODO resubmit code to backend
@@ -31,7 +30,7 @@ export class KycIdverificationComponent
   }
 
   goBack(): void {
-    this.kycService.inactivateStep(3);
+    this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../verify'], { relativeTo: this.route });
   }
 
@@ -39,7 +38,7 @@ export class KycIdverificationComponent
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
       // TODO submit code to backed
-      this.kycService.completeStep(3);
+      this.kycService.completeStep(this.stepID);
       // this.router.navigate(['../congratulations'], { relativeTo: this.route });
     }
   }

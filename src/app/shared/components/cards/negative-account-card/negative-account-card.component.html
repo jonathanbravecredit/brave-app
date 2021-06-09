@@ -1,0 +1,40 @@
+<span><p class="text-sm font-semibold">{{ creditorName }}</p></span>
+<div class="grid grid-cols-2 gap-4">
+  <span><p class="text-sm font-semibold">Last Reported: </p></span>
+  <span><p class="text-sm font-semibold">{{ lastReported }}</p></span>
+  <span><p class="text-xs text-dk-gray">{{ accountTypeDescription }}</p></span>
+  <span><p class="text-xs text-dk-gray text-opacity-50">{{ accountTypeDescriptionValue }}</p></span>
+  <span><p class="text-xs text-dk-gray">{{ disputeFlag }}</p></span>
+  <span><p class="text-xs text-dk-gray text-opacity-50">{{ disputeFlagValue }}</p></span>
+  <span><p class="text-xs text-dk-gray">{{ originalCreditor }}</p></span>
+  <span><p class="text-xs text-dk-gray text-opacity-50">{{ originalCreditorValue }}</p></span>
+</div>
+<brave-viewdetail-button class="w-100 mt-2" size="full">View Detail</brave-viewdetail-button>
+<div *ngIf="open$ | async as open" class="flex flex-col w-full">
+  <div class="flex">
+    <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-indigo-800" activeColor="bg-indigo-800" color="text-black">Ignore</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-indigo-800" activeColor="bg-indigo-800" color="text-white">Dispute</brave-filled-onlytext-button>
+  </div>
+  <div class="border-t border-blueGray-300"></div>
+  <span><p class="text-lg">Account Details</p></span>
+  <div class="grid grid-cols-2 gap-4">
+    <span><p class="text-xs text-dk-gray">Account Number</p></span>
+    <span><p class="text-xs text-dk-gray text-opacity-50">{{ accountNumber }}</p></span>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <span><p class="text-xs text-dk-gray">Type</p></span>
+    <span><p class="text-xs text-dk-gray text-opacity-50">{{ typeOfCollection }}</p></span>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <span><p class="text-xs text-dk-gray">Amount Past Due</p></span>
+    <span><p class="text-xs text-dk-gray text-opacity-50">{{ '$' + amountPastDue }}</p></span>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <span><p class="text-xs text-dk-gray">Date Opened</p></span>
+    <span><p class="text-xs text-dk-gray text-opacity-50">{{ dateOpened }}</p></span>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <span><p class="text-xs text-dk-gray">Date of Last Payment</p></span>
+    <span><p class="text-xs text-dk-gray text-opacity-50">{{ dateLastPayment }}</p></span>
+  </div>
+</div>

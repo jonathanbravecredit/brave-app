@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SigninComponent } from './signin/signin.component';
+import { SigninComponent } from './signin/signin/signin.component';
+import { SigninPureComponent } from './signin/signin-pure/signin-pure.component';
 import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
 import { SignupComponent } from '@views/signup/signup/signup.component';
 import { SignupPureComponent } from './signup/signup-pure/signup-pure.component';
@@ -23,7 +24,6 @@ import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestio
 import { KycKbaquestionsPureComponent } from './kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber/kyc-phonenumber.component';
 import { KycPhonenumberPureComponent } from './kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
-import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { KycSsnPureComponent } from './kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
 import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component';
 import { KycSsnFullPureComponent } from '@views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
@@ -33,6 +33,10 @@ import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/
 import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.component';
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
+import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
+import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
+import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
+import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 
 const views = [
   SignupComponent,
@@ -43,7 +47,9 @@ const views = [
   SignupThankyouComponent,
   SignupResendComponent,
   SigninComponent,
+  SigninPureComponent,
   SigninForgotComponent,
+  SigninRedirectComponent,
   KycBaseComponent,
   KycAddressComponent,
   KycAddressPureComponent,
@@ -55,7 +61,6 @@ const views = [
   KycKbaquestionsPureComponent,
   KycPhonenumberComponent,
   KycPhonenumberPureComponent,
-  KycSsnComponent,
   KycSsnPureComponent,
   KycSsnFullComponent,
   KycSsnFullPureComponent,
@@ -65,13 +70,14 @@ const views = [
   KycWelcomebackPureComponent,
   CompliancePrivacyComponent,
   ComplianceTosComponent,
+  DashboardInitComponent,
+  NegativeAccountInitialComponent
 ];
 
-// const services = [
-// ]
+const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views],
+  declarations: [...views, ...pipes],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -79,7 +85,7 @@ const views = [
     SharedComponentsModule,
     RouterModule,
   ],
-  exports: [...views],
+  exports: [...views, ...pipes],
   providers: [],
 })
 export class ViewsModule {}

@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import * as UserActions from './user.actions';
 import { UserStateModel } from '@store/user/user.model';
+import { OnboardingState } from '@store/onboarding';
 
 @State<UserStateModel>({
   name: 'user',
   defaults: {
-    __typename: 'User',
+    id: '',
   },
+  children: [OnboardingState],
 })
 @Injectable()
 export class UserState {
@@ -33,6 +35,20 @@ export class UserState {
     const payload = new UserStateModel();
     ctx.patchState({
       ...payload,
+    });
+  }
+
+  @Action(UserActions.UpdateAttributes)
+  updateAttributes(
+    ctx: StateContext<UserStateModel>,
+    { payload }: UserActions.UpdateAttributes
+  ): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      userAttributes: {
+        ...state.userAttributes,
+        ...payload,
+      },
     });
   }
 }

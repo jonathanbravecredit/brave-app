@@ -10,6 +10,7 @@ projects:
         codeGenTarget: angular
         generatedFileName: src/app/shared/services/aws/api.service.ts
         docsFilePath: src/graphql
+        maxDepth: 10
 extensions:
   amplify:
     version: 3
