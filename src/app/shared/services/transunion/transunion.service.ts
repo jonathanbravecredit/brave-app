@@ -99,6 +99,7 @@ export class TransunionService {
           LastName: attrs.name?.last || '',
           MiddleName: attrs.name?.middle || '',
         },
+        PhoneNumber: attrs.phone?.primary || '',
         Ssn: ssn || '',
       },
       ServiceBundleCode: 'CC2BraveCreditAuthentication',

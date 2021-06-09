@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
+import * as parser from 'fast-xml-parser';
 import * as OnboardingActions from '@store/onboarding/onboarding.actions';
 import * as UserActions from '@store/user/user.actions';
 import * as AgenciesActions from '@store/agencies/agencies.actions';
@@ -12,15 +13,30 @@ import {
 } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { state } from '@angular/animations';
 import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
+import {
+  ITransunionKBAAnswer,
+  ITransunionKBAQuestion,
+  ITransunionKBAQuestions,
+} from '@shared/interfaces/tu-kba-questions.interface';
 
 export const enum KYCResponse {
   Failed = 'failed',
   Success = 'success',
+}
+
+export const enum OTPQuestion {
+  FullText = 'Please select your preferred method of Authentication?(Standard text message and voice rates apply)*</FullQuestionText',
+  PartialOne = 'preferred method of Authentication',
+  PartialTwo = 'Standard text message and voice rates apply',
+}
+
+export const enum OTPReponse {
+  FullText = 'Deliver passcode via Text Message',
+  PartialOne = 'via Text Message',
 }
 
 @Injectable({
@@ -186,41 +202,6 @@ export class KycService {
   }
 
   /**
-   * Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param {string} questions the string of xml questions returned by Transunion or other agency
-   */
-  updateCurrentRawQuestions(questions: string): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunionQuestions({
-        currentRawQuestions: questions,
-      })
-    );
-  }
-
-  /**
-   * (Synchronous) Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param {string} questions the string of xml questions returned by Transunion or other agency
-   */
-  async updateCurrentRawQuestionsAsync(
-    questions: string
-  ): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunionQuestions({
-            currentRawQuestions: questions,
-          })
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
-  }
-
-  /**
    * Send the indicative enrichment message to the Transunion backend and await a response
    * @param {UpdateAppDataInput} data AppData state
    * @returns
@@ -370,7 +351,7 @@ export class KycService {
    */
   async getGetAuthenticationQuestionsResults(
     data: UpdateAppDataInput
-  ): Promise<KYCResponse> {
+  ): Promise<KYCResponse | string> {
     let questionResponse;
     let questions;
     let xml;
@@ -390,10 +371,96 @@ export class KycService {
           .GetAuthenticationQuestionsResult['a:Questions'];
       if (!xml?._text) return KYCResponse.Failed;
       await this.updateCurrentRawQuestionsAsync(xml?._text || '');
-      return KYCResponse.Success;
+      return xml?._text;
     } catch {
       return KYCResponse.Failed;
     }
+  }
+
+  /**
+   * This parses the xml string and returns it as the TU question format
+   * @param {string} xml xml string in the TU question schema
+   * @returns
+   */
+  parseCurrentRawQuestions(xml: string): ITransunionKBAQuestions {
+    const questions: ITransunionKBAQuestions = parser.parse(xml);
+    return questions;
+  }
+
+  /**
+   * Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  updateCurrentRawQuestions(questions: string): void {
+    this.store.dispatch(
+      new AgenciesActions.EditTransunionQuestions({
+        currentRawQuestions: questions,
+      })
+    );
+  }
+
+  /**
+   * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateCurrentRawQuestionsAsync(
+    questions: string
+  ): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(
+          new AgenciesActions.EditTransunionQuestions({
+            currentRawQuestions: questions,
+          })
+        )
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
+  }
+
+  /**
+   * Runs a series of tests to see if the question is a OTP
+   * @param {ITransunionKBAQuestions} questions
+   * @returns
+   */
+  getOTPQuestion(
+    questions: ITransunionKBAQuestions
+  ): ITransunionKBAQuestion | undefined {
+    const series: ITransunionKBAQuestion[] =
+      questions.ChallengeConfigurationType.MultiChoiceQuestion;
+    return series.find(
+      (q) =>
+        q.FullQuestionText === OTPQuestion.FullText ||
+        q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
+        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
+    );
+  }
+
+  /**
+   * Runs a series of test to find the 'Send text message' answer for OTP
+   * @param {ITransunionKBAQuestion} question
+   * @returns
+   */
+  getOTPSendTextAnswer(
+    question: ITransunionKBAQuestion
+  ): IVerifyAuthenticationAnswer {
+    const answer: ITransunionKBAAnswer | undefined = question.AnswerChoice.find(
+      (c) =>
+        c.AnswerChoiceText === OTPReponse.FullText ||
+        c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0
+    );
+    return {
+      VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+        QuestionId: question?.QuestionId,
+        SelectedAnswerChoice: {
+          AnswerChoiceId: answer?.AnswerChoiceId || '',
+        },
+      },
+    };
   }
 
   /**

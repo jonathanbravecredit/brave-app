@@ -11,7 +11,6 @@ import {
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { take } from 'rxjs/operators';
-import * as parser from 'fast-xml-parser';
 import { KycKbaquestionsPureComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
@@ -30,7 +29,7 @@ export class KycKbaquestionsComponent implements OnInit {
     | ITransunionKBAQuestion
     | ITransunionKBAAnswer
     | undefined
-  )[] = []; // TODO replace with KBA answers interface
+  )[] = [];
   numberOfQuestions: number = 0;
   stepID = 3;
 
@@ -47,7 +46,7 @@ export class KycKbaquestionsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((agencies: AgenciesStateModel) => {
         if (!agencies.transunion?.currentRawQuestions) return;
-        const xml: ITransunionKBAQuestions = parser.parse(
+        const xml: ITransunionKBAQuestions = this.kycService.parseCurrentRawQuestions(
           agencies.transunion?.currentRawQuestions
         );
         this.questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;

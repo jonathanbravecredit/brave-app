@@ -45,15 +45,21 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
           lastfour: lastFour,
         },
       } as UserAttributesInput;
-      const data = await this.kycService.updateUserAttributesAsync(attrs);
-      const full = await this.kycService.getIndicativeEnrichmentResults(data);
-      if (full === KYCResponse.Failed) {
+      try {
+        const data = await this.kycService.updateUserAttributesAsync(attrs);
+        const full = await this.kycService.getIndicativeEnrichmentResults(data);
+        if (full === KYCResponse.Failed) {
+          this.router.navigate(['../identityfull'], { relativeTo: this.route });
+        } else {
+          const newAttrs = {
+            ssn: { ...attrs.ssn, full },
+          } as UserAttributesInput;
+          this.kycService.updateUserAttributesAsync(newAttrs);
+          this.kycService.completeStep(this.stepID);
+          this.router.navigate(['../verify'], { relativeTo: this.route });
+        }
+      } catch {
         this.router.navigate(['../identityfull'], { relativeTo: this.route });
-      } else {
-        const newAttrs = { ssn: { ...attrs.ssn, full } } as UserAttributesInput;
-        this.kycService.updateUserAttributesAsync(newAttrs);
-        this.kycService.completeStep(this.stepID);
-        this.router.navigate(['../verify'], { relativeTo: this.route });
       }
     }
   }
