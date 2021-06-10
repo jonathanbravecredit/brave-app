@@ -61,19 +61,28 @@ export class KycPhonenumberComponent
           const clean = authenticated
             ? JSON.parse(authenticated)
             : ({} as IVerifyAuthenticationResponseSuccess);
-          const body =
-            clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
-          const success =
-            body['VerifyAuthenticationQuestionsResponse'][
-              'VerifyAuthenticationQuestionsResult'
-            ]['a:ResponseType'].toLowerCase() === 'success';
+
+          const verificationQuestions = clean
+            ? clean['VerifyAuthenticationQuestions']
+            : null;
+          const envelope = verificationQuestions
+            ? verificationQuestions['s:Envelope']
+            : null;
+          const body = envelope ? envelope['s:Body'] : null;
+          const response = body
+            ? body['VerifyAuthenticationQuestionsResponse']
+            : null;
+          const result = response
+            ? response['VerifyAuthenticationQuestionsResult']
+            : null;
+          const type = result ? result['a:ResponseType'] : null;
+          const success = type ? type.toLowerCase() === 'success' : false;
+
           if (success) {
             // need to save the new questions about passcode
-            const rawAuthDetails =
-              body['VerifyAuthenticationQuestionsResponse'][
-                'VerifyAuthenticationQuestionsResult'
-              ]['a:AuthenticationDetails'];
-
+            const rawAuthDetails = result
+              ? result['a:AuthenticationDetails']
+              : null;
             // TODO the answer xml is the same for auth details as it is for
             //   KBA questions...only thing different is AuthenticationDetails above
             //   Remove Auth details from state and remove methods from KYC services

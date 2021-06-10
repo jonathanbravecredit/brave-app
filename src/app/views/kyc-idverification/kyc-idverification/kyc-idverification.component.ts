@@ -70,12 +70,22 @@ export class KycIdverificationComponent extends KycBaseComponent {
           const clean = authenticated
             ? JSON.parse(authenticated)
             : ({} as IVerifyAuthenticationResponseSuccess);
-          const body =
-            clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
-          const success =
-            body['VerifyAuthenticationQuestionsResponse'][
-              'VerifyAuthenticationQuestionsResult'
-            ]['a:ResponseType'].toLowerCase() === 'success';
+
+          const verificationQuestions = clean
+            ? clean['VerifyAuthenticationQuestions']
+            : null;
+          const envelope = verificationQuestions
+            ? verificationQuestions['s:Envelope']
+            : null;
+          const body = envelope ? envelope['s:Body'] : null;
+          const response = body
+            ? body['VerifyAuthenticationQuestionsResponse']
+            : null;
+          const result = response
+            ? response['VerifyAuthenticationQuestionsResult']
+            : null;
+          const type = result ? result['a:ResponseType'] : null;
+          const success = type ? type.toLowerCase() === 'success' : false;
 
           if (success) {
             this.kycService.completeStep(this.stepID);

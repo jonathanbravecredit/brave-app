@@ -18,12 +18,10 @@ import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import {
-  ITransunionKBAAnswer,
   ITransunionKBAChallengeAnswer,
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
-import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 
 export const enum KYCResponse {
   Failed = 'failed',
@@ -81,7 +79,7 @@ export class KycService {
    * Then updates the state
    * @param {number} step the progress step ID
    */
-  async inactivateStep(step: number): Promise<void> {
+  inactivateStep(step: number): void {
     this.store
       .dispatch(new OnboardingActions.UpdateLastActive(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
@@ -240,10 +238,14 @@ export class KycService {
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
       JSON.parse(resp)['IndicativeEnrichmentResults']
     );
-    if (
-      enrichment['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
-        .IndicativeEnrichmentResult['a:ResponseType']._text === 'Success'
-    ) {
+    const envelope = enrichment['s:Envelope'];
+    const body = envelope ? envelope['s:Body'] : null;
+    const response = body ? body['IndicativeEnrichmentResponse'] : null;
+    const result = response ? response['IndicativeEnrichmentResult'] : null;
+    const type = result ? result['a:ResponseType'] : null;
+    const text = type ? type['_text'] : null;
+
+    if (text === 'Success') {
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
@@ -251,7 +253,6 @@ export class KycService {
           indicativeEnrichmentSuccess: true,
         },
       });
-      // now do the authentication
       return enrichment;
     } else {
       return;
@@ -268,7 +269,6 @@ export class KycService {
   ): Promise<KYCResponse | string> {
     let enrichmentResponse;
     let enrichment;
-    let ssn;
 
     try {
       enrichmentResponse = await this.sendIndicativeEnrichment(data);
@@ -278,11 +278,14 @@ export class KycService {
       );
       if (!enrichment) return KYCResponse.Failed;
       // parse ssn for getting the authentication questions (NEVER STORE IN DB!!!);
-      ssn =
-        enrichment?.['s:Envelope']['s:Body'].IndicativeEnrichmentResponse
-          .IndicativeEnrichmentResult['a:SSN'];
+      const envelope = enrichment['s:Envelope'];
+      const body = envelope ? envelope['s:Body'] : null;
+      const response = body ? body['IndicativeEnrichmentResponse'] : null;
+      const result = response ? response['IndicativeEnrichmentResult'] : null;
+      const ssn = result ? result['a:SSN'] : null;
+      const text = ssn ? ssn['_text'] : '';
 
-      return !ssn?._text ? KYCResponse.Failed : ssn?._text;
+      return text ? KYCResponse.Failed : text;
     } catch {
       return KYCResponse.Failed;
     }
@@ -326,14 +329,19 @@ export class KycService {
     const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
       JSON.parse(resp)['GetAuthenticationQuestions']
     );
-    if (
-      questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
-        .GetAuthenticationQuestionsResult['a:ResponseType']._text === 'Success'
-    ) {
-      const fulillmentKey =
-        questions['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
-          .GetAuthenticationQuestionsResult['a:ServiceBundleFulfillmentKey']
-          ._text;
+    const envelope = questions['s:Envelope'];
+    const body = envelope ? envelope['s:Body'] : null;
+    const response = body ? body['GetAuthenticationQuestionsResponse'] : null;
+    const result = response
+      ? response['GetAuthenticationQuestionsResult']
+      : null;
+    const type = result ? result['a:ServiceBundleFulfillmentKey'] : null;
+    const text = type ? type['_text'] : null;
+
+    if (text === 'Success') {
+      const key = result ? result['a:ServiceBundleFulfillmentKey'] : null;
+      const keyText = key ? key['_text'] : '';
+      const fulillmentKey = keyText;
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
@@ -361,7 +369,6 @@ export class KycService {
   ): Promise<KYCResponse | string> {
     let questionResponse;
     let questions;
-    let xml;
     const ssn = data.user?.userAttributes?.ssn?.full;
     if (!ssn) return KYCResponse.Failed;
     // GetAuthorizationQuestions response from TU service
@@ -373,12 +380,17 @@ export class KycService {
       );
       if (!questions) return KYCResponse.Failed;
       // Sucess...parse questions and pass to question component
-      xml =
-        questions?.['s:Envelope']['s:Body'].GetAuthenticationQuestionsResponse
-          .GetAuthenticationQuestionsResult['a:Questions'];
-      if (!xml?._text) return KYCResponse.Failed;
-      await this.updateCurrentRawQuestionsAsync(xml?._text || '');
-      return xml?._text;
+      const envelope = questions['s:Envelope'];
+      const body = envelope ? envelope['s:Body'] : null;
+      const response = body ? body['GetAuthenticationQuestionsResponse'] : null;
+      const result = response
+        ? response['GetAuthenticationQuestionsResult']
+        : null;
+      const questionXml = result ? result['a:Questions'] : null;
+      const xmlText = questionXml ? questionXml['_text'] : null;
+      if (!xmlText) return KYCResponse.Failed;
+      await this.updateCurrentRawQuestionsAsync(xmlText || '');
+      return xmlText;
     } catch {
       return KYCResponse.Failed;
     }
