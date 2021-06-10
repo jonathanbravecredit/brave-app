@@ -50,19 +50,24 @@ export class KycPhonenumberComponent
         const questions = this.kycService.parseCurrentRawQuestions(xmlString);
         const otpQuestion = this.kycService.getOTPQuestion(questions);
         if (otpQuestion) {
-          // get the OTP  send text answer
+          // get the OTP  send text answer...TODO refactor this section (used in 3 places0)
           const otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion);
           const { appData: state } = this.store.snapshot();
-          const authenticated: IVerifyAuthenticationResponseSuccess = await this.kycService.sendVerifyAuthenticationQuestions(
+          const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(
             state,
             [otpAnswer]
           );
+
+          const clean = authenticated
+            ? JSON.parse(authenticated)
+            : ({} as IVerifyAuthenticationResponseSuccess);
+          const body =
+            clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
           const success =
-            authenticated.VerifyAuthenticationQuestions['s:Envelope'][
-              's:Body'
-            ].VerifyAuthenticationQuestionsResponse.VerifyAuthenticationQuestionsResult[
-              'a:ResponseType'
-            ].toLowerCase() === 'success';
+            body['VerifyAuthenticationQuestionsResponse'][
+              'VerifyAuthenticationQuestionsResult'
+            ]['a:ResponseType'].toLowerCase() === 'success';
+
           if (success) {
             this.kycService.completeStep(this.stepID);
             this.router.navigate(['../code'], {
@@ -74,7 +79,8 @@ export class KycPhonenumberComponent
         } else {
           this.router.navigate(['../kba'], { relativeTo: this.route });
         }
-      } catch {
+      } catch (err) {
+        console.log('error ===> ', err);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }

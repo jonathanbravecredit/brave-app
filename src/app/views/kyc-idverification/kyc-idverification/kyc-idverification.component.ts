@@ -45,24 +45,36 @@ export class KycIdverificationComponent extends KycBaseComponent {
         const xmlString = await this.kycService.getGetAuthenticationQuestionsResults(
           state
         );
+        console.log('here 1');
         const questions = this.kycService.parseCurrentRawQuestions(xmlString);
+        console.log('questions', questions);
         const codeQuestion = this.kycService.getPassCodeQuestion(questions);
+        console.log('here 2');
         if (codeQuestion) {
           // get the OTP  send text answer
           const codeAnswer = this.kycService.getPassCodeAnswer(
             codeQuestion,
             code
           );
-          const authenticated: IVerifyAuthenticationResponseSuccess = await this.kycService.sendVerifyAuthenticationQuestions(
+          const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(
             state,
             [codeAnswer]
           );
+          console.log('here 3');
+          //clean up the json object coming back
+          const clean = authenticated
+            ? JSON.parse(authenticated)
+            : ({} as IVerifyAuthenticationResponseSuccess);
+          console.log('here 4');
+          const body =
+            clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
+          console.log('here 5');
           const success =
-            authenticated.VerifyAuthenticationQuestions['s:Envelope'][
-              's:Body'
-            ].VerifyAuthenticationQuestionsResponse.VerifyAuthenticationQuestionsResult[
-              'a:ResponseType'
-            ].toLowerCase() === 'success';
+            body['VerifyAuthenticationQuestionsResponse'][
+              'VerifyAuthenticationQuestionsResult'
+            ]['a:ResponseType'].toLowerCase() === 'success';
+
+          console.log('here 6');
           if (success) {
             this.kycService.completeStep(this.stepID);
             this.router.navigate(['../congratulations'], {
@@ -71,8 +83,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
           } else {
             this.router.navigate(['../error'], { relativeTo: this.route });
           }
+        } else {
+          // code questions not coming back
         }
-      } catch {
+      } catch (err) {
+        console.log('error ===> ', err);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }

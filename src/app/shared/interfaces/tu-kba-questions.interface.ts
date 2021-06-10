@@ -3,7 +3,7 @@ export interface ITransunionKBAQuestions {
     RulesApp: string;
     CorrectAnswersNeeded: string;
     AnswerAttemptsAllowed: string;
-    MultiChoiceQuestion: ITransunionKBAQuestion[];
+    MultiChoiceQuestion: ITransunionKBAQuestion[] | ITransunionKBAQuestion;
     ApplicantChallengeId: string;
     ApplicantId: string;
   };

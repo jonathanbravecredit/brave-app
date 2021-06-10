@@ -37,6 +37,7 @@ import { ComplianceTosComponent } from './compliance-tos/compliance-tos.componen
 import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
+import { KycErrorComponent } from './kyc-error/kyc-error.component';
 
 const views = [
   SignupComponent,
@@ -69,9 +70,10 @@ const views = [
   KycWelcomePureComponent,
   KycWelcomebackComponent,
   KycWelcomebackPureComponent,
+  KycErrorComponent,
   CompliancePrivacyComponent,
   ComplianceTosComponent,
-  DashboardInitComponent
+  DashboardInitComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];

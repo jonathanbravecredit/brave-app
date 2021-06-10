@@ -22,6 +22,7 @@ import {
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
+import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 
 export const enum KYCResponse {
   Failed = 'failed',
@@ -435,14 +436,22 @@ export class KycService {
   getOTPQuestion(
     questions: ITransunionKBAQuestions
   ): ITransunionKBAQuestion | undefined {
-    const series: ITransunionKBAQuestion[] =
+    const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
       questions.ChallengeConfigurationType.MultiChoiceQuestion;
-    return series.find(
-      (q) =>
-        q.FullQuestionText === OTPQuestion.FullText ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
-    );
+    if (series instanceof Array) {
+      return series.find(
+        (q) =>
+          q.FullQuestionText === OTPQuestion.FullText ||
+          q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
+          q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
+      );
+    } else {
+      return series.FullQuestionText === OTPQuestion.FullText ||
+        series.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
+        series.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
+        ? series
+        : undefined;
+    }
   }
 
   /**
@@ -476,13 +485,20 @@ export class KycService {
   getPassCodeQuestion(
     questions: ITransunionKBAQuestions
   ): ITransunionKBAQuestion | undefined {
-    const series: ITransunionKBAQuestion[] =
+    const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
       questions.ChallengeConfigurationType.MultiChoiceQuestion;
-    return series.find(
-      (q) =>
-        q.FullQuestionText === PassCodeQuestion.FullText ||
-        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
-    );
+    if (series instanceof Array) {
+      return series.find(
+        (q) =>
+          q.FullQuestionText === PassCodeQuestion.FullText ||
+          q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
+      );
+    } else {
+      return series.FullQuestionText === PassCodeQuestion.FullText ||
+        series.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
+        ? series
+        : undefined;
+    }
   }
 
   /**
@@ -519,7 +535,7 @@ export class KycService {
   async sendVerifyAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[]
-  ): Promise<any | undefined> {
+  ): Promise<string | undefined> {
     if (!answers.length) return;
     try {
       const msg = this.transunion.createVerifyAuthenticationQuestionsPayload(
