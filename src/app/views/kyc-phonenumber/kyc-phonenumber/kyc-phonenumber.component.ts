@@ -67,9 +67,19 @@ export class KycPhonenumberComponent
             body['VerifyAuthenticationQuestionsResponse'][
               'VerifyAuthenticationQuestionsResult'
             ]['a:ResponseType'].toLowerCase() === 'success';
-
           if (success) {
-            this.kycService.completeStep(this.stepID);
+            // need to save the new questions about passcode
+            const rawAuthDetails =
+              body['VerifyAuthenticationQuestionsResponse'][
+                'VerifyAuthenticationQuestionsResult'
+              ]['a:AuthenticationDetails'];
+
+            // TODO the answer xml is the same for auth details as it is for
+            //   KBA questions...only thing different is AuthenticationDetails above
+            //   Remove Auth details from state and remove methods from KYC services
+            await this.kycService.updateCurrentRawQuestionsAsync(
+              rawAuthDetails
+            );
             this.router.navigate(['../code'], {
               relativeTo: this.route,
             });

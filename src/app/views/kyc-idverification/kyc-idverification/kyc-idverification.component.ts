@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { SyncService } from '@shared/services/sync/sync.service';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
+import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -41,15 +41,21 @@ export class KycIdverificationComponent extends KycBaseComponent {
       const { code } = this.formatAttributes(form, codeMap);
       // TODO submit code to backed
       try {
-        const { appData: state } = this.store.snapshot();
-        const xmlString = await this.kycService.getGetAuthenticationQuestionsResults(
-          state
+        const { appData } = this.store.snapshot();
+        const state: UpdateAppDataInput = appData;
+        // pulled the saved questions from state (saved in kyc-phonenumber)
+        const questions = this.kycService.parseCurrentRawAuthDetails(
+          state.agencies?.transunion?.currentRawQuestions || ''
         );
-        console.log('here 1');
-        const questions = this.kycService.parseCurrentRawQuestions(xmlString);
-        console.log('questions', questions);
-        const codeQuestion = this.kycService.getPassCodeQuestion(questions);
-        console.log('here 2');
+        const configuration =
+          questions.VerifyChallengeAnswersResponseSuccess
+            .ChallengeConfiguration;
+        const challenge = {
+          ChallengeConfigurationType: {
+            ...configuration,
+          },
+        };
+        const codeQuestion = this.kycService.getPassCodeQuestion(challenge);
         if (codeQuestion) {
           // get the OTP  send text answer
           const codeAnswer = this.kycService.getPassCodeAnswer(
@@ -60,21 +66,17 @@ export class KycIdverificationComponent extends KycBaseComponent {
             state,
             [codeAnswer]
           );
-          console.log('here 3');
           //clean up the json object coming back
           const clean = authenticated
             ? JSON.parse(authenticated)
             : ({} as IVerifyAuthenticationResponseSuccess);
-          console.log('here 4');
           const body =
             clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
-          console.log('here 5');
           const success =
             body['VerifyAuthenticationQuestionsResponse'][
               'VerifyAuthenticationQuestionsResult'
             ]['a:ResponseType'].toLowerCase() === 'success';
 
-          console.log('here 6');
           if (success) {
             this.kycService.completeStep(this.stepID);
             this.router.navigate(['../congratulations'], {
@@ -87,7 +89,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
           // code questions not coming back
         }
       } catch (err) {
-        console.log('error ===> ', err);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }

@@ -11,4 +11,9 @@ export class AgenciesSelectors {
   static getTransunionRawQuestions(state: AgenciesStateModel): string {
     return state.transunion?.currentRawQuestions || '';
   }
+
+  @Selector([AgenciesStateModel])
+  static getTransunionRawAuthDetails(state: AgenciesStateModel): string {
+    return state.transunion?.currentRawAuthDetails || '';
+  }
 }

@@ -19,6 +19,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import {
   ITransunionKBAAnswer,
+  ITransunionKBAChallengeAnswer,
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
@@ -389,7 +390,11 @@ export class KycService {
    * @returns
    */
   parseCurrentRawQuestions(xml: string): ITransunionKBAQuestions {
-    const questions: ITransunionKBAQuestions = parser.parse(xml);
+    const clean = xml
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&#xD;/g, '');
+    const questions: ITransunionKBAQuestions = parser.parse(clean);
     return questions;
   }
 
@@ -429,6 +434,55 @@ export class KycService {
   }
 
   /**
+   * This parses the xml string and returns it as the TU question format
+   * @param {string} xml xml string in the TU question schema
+   * @returns
+   */
+  parseCurrentRawAuthDetails(xml: string): ITransunionKBAChallengeAnswer {
+    const clean = xml
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&#xD;/g, '');
+    const questions: ITransunionKBAChallengeAnswer = parser.parse(clean);
+    return questions;
+  }
+
+  /**
+   * Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  updateCurrentRawAuthDetails(questions: string): void {
+    this.store.dispatch(
+      new AgenciesActions.EditTransunionAuthDetails({
+        currentRawAuthDetails: questions,
+      })
+    );
+  }
+
+  /**
+   * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateCurrentRawAuthDetailsAsync(
+    questions: string
+  ): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(
+          new AgenciesActions.EditTransunionAuthDetails({
+            currentRawAuthDetails: questions,
+          })
+        )
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
+  }
+
+  /**
    * Runs a series of tests to see if the question is a OTP
    * @param {ITransunionKBAQuestions} questions
    * @returns
@@ -437,21 +491,15 @@ export class KycService {
     questions: ITransunionKBAQuestions
   ): ITransunionKBAQuestion | undefined {
     const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
-      questions.ChallengeConfigurationType.MultiChoiceQuestion;
-    if (series instanceof Array) {
-      return series.find(
-        (q) =>
-          q.FullQuestionText === OTPQuestion.FullText ||
-          q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
-          q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
-      );
-    } else {
-      return series.FullQuestionText === OTPQuestion.FullText ||
-        series.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
-        series.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
-        ? series
-        : undefined;
-    }
+      questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
+        ? questions.ChallengeConfigurationType.MultiChoiceQuestion
+        : new Array(questions.ChallengeConfigurationType.MultiChoiceQuestion);
+    return series.find(
+      (q) =>
+        q.FullQuestionText === OTPQuestion.FullText ||
+        q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
+        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
+    );
   }
 
   /**
@@ -462,7 +510,12 @@ export class KycService {
   getOTPSendTextAnswer(
     question: ITransunionKBAQuestion
   ): IVerifyAuthenticationAnswer {
-    const answer: ITransunionKBAAnswer | undefined = question.AnswerChoice.find(
+    const answerChoice =
+      question.AnswerChoice instanceof Array
+        ? question.AnswerChoice
+        : new Array(question.AnswerChoice);
+
+    let answer = answerChoice.find(
       (c) =>
         c.AnswerChoiceText === OTPReponse.FullText ||
         c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0
@@ -485,20 +538,15 @@ export class KycService {
   getPassCodeQuestion(
     questions: ITransunionKBAQuestions
   ): ITransunionKBAQuestion | undefined {
-    const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
-      questions.ChallengeConfigurationType.MultiChoiceQuestion;
-    if (series instanceof Array) {
-      return series.find(
-        (q) =>
-          q.FullQuestionText === PassCodeQuestion.FullText ||
-          q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
-      );
-    } else {
-      return series.FullQuestionText === PassCodeQuestion.FullText ||
-        series.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
-        ? series
-        : undefined;
-    }
+    const series: ITransunionKBAQuestion[] =
+      questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
+        ? questions.ChallengeConfigurationType.MultiChoiceQuestion
+        : new Array(questions.ChallengeConfigurationType.MultiChoiceQuestion);
+    return series.find(
+      (q) =>
+        q.FullQuestionText === PassCodeQuestion.FullText ||
+        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
+    );
   }
 
   /**
@@ -510,10 +558,14 @@ export class KycService {
     question: ITransunionKBAQuestion,
     input: string
   ): IVerifyAuthenticationAnswer {
-    const answer: ITransunionKBAAnswer | undefined = question.AnswerChoice.find(
+    const answerChoice =
+      question.AnswerChoice instanceof Array
+        ? question.AnswerChoice
+        : new Array(question.AnswerChoice);
+    const answer = answerChoice.find(
       (c) =>
-        c.AnswerChoiceText === OTPReponse.FullText ||
-        c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0
+        c.AnswerChoiceText === PassCodeQuestion.FullText ||
+        c.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0
     );
     return {
       VerifyChallengeAnswersRequestMultiChoiceQuestion: {
