@@ -6,6 +6,7 @@ import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
 import { UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { returnNestedObject } from '@shared/utils/utils';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -44,12 +45,14 @@ export class KycIdverificationComponent extends KycBaseComponent {
         const { appData } = this.store.snapshot();
         const state: UpdateAppDataInput = appData;
         // pulled the saved questions from state (saved in kyc-phonenumber)
+        const rawQuestions = returnNestedObject(state, 'currentRawQuestions');
         const questions = this.kycService.parseCurrentRawAuthDetails(
-          state.agencies?.transunion?.currentRawQuestions || ''
+          rawQuestions || ''
         );
-        const configuration =
-          questions.VerifyChallengeAnswersResponseSuccess
-            .ChallengeConfiguration;
+        const configuration = returnNestedObject(
+          questions,
+          'ChallengeConfiguration'
+        );
         const challenge = {
           ChallengeConfigurationType: {
             ...configuration,
@@ -71,23 +74,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
             ? JSON.parse(authenticated)
             : ({} as IVerifyAuthenticationResponseSuccess);
 
-          const verificationQuestions = clean
-            ? clean['VerifyAuthenticationQuestions']
-            : null;
-          const envelope = verificationQuestions
-            ? verificationQuestions['s:Envelope']
-            : null;
-          const body = envelope ? envelope['s:Body'] : null;
-          const response = body
-            ? body['VerifyAuthenticationQuestionsResponse']
-            : null;
-          const result = response
-            ? response['VerifyAuthenticationQuestionsResult']
-            : null;
-          const type = result ? result['a:ResponseType'] : null;
-          const success = type ? type.toLowerCase() === 'success' : false;
-
-          if (success) {
+          const responseType = returnNestedObject(clean, 'a:ResponseType');
+          if (responseType.toLowerCase() === 'success') {
             this.kycService.completeStep(this.stepID);
             this.router.navigate(['../congratulations'], {
               relativeTo: this.route,

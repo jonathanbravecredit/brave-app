@@ -22,6 +22,7 @@ import {
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
+import { returnNestedObject } from '@shared/utils/utils';
 
 export const enum KYCResponse {
   Failed = 'failed',
@@ -238,14 +239,10 @@ export class KycService {
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
       JSON.parse(resp)['IndicativeEnrichmentResults']
     );
-    const envelope = enrichment['s:Envelope'];
-    const body = envelope ? envelope['s:Body'] : null;
-    const response = body ? body['IndicativeEnrichmentResponse'] : null;
-    const result = response ? response['IndicativeEnrichmentResult'] : null;
-    const type = result ? result['a:ResponseType'] : null;
-    const text = type ? type['_text'] : null;
-
-    if (text === 'Success') {
+    const responseType = returnNestedObject(enrichment, 'a:ResponseType')[
+      '_text'
+    ];
+    if (responseType === 'Success') {
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
@@ -277,15 +274,8 @@ export class KycService {
         enrichmentResponse
       );
       if (!enrichment) return KYCResponse.Failed;
-      // parse ssn for getting the authentication questions (NEVER STORE IN DB!!!);
-      const envelope = enrichment['s:Envelope'];
-      const body = envelope ? envelope['s:Body'] : null;
-      const response = body ? body['IndicativeEnrichmentResponse'] : null;
-      const result = response ? response['IndicativeEnrichmentResult'] : null;
-      const ssn = result ? result['a:SSN'] : null;
-      const text = ssn ? ssn['_text'] : '';
-
-      return text ? KYCResponse.Failed : text;
+      const ssn = returnNestedObject(enrichment, 'a:SSN')['_text'];
+      return ssn ? KYCResponse.Failed : ssn;
     } catch {
       return KYCResponse.Failed;
     }
@@ -329,26 +319,21 @@ export class KycService {
     const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
       JSON.parse(resp)['GetAuthenticationQuestions']
     );
-    const envelope = questions['s:Envelope'];
-    const body = envelope ? envelope['s:Body'] : null;
-    const response = body ? body['GetAuthenticationQuestionsResponse'] : null;
-    const result = response
-      ? response['GetAuthenticationQuestionsResult']
-      : null;
-    const type = result ? result['a:ServiceBundleFulfillmentKey'] : null;
-    const text = type ? type['_text'] : null;
-
-    if (text === 'Success') {
-      const key = result ? result['a:ServiceBundleFulfillmentKey'] : null;
-      const keyText = key ? key['_text'] : '';
-      const fulillmentKey = keyText;
+    const responseType = returnNestedObject(questions, 'a:ResponseType')[
+      '_text'
+    ];
+    if (responseType === 'Success') {
+      const fulfillmentKey = returnNestedObject(
+        questions,
+        'a:ServiceBundleFulfillmentKey'
+      )['_text'];
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           authenticated: false,
           indicativeEnrichmentSuccess: true,
           getAuthenticationQuestionsSuccess: true,
-          serviceBundleFulfillmentKey: fulillmentKey,
+          serviceBundleFulfillmentKey: fulfillmentKey,
         },
       });
       // now do the authentication
@@ -380,13 +365,7 @@ export class KycService {
       );
       if (!questions) return KYCResponse.Failed;
       // Sucess...parse questions and pass to question component
-      const envelope = questions['s:Envelope'];
-      const body = envelope ? envelope['s:Body'] : null;
-      const response = body ? body['GetAuthenticationQuestionsResponse'] : null;
-      const result = response
-        ? response['GetAuthenticationQuestionsResult']
-        : null;
-      const questionXml = result ? result['a:Questions'] : null;
+      const questionXml = returnNestedObject(questions, 'a:Questions');
       const xmlText = questionXml ? questionXml['_text'] : null;
       if (!xmlText) return KYCResponse.Failed;
       await this.updateCurrentRawQuestionsAsync(xmlText || '');
