@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'brave-negative-account-card',
@@ -8,6 +8,8 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./negative-account-card.component.css']
 })
 export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
+  private $isIgnored = new BehaviorSubject(false);
+  isIgnored = this.$isIgnored.asObservable();
   @Input() creditorName: string = '';
   @Input() lastReported: string = '';
   @Input() originalCreditor: string = '';
@@ -34,5 +36,13 @@ export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.open$ = this.viewDetail?.open$.asObservable();
+  }
+
+  ignore() {
+    this.$isIgnored.next(true);
+  }
+
+  undoIgnore() {
+    this.$isIgnored.next(false);
   }
 }
