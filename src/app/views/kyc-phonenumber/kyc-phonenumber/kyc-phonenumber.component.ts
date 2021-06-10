@@ -8,7 +8,6 @@ import {
   UserAttributesInput,
 } from '@shared/services/aws/api.service';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import { Store } from '@ngxs/store';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAQuestion,
@@ -38,7 +37,6 @@ export class KycPhonenumberComponent
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store,
     private kycService: KycService
   ) {
     super();
@@ -67,6 +65,7 @@ export class KycPhonenumberComponent
           await (async () => {
             await this.updateUserAttributes(attrs);
             await this.getAuthQuestions(this.state);
+            await this.updateStateWithKBAQuestions(this.authXML);
             return this;
           })
         )
@@ -74,13 +73,19 @@ export class KycPhonenumberComponent
           .then((_this) => {
             _this
               .parseAuthQuestions(this.authXML)
-              .getOTPQuestion(this.authQuestions).otpQuestion;
+              .getOTPQuestion(this.authQuestions);
+          });
+
+        if (!this.authQuestions)
+          // no questions came back at all
+          this.router.navigate(['../error'], {
+            relativeTo: this.route,
           });
 
         if (this.otpQuestion) {
-          this.sendOTPAnswer(this.otpQuestion);
+          this.getOTPAnswer(this.otpQuestion); // automatically select (send text for user)
           (await this.sendVerifyAuthQuestions(this.state, this.otpAnswer))
-            .parseVerifyResponse(this.verifyResponse)
+            .parseVerifyResponse(this.verifyResponse) // this contains the (enter code question)
             .isVerificationSuccesful(this.authResponse);
         } else {
           this.router.navigate(['../kba'], { relativeTo: this.route });
@@ -145,7 +150,7 @@ export class KycPhonenumberComponent
 
   /**
    * Updates the otpQuestion prop with the OTP question provided by TU
-   *   - Searches the questions returned for the specific OTP text
+   *   - Searches the questions returned for specific OTP text
    * @param {ITransunionKBAQuestions | undefined} questions
    * @returns
    */
@@ -163,7 +168,7 @@ export class KycPhonenumberComponent
    * @param {ITransunionKBAQuestion | undefined} otpQuestion
    * @returns
    */
-  sendOTPAnswer(
+  getOTPAnswer(
     otpQuestion: ITransunionKBAQuestion | undefined
   ): KycPhonenumberComponent {
     if (!otpQuestion) return this;
@@ -226,6 +231,19 @@ export class KycPhonenumberComponent
    * @returns
    */
   async updateStateWithCodeQuestions(
+    question: string | undefined
+  ): Promise<KycPhonenumberComponent> {
+    if (!question) return this;
+    await this.kycService.updateCurrentRawQuestionsAsync(question);
+    return this;
+  }
+
+  /**
+   * Update the state (currentRawQuestions) with the KBA questions
+   * @param {string | undefined} question
+   * @returns
+   */
+  async updateStateWithKBAQuestions(
     question: string | undefined
   ): Promise<KycPhonenumberComponent> {
     if (!question) return this;
