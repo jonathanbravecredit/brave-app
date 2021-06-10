@@ -40,7 +40,7 @@ export class AuthService {
       switch (payload.event) {
         case 'signIn':
           this.authState.next(payload.data);
-          const creds: ICredentials = await this.getCredentials();
+          const creds: ICredentials = await this.getCurrentUserCredentials();
           this.sync.hallmonitor(creds);
           break;
         case 'signOut':
@@ -69,7 +69,7 @@ export class AuthService {
    * @returns
    */
   async reloadCredentials(): Promise<void> {
-    const creds = await this.getCredentials();
+    const creds = await this.getCurrentUserCredentials();
     if (creds) {
       await this.sync.hallmonitor(creds);
     } else {
@@ -168,16 +168,16 @@ export class AuthService {
   }
 
   /**
-   *
-   * @returns
+   * Get authenticated credentials of current user.
+   * @return - A promise resolves to be current user's credentials
    */
-  getCredentials(): Promise<ICredentials> {
-    return Auth.currentCredentials();
+  getCurrentUserCredentials(): Promise<ICredentials> {
+    return Auth.currentUserCredentials();
   }
 
   /**
-   *
-   * @returns
+   * Get current authenticated user
+   * @return - A promise resolves to current authenticated CognitoUser if success
    */
   getCurrentAuthenticatedUser(): Promise<CognitoUser> {
     return Auth.currentAuthenticatedUser();

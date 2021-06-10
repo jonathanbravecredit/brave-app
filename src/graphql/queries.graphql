@@ -46,6 +46,7 @@ query GetAppData($id: ID!) {
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
         currentRawQuestions
+        currentRawAuthDetails
       }
       equifax {
         authenticated
@@ -107,6 +108,7 @@ query ListAppDatas(
           getAuthenticationQuestionsSuccess
           serviceBundleFulfillmentKey
           currentRawQuestions
+          currentRawAuthDetails
         }
         equifax {
           authenticated

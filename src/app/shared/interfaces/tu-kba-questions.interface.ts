@@ -3,7 +3,7 @@ export interface ITransunionKBAQuestions {
     RulesApp: string;
     CorrectAnswersNeeded: string;
     AnswerAttemptsAllowed: string;
-    MultiChoiceQuestion: ITransunionKBAQuestion[];
+    MultiChoiceQuestion: ITransunionKBAQuestion[] | ITransunionKBAQuestion;
     ApplicantChallengeId: string;
     ApplicantId: string;
   };
@@ -18,7 +18,7 @@ export interface ITransunionKBAQuestion {
   KeyQuestionText: {
     PromptDate: string;
   };
-  AnswerChoice: ITransunionKBAAnswer[];
+  AnswerChoice: ITransunionKBAAnswer[] | ITransunionKBAAnswer;
   Key: string;
   QuestionId: string;
 }
@@ -40,5 +40,20 @@ export interface ITransunionBAAnsweredQuestion {
     AnswerChoiceText: string;
     IsCorrectAnswer?: boolean;
     Key: string;
+  };
+}
+
+export interface ITransunionKBAChallengeAnswer {
+  VerifyChallengeAnswersResponseSuccess: {
+    AnswerVerificationStatus: string;
+    ApplicantChallengeId: string;
+    ChallengeConfiguration: {
+      RulesApp: string;
+      CorrectAnswersNeeded: string;
+      AnswerAttemptsAllowed: string;
+      MultiChoiceQuestion: ITransunionKBAQuestion[] | ITransunionKBAQuestion;
+      ApplicantChallengeId: string;
+      ApplicantId: string;
+    };
   };
 }

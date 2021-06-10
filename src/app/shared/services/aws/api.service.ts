@@ -76,6 +76,7 @@ export type TransunionInput = {
   getAuthenticationQuestionsSuccess?: boolean | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
+  currentRawAuthDetails?: string | null;
 };
 
 export type EquifaxInput = {
@@ -172,6 +173,7 @@ export type Transunion = {
   getAuthenticationQuestionsSuccess?: boolean | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
+  currentRawAuthDetails?: string | null;
 };
 
 export type Equifax = {
@@ -300,6 +302,7 @@ export type CreateAppDataMutation = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -368,6 +371,7 @@ export type UpdateAppDataMutation = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -436,6 +440,7 @@ export type DeleteAppDataMutation = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -504,6 +509,7 @@ export type GetAppDataQuery = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -574,6 +580,7 @@ export type ListAppDatasQuery = {
         getAuthenticationQuestionsSuccess?: boolean | null;
         serviceBundleFulfillmentKey?: string | null;
         currentRawQuestions?: string | null;
+        currentRawAuthDetails?: string | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -644,6 +651,7 @@ export type OnCreateAppDataSubscription = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -712,6 +720,7 @@ export type OnUpdateAppDataSubscription = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -780,6 +789,7 @@ export type OnDeleteAppDataSubscription = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -857,6 +867,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename
@@ -941,6 +952,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename
@@ -1025,6 +1037,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename
@@ -1119,6 +1132,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename
@@ -1203,6 +1217,7 @@ export class APIService {
                 getAuthenticationQuestionsSuccess
                 serviceBundleFulfillmentKey
                 currentRawQuestions
+                currentRawAuthDetails
               }
               equifax {
                 __typename
@@ -1293,6 +1308,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename
@@ -1369,6 +1385,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename
@@ -1445,6 +1462,7 @@ export class APIService {
               getAuthenticationQuestionsSuccess
               serviceBundleFulfillmentKey
               currentRawQuestions
+              currentRawAuthDetails
             }
             equifax {
               __typename

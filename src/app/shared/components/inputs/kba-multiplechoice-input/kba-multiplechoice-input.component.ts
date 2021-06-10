@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
+import {
+  ITransunionKBAAnswer,
+  ITransunionKBAQuestion,
+} from '@shared/interfaces/tu-kba-questions.interface';
 
 export interface IKbaMultipleChoiceConfig {
   size: string;
@@ -68,6 +71,11 @@ export class KbaMultiplechoiceInputComponent implements OnInit {
   }
   set question(value: ITransunionKBAQuestion | undefined) {
     this._question = value;
+  }
+
+  get choices() {
+    const choices = this._question?.AnswerChoice;
+    return choices instanceof Array ? choices : [choices];
   }
 
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();

@@ -61,6 +61,7 @@ type Transunion {
   getAuthenticationQuestionsSuccess: Boolean
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
+  currentRawAuthDetails: String
 }
 type Equifax {
   authenticated: Boolean
