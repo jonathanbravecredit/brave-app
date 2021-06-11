@@ -483,9 +483,10 @@ export class KycService {
     questions: ITransunionKBAQuestions
   ): ITransunionKBAQuestion | undefined {
     const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
-      questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
-        ? questions.ChallengeConfigurationType.MultiChoiceQuestion
-        : new Array(questions.ChallengeConfigurationType.MultiChoiceQuestion);
+      questions?.ChallengeConfigurationType?.MultiChoiceQuestion instanceof
+      Array
+        ? questions?.ChallengeConfigurationType?.MultiChoiceQuestion
+        : new Array(questions?.ChallengeConfigurationType?.MultiChoiceQuestion);
     return series.find(
       (q) =>
         q.FullQuestionText === OTPQuestion.FullText ||
@@ -503,9 +504,9 @@ export class KycService {
     question: ITransunionKBAQuestion
   ): IVerifyAuthenticationAnswer {
     const answerChoice =
-      question.AnswerChoice instanceof Array
-        ? question.AnswerChoice
-        : new Array(question.AnswerChoice);
+      question?.AnswerChoice instanceof Array
+        ? question?.AnswerChoice
+        : new Array(question?.AnswerChoice);
 
     let answer = answerChoice.find(
       (c) =>

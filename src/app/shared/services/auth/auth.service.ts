@@ -53,9 +53,11 @@ export class AuthService {
     });
 
     Auth.currentAuthenticatedUser()
-      .then((user) => {
+      .then(async (user) => {
         console.log('authenticated user');
         this.authState.next(user);
+        const creds: ICredentials = await this.getCurrentUserCredentials();
+        if (creds) await this.sync.hallmonitor(creds);
       })
       .catch(() => console.log('Not signed in'));
   }
