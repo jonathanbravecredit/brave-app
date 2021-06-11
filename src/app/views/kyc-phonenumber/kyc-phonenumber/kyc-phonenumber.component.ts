@@ -15,6 +15,7 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -37,6 +38,7 @@ export class KycPhonenumberComponent
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private store: Store,
     private kycService: KycService
   ) {
     super();
@@ -61,14 +63,12 @@ export class KycPhonenumberComponent
       } as UserAttributesInput;
 
       try {
-        (
-          await (async () => {
-            await this.updateUserAttributes(attrs);
-            await this.getAuthQuestions(this.state);
-            await this.updateStateWithKBAQuestions(this.authXML);
-            return this;
-          })
-        )
+        await (async () => {
+          await this.updateUserAttributes(attrs);
+          await this.getAuthQuestions(this.state);
+          await this.updateStateWithKBAQuestions(this.authXML);
+          return this;
+        })
           .bind(this)()
           .then((_this) => {
             _this
@@ -76,13 +76,10 @@ export class KycPhonenumberComponent
               .getOTPQuestion(this.authQuestions);
           });
 
-        if (!this.authQuestions)
-          // no questions came back at all
-          this.router.navigate(['../error'], {
-            relativeTo: this.route,
-          });
+        if (!this.authQuestions) throw 'No authentication questions returned';
 
         if (this.otpQuestion) {
+          this.state = this.store.snapshot()['appData']; // refresh state for new bundle key
           this.getOTPAnswer(this.otpQuestion); // automatically select (send text for user)
           (await this.sendVerifyAuthQuestions(this.state, this.otpAnswer))
             .parseVerifyResponse(this.verifyResponse) // this contains the (enter code question)
@@ -98,10 +95,10 @@ export class KycPhonenumberComponent
             relativeTo: this.route,
           });
         } else {
-          this.router.navigate(['../error'], { relativeTo: this.route });
+          throw 'Authentication request failed';
         }
       } catch (err) {
-        console.log('error ===> ', err);
+        console.log('error ===> ', err, this);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }
@@ -226,11 +223,11 @@ export class KycPhonenumberComponent
   }
 
   /**
-   * Update the state (currentRawQuestions) with the enter pass code question
+   * Update the state (currentRawQuestions) with the KBA questions
    * @param {string | undefined} question
    * @returns
    */
-  async updateStateWithCodeQuestions(
+  async updateStateWithKBAQuestions(
     question: string | undefined
   ): Promise<KycPhonenumberComponent> {
     if (!question) return this;
@@ -239,11 +236,11 @@ export class KycPhonenumberComponent
   }
 
   /**
-   * Update the state (currentRawQuestions) with the KBA questions
+   * Update the state (currentRawQuestions) with the enter pass code question
    * @param {string | undefined} question
    * @returns
    */
-  async updateStateWithKBAQuestions(
+  async updateStateWithCodeQuestions(
     question: string | undefined
   ): Promise<KycPhonenumberComponent> {
     if (!question) return this;

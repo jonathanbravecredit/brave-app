@@ -275,7 +275,7 @@ export class KycService {
       );
       if (!enrichment) return KYCResponse.Failed;
       const ssn = returnNestedObject(enrichment, 'a:SSN')['_text'];
-      return ssn ? KYCResponse.Failed : ssn;
+      return ssn ? ssn : KYCResponse.Failed;
     } catch {
       return KYCResponse.Failed;
     }
@@ -327,6 +327,7 @@ export class KycService {
         questions,
         'a:ServiceBundleFulfillmentKey'
       )['_text'];
+      console.log('fulfillmentkey', fulfillmentKey);
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
         transunion: {

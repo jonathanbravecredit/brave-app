@@ -53,7 +53,7 @@ export const returnNestedObject = (o: any, k: string): any => {
   const _returnNestedObject = (obj: any) => {
     Object.keys(obj).forEach((key) => {
       if (key === k) value = obj[k];
-      if (typeof obj[key] === 'object') {
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
         _returnNestedObject(obj[key]);
       }
     });
