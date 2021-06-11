@@ -38,6 +38,7 @@ import { DashboardInitComponent } from './dashboard-init/dashboard-init.componen
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
+import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 
 const views = [
   SignupComponent,
@@ -62,6 +63,7 @@ const views = [
   KycKbaquestionsPureComponent,
   KycPhonenumberComponent,
   KycPhonenumberPureComponent,
+  KycSsnComponent,
   KycSsnPureComponent,
   KycSsnFullComponent,
   KycSsnFullPureComponent,
@@ -73,7 +75,7 @@ const views = [
   CompliancePrivacyComponent,
   ComplianceTosComponent,
   DashboardInitComponent,
-  NegativeAccountInitialComponent
+  NegativeAccountInitialComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];
