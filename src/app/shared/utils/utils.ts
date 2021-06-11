@@ -33,7 +33,6 @@ export const deleteKeyNestedObject = (o: any, k: string) => {
   return obj;
 };
 const _deleteKeyNestedObject = (o: any, k: string) => {
-  // console.log('delete', o, o[k], k);
   if (!o) return;
   delete o[k];
   Object.keys(o).forEach((key) => {
@@ -41,4 +40,24 @@ const _deleteKeyNestedObject = (o: any, k: string) => {
       _deleteKeyNestedObject(o[key], k);
     }
   });
+};
+
+/**
+ * A utility function to find the first matching key in a nested object
+ *   use carefully. Does not iterate over arrays
+ * @param {object} o the object you want to search
+ * @param {string} k the key you want to search for
+ */
+export const returnNestedObject = (o: any, k: string): any => {
+  let value;
+  const _returnNestedObject = (obj: any) => {
+    Object.keys(obj).forEach((key) => {
+      if (key === k) value = obj[k];
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        _returnNestedObject(obj[key]);
+      }
+    });
+  };
+  _returnNestedObject(o);
+  return value;
 };

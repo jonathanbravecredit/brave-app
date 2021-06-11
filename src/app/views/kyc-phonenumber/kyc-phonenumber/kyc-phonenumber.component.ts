@@ -3,8 +3,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
-import { UserAttributesInput } from '@shared/services/aws/api.service';
+import {
+  UpdateAppDataInput,
+  UserAttributesInput,
+} from '@shared/services/aws/api.service';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
+import { returnNestedObject } from '@shared/utils/utils';
+import {
+  ITransunionKBAQuestion,
+  ITransunionKBAQuestions,
+} from '@shared/interfaces/tu-kba-questions.interface';
+import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
+import { AppDataStateModel } from '@store/app-data';
 import { Store } from '@ngxs/store';
 
 @Component({
@@ -14,7 +24,17 @@ import { Store } from '@ngxs/store';
 export class KycPhonenumberComponent
   extends KycBaseComponent
   implements OnInit {
-  stepID = 3;
+  private stepID = 3;
+  private state: UpdateAppDataInput | undefined;
+  private authXML: string | undefined;
+  private authQuestions: ITransunionKBAQuestions | undefined;
+  private otpQuestion: ITransunionKBAQuestion | undefined;
+  private otpAnswer: IVerifyAuthenticationAnswer | undefined;
+  private verifyResponse: string | undefined;
+  private codeQuestion: string | undefined;
+  private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
+  private authSuccessful: boolean = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -43,69 +63,203 @@ export class KycPhonenumberComponent
       } as UserAttributesInput;
 
       try {
-        const data = await this.kycService.updateUserAttributesAsync(attrs);
-        const xmlString = await this.kycService.getGetAuthenticationQuestionsResults(
-          data
-        );
-        const questions = this.kycService.parseCurrentRawQuestions(xmlString);
-        const otpQuestion = this.kycService.getOTPQuestion(questions);
-        if (otpQuestion) {
-          // get the OTP  send text answer...TODO refactor this section (used in 3 places0)
-          const otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion);
-          const { appData: state } = this.store.snapshot();
-          const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(
-            state,
-            [otpAnswer]
-          );
+        await (async () => {
+          await this.updateUserAttributes(attrs);
+          await this.getAuthQuestions(this.state);
+          await this.updateStateWithKBAQuestions(this.authXML);
+          return this;
+        })
+          .bind(this)()
+          .then((_this) => {
+            _this
+              .parseAuthQuestions(this.authXML)
+              .getOTPQuestion(this.authQuestions);
+          });
 
-          const clean = authenticated
-            ? JSON.parse(authenticated)
-            : ({} as IVerifyAuthenticationResponseSuccess);
+        if (!this.authQuestions) throw 'No authentication questions returned';
 
-          const verificationQuestions = clean
-            ? clean['VerifyAuthenticationQuestions']
-            : null;
-          const envelope = verificationQuestions
-            ? verificationQuestions['s:Envelope']
-            : null;
-          const body = envelope ? envelope['s:Body'] : null;
-          const response = body
-            ? body['VerifyAuthenticationQuestionsResponse']
-            : null;
-          const result = response
-            ? response['VerifyAuthenticationQuestionsResult']
-            : null;
-          const type = result ? result['a:ResponseType'] : null;
-          const success = type ? type.toLowerCase() === 'success' : false;
-
-          if (success) {
-            // need to save the new questions about passcode
-            const rawAuthDetails = result
-              ? result['a:AuthenticationDetails']
-              : null;
-            // TODO the answer xml is the same for auth details as it is for
-            //   KBA questions...only thing different is AuthenticationDetails above
-            //   Remove Auth details from state and remove methods from KYC services
-            await this.kycService.updateCurrentRawQuestionsAsync(
-              rawAuthDetails
-            );
-            this.router.navigate(['../code'], {
-              relativeTo: this.route,
-            });
-          } else {
-            this.router.navigate(['../error'], { relativeTo: this.route });
-          }
+        if (this.otpQuestion) {
+          this.state = this.store.snapshot()['appData']; // refresh state for new bundle key
+          this.getOTPAnswer(this.otpQuestion); // automatically select (send text for user)
+          (await this.sendVerifyAuthQuestions(this.state, this.otpAnswer))
+            .parseVerifyResponse(this.verifyResponse) // this contains the (enter code question)
+            .isVerificationSuccesful(this.authResponse);
         } else {
           this.router.navigate(['../kba'], { relativeTo: this.route });
         }
+
+        if (this.authSuccessful) {
+          this.getCodeQuestion(this.authResponse);
+          await this.updateStateWithCodeQuestions(this.codeQuestion);
+          this.router.navigate(['../code'], {
+            relativeTo: this.route,
+          });
+        } else {
+          throw 'Authentication request failed';
+        }
       } catch (err) {
-        console.log('error ===> ', err);
+        console.log('error ===> ', err, this);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }
   }
+
   handleError(errors: { [key: string]: AbstractControl }): void {
     console.log('form errors', errors);
+  }
+
+  /**
+   * Update the state prop with the current user attributes.
+   * @param {UserAttributesInput | undefined} attrs
+   * @returns
+   */
+  async updateUserAttributes(
+    attrs: UserAttributesInput | undefined
+  ): Promise<KycPhonenumberComponent> {
+    if (!attrs) return this;
+    this.state = await this.kycService.updateUserAttributesAsync(attrs);
+    return this;
+  }
+
+  /**
+   * Updates the authXML prop with the authentication questions back from TU
+   * @param {UpdateAppDataInput | undefined} data
+   * @returns
+   */
+  async getAuthQuestions(data: UpdateAppDataInput | undefined) {
+    if (!data) return this;
+    this.authXML = await this.kycService.getGetAuthenticationQuestionsResults(
+      data
+    );
+    return this;
+  }
+
+  /**
+   * Update the authQuestions prop with the parsed authXML prop
+   * @param {string | undefined} xml
+   * @returns
+   */
+  parseAuthQuestions(xml: string | undefined): KycPhonenumberComponent {
+    if (!xml) return this;
+    this.authQuestions = this.kycService.parseCurrentRawQuestions(xml);
+    return this;
+  }
+
+  /**
+   * Updates the otpQuestion prop with the OTP question provided by TU
+   *   - Searches the questions returned for specific OTP text
+   * @param {ITransunionKBAQuestions | undefined} questions
+   * @returns
+   */
+  getOTPQuestion(
+    questions: ITransunionKBAQuestions | undefined
+  ): KycPhonenumberComponent {
+    if (!questions) return this;
+    this.otpQuestion = this.kycService.getOTPQuestion(questions);
+    return this;
+  }
+
+  /**
+   * Updates the otpAnswer prop with the OTP answer provided by TU
+   *   - Searches the answers returned for the specific OTP text (send text message)
+   * @param {ITransunionKBAQuestion | undefined} otpQuestion
+   * @returns
+   */
+  getOTPAnswer(
+    otpQuestion: ITransunionKBAQuestion | undefined
+  ): KycPhonenumberComponent {
+    if (!otpQuestion) return this;
+    this.otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion);
+    return this;
+  }
+
+  /**
+   * Updates the verifyResponse prop with the VerifyAuthenticationQuestions response from TU
+   *   - This is the response to our answer to send OTP (send text message)
+   *   - This response will contain an question (enter the passcode) embeded in CDATA
+   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+   * @param {IVerifyAuthenticationAnswer | undefined} otpAnswer
+   * @returns
+   */
+  async sendVerifyAuthQuestions(
+    state: UpdateAppDataInput | AppDataStateModel | undefined,
+    otpAnswer: IVerifyAuthenticationAnswer | undefined
+  ): Promise<KycPhonenumberComponent> {
+    if (!otpAnswer || !state) return this;
+    this.verifyResponse = await this.kycService.sendVerifyAuthenticationQuestions(
+      state,
+      [otpAnswer]
+    );
+    return this;
+  }
+
+  /**
+   * Update the authResponse prop with the parsed verifyResp prop
+   * @param {string | undefined} verifyResp
+   * @returns
+   */
+  parseVerifyResponse(verifyResp: string | undefined): KycPhonenumberComponent {
+    this.authResponse = verifyResp
+      ? JSON.parse(verifyResp)
+      : ({} as IVerifyAuthenticationResponseSuccess);
+    return this;
+  }
+
+  /**
+   * Update the codeQuestion prop with the nested object from the parsed authRespone
+   *   - This is the enter pass code question
+   * @param {IVerifyAuthenticationResponseSuccess | undefined} authResponse
+   * @returns
+   */
+  getCodeQuestion(
+    authResponse: IVerifyAuthenticationResponseSuccess | undefined
+  ): KycPhonenumberComponent {
+    if (!authResponse) return this;
+    this.codeQuestion = returnNestedObject(
+      authResponse,
+      'a:AuthenticationDetails'
+    );
+    return this;
+  }
+
+  /**
+   * Update the state (currentRawQuestions) with the KBA questions
+   * @param {string | undefined} question
+   * @returns
+   */
+  async updateStateWithKBAQuestions(
+    question: string | undefined
+  ): Promise<KycPhonenumberComponent> {
+    if (!question) return this;
+    await this.kycService.updateCurrentRawQuestionsAsync(question);
+    return this;
+  }
+
+  /**
+   * Update the state (currentRawQuestions) with the enter pass code question
+   * @param {string | undefined} question
+   * @returns
+   */
+  async updateStateWithCodeQuestions(
+    question: string | undefined
+  ): Promise<KycPhonenumberComponent> {
+    if (!question) return this;
+    await this.kycService.updateCurrentRawQuestionsAsync(question);
+    return this;
+  }
+
+  /**
+   * Update the prop to indicate that verification was successful
+   * @param {IVerifyAuthenticationResponseSuccess | undefined} resp
+   * @returns
+   */
+  isVerificationSuccesful(
+    resp: IVerifyAuthenticationResponseSuccess | undefined
+  ): KycPhonenumberComponent {
+    if (!resp) return this;
+    this.authSuccessful =
+      returnNestedObject(resp, 'a:ResponseType').toLowerCase() === 'success';
+    return this;
   }
 }
 
