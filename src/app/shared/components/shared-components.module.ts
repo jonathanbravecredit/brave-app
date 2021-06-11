@@ -128,7 +128,7 @@ const components = [
   CreditBuilderCardComponent,
   SnapshotDisplayCardComponent,
   NegativeAccountCardComponent,
-  KbaMultiplechoiceInputComponent
+  KbaMultiplechoiceInputComponent,
 ];
 
 // component specific pipes only
@@ -144,12 +144,13 @@ const pipes = [
   AccountStatusPipe,
   SnapshotLabelPipe,
   SnapshotStatusPipe,
+  KbaMultiplechoiceInputComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives, KbaMultiplechoiceInputComponent],
+  declarations: [...components, ...pipes, ...directives],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

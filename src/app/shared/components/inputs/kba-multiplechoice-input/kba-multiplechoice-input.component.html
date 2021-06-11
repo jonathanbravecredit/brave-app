@@ -5,22 +5,24 @@
         {{ question?.FullQuestionText }}
       </p>
       <fieldset>
-        <div *ngFor="let choice of question?.AnswerChoice; index as i">
-          <label class="inline-flex items-center">
-            <input
-              name="input"
-              type="radio"
-              formControlName="input"
-              class="form-radio text-indigo-800 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-              [value]="{
-                question: question,
-                answer: choice
-              }"
-            />
-            <span class="font-sans text-sm text-coolGray-700 ml-4">{{
-              choice.AnswerChoiceText
-            }}</span>
-          </label>
+        <div *ngIf="question">
+          <div *ngFor="let choice of choices; index as i">
+            <label class="inline-flex items-center">
+              <input
+                name="input"
+                type="radio"
+                formControlName="input"
+                class="form-radio text-indigo-800 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                [value]="{
+                  question: question,
+                  answer: choice
+                }"
+              />
+              <span class="font-sans text-sm text-coolGray-700 ml-4">{{
+                choice?.AnswerChoiceText
+              }}</span>
+            </label>
+          </div>
         </div>
       </fieldset>
     </div>

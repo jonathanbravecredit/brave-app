@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { OnboardingComponent } from './onboarding.component';
 import { KycWelcomeComponent } from '@views/kyc-welcome/kyc-welcome/kyc-welcome.component';
 import { KycAddressComponent } from '@views/kyc-address/kyc-address/kyc-address.component';
-// import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
+import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component';
 import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber/kyc-phonenumber.component';
 import { KycIdverificationComponent } from '@views/kyc-idverification/kyc-idverification/kyc-idverification.component';
