@@ -26,6 +26,19 @@ const Template: Story<NegativeAccountInitialComponent> = (args: any) => ({
   component: NegativeAccountInitialComponent,
   props: {
     ...args,
+    creditorName:"Hj National Collections",
+    lastReported:"29/09/2020",
+    accountTypeDescription:"Collections Account",
+    accountTypeDescriptionValue:"Open",
+    originalCreditor:"Original Creditor",
+    originalCreditorValue:"Wells Fargo Bank, N.A.",
+    disputeFlag:"Previously Disputed?",
+    disputeFlagValue:"No",
+    accountNumber:"066611222",
+    typeOfCollection:"Collections",
+    amountPastDue:"700",
+    dateOpened:"04/12/2018",
+    dateLastPayment:"04/21/2018"
   },
 });
 

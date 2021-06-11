@@ -14,10 +14,12 @@
   <span><p class="text-xs text-dk-gray">{{ originalCreditor }}</p></span>
   <span><p class="text-xs text-dk-gray text-opacity-50 text-right">{{ originalCreditorValue }}</p></span>
 </div>
-<brave-viewdetail-button class="w-100 mt-4" size="full">View Detail</brave-viewdetail-button>
+<div class="py-3">
+  <brave-viewdetail-button class="w-100 " size="full">View Detail</brave-viewdetail-button>
+</div>
 <div *ngIf="open$ | async as open" class="flex flex-col w-full">
   <div class="flex justify-between">
-    <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-dk-gray" activeColor="bg-indigo-800" color="text-black" (click)="ignore()">Ignore</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-dk-gray" activeColor="bg-dk-gray" color="text-black" (click)="ignore()">Ignore</brave-filled-onlytext-button>
     <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-indigo-800" activeColor="bg-indigo-800" color="text-white">Dispute</brave-filled-onlytext-button>
   </div>
   
