@@ -46,6 +46,7 @@ mutation CreateAppData(
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
         currentRawQuestions
+        currentRawAuthDetails
       }
       equifax {
         authenticated
@@ -105,6 +106,7 @@ mutation UpdateAppData(
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
         currentRawQuestions
+        currentRawAuthDetails
       }
       equifax {
         authenticated
@@ -164,6 +166,7 @@ mutation DeleteAppData(
         getAuthenticationQuestionsSuccess
         serviceBundleFulfillmentKey
         currentRawQuestions
+        currentRawAuthDetails
       }
       equifax {
         authenticated

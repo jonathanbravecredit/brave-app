@@ -11,7 +11,6 @@ import {
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { take } from 'rxjs/operators';
-import * as parser from 'fast-xml-parser';
 import { KycKbaquestionsPureComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
@@ -30,7 +29,7 @@ export class KycKbaquestionsComponent implements OnInit {
     | ITransunionKBAQuestion
     | ITransunionKBAAnswer
     | undefined
-  )[] = []; // TODO replace with KBA answers interface
+  )[] = [];
   numberOfQuestions: number = 0;
   stepID = 3;
 
@@ -47,10 +46,11 @@ export class KycKbaquestionsComponent implements OnInit {
       .pipe(take(1))
       .subscribe((agencies: AgenciesStateModel) => {
         if (!agencies.transunion?.currentRawQuestions) return;
-        const xml: ITransunionKBAQuestions = parser.parse(
+        const xml: ITransunionKBAQuestions = this.kycService.parseCurrentRawQuestions(
           agencies.transunion?.currentRawQuestions
         );
-        this.questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
+        const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
+        questions instanceof Array ? (this.questions = questions) : [questions];
         this.numberOfQuestions = this.questions.length;
       });
   }
@@ -131,16 +131,19 @@ export class KycKbaquestionsComponent implements OnInit {
       });
     const { appData: state } = this.store.snapshot();
     try {
-      const authenticated: IVerifyAuthenticationResponseSuccess = await this.kycService.sendVerifyAuthenticationQuestions(
+      const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(
         state,
         answers
       );
+      const clean = authenticated
+        ? JSON.parse(authenticated)
+        : ({} as IVerifyAuthenticationResponseSuccess);
+      const body =
+        clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
       const success =
-        authenticated.VerifyAuthenticationQuestions['s:Envelope'][
-          's:Body'
-        ].VerifyAuthenticationQuestionsResponse.VerifyAuthenticationQuestionsResult[
-          'a:ResponseType'
-        ].toLowerCase() === 'success';
+        body['VerifyAuthenticationQuestionsResponse'][
+          'VerifyAuthenticationQuestionsResult'
+        ]['a:ResponseType'].toLowerCase() === 'success';
       if (success) {
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {

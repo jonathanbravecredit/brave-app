@@ -11,6 +11,7 @@ import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestio
 import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
 import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
+import { KycErrorComponent } from '@views/kyc-error/kyc-error.component';
 
 const OnboardingRoutes: Routes = [
   {
@@ -28,11 +29,11 @@ const OnboardingRoutes: Routes = [
         component: KycAddressComponent,
         canActivate: [AuthGuard],
       },
-      // {
-      //   path: 'identity',
-      //   component: KycSsnComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'identity',
+        component: KycSsnComponent,
+        canActivate: [AuthGuard],
+      },
       {
         path: 'identityfull',
         component: KycSsnFullComponent,
@@ -61,6 +62,11 @@ const OnboardingRoutes: Routes = [
       {
         path: 'returning',
         component: KycWelcomebackComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'error',
+        component: KycErrorComponent,
         canActivate: [AuthGuard],
       },
     ],

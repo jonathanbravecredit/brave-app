@@ -27,7 +27,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
     this.kycService.activateStep(this.stepID);
   }
 
-  goToNext(form: FormGroup): void {
+  async goToNext(form: FormGroup): Promise<void> {
     if (form.valid) {
       // write to state...TODO write to DB
       const attrs = {
@@ -38,7 +38,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
           ...this.formatAttributes(form, dob),
         },
       } as UserAttributesInput;
-      this.kycService.updateUserAttributes(attrs);
+      await this.kycService.updateUserAttributesAsync(attrs);
       this.kycService.completeStep(this.stepID);
       this.router.navigate(['../address'], { relativeTo: this.route });
     }

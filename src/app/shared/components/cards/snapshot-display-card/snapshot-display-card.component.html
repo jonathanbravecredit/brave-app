@@ -1,3 +1,6 @@
+<!-- no-purge for component -->
+<div class="text-brave-danger bg-brave-danger bg-brave-critical bg-brave-safe text-brave-danger text-brave-critical text-brave-safe mt-4 mt-3" *ngIf="false"></div>
+
 <div class="relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-3">
   <!-- tag div: Display of current type of snapshot -->
   <div class="absolute -mt-5 ml-3 px-1 font-semibold bg-white" *ngIf="label !== undefined"><span class="font-sans" [ngClass]="label | snapshotLabel:'color-class'">{{ label | snapshotLabel:'text' }}</span></div>

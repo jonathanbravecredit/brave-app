@@ -77,23 +77,24 @@ export class SyncService {
   async initAppData(
     creds: ICredentials
   ): Promise<CreateAppDataMutation | undefined> {
-    const input: CreateAppDataInput = {
-      id: creds.identityId,
-      user: {
-        id: creds.identityId,
-        onboarding: {
-          lastActive: 0,
-          lastComplete: -1,
-          started: true,
-        },
-      },
-      agencies: {
-        transunion: { authenticated: false },
-        experian: { authenticated: false },
-        equifax: { authenticated: false },
-      },
-    };
     try {
+      const input: CreateAppDataInput = {
+        id: creds.identityId,
+        user: {
+          id: creds.identityId,
+          onboarding: {
+            lastActive: 0,
+            lastComplete: -1,
+            started: true,
+          },
+        },
+        agencies: {
+          transunion: { authenticated: false },
+          experian: { authenticated: false },
+          equifax: { authenticated: false },
+        },
+      };
+      console.log('input', input);
       const data = await this.api.CreateAppData(input);
       return data;
     } catch (err) {

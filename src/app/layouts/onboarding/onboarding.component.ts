@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { OnboardingService } from '@layouts/onboarding/onboarding.service';
 import {
   FilledChecktextProgressbarComponent,
   IFilledChecktextProgressbarConfig,
@@ -42,9 +41,5 @@ export class OnboardingComponent {
       .subscribe((onboarding: OnboardingStateModel) => {
         this.onboarding = onboarding;
       });
-  }
-
-  async ngOnInit(): Promise<void> {
-    await this.auth.reloadCredentials();
   }
 }

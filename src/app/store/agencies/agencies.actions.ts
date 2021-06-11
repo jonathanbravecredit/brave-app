@@ -21,3 +21,8 @@ export class EditTransunionQuestions {
   static readonly type = '[Agencies] EditTransunionQuestions';
   constructor(public payload: { currentRawQuestions: string }) {}
 }
+
+export class EditTransunionAuthDetails {
+  static readonly type = '[Agencies] EditTransunionAuthDetails';
+  constructor(public payload: { currentRawAuthDetails: string }) {}
+}

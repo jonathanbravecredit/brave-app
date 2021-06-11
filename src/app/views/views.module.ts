@@ -33,6 +33,7 @@ import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/
 import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.component';
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
+import { KycErrorComponent } from './kyc-error/kyc-error.component';
 import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
@@ -68,6 +69,7 @@ const views = [
   KycWelcomePureComponent,
   KycWelcomebackComponent,
   KycWelcomebackPureComponent,
+  KycErrorComponent,
   CompliancePrivacyComponent,
   ComplianceTosComponent,
   DashboardInitComponent,
