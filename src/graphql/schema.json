@@ -1949,6 +1949,25 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "ENUM",
+        "name" : "ModelSortDirection",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "ASC",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "DESC",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
         "kind" : "INPUT_OBJECT",
         "name" : "ModelStringInput",
         "description" : null,
@@ -2300,7 +2319,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelIntInput",
+        "name" : "ModelStringInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -2308,7 +2327,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2317,7 +2336,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2326,7 +2345,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2335,7 +2354,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2344,7 +2363,7 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2353,7 +2372,25 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "contains",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "notContains",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2365,9 +2402,18 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "Int",
+              "name" : "String",
               "ofType" : null
             }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "beginsWith",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
@@ -2385,6 +2431,15 @@
           "type" : {
             "kind" : "ENUM",
             "name" : "ModelAttributeTypes",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "size",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSizeInput",
             "ofType" : null
           },
           "defaultValue" : null

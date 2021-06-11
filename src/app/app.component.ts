@@ -1,7 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { ICredentials } from '@aws-amplify/core';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { SyncService } from '@shared/services/sync/sync.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'brave-root',

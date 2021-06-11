@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
   templateUrl: './viewdetail-button.component.html',
 })
 export class ViewdetailButtonComponent implements OnInit {
+  @Input() size = '';
   open: boolean = false;
   open$: Subject<boolean> = new Subject();
   constructor() {}

@@ -74,7 +74,13 @@ export class KbaMultiplechoiceInputComponent implements OnInit {
   }
 
   get choices() {
-    const choices = this._question?.AnswerChoice;
+    const choices:
+      | ITransunionKBAAnswer
+      | ITransunionKBAAnswer[]
+      | undefined = this._question?.AnswerChoice;
+    if (!choices) {
+      return [];
+    }
     return choices instanceof Array ? choices : [choices];
   }
 

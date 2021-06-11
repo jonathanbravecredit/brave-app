@@ -1,0 +1,52 @@
+<div *ngIf="isIgnored | async as ignored">
+  <span><p class="font-semibold">We'll ignore this account for now</p></span>
+  <span><p>See your full report to review hidden items</p></span>
+</div>
+<div class="border-t border-blueGray-300 py-2"></div>
+<span><p class="text-sm font-semibold">{{ creditorName }}</p></span>
+<div class="grid grid-cols-2 gap-4 mb-2">
+  <span><p class="text-sm font-semibold">Last Reported: </p></span>
+  <span><p class="text-sm font-semibold text-right">{{ lastReported }}</p></span>
+  <span><p class="text-xs text-dk-gray">{{ accountTypeDescription }}</p></span>
+  <span><p class="text-xs text-dk-gray text-opacity-50 text-right">{{ accountTypeDescriptionValue }}</p></span>
+  <span><p class="text-xs text-dk-gray">{{ disputeFlag }}</p></span>
+  <span><p class="text-xs text-dk-gray text-opacity-50 text-right">{{ disputeFlagValue }}</p></span>
+  <span><p class="text-xs text-dk-gray">{{ originalCreditor }}</p></span>
+  <span><p class="text-xs text-dk-gray text-opacity-50 text-right">{{ originalCreditorValue }}</p></span>
+</div>
+<div class="py-3">
+  <brave-viewdetail-button class="w-100 " size="full">View Detail</brave-viewdetail-button>
+</div>
+<div *ngIf="open$ | async as open" class="flex flex-col w-full">
+  <div class="flex justify-between">
+    <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-dk-gray" activeColor="bg-dk-gray" color="text-black" (click)="ignore()">Ignore</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button buttonSize="sm" backgroundColor="bg-indigo-800" activeColor="bg-indigo-800" color="text-white">Dispute</brave-filled-onlytext-button>
+  </div>
+  
+  <span><p class="text-lg">Account Details</p></span>
+  <div class="border-t border-blueGray-300"></div>
+  <div class="grid grid-cols-2 gap-4 py-2">
+    <span><p class="text-xs text-dk-gray">Account Number</p></span>
+    <span><p class="text-xs text-dk-gray text-opacity-50 text-right">{{ accountNumber }}</p></span>
+  </div>
+  <div class="border-t border-blueGray-300"></div>
+  <div class="grid grid-cols-2 gap-4 py-2">
+    <span><p class="text-xs text-dk-gray">Type</p></span>
+    <span class="text-right"><p class="text-xs text-dk-gray text-opacity-50">{{ typeOfCollection }}</p></span>
+  </div>
+  <div class="border-t border-blueGray-300"></div>
+  <div class="grid grid-cols-2 gap-4 py-2">
+    <span><p class="text-xs text-dk-gray">Amount Past Due</p></span>
+    <span class="text-right"><p class="text-xs text-dk-gray text-opacity-50">{{ '$' + amountPastDue }}</p></span>
+  </div>
+  <div class="border-t border-blueGray-300"></div>
+  <div class="grid grid-cols-2 gap-4 py-2">
+    <span><p class="text-xs text-dk-gray">Date Opened</p></span>
+    <span class="text-right"><p class="text-xs text-dk-gray text-opacity-50">{{ dateOpened }}</p></span>
+  </div>
+  <div class="border-t border-blueGray-300"></div>
+  <div class="grid grid-cols-2 gap-4 py-2">
+    <span><p class="text-xs text-dk-gray">Date of Last Payment</p></span>
+    <span class="text-right"><p class="text-xs text-dk-gray text-opacity-50">{{ dateLastPayment }}</p></span>
+  </div>
+</div>

@@ -24,7 +24,6 @@ import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestio
 import { KycKbaquestionsPureComponent } from './kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber/kyc-phonenumber.component';
 import { KycPhonenumberPureComponent } from './kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
-import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { KycSsnPureComponent } from './kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
 import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component';
 import { KycSsnFullPureComponent } from '@views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
@@ -34,10 +33,12 @@ import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/
 import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.component';
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
+import { KycErrorComponent } from './kyc-error/kyc-error.component';
 import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
-import { KycErrorComponent } from './kyc-error/kyc-error.component';
+import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
+import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 
 const views = [
   SignupComponent,
@@ -74,6 +75,7 @@ const views = [
   CompliancePrivacyComponent,
   ComplianceTosComponent,
   DashboardInitComponent,
+  NegativeAccountInitialComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];

@@ -133,9 +133,8 @@ export class KycService {
   }
 
   /**
-   * Takes the id of the step and updates the state of the step to either active or complete
-   * @param {number} id the progress step ID
-   * @param {{ active: boolean } | { complete: boolean }}  state the state of the step to update (active or complete)
+   * Process and clean the indicative enrichment response back from Transunion
+   * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
    */
   updateStep(
