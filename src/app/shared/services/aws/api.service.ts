@@ -77,6 +77,21 @@ export type TransunionInput = {
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  enrollmentKey?: string | null;
+  enrollReport?: TUEnrollResponseInput | null;
+  enrollMergeReport?: TUEnrollResponseInput | null;
+  enrollVantageScore?: TUEnrollResponseInput | null;
+};
+
+export type TUEnrollResponseInput = {
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: string | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
 };
 
 export type EquifaxInput = {
@@ -174,6 +189,22 @@ export type Transunion = {
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  enrollmentKey?: string | null;
+  enrollReport?: TUEnrollResponse;
+  enrollMergeReport?: TUEnrollResponse;
+  enrollVantageScore?: TUEnrollResponse;
+};
+
+export type TUEnrollResponse = {
+  __typename: "TUEnrollResponse";
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: string | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
 };
 
 export type Equifax = {
@@ -303,6 +334,40 @@ export type CreateAppDataMutation = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -372,6 +437,40 @@ export type UpdateAppDataMutation = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -441,6 +540,40 @@ export type DeleteAppDataMutation = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -510,6 +643,40 @@ export type GetAppDataQuery = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -581,6 +748,40 @@ export type ListAppDatasQuery = {
         serviceBundleFulfillmentKey?: string | null;
         currentRawQuestions?: string | null;
         currentRawAuthDetails?: string | null;
+        enrollmentKey?: string | null;
+        enrollReport?: {
+          __typename: "TUEnrollResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        enrollMergeReport?: {
+          __typename: "TUEnrollResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        enrollVantageScore?: {
+          __typename: "TUEnrollResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -652,6 +853,40 @@ export type OnCreateAppDataSubscription = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -721,6 +956,40 @@ export type OnUpdateAppDataSubscription = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -790,6 +1059,40 @@ export type OnDeleteAppDataSubscription = {
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -868,6 +1171,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
@@ -953,6 +1290,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
@@ -1038,6 +1409,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
@@ -1133,6 +1538,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
@@ -1218,6 +1657,40 @@ export class APIService {
                 serviceBundleFulfillmentKey
                 currentRawQuestions
                 currentRawAuthDetails
+                enrollmentKey
+                enrollReport {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                enrollMergeReport {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                enrollVantageScore {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
               }
               equifax {
                 __typename
@@ -1309,6 +1782,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
@@ -1386,6 +1893,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
@@ -1463,6 +2004,40 @@ export class APIService {
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
             }
             equifax {
               __typename
