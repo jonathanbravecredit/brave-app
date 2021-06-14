@@ -115,6 +115,7 @@ export type AppData = {
   agencies?: Agencies;
   createdAt?: string;
   updatedAt?: string;
+  owner?: string | null;
 };
 
 export type User = {
@@ -380,6 +381,7 @@ export type CreateAppDataMutation = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateAppDataMutation = {
@@ -483,6 +485,7 @@ export type UpdateAppDataMutation = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteAppDataMutation = {
@@ -586,6 +589,7 @@ export type DeleteAppDataMutation = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type GetAppDataQuery = {
@@ -689,6 +693,7 @@ export type GetAppDataQuery = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListAppDatasQuery = {
@@ -794,6 +799,7 @@ export type ListAppDatasQuery = {
     };
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -899,6 +905,7 @@ export type OnCreateAppDataSubscription = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateAppDataSubscription = {
@@ -1002,6 +1009,7 @@ export type OnUpdateAppDataSubscription = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteAppDataSubscription = {
@@ -1105,6 +1113,7 @@ export type OnDeleteAppDataSubscription = {
   };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 @Injectable({
@@ -1217,6 +1226,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1336,6 +1346,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1455,6 +1466,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1584,6 +1596,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1703,6 +1716,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1722,12 +1736,11 @@ export class APIService {
     )) as any;
     return <ListAppDatasQuery>response.data.listAppDatas;
   }
-  OnCreateAppDataListener: Observable<
-    SubscriptionResponse<OnCreateAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateAppData {
-        onCreateAppData {
+  OnCreateAppDataListener(
+    owner?: string
+  ): Observable<SubscriptionResponse<OnCreateAppDataSubscription>> {
+    const statement = `subscription OnCreateAppData($owner: String) {
+        onCreateAppData(owner: $owner) {
           __typename
           id
           user {
@@ -1828,17 +1841,23 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
+  }
 
-  OnUpdateAppDataListener: Observable<
-    SubscriptionResponse<OnUpdateAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateAppData {
-        onUpdateAppData {
+  OnUpdateAppDataListener(
+    owner?: string
+  ): Observable<SubscriptionResponse<OnUpdateAppDataSubscription>> {
+    const statement = `subscription OnUpdateAppData($owner: String) {
+        onUpdateAppData(owner: $owner) {
           __typename
           id
           user {
@@ -1939,17 +1958,23 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+  }
 
-  OnDeleteAppDataListener: Observable<
-    SubscriptionResponse<OnDeleteAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteAppData {
-        onDeleteAppData {
+  OnDeleteAppDataListener(
+    owner?: string
+  ): Observable<SubscriptionResponse<OnDeleteAppDataSubscription>> {
+    const statement = `subscription OnDeleteAppData($owner: String) {
+        onDeleteAppData(owner: $owner) {
           __typename
           id
           user {
@@ -2050,8 +2075,15 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
+  }
 }

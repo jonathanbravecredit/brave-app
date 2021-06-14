@@ -88,6 +88,7 @@ query GetAppData($id: ID!) {
     }
     createdAt
     updatedAt
+    owner
   }
 }
 query ListAppDatas(
@@ -181,6 +182,7 @@ query ListAppDatas(
       }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }

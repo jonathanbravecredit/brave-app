@@ -1,6 +1,6 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateAppData {
-  onCreateAppData {
+subscription OnCreateAppData($owner: String) {
+  onCreateAppData(owner: $owner) {
     id
     user {
       id
@@ -85,10 +85,11 @@ subscription OnCreateAppData {
     }
     createdAt
     updatedAt
+    owner
   }
 }
-subscription OnUpdateAppData {
-  onUpdateAppData {
+subscription OnUpdateAppData($owner: String) {
+  onUpdateAppData(owner: $owner) {
     id
     user {
       id
@@ -173,10 +174,11 @@ subscription OnUpdateAppData {
     }
     createdAt
     updatedAt
+    owner
   }
 }
-subscription OnDeleteAppData {
-  onDeleteAppData {
+subscription OnDeleteAppData($owner: String) {
+  onDeleteAppData(owner: $owner) {
     id
     user {
       id
@@ -261,5 +263,6 @@ subscription OnDeleteAppData {
     }
     createdAt
     updatedAt
+    owner
   }
 }
