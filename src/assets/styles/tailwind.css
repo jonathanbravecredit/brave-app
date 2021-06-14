@@ -1191,6 +1191,11 @@ select {
   background-color: rgba(51, 51, 51, var(--tw-bg-opacity));
 }
 
+.bg-brave-lusitan-blue {
+  --tw-bg-opacity: 1;
+  background-color: rgba(236, 248, 250, var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(250, 250, 250, var(--tw-bg-opacity));

@@ -10,6 +10,8 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
   private $isIgnored = new BehaviorSubject(false);
   isIgnored = this.$isIgnored.asObservable();
+  private $isClosed = new BehaviorSubject(false);
+  isClosed = this.$isClosed.asObservable();
   @Input() creditorName: string = '';
   @Input() lastReported: string = '';
   @Input() originalCreditor: string = '';
@@ -44,5 +46,10 @@ export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
 
   undoIgnore() {
     this.$isIgnored.next(false);
+    this.viewDetail?.open$.next(true);
+  }
+
+  close() {
+     this.$isClosed.next(true);
   }
 }
