@@ -29,6 +29,7 @@ module.exports = {
       'brave-blurple': '#222C9D',
       'brave-safe': '#4BD269',
       'brave-critical': '#E93C25',
+      'brave-lusitan-blue': '#ecf8fa',
       'brave-danger': '#F9A21F',
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
