@@ -62,6 +62,10 @@ type Transunion {
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
+  enrollmentKey: String
+  enrollReport: TUEnrollResponse
+  enrollMergeReport: TUEnrollResponse
+  enrollVantageScore: TUEnrollResponse
 }
 type Equifax {
   authenticated: Boolean
@@ -71,4 +75,14 @@ type Experian {
 }
 type Query {
   transunion(action: String!, message: String!): String
+}
+type TUEnrollResponse {
+  bureau: String
+  errorResponse: String
+  serviceProduct: String
+  serviceProductFullfillmentKey: String
+  serviceProductObject: String
+  serviceProductTypeId: String
+  serviceProductValue: String
+  status: String
 }
