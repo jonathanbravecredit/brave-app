@@ -1,24 +1,25 @@
-type AppData {
+type AppData @aws_iam @aws_cognito_user_pools {
   id: ID!
   user: User!
   agencies: Agencies!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  owner: String
 }
 
-type User {
+type User @aws_iam @aws_cognito_user_pools {
   id: ID!
   userAttributes: UserAttributes
   onboarding: Onboarding
 }
 
-type Name {
+type Name @aws_iam @aws_cognito_user_pools {
   first: String!
   middle: String
   last: String!
 }
 
-type UserAttributes {
+type UserAttributes @aws_iam @aws_cognito_user_pools {
   name: Name
   address: Address
   phone: Phone
@@ -26,7 +27,7 @@ type UserAttributes {
   ssn: Ssn
 }
 
-type Address {
+type Address @aws_iam @aws_cognito_user_pools {
   addressOne: String!
   addressTwo: String
   city: String!
@@ -34,22 +35,22 @@ type Address {
   zip: String!
 }
 
-type Phone {
+type Phone @aws_iam @aws_cognito_user_pools {
   primary: String!
 }
 
-type Dob {
+type Dob @aws_iam @aws_cognito_user_pools {
   year: String!
   month: String!
   day: String!
 }
 
-type Ssn {
+type Ssn @aws_iam @aws_cognito_user_pools {
   lastfour: String!
   full: String
 }
 
-type Onboarding {
+type Onboarding @aws_iam @aws_cognito_user_pools {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
@@ -62,29 +63,48 @@ type OnboardingStep {
   name: String
 }
 
-type Agencies {
+type Agencies @aws_iam @aws_cognito_user_pools {
   transunion: Transunion
   equifax: Equifax
   experian: Experian
 }
 
-type Transunion {
+type Transunion @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
+  getAuthenticationQuestionsSuccess: Boolean
+  serviceBundleFulfillmentKey: String
+  currentRawQuestions: String
+  currentRawAuthDetails: String
+  enrollmentKey: String
+  enrollReport: TUEnrollResponse
+  enrollMergeReport: TUEnrollResponse
+  enrollVantageScore: TUEnrollResponse
 }
 
-type Equifax {
+type Equifax @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
 }
 
-type Experian {
+type Experian @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
 }
 
 type Query {
   transunion(action: String!, message: String!): String
-  getAppData(id: ID!): AppData
-  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
+  getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
+}
+
+type TUEnrollResponse @aws_iam @aws_cognito_user_pools {
+  bureau: String
+  errorResponse: String
+  serviceProduct: String
+  serviceProductFullfillmentKey: String
+  serviceProductObject: String
+  serviceProductTypeId: String
+  serviceProductValue: String
+  status: String
 }
 
 input UserInput {
@@ -145,6 +165,25 @@ input AgenciesInput {
 input TransunionInput {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
+  getAuthenticationQuestionsSuccess: Boolean
+  serviceBundleFulfillmentKey: String
+  currentRawQuestions: String
+  currentRawAuthDetails: String
+  enrollmentKey: String
+  enrollReport: TUEnrollResponseInput
+  enrollMergeReport: TUEnrollResponseInput
+  enrollVantageScore: TUEnrollResponseInput
+}
+
+input TUEnrollResponseInput {
+  bureau: String
+  errorResponse: String
+  serviceProduct: String
+  serviceProductFullfillmentKey: String
+  serviceProductObject: String
+  serviceProductTypeId: String
+  serviceProductValue: String
+  status: String
 }
 
 input EquifaxInput {
@@ -160,7 +199,7 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelAppDataConnection {
+type ModelAppDataConnection @aws_iam @aws_cognito_user_pools {
   items: [AppData]
   nextToken: String
 }
@@ -275,9 +314,9 @@ input DeleteAppDataInput {
 }
 
 type Mutation {
-  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData
-  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData
-  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData
+  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
 }
 
 input ModelAppDataConditionInput {
@@ -287,7 +326,7 @@ input ModelAppDataConditionInput {
 }
 
 type Subscription {
-  onCreateAppData: AppData @aws_subscribe(mutations: ["createAppData"])
-  onUpdateAppData: AppData @aws_subscribe(mutations: ["updateAppData"])
-  onDeleteAppData: AppData @aws_subscribe(mutations: ["deleteAppData"])
+  onCreateAppData(owner: String): AppData @aws_subscribe(mutations: ["createAppData"]) @aws_iam @aws_cognito_user_pools
+  onUpdateAppData(owner: String): AppData @aws_subscribe(mutations: ["updateAppData"]) @aws_iam @aws_cognito_user_pools
+  onDeleteAppData(owner: String): AppData @aws_subscribe(mutations: ["deleteAppData"]) @aws_iam @aws_cognito_user_pools
 }
