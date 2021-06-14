@@ -1,6 +1,6 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateAppData {
-  onCreateAppData {
+subscription OnCreateAppData($owner: String) {
+  onCreateAppData(owner: $owner) {
     id
     user {
       id
@@ -44,6 +44,37 @@ subscription OnCreateAppData {
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -54,10 +85,11 @@ subscription OnCreateAppData {
     }
     createdAt
     updatedAt
+    owner
   }
 }
-subscription OnUpdateAppData {
-  onUpdateAppData {
+subscription OnUpdateAppData($owner: String) {
+  onUpdateAppData(owner: $owner) {
     id
     user {
       id
@@ -101,6 +133,37 @@ subscription OnUpdateAppData {
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -111,10 +174,11 @@ subscription OnUpdateAppData {
     }
     createdAt
     updatedAt
+    owner
   }
 }
-subscription OnDeleteAppData {
-  onDeleteAppData {
+subscription OnDeleteAppData($owner: String) {
+  onDeleteAppData(owner: $owner) {
     id
     user {
       id
@@ -158,6 +222,37 @@ subscription OnDeleteAppData {
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -168,5 +263,6 @@ subscription OnDeleteAppData {
     }
     createdAt
     updatedAt
+    owner
   }
 }

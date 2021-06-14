@@ -47,6 +47,37 @@ mutation CreateAppData(
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -57,6 +88,7 @@ mutation CreateAppData(
     }
     createdAt
     updatedAt
+    owner
   }
 }
 mutation UpdateAppData(
@@ -107,6 +139,37 @@ mutation UpdateAppData(
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -117,6 +180,7 @@ mutation UpdateAppData(
     }
     createdAt
     updatedAt
+    owner
   }
 }
 mutation DeleteAppData(
@@ -167,6 +231,37 @@ mutation DeleteAppData(
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -177,5 +272,6 @@ mutation DeleteAppData(
     }
     createdAt
     updatedAt
+    owner
   }
 }
