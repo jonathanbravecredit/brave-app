@@ -47,6 +47,37 @@ query GetAppData($id: ID!) {
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -109,6 +140,37 @@ query ListAppDatas(
           serviceBundleFulfillmentKey
           currentRawQuestions
           currentRawAuthDetails
+          enrollmentKey
+          enrollReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollMergeReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollVantageScore {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
         }
         equifax {
           authenticated

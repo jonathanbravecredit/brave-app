@@ -47,6 +47,37 @@ mutation CreateAppData(
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -107,6 +138,37 @@ mutation UpdateAppData(
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
@@ -167,6 +229,37 @@ mutation DeleteAppData(
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
       }
       equifax {
         authenticated
