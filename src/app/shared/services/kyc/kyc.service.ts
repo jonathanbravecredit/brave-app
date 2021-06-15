@@ -23,6 +23,7 @@ import {
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { returnNestedObject } from '@shared/utils/utils';
+import { AgenciesStateModel } from '@store/agencies';
 
 export const enum KYCResponse {
   Failed = 'failed',
@@ -417,6 +418,34 @@ export class KycService {
             currentRawQuestions: questions,
           })
         )
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
+  }
+
+  /**
+   *
+   * @param agencies
+   */
+  updateAgencies(agencies: AgenciesStateModel | undefined): void {
+    if (!agencies) return;
+    this.store.dispatch(new AgenciesActions.Edit(agencies));
+  }
+
+  /**
+   * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateAgenciesAsync(
+    agencies: AgenciesStateModel | null | undefined
+  ): Promise<UpdateAppDataInput | null | undefined> {
+    if (!agencies) return;
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new AgenciesActions.Edit(agencies))
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
           resolve(input);

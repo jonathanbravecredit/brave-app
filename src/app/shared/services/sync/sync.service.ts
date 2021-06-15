@@ -7,6 +7,7 @@ import {
   CreateAppDataInput,
   CreateAppDataMutation,
   GetAppDataQuery,
+  UpdateAppDataInput,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
@@ -16,7 +17,7 @@ import { deleteKeyNestedObject } from '@shared/utils/utils';
   providedIn: 'root',
 })
 export class SyncService {
-    // apiCreateListener$: ZenObservable.Subscription;
+  // apiCreateListener$: ZenObservable.Subscription;
   // apiUpdateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
   constructor(
@@ -44,7 +45,6 @@ export class SyncService {
     //     // console.log('on create listener', data);
     //   }
     // );
-
   }
 
   /**
@@ -134,8 +134,16 @@ export class SyncService {
    * Update the state with updated db data
    * @param {AppDataStateModel} payload
    */
-  syncUpDBandState(payload: AppDataStateModel): void {
+  syncUpDBToState(payload: AppDataStateModel): void {
     this.store.dispatch(new AppDataActions.Edit(payload));
+  }
+
+  /**
+   * Update the database with the state
+   * @param {UpdateAppDataInput} payload
+   */
+  async syncUpStateToDB(payload: UpdateAppDataInput): Promise<void> {
+    await this.api.UpdateAppData(payload);
   }
 
   cleanBackendData(data: GetAppDataQuery): AppDataStateModel {

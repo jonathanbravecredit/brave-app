@@ -14,6 +14,10 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
+import {
+  IEnrollResponse,
+  IEnrollServiceProductResponse,
+} from '@shared/interfaces/enroll.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -34,7 +38,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   private verifyResponse: string | undefined;
   private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
   private authSuccessful: boolean = false;
-  private enrollResponse: string | undefined;
+  private enrollResponse: IEnrollResponse | undefined;
 
   constructor(
     private router: Router,
@@ -83,6 +87,15 @@ export class KycIdverificationComponent extends KycBaseComponent {
         await this.sendEnrollRequest(this.state);
 
         if (!this.enrollResponse) throw 'Enroll request failed';
+        // need to add to state and then update the db
+        const enriched = this.enrichEnrollmentData(
+          this.state,
+          this.enrollResponse
+        );
+
+        if (!enriched) throw 'Enrichment failed';
+
+        await this.kycService.updateAgenciesAsync(enriched.agencies);
 
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
@@ -224,8 +237,71 @@ export class KycIdverificationComponent extends KycBaseComponent {
     state: UpdateAppDataInput | AppDataStateModel | undefined
   ): Promise<KycIdverificationComponent> {
     if (!state) return this;
-    this.enrollResponse = await this.kycService.sendEnrollRequest(state);
+    const resp = await this.kycService.sendEnrollRequest(state);
+    this.enrollResponse = resp ? JSON.parse(resp) : ({} as IEnrollResponse);
     return this;
+  }
+
+  /**
+   * This method parses and enriches the state data
+   * @param {AppDataStateModel | UpdateAppDataInput} state
+   * @param {IEnrollResponse} enroll
+   * @returns
+   */
+  enrichEnrollmentData(
+    state: UpdateAppDataInput | undefined,
+    enroll: IEnrollResponse
+  ): AppDataStateModel | UpdateAppDataInput | undefined {
+    if (!state) return;
+    let enrollReport;
+    let enrollMergeReport;
+    let enrollVantageScore;
+    const enrollmentKey = returnNestedObject(enroll, 'a:EnrollmentKey');
+    const prodResponse = returnNestedObject(enroll, 'a:ServiceProductResponse');
+    if (prodResponse instanceof Array) {
+      enrollReport = prodResponse.find(
+        (item: IEnrollServiceProductResponse) => {
+          return item['a:ServiceProduct'] === 'TUCReport';
+        }
+      );
+      enrollMergeReport = prodResponse.find(
+        (item: IEnrollServiceProductResponse) => {
+          return item['a:ServiceProduct'] === 'MergeCreditReports';
+        }
+      );
+      enrollVantageScore = prodResponse.find(
+        (item: IEnrollServiceProductResponse) => {
+          return item['a:ServiceProduct'] === 'TUCVantageScore3';
+        }
+      );
+    } else {
+      switch (prodResponse['a:ServiceProduct']) {
+        case 'TUCReport':
+          enrollReport = prodResponse['a:ServiceProduct'] || null;
+          break;
+        case 'MergeCreditReports':
+          enrollMergeReport = prodResponse['a:ServiceProduct'] || null;
+          break;
+        case 'TUCVantageScore3':
+          enrollVantageScore = prodResponse['a:ServiceProduct'] || null;
+          break;
+        default:
+          break;
+      }
+    }
+    return {
+      ...state,
+      agencies: {
+        ...state.agencies,
+        transunion: {
+          ...state.agencies?.transunion,
+          enrollmentKey: enrollmentKey,
+          enrollReport: enrollReport,
+          enrollMergeReport: enrollMergeReport,
+          enrollVantageScore: enrollVantageScore,
+        },
+      },
+    };
   }
 }
 
