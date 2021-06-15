@@ -13,6 +13,11 @@ import { AppDataStateModel } from '@store/app-data';
 export class TransunionService {
   constructor() {}
 
+  /**
+   * Generates the message payload for TU services
+   * @param {UpdateAppDataInput | AppDataStateModel} data
+   * @returns
+   */
   createIndicativeEnrichmentPayload(
     data: UpdateAppDataInput | AppDataStateModel
   ): IIndicativeEnrichmentMsg | undefined {
@@ -60,6 +65,12 @@ export class TransunionService {
     } as IIndicativeEnrichmentMsg;
   }
 
+  /**
+   * Generates the message payload for TU services
+   * @param {UpdateAppDataInput | AppDataStateModel} data
+   * @param {string} ssn
+   * @returns
+   */
   createGetAuthenticationQuestionsPayload(
     data: UpdateAppDataInput | AppDataStateModel,
     ssn: string = ''
@@ -107,6 +118,12 @@ export class TransunionService {
     } as IGetAuthenticationQuestionsMsg;
   }
 
+  /**
+   * Generates the message payload for TU services
+   * @param {UpdateAppDataInput | AppDataStateModel} data
+   * @param {IVerifyAuthenticationAnswer[]} answers
+   * @returns
+   */
   createVerifyAuthenticationQuestionsPayload(
     data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[]
@@ -129,6 +146,11 @@ export class TransunionService {
     } as IVerifyAuthenticationQuestionsMsg;
   }
 
+  /**
+   * Genarates the message payload for TU service
+   * @param { UpdateAppDataInput | AppDataStateModel} data
+   * @returns
+   */
   createEnrollPayload(
     data: UpdateAppDataInput | AppDataStateModel
   ): IEnrollRequest | undefined {

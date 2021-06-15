@@ -5,7 +5,10 @@ import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import { UpdateAppDataInput } from '@shared/services/aws/api.service';
+import {
+  TUEnrollResponseInput,
+  UpdateAppDataInput,
+} from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
@@ -303,9 +306,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
         transunion: {
           ...state.agencies?.transunion,
           enrollmentKey: enrollmentKey,
-          enrollReport: enrollReport,
-          enrollMergeReport: enrollMergeReport,
-          enrollVantageScore: enrollVantageScore,
+          enrollReport: mapEnrollResponse(enrollReport),
+          enrollMergeReport: mapEnrollResponse(enrollMergeReport),
+          enrollVantageScore: mapEnrollResponse(enrollVantageScore),
         },
       },
     };
@@ -314,4 +317,17 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
 const codeMap: Record<string, any> = {
   code: true,
+};
+
+const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
+  return {
+    bureau: res['a:Bureau'],
+    errorResponse: res['a:ErrorResponse'],
+    serviceProduct: res['a:ServiceProduct'],
+    serviceProductFullfillmentKey: res['a:ServiceProductFulfillmentKey'],
+    serviceProductObject: res['a:ServiceProductObject'],
+    serviceProductTypeId: res['a:ServiceProductTypeId'],
+    serviceProductValue: res['a:ServiceProductValue'],
+    status: res['a:Status'],
+  };
 };
