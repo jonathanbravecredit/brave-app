@@ -88,6 +88,7 @@ mutation CreateAppData(
     }
     createdAt
     updatedAt
+    owner
   }
 }
 mutation UpdateAppData(
@@ -179,6 +180,7 @@ mutation UpdateAppData(
     }
     createdAt
     updatedAt
+    owner
   }
 }
 mutation DeleteAppData(
@@ -270,5 +272,6 @@ mutation DeleteAppData(
     }
     createdAt
     updatedAt
+    owner
   }
 }
