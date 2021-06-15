@@ -23,6 +23,7 @@ import {
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { returnNestedObject } from '@shared/utils/utils';
+import { AgenciesStateModel } from '@store/agencies';
 
 export const enum KYCResponse {
   Failed = 'failed',
@@ -425,6 +426,51 @@ export class KycService {
   }
 
   /**
+   *
+   * @param agencies
+   */
+  updateAgencies(agencies: AgenciesStateModel | undefined): void {
+    if (!agencies) return;
+    this.store
+      .dispatch(new AgenciesActions.Edit(agencies))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input);
+        }
+      });
+  }
+
+  /**
+   * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateAgenciesAsync(
+    agencies: AgenciesStateModel | null | undefined
+  ): Promise<UpdateAppDataInput | null | undefined> {
+    if (!agencies) return;
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new AgenciesActions.Edit(agencies))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          if (!input.id) {
+            this.auth.reloadCredentials();
+            reject();
+            return;
+          } else {
+            this.api.UpdateAppData(input);
+            resolve(input);
+          }
+        });
+    });
+  }
+
+  /**
    * This parses the xml string and returns it as the TU question format
    * @param {string} xml xml string in the TU question schema
    * @returns
@@ -590,6 +636,24 @@ export class KycService {
         'VerifyAuthenticationQuestions',
         JSON.stringify(msg)
       );
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the verified user to transunion to enroll them and receive their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendEnrollRequest(
+    data: UpdateAppDataInput | AppDataStateModel
+  ): Promise<string | undefined> {
+    try {
+      const msg = this.transunion.createEnrollPayload(data);
+      const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
       return res ? res : undefined;
     } catch (err) {
       console.log('err ', err);
