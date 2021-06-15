@@ -39,6 +39,7 @@ import { SigninRedirectComponent } from './signin-redirect/signin-redirect.compo
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
+import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
 
 const views = [
   SignupComponent,
@@ -81,7 +82,7 @@ const views = [
 const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes],
+  declarations: [...views, ...pipes, NegativeAccountInitialPureComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

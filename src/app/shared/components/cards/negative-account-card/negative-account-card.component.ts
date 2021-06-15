@@ -1,11 +1,36 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { Observable, of, BehaviorSubject } from 'rxjs';
+
+export interface INegativeAccountCardInputs {
+  creditorName?: string;
+  lastReported?: string;
+  originalCreditor?: string;
+  originalCreditorValue?: string;
+  accountTypeDescription?: string;
+  accountTypeDescriptionValue?: string;
+  disputeFlag?: string;
+  disputeFlagValue?: string;
+  accountDetail?: {
+    accountNumber?: string;
+    typeOfCollection?: string;
+    amountPastDue?: number;
+    dateOpened?: string;
+    dateLastPayment?: string;
+    remarks?: string;
+  };
+}
 
 @Component({
   selector: 'brave-negative-account-card',
   templateUrl: './negative-account-card.component.html',
-  styleUrls: ['./negative-account-card.component.css']
+  styleUrls: ['./negative-account-card.component.css'],
 })
 export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
   private $isIgnored = new BehaviorSubject(false);
@@ -32,9 +57,9 @@ export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
   viewDetail: ViewdetailButtonComponent | undefined;
   open$: Observable<boolean> | undefined = of(false);
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.open$ = this.viewDetail?.open$.asObservable();
@@ -50,6 +75,6 @@ export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
   }
 
   close() {
-     this.$isClosed.next(true);
+    this.$isClosed.next(true);
   }
 }
