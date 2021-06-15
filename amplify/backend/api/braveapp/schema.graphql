@@ -1,6 +1,15 @@
 type AppData
   @model
-  @auth(rules: [{ allow: owner }, { allow: private, provider: iam }]) {
+  @auth(
+    rules: [
+      { allow: owner }
+      {
+        allow: private
+        provider: iam
+        operations: [read, update, create, delete]
+      }
+    ]
+  ) {
   id: ID!
   user: User!
   agencies: Agencies!
