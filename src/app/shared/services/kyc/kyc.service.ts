@@ -596,4 +596,22 @@ export class KycService {
       return;
     }
   }
+
+  /**
+   * Send the verified user to transunion to enroll them and receive their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendEnrollRequest(
+    data: UpdateAppDataInput | AppDataStateModel
+  ): Promise<string | undefined> {
+    try {
+      const msg = this.transunion.createEnrollPayload(data);
+      const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
 }

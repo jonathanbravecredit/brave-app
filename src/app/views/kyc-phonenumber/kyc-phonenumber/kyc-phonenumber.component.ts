@@ -126,7 +126,9 @@ export class KycPhonenumberComponent
    * @param {UpdateAppDataInput | undefined} data
    * @returns
    */
-  async getAuthQuestions(data: UpdateAppDataInput | undefined) {
+  async getAuthQuestions(
+    data: UpdateAppDataInput | undefined
+  ): Promise<KycPhonenumberComponent> {
     if (!data) return this;
     this.authXML = await this.kycService.getGetAuthenticationQuestionsResults(
       data

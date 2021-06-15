@@ -34,6 +34,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   private verifyResponse: string | undefined;
   private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
   private authSuccessful: boolean = false;
+  private enrollResponse: string | undefined;
 
   constructor(
     private router: Router,
@@ -77,6 +78,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
           .isVerificationSuccesful(this.authResponse);
 
         if (!this.authSuccessful) throw 'Authentication request failed';
+
+        // fetching reports
+        await this.sendEnrollRequest(this.state);
+
+        if (!this.enrollResponse) throw 'Enroll request failed';
 
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
@@ -206,6 +212,19 @@ export class KycIdverificationComponent extends KycBaseComponent {
     if (!resp) return this;
     this.authSuccessful =
       returnNestedObject(resp, 'a:ResponseType').toLowerCase() === 'success';
+    return this;
+  }
+
+  /**
+   * Once the user is verified send the enroll request to return the users credit reports
+   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+   * @returns
+   */
+  async sendEnrollRequest(
+    state: UpdateAppDataInput | AppDataStateModel | undefined
+  ): Promise<KycIdverificationComponent> {
+    if (!state) return this;
+    this.enrollResponse = await this.kycService.sendEnrollRequest(state);
     return this;
   }
 }
