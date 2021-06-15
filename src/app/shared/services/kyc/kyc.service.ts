@@ -431,7 +431,17 @@ export class KycService {
    */
   updateAgencies(agencies: AgenciesStateModel | undefined): void {
     if (!agencies) return;
-    this.store.dispatch(new AgenciesActions.Edit(agencies));
+    this.store
+      .dispatch(new AgenciesActions.Edit(agencies))
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          return;
+        } else {
+          this.api.UpdateAppData(input);
+        }
+      });
   }
 
   /**
@@ -448,7 +458,14 @@ export class KycService {
         .dispatch(new AgenciesActions.Edit(agencies))
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
+          if (!input.id) {
+            this.auth.reloadCredentials();
+            reject();
+            return;
+          } else {
+            this.api.UpdateAppData(input);
+            resolve(input);
+          }
         });
     });
   }

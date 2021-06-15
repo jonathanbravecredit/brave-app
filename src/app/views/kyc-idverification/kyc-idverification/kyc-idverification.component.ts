@@ -16,6 +16,7 @@ import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentic
 import { AppDataStateModel } from '@store/app-data';
 import {
   IEnrollResponse,
+  IEnrollResult,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces/enroll.interface';
 
@@ -38,7 +39,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   private verifyResponse: string | undefined;
   private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
   private authSuccessful: boolean = false;
-  private enrollResponse: IEnrollResponse | undefined;
+  private enrollResult: IEnrollResult | undefined;
 
   constructor(
     private router: Router,
@@ -86,17 +87,16 @@ export class KycIdverificationComponent extends KycBaseComponent {
         // fetching reports
         await this.sendEnrollRequest(this.state);
 
-        if (!this.enrollResponse) throw 'Enroll request failed';
+        if (!this.enrollResult) throw 'Enroll request failed';
         // need to add to state and then update the db
         const enriched = this.enrichEnrollmentData(
           this.state,
-          this.enrollResponse
+          this.enrollResult
         );
 
         if (!enriched) throw 'Enrichment failed';
 
         await this.kycService.updateAgenciesAsync(enriched.agencies);
-
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
           relativeTo: this.route,
@@ -238,7 +238,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
   ): Promise<KycIdverificationComponent> {
     if (!state) return this;
     const resp = await this.kycService.sendEnrollRequest(state);
-    this.enrollResponse = resp ? JSON.parse(resp) : ({} as IEnrollResponse);
+    const parsed = resp ? JSON.parse(resp) : undefined;
+    const enrollResult = returnNestedObject(
+      JSON.parse(parsed.Enroll),
+      'EnrollResult'
+    );
+    this.enrollResult = enrollResult ? enrollResult : undefined;
     return this;
   }
 
@@ -250,14 +255,16 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   enrichEnrollmentData(
     state: UpdateAppDataInput | undefined,
-    enroll: IEnrollResponse
+    enroll: IEnrollResult
   ): AppDataStateModel | UpdateAppDataInput | undefined {
     if (!state) return;
     let enrollReport;
     let enrollMergeReport;
     let enrollVantageScore;
+    console.log('enroll in enrich', enroll, state);
     const enrollmentKey = returnNestedObject(enroll, 'a:EnrollmentKey');
     const prodResponse = returnNestedObject(enroll, 'a:ServiceProductResponse');
+    if (!prodResponse) return;
     if (prodResponse instanceof Array) {
       enrollReport = prodResponse.find(
         (item: IEnrollServiceProductResponse) => {
