@@ -1,13 +1,19 @@
-export interface IMergeReport {
-  TrueLinkCreditReportType: {
-    SB168Frozen: string;
-    Borrower: IBorrower;
-    TradeLinePartition: ITradeLinePartition[];
-    InquiryPartition: IInquiryPartition;
-    Message: { code: string; type: string }[];
-    Summary: ISummary
+import {
+  ISource,
+  ICreditScoreFactor,
+} from '@shared/interfaces/common-tu.interface';
 
-  }
+export interface IMergeReport {
+  TrueLinkCreditReportType: ITrueLinkCreditReportType;
+}
+
+export interface ITrueLinkCreditReportType {
+  SB168Frozen: string;
+  Borrower: IBorrower;
+  TradeLinePartition: ITradeLinePartition[];
+  InquiryPartition: IInquiryPartition;
+  Message: { code: string; type: string }[];
+  Summary: ISummary;
 }
 
 export interface IBorrower {
@@ -17,23 +23,23 @@ export interface IBorrower {
     Origin: string;
     Ownership: string;
     Source: ISource;
-  },
+  };
   Birth: {
     BirthDate: string;
     Source: ISource;
-  },
+  };
   CreditScore: {
     CreditScoreFactor: ICreditScoreFactor[];
     CreditScoreMode: string;
     NoScoreReason: string;
     Source: ISource;
-  },
+  };
   SocialPartition: {
     Social: {
       SocialSecurityNumber: String;
       Source: ISource;
-    }
-  }
+    };
+  };
 }
 
 export interface ITradeLinePartition {
@@ -60,16 +66,15 @@ export interface ITradeLinePartition {
       CreditLimit: string;
     };
     Source: ISource;
-  }
+  };
 }
 
 export interface IInquiryPartition {
   Inquiry: {
     IndustryCode: string;
     Source: ISource;
-  }
+  };
 }
-
 
 export interface ISummary {
   TradelineSummary: {
@@ -86,19 +91,7 @@ export interface ISummary {
       Bureau: string;
       InquiryDate: string;
       OriginalData: string;
-    }
+    };
   };
   SafetyCheckPassed: string;
-}
-
-export interface ICreditScoreFactor {
-  Factor: string;
-  FactorText: string[];
-}
-
-export interface ISource {
-  BorrowerKey: string;
-  Bureau: string;
-  InquiryDate: string;
-  Reference: string;
 }
