@@ -32,6 +32,7 @@ export class AuthService {
         case 'signIn':
           console.log('in signin');
           const creds: ICredentials = await this.getCurrentUserCredentials();
+          console.log('current credentials', creds);
           if (creds) await this.sync.hallmonitor(creds);
           break;
         case 'signOut':

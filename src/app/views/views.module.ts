@@ -77,12 +77,13 @@ const views = [
   ComplianceTosComponent,
   DashboardInitComponent,
   NegativeAccountInitialComponent,
+  NegativeAccountInitialPureComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes, NegativeAccountInitialPureComponent],
+  declarations: [...views, ...pipes],
   imports: [
     CommonModule,
     ReactiveFormsModule,

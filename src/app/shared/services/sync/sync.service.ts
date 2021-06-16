@@ -12,9 +12,7 @@ import {
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataSelectors, AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { input } from 'aws-amplify';
-import { filter } from 'rxjs/operators';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +23,6 @@ export class SyncService {
   // apiDeleteListener$: ZenObservable.Subscription;
   constructor(
     private api: APIService,
-    private auth: AuthService,
     private store: Store,
     private router: Router
   ) {
@@ -62,13 +59,15 @@ export class SyncService {
   async hallmonitor(creds: ICredentials): Promise<void> {
     console.log('calling hallmonitor');
     const { identityId: id } = creds;
+    console.log('id', id);
     if (!id) {
       // new user...seed database...and send them to onboarding
       await this.initAppData({ identityId: id } as ICredentials);
       this.routeUser(-1);
     } else {
       // existing user...check where last left off
-      this.syncDBDownToState().then((state: AppDataStateModel) => {
+      this.syncDBDownToState(id).then((state: AppDataStateModel) => {
+        console.log('synching database to state', state);
         const lastComplete = state.user?.onboarding?.lastComplete || -1;
         this.routeUser(lastComplete);
       });
@@ -143,29 +142,31 @@ export class SyncService {
    * Update the state with updated db data
    *   - will use the provided state or if none provided,
    *     will select the state from the DB
+   * @param {string} id user id
    * @param {AppDataStateModel} payload (optional)
    */
   async syncDBDownToState(
+    id: string,
     payload?: AppDataStateModel
   ): Promise<AppDataStateModel> {
+    console.log('payload in sync db', payload);
     if (payload) {
+      console.log('editing state with provided payload');
       this.store.dispatch(new AppDataActions.Edit(payload));
       return payload;
     }
-    return new Promise((resolve, reject) => {
-      this.store
-        .selectOnce(AppDataSelectors.getAppData)
-        .subscribe(async (state) => {
-          const id = !state.id
-            ? this.auth.getCurrentUserCredentials()
-            : state.id;
-          if (!id) return;
-          const raw = await this.api.GetAppData(state.id);
-          const data = this.cleanBackendData(raw);
-          this.store.dispatch(new AppDataActions.Edit(data));
+    // no payload need to get the id
+    try {
+      const raw = await this.api.GetAppData(id);
+      const data = this.cleanBackendData(raw);
+      return new Promise((resolve, reject) => {
+        this.store.dispatch(new AppDataActions.Edit(data)).subscribe((_) => {
           resolve(data);
         });
-    });
+      });
+    } catch (err) {
+      throw 'Error syncing db to state';
+    }
   }
 
   cleanBackendData(data: GetAppDataQuery): AppDataStateModel {
