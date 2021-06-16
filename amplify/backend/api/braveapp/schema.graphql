@@ -97,3 +97,110 @@ type TUEnrollResponse {
   serviceProductValue: String
   status: String
 }
+
+type MergeReport {
+  TrueLinkCreditReportType: TrueLinkCreditReportType
+}
+
+type TrueLinkCreditReportType {
+  SB168Frozen: String
+  Borrower: Borrower
+  TradeLinePartition: [TradeLinePartition]
+  InquiryPartition: InquiryPartition
+  Message: [{
+    code: String
+    type: String }]
+  Summary: Summary
+}
+
+type Borrowr {
+  BorrowerAddress: {
+    CreditAddress: String
+    Dwelling: String
+    Origin: String
+    Ownership: String
+    Source: Source
+  },
+  Birth: {
+    BirthDate: String
+    Source: Source
+  },
+  CreditScore: {
+    CreditScoreFactor: [CreditScoreFactor]
+    CreditScoreMode: String
+    NoScoreReason: String
+    Source: Source
+  },
+  SocialPartition: {
+    Social: {
+      SocialSecurityNumber: String
+      Source: Source
+    }
+  }
+}
+
+type TradeLinePartition {
+  Tradeline: {
+    AccountCondition: String
+    AccountDesignator: String
+    DisputeFlag: String
+    IndustryCode: String
+    OpenClosed: String
+    PayStatus: String
+    VerificationIndicator: String
+    Remark: {
+      RemarkCode: String
+    }
+    GrantedTrade: {
+      AccountType: String
+      CreditType: String
+      PaymentFrequency: String
+      TermType: String
+      WorstPayStatus: String
+      PayStatusHistory: {
+        MonthlyPayStatus: [String]
+      }
+      CreditLimit: String
+    }
+    Source: Source
+  }
+}
+
+type InquiryPartition {
+  Inquiry: {
+    IndustryCode: String
+    Source: Source
+  }
+}
+
+type Summary {
+  TradelineSummary: {
+    TransUnion: String
+  }
+  InquirySummary: {
+    TransUnion: String
+  }
+  PublicRecordSummary: {
+    TransUnion: String
+  }
+  Sources: {
+    Source: {
+      Bureau: String
+      InquiryDate: String
+      OriginalData: String
+    }
+  }
+  SafetyCheckPassed: String
+}
+
+type CreditScoreFactor {
+  Factor: String
+  FactorText: [String]
+}
+
+type Source {
+  BorrowerKey: String
+  Bureau: String
+  InquiryDate: String
+  Reference: String
+}
