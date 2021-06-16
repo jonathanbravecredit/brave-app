@@ -7376,6 +7376,243 @@
             "templateData": "<div\r\n  class=\"relative flex flex-col break-words w-full py-5 rounded-lg border border-blueGray-300\"\r\n>\r\n  <div class=\"flex pr-5\">\r\n    <div class=\"px-4 w-13\">\r\n      <!-- left column  section 1 -->\r\n      <div\r\n        class=\"rounded-full border-none w-5 h-5\"\r\n        [ngClass]=\"status | accountStatus\"\r\n      ></div>\r\n    </div>\r\n    <div class=\"flex flex-col w-full\">\r\n      <!--  right column section 2 -->\r\n      <div class=\"flex flex-row justify-between p-0 -mt-1 mb-1\">\r\n        <!-- header  -->\r\n        <span><p class=\"brave-body1-semibold\">CITI</p></span>\r\n        <span\r\n          ><p class=\"brave-body1-semibold\"></p>\r\n          80%</span\r\n        >\r\n      </div>\r\n\r\n      <div class=\"flex flex-row\">\r\n        <!-- credit balance  -->\r\n        <span><p class=\"brave-body1\">Credit Balance:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">$800</p></span>\r\n      </div>\r\n\r\n      <div class=\"flex flex-row\">\r\n        <!-- credit limit  -->\r\n        <span><p class=\"brave-body1\">Credit Limit:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">$2000</p></span>\r\n      </div>\r\n\r\n      <div class=\"mt-1\">\r\n        <!-- buttons goes here -->\r\n        <brave-viewdetail-button>View Details</brave-viewdetail-button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div *ngIf=\"open$ | async as open\" class=\"flex flex-col w-full py-5 px-4\">\r\n    <div class=\"border-t border-blueGray-300\"></div>\r\n  </div>\r\n\r\n  <div *ngIf=\"open$ | async as open\" class=\"flex flex-row pr-5\">\r\n    <div class=\"px-4 w-13\">\r\n      <!-- left column  section 1 -->\r\n      <div class=\"w-5 h-5\"></div>\r\n    </div>\r\n    <div class=\"flex flex-col w-full pr-1\">\r\n      <!--  right column section 2 -->\r\n\r\n      <div class=\"flex flex-row justify-between\">\r\n        <!-- min payment  -->\r\n        <span><p class=\"brave-body1\">Minimum Payment:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">$50</p></span>\r\n      </div>\r\n\r\n      <div class=\"flex flex-row justify-between\">\r\n        <!-- date opened TODO swith to pipe  -->\r\n        <span><p class=\"brave-body1\">Date Opened:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">02/01/2020</p></span>\r\n      </div>\r\n\r\n      <div class=\"flex flex-row justify-between\">\r\n        <!-- account status  -->\r\n        <span><p class=\"brave-body1\">Account Status:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">In good standing</p></span>\r\n      </div>\r\n\r\n      <div class=\"flex flex-row justify-between\">\r\n        <!-- ownership of account  -->\r\n        <span><p class=\"brave-body1\">Ownership of account:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">Self</p></span>\r\n      </div>\r\n\r\n      <div class=\"flex flex-row justify-between\">\r\n        <!-- credit limit  -->\r\n        <span><p class=\"brave-body1\">Days 30/60/90 Late:&nbsp;</p></span>\r\n        <span><p class=\"brave-body1\">1/0/0</p></span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
         },
         {
+            "name": "CreditReportCardComponent",
+            "id": "component-CreditReportCardComponent-5ebb0e9738a4466ac17f7662f1608812",
+            "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-credit-report-card",
+            "styleUrls": [
+                "./credit-report-card.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./credit-report-card.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "firstFieldName",
+                    "defaultValue": "''",
+                    "line": 11,
+                    "type": "string"
+                },
+                {
+                    "name": "firstFieldValue",
+                    "defaultValue": "''",
+                    "line": 12,
+                    "type": "string"
+                },
+                {
+                    "name": "isOpen",
+                    "defaultValue": "false",
+                    "line": 10,
+                    "type": "boolean"
+                },
+                {
+                    "name": "secondFieldName",
+                    "defaultValue": "''",
+                    "line": 13,
+                    "type": "string"
+                },
+                {
+                    "name": "secondFieldValue",
+                    "defaultValue": "''",
+                    "line": 14,
+                    "type": "string"
+                },
+                {
+                    "name": "status",
+                    "defaultValue": "''",
+                    "line": 17,
+                    "type": "string"
+                },
+                {
+                    "name": "thirdFieldName",
+                    "defaultValue": "''",
+                    "line": 15,
+                    "type": "string"
+                },
+                {
+                    "name": "thirdFieldValue",
+                    "defaultValue": "''",
+                    "line": 16,
+                    "type": "string"
+                },
+                {
+                    "name": "title",
+                    "defaultValue": "''",
+                    "line": 9,
+                    "type": "string"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 20
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report-card',\n  templateUrl: './credit-report-card.component.html',\n  styleUrls: ['./credit-report-card.component.css']\n})\nexport class CreditReportCardComponent implements OnInit {\n  @Input() title: string = '';\n  @Input() isOpen: boolean = false;\n  @Input() firstFieldName: string = '';\n  @Input() firstFieldValue: string = '';\n  @Input() secondFieldName: string = '';\n  @Input() secondFieldValue: string = '';\n  @Input() thirdFieldName: string = '';\n  @Input() thirdFieldValue: string = '';\n  @Input() status: string = '';\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./credit-report-card.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 17
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"border-t border-blueGray-300 my-2\"></div>\n<div class=\"flex items-center\">\n<div class=\"ml-3 h-4 w-4 bg-blue-500 rounded-full border-none\" [ngClass]=\"status | snapshotStatus:'background'\"></div>\n\t<span class=\"ml-3\">{{ title }} ({{ isOpen ? 'Open' : 'Closed' }})</span>\n</div>\n<div class=\"card pl-10 pr-3 mt-1\">\n\t<div class=\"grid grid-cols-2 gap-4 mb-2\">\n\t  <span><p class=\"text-sm font-semibold\">{{ firstFieldName }}: </p></span>\n\t  <span><p class=\"text-sm font-semibold text-right\">{{ firstFieldValue }}</p></span>\n\t  <span><p class=\"text-xs text-dk-gray\">{{ secondFieldName }}</p></span>\n\t  <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ secondFieldValue }}</p></span>\n\t  <span><p class=\"text-xs text-dk-gray\">{{ thirdFieldName }}</p></span>\n\t  <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ thirdFieldValue }}</p></span>\n\t</div>\n\t<p class=\"text-sm mt-5 hover:cursor-pointer\">View Details <span class=\"ml-2\">&#10095;</span></p>\n</div>\n<div class=\"border-t border-blueGray-300 my-2\"></div>\n"
+        },
+        {
+            "name": "CreditReportComponent",
+            "id": "component-CreditReportComponent-bf2dcc8690d46371c03873b95e7a3bff",
+            "file": "src/app/views/credit-report/credit-report/credit-report.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-credit-report",
+            "styleUrls": [
+                "./credit-report.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./credit-report.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "creditReports",
+                    "defaultValue": "[]",
+                    "line": 9,
+                    "type": "any[]"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 12
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report',\n  templateUrl: './credit-report.component.html',\n  styleUrls: ['./credit-report.component.css']\n})\nexport class CreditReportComponent implements OnInit {\n  @Input() creditReports: any[] = [];\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./credit-report.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 9
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<brave-credit-report-pure [creditReports]=\"creditReports\"></brave-credit-report-pure>\n"
+        },
+        {
+            "name": "CreditReportPureComponent",
+            "id": "component-CreditReportPureComponent-19df14e6904f29721628f01841e7725d",
+            "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-credit-report-pure",
+            "styleUrls": [
+                "./credit-report-pure.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./credit-report-pure.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "creditReports",
+                    "defaultValue": "[]",
+                    "line": 9,
+                    "type": "any[]"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 13
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report-pure',\n  templateUrl: './credit-report-pure.component.html',\n  styleUrls: ['./credit-report-pure.component.css']\n})\nexport class CreditReportPureComponent implements OnInit {\n  @Input() creditReports: any[] = [];\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./credit-report-pure.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 9
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\n\t<div class=\"p-4\">\n\t  <span class=\"text-lg\">Your TransUnion Credit Report</span>\n\t  <div class=\"w-full h-40 bg-gray-400 mt-4\">\n\t    <!-- Placeholder -->\n\t  </div>\n\t  <p class=\"text-xs mt-3 text-gray-600\">As of 03/17/2021</p>\n\t</div>\n\t<div class=\"p-4\" *ngFor=\"let report of creditReports\">\n\t  <h6 class=\"text-lg\">{{ report.name }}</h6>\n\t  <input type=\"checkbox\" id=\"dont-show-hide\">\n\t  <label for=\"dont-show-hide\" class=\"ml-2 mr-auto\">Only Show me delinquent accounts</label>\n\t\t<brave-credit-report-card *ngFor=\"let reportItem of report.items\" \n\t\t[title]=\"reportItem.title\"\n\t\t[isOpen]=\"reportItem.isOpen\"\n\t\t[firstFieldName]=\"reportItem.firstFieldName\"\n\t\t[firstFieldValue]=\"reportItem.firstFieldValue\"\n\t\t[secondFieldName]=\"reportItem.secondFieldName\"\n\t\t[secondFieldValue]=\"reportItem.secondFieldValue\"\n\t\t[thirdFieldName]=\"reportItem.thirdFieldName\"\n\t\t[thirdFieldValue]=\"reportItem.thirdFieldValue\"\n\t\t></brave-credit-report-card>\n\t</div>\n</div>\n"
+        },
+        {
             "name": "DashboardComponent",
             "id": "component-DashboardComponent-f86aceb8416f3ed40d6fa93302fb1df6",
             "file": "src/app/layouts/dashboard/dashboard.component.ts",
@@ -13218,7 +13455,7 @@
         },
         {
             "name": "NegativeAccountCardComponent",
-            "id": "component-NegativeAccountCardComponent-0c121d8f802cd5140c873362410397d2",
+            "id": "component-NegativeAccountCardComponent-d8d91656dfb1f503e226117fe92bd4a4",
             "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -13238,85 +13475,96 @@
                 {
                     "name": "accountNumber",
                     "defaultValue": "''",
-                    "line": 23
+                    "line": 25
                 },
                 {
                     "name": "accountTypeDescription",
-                    "defaultValue": "''",
-                    "line": 17,
-                    "type": "string"
-                },
-                {
-                    "name": "accountTypeDescriptionValue",
-                    "defaultValue": "''",
-                    "line": 18,
-                    "type": "string"
-                },
-                {
-                    "name": "amountPastDue",
-                    "defaultValue": "0",
-                    "line": 25,
-                    "type": "number"
-                },
-                {
-                    "name": "creditorName",
-                    "defaultValue": "''",
-                    "line": 13,
-                    "type": "string"
-                },
-                {
-                    "name": "dateLastPayment",
-                    "defaultValue": "'20/02/2021'",
-                    "line": 27
-                },
-                {
-                    "name": "dateOpened",
-                    "defaultValue": "'20/02/2021'",
-                    "line": 26
-                },
-                {
-                    "name": "disputeFlag",
                     "defaultValue": "''",
                     "line": 19,
                     "type": "string"
                 },
                 {
-                    "name": "disputeFlagValue",
+                    "name": "accountTypeDescriptionValue",
                     "defaultValue": "''",
                     "line": 20,
                     "type": "string"
                 },
                 {
-                    "name": "lastReported",
-                    "defaultValue": "''",
-                    "line": 14,
-                    "type": "string"
+                    "name": "amountPastDue",
+                    "defaultValue": "0",
+                    "line": 27,
+                    "type": "number"
                 },
                 {
-                    "name": "originalCreditor",
+                    "name": "creditorName",
                     "defaultValue": "''",
                     "line": 15,
                     "type": "string"
                 },
                 {
-                    "name": "originalCreditorValue",
+                    "name": "dateLastPayment",
+                    "defaultValue": "'20/02/2021'",
+                    "line": 29
+                },
+                {
+                    "name": "dateOpened",
+                    "defaultValue": "'20/02/2021'",
+                    "line": 28
+                },
+                {
+                    "name": "disputeFlag",
+                    "defaultValue": "''",
+                    "line": 21,
+                    "type": "string"
+                },
+                {
+                    "name": "disputeFlagValue",
+                    "defaultValue": "''",
+                    "line": 22,
+                    "type": "string"
+                },
+                {
+                    "name": "lastReported",
                     "defaultValue": "''",
                     "line": 16,
                     "type": "string"
                 },
                 {
+                    "name": "originalCreditor",
+                    "defaultValue": "''",
+                    "line": 17,
+                    "type": "string"
+                },
+                {
+                    "name": "originalCreditorValue",
+                    "defaultValue": "''",
+                    "line": 18,
+                    "type": "string"
+                },
+                {
                     "name": "remarks",
                     "defaultValue": "''",
-                    "line": 28
+                    "line": 30
                 },
                 {
                     "name": "typeOfCollection",
                     "defaultValue": "''",
-                    "line": 24
+                    "line": 26
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
+                {
+                    "name": "$isClosed",
+                    "defaultValue": "new BehaviorSubject(false)",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "modifierKind": [
+                        112
+                    ]
+                },
                 {
                     "name": "$isIgnored",
                     "defaultValue": "new BehaviorSubject(false)",
@@ -13327,6 +13575,14 @@
                     "modifierKind": [
                         112
                     ]
+                },
+                {
+                    "name": "isClosed",
+                    "defaultValue": "this.$isClosed.asObservable()",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
                 },
                 {
                     "name": "isIgnored",
@@ -13342,14 +13598,14 @@
                     "type": "Observable<boolean> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 33
                 },
                 {
                     "name": "viewDetail",
                     "type": "ViewdetailButtonComponent | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 30,
+                    "line": 32,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -13360,12 +13616,20 @@
             ],
             "methodsClass": [
                 {
+                    "name": "close",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 52
+                },
+                {
                     "name": "ignore",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 41
+                    "line": 43
                 },
                 {
                     "name": "ngAfterViewInit",
@@ -13373,7 +13637,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 37
+                    "line": 39
                 },
                 {
                     "name": "ngOnInit",
@@ -13381,7 +13645,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 35
+                    "line": 37
                 },
                 {
                     "name": "undoIgnore",
@@ -13389,7 +13653,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 45
+                    "line": 47
                 }
             ],
             "hostBindings": [],
@@ -13397,7 +13661,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';\nimport { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';\nimport { Observable, of, BehaviorSubject } from 'rxjs';\n\n@Component({\n  selector: 'brave-negative-account-card',\n  templateUrl: './negative-account-card.component.html',\n  styleUrls: ['./negative-account-card.component.css']\n})\nexport class NegativeAccountCardComponent implements OnInit, AfterViewInit {\n  private $isIgnored = new BehaviorSubject(false);\n  isIgnored = this.$isIgnored.asObservable();\n  @Input() creditorName: string = '';\n  @Input() lastReported: string = '';\n  @Input() originalCreditor: string = '';\n  @Input() originalCreditorValue: string = '';\n  @Input() accountTypeDescription: string = '';\n  @Input() accountTypeDescriptionValue: string = '';\n  @Input() disputeFlag: string = '';\n  @Input() disputeFlagValue: string = '';\n\n  // Detail Information\n  @Input() accountNumber = '';\n  @Input() typeOfCollection = '';\n  @Input() amountPastDue: number = 0;\n  @Input() dateOpened = '20/02/2021';\n  @Input() dateLastPayment = '20/02/2021';\n  @Input() remarks = '';\n  @ViewChild(ViewdetailButtonComponent)\n  viewDetail: ViewdetailButtonComponent | undefined;\n  open$: Observable<boolean> | undefined = of(false);\n\n  constructor() { }\n\n  ngOnInit(): void { }\n\n  ngAfterViewInit(): void {\n    this.open$ = this.viewDetail?.open$.asObservable();\n  }\n\n  ignore() {\n    this.$isIgnored.next(true);\n  }\n\n  undoIgnore() {\n    this.$isIgnored.next(false);\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';\r\nimport { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';\r\nimport { Observable, of, BehaviorSubject } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'brave-negative-account-card',\r\n  templateUrl: './negative-account-card.component.html',\r\n  styleUrls: ['./negative-account-card.component.css']\r\n})\r\nexport class NegativeAccountCardComponent implements OnInit, AfterViewInit {\r\n  private $isIgnored = new BehaviorSubject(false);\r\n  isIgnored = this.$isIgnored.asObservable();\r\n  private $isClosed = new BehaviorSubject(false);\r\n  isClosed = this.$isClosed.asObservable();\r\n  @Input() creditorName: string = '';\r\n  @Input() lastReported: string = '';\r\n  @Input() originalCreditor: string = '';\r\n  @Input() originalCreditorValue: string = '';\r\n  @Input() accountTypeDescription: string = '';\r\n  @Input() accountTypeDescriptionValue: string = '';\r\n  @Input() disputeFlag: string = '';\r\n  @Input() disputeFlagValue: string = '';\r\n\r\n  // Detail Information\r\n  @Input() accountNumber = '';\r\n  @Input() typeOfCollection = '';\r\n  @Input() amountPastDue: number = 0;\r\n  @Input() dateOpened = '20/02/2021';\r\n  @Input() dateLastPayment = '20/02/2021';\r\n  @Input() remarks = '';\r\n  @ViewChild(ViewdetailButtonComponent)\r\n  viewDetail: ViewdetailButtonComponent | undefined;\r\n  open$: Observable<boolean> | undefined = of(false);\r\n\r\n  constructor() { }\r\n\r\n  ngOnInit(): void { }\r\n\r\n  ngAfterViewInit(): void {\r\n    this.open$ = this.viewDetail?.open$.asObservable();\r\n  }\r\n\r\n  ignore() {\r\n    this.$isIgnored.next(true);\r\n  }\r\n\r\n  undoIgnore() {\r\n    this.$isIgnored.next(false);\r\n    this.viewDetail?.open$.next(true);\r\n  }\r\n\r\n  close() {\r\n     this.$isClosed.next(true);\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -13410,17 +13674,17 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 31
+                "line": 33
             },
             "implements": [
                 "OnInit",
                 "AfterViewInit"
             ],
-            "templateData": "<div *ngIf=\"isIgnored | async as ignored\">\n  <span><p class=\"font-semibold\">We'll ignore this account for now</p></span>\n  <span><p>See your full report to review hidden items</p></span>\n</div>\n<div class=\"border-t border-blueGray-300 py-2\"></div>\n<span><p class=\"text-sm font-semibold\">{{ creditorName }}</p></span>\n<div class=\"grid grid-cols-2 gap-4 mb-2\">\n  <span><p class=\"text-sm font-semibold\">Last Reported: </p></span>\n  <span><p class=\"text-sm font-semibold text-right\">{{ lastReported }}</p></span>\n  <span><p class=\"text-xs text-dk-gray\">{{ accountTypeDescription }}</p></span>\n  <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ accountTypeDescriptionValue }}</p></span>\n  <span><p class=\"text-xs text-dk-gray\">{{ disputeFlag }}</p></span>\n  <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ disputeFlagValue }}</p></span>\n  <span><p class=\"text-xs text-dk-gray\">{{ originalCreditor }}</p></span>\n  <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ originalCreditorValue }}</p></span>\n</div>\n<brave-viewdetail-button class=\"w-100 mt-4\" size=\"full\">View Detail</brave-viewdetail-button>\n<div *ngIf=\"open$ | async as open\" class=\"flex flex-col w-full\">\n  <div class=\"flex justify-between\">\n    <brave-filled-onlytext-button buttonSize=\"sm\" backgroundColor=\"bg-dk-gray\" activeColor=\"bg-indigo-800\" color=\"text-black\" (click)=\"ignore()\">Ignore</brave-filled-onlytext-button>\n    <brave-filled-onlytext-button buttonSize=\"sm\" backgroundColor=\"bg-indigo-800\" activeColor=\"bg-indigo-800\" color=\"text-white\">Dispute</brave-filled-onlytext-button>\n  </div>\n  \n  <span><p class=\"text-lg\">Account Details</p></span>\n  <div class=\"border-t border-blueGray-300\"></div>\n  <div class=\"grid grid-cols-2 gap-4 py-2\">\n    <span><p class=\"text-xs text-dk-gray\">Account Number</p></span>\n    <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ accountNumber }}</p></span>\n  </div>\n  <div class=\"border-t border-blueGray-300\"></div>\n  <div class=\"grid grid-cols-2 gap-4 py-2\">\n    <span><p class=\"text-xs text-dk-gray\">Type</p></span>\n    <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ typeOfCollection }}</p></span>\n  </div>\n  <div class=\"border-t border-blueGray-300\"></div>\n  <div class=\"grid grid-cols-2 gap-4 py-2\">\n    <span><p class=\"text-xs text-dk-gray\">Amount Past Due</p></span>\n    <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ '$' + amountPastDue }}</p></span>\n  </div>\n  <div class=\"border-t border-blueGray-300\"></div>\n  <div class=\"grid grid-cols-2 gap-4 py-2\">\n    <span><p class=\"text-xs text-dk-gray\">Date Opened</p></span>\n    <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ dateOpened }}</p></span>\n  </div>\n  <div class=\"border-t border-blueGray-300\"></div>\n  <div class=\"grid grid-cols-2 gap-4 py-2\">\n    <span><p class=\"text-xs text-dk-gray\">Date of Last Payment</p></span>\n    <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ dateLastPayment }}</p></span>\n  </div>\n</div>\n"
+            "templateData": "<div *ngIf=\"!(isClosed | async)\">\r\n  <div *ngIf=\"(isIgnored | async)\" class=\"bg-brave-lusitan-blue w-full p-3\">\r\n    <div class=\"w-100 flex justify-end\">\r\n      <span (click)=\"close()\">&#10005;</span>\r\n    </div>\r\n    <span class=\"text-center\"><p class=\"font-semibold\">We'll ignore this account for now</p></span>\r\n    <span class=\"text-center\"><p>See your full report to review hidden items</p></span>\r\n    <div class=\"mt-2 mx-auto w-full\">\r\n      <div class=\"flex items-center w-full\">\r\n        <input class=\"ml-auto\" type=\"checkbox\" id=\"dont-show-hide\"><label for=\"dont-show-hide\" class=\"ml-2 mr-auto\">Don't show me this again</label>\r\n      </div>\r\n      <brave-links-onlytext-button (click)=\"undoIgnore()\">Undo</brave-links-onlytext-button>\r\n    </div>\r\n  </div>\r\n  <div *ngIf=\"!(isIgnored | async)\">\r\n    <div class=\"border-t border-blueGray-300 py-2\"></div>\r\n    <span><p class=\"text-sm font-semibold\">{{ creditorName }}</p></span>\r\n    <div class=\"grid grid-cols-2 gap-4 mb-2\">\r\n      <span><p class=\"text-sm font-semibold\">Last Reported: </p></span>\r\n      <span><p class=\"text-sm font-semibold text-right\">{{ lastReported }}</p></span>\r\n      <span><p class=\"text-xs text-dk-gray\">{{ accountTypeDescription }}</p></span>\r\n      <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ accountTypeDescriptionValue }}</p></span>\r\n      <span><p class=\"text-xs text-dk-gray\">{{ disputeFlag }}</p></span>\r\n      <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ disputeFlagValue }}</p></span>\r\n      <span><p class=\"text-xs text-dk-gray\">{{ originalCreditor }}</p></span>\r\n      <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ originalCreditorValue }}</p></span>\r\n    </div>\r\n    <div class=\"py-3\">\r\n      <brave-viewdetail-button class=\"w-100 \" size=\"full\">View Detail</brave-viewdetail-button>\r\n    </div>\r\n    <div *ngIf=\"open$ | async as open\" class=\"flex flex-col w-full\">\r\n      <div class=\"flex justify-between\">\r\n        <brave-filled-onlytext-button buttonSize=\"sm\" backgroundColor=\"bg-dk-gray\" activeColor=\"bg-dk-gray\" color=\"text-black\" (click)=\"ignore()\">Ignore</brave-filled-onlytext-button>\r\n        <brave-filled-onlytext-button buttonSize=\"sm\" backgroundColor=\"bg-indigo-800\" activeColor=\"bg-indigo-800\" color=\"text-white\">Dispute</brave-filled-onlytext-button>\r\n      </div>\r\n      <span><p class=\"text-lg\">Account Details</p></span>\r\n      <div class=\"border-t border-blueGray-300\"></div>\r\n      <div class=\"grid grid-cols-2 gap-4 py-2\">\r\n        <span><p class=\"text-xs text-dk-gray\">Account Number</p></span>\r\n        <span><p class=\"text-xs text-dk-gray text-opacity-50 text-right\">{{ accountNumber }}</p></span>\r\n      </div>\r\n      <div class=\"border-t border-blueGray-300\"></div>\r\n      <div class=\"grid grid-cols-2 gap-4 py-2\">\r\n        <span><p class=\"text-xs text-dk-gray\">Type</p></span>\r\n        <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ typeOfCollection }}</p></span>\r\n      </div>\r\n      <div class=\"border-t border-blueGray-300\"></div>\r\n      <div class=\"grid grid-cols-2 gap-4 py-2\">\r\n        <span><p class=\"text-xs text-dk-gray\">Amount Past Due</p></span>\r\n        <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ '$' + amountPastDue }}</p></span>\r\n      </div>\r\n      <div class=\"border-t border-blueGray-300\"></div>\r\n      <div class=\"grid grid-cols-2 gap-4 py-2\">\r\n        <span><p class=\"text-xs text-dk-gray\">Date Opened</p></span>\r\n        <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ dateOpened }}</p></span>\r\n      </div>\r\n      <div class=\"border-t border-blueGray-300\"></div>\r\n      <div class=\"grid grid-cols-2 gap-4 py-2\">\r\n        <span><p class=\"text-xs text-dk-gray\">Date of Last Payment</p></span>\r\n        <span class=\"text-right\"><p class=\"text-xs text-dk-gray text-opacity-50\">{{ dateLastPayment }}</p></span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
         },
         {
             "name": "NegativeAccountInitialComponent",
-            "id": "component-NegativeAccountInitialComponent-d03d13e19674e3922f3a01de255a23d6",
+            "id": "component-NegativeAccountInitialComponent-a1ef7cc46ac45c162dd3f62ed82a3507",
             "file": "src/app/views/negative-account/negative-account-initial/negative-account-initial.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -13454,7 +13718,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-negative-account-initial',\n  templateUrl: './negative-account-initial.component.html',\n  styleUrls: ['./negative-account-initial.component.css']\n})\nexport class NegativeAccountInitialComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'brave-negative-account-initial',\r\n  templateUrl: './negative-account-initial.component.html',\r\n  styleUrls: ['./negative-account-initial.component.css']\r\n})\r\nexport class NegativeAccountInitialComponent implements OnInit {\r\n\r\n  constructor() { }\r\n\r\n  ngOnInit(): void {\r\n  }\r\n\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -13472,7 +13736,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\n  <div class=\"mb-2\">\n    <h2 class=\"font-semibold text-lg\">New Negative Accounts</h2>\n    <span><p class=\"text-brave-critical text-xs\">High Score Impact</p></span>\n  </div>\n  <span><p class=\"text-sm mb-1\">These are new negative accounts in the last 30 days that are in collections, have been charged off, or have late payments.</p></span>\n  <span><p class=\"text-sm mb-1\">Review the accounts for accuracy, and if you see an error, you can dispute them.</p></span>\n  <brave-negative-account-card\n  creditorName=\"Hj National Collections\"\n  lastReported=\"29/09/2020\"\n  accountTypeDescription=\"Collections Account\"\n  accountTypeDescriptionValue=\"Open\"\n  originalCreditor=\"Original Creditor\"\n  originalCreditorValue=\"Wells Fargo Bank, N.A.\"\n  disputeFlag=\"Previously Disputed?\"\n  disputeFlagValue=\"No\"\n  accountNumber=\"066611222\"\n  typeOfCollection=\"Collections\"\n  [amountPastDue]=\"700\"\n  dateOpened=\"04/12/2018\"\n  dateLastPayment=\"04/21/2018\"\n  ></brave-negative-account-card>\n  <brave-negative-account-card\n  creditorName=\"A.R.M. Solutions\"\n  lastReported=\"29/09/2020\"\n  accountTypeDescription=\"90-Day Late Payment\"\n  accountTypeDescriptionValue=\"Open\"\n  originalCreditor=\"Original Creditor\"\n  originalCreditorValue=\"Bank Of America\"\n  disputeFlag=\"Previously Disputed?\"\n  disputeFlagValue=\"No\"\n  accountNumber=\"066611222\"\n  typeOfCollection=\"Collections\"\n  [amountPastDue]=\"700\"\n  dateOpened=\"04/12/2018\"\n  dateLastPayment=\"04/21/2018\"\n  ></brave-negative-account-card>\n  <brave-navigation-tabs></brave-navigation-tabs>\n</div>\n"
+            "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\r\n  <div class=\"mb-2\">\r\n    <h2 class=\"font-semibold text-lg\">New Negative Accounts</h2>\r\n    <span><p class=\"text-brave-critical text-xs\">High Score Impact</p></span>\r\n  </div>\r\n  <span><p class=\"text-sm mb-1\">These are new negative accounts in the last 30 days that are in collections, have been charged off, or have late payments.</p></span>\r\n  <span><p class=\"text-sm mb-1\">Review the accounts for accuracy, and if you see an error, you can dispute them.</p></span>\r\n  <brave-negative-account-card\r\n  creditorName=\"Hj National Collections\"\r\n  lastReported=\"29/09/2020\"\r\n  accountTypeDescription=\"Collections Account\"\r\n  accountTypeDescriptionValue=\"Open\"\r\n  originalCreditor=\"Original Creditor\"\r\n  originalCreditorValue=\"Wells Fargo Bank, N.A.\"\r\n  disputeFlag=\"Previously Disputed?\"\r\n  disputeFlagValue=\"No\"\r\n  accountNumber=\"066611222\"\r\n  typeOfCollection=\"Collections\"\r\n  [amountPastDue]=\"700\"\r\n  dateOpened=\"04/12/2018\"\r\n  dateLastPayment=\"04/21/2018\"\r\n  ></brave-negative-account-card>\r\n  <brave-negative-account-card\r\n  creditorName=\"A.R.M. Solutions\"\r\n  lastReported=\"29/09/2020\"\r\n  accountTypeDescription=\"90-Day Late Payment\"\r\n  accountTypeDescriptionValue=\"Open\"\r\n  originalCreditor=\"Original Creditor\"\r\n  originalCreditorValue=\"Bank Of America\"\r\n  disputeFlag=\"Previously Disputed?\"\r\n  disputeFlagValue=\"No\"\r\n  accountNumber=\"066611222\"\r\n  typeOfCollection=\"Collections\"\r\n  [amountPastDue]=\"700\"\r\n  dateOpened=\"04/12/2018\"\r\n  dateLastPayment=\"04/21/2018\"\r\n  ></brave-negative-account-card>\r\n  <brave-navigation-tabs></brave-navigation-tabs>\r\n</div>\r\n"
         },
         {
             "name": "NotificationDropdownComponent",
@@ -17259,7 +17523,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-3\">\r\n  <!-- tag div: Display of current type of snapshot -->\r\n  <div class=\"absolute -mt-5 ml-3 px-1 font-semibold bg-white\" *ngIf=\"label !== undefined\"><span class=\"font-sans\" [ngClass]=\"label | snapshotLabel:'color-class'\">{{ label | snapshotLabel:'text' }}</span></div>\r\n  <!-- left column  section 1: Display of current snapshot status indicator-->\r\n  <div class=\"flex items-center ml-3 mr-6\">\r\n    <div class=\"rounded-full border-none w-4 h-4\" [ngClass]=\"status | snapshotStatus:'background'\"></div>\r\n  </div>\r\n  <div class=\"flex flex-col mr-auto justify-center\">\r\n    <!--  center column section 2: Display of snapshot card information -->\r\n    <div class=\"flex flex-row items-center\">\r\n      <p class=\"text-base font-semibold font-sans text-dk-gray\">{{ title }}</p>\r\n      <div class=\"ml-2\" *ngIf=\"tendency !== 'no-tendency'\">\r\n        <span *ngIf=\"tendency === 'down'\">&darr;</span>\r\n        <span *ngIf=\"tendency === 'up'\">&uarr;</span>\r\n      </div>\r\n    </div>\r\n    <div class=\"flex flex-row items-center\">\r\n      <p class=\"text-2.5 text-opacity-50 font-sans text-dk-gray\">Learn More</p>\r\n      <span class=\"ml-2 text-little-card-icon text-md-gray\">&#10095;</span>\r\n    </div>\r\n  </div>\r\n  <!-- right column section 3: Display of values -->\r\n  <div class=\"flex flex-col items-center mr-8 text-center\">\r\n    <span class=\"text-xl m-auto\">\r\n      <p class=\"font-bold font-headings\" *ngIf=\"typeOfSnapshot === 'tag'\" [ngClass]=\"status | snapshotStatus: 'text'\">{{ value }}</p>\r\n      <p class=\"font-bold font-headings text-dk-gray\" *ngIf=\"typeOfSnapshot !== 'tag'\">{{ value }}<span *ngIf=\"typeOfSnapshot === 'percentage'\">%</span></p>\r\n    </span>\r\n    <span class=\"text-2.5 -mt-1\" *ngIf=\"typeOfSnapshot === 'date'\">\r\n      <p class=\"font-sans text-dk-gray\">{{ typeOfDate }}</p>\r\n    </span>\r\n  </div>\r\n</div>\r\n"
+            "templateData": "<div class=\"relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-3\">\r\n  <!-- tag div: Display of current type of snapshot -->\r\n  <div class=\"absolute -mt-5 ml-3 px-1 font-semibold bg-white\" *ngIf=\"label !== undefined\"><span class=\"font-sans\" [ngClass]=\"label | snapshotLabel:'color-class'\">{{ label | snapshotLabel:'text' }}</span></div>\r\n  <!-- left column  section 1: Display of current snapshot status indicator-->\r\n  <div class=\"flex items-center ml-3 mr-6\">\r\n    <div class=\"rounded-full border-none w-4 h-4\"></div>\r\n  </div>\r\n  <div class=\"flex flex-col mr-auto justify-center\">\r\n    <!--  center column section 2: Display of snapshot card information -->\r\n    <div class=\"flex flex-row items-center\">\r\n      <p class=\"text-base font-semibold font-sans text-dk-gray\">{{ title }}</p>\r\n      <div class=\"ml-2\" *ngIf=\"tendency !== 'no-tendency'\">\r\n        <span *ngIf=\"tendency === 'down'\">&darr;</span>\r\n        <span *ngIf=\"tendency === 'up'\">&uarr;</span>\r\n      </div>\r\n    </div>\r\n    <div class=\"flex flex-row items-center\">\r\n      <p class=\"text-2.5 text-opacity-50 font-sans text-dk-gray\">Learn More</p>\r\n      <span class=\"ml-2 text-little-card-icon text-md-gray\">&#10095;</span>\r\n    </div>\r\n  </div>\r\n  <!-- right column section 3: Display of values -->\r\n  <div class=\"flex flex-col items-center mr-8 text-center\">\r\n    <span class=\"text-xl m-auto\">\r\n      <p class=\"font-bold font-headings\" *ngIf=\"typeOfSnapshot === 'tag'\" [ngClass]=\"status | snapshotStatus: 'text'\">{{ value }}</p>\r\n      <p class=\"font-bold font-headings text-dk-gray\" *ngIf=\"typeOfSnapshot !== 'tag'\">{{ value }}<span *ngIf=\"typeOfSnapshot === 'percentage'\">%</span></p>\r\n    </span>\r\n    <span class=\"text-2.5 -mt-1\" *ngIf=\"typeOfSnapshot === 'date'\">\r\n      <p class=\"font-sans text-dk-gray\">{{ typeOfDate }}</p>\r\n    </span>\r\n  </div>\r\n</div>\r\n"
         },
         {
             "name": "SsnFullFormComponent",
@@ -18127,7 +18391,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18146,7 +18410,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18200,7 +18464,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18219,7 +18483,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18273,7 +18537,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18292,7 +18556,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18350,7 +18614,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18369,7 +18633,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -18423,7 +18687,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         },
                         {
                             "name": "HiddenAsteriskInputDirective"
@@ -18444,7 +18708,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         },
                         {
                             "name": "HiddenAsteriskInputDirective"
@@ -18593,6 +18857,12 @@
                             "name": "ComplianceTosComponent"
                         },
                         {
+                            "name": "CreditReportComponent"
+                        },
+                        {
+                            "name": "CreditReportPureComponent"
+                        },
+                        {
                             "name": "DashboardInitComponent"
                         },
                         {
@@ -18702,6 +18972,12 @@
                         },
                         {
                             "name": "ComplianceTosComponent"
+                        },
+                        {
+                            "name": "CreditReportComponent"
+                        },
+                        {
+                            "name": "CreditReportPureComponent"
                         },
                         {
                             "name": "DashboardInitComponent"
@@ -18930,14 +19206,6 @@
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/authentication/authentication.module.ts",
-                "type": "[]",
-                "defaultValue": "[AuthenticationComponent]"
-            },
-            {
-                "name": "components",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/layouts/compliance/compliance.module.ts",
                 "type": "[]",
                 "defaultValue": "[ComplianceComponent]"
@@ -18954,6 +19222,14 @@
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/layouts/authentication/authentication.module.ts",
+                "type": "[]",
+                "defaultValue": "[AuthenticationComponent]"
+            },
+            {
+                "name": "components",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/layouts/onboarding/onboarding.module.ts",
                 "type": "[]",
                 "defaultValue": "[OnboardingComponent]"
@@ -18964,7 +19240,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/shared-components.module.ts",
                 "type": "[]",
-                "defaultValue": "[\r\n  BaseFormComponent,\r\n  SignInComponent,\r\n  SignUpComponent,\r\n  FilledOnlytextButtonComponent,\r\n  LinksOnlytextButtonComponent,\r\n  OutlineOnlytextButtonComponent,\r\n  OutlineInputComponent,\r\n  OutlineOnecolumnFormComponent,\r\n  GoogleIconsigninButtonComponent,\r\n  FacebookOnlytextsigninButtonComponent,\r\n  SimpleSignupFormComponent,\r\n  OutlineSelectInputComponent,\r\n  FilledClosingAlertComponent,\r\n  FilledOnlytextBadgeComponent,\r\n  IndexDropdownComponent,\r\n  MenuDropdownComponent,\r\n  NotificationDropdownComponent,\r\n  PagesDropdownComponent,\r\n  TableDropdownComponent,\r\n  UserDropdownComponent,\r\n  OutlineOnlytextSelectComponent,\r\n  FooterComponent,\r\n  FooterAdminComponent,\r\n  FooterSmallComponent,\r\n  HiddenAsteriskInputComponent,\r\n  OutlineAddressFormComponent,\r\n  OutlinePhoneFormComponent,\r\n  OutlineVerificationcodeFormComponent,\r\n  SsnFullFormComponent,\r\n  SsnLastfourFormComponent,\r\n  HiddenAsteriskInputComponent,\r\n  BaseModalRegularComponent,\r\n  BaseModalSmallComponent,\r\n  AdminNavbarComponent,\r\n  AuthNavbarComponent,\r\n  DashboardNavbarComponent,\r\n  IndexNavbarComponent,\r\n  OutlinePrevnextPaginationComponent,\r\n  FilledChecktextProgressbarComponent,\r\n  SidebarComponent,\r\n  FilledOnlytextTabsComponent,\r\n  NavigationTabsComponent,\r\n  OutlineTooltipComponent,\r\n  KbaquestionsFormComponent,\r\n  OutlineNamedobFormComponent,\r\n  SelectDobFormComponent,\r\n  OutlineNameFormComponent,\r\n  CreditcardCardComponent,\r\n  ViewdetailButtonComponent,\r\n  LoanCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  CreditBuilderCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  NegativeAccountCardComponent,\r\n  KbaMultiplechoiceInputComponent\r\n]"
+                "defaultValue": "[\r\n  BaseFormComponent,\r\n  SignInComponent,\r\n  SignUpComponent,\r\n  FilledOnlytextButtonComponent,\r\n  LinksOnlytextButtonComponent,\r\n  OutlineOnlytextButtonComponent,\r\n  OutlineInputComponent,\r\n  OutlineOnecolumnFormComponent,\r\n  GoogleIconsigninButtonComponent,\r\n  FacebookOnlytextsigninButtonComponent,\r\n  SimpleSignupFormComponent,\r\n  OutlineSelectInputComponent,\r\n  FilledClosingAlertComponent,\r\n  FilledOnlytextBadgeComponent,\r\n  IndexDropdownComponent,\r\n  MenuDropdownComponent,\r\n  NotificationDropdownComponent,\r\n  PagesDropdownComponent,\r\n  TableDropdownComponent,\r\n  UserDropdownComponent,\r\n  OutlineOnlytextSelectComponent,\r\n  FooterComponent,\r\n  FooterAdminComponent,\r\n  FooterSmallComponent,\r\n  HiddenAsteriskInputComponent,\r\n  OutlineAddressFormComponent,\r\n  OutlinePhoneFormComponent,\r\n  OutlineVerificationcodeFormComponent,\r\n  SsnFullFormComponent,\r\n  SsnLastfourFormComponent,\r\n  HiddenAsteriskInputComponent,\r\n  BaseModalRegularComponent,\r\n  BaseModalSmallComponent,\r\n  AdminNavbarComponent,\r\n  AuthNavbarComponent,\r\n  DashboardNavbarComponent,\r\n  IndexNavbarComponent,\r\n  OutlinePrevnextPaginationComponent,\r\n  FilledChecktextProgressbarComponent,\r\n  SidebarComponent,\r\n  FilledOnlytextTabsComponent,\r\n  NavigationTabsComponent,\r\n  OutlineTooltipComponent,\r\n  KbaquestionsFormComponent,\r\n  OutlineNamedobFormComponent,\r\n  SelectDobFormComponent,\r\n  OutlineNameFormComponent,\r\n  CreditcardCardComponent,\r\n  ViewdetailButtonComponent,\r\n  LoanCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  CreditBuilderCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  NegativeAccountCardComponent,\r\n  KbaMultiplechoiceInputComponent,\r\n  CreditReportCardComponent\r\n]"
             },
             {
                 "name": "config",
@@ -19066,7 +19342,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
+                "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19074,7 +19350,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
+                "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19091,6 +19367,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/views/kyc-congratulations/kyc-congratulations-pure/kyc-congratulations-pure.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/credit-report/credit-report/credit-report.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19146,7 +19430,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19154,7 +19438,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19194,7 +19478,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19210,7 +19494,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19218,7 +19502,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19234,6 +19518,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -19242,7 +19534,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19266,7 +19558,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19275,6 +19567,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19298,14 +19598,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/forms/select-dob-form/select-dob-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -19322,23 +19614,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19354,7 +19630,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19363,6 +19639,22 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19410,6 +19702,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -19419,14 +19719,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19635,7 +19927,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19643,7 +19935,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19691,17 +19983,17 @@
                 "name": "largeConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\r\n  buttonSize: 'lg',\r\n  borderColor: 'border-indigo-800',\r\n  activeColor: 'bg-indigo-900',\r\n  hoverColor: 'bg-indigo-800',\r\n  color: 'text-indigo-800',\r\n}"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "ILinksOnlyTextButtonConfig",
+                "defaultValue": "{\r\n  buttonSize: 'lg',\r\n  color: 'text-indigo-800',\r\n}"
             },
             {
                 "name": "largeConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\r\n  buttonSize: 'lg',\r\n  color: 'text-indigo-800',\r\n}"
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\r\n  buttonSize: 'lg',\r\n  borderColor: 'border-indigo-800',\r\n  activeColor: 'bg-indigo-900',\r\n  hoverColor: 'bg-indigo-800',\r\n  color: 'text-indigo-800',\r\n}"
             },
             {
                 "name": "largeConfig",
@@ -19726,6 +20018,14 @@
                 "file": "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "mockCreditReports",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/credit-report/credit-report/constants.ts",
+                "type": "[]",
+                "defaultValue": "[\r\n\t{\r\n\t\tid: 0,\r\n\t\tname: 'Credit Cards',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'American Express',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  300,\r\n\t\t\t\tsecondFieldName: 'Credit Limit',\r\n\t\t\t\tsecondFieldValue: 400,\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 1,\r\n\t\tname: 'Credit Cards',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Hj National Collections',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  300,\r\n\t\t\t\tsecondFieldName: 'Credit Limit',\r\n\t\t\t\tsecondFieldValue: 400,\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 1,\r\n\t\tname: 'Credit Cards',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Hj National Collections',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'critical',\r\n\t\t\t\tfirstFieldName: 'Original Creditor',\r\n\t\t\t\tfirstFieldValue:  'Bank of America',\r\n\t\t\t\tsecondFieldName: 'Amount Past Due',\r\n\t\t\t\tsecondFieldValue: '20/04/2021',\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 2,\r\n\t\tname: 'Student, Car & Personal Loans',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Verify Student Loans',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  '-400$',\r\n\t\t\t\tsecondFieldName: 'Original Loan Amount',\r\n\t\t\t\tsecondFieldValue: '3000$',\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Not Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 3,\r\n\t\tname: 'Mortages',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Consolidated Lenders',\r\n\t\t\t\tisOpen: false,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  '-400$',\r\n\t\t\t\tsecondFieldName: 'Loan Amount',\r\n\t\t\t\tsecondFieldValue: '3000$',\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Not Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n]"
             },
             {
                 "name": "monthMap",
@@ -19827,7 +20127,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19835,7 +20135,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -19867,17 +20167,17 @@
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\r\n  buttonSize: 'base',\r\n  borderColor: 'border-indigo-800',\r\n  activeColor: 'bg-indigo-900',\r\n  hoverColor: 'bg-indigo-800',\r\n  color: 'text-indigo-800',\r\n}"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "ILinksOnlyTextButtonConfig",
+                "defaultValue": "{\r\n  buttonSize: 'base',\r\n  color: 'text-indigo-800',\r\n}"
             },
             {
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\r\n  buttonSize: 'base',\r\n  color: 'text-indigo-800',\r\n}"
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\r\n  buttonSize: 'base',\r\n  borderColor: 'border-indigo-800',\r\n  activeColor: 'bg-indigo-900',\r\n  hoverColor: 'bg-indigo-800',\r\n  color: 'text-indigo-800',\r\n}"
             },
             {
                 "name": "question",
@@ -19986,17 +20286,17 @@
                 "name": "sizeSpecificClass",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts",
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.pipe.ts",
                 "type": "Record<string, any>",
-                "defaultValue": "{\r\n  sm: 'text-sm px-3 py-1',\r\n  base: 'text-sm px-3 py-3',\r\n  lg: 'text-base px-3 py-4',\r\n}"
+                "defaultValue": "{\r\n  sm: 'text-sm px-1 py-1',\r\n  base: 'text-sm px-1 py-3',\r\n  lg: 'text-base px-1 py-4',\r\n}"
             },
             {
                 "name": "sizeSpecificClass",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.pipe.ts",
+                "file": "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts",
                 "type": "Record<string, any>",
-                "defaultValue": "{\r\n  sm: 'text-sm px-1 py-1',\r\n  base: 'text-sm px-1 py-3',\r\n  lg: 'text-base px-1 py-4',\r\n}"
+                "defaultValue": "{\r\n  sm: 'text-sm px-3 py-1',\r\n  base: 'text-sm px-3 py-3',\r\n  lg: 'text-base px-3 py-4',\r\n}"
             },
             {
                 "name": "Small",
@@ -20018,7 +20318,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -20026,7 +20326,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -20074,17 +20374,17 @@
                 "name": "smallConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\r\n  buttonSize: 'sm',\r\n  borderColor: 'border-indigo-800',\r\n  activeColor: 'bg-indigo-900',\r\n  hoverColor: 'bg-indigo-800',\r\n  color: 'text-indigo-800',\r\n}"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "ILinksOnlyTextButtonConfig",
+                "defaultValue": "{\r\n  buttonSize: 'sm',\r\n  color: 'text-indigo-800',\r\n}"
             },
             {
                 "name": "smallConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\r\n  buttonSize: 'sm',\r\n  color: 'text-indigo-800',\r\n}"
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\r\n  buttonSize: 'sm',\r\n  borderColor: 'border-indigo-800',\r\n  activeColor: 'bg-indigo-900',\r\n  hoverColor: 'bg-indigo-800',\r\n  color: 'text-indigo-800',\r\n}"
             },
             {
                 "name": "smallConfig",
@@ -20234,17 +20534,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
+                "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
                 "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n    <h1 class='font-headings font-extrabold text-5xl text-coolGray-900'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-coolGray-900'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-coolGray-900'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-coolGray-900'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-coolGray-900'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-coolGray-900'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-coolGray-700'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-coolGray-700'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-coolGray-700'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-coolGray-700'>Body 2-semibold</p>\r\n    `,\r\n})"
+                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <div class=\"bg-indigo-800 p-4\">\r\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-white'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-white'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\r\n  </div>\r\n    `,\r\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
+                "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
                 "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <div class=\"bg-indigo-800 p-4\">\r\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-white'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-white'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\r\n  </div>\r\n    `,\r\n})"
+                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n    <h1 class='font-headings font-extrabold text-5xl text-coolGray-900'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-coolGray-900'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-coolGray-900'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-coolGray-900'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-coolGray-900'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-coolGray-900'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-coolGray-700'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-coolGray-700'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-coolGray-700'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-coolGray-700'>Body 2-semibold</p>\r\n    `,\r\n})"
             },
             {
                 "name": "Template",
@@ -20261,6 +20561,14 @@
                 "file": "src/app/views/kyc-congratulations/kyc-congratulations-pure/kyc-congratulations-pure.stories.ts",
                 "type": "Story<KycCongratulationsPureComponent>",
                 "defaultValue": "(args: any) => ({\r\n  component: KycCongratulationsPureComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/credit-report/credit-report/credit-report.stories.ts",
+                "type": "Story<CreditReportComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: CreditReportComponent,\r\n  props: {\r\n    ...args,\r\n    creditReports: mock\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20314,17 +20622,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
-                "type": "Story<KycWelcomebackPureComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: KycWelcomebackPureComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
+                "type": "Story<NegativeAccountInitialComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountInitialComponent,\r\n  props: {\r\n    ...args,\r\n    creditorName:\"Hj National Collections\",\r\n    lastReported:\"29/09/2020\",\r\n    accountTypeDescription:\"Collections Account\",\r\n    accountTypeDescriptionValue:\"Open\",\r\n    originalCreditor:\"Original Creditor\",\r\n    originalCreditorValue:\"Wells Fargo Bank, N.A.\",\r\n    disputeFlag:\"Previously Disputed?\",\r\n    disputeFlagValue:\"No\",\r\n    accountNumber:\"066611222\",\r\n    typeOfCollection:\"Collections\",\r\n    amountPastDue:\"700\",\r\n    dateOpened:\"04/12/2018\",\r\n    dateLastPayment:\"04/21/2018\"\r\n  },\r\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
-                "type": "Story<NegativeAccountInitialComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountInitialComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "type": "Story<KycWelcomebackPureComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: KycWelcomebackPureComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20362,9 +20670,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
-                "type": "Story<ViewdetailButtonComponent>",
-                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <span style=\"p-6 width: 120px\">\r\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\r\n  </span>\r\n  `,\r\n})"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "Story<LinksOnlytextButtonComponent>",
+                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\r\n})"
             },
             {
                 "name": "Template",
@@ -20378,17 +20686,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "Story<LinksOnlytextButtonComponent>",
-                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\r\n})"
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                "type": "Story<CreditBuilderCardComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: CreditBuilderCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                "type": "Story<CreditBuilderCardComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: CreditBuilderCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "type": "Story<CreditReportCardComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: CreditReportCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20402,17 +20710,25 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                "type": "Story<NegativeAccountCardComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
+                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "type": "Story<LoanCardComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: LoanCardComponent,\r\n  props: {\r\n    ...args,\r\n    status: 'good',\r\n  },\r\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                "type": "Story<LoanCardComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: LoanCardComponent,\r\n  props: {\r\n    ...args,\r\n    status: 'good',\r\n  },\r\n})"
+                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                "type": "Story<NegativeAccountCardComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountCardComponent,\r\n  props: {\r\n    ...args,\r\n    creditorName:\"A.R.M. Solutions\",\r\n    lastReported:\"29/09/2020\",\r\n    accountTypeDescription:\"90-Day Late Payment\",\r\n    accountTypeDescriptionValue:\"Open\",\r\n    originalCreditor:\"Original Creditor\",\r\n    originalCreditorValue:\"Bank Of America\",\r\n    disputeFlag:\"Previously Disputed?\",\r\n    disputeFlagValue:\"No\",\r\n    accountNumber:\"066611222\",\r\n    typeOfCollection:\"Collections\",\r\n    amountPastDue:700,\r\n    dateOpened:\"04/12/2018\",\r\n    dateLastPayment:\"04/21/2018\"\r\n  },\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                "type": "Story<ViewdetailButtonComponent>",
+                "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <span style=\"p-6 width: 120px\">\r\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\r\n  </span>\r\n  `,\r\n})"
             },
             {
                 "name": "Template",
@@ -20434,9 +20750,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
-                "type": "Story<OutlineAddressFormComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: OutlineAddressFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                "type": "Story<OutlinePhoneFormComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: OutlinePhoneFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20445,6 +20761,14 @@
                 "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
                 "type": "Story<OutlineNameFormComponent>",
                 "defaultValue": "(args: any) => ({\r\n  component: OutlineNameFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                "type": "Story<OutlineAddressFormComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: OutlineAddressFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20466,14 +20790,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                "type": "Story<OutlinePhoneFormComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: OutlinePhoneFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/forms/select-dob-form/select-dob-form.stories.ts",
                 "type": "Story<SelectDobFormComponent>",
                 "defaultValue": "(args: any) => ({\r\n  component: SelectDobFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
@@ -20490,25 +20806,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                "type": "Story<HiddenAsteriskInputComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: HiddenAsteriskInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
                 "type": "Story<SsnFullFormComponent>",
                 "defaultValue": "(args: any) => ({\r\n  component: SsnFullFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                "type": "Story<OutlineInputComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: OutlineInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20522,9 +20822,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                "type": "Story<OutlineSelectInputComponent>",
-                "defaultValue": "(args: any) => ({\r\n  component: OutlineSelectInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
+                "type": "Story<HiddenAsteriskInputComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: HiddenAsteriskInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20533,6 +20833,22 @@
                 "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
                 "type": "Story<KbaMultiplechoiceInputComponent>",
                 "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n    question,\r\n  },\r\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                "type": "Story<OutlineInputComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: OutlineInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                "type": "Story<OutlineSelectInputComponent>",
+                "defaultValue": "(args: any) => ({\r\n  component: OutlineSelectInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20578,6 +20894,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\r\n  component: NavigationTabsComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\r\n  component: FilledOnlytextTabsComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
@@ -20589,14 +20913,6 @@
                 "file": "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.stories.ts",
                 "type": "Story<OutlineTooltipComponent>",
                 "defaultValue": "(args: any) => ({\r\n  component: OutlineTooltipComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\r\n  component: NavigationTabsComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
             },
             {
                 "name": "Template",
@@ -20683,7 +20999,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/views.module.ts",
                 "type": "[]",
-                "defaultValue": "[\r\n  SignupComponent,\r\n  SignupPureComponent,\r\n  SignupErrorComponent,\r\n  SignupErrorValidationComponent,\r\n  SignupKnowyouComponent,\r\n  SignupThankyouComponent,\r\n  SignupResendComponent,\r\n  SigninComponent,\r\n  SigninPureComponent,\r\n  SigninForgotComponent,\r\n  SigninRedirectComponent,\r\n  KycBaseComponent,\r\n  KycAddressComponent,\r\n  KycAddressPureComponent,\r\n  KycCongratulationsComponent,\r\n  KycCongratulationsPureComponent,\r\n  KycIdverificationComponent,\r\n  KycIdverificationPureComponent,\r\n  KycKbaquestionsComponent,\r\n  KycKbaquestionsPureComponent,\r\n  KycPhonenumberComponent,\r\n  KycPhonenumberPureComponent,\r\n  KycSsnPureComponent,\r\n  KycSsnFullComponent,\r\n  KycSsnFullPureComponent,\r\n  KycWelcomeComponent,\r\n  KycWelcomePureComponent,\r\n  KycWelcomebackComponent,\r\n  KycWelcomebackPureComponent,\r\n  CompliancePrivacyComponent,\r\n  ComplianceTosComponent,\r\n  DashboardInitComponent,\r\n  NegativeAccountInitialComponent\r\n]"
+                "defaultValue": "[\r\n  SignupComponent,\r\n  SignupPureComponent,\r\n  SignupErrorComponent,\r\n  SignupErrorValidationComponent,\r\n  SignupKnowyouComponent,\r\n  SignupThankyouComponent,\r\n  SignupResendComponent,\r\n  SigninComponent,\r\n  SigninPureComponent,\r\n  SigninForgotComponent,\r\n  SigninRedirectComponent,\r\n  KycBaseComponent,\r\n  KycAddressComponent,\r\n  KycAddressPureComponent,\r\n  KycCongratulationsComponent,\r\n  KycCongratulationsPureComponent,\r\n  KycIdverificationComponent,\r\n  KycIdverificationPureComponent,\r\n  KycKbaquestionsComponent,\r\n  KycKbaquestionsPureComponent,\r\n  KycPhonenumberComponent,\r\n  KycPhonenumberPureComponent,\r\n  KycSsnPureComponent,\r\n  KycSsnFullComponent,\r\n  KycSsnFullPureComponent,\r\n  KycWelcomeComponent,\r\n  KycWelcomePureComponent,\r\n  KycWelcomebackComponent,\r\n  KycWelcomebackPureComponent,\r\n  CompliancePrivacyComponent,\r\n  ComplianceTosComponent,\r\n  DashboardInitComponent,\r\n  NegativeAccountInitialComponent,\r\n  CreditReportPureComponent,\r\n  CreditReportComponent\r\n]"
             }
         ],
         "functions": [
@@ -21772,16 +22088,6 @@
                     "defaultValue": "{\r\n  code: true,\r\n}"
                 }
             ],
-            "src/app/layouts/authentication/authentication.module.ts": [
-                {
-                    "name": "components",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/layouts/authentication/authentication.module.ts",
-                    "type": "[]",
-                    "defaultValue": "[AuthenticationComponent]"
-                }
-            ],
             "src/app/layouts/compliance/compliance.module.ts": [
                 {
                     "name": "components",
@@ -21802,6 +22108,16 @@
                     "defaultValue": "[DashboardComponent]"
                 }
             ],
+            "src/app/layouts/authentication/authentication.module.ts": [
+                {
+                    "name": "components",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/layouts/authentication/authentication.module.ts",
+                    "type": "[]",
+                    "defaultValue": "[AuthenticationComponent]"
+                }
+            ],
             "src/app/layouts/onboarding/onboarding.module.ts": [
                 {
                     "name": "components",
@@ -21819,7 +22135,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/shared-components.module.ts",
                     "type": "[]",
-                    "defaultValue": "[\r\n  BaseFormComponent,\r\n  SignInComponent,\r\n  SignUpComponent,\r\n  FilledOnlytextButtonComponent,\r\n  LinksOnlytextButtonComponent,\r\n  OutlineOnlytextButtonComponent,\r\n  OutlineInputComponent,\r\n  OutlineOnecolumnFormComponent,\r\n  GoogleIconsigninButtonComponent,\r\n  FacebookOnlytextsigninButtonComponent,\r\n  SimpleSignupFormComponent,\r\n  OutlineSelectInputComponent,\r\n  FilledClosingAlertComponent,\r\n  FilledOnlytextBadgeComponent,\r\n  IndexDropdownComponent,\r\n  MenuDropdownComponent,\r\n  NotificationDropdownComponent,\r\n  PagesDropdownComponent,\r\n  TableDropdownComponent,\r\n  UserDropdownComponent,\r\n  OutlineOnlytextSelectComponent,\r\n  FooterComponent,\r\n  FooterAdminComponent,\r\n  FooterSmallComponent,\r\n  HiddenAsteriskInputComponent,\r\n  OutlineAddressFormComponent,\r\n  OutlinePhoneFormComponent,\r\n  OutlineVerificationcodeFormComponent,\r\n  SsnFullFormComponent,\r\n  SsnLastfourFormComponent,\r\n  HiddenAsteriskInputComponent,\r\n  BaseModalRegularComponent,\r\n  BaseModalSmallComponent,\r\n  AdminNavbarComponent,\r\n  AuthNavbarComponent,\r\n  DashboardNavbarComponent,\r\n  IndexNavbarComponent,\r\n  OutlinePrevnextPaginationComponent,\r\n  FilledChecktextProgressbarComponent,\r\n  SidebarComponent,\r\n  FilledOnlytextTabsComponent,\r\n  NavigationTabsComponent,\r\n  OutlineTooltipComponent,\r\n  KbaquestionsFormComponent,\r\n  OutlineNamedobFormComponent,\r\n  SelectDobFormComponent,\r\n  OutlineNameFormComponent,\r\n  CreditcardCardComponent,\r\n  ViewdetailButtonComponent,\r\n  LoanCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  CreditBuilderCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  NegativeAccountCardComponent,\r\n  KbaMultiplechoiceInputComponent\r\n]"
+                    "defaultValue": "[\r\n  BaseFormComponent,\r\n  SignInComponent,\r\n  SignUpComponent,\r\n  FilledOnlytextButtonComponent,\r\n  LinksOnlytextButtonComponent,\r\n  OutlineOnlytextButtonComponent,\r\n  OutlineInputComponent,\r\n  OutlineOnecolumnFormComponent,\r\n  GoogleIconsigninButtonComponent,\r\n  FacebookOnlytextsigninButtonComponent,\r\n  SimpleSignupFormComponent,\r\n  OutlineSelectInputComponent,\r\n  FilledClosingAlertComponent,\r\n  FilledOnlytextBadgeComponent,\r\n  IndexDropdownComponent,\r\n  MenuDropdownComponent,\r\n  NotificationDropdownComponent,\r\n  PagesDropdownComponent,\r\n  TableDropdownComponent,\r\n  UserDropdownComponent,\r\n  OutlineOnlytextSelectComponent,\r\n  FooterComponent,\r\n  FooterAdminComponent,\r\n  FooterSmallComponent,\r\n  HiddenAsteriskInputComponent,\r\n  OutlineAddressFormComponent,\r\n  OutlinePhoneFormComponent,\r\n  OutlineVerificationcodeFormComponent,\r\n  SsnFullFormComponent,\r\n  SsnLastfourFormComponent,\r\n  HiddenAsteriskInputComponent,\r\n  BaseModalRegularComponent,\r\n  BaseModalSmallComponent,\r\n  AdminNavbarComponent,\r\n  AuthNavbarComponent,\r\n  DashboardNavbarComponent,\r\n  IndexNavbarComponent,\r\n  OutlinePrevnextPaginationComponent,\r\n  FilledChecktextProgressbarComponent,\r\n  SidebarComponent,\r\n  FilledOnlytextTabsComponent,\r\n  NavigationTabsComponent,\r\n  OutlineTooltipComponent,\r\n  KbaquestionsFormComponent,\r\n  OutlineNamedobFormComponent,\r\n  SelectDobFormComponent,\r\n  OutlineNameFormComponent,\r\n  CreditcardCardComponent,\r\n  ViewdetailButtonComponent,\r\n  LoanCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  CreditBuilderCardComponent,\r\n  SnapshotDisplayCardComponent,\r\n  NegativeAccountCardComponent,\r\n  KbaMultiplechoiceInputComponent,\r\n  CreditReportCardComponent\r\n]"
                 },
                 {
                     "name": "directives",
@@ -22093,24 +22409,6 @@
                     "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <div class=\"bg-indigo-800 p-4\">\r\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\r\n  </div>\r\n    `,\r\n})"
                 }
             ],
-            "src/app/shared/components/typography/typography-transparent-bg.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
-                    "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n    <h1 class='font-headings font-extrabold text-5xl text-coolGray-900'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-coolGray-900'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-coolGray-900'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-coolGray-900'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-coolGray-900'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-coolGray-900'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-coolGray-700'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-coolGray-700'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-coolGray-700'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-coolGray-700'>Body 2-semibold</p>\r\n    `,\r\n})"
-                }
-            ],
             "src/app/shared/components/typography/typography-primary-bg.stories.ts": [
                 {
                     "name": "Default",
@@ -22127,6 +22425,24 @@
                     "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <div class=\"bg-indigo-800 p-4\">\r\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-white'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-white'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\r\n  </div>\r\n    `,\r\n})"
+                }
+            ],
+            "src/app/shared/components/typography/typography-transparent-bg.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/typography/typography-transparent-bg.stories.ts",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n    <h1 class='font-headings font-extrabold text-5xl text-coolGray-900'>H1 Heading</h1>\r\n    <h2 class='font-headings font-extrabold text-4xl text-coolGray-900'>H2 Heading</h2>\r\n    <h3 class='font-headings font-extrabold text-3xl text-coolGray-900'>H3 Heading</h3>\r\n    <h4 class='font-headings font-extrabold text-2xl text-coolGray-900'>H4 Heading</h4>\r\n    <h5 class='font-headings font-extrabold text-xl text-coolGray-900'>H5 Heading</h5>\r\n    <h6 class='font-headings font-extrabold text-lg text-coolGray-900'>H6 Heading</h6>\r\n    <div style=\"margin: 10px 0px\"></div>\r\n    <p class='font-sans text-base text-coolGray-700'>Body 1</p>\r\n    <p class='font-sans font-semibold text-base text-coolGray-700'>Body 1-semibold</p>\r\n    <p class='font-sans text-sm text-coolGray-700'>Body 2</p>\r\n    <p class='font-sans font-semibold text-sm text-coolGray-700'>Body 2-semibold</p>\r\n    `,\r\n})"
                 }
             ],
             "src/app/views/kyc-address/kyc-address-pure/kyc-address-pure.stories.ts": [
@@ -22163,6 +22479,24 @@
                     "file": "src/app/views/kyc-congratulations/kyc-congratulations-pure/kyc-congratulations-pure.stories.ts",
                     "type": "Story<KycCongratulationsPureComponent>",
                     "defaultValue": "(args: any) => ({\r\n  component: KycCongratulationsPureComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                }
+            ],
+            "src/app/views/credit-report/credit-report/credit-report.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/credit-report/credit-report/credit-report.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/credit-report/credit-report/credit-report.stories.ts",
+                    "type": "Story<CreditReportComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: CreditReportComponent,\r\n  props: {\r\n    ...args,\r\n    creditReports: mock\r\n  },\r\n})"
                 }
             ],
             "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts": [
@@ -22281,6 +22615,24 @@
                     "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
+            "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
+                    "type": "Story<NegativeAccountInitialComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountInitialComponent,\r\n  props: {\r\n    ...args,\r\n    creditorName:\"Hj National Collections\",\r\n    lastReported:\"29/09/2020\",\r\n    accountTypeDescription:\"Collections Account\",\r\n    accountTypeDescriptionValue:\"Open\",\r\n    originalCreditor:\"Original Creditor\",\r\n    originalCreditorValue:\"Wells Fargo Bank, N.A.\",\r\n    disputeFlag:\"Previously Disputed?\",\r\n    disputeFlagValue:\"No\",\r\n    accountNumber:\"066611222\",\r\n    typeOfCollection:\"Collections\",\r\n    amountPastDue:\"700\",\r\n    dateOpened:\"04/12/2018\",\r\n    dateLastPayment:\"04/21/2018\"\r\n  },\r\n})"
+                }
+            ],
             "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -22299,24 +22651,6 @@
                     "defaultValue": "(args: any) => ({\r\n  component: KycWelcomebackPureComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
-            "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/negative-account/negative-account-initial/negative-account-init.stories.ts",
-                    "type": "Story<NegativeAccountInitialComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountInitialComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-                }
-            ],
             "src/app/views/signup/signup-pure/signup-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -22333,24 +22667,6 @@
                     "file": "src/app/views/signup/signup-pure/signup-pure.stories.ts",
                     "type": "Story<SignupPureComponent>",
                     "defaultValue": "(args: any) => ({\r\n  component: SignupPureComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-                }
-            ],
-            "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
-                    "type": "Story<ViewdetailButtonComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <span style=\"p-6 width: 120px\">\r\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\r\n  </span>\r\n  `,\r\n})"
                 }
             ],
             "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts": [
@@ -22437,6 +22753,24 @@
                     "defaultValue": "(args: any) => ({\r\n  component: CreditBuilderCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
                 }
             ],
+            "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                    "type": "Story<CreditReportCardComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: CreditReportCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
+                }
+            ],
             "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
                 {
                     "name": "Default",
@@ -22455,24 +22789,6 @@
                     "defaultValue": "(args: any) => ({\r\n  component: CreditcardCardComponent,\r\n  props: {\r\n    ...args,\r\n    status: 'excellent',\r\n  },\r\n})"
                 }
             ],
-            "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                    "type": "Story<NegativeAccountCardComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountCardComponent,\r\n  props: {\r\n    ...args\r\n  },\r\n})"
-                }
-            ],
             "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
                 {
                     "name": "Default",
@@ -22489,6 +22805,42 @@
                     "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
                     "type": "Story<LoanCardComponent>",
                     "defaultValue": "(args: any) => ({\r\n  component: LoanCardComponent,\r\n  props: {\r\n    ...args,\r\n    status: 'good',\r\n  },\r\n})"
+                }
+            ],
+            "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                    "type": "Story<NegativeAccountCardComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: NegativeAccountCardComponent,\r\n  props: {\r\n    ...args,\r\n    creditorName:\"A.R.M. Solutions\",\r\n    lastReported:\"29/09/2020\",\r\n    accountTypeDescription:\"90-Day Late Payment\",\r\n    accountTypeDescriptionValue:\"Open\",\r\n    originalCreditor:\"Original Creditor\",\r\n    originalCreditorValue:\"Bank Of America\",\r\n    disputeFlag:\"Previously Disputed?\",\r\n    disputeFlagValue:\"No\",\r\n    accountNumber:\"066611222\",\r\n    typeOfCollection:\"Collections\",\r\n    amountPastDue:700,\r\n    dateOpened:\"04/12/2018\",\r\n    dateLastPayment:\"04/21/2018\"\r\n  },\r\n})"
+                }
+            ],
+            "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                    "type": "Story<ViewdetailButtonComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `\r\n  <span style=\"p-6 width: 120px\">\r\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\r\n  </span>\r\n  `,\r\n})"
                 }
             ],
             "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
@@ -22567,12 +22919,12 @@
                     "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n    kbas,\r\n    required: true,\r\n  },\r\n  template: `<brave-kbaquestions-form [kbas]=\"kbas\"></brave-kbaquestions-form>`,\r\n})"
                 }
             ],
-            "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts": [
+            "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -22580,9 +22932,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
-                    "type": "Story<OutlineAddressFormComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  component: OutlineAddressFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                    "type": "Story<OutlinePhoneFormComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: OutlinePhoneFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
             "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts": [
@@ -22601,6 +22953,24 @@
                     "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
                     "type": "Story<OutlineNameFormComponent>",
                     "defaultValue": "(args: any) => ({\r\n  component: OutlineNameFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                }
+            ],
+            "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                    "type": "Story<OutlineAddressFormComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: OutlineAddressFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
             "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts": [
@@ -22639,24 +23009,6 @@
                     "defaultValue": "(args: any) => ({\r\n  component: OutlineVerificationcodeFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
-            "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                    "type": "Story<OutlinePhoneFormComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  component: OutlinePhoneFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-                }
-            ],
             "src/app/shared/components/forms/select-dob-form/select-dob-form.stories.ts": [
                 {
                     "name": "Default",
@@ -22693,6 +23045,42 @@
                     "defaultValue": "(args: any) => ({\r\n  component: SimpleSignupFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
+            "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
+                    "type": "Story<SsnFullFormComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  component: SsnFullFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                }
+            ],
+            "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
+                    "type": "Story<SsnLastfourFormComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,\r\n})"
+                }
+            ],
             "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts": [
                 {
                     "name": "Default",
@@ -22727,22 +23115,30 @@
                     "defaultValue": "(args: any) => ({\r\n  component: HiddenAsteriskInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
-            "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts": [
+            "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "question",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "ITransunionKBAQuestion",
+                    "defaultValue": "{} as ITransunionKBAQuestion"
                 },
                 {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
-                    "type": "Story<SsnFullFormComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  component: SsnFullFormComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "Story<KbaMultiplechoiceInputComponent>",
+                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n    question,\r\n  },\r\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\r\n})"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.stories.ts": [
@@ -22795,24 +23191,6 @@
                     "defaultValue": "(args: any) => ({\r\n  component: OutlineInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
-            "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
-                    "type": "Story<SsnLastfourFormComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n  },\r\n  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,\r\n})"
-                }
-            ],
             "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts": [
                 {
                     "name": "Default",
@@ -22863,32 +23241,6 @@
                     "defaultValue": "(args: any) => ({\r\n  component: OutlineSelectInputComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
-            "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "question",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "ITransunionKBAQuestion",
-                    "defaultValue": "{} as ITransunionKBAQuestion"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "Story<KbaMultiplechoiceInputComponent>",
-                    "defaultValue": "(args: any) => ({\r\n  props: {\r\n    ...args,\r\n    question,\r\n  },\r\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\r\n})"
-                }
-            ],
             "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts": [
                 {
                     "name": "Default",
@@ -22925,24 +23277,6 @@
                     "defaultValue": "(args: any) => ({\r\n  component: OutlinePrevnextPaginationComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
-            "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
-                    "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\r\n  component: FilledOnlytextTabsComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
-                }
-            ],
             "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts": [
                 {
                     "name": "Default",
@@ -22959,6 +23293,24 @@
                     "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\r\n  component: NavigationTabsComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
+                }
+            ],
+            "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\r\n  component: FilledOnlytextTabsComponent,\r\n  props: {\r\n    ...args,\r\n  },\r\n})"
                 }
             ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
@@ -23161,6 +23513,16 @@
                     "defaultValue": "{\r\n  ...awsconfig,\r\n  oauth: {\r\n    ...awsconfig.oauth,\r\n    redirectSignIn: isLocalhost\r\n      ? localRedirectSignIn\r\n      : productionRedirectSignIn,\r\n    redirectSignOut: isLocalhost\r\n      ? localRedirectSignOut\r\n      : productionRedirectSignOut,\r\n  },\r\n}"
                 }
             ],
+            "src/app/views/credit-report/credit-report/constants.ts": [
+                {
+                    "name": "mockCreditReports",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/credit-report/credit-report/constants.ts",
+                    "type": "[]",
+                    "defaultValue": "[\r\n\t{\r\n\t\tid: 0,\r\n\t\tname: 'Credit Cards',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'American Express',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  300,\r\n\t\t\t\tsecondFieldName: 'Credit Limit',\r\n\t\t\t\tsecondFieldValue: 400,\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 1,\r\n\t\tname: 'Credit Cards',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Hj National Collections',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  300,\r\n\t\t\t\tsecondFieldName: 'Credit Limit',\r\n\t\t\t\tsecondFieldValue: 400,\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 1,\r\n\t\tname: 'Credit Cards',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Hj National Collections',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'critical',\r\n\t\t\t\tfirstFieldName: 'Original Creditor',\r\n\t\t\t\tfirstFieldValue:  'Bank of America',\r\n\t\t\t\tsecondFieldName: 'Amount Past Due',\r\n\t\t\t\tsecondFieldValue: '20/04/2021',\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 2,\r\n\t\tname: 'Student, Car & Personal Loans',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Verify Student Loans',\r\n\t\t\t\tisOpen: true,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  '-400$',\r\n\t\t\t\tsecondFieldName: 'Original Loan Amount',\r\n\t\t\t\tsecondFieldValue: '3000$',\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Not Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t},\r\n\t{\r\n\t\tid: 3,\r\n\t\tname: 'Mortages',\r\n\t\titems: [\r\n\t\t\t{\r\n\t\t\t\ttitle: 'Consolidated Lenders',\r\n\t\t\t\tisOpen: false,\r\n\t\t\t\tstatus: 'safe',\r\n\t\t\t\tfirstFieldName: 'Current Balance',\r\n\t\t\t\tfirstFieldValue:  '-400$',\r\n\t\t\t\tsecondFieldName: 'Loan Amount',\r\n\t\t\t\tsecondFieldValue: '3000$',\r\n\t\t\t\tthirdFieldName: 'Payment Status',\r\n\t\t\t\tthirdFieldValue: 'Not Safe'\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n]"
+                }
+            ],
             "src/app/shared/services/transunion/transunion.service.ts": [
                 {
                     "name": "monthMap",
@@ -23226,7 +23588,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/views.module.ts",
                     "type": "[]",
-                    "defaultValue": "[\r\n  SignupComponent,\r\n  SignupPureComponent,\r\n  SignupErrorComponent,\r\n  SignupErrorValidationComponent,\r\n  SignupKnowyouComponent,\r\n  SignupThankyouComponent,\r\n  SignupResendComponent,\r\n  SigninComponent,\r\n  SigninPureComponent,\r\n  SigninForgotComponent,\r\n  SigninRedirectComponent,\r\n  KycBaseComponent,\r\n  KycAddressComponent,\r\n  KycAddressPureComponent,\r\n  KycCongratulationsComponent,\r\n  KycCongratulationsPureComponent,\r\n  KycIdverificationComponent,\r\n  KycIdverificationPureComponent,\r\n  KycKbaquestionsComponent,\r\n  KycKbaquestionsPureComponent,\r\n  KycPhonenumberComponent,\r\n  KycPhonenumberPureComponent,\r\n  KycSsnPureComponent,\r\n  KycSsnFullComponent,\r\n  KycSsnFullPureComponent,\r\n  KycWelcomeComponent,\r\n  KycWelcomePureComponent,\r\n  KycWelcomebackComponent,\r\n  KycWelcomebackPureComponent,\r\n  CompliancePrivacyComponent,\r\n  ComplianceTosComponent,\r\n  DashboardInitComponent,\r\n  NegativeAccountInitialComponent\r\n]"
+                    "defaultValue": "[\r\n  SignupComponent,\r\n  SignupPureComponent,\r\n  SignupErrorComponent,\r\n  SignupErrorValidationComponent,\r\n  SignupKnowyouComponent,\r\n  SignupThankyouComponent,\r\n  SignupResendComponent,\r\n  SigninComponent,\r\n  SigninPureComponent,\r\n  SigninForgotComponent,\r\n  SigninRedirectComponent,\r\n  KycBaseComponent,\r\n  KycAddressComponent,\r\n  KycAddressPureComponent,\r\n  KycCongratulationsComponent,\r\n  KycCongratulationsPureComponent,\r\n  KycIdverificationComponent,\r\n  KycIdverificationPureComponent,\r\n  KycKbaquestionsComponent,\r\n  KycKbaquestionsPureComponent,\r\n  KycPhonenumberComponent,\r\n  KycPhonenumberPureComponent,\r\n  KycSsnPureComponent,\r\n  KycSsnFullComponent,\r\n  KycSsnFullPureComponent,\r\n  KycWelcomeComponent,\r\n  KycWelcomePureComponent,\r\n  KycWelcomebackComponent,\r\n  KycWelcomebackPureComponent,\r\n  CompliancePrivacyComponent,\r\n  ComplianceTosComponent,\r\n  DashboardInitComponent,\r\n  NegativeAccountInitialComponent,\r\n  CreditReportPureComponent,\r\n  CreditReportComponent\r\n]"
                 }
             ],
             "src/app/shared/services/shared-services.module.ts": [
@@ -23289,16 +23651,6 @@
                     "defaultValue": "{\r\n  sm: 'text-xs px-3 py-1',\r\n  base: 'text-sm px-6 py-2',\r\n  lg: 'text-base px-8 py-3',\r\n}"
                 }
             ],
-            "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\r\n  sm: 'text-sm px-3 py-1',\r\n  base: 'text-sm px-3 py-3',\r\n  lg: 'text-base px-3 py-4',\r\n}"
-                }
-            ],
             "src/app/shared/components/inputs/outline-select-input/outline-select-input.pipe.ts": [
                 {
                     "name": "sizeSpecificClass",
@@ -23307,6 +23659,16 @@
                     "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\r\n  sm: 'text-sm px-1 py-1',\r\n  base: 'text-sm px-1 py-3',\r\n  lg: 'text-base px-1 py-4',\r\n}"
+                }
+            ],
+            "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\r\n  sm: 'text-sm px-3 py-1',\r\n  base: 'text-sm px-3 py-3',\r\n  lg: 'text-base px-3 py-4',\r\n}"
                 }
             ],
             "src/app/views/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component.ts": [
@@ -25066,6 +25428,35 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/cards/credit-report-card/credit-report-card.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CreditReportCardComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/components/cards/creditcard-card/account-status.pipe.ts",
                 "type": "pipe",
                 "linktype": "pipe",
@@ -25148,7 +25539,7 @@
                 "linktype": "component",
                 "name": "NegativeAccountCardComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/24",
+                "coverageCount": "0/27",
                 "status": "low"
             },
             {
@@ -27283,6 +27674,54 @@
                 "name": "ComplianceTosComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/credit-report/credit-report-pure/credit-report-pure.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CreditReportPureComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/credit-report/credit-report/constants.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "mockCreditReports",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/credit-report/credit-report/credit-report.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CreditReportComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/credit-report/credit-report/credit-report.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/credit-report/credit-report/credit-report.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
