@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
@@ -12,6 +13,11 @@ import { AppDataStateModel } from '@store/app-data';
 export class TransunionService {
   constructor() {}
 
+  /**
+   * Generates the message payload for TU services
+   * @param {UpdateAppDataInput | AppDataStateModel} data
+   * @returns
+   */
   createIndicativeEnrichmentPayload(
     data: UpdateAppDataInput | AppDataStateModel
   ): IIndicativeEnrichmentMsg | undefined {
@@ -59,11 +65,17 @@ export class TransunionService {
     } as IIndicativeEnrichmentMsg;
   }
 
+  /**
+   * Generates the message payload for TU services
+   * @param {UpdateAppDataInput | AppDataStateModel} data
+   * @param {string} ssn
+   * @returns
+   */
   createGetAuthenticationQuestionsPayload(
     data: UpdateAppDataInput | AppDataStateModel,
     ssn: string = ''
-  ) {
-    const id = data.id?.split(':').pop();
+  ): IGetAuthenticationQuestionsMsg | undefined {
+    const id = data.id?.split(':')?.pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
 
@@ -106,10 +118,16 @@ export class TransunionService {
     } as IGetAuthenticationQuestionsMsg;
   }
 
+  /**
+   * Generates the message payload for TU services
+   * @param {UpdateAppDataInput | AppDataStateModel} data
+   * @param {IVerifyAuthenticationAnswer[]} answers
+   * @returns
+   */
   createVerifyAuthenticationQuestionsPayload(
     data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[]
-  ) {
+  ): IVerifyAuthenticationQuestionsMsg | undefined {
     const id = data.id?.split(':')?.pop();
 
     if (!id || !answers.length) {
@@ -126,6 +144,50 @@ export class TransunionService {
       ServiceBundleFulfillmentKey:
         data.agencies?.transunion?.serviceBundleFulfillmentKey || '',
     } as IVerifyAuthenticationQuestionsMsg;
+  }
+
+  /**
+   * Genarates the message payload for TU service
+   * @param { UpdateAppDataInput | AppDataStateModel} data
+   * @returns
+   */
+  createEnrollPayload(
+    data: UpdateAppDataInput | AppDataStateModel
+  ): IEnrollRequest | undefined {
+    const id = data.id?.split(':')?.pop();
+    const attrs = data.user?.userAttributes;
+    const dob = attrs?.dob;
+
+    if (!id || !attrs || !dob) {
+      console.log(
+        `no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`
+      );
+      return;
+    }
+
+    return {
+      ClientKey: id,
+      Customer: {
+        CurrentAddress: {
+          AddressLine1: attrs.address?.addressOne || '',
+          AddressLine2: attrs.address?.addressTwo || '',
+          City: attrs.address?.city || '',
+          State: attrs.address?.state || '',
+          Zipcode: attrs.address?.zip || '',
+        },
+        DateOfBirth:
+          `${attrs.dob?.year}-${
+            monthMap[dob?.month?.toLowerCase() || '']
+          }-${`0${dob.day}`.slice(-2)}` || '',
+        FullName: {
+          FirstName: attrs.name?.first || '',
+          LastName: attrs.name?.last || '',
+          MiddleName: attrs.name?.middle || '',
+        },
+        Ssn: attrs.ssn?.full || '',
+      },
+      ServiceBundleCode: 'CC2BraveCreditTUReportV3Score',
+    } as IEnrollRequest;
   }
 }
 

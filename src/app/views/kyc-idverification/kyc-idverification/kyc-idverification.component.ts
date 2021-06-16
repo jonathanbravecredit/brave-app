@@ -5,7 +5,10 @@ import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import { UpdateAppDataInput } from '@shared/services/aws/api.service';
+import {
+  TUEnrollResponseInput,
+  UpdateAppDataInput,
+} from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
@@ -14,6 +17,11 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
+import {
+  IEnrollResponse,
+  IEnrollResult,
+  IEnrollServiceProductResponse,
+} from '@shared/interfaces/enroll.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -34,6 +42,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   private verifyResponse: string | undefined;
   private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
   private authSuccessful: boolean = false;
+  private enrollResult: IEnrollResult | undefined;
 
   constructor(
     private router: Router,
@@ -78,6 +87,19 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
         if (!this.authSuccessful) throw 'Authentication request failed';
 
+        // fetching reports
+        await this.sendEnrollRequest(this.state);
+
+        if (!this.enrollResult) throw 'Enroll request failed';
+        // need to add to state and then update the db
+        const enriched = this.enrichEnrollmentData(
+          this.state,
+          this.enrollResult
+        );
+
+        if (!enriched) throw 'Enrichment failed';
+
+        await this.kycService.updateAgenciesAsync(enriched.agencies);
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
           relativeTo: this.route,
@@ -205,11 +227,107 @@ export class KycIdverificationComponent extends KycBaseComponent {
   ): KycIdverificationComponent {
     if (!resp) return this;
     this.authSuccessful =
-      returnNestedObject(resp, 'a:ResponseType').toLowerCase() === 'success';
+      returnNestedObject(resp, 'a:ResponseType')?.toLowerCase() === 'success';
     return this;
+  }
+
+  /**
+   * Once the user is verified send the enroll request to return the users credit reports
+   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+   * @returns
+   */
+  async sendEnrollRequest(
+    state: UpdateAppDataInput | AppDataStateModel | undefined
+  ): Promise<KycIdverificationComponent> {
+    if (!state) return this;
+    const resp = await this.kycService.sendEnrollRequest(state);
+    const parsed = resp ? JSON.parse(resp) : undefined;
+    const enrollResult = returnNestedObject(
+      JSON.parse(parsed.Enroll),
+      'EnrollResult'
+    );
+    this.enrollResult = enrollResult ? enrollResult : undefined;
+    return this;
+  }
+
+  /**
+   * This method parses and enriches the state data
+   * @param {AppDataStateModel | UpdateAppDataInput} state
+   * @param {IEnrollResponse} enroll
+   * @returns
+   */
+  enrichEnrollmentData(
+    state: UpdateAppDataInput | undefined,
+    enroll: IEnrollResult
+  ): AppDataStateModel | UpdateAppDataInput | undefined {
+    if (!state) return;
+    let enrollReport;
+    let enrollMergeReport;
+    let enrollVantageScore;
+    console.log('enroll in enrich', enroll, state);
+    const enrollmentKey = returnNestedObject(enroll, 'a:EnrollmentKey');
+    const prodResponse = returnNestedObject(enroll, 'a:ServiceProductResponse');
+    if (!prodResponse) return;
+    if (prodResponse instanceof Array) {
+      enrollReport = prodResponse.find(
+        (item: IEnrollServiceProductResponse) => {
+          return item['a:ServiceProduct'] === 'TUCReport';
+        }
+      );
+      enrollMergeReport = prodResponse.find(
+        (item: IEnrollServiceProductResponse) => {
+          return item['a:ServiceProduct'] === 'MergeCreditReports';
+        }
+      );
+      enrollVantageScore = prodResponse.find(
+        (item: IEnrollServiceProductResponse) => {
+          return item['a:ServiceProduct'] === 'TUCVantageScore3';
+        }
+      );
+    } else {
+      switch (prodResponse['a:ServiceProduct']) {
+        case 'TUCReport':
+          enrollReport = prodResponse['a:ServiceProduct'] || null;
+          break;
+        case 'MergeCreditReports':
+          enrollMergeReport = prodResponse['a:ServiceProduct'] || null;
+          break;
+        case 'TUCVantageScore3':
+          enrollVantageScore = prodResponse['a:ServiceProduct'] || null;
+          break;
+        default:
+          break;
+      }
+    }
+    return {
+      ...state,
+      agencies: {
+        ...state.agencies,
+        transunion: {
+          ...state.agencies?.transunion,
+          enrollmentKey: enrollmentKey,
+          enrollReport: mapEnrollResponse(enrollReport),
+          enrollMergeReport: mapEnrollResponse(enrollMergeReport),
+          enrollVantageScore: mapEnrollResponse(enrollVantageScore),
+        },
+      },
+    };
   }
 }
 
 const codeMap: Record<string, any> = {
   code: true,
+};
+
+const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
+  return {
+    bureau: res['a:Bureau'],
+    errorResponse: res['a:ErrorResponse'],
+    serviceProduct: res['a:ServiceProduct'],
+    serviceProductFullfillmentKey: res['a:ServiceProductFulfillmentKey'],
+    serviceProductObject: res['a:ServiceProductObject'],
+    serviceProductTypeId: res['a:ServiceProductTypeId'],
+    serviceProductValue: res['a:ServiceProductValue'],
+    status: res['a:Status'],
+  };
 };

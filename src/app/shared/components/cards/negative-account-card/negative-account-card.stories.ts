@@ -22,7 +22,20 @@ export default {
 const Template: Story<NegativeAccountCardComponent> = (args: any) => ({
   component: NegativeAccountCardComponent,
   props: {
-    ...args
+    ...args,
+    creditorName:"A.R.M. Solutions",
+    lastReported:"29/09/2020",
+    accountTypeDescription:"90-Day Late Payment",
+    accountTypeDescriptionValue:"Open",
+    originalCreditor:"Original Creditor",
+    originalCreditorValue:"Bank Of America",
+    disputeFlag:"Previously Disputed?",
+    disputeFlagValue:"No",
+    accountNumber:"066611222",
+    typeOfCollection:"Collections",
+    amountPastDue:700,
+    dateOpened:"04/12/2018",
+    dateLastPayment:"04/21/2018"
   },
 });
 

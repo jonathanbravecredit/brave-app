@@ -7,6 +7,7 @@ import {
   CreateAppDataInput,
   CreateAppDataMutation,
   GetAppDataQuery,
+  UpdateAppDataInput,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
@@ -16,11 +17,35 @@ import { deleteKeyNestedObject } from '@shared/utils/utils';
   providedIn: 'root',
 })
 export class SyncService {
+  // apiCreateListener$: ZenObservable.Subscription;
+  // apiUpdateListener$: ZenObservable.Subscription;
+  // apiDeleteListener$: ZenObservable.Subscription;
   constructor(
     private api: APIService,
     private store: Store,
     private router: Router
-  ) {}
+  ) {
+    // this.apiCreateListener$ = this.api.OnCreateAppDataListener.subscribe(
+    //   (resp: any) => {
+    //     // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
+    //     // const data: any = resp.value?.data?.onCreateAppData;
+    //     // console.log('on create listener', data);
+    //   }
+    // );
+    // this.apiUpdateListener$ = this.api.OnUpdateAppDataListener.subscribe(
+    //   (resp: any) => {
+    //     // update state
+    //     // const data: any = resp.value?.data?.onUpdateAppData;
+    //     // console.log('on update listener', data);
+    //   }
+    // );
+    // this.apiDeleteListener$ = this.api.OnDeleteAppDataListener.subscribe(
+    //   (resp: any) => {
+    //     // const data: any = resp.value?.data?.onDeleteAppData;
+    //     // console.log('on create listener', data);
+    //   }
+    // );
+  }
 
   /**
    * Hall monitor. Checks the user and tells them where to go when they come back
@@ -96,6 +121,8 @@ export class SyncService {
       };
       console.log('input', input);
       const data = await this.api.CreateAppData(input);
+      const clean = this.cleanBackendData(data);
+      await this.store.dispatch(new AppDataActions.Add(clean));
       return data;
     } catch (err) {
       console.log('initApp error', err);
@@ -103,10 +130,27 @@ export class SyncService {
     }
   }
 
+  /**
+   * Update the state with updated db data
+   * @param {AppDataStateModel} payload
+   */
+  syncUpDBToState(payload: AppDataStateModel): void {
+    this.store.dispatch(new AppDataActions.Edit(payload));
+  }
+
+  /**
+   * Update the database with the state
+   * @param {UpdateAppDataInput} payload
+   */
+  async syncUpStateToDB(payload: UpdateAppDataInput): Promise<void> {
+    await this.api.UpdateAppData(payload);
+  }
+
   cleanBackendData(data: GetAppDataQuery): AppDataStateModel {
     let clean = deleteKeyNestedObject(data, '__typename');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
+    delete clean.owner; // this is a graphql managed field
     return clean;
   }
 }
