@@ -36,7 +36,9 @@ import { ComplianceTosComponent } from './compliance-tos/compliance-tos.componen
 import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
-import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
+import { NegativeAccountInitialComponent } from '@views/negative-account/negative-account-initial/negative-account-initial.component';
+import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
 
 const views = [
   SignupComponent,
@@ -71,7 +73,9 @@ const views = [
   CompliancePrivacyComponent,
   ComplianceTosComponent,
   DashboardInitComponent,
-  NegativeAccountInitialComponent
+  NegativeAccountInitialComponent,
+  CreditReportPureComponent,
+  CreditReportComponent
 ];
 
 const pipes = [KycKbaquestionsPipe];
