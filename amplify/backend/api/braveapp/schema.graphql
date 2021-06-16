@@ -1,3 +1,6 @@
+type Query {
+  transunion(action: String!, message: String!): String
+}
 type AppData
   @model
   @auth(
@@ -84,9 +87,6 @@ type Equifax {
 type Experian {
   authenticated: Boolean
 }
-type Query {
-  transunion(action: String!, message: String!): String
-}
 type TUEnrollResponse {
   bureau: String
   errorResponse: String
@@ -126,6 +126,11 @@ type CreditScoreType {
   NoScoreReason: String
   Source: Source
 }
+type CreditScoreFactor {
+  Factor: String
+  FactorText: [String]
+}
+
 type MergeReport {
   TrueLinkCreditReportType: TrueLinkCreditReportType
 }
@@ -225,19 +230,6 @@ type SummarySource {
 }
 type TransunionSummary {
   TransUnion: String
-}
-type VantageScore {
-  CreditScoreType: CreditScoreType
-}
-type CreditScoreType {
-  CreditScoreFactor: [CreditScoreFactor]
-  CreditScoreModel: String
-  NoScoreReason: String
-  Source: Source
-}
-type CreditScoreFactor {
-  Factor: String
-  FactorText: [String]
 }
 type Source {
   BorrowerKey: String
