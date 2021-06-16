@@ -97,11 +97,9 @@ type TUEnrollResponse {
   serviceProductValue: String
   status: String
 }
-
 type MergeReport {
   TrueLinkCreditReportType: TrueLinkCreditReportType
 }
-
 type TrueLinkCreditReportType {
   SB168Frozen: String
   Borrower: Borrower
@@ -112,7 +110,6 @@ type TrueLinkCreditReportType {
     type: String }]
   Summary: Summary
 }
-
 type Borrowr {
   BorrowerAddress: {
     CreditAddress: String
@@ -138,7 +135,6 @@ type Borrowr {
     }
   }
 }
-
 type TradeLinePartition {
   Tradeline: {
     AccountCondition: String
@@ -165,14 +161,12 @@ type TradeLinePartition {
     Source: Source
   }
 }
-
 type InquiryPartition {
   Inquiry: {
     IndustryCode: String
     Source: Source
   }
 }
-
 type Summary {
   TradelineSummary: {
     TransUnion: String
@@ -192,12 +186,19 @@ type Summary {
   }
   SafetyCheckPassed: String
 }
-
+type VantageScore {
+  CreditScoreType: CreditScoreType
+}
+type CreditScoreType {
+  CreditScoreFactor: [CreditScoreFactor]
+  CreditScoreModel: String
+  NoScoreReason: String
+  Source: Source
+}
 type CreditScoreFactor {
   Factor: String
   FactorText: [String]
 }
-
 type Source {
   BorrowerKey: String
   Bureau: String
