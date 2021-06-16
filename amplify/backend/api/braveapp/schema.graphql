@@ -178,7 +178,7 @@ type TradelinePartitionTradeline {
   OpenClosed: String
   PayStatus: String
   VerificationIndicator: String
-  Remark: TradlineRemark
+  Remark: TradelineRemark
   GrantedTrade: TradelineGrantedTrade
   Source: Source
 }
