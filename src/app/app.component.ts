@@ -8,8 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'brave-app';
 
-  // user: CognitoUserInterface | undefined;
-  // authState: AuthState = {} as AuthState;
   // apiCreateListener$: ZenObservable.Subscription;
   // apiUpdateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;

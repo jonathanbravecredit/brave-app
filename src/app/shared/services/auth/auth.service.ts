@@ -20,28 +20,19 @@ export interface NewUser {
   providedIn: 'root',
 })
 export class AuthService {
-  private authState: Subject<CognitoUser | any> = new Subject<
-    CognitoUser | any
-  >();
-  authState$: Observable<CognitoUser | any> = this.authState.asObservable();
-
   public static SIGN_IN = 'signIn';
   public static SIGN_OUT = 'signOut';
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(
-    private store: Store,
-    private sync: SyncService,
-    private router: Router
-  ) {
+  constructor(private sync: SyncService, private router: Router) {
     Hub.listen('auth', async (data) => {
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
-          this.authState.next(payload.data);
+          console.log('in signin');
           const creds: ICredentials = await this.getCurrentUserCredentials();
-          this.sync.hallmonitor(creds);
+          if (creds) await this.sync.hallmonitor(creds);
           break;
         case 'signOut':
           // handle sign out
@@ -55,7 +46,6 @@ export class AuthService {
     Auth.currentAuthenticatedUser()
       .then(async (user) => {
         console.log('authenticated user');
-        this.authState.next(user);
         const creds: ICredentials = await this.getCurrentUserCredentials();
         if (creds) await this.sync.hallmonitor(creds);
       })
@@ -189,35 +179,8 @@ export class AuthService {
    *
    * @returns
    */
-  getAuthState(): Observable<CognitoUser | any> {
-    return this.authState$;
-  }
-
-  /**
-   *
-   * @returns
-   */
   refreshSession(): Promise<CognitoUserSession> {
     return Auth.currentSession();
-  }
-
-  /**
-   *
-   * @param {CognitoUser} user
-   * @returns
-   */
-  async refreshAuthState(user?: CognitoUser): Promise<void> {
-    if (user) {
-      this.authState.next(user);
-      return;
-    }
-    try {
-      const user = await Auth.currentAuthenticatedUser();
-      this.authState.next(user);
-    } catch (err) {
-      const unconfirmed = await Auth.currentCredentials();
-      this.authState.next(null);
-    }
   }
 
   /**
