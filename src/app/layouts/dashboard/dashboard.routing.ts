@@ -11,7 +11,7 @@ const DashboardRoutes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'negativeaccounts',
+        path: 'accounts/negative',
         component: NegativeAccountInitialComponent,
         canActivate: [AuthGuard],
       },

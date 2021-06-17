@@ -226,7 +226,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   ): KycIdverificationComponent {
     if (!resp) return this;
     this.authSuccessful =
-      returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
+      returnNestedObject(resp, 'a:ResponseType')?.toLowerCase() === 'success';
     return this;
   }
 

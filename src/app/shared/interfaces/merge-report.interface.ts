@@ -95,3 +95,8 @@ export interface ISummary {
   };
   SafetyCheckPassed?: string;
 }
+
+export interface IUnparsedCreditReport {
+  '#text': string;
+  type: string;
+}

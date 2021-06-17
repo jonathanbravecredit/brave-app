@@ -112,30 +112,26 @@ export class SyncService {
 
   /**
    * Takes the last completed step by the user and routes them to
-   *   where they left off
+   *   where they left off if they haven't finishd onboarding
    * @param {number} lastComplete
    */
   routeUser(lastComplete: number): void {
-    if (lastComplete === 3) {
-      this.router.navigate(['/dashboard/']);
-    } else {
-      switch (lastComplete) {
-        case -1:
-          this.router.navigate(['/onboarding/name']);
-          break;
-        case 0:
-          this.router.navigate(['/onboarding/address']);
-          break;
-        case 1:
-          this.router.navigate(['/onboarding/identity']);
-          break;
-        case 2:
-          this.router.navigate(['/onboarding/verify']);
-          break;
-        default:
-          this.router.navigate(['/dashboard/']);
-          break;
-      }
+    switch (lastComplete) {
+      case -1:
+        this.router.navigate(['/onboarding/name']);
+        break;
+      case 0:
+        this.router.navigate(['/onboarding/address']);
+        break;
+      case 1:
+        this.router.navigate(['/onboarding/identity']);
+        break;
+      case 2:
+        this.router.navigate(['/onboarding/verify']);
+        break;
+      default:
+        // nothing to do, stay on same route
+        break;
     }
   }
 
