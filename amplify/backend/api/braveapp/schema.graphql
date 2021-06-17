@@ -90,7 +90,7 @@ type Experian {
 type TUEnrollResponse {
   bureau: String
   errorResponse: String
-  serviceProduct: Stringsave
+  serviceProduct: String
   serviceProductFullfillmentKey: String
   serviceProductObject: AWSJSON
   serviceProductTypeId: String
