@@ -78,8 +78,8 @@ type Transunion {
   currentRawAuthDetails: String
   enrollmentKey: String
   enrollReport: TUEnrollResponse
-  enrollMergeReport: TUEnrollMergeReport
-  enrollVantageScore: TUEnrollVantageScore
+  enrollMergeReport: TUEnrollResponse
+  enrollVantageScore: TUEnrollResponse
 }
 type Equifax {
   authenticated: Boolean
@@ -92,148 +92,8 @@ type TUEnrollResponse {
   errorResponse: String
   serviceProduct: String
   serviceProductFullfillmentKey: String
-  serviceProductObject: String
+  serviceProductObject: AWSJSON
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-type TUEnrollVantageScore {
-  bureau: String
-  errorResponse: String
-  serviceProduct: String
-  serviceProductFullfillmentKey: String
-  serviceProductObject: MergeReport
-  serviceProductTypeId: String
-  serviceProductValue: String
-  status: String
-}
-type TUEnrollMergeReport {
-  bureau: String
-  errorResponse: String
-  serviceProduct: String
-  serviceProductFullfillmentKey: String
-  serviceProductObject: MergeReport
-  serviceProductTypeId: String
-  serviceProductValue: String
-  status: String
-}
-type VantageScore {
-  CreditScoreType: CreditScoreType
-}
-type CreditScoreType {
-  CreditScoreFactor: [CreditScoreFactor]
-  CreditScoreModel: String
-  NoScoreReason: String
-  Source: Source
-}
-type CreditScoreFactor {
-  Factor: String
-  FactorText: [String]
-}
-
-type MergeReport {
-  TrueLinkCreditReportType: TrueLinkCreditReportType
-}
-type TrueLinkCreditReportType {
-  SB168Frozen: String
-  Borrower: Borrower
-  TradeLinePartition: [TradeLinePartition]
-  InquiryPartition: InquiryPartition
-  Message: [Message]
-  Summary: Summary
-}
-type Borrower {
-  BorrowerAddress: BorrowerAddress
-  Birth: BorrowerBirth
-  CreditScore: BorrowerCreditScore
-  SocialPartition: BorrowerSocialPartition
-}
-type BorrowerAddress {
-  CreditAddress: String
-  Dwelling: String
-  Origin: String
-  Ownership: String
-  Source: Source
-}
-type BorrowerBirth {
-  BirthDate: String
-  Source: Source
-}
-type BorrowerCreditScore {
-  CreditScoreFactor: [CreditScoreFactor]
-  CreditScoreMode: String
-  NoScoreReason: String
-  Source: Source
-}
-type BorrowerSocialPartition {
-  Social: BorrowerSocialPartitionSocial
-}
-type BorrowerSocialPartitionSocial {
-  SocialSecurityNumber: String
-  Source: Source
-}
-type TradeLinePartition {
-  Tradeline: TradelinePartitionTradeline
-}
-type TradelinePartitionTradeline {
-  AccountCondition: String
-  AccountDesignator: String
-  DisputeFlag: String
-  IndustryCode: String
-  OpenClosed: String
-  PayStatus: String
-  VerificationIndicator: String
-  Remark: TradelineRemark
-  GrantedTrade: TradelineGrantedTrade
-  Source: Source
-}
-type TradelineRemark {
-  RemarkCode: String
-}
-type TradelineGrantedTrade {
-  AccountType: String
-  CreditType: String
-  PaymentFrequency: String
-  TermType: String
-  WorstPayStatus: String
-  PayStatusHistory: TradelineGrantedTradePayStatusHistory
-  CreditLimit: String
-}
-type TradelineGrantedTradePayStatusHistory {
-  MonthlyPayStatus: [String]
-}
-type InquiryPartition {
-  Inquiry: InquiryPartitionInquiry
-}
-type InquiryPartitionInquiry {
-  IndustryCode: String
-  Source: Source
-}
-type Message {
-  code: String
-  type: String
-}
-type Summary {
-  TradelineSummary: TransunionSummary
-  InquirySummary: TransunionSummary
-  PublicRecordSummary: TransunionSummary
-  Sources: SummarySources
-  SafetyCheckPassed: String
-}
-type SummarySources {
-  Source: SummarySource
-}
-type SummarySource {
-  Bureau: String
-  InquiryDate: String
-  OriginalData: String
-}
-type TransunionSummary {
-  TransUnion: String
-}
-type Source {
-  BorrowerKey: String
-  Bureau: String
-  InquiryDate: String
-  Reference: String
 }

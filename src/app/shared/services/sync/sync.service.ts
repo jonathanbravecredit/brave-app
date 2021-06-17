@@ -60,7 +60,8 @@ export class SyncService {
     console.log('calling hallmonitor');
     const { identityId: id } = creds;
     console.log('id', id);
-    if (!id) {
+    const data = await this.api.GetAppData(id); // check database for data
+    if (!data) {
       // new user...seed database...and send them to onboarding
       await this.initAppData({ identityId: id } as ICredentials);
       this.routeUser(-1);

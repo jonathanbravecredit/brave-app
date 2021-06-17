@@ -94,6 +94,160 @@ export type TUEnrollResponseInput = {
   status?: string | null;
 };
 
+export type TUEnrollMergeReportInput = {
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: MergeReportInput | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
+};
+
+export type MergeReportInput = {
+  TrueLinkCreditReportType?: TrueLinkCreditReportTypeInput | null;
+};
+
+export type TrueLinkCreditReportTypeInput = {
+  SB168Frozen?: string | null;
+  Borrower?: BorrowerInput | null;
+  TradeLinePartition?: Array<TradeLinePartitionInput | null> | null;
+  InquiryPartition?: InquiryPartitionInput | null;
+  Message?: Array<MessageInput | null> | null;
+  Summary?: SummaryInput | null;
+};
+
+export type BorrowerInput = {
+  BorrowerAddress?: BorrowerAddressInput | null;
+  Birth?: BorrowerBirthInput | null;
+  CreditScore?: BorrowerCreditScoreInput | null;
+  SocialPartition?: BorrowerSocialPartitionInput | null;
+};
+
+export type BorrowerAddressInput = {
+  CreditAddress?: string | null;
+  Dwelling?: string | null;
+  Origin?: string | null;
+  Ownership?: string | null;
+  Source?: SourceInput | null;
+};
+
+export type SourceInput = {
+  BorrowerKey?: string | null;
+  Bureau?: string | null;
+  InquiryDate?: string | null;
+  Reference?: string | null;
+};
+
+export type BorrowerBirthInput = {
+  BirthDate?: string | null;
+  Source?: SourceInput | null;
+};
+
+export type BorrowerCreditScoreInput = {
+  CreditScoreFactor?: Array<CreditScoreFactorInput | null> | null;
+  CreditScoreMode?: string | null;
+  NoScoreReason?: string | null;
+  Source?: SourceInput | null;
+};
+
+export type CreditScoreFactorInput = {
+  Factor?: string | null;
+  FactorText?: Array<string | null> | null;
+};
+
+export type BorrowerSocialPartitionInput = {
+  Social?: BorrowerSocialPartitionSocialInput | null;
+};
+
+export type BorrowerSocialPartitionSocialInput = {
+  SocialSecurityNumber?: string | null;
+  Source?: SourceInput | null;
+};
+
+export type TradeLinePartitionInput = {
+  Tradeline?: TradelinePartitionTradelineInput | null;
+};
+
+export type TradelinePartitionTradelineInput = {
+  AccountCondition?: string | null;
+  AccountDesignator?: string | null;
+  DisputeFlag?: string | null;
+  IndustryCode?: string | null;
+  OpenClosed?: string | null;
+  PayStatus?: string | null;
+  VerificationIndicator?: string | null;
+  Remark?: TradelineRemarkInput | null;
+  GrantedTrade?: TradelineGrantedTradeInput | null;
+  Source?: SourceInput | null;
+};
+
+export type TradelineRemarkInput = {
+  RemarkCode?: string | null;
+};
+
+export type TradelineGrantedTradeInput = {
+  AccountType?: string | null;
+  CreditType?: string | null;
+  PaymentFrequency?: string | null;
+  TermType?: string | null;
+  WorstPayStatus?: string | null;
+  PayStatusHistory?: TradelineGrantedTradePayStatusHistoryInput | null;
+  CreditLimit?: string | null;
+};
+
+export type TradelineGrantedTradePayStatusHistoryInput = {
+  MonthlyPayStatus?: Array<string | null> | null;
+};
+
+export type InquiryPartitionInput = {
+  Inquiry?: InquiryPartitionInquiryInput | null;
+};
+
+export type InquiryPartitionInquiryInput = {
+  IndustryCode?: string | null;
+  Source?: SourceInput | null;
+};
+
+export type MessageInput = {
+  code?: string | null;
+  type?: string | null;
+};
+
+export type SummaryInput = {
+  TradelineSummary?: TransunionSummaryInput | null;
+  InquirySummary?: TransunionSummaryInput | null;
+  PublicRecordSummary?: TransunionSummaryInput | null;
+  Sources?: SummarySourcesInput | null;
+  SafetyCheckPassed?: string | null;
+};
+
+export type TransunionSummaryInput = {
+  TransUnion?: string | null;
+};
+
+export type SummarySourcesInput = {
+  Source?: SummarySourceInput | null;
+};
+
+export type SummarySourceInput = {
+  Bureau?: string | null;
+  InquiryDate?: string | null;
+  OriginalData?: string | null;
+};
+
+export type TUEnrollVantageScoreInput = {
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: MergeReportInput | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
+};
+
 export type EquifaxInput = {
   authenticated?: boolean | null;
 };
@@ -192,8 +346,8 @@ export type Transunion = {
   currentRawAuthDetails?: string | null;
   enrollmentKey?: string | null;
   enrollReport?: TUEnrollResponse;
-  enrollMergeReport?: TUEnrollResponse;
-  enrollVantageScore?: TUEnrollResponse;
+  enrollMergeReport?: TUEnrollMergeReport;
+  enrollVantageScore?: TUEnrollVantageScore;
 };
 
 export type TUEnrollResponse = {
@@ -203,6 +357,184 @@ export type TUEnrollResponse = {
   serviceProduct?: string | null;
   serviceProductFullfillmentKey?: string | null;
   serviceProductObject?: string | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
+};
+
+export type TUEnrollMergeReport = {
+  __typename: "TUEnrollMergeReport";
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: MergeReport;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
+};
+
+export type MergeReport = {
+  __typename: "MergeReport";
+  TrueLinkCreditReportType?: TrueLinkCreditReportType;
+};
+
+export type TrueLinkCreditReportType = {
+  __typename: "TrueLinkCreditReportType";
+  SB168Frozen?: string | null;
+  Borrower?: Borrower;
+  TradeLinePartition?: Array<TradeLinePartition | null> | null;
+  InquiryPartition?: InquiryPartition;
+  Message?: Array<Message | null> | null;
+  Summary?: Summary;
+};
+
+export type Borrower = {
+  __typename: "Borrower";
+  BorrowerAddress?: BorrowerAddress;
+  Birth?: BorrowerBirth;
+  CreditScore?: BorrowerCreditScore;
+  SocialPartition?: BorrowerSocialPartition;
+};
+
+export type BorrowerAddress = {
+  __typename: "BorrowerAddress";
+  CreditAddress?: string | null;
+  Dwelling?: string | null;
+  Origin?: string | null;
+  Ownership?: string | null;
+  Source?: Source;
+};
+
+export type Source = {
+  __typename: "Source";
+  BorrowerKey?: string | null;
+  Bureau?: string | null;
+  InquiryDate?: string | null;
+  Reference?: string | null;
+};
+
+export type BorrowerBirth = {
+  __typename: "BorrowerBirth";
+  BirthDate?: string | null;
+  Source?: Source;
+};
+
+export type BorrowerCreditScore = {
+  __typename: "BorrowerCreditScore";
+  CreditScoreFactor?: Array<CreditScoreFactor | null> | null;
+  CreditScoreMode?: string | null;
+  NoScoreReason?: string | null;
+  Source?: Source;
+};
+
+export type CreditScoreFactor = {
+  __typename: "CreditScoreFactor";
+  Factor?: string | null;
+  FactorText?: Array<string | null> | null;
+};
+
+export type BorrowerSocialPartition = {
+  __typename: "BorrowerSocialPartition";
+  Social?: BorrowerSocialPartitionSocial;
+};
+
+export type BorrowerSocialPartitionSocial = {
+  __typename: "BorrowerSocialPartitionSocial";
+  SocialSecurityNumber?: string | null;
+  Source?: Source;
+};
+
+export type TradeLinePartition = {
+  __typename: "TradeLinePartition";
+  Tradeline?: TradelinePartitionTradeline;
+};
+
+export type TradelinePartitionTradeline = {
+  __typename: "TradelinePartitionTradeline";
+  AccountCondition?: string | null;
+  AccountDesignator?: string | null;
+  DisputeFlag?: string | null;
+  IndustryCode?: string | null;
+  OpenClosed?: string | null;
+  PayStatus?: string | null;
+  VerificationIndicator?: string | null;
+  Remark?: TradelineRemark;
+  GrantedTrade?: TradelineGrantedTrade;
+  Source?: Source;
+};
+
+export type TradelineRemark = {
+  __typename: "TradelineRemark";
+  RemarkCode?: string | null;
+};
+
+export type TradelineGrantedTrade = {
+  __typename: "TradelineGrantedTrade";
+  AccountType?: string | null;
+  CreditType?: string | null;
+  PaymentFrequency?: string | null;
+  TermType?: string | null;
+  WorstPayStatus?: string | null;
+  PayStatusHistory?: TradelineGrantedTradePayStatusHistory;
+  CreditLimit?: string | null;
+};
+
+export type TradelineGrantedTradePayStatusHistory = {
+  __typename: "TradelineGrantedTradePayStatusHistory";
+  MonthlyPayStatus?: Array<string | null> | null;
+};
+
+export type InquiryPartition = {
+  __typename: "InquiryPartition";
+  Inquiry?: InquiryPartitionInquiry;
+};
+
+export type InquiryPartitionInquiry = {
+  __typename: "InquiryPartitionInquiry";
+  IndustryCode?: string | null;
+  Source?: Source;
+};
+
+export type Message = {
+  __typename: "Message";
+  code?: string | null;
+  type?: string | null;
+};
+
+export type Summary = {
+  __typename: "Summary";
+  TradelineSummary?: TransunionSummary;
+  InquirySummary?: TransunionSummary;
+  PublicRecordSummary?: TransunionSummary;
+  Sources?: SummarySources;
+  SafetyCheckPassed?: string | null;
+};
+
+export type TransunionSummary = {
+  __typename: "TransunionSummary";
+  TransUnion?: string | null;
+};
+
+export type SummarySources = {
+  __typename: "SummarySources";
+  Source?: SummarySource;
+};
+
+export type SummarySource = {
+  __typename: "SummarySource";
+  Bureau?: string | null;
+  InquiryDate?: string | null;
+  OriginalData?: string | null;
+};
+
+export type TUEnrollVantageScore = {
+  __typename: "TUEnrollVantageScore";
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: MergeReport;
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
@@ -348,23 +680,315 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -452,23 +1076,315 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -556,23 +1472,315 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -660,23 +1868,315 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -766,23 +2266,293 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         enrollMergeReport?: {
-          __typename: "TUEnrollResponse";
+          __typename: "TUEnrollMergeReport";
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
           serviceProductFullfillmentKey?: string | null;
-          serviceProductObject?: string | null;
+          serviceProductObject?: {
+            __typename: "MergeReport";
+            TrueLinkCreditReportType?: {
+              __typename: "TrueLinkCreditReportType";
+              SB168Frozen?: string | null;
+              Borrower?: {
+                __typename: "Borrower";
+                BorrowerAddress?: {
+                  __typename: "BorrowerAddress";
+                  CreditAddress?: string | null;
+                  Dwelling?: string | null;
+                  Origin?: string | null;
+                  Ownership?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+                Birth?: {
+                  __typename: "BorrowerBirth";
+                  BirthDate?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+                CreditScore?: {
+                  __typename: "BorrowerCreditScore";
+                  CreditScoreFactor?: Array<{
+                    __typename: "CreditScoreFactor";
+                    Factor?: string | null;
+                    FactorText?: Array<string | null> | null;
+                  } | null> | null;
+                  CreditScoreMode?: string | null;
+                  NoScoreReason?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+                SocialPartition?: {
+                  __typename: "BorrowerSocialPartition";
+                  Social?: {
+                    __typename: "BorrowerSocialPartitionSocial";
+                    SocialSecurityNumber?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+              TradeLinePartition?: Array<{
+                __typename: "TradeLinePartition";
+                Tradeline?: {
+                  __typename: "TradelinePartitionTradeline";
+                  AccountCondition?: string | null;
+                  AccountDesignator?: string | null;
+                  DisputeFlag?: string | null;
+                  IndustryCode?: string | null;
+                  OpenClosed?: string | null;
+                  PayStatus?: string | null;
+                  VerificationIndicator?: string | null;
+                  Remark?: {
+                    __typename: "TradelineRemark";
+                    RemarkCode?: string | null;
+                  } | null;
+                  GrantedTrade?: {
+                    __typename: "TradelineGrantedTrade";
+                    AccountType?: string | null;
+                    CreditType?: string | null;
+                    PaymentFrequency?: string | null;
+                    TermType?: string | null;
+                    WorstPayStatus?: string | null;
+                    CreditLimit?: string | null;
+                  } | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null> | null;
+              InquiryPartition?: {
+                __typename: "InquiryPartition";
+                Inquiry?: {
+                  __typename: "InquiryPartitionInquiry";
+                  IndustryCode?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+              Message?: Array<{
+                __typename: "Message";
+                code?: string | null;
+                type?: string | null;
+              } | null> | null;
+              Summary?: {
+                __typename: "Summary";
+                TradelineSummary?: {
+                  __typename: "TransunionSummary";
+                  TransUnion?: string | null;
+                } | null;
+                InquirySummary?: {
+                  __typename: "TransunionSummary";
+                  TransUnion?: string | null;
+                } | null;
+                PublicRecordSummary?: {
+                  __typename: "TransunionSummary";
+                  TransUnion?: string | null;
+                } | null;
+                Sources?: {
+                  __typename: "SummarySources";
+                  Source?: {
+                    __typename: "SummarySource";
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    OriginalData?: string | null;
+                  } | null;
+                } | null;
+                SafetyCheckPassed?: string | null;
+              } | null;
+            } | null;
+          } | null;
           serviceProductTypeId?: string | null;
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
         enrollVantageScore?: {
-          __typename: "TUEnrollResponse";
+          __typename: "TUEnrollVantageScore";
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
           serviceProductFullfillmentKey?: string | null;
-          serviceProductObject?: string | null;
+          serviceProductObject?: {
+            __typename: "MergeReport";
+            TrueLinkCreditReportType?: {
+              __typename: "TrueLinkCreditReportType";
+              SB168Frozen?: string | null;
+              Borrower?: {
+                __typename: "Borrower";
+                BorrowerAddress?: {
+                  __typename: "BorrowerAddress";
+                  CreditAddress?: string | null;
+                  Dwelling?: string | null;
+                  Origin?: string | null;
+                  Ownership?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+                Birth?: {
+                  __typename: "BorrowerBirth";
+                  BirthDate?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+                CreditScore?: {
+                  __typename: "BorrowerCreditScore";
+                  CreditScoreFactor?: Array<{
+                    __typename: "CreditScoreFactor";
+                    Factor?: string | null;
+                    FactorText?: Array<string | null> | null;
+                  } | null> | null;
+                  CreditScoreMode?: string | null;
+                  NoScoreReason?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+                SocialPartition?: {
+                  __typename: "BorrowerSocialPartition";
+                  Social?: {
+                    __typename: "BorrowerSocialPartitionSocial";
+                    SocialSecurityNumber?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+              TradeLinePartition?: Array<{
+                __typename: "TradeLinePartition";
+                Tradeline?: {
+                  __typename: "TradelinePartitionTradeline";
+                  AccountCondition?: string | null;
+                  AccountDesignator?: string | null;
+                  DisputeFlag?: string | null;
+                  IndustryCode?: string | null;
+                  OpenClosed?: string | null;
+                  PayStatus?: string | null;
+                  VerificationIndicator?: string | null;
+                  Remark?: {
+                    __typename: "TradelineRemark";
+                    RemarkCode?: string | null;
+                  } | null;
+                  GrantedTrade?: {
+                    __typename: "TradelineGrantedTrade";
+                    AccountType?: string | null;
+                    CreditType?: string | null;
+                    PaymentFrequency?: string | null;
+                    TermType?: string | null;
+                    WorstPayStatus?: string | null;
+                    CreditLimit?: string | null;
+                  } | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null> | null;
+              InquiryPartition?: {
+                __typename: "InquiryPartition";
+                Inquiry?: {
+                  __typename: "InquiryPartitionInquiry";
+                  IndustryCode?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+              Message?: Array<{
+                __typename: "Message";
+                code?: string | null;
+                type?: string | null;
+              } | null> | null;
+              Summary?: {
+                __typename: "Summary";
+                TradelineSummary?: {
+                  __typename: "TransunionSummary";
+                  TransUnion?: string | null;
+                } | null;
+                InquirySummary?: {
+                  __typename: "TransunionSummary";
+                  TransUnion?: string | null;
+                } | null;
+                PublicRecordSummary?: {
+                  __typename: "TransunionSummary";
+                  TransUnion?: string | null;
+                } | null;
+                Sources?: {
+                  __typename: "SummarySources";
+                  Source?: {
+                    __typename: "SummarySource";
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    OriginalData?: string | null;
+                  } | null;
+                } | null;
+                SafetyCheckPassed?: string | null;
+              } | null;
+            } | null;
+          } | null;
           serviceProductTypeId?: string | null;
           serviceProductValue?: string | null;
           status?: string | null;
@@ -872,23 +2642,315 @@ export type OnCreateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -976,23 +3038,315 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -1080,23 +3434,315 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollMergeReport";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUEnrollVantageScore";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
         serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
+        serviceProductObject?: {
+          __typename: "MergeReport";
+          TrueLinkCreditReportType?: {
+            __typename: "TrueLinkCreditReportType";
+            SB168Frozen?: string | null;
+            Borrower?: {
+              __typename: "Borrower";
+              BorrowerAddress?: {
+                __typename: "BorrowerAddress";
+                CreditAddress?: string | null;
+                Dwelling?: string | null;
+                Origin?: string | null;
+                Ownership?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              Birth?: {
+                __typename: "BorrowerBirth";
+                BirthDate?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              CreditScore?: {
+                __typename: "BorrowerCreditScore";
+                CreditScoreFactor?: Array<{
+                  __typename: "CreditScoreFactor";
+                  Factor?: string | null;
+                  FactorText?: Array<string | null> | null;
+                } | null> | null;
+                CreditScoreMode?: string | null;
+                NoScoreReason?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+              SocialPartition?: {
+                __typename: "BorrowerSocialPartition";
+                Social?: {
+                  __typename: "BorrowerSocialPartitionSocial";
+                  SocialSecurityNumber?: string | null;
+                  Source?: {
+                    __typename: "Source";
+                    BorrowerKey?: string | null;
+                    Bureau?: string | null;
+                    InquiryDate?: string | null;
+                    Reference?: string | null;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+            TradeLinePartition?: Array<{
+              __typename: "TradeLinePartition";
+              Tradeline?: {
+                __typename: "TradelinePartitionTradeline";
+                AccountCondition?: string | null;
+                AccountDesignator?: string | null;
+                DisputeFlag?: string | null;
+                IndustryCode?: string | null;
+                OpenClosed?: string | null;
+                PayStatus?: string | null;
+                VerificationIndicator?: string | null;
+                Remark?: {
+                  __typename: "TradelineRemark";
+                  RemarkCode?: string | null;
+                } | null;
+                GrantedTrade?: {
+                  __typename: "TradelineGrantedTrade";
+                  AccountType?: string | null;
+                  CreditType?: string | null;
+                  PaymentFrequency?: string | null;
+                  TermType?: string | null;
+                  WorstPayStatus?: string | null;
+                  PayStatusHistory?: {
+                    __typename: "TradelineGrantedTradePayStatusHistory";
+                    MonthlyPayStatus?: Array<string | null> | null;
+                  } | null;
+                  CreditLimit?: string | null;
+                } | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null> | null;
+            InquiryPartition?: {
+              __typename: "InquiryPartition";
+              Inquiry?: {
+                __typename: "InquiryPartitionInquiry";
+                IndustryCode?: string | null;
+                Source?: {
+                  __typename: "Source";
+                  BorrowerKey?: string | null;
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  Reference?: string | null;
+                } | null;
+              } | null;
+            } | null;
+            Message?: Array<{
+              __typename: "Message";
+              code?: string | null;
+              type?: string | null;
+            } | null> | null;
+            Summary?: {
+              __typename: "Summary";
+              TradelineSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              InquirySummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              PublicRecordSummary?: {
+                __typename: "TransunionSummary";
+                TransUnion?: string | null;
+              } | null;
+              Sources?: {
+                __typename: "SummarySources";
+                Source?: {
+                  __typename: "SummarySource";
+                  Bureau?: string | null;
+                  InquiryDate?: string | null;
+                  OriginalData?: string | null;
+                } | null;
+              } | null;
+              SafetyCheckPassed?: string | null;
+            } | null;
+          } | null;
+        } | null;
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
@@ -1198,7 +3844,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1209,7 +4001,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1318,7 +4256,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1329,7 +4413,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1438,7 +4668,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1449,7 +4825,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1568,7 +5090,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1579,7 +5247,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1688,7 +5502,142 @@ export class APIService {
                   errorResponse
                   serviceProduct
                   serviceProductFullfillmentKey
-                  serviceProductObject
+                  serviceProductObject {
+                    __typename
+                    TrueLinkCreditReportType {
+                      __typename
+                      SB168Frozen
+                      Borrower {
+                        __typename
+                        BorrowerAddress {
+                          __typename
+                          CreditAddress
+                          Dwelling
+                          Origin
+                          Ownership
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                        Birth {
+                          __typename
+                          BirthDate
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                        CreditScore {
+                          __typename
+                          CreditScoreFactor {
+                            __typename
+                            Factor
+                            FactorText
+                          }
+                          CreditScoreMode
+                          NoScoreReason
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                        SocialPartition {
+                          __typename
+                          Social {
+                            __typename
+                            SocialSecurityNumber
+                          }
+                        }
+                      }
+                      TradeLinePartition {
+                        __typename
+                        Tradeline {
+                          __typename
+                          AccountCondition
+                          AccountDesignator
+                          DisputeFlag
+                          IndustryCode
+                          OpenClosed
+                          PayStatus
+                          VerificationIndicator
+                          Remark {
+                            __typename
+                            RemarkCode
+                          }
+                          GrantedTrade {
+                            __typename
+                            AccountType
+                            CreditType
+                            PaymentFrequency
+                            TermType
+                            WorstPayStatus
+                            CreditLimit
+                          }
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                      InquiryPartition {
+                        __typename
+                        Inquiry {
+                          __typename
+                          IndustryCode
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                      Message {
+                        __typename
+                        code
+                        type
+                      }
+                      Summary {
+                        __typename
+                        TradelineSummary {
+                          __typename
+                          TransUnion
+                        }
+                        InquirySummary {
+                          __typename
+                          TransUnion
+                        }
+                        PublicRecordSummary {
+                          __typename
+                          TransUnion
+                        }
+                        Sources {
+                          __typename
+                          Source {
+                            __typename
+                            Bureau
+                            InquiryDate
+                            OriginalData
+                          }
+                        }
+                        SafetyCheckPassed
+                      }
+                    }
+                  }
                   serviceProductTypeId
                   serviceProductValue
                   status
@@ -1699,7 +5648,142 @@ export class APIService {
                   errorResponse
                   serviceProduct
                   serviceProductFullfillmentKey
-                  serviceProductObject
+                  serviceProductObject {
+                    __typename
+                    TrueLinkCreditReportType {
+                      __typename
+                      SB168Frozen
+                      Borrower {
+                        __typename
+                        BorrowerAddress {
+                          __typename
+                          CreditAddress
+                          Dwelling
+                          Origin
+                          Ownership
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                        Birth {
+                          __typename
+                          BirthDate
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                        CreditScore {
+                          __typename
+                          CreditScoreFactor {
+                            __typename
+                            Factor
+                            FactorText
+                          }
+                          CreditScoreMode
+                          NoScoreReason
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                        SocialPartition {
+                          __typename
+                          Social {
+                            __typename
+                            SocialSecurityNumber
+                          }
+                        }
+                      }
+                      TradeLinePartition {
+                        __typename
+                        Tradeline {
+                          __typename
+                          AccountCondition
+                          AccountDesignator
+                          DisputeFlag
+                          IndustryCode
+                          OpenClosed
+                          PayStatus
+                          VerificationIndicator
+                          Remark {
+                            __typename
+                            RemarkCode
+                          }
+                          GrantedTrade {
+                            __typename
+                            AccountType
+                            CreditType
+                            PaymentFrequency
+                            TermType
+                            WorstPayStatus
+                            CreditLimit
+                          }
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                      InquiryPartition {
+                        __typename
+                        Inquiry {
+                          __typename
+                          IndustryCode
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                      Message {
+                        __typename
+                        code
+                        type
+                      }
+                      Summary {
+                        __typename
+                        TradelineSummary {
+                          __typename
+                          TransUnion
+                        }
+                        InquirySummary {
+                          __typename
+                          TransUnion
+                        }
+                        PublicRecordSummary {
+                          __typename
+                          TransUnion
+                        }
+                        Sources {
+                          __typename
+                          Source {
+                            __typename
+                            Bureau
+                            InquiryDate
+                            OriginalData
+                          }
+                        }
+                        SafetyCheckPassed
+                      }
+                    }
+                  }
                   serviceProductTypeId
                   serviceProductValue
                   status
@@ -1813,7 +5897,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1824,7 +6054,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1930,7 +6306,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -1941,7 +6463,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -2047,7 +6715,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status
@@ -2058,7 +6872,153 @@ export class APIService {
                 errorResponse
                 serviceProduct
                 serviceProductFullfillmentKey
-                serviceProductObject
+                serviceProductObject {
+                  __typename
+                  TrueLinkCreditReportType {
+                    __typename
+                    SB168Frozen
+                    Borrower {
+                      __typename
+                      BorrowerAddress {
+                        __typename
+                        CreditAddress
+                        Dwelling
+                        Origin
+                        Ownership
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      Birth {
+                        __typename
+                        BirthDate
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      CreditScore {
+                        __typename
+                        CreditScoreFactor {
+                          __typename
+                          Factor
+                          FactorText
+                        }
+                        CreditScoreMode
+                        NoScoreReason
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                      SocialPartition {
+                        __typename
+                        Social {
+                          __typename
+                          SocialSecurityNumber
+                          Source {
+                            __typename
+                            BorrowerKey
+                            Bureau
+                            InquiryDate
+                            Reference
+                          }
+                        }
+                      }
+                    }
+                    TradeLinePartition {
+                      __typename
+                      Tradeline {
+                        __typename
+                        AccountCondition
+                        AccountDesignator
+                        DisputeFlag
+                        IndustryCode
+                        OpenClosed
+                        PayStatus
+                        VerificationIndicator
+                        Remark {
+                          __typename
+                          RemarkCode
+                        }
+                        GrantedTrade {
+                          __typename
+                          AccountType
+                          CreditType
+                          PaymentFrequency
+                          TermType
+                          WorstPayStatus
+                          PayStatusHistory {
+                            __typename
+                            MonthlyPayStatus
+                          }
+                          CreditLimit
+                        }
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    InquiryPartition {
+                      __typename
+                      Inquiry {
+                        __typename
+                        IndustryCode
+                        Source {
+                          __typename
+                          BorrowerKey
+                          Bureau
+                          InquiryDate
+                          Reference
+                        }
+                      }
+                    }
+                    Message {
+                      __typename
+                      code
+                      type
+                    }
+                    Summary {
+                      __typename
+                      TradelineSummary {
+                        __typename
+                        TransUnion
+                      }
+                      InquirySummary {
+                        __typename
+                        TransUnion
+                      }
+                      PublicRecordSummary {
+                        __typename
+                        TransUnion
+                      }
+                      Sources {
+                        __typename
+                        Source {
+                          __typename
+                          Bureau
+                          InquiryDate
+                          OriginalData
+                        }
+                      }
+                      SafetyCheckPassed
+                    }
+                  }
+                }
                 serviceProductTypeId
                 serviceProductValue
                 status

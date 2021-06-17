@@ -18,7 +18,6 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import {
-  IEnrollResponse,
   IEnrollResult,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces/enroll.interface';
@@ -329,5 +328,5 @@ const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
     serviceProductTypeId: res['a:ServiceProductTypeId'],
     serviceProductValue: res['a:ServiceProductValue'],
     status: res['a:Status'],
-  };
+  } as TUEnrollResponseInput;
 };
