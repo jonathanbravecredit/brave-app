@@ -1,4 +1,4 @@
-const mockParsedVantageUser = {
+const mockParsedMergeReport = {
   TrueLinkCreditReportType: {
     FraudIndicator: false,
     DeceasedIndicator: false,
