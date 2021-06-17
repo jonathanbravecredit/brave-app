@@ -1,4 +1,4 @@
-export const PositiveReasonCodes = {
+export const POSITIVE_REASON_CODES: Record<string, any> = {
   RPO1: { factor: ``, explain: ``, cando: `` },
   RP02: { factor: ``, explain: ``, cando: `` },
   RP03: { factor: ``, explain: ``, cando: `` },

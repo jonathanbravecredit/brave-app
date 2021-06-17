@@ -1,4 +1,4 @@
-export const NegativeReasonCodes = {
+export const NEGATIVE_REASON_CODES: Record<string, any> = {
   R1: { factor: ``, explain: ``, cando: `` },
   R2: { factor: ``, explain: ``, cando: `` },
   R3: { factor: ``, explain: ``, cando: `` },

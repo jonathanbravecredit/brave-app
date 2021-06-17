@@ -1,30 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { AgenciesState, AgenciesStateModel } from '@store/agencies';
-import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { IMergeReport } from '@shared/interfaces/merge-report.interface';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-negative-account-initial',
   templateUrl: './negative-account-initial.component.html',
 })
-export class NegativeAccountInitialComponent implements OnInit, OnDestroy {
-  @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
-  agenciesSub$: Subscription;
+export class NegativeAccountInitialComponent implements OnInit {
+  creditReport$: Observable<IMergeReport>;
 
-  constructor() {
-    this.agenciesSub$ = this.agencies$
-      .pipe(take(1))
-      .subscribe((agencies: AgenciesStateModel) => {
-        console.log('agencies', agencies);
-        console.log('tu', agencies.transunion);
-        console.log('mergeReport', agencies.transunion?.enrollMergeReport);
-      });
+  constructor(private creditReportService: CreditreportService) {
+    this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 
   ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
-  }
 }

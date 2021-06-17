@@ -24,9 +24,8 @@ const parserOptions = {
   providedIn: 'root',
 })
 export class CreditreportService implements OnDestroy {
-  private tuReport: IMergeReport = {} as IMergeReport;
-  private tuReport$: Subject<IMergeReport> = new Subject();
-  // private tuReportSub$: Subscription;
+  tuReport: IMergeReport = {} as IMergeReport;
+  tuReport$: Subject<IMergeReport> = new Subject();
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
@@ -35,18 +34,10 @@ export class CreditreportService implements OnDestroy {
     this.agenciesSub$ = this.agencies$
       .pipe()
       .subscribe((agencies: AgenciesStateModel) => {
-        const serviceProductString =
-          agencies.transunion?.enrollMergeReport?.serviceProductObject ||
-          '{"#text":""}';
-        const serviceProductObject: IUnparsedCreditReport = JSON.parse(
-          serviceProductString
-        );
-        const parsedReport = this.parseCreditReport(
-          serviceProductObject['#text']
-        );
+        const unparsed = this.getUnparsedCreditReport(agencies);
+        const parsedReport = this.parseCreditReport(unparsed['#text']);
         this.tuReport$.next(parsedReport);
         this.tuReport = parsedReport;
-        console.log('agencies', agencies, serviceProductObject);
       });
   }
 
@@ -54,13 +45,36 @@ export class CreditreportService implements OnDestroy {
     if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
   }
 
+  /**
+   * Takes the agency state model and returns the unparsed TU credit report
+   *   - TUCredit report agency stored as AWS JSON string in DB
+   * @param {AgenciesStateModel} agencies
+   * @returns
+   */
+  getUnparsedCreditReport(agencies: AgenciesStateModel): IUnparsedCreditReport {
+    if (!agencies) return JSON.parse('{"#text":""}');
+    const serviceProductString =
+      agencies.transunion?.enrollMergeReport?.serviceProductObject ||
+      '{"#text":""}';
+    const serviceProductObject: IUnparsedCreditReport = JSON.parse(
+      serviceProductString
+    );
+    return serviceProductObject
+      ? serviceProductObject
+      : ({} as IUnparsedCreditReport);
+  }
+
+  /**
+   * Parses the xml string into a JSON object of the IMergeReport form
+   * @param {string} xml
+   * @returns
+   */
   parseCreditReport(xml: string): IMergeReport {
     const clean = xml
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&#xD;/g, '');
     const report: IMergeReport = parser.parse(clean, parserOptions);
-    console.log('parsed report', report);
     return report;
   }
 
@@ -72,6 +86,7 @@ export class CreditreportService implements OnDestroy {
     if (!this.tuReport) return [{} as ITradeLinePartition];
     const partitions = this.tuReport?.TrueLinkCreditReportType
       ?.TradeLinePartition;
+    if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
   }
 
