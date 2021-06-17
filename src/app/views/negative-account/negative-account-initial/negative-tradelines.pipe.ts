@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
-import { NEGATIVE_PAY_STATUS_CODES } from '@shared/data/pay-status-codes';
+import {
+  BRAVE_ACCOUNT_TYPE,
+  NEGATIVE_PAY_STATUS_CODES,
+} from '@shared/data/pay-status-codes';
 import {
   IMergeReport,
   ITradeline,
@@ -20,14 +23,15 @@ export class NegativeTradelinesPipe implements PipeTransform {
       return tradeLines
         .filter((item) => {
           const status =
-            NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus}`];
+            NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
+          console.log('status in pipe', status, !!status);
           return !!status;
         })
         .map((item) => {
           return {
             creditorName: item.Tradeline?.creditorName || '',
             lastReported: item.Tradeline?.dateReported || '',
-            accountTypeDescription: item.accountTypeDescription || '',
+            accountTypeDescription: this.lookupAccountType(item),
             accountTypeDescriptionValue:
               item.Tradeline?.OpenClosed?.description || '',
             disputeFlag: 'Previously Disputed?',
@@ -37,7 +41,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
             accountDetail: {
               accountNumber: item.Tradeline?.accountNumber || '',
               typeOfCollection: item.accountTypeAbbreviation || '',
-              amountPastDue: item.Tradeline?.currentBalance || -1,
+              amountPastDue: item.Tradeline?.currentBalance || 0,
               dateOpened: item.Tradeline?.dateOpened || '',
               dateLastPayment:
                 item.Tradeline?.GrantedTrade?.dateLastPayment || '',
@@ -50,7 +54,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
         {
           creditorName: tradeLines.Tradeline?.creditorName || '',
           lastReported: tradeLines.Tradeline?.dateReported || '',
-          accountTypeDescription: tradeLines.accountTypeDescription || '',
+          accountTypeDescription: this.lookupAccountType(tradeLines),
           accountTypeDescriptionValue:
             tradeLines.Tradeline?.OpenClosed?.description || '',
           disputeFlag: 'Previously Disputed?',
@@ -60,7 +64,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
           accountDetail: {
             accountNumber: tradeLines.Tradeline?.accountNumber || '',
             typeOfCollection: tradeLines.accountTypeAbbreviation || '',
-            amountPastDue: tradeLines.Tradeline?.currentBalance || -1,
+            amountPastDue: tradeLines.Tradeline?.currentBalance || 0,
             dateOpened: tradeLines.Tradeline?.dateOpened || '',
             dateLastPayment:
               tradeLines.Tradeline?.GrantedTrade?.dateLastPayment || '',
@@ -69,6 +73,16 @@ export class NegativeTradelinesPipe implements PipeTransform {
         },
       ];
     }
+  }
+
+  lookupAccountType(partition: ITradeLinePartition | undefined): string {
+    if (!partition) return 'unknown';
+    const description = partition.accountTypeDescription;
+    const status =
+      BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
+    return partition.accountTypeSymbol?.toLowerCase() === 'y'
+      ? description || 'No Data / Unknown'
+      : status;
   }
 
   lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {

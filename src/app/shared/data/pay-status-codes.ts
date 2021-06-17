@@ -26,3 +26,13 @@ export const POSITIVE_PAY_STATUS_CODES: Record<string, any> = {
   C: `Current`,
   '0': `Too New to Rate`,
 };
+
+export const BRAVE_ACCOUNT_TYPE: Record<string, any> = {
+  '1': `30-Day Late Payment`,
+  '2': `60-Day Late Payment`,
+  '3': `90-Day Late Payment`,
+  '4': `120-Day Late Payment`,
+  '7': `Wage Earner Plan`,
+  '8R': `Repossesion Account`,
+  '9': `Collection Chargeoff Account`,
+};
