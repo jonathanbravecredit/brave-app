@@ -9,11 +9,11 @@ export interface IVantageScore {
 }
 
 export interface ICreditScoreType {
-  riskScore: number;
-  scoreName: string;
-  populationRank: number;
-  CreditScoreFactor: ICreditScoreFactor[];
-  CreditScoreModel: ICreditScoreAttributes;
-  NoScoreReason: ICreditScoreAttributes;
-  Source: ISource;
+  riskScore?: number;
+  scoreName?: string;
+  populationRank?: number;
+  CreditScoreFactor?: ICreditScoreFactor[];
+  CreditScoreModel?: ICreditScoreAttributes;
+  NoScoreReason?: ICreditScoreAttributes;
+  Source?: ISource;
 }

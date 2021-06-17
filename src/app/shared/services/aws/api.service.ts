@@ -79,8 +79,8 @@ export type TransunionInput = {
   currentRawAuthDetails?: string | null;
   enrollmentKey?: string | null;
   enrollReport?: TUEnrollResponseInput | null;
-  enrollMergeReport?: TUEnrollResponseInput | null;
-  enrollVantageScore?: TUEnrollResponseInput | null;
+  enrollMergeReport?: TUEnrollMergeReportInput | null;
+  enrollVantageScore?: TUEnrollVantageScoreInput | null;
 };
 
 export type TUEnrollResponseInput = {

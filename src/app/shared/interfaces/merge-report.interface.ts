@@ -17,81 +17,81 @@ export interface ITrueLinkCreditReportType {
 }
 
 export interface IBorrower {
-  BorrowerAddress: {
-    CreditAddress: string;
-    Dwelling: string;
-    Origin: string;
-    Ownership: string;
-    Source: ISource;
+  BorrowerAddress?: {
+    CreditAddress?: string;
+    Dwelling?: string;
+    Origin?: string;
+    Ownership?: string;
+    Source?: ISource;
   };
-  Birth: {
-    BirthDate: string;
-    Source: ISource;
+  Birth?: {
+    BirthDate?: string;
+    Source?: ISource;
   };
-  CreditScore: {
-    CreditScoreFactor: ICreditScoreFactor[];
-    CreditScoreMode: string;
-    NoScoreReason: string;
-    Source: ISource;
+  CreditScore?: {
+    CreditScoreFactor?: ICreditScoreFactor[];
+    CreditScoreMode?: string;
+    NoScoreReason?: string;
+    Source?: ISource;
   };
-  SocialPartition: {
-    Social: {
-      SocialSecurityNumber: String;
-      Source: ISource;
+  SocialPartition?: {
+    Social?: {
+      SocialSecurityNumber?: String;
+      Source?: ISource;
     };
   };
 }
 
 export interface ITradeLinePartition {
-  Tradeline: {
-    AccountCondition: string;
-    AccountDesignator: string;
-    DisputeFlag: string;
-    IndustryCode: string;
-    OpenClosed: string;
-    PayStatus: string;
-    VerificationIndicator: string;
-    Remark: {
-      RemarkCode: string;
+  Tradeline?: {
+    AccountCondition?: string;
+    AccountDesignator?: string;
+    DisputeFlag?: string;
+    IndustryCode?: string;
+    OpenClosed?: string;
+    PayStatus?: string;
+    VerificationIndicator?: string;
+    Remark?: {
+      RemarkCode?: string;
     };
-    GrantedTrade: {
-      AccountType: string;
-      CreditType: string;
-      PaymentFrequency: string;
-      TermType: string;
-      WorstPayStatus: string;
-      PayStatusHistory: {
-        MonthlyPayStatus: any[];
+    GrantedTrade?: {
+      AccountType?: string;
+      CreditType?: string;
+      PaymentFrequency?: string;
+      TermType?: string;
+      WorstPayStatus?: string;
+      PayStatusHistory?: {
+        MonthlyPayStatus?: any[];
       };
-      CreditLimit: string;
+      CreditLimit?: string;
     };
-    Source: ISource;
+    Source?: ISource;
   };
 }
 
 export interface IInquiryPartition {
-  Inquiry: {
-    IndustryCode: string;
-    Source: ISource;
+  Inquiry?: {
+    IndustryCode?: string;
+    Source?: ISource;
   };
 }
 
 export interface ISummary {
-  TradelineSummary: {
-    TransUnion: string;
+  TradelineSummary?: {
+    TransUnion?: string;
   };
-  InquirySummary: {
-    TransUnion: string;
+  InquirySummary?: {
+    TransUnion?: string;
   };
-  PublicRecordSummary: {
-    TransUnion: string;
+  PublicRecordSummary?: {
+    TransUnion?: string;
   };
-  Sources: {
-    Source: {
-      Bureau: string;
-      InquiryDate: string;
-      OriginalData: string;
+  Sources?: {
+    Source?: {
+      Bureau?: string;
+      InquiryDate?: string;
+      OriginalData?: string;
     };
   };
-  SafetyCheckPassed: string;
+  SafetyCheckPassed?: string;
 }
