@@ -27,6 +27,33 @@ export class NegativeTradelinesPipe implements PipeTransform {
           console.log('status in pipe', status, !!status);
           return !!status;
         })
+        .sort((a, b) => {
+          if (
+            a.accountTypeSymbol?.toLowerCase() === 'y' &&
+            b.accountTypeDescription?.toLowerCase() !== 'y'
+          ) {
+            return 1;
+          }
+          if (
+            a.accountTypeSymbol?.toLowerCase() !== 'y' &&
+            b.accountTypeDescription?.toLowerCase() === 'y'
+          ) {
+            return -1;
+          }
+          return 0;
+        })
+        .sort((a, b) => {
+          if (a.Tradeline?.dateOpened !== b.Tradeline?.dateOpened) {
+            return 0;
+          }
+          if (a.Tradeline?.dateOpened! < b.Tradeline?.dateOpened!) {
+            return 1;
+          }
+          if (a.Tradeline?.dateOpened! > b.Tradeline?.dateOpened!) {
+            return -1;
+          }
+          return 0;
+        })
         .map((item) => {
           return {
             creditorName: item.Tradeline?.creditorName || '',
