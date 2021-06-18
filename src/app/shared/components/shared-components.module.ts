@@ -73,6 +73,8 @@ import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.
 import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
 import { NegativeAccountCardComponent } from './cards/negative-account-card/negative-account-card.component';
 import { SpinnerComponent } from './interstitials/spinner/spinner.component';
+import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
+import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
 
 const components = [
   BaseFormComponent,
@@ -130,6 +132,7 @@ const components = [
   SnapshotDisplayCardComponent,
   NegativeAccountCardComponent,
   KbaMultiplechoiceInputComponent,
+  CreditReportCardComponent
   SpinnerComponent
 ];
 
@@ -146,13 +149,13 @@ const pipes = [
   AccountStatusPipe,
   SnapshotLabelPipe,
   SnapshotStatusPipe,
-  KbaMultiplechoiceInputComponent,
+  CreditReportGraphicPipe
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives ],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
