@@ -1,13 +1,32 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+export interface INegativeAccountCardInputs {
+  creditorName?: string;
+  lastReported?: string;
+  accountTypeDescription?: string;
+  accountTypeDescriptionValue?: string;
+  originalCreditor?: string;
+  originalCreditorValue?: string;
+  disputeFlag?: string;
+  disputeFlagValue?: string;
+  accountDetail?: {
+    accountNumber?: string;
+    typeOfCollection?: string;
+    amountPastDue?: number | string;
+    dateOpened?: string;
+    dateLastPayment?: string;
+    remarks?: string;
+  };
+}
 
 @Component({
   selector: 'brave-negative-account-card',
   templateUrl: './negative-account-card.component.html',
-  styleUrls: ['./negative-account-card.component.css']
+  styleUrls: ['./negative-account-card.component.css'],
 })
-export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
+export class NegativeAccountCardComponent {
   private $isIgnored = new BehaviorSubject(false);
   isIgnored = this.$isIgnored.asObservable();
   private $isClosed = new BehaviorSubject(false);
@@ -24,21 +43,14 @@ export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
   // Detail Information
   @Input() accountNumber = '';
   @Input() typeOfCollection = '';
-  @Input() amountPastDue: number = 0;
+  @Input() amountPastDue: string | number = 0;
   @Input() dateOpened = '20/02/2021';
   @Input() dateLastPayment = '20/02/2021';
   @Input() remarks = '';
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
-  open$: Observable<boolean> | undefined = of(false);
 
-  constructor() { }
-
-  ngOnInit(): void { }
-
-  ngAfterViewInit(): void {
-    this.open$ = this.viewDetail?.open$.asObservable();
-  }
+  constructor() {}
 
   ignore() {
     this.$isIgnored.next(true);
@@ -50,6 +62,6 @@ export class NegativeAccountCardComponent implements OnInit, AfterViewInit {
   }
 
   close() {
-     this.$isClosed.next(true);
+    this.$isClosed.next(true);
   }
 }

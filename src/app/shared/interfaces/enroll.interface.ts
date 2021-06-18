@@ -91,30 +91,32 @@ export interface IEnrollResponse {
 }
 
 export interface IEnrollResult {
-  'a:AccountName': string;
-  'a:ErrorResponse': string;
-  'a:RequestKey': string;
-  'a:ResponseType': string;
-  'a:ClientKey': string;
-  'a:EnrollmentKey': string;
-  'a:ServiceBundleFulfillmentKey': string;
-  'a:ServiceProductFulfillments': {
-    'a:ServiceProductResponse': IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
+  AccountName: string;
+  ErrorResponse: string;
+  RequestKey: string;
+  ResponseType: string;
+  ClientKey: string;
+  EnrollmentKey: string;
+  ServiceBundleFulfillmentKey: string;
+  ServiceProductFulfillments: {
+    ServiceProductResponse:
+      | IEnrollServiceProductResponse[]
+      | IEnrollServiceProductResponse;
   };
 }
 
 export interface IEnrollServiceProductResponse {
-  'a:Bureau': string;
-  'a:ErrorResponse': string;
-  'a:ServiceBundleResponse': {
-    'a:ServiceBundleCode': string;
-    'a:ServiceBundleFulfillmentKey': string;
-    'a:ServiceBundleFulfillmentStatus': string;
+  Bureau: string;
+  ErrorResponse: string;
+  ServiceBundleResponse: {
+    ServiceBundleCode: string;
+    ServiceBundleFulfillmentKey: string;
+    ServiceBundleFulfillmentStatus: string;
   };
-  'a:ServiceProduct': string;
-  'a:ServiceProductFulfillmentKey': string;
-  'a:ServiceProductObject': string;
-  'a:ServiceProductTypeId': string;
-  'a:ServiceProductValue': string;
-  'a:Status': string;
+  ServiceProduct: string;
+  ServiceProductFulfillmentKey: string;
+  ServiceProductObject: string;
+  ServiceProductTypeId: string;
+  ServiceProductValue: string;
+  Status: string;
 }

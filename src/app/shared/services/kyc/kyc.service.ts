@@ -46,9 +46,7 @@ export const enum PassCodeQuestion {
   PartialOne = 'passcode',
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class KycService {
   constructor(
     private api: APIService,

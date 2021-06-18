@@ -1,5 +1,6 @@
 import {
   ICreditScoreFactor,
+  ICreditScoreAttributes,
   ISource,
 } from '@shared/interfaces/common-tu.interface';
 
@@ -8,8 +9,11 @@ export interface IVantageScore {
 }
 
 export interface ICreditScoreType {
-  CreditScoreFactor: ICreditScoreFactor[];
-  CreditScoreModel: string;
-  NoScoreReason: string;
-  Source: ISource;
+  riskScore?: number;
+  scoreName?: string;
+  populationRank?: number;
+  CreditScoreFactor?: ICreditScoreFactor[];
+  CreditScoreModel?: ICreditScoreAttributes;
+  NoScoreReason?: ICreditScoreAttributes;
+  Source?: ISource;
 }

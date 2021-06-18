@@ -18,7 +18,6 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import {
-  IEnrollResponse,
   IEnrollResult,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces/enroll.interface';
@@ -265,35 +264,35 @@ export class KycIdverificationComponent extends KycBaseComponent {
     let enrollMergeReport;
     let enrollVantageScore;
     console.log('enroll in enrich', enroll, state);
-    const enrollmentKey = returnNestedObject(enroll, 'a:EnrollmentKey');
-    const prodResponse = returnNestedObject(enroll, 'a:ServiceProductResponse');
+    const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
+    const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
     if (!prodResponse) return;
     if (prodResponse instanceof Array) {
       enrollReport = prodResponse.find(
         (item: IEnrollServiceProductResponse) => {
-          return item['a:ServiceProduct'] === 'TUCReport';
+          return item['ServiceProduct'] === 'TUCReport';
         }
       );
       enrollMergeReport = prodResponse.find(
         (item: IEnrollServiceProductResponse) => {
-          return item['a:ServiceProduct'] === 'MergeCreditReports';
+          return item['ServiceProduct'] === 'MergeCreditReports';
         }
       );
       enrollVantageScore = prodResponse.find(
         (item: IEnrollServiceProductResponse) => {
-          return item['a:ServiceProduct'] === 'TUCVantageScore3';
+          return item['ServiceProduct'] === 'TUCVantageScore3';
         }
       );
     } else {
-      switch (prodResponse['a:ServiceProduct']) {
+      switch (prodResponse['ServiceProduct']) {
         case 'TUCReport':
-          enrollReport = prodResponse['a:ServiceProduct'] || null;
+          enrollReport = prodResponse || null;
           break;
         case 'MergeCreditReports':
-          enrollMergeReport = prodResponse['a:ServiceProduct'] || null;
+          enrollMergeReport = prodResponse || null;
           break;
         case 'TUCVantageScore3':
-          enrollVantageScore = prodResponse['a:ServiceProduct'] || null;
+          enrollVantageScore = prodResponse || null;
           break;
         default:
           break;
@@ -319,15 +318,16 @@ const codeMap: Record<string, any> = {
   code: true,
 };
 
+// TODO use a pascal to camel converter
 const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
   return {
-    bureau: res['a:Bureau'],
-    errorResponse: res['a:ErrorResponse'],
-    serviceProduct: res['a:ServiceProduct'],
-    serviceProductFullfillmentKey: res['a:ServiceProductFulfillmentKey'],
-    serviceProductObject: res['a:ServiceProductObject'],
-    serviceProductTypeId: res['a:ServiceProductTypeId'],
-    serviceProductValue: res['a:ServiceProductValue'],
-    status: res['a:Status'],
-  };
+    bureau: res['Bureau'],
+    errorResponse: res['ErrorResponse'],
+    serviceProduct: res['ServiceProduct'],
+    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
+    serviceProductObject: JSON.stringify(res['ServiceProductObject']),
+    serviceProductTypeId: res['ServiceProductTypeId'],
+    serviceProductValue: res['ServiceProductValue'],
+    status: res['Status'],
+  } as TUEnrollResponseInput;
 };

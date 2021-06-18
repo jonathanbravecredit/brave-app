@@ -5,9 +5,7 @@ import { filter } from 'rxjs/operators';
 import { OnboardingStateModel } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class OnboardingService implements OnDestroy {
   private onboarding: OnboardingStateModel = {} as OnboardingStateModel;
   private onboarding$: Observable<OnboardingStateModel> = this.store.select(
