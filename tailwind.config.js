@@ -53,7 +53,19 @@ module.exports = {
       },
       margin: {
         '-5': "-1.25rem",
-         '6': "1.5rem"
+        '6': "1.5rem",
+        '0-percent': "0%",
+        '5-percent': "5%",
+        '10-percent': "10%",
+        '20-percent': "20%",
+        '30-percent': "30%",
+        '40-percent': "40%",
+        '50-percent': "50%",
+        '60-percent': "60%",
+        '70-percent': "70%",
+        '80-percent': "80%",
+        '90-percent': "90%",
+        '100-percent': "100%"
       },
       minHeight: {
         "screen-75": "75vh",
