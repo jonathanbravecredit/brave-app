@@ -1,97 +1,146 @@
 import {
   ISource,
   ICreditScoreFactor,
+  ICreditScoreAttributes,
 } from '@shared/interfaces/common-tu.interface';
 
 export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
 }
-
 export interface ITrueLinkCreditReportType {
-  SB168Frozen: string;
-  Borrower: IBorrower;
-  TradeLinePartition: ITradeLinePartition[];
-  InquiryPartition: IInquiryPartition;
-  Message: { code: string; type: string }[];
-  Summary: ISummary;
+  SB168Frozen?: string;
+  Borrower?: IBorrower;
+  TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
+  InquiryPartition?: IInquiryPartition;
+  Message?:
+    | { code?: string; type?: string }[]
+    | { code?: string; type?: string };
+  Summary?: ISummary;
+  Sources?: { Source?: ISource };
+  SafetyCheckPassed?: boolean | string;
 }
-
 export interface IBorrower {
-  BorrowerAddress: {
-    CreditAddress: string;
-    Dwelling: string;
-    Origin: string;
-    Ownership: string;
-    Source: ISource;
+  BorrowerAddress?: {
+    CreditAddress?: string;
+    Dwelling?: string;
+    Origin?: string;
+    Ownership?: string;
+    Source?: ISource;
   };
-  Birth: {
-    BirthDate: string;
-    Source: ISource;
+  Birth?: {
+    BirthDate?: string;
+    Source?: ISource;
   };
-  CreditScore: {
-    CreditScoreFactor: ICreditScoreFactor[];
-    CreditScoreMode: string;
-    NoScoreReason: string;
-    Source: ISource;
+  CreditScore?: {
+    CreditScoreFactor?: ICreditScoreFactor[];
+    CreditScoreMode?: string;
+    NoScoreReason?: string;
+    Source?: ISource;
   };
-  SocialPartition: {
-    Social: {
-      SocialSecurityNumber: String;
-      Source: ISource;
+  SocialPartition?: {
+    Social?: {
+      SocialSecurityNumber?: String;
+      Source?: ISource;
     };
   };
 }
-
 export interface ITradeLinePartition {
-  Tradeline: {
-    AccountCondition: string;
-    AccountDesignator: string;
-    DisputeFlag: string;
-    IndustryCode: string;
-    OpenClosed: string;
-    PayStatus: string;
-    VerificationIndicator: string;
-    Remark: {
-      RemarkCode: string;
-    };
-    GrantedTrade: {
-      AccountType: string;
-      CreditType: string;
-      PaymentFrequency: string;
-      TermType: string;
-      WorstPayStatus: string;
-      PayStatusHistory: {
-        MonthlyPayStatus: any[];
-      };
-      CreditLimit: string;
-    };
-    Source: ISource;
-  };
+  accountTypeDescription?: string;
+  accountTypeSymbol?: string;
+  accountTypeAbbreviation?: string;
+  Tradeline?: ITradeline;
 }
-
+export interface ITradeline {
+  subscriberCode?: string;
+  highBalance?: number | string;
+  dateVerified?: string;
+  dateReported?: string;
+  dateOpened?: string;
+  accountNumber?: string;
+  dateAccountStatus?: string;
+  currentBalance?: number | string;
+  creditorName?: string;
+  position?: number | string;
+  bureau?: string;
+  AccountCondition?: ICreditScoreAttributes;
+  AccountDesignator?: ICreditScoreAttributes;
+  DisputeFlag?: ICreditScoreAttributes;
+  IndustryCode?: ICreditScoreAttributes;
+  OpenClosed?: ICreditScoreAttributes;
+  PayStatus?: ICreditScoreAttributes;
+  VerificationIndicator?: ICreditScoreAttributes;
+  Remark?: ITradelineRemark;
+  GrantedTrade: any;
+  CollectionTrade?: ITradelineCollection;
+  Source?: ISource;
+}
+export interface ITradelineRemark {
+  customRemark?: string;
+  RemarkCode?: ICreditScoreAttributes;
+}
+export interface IGrantedTrade {
+  monthsReviewed: number | string;
+  monthlyPayment: number | string;
+  late90Count: number | string;
+  late60Count: number | string;
+  late30Count: number | string;
+  dateLastPayment: string;
+  termMonths: number | string;
+  collateral: string;
+  amountPastDue: number | string;
+  worstPatStatusCount: number | string;
+  AccountType: ICreditScoreAttributes;
+  CreditType: ICreditScoreAttributes;
+  PaymentFrequency: ICreditScoreAttributes;
+  TermType: ICreditScoreAttributes;
+  WorstPayStatus: ICreditScoreAttributes;
+  PayStatusHistory: IPayStatusHistory;
+  CreditLimit: number | string;
+}
+export interface IPayStatusHistory {
+  status: string;
+  startDate: string;
+  MonthlyPayStatus: IMonthyPayStatusItem[];
+}
+export interface IMonthyPayStatusItem {
+  date: string;
+  status: string;
+}
+export interface ITradelineCollection {
+  originalCreditor?: string;
+  creditType?: ICreditScoreAttributes;
+}
 export interface IInquiryPartition {
-  Inquiry: {
-    IndustryCode: string;
-    Source: ISource;
+  Inquiry?: {
+    inquiryDate?: string;
+    subscriberName?: string;
+    subscriberNumber?: number | string;
+    bureau?: string;
+    inquiryType?: string;
+    IndustryCode?: string;
+    Source?: ISource;
   };
 }
-
 export interface ISummary {
-  TradelineSummary: {
-    TransUnion: string;
+  TradelineSummary?: {
+    TransUnion?: string;
   };
-  InquirySummary: {
-    TransUnion: string;
+  InquirySummary?: {
+    TransUnion?: string;
   };
-  PublicRecordSummary: {
-    TransUnion: string;
+  PublicRecordSummary?: {
+    TransUnion?: string;
   };
-  Sources: {
-    Source: {
-      Bureau: string;
-      InquiryDate: string;
-      OriginalData: string;
+  Sources?: {
+    Source?: {
+      Bureau?: string;
+      InquiryDate?: string;
+      OriginalData?: string;
     };
   };
-  SafetyCheckPassed: string;
+  SafetyCheckPassed?: string;
+}
+export interface IUnparsedCreditReport {
+  '#text': string;
+  type: string;
 }

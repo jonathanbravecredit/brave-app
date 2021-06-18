@@ -8,12 +8,9 @@ import { SyncService } from '@shared/services/sync/sync.service';
   templateUrl: './kyc-welcomeback.component.html',
 })
 export class KycWelcomebackComponent implements OnInit {
-  constructor(private auth: AuthService, private sync: SyncService) {}
+  constructor() {}
 
-  async ngOnInit(): Promise<void> {
-    const creds: ICredentials = await this.auth.getCurrentUserCredentials();
-    await this.sync.hallmonitor(creds);
-  }
+  async ngOnInit(): Promise<void> {}
 
   goBack(): void {
     // need to add state to pick up where left off
