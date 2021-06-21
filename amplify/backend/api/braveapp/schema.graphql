@@ -16,6 +16,7 @@ type AppData
   id: ID!
   user: User!
   agencies: Agencies!
+  preferences: Preferences!
 }
 type User {
   id: ID!
@@ -69,6 +70,12 @@ type Agencies {
   equifax: Equifax
   experian: Experian
 }
+type Preferences {
+  hideCreditCardAccounts: boolean
+  hideCollectionsAccounts: boolean
+  hideInstallmentAccounts: boolean
+  hideMortgageAccounts: boolean
+}
 type Transunion {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
@@ -80,6 +87,10 @@ type Transunion {
   enrollReport: TUEnrollResponse
   enrollMergeReport: TUEnrollResponse
   enrollVantageScore: TUEnrollResponse
+  hidePositiveCreditCardAccounts: Boolean
+  hidePositiveCollectionAccounts: Boolean
+  hidePositiveInstallmentAccounts: Boolean
+  hidePositiveMortgageAccounts: Boolean
 }
 type Equifax {
   authenticated: Boolean

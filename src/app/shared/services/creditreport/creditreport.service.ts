@@ -9,6 +9,8 @@ import {
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
+import { TransunionInput } from '@shared/services/aws/api.service';
+import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -26,23 +28,50 @@ const parserOptions = {
 export class CreditreportService implements OnDestroy {
   tuReport: IMergeReport = {} as IMergeReport;
   tuReport$: Subject<IMergeReport> = new Subject();
+  tuAgency: TransunionInput = {} as TransunionInput;
+  tuAgency$: Subject<TransunionInput> = new Subject();
+  tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
+  tuPreferences$: Subject<PreferencesStateModel> = new Subject();
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
+
+  @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
+  preferencesSub$: Subscription;
 
   constructor() {
     this.agenciesSub$ = this.agencies$
       .pipe()
       .subscribe((agencies: AgenciesStateModel) => {
+        const tu = this.getTransunion(agencies);
+        this.tuAgency$.next(tu);
+        this.tuAgency = tu;
         const unparsed = this.getUnparsedCreditReport(agencies);
         const parsedReport = this.parseCreditReport(unparsed['#text']);
         this.tuReport$.next(parsedReport);
         this.tuReport = parsedReport;
       });
+    this.preferencesSub$ = this.preferences$
+      .pipe()
+      .subscribe((pref: PreferencesStateModel) => {
+        this.tuPreferences$.next(pref);
+        this.tuPreferences = pref;
+      });
   }
 
   ngOnDestroy(): void {
     if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
+    if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
+  }
+
+  /**
+   * Return the TU data from provided agency state model
+   * @param {AgenciesStateModel} agencies
+   * @returns
+   */
+  getTransunion(agencies: AgenciesStateModel): TransunionInput {
+    if (!agencies.transunion) return {} as TransunionInput;
+    return agencies.transunion;
   }
 
   /**

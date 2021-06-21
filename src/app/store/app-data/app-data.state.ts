@@ -4,13 +4,14 @@ import { Injectable } from '@angular/core';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { UserState } from '@store/user';
 import { AgenciesState } from '@store/agencies';
+import { PreferencesState } from '@store/preferences';
 
 @State<AppDataStateModel>({
   name: 'appData',
   defaults: {
     id: '',
   },
-  children: [UserState, AgenciesState],
+  children: [UserState, AgenciesState, PreferencesState],
 })
 @Injectable()
 export class AppDataState {
