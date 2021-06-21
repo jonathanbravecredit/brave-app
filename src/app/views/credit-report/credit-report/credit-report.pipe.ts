@@ -44,7 +44,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  filterTradelines(
+  private filterTradelines(
     partitions: ITradeLinePartition[] | ITradeLinePartition,
     prefs: PreferencesStateModel
   ): CreditReportPipe {
@@ -76,7 +76,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  sortByAccountType(tradeLines: ITradeLinePartition[]): CreditReportPipe {
+  private sortByAccountType(
+    tradeLines: ITradeLinePartition[]
+  ): CreditReportPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
         const symA = a.accountTypeSymbol?.toLowerCase();
@@ -96,7 +98,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  sortByDateOpened(tradeLines: ITradeLinePartition[]): CreditReportPipe {
+  private sortByDateOpened(
+    tradeLines: ITradeLinePartition[]
+  ): CreditReportPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
         if (a.accountTypeSymbol !== b.accountTypeSymbol) {
@@ -119,7 +123,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): CreditReportPipe {
+  private mapTradeLineToAccount(
+    tradeLines: ITradeLinePartition[]
+  ): CreditReportPipe {
     this.creditReportAccounts = tradeLines.map((item) => {
       const firstField = this.getFirstFields(item);
       const secondField = this.getSecondFields(item);
@@ -143,7 +149,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ICreditReportCardInputs[] | undefined} reports
    * @returns
    */
-  groupCreditReportAccounts(
+  private groupCreditReportAccounts(
     reports: ICreditReportCardInputs[] | undefined
   ): ICreditReportCardGroup[] {
     if (!reports) return [{} as ICreditReportCardGroup];
@@ -202,7 +208,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupAccountType(partition: ITradeLinePartition | undefined): string {
+  private lookupAccountType(
+    partition: ITradeLinePartition | undefined
+  ): string {
     if (!partition) return 'unknown';
     const description = partition.accountTypeDescription;
     const status =
@@ -217,7 +225,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {
+  private lookupOriginalCreditor(
+    partition: ITradeLinePartition | undefined
+  ): string {
     if (!partition) return 'unknown';
     const originalCreditor =
       partition.Tradeline?.CollectionTrade?.originalCreditor;
@@ -234,7 +244,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupDisputeFlag(partition: ITradeLinePartition | undefined): string {
+  private lookupDisputeFlag(
+    partition: ITradeLinePartition | undefined
+  ): string {
     if (!partition) return 'No';
     const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
@@ -245,7 +257,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  getFirstFields(
+  private getFirstFields(
     partition: ITradeLinePartition | undefined
   ): { firstFieldName: string; firstFieldValue: string | number } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
@@ -275,7 +287,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  getSecondFields(
+  private getSecondFields(
     partition: ITradeLinePartition | undefined
   ): { secondFieldName: string; secondFieldValue: string | number } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
@@ -315,7 +327,9 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  getStatus(partition: ITradeLinePartition | undefined): SnapshotStatus {
+  private getStatus(
+    partition: ITradeLinePartition | undefined
+  ): SnapshotStatus {
     const sym = partition?.Tradeline?.PayStatus?.symbol?.toString() || '';
     if (!sym) return SnapshotStatus.Default;
     switch (sym.toLowerCase()) {
