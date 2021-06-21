@@ -34,8 +34,8 @@ export class CreditReportComponent implements OnInit {
     const prefs = this.creditReportService.tuPreferences;
     const updated: PreferencesStateModel = {
       ...prefs,
-      hidePositiveAccounts: {
-        ...prefs.hidePositiveAccounts,
+      showAllAccounts: {
+        ...prefs.showAllAccounts,
         [report.group]: true,
       },
     };

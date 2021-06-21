@@ -1,7 +1,7 @@
 import { CreditReportGroups } from '@shared/data/credit-report';
 
 export class PreferencesStateModel {
-  hidePositiveAccounts!: {
+  showAllAccounts!: {
     [CreditReportGroups.CreditCards]: boolean | undefined;
     [CreditReportGroups.CollectionsAccounts]: boolean | undefined;
     [CreditReportGroups.InstallmentLoans]: boolean | undefined;

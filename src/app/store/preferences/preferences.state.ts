@@ -7,11 +7,11 @@ import { CreditReportGroups } from '@shared/data/credit-report';
 @State<PreferencesStateModel>({
   name: 'preferences',
   defaults: {
-    hidePositiveAccounts: {
-      [CreditReportGroups.CreditCards]: false,
-      [CreditReportGroups.CollectionsAccounts]: false,
-      [CreditReportGroups.InstallmentLoans]: false,
-      [CreditReportGroups.Mortgages]: false,
+    showAllAccounts: {
+      [CreditReportGroups.CreditCards]: true,
+      [CreditReportGroups.CollectionsAccounts]: true,
+      [CreditReportGroups.InstallmentLoans]: true,
+      [CreditReportGroups.Mortgages]: true,
     },
   },
 })

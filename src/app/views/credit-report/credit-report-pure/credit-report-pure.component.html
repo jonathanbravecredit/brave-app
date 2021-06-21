@@ -8,7 +8,7 @@
   </div>
   <div class="p-4" *ngFor="let report of creditReports">
     <h6 class="text-lg">{{ report.title }}</h6>
-    <div>
+    <div *ngIf="preferences.showAllAccounts[report.group]">
       <input type="checkbox" id="dont-show-hide" (click)="hide.emit(report)" />
       <label for="dont-show-hide" class="ml-2 mr-auto"
         >Only Show me delinquent accounts</label
