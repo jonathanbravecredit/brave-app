@@ -27,6 +27,7 @@ export class CreditReportPipe implements PipeTransform {
     prefs: PreferencesStateModel
   ): ICreditReportCardGroup[] {
     this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
+
     if (!this.tradeLines) return [{} as ICreditReportCardGroup];
     return this.tradeLines instanceof Array
       ? this.filterTradelines(this.tradeLines, prefs)
@@ -49,15 +50,21 @@ export class CreditReportPipe implements PipeTransform {
     prefs: PreferencesStateModel
   ): CreditReportPipe {
     const filters = prefs.showAllAccounts;
+    console.log('prefs', prefs);
     if (!filters) return this;
     if (partitions instanceof Array) {
+      console.log('initial tradelines', partitions.length);
       this.tradeLines = partitions.filter((item) => {
-        const sym = item.accountTypeSymbol || '';
-        const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym].group;
-        const pos =
-          POSITIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`] ||
-          null;
-        return !(filters[group] && pos);
+        const sym = item.accountTypeSymbol?.toLowerCase() || '';
+        console.log('sym and type', sym, item.accountTypeSymbol?.toLowerCase());
+        const group: CreditReportGroups =
+          CREDIT_REPORT_GROUPS[sym]?.group || '';
+        const status = item.Tradeline?.PayStatus?.symbol || '';
+        const pos = POSITIVE_PAY_STATUS_CODES[`${status}`] || null;
+        if (filters[group]) return true;
+        if (!filters[group] && pos) return false;
+        if (!filters[group] && !pos) return true;
+        return true;
       });
     } else {
       const sym = partitions.accountTypeSymbol || '';
@@ -66,8 +73,9 @@ export class CreditReportPipe implements PipeTransform {
         POSITIVE_PAY_STATUS_CODES[
           `${partitions.Tradeline?.PayStatus?.symbol}`
         ] || null;
-      this.tradeLines = !(filters[group] && pos) ? [partitions] : [];
+      this.tradeLines = !(!filters[group] && pos) ? [partitions] : [];
     }
+    console.log('this.tradelines', this.tradeLines);
     return this;
   }
 
@@ -131,7 +139,7 @@ export class CreditReportPipe implements PipeTransform {
       const secondField = this.getSecondFields(item);
       return {
         type: item.accountTypeSymbol,
-        creditorName: CREDIT_REPORT_GROUPS[item.accountTypeSymbol!],
+        creditorName: item.Tradeline?.creditorName,
         isOpen: item.Tradeline?.OpenClosed,
         firstFieldName: firstField.firstFieldName,
         firstFieldValue: firstField.firstFieldValue,
@@ -141,6 +149,7 @@ export class CreditReportPipe implements PipeTransform {
         thirdFieldValue: item.Tradeline?.PayStatus?.description,
       } as ICreditReportCardInputs;
     });
+    console.log('credit report accounts', this.creditReportAccounts);
     return this;
   }
 
@@ -204,55 +213,6 @@ export class CreditReportPipe implements PipeTransform {
   }
 
   /**
-   * Helper function to securely lookup the account type
-   * @param {ITradeLinePartition | undefined} partition
-   * @returns
-   */
-  private lookupAccountType(
-    partition: ITradeLinePartition | undefined
-  ): string {
-    if (!partition) return 'unknown';
-    const description = partition.accountTypeDescription;
-    const status =
-      BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
-    return partition.accountTypeSymbol?.toLowerCase() === 'y'
-      ? description || 'No Data / Unknown'
-      : status;
-  }
-
-  /**
-   * Helper function to securey look up the original creditor
-   * @param {ITradeLinePartition | undefined} partition
-   * @returns
-   */
-  private lookupOriginalCreditor(
-    partition: ITradeLinePartition | undefined
-  ): string {
-    if (!partition) return 'unknown';
-    const originalCreditor =
-      partition.Tradeline?.CollectionTrade?.originalCreditor;
-    const creditorName = partition.Tradeline?.creditorName || 'unknown';
-    if (partition.accountTypeSymbol?.toLowerCase() === 'y') {
-      return originalCreditor ? originalCreditor : creditorName;
-    } else {
-      return creditorName;
-    }
-  }
-
-  /**
-   * Helper function to securely look up the dispute flag
-   * @param {ITradeLinePartition | undefined} partition
-   * @returns
-   */
-  private lookupDisputeFlag(
-    partition: ITradeLinePartition | undefined
-  ): string {
-    if (!partition) return 'No';
-    const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
-    return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
-  }
-
-  /**
    * Helper function to get the label and value for the first fields
    * @param {ITradeLinePartition | undefined} partition
    * @returns
@@ -261,8 +221,10 @@ export class CreditReportPipe implements PipeTransform {
     partition: ITradeLinePartition | undefined
   ): { firstFieldName: string; firstFieldValue: string | number } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
+    console.log('sym in first field', sym);
     if (!sym) return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown' };
-    const group = CREDIT_REPORT_GROUPS[sym];
+    const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym]['group'];
+    console.log('group in first field', group);
     switch (group) {
       case CreditReportGroups.CreditCards:
       case CreditReportGroups.InstallmentLoans:
@@ -293,7 +255,7 @@ export class CreditReportPipe implements PipeTransform {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
     if (!sym)
       return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown' };
-    const group = CREDIT_REPORT_GROUPS[sym];
+    const group = CREDIT_REPORT_GROUPS[sym]['group'];
     switch (group) {
       case CreditReportGroups.CreditCards:
         return {
@@ -319,35 +281,6 @@ export class CreditReportPipe implements PipeTransform {
         };
       default:
         return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown' };
-    }
-  }
-
-  /**
-   * Helper function to get the proper status to color the circle
-   * @param {ITradeLinePartition | undefined} partition
-   * @returns
-   */
-  private getStatus(
-    partition: ITradeLinePartition | undefined
-  ): SnapshotStatus {
-    const sym = partition?.Tradeline?.PayStatus?.symbol?.toString() || '';
-    if (!sym) return SnapshotStatus.Default;
-    switch (sym.toLowerCase()) {
-      case 'u':
-      case 'c':
-      case '0':
-      case '7':
-        return SnapshotStatus.Safe;
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-        return SnapshotStatus.Danger;
-      case '8r':
-      case '9':
-        return SnapshotStatus.Critical;
-      default:
-        return SnapshotStatus.Default;
     }
   }
 }

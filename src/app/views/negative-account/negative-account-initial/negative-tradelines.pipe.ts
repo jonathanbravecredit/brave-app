@@ -16,7 +16,6 @@ export class NegativeTradelinesPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
 
   transform(report: IMergeReport): INegativeAccountCardInputs[] | undefined {
-    console.log('report in pipe', report);
     this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
     if (!this.tradeLines) return [defaultTradeline];
     return this.tradeLines instanceof Array
@@ -36,7 +35,6 @@ export class NegativeTradelinesPipe implements PipeTransform {
     this.tradeLines = tradeLines.filter((item) => {
       const status =
         NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
-      console.log('status in pipe', status, !!status);
       return !!status;
     });
     return this;

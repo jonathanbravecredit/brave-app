@@ -36,7 +36,7 @@ export class CreditReportComponent implements OnInit {
       ...prefs,
       showAllAccounts: {
         ...prefs.showAllAccounts,
-        [report.group]: true,
+        [report.group]: false,
       },
     };
     this.store.dispatch(new PreferenceActions.Edit(updated));
