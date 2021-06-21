@@ -7,12 +7,13 @@ import {
 } from '@shared/data/credit-report';
 import {
   BRAVE_ACCOUNT_TYPE,
-  NEGATIVE_PAY_STATUS_CODES,
+  POSITIVE_PAY_STATUS_CODES,
 } from '@shared/data/pay-status-codes';
 import {
   IMergeReport,
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
+import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 
 @Pipe({
@@ -21,18 +22,21 @@ import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/
 export class CreditReportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
-  transform(report: IMergeReport): ICreditReportCardGroup[] {
+  transform(
+    report: IMergeReport,
+    prefs: PreferencesStateModel
+  ): ICreditReportCardGroup[] {
     this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
     if (!this.tradeLines) return [{} as ICreditReportCardGroup];
     return this.tradeLines instanceof Array
-      ? this.filterTradelines(this.tradeLines)
+      ? this.filterTradelines(this.tradeLines, prefs)
           .sortByAccountType(this.tradeLines)
           .sortByDateOpened(this.tradeLines)
           .mapTradeLineToAccount(this.tradeLines)
           .groupCreditReportAccounts(this.creditReportAccounts)
-      : this.mapTradeLineToAccount([this.tradeLines]).groupCreditReportAccounts(
-          this.creditReportAccounts
-        );
+      : this.filterTradelines(this.tradeLines, prefs)
+          .mapTradeLineToAccount([this.tradeLines])
+          .groupCreditReportAccounts(this.creditReportAccounts);
   }
 
   /**
@@ -40,12 +44,30 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  filterTradelines(tradeLines: ITradeLinePartition[]): CreditReportPipe {
-    this.tradeLines = tradeLines.filter((item) => {
-      const status =
-        NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
-      return !!status;
-    });
+  filterTradelines(
+    partitions: ITradeLinePartition[] | ITradeLinePartition,
+    prefs: PreferencesStateModel
+  ): CreditReportPipe {
+    const filters = prefs.hidePositiveAccounts;
+    if (!filters) return this;
+    if (partitions instanceof Array) {
+      this.tradeLines = partitions.filter((item) => {
+        const sym = item.accountTypeSymbol || '';
+        const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym].group;
+        const pos =
+          POSITIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`] ||
+          null;
+        return !(filters[group] && pos);
+      });
+    } else {
+      const sym = partitions.accountTypeSymbol || '';
+      const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym].group;
+      const pos =
+        POSITIVE_PAY_STATUS_CODES[
+          `${partitions.Tradeline?.PayStatus?.symbol}`
+        ] || null;
+      this.tradeLines = !(filters[group] && pos) ? [partitions] : [];
+    }
     return this;
   }
 
