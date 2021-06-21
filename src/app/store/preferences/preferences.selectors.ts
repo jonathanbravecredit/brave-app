@@ -1,15 +1,9 @@
 import { Selector } from '@ngxs/store';
-import { UserStateModel } from '@store/user/user.model';
-import { UserState } from '@store/user/user.state';
+import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 
-export class UserSelectors {
-  @Selector([UserState])
-  static getUser(state: UserStateModel): UserStateModel {
+export class PreferencesSelectors {
+  @Selector([PreferencesState])
+  static getPreferences(state: PreferencesStateModel): PreferencesStateModel {
     return state;
-  }
-
-  @Selector([UserState])
-  static getUserId(state: UserStateModel): string | undefined {
-    return state.id;
   }
 }

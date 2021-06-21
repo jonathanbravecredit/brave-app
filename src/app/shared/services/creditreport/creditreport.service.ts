@@ -10,6 +10,7 @@ import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
 import { TransunionInput } from '@shared/services/aws/api.service';
+import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -29,9 +30,14 @@ export class CreditreportService implements OnDestroy {
   tuReport$: Subject<IMergeReport> = new Subject();
   tuAgency: TransunionInput = {} as TransunionInput;
   tuAgency$: Subject<TransunionInput> = new Subject();
+  tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
+  tuPreferences$: Subject<PreferencesStateModel> = new Subject();
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
+
+  @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
+  preferencesSub$: Subscription;
 
   constructor() {
     this.agenciesSub$ = this.agencies$
@@ -45,10 +51,17 @@ export class CreditreportService implements OnDestroy {
         this.tuReport$.next(parsedReport);
         this.tuReport = parsedReport;
       });
+    this.preferencesSub$ = this.preferences$
+      .pipe()
+      .subscribe((pref: PreferencesStateModel) => {
+        this.tuPreferences$.next(pref);
+        this.tuPreferences = pref;
+      });
   }
 
   ngOnDestroy(): void {
     if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
+    if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
   }
 
   /**

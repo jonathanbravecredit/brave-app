@@ -1,6 +1,10 @@
+import { CreditReportGroups } from '@shared/data/credit-report';
+
 export class PreferencesStateModel {
-  hideCreditCardAccounts: boolean | undefined;
-  hideCollectionsAccounts: boolean | undefined;
-  hideInstallmentAccounts: boolean | undefined;
-  hideMortgageAccounts: boolean | undefined;
+  hidePositiveAccounts!: {
+    [CreditReportGroups.CreditCards]: boolean | undefined;
+    [CreditReportGroups.CollectionsAccounts]: boolean | undefined;
+    [CreditReportGroups.InstallmentLoans]: boolean | undefined;
+    [CreditReportGroups.Mortgages]: boolean | undefined;
+  };
 }

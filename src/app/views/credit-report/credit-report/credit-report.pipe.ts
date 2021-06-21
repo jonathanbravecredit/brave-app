@@ -13,7 +13,6 @@ import {
   IMergeReport,
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
-import { TransunionInput } from '@shared/services/aws/api.service';
 import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 
 @Pipe({
@@ -117,6 +116,11 @@ export class CreditReportPipe implements PipeTransform {
     return this;
   }
 
+  /**
+   * Filters and groups the cards according to the account types
+   * @param {ICreditReportCardInputs[] | undefined} reports
+   * @returns
+   */
   groupCreditReportAccounts(
     reports: ICreditReportCardInputs[] | undefined
   ): ICreditReportCardGroup[] {
@@ -131,25 +135,41 @@ export class CreditReportPipe implements PipeTransform {
     results = creditCards.length
       ? [
           ...results,
-          { title: CREDIT_REPORT_GROUPS['c']['title'], cards: creditCards },
+          {
+            title: CREDIT_REPORT_GROUPS['c']['title'],
+            group: CREDIT_REPORT_GROUPS['c']['group'],
+            cards: creditCards,
+          },
         ]
       : results;
     results = collections.length
       ? [
           ...results,
-          { title: CREDIT_REPORT_GROUPS['y']['title'], cards: collections },
+          {
+            title: CREDIT_REPORT_GROUPS['y']['title'],
+            group: CREDIT_REPORT_GROUPS['y']['group'],
+            cards: collections,
+          },
         ]
       : results;
     results = installments.length
       ? [
           ...results,
-          { title: CREDIT_REPORT_GROUPS['i']['title'], cards: installments },
+          {
+            title: CREDIT_REPORT_GROUPS['i']['title'],
+            group: CREDIT_REPORT_GROUPS['i']['group'],
+            cards: installments,
+          },
         ]
       : results;
     results = mortgages.length
       ? [
           ...results,
-          { title: CREDIT_REPORT_GROUPS['m']['title'], cards: mortgages },
+          {
+            title: CREDIT_REPORT_GROUPS['m']['title'],
+            group: CREDIT_REPORT_GROUPS['m']['group'],
+            cards: mortgages,
+          },
         ]
       : results;
     return results;

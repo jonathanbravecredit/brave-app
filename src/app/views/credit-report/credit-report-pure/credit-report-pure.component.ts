@@ -4,6 +4,7 @@ import { CreditReportGroups } from '@shared/data/credit-report';
 
 export interface ICreditReportCardGroup {
   title: string;
+  group: CreditReportGroups;
   cards: ICreditReportCardInputs[];
 }
 

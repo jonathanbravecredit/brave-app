@@ -1,6 +1,6 @@
 <div *ngIf="creditReport$ | async as creditReports">
   <brave-credit-report-pure
-    [filters]="filters"
+    (hide)="onHide($event)"
     [creditReports]="creditReports | creditReport"
   ></brave-credit-report-pure>
 </div>
