@@ -22,14 +22,11 @@ import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/
 export class CreditReportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
-  transform(
-    report: IMergeReport,
-    agency: TransunionInput
-  ): ICreditReportCardGroup[] {
+  transform(report: IMergeReport): ICreditReportCardGroup[] {
     this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
     if (!this.tradeLines) return [{} as ICreditReportCardGroup];
     return this.tradeLines instanceof Array
-      ? this.filterTradelines(this.tradeLines, agency)
+      ? this.filterTradelines(this.tradeLines)
           .sortByAccountType(this.tradeLines)
           .sortByDateOpened(this.tradeLines)
           .mapTradeLineToAccount(this.tradeLines)
@@ -44,10 +41,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  filterTradelines(
-    tradeLines: ITradeLinePartition[],
-    agency: TransunionInput
-  ): CreditReportPipe {
+  filterTradelines(tradeLines: ITradeLinePartition[]): CreditReportPipe {
     this.tradeLines = tradeLines.filter((item) => {
       const status =
         NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];

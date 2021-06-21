@@ -16,6 +16,7 @@ type AppData
   id: ID!
   user: User!
   agencies: Agencies!
+  preferences: Preferences!
 }
 type User {
   id: ID!
@@ -68,6 +69,12 @@ type Agencies {
   transunion: Transunion
   equifax: Equifax
   experian: Experian
+}
+type Preferences {
+  hideCreditCardAccounts: boolean
+  hideCollectionsAccounts: boolean
+  hideInstallmentAccounts: boolean
+  hideMortgageAccounts: boolean
 }
 type Transunion {
   authenticated: Boolean
