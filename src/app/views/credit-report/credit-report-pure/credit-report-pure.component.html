@@ -1,24 +1,27 @@
 <div class="container mx-auto max-w-xs h-full">
-	<div class="p-4">
-	  <span class="text-lg">Your TransUnion Credit Report</span>
-	  <div class="w-full h-40 bg-gray-400 mt-4">
-	    <!-- Placeholder -->
-	  </div>
-	  <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
-	</div>
-	<div class="p-4" *ngFor="let report of creditReports">
-	  <h6 class="text-lg">{{ report.name }}</h6>
-	  <input type="checkbox" id="dont-show-hide">
-	  <label for="dont-show-hide" class="ml-2 mr-auto">Only Show me delinquent accounts</label>
-		<brave-credit-report-card *ngFor="let reportItem of report.items" 
-		[title]="reportItem.title"
-		[isOpen]="reportItem.isOpen"
-		[firstFieldName]="reportItem.firstFieldName"
-		[firstFieldValue]="reportItem.firstFieldValue"
-		[secondFieldName]="reportItem.secondFieldName"
-		[secondFieldValue]="reportItem.secondFieldValue"
-		[thirdFieldName]="reportItem.thirdFieldName"
-		[thirdFieldValue]="reportItem.thirdFieldValue"
-		></brave-credit-report-card>
-	</div>
+  <div class="p-4">
+    <span class="text-lg">Your TransUnion Credit Report</span>
+    <div class="w-full h-40 bg-gray-400 mt-4">
+      <!-- Placeholder -->
+    </div>
+    <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
+  </div>
+  <div class="p-4" *ngFor="let report of creditReports">
+    <h6 class="text-lg">{{ report.title }}</h6>
+    <input type="checkbox" id="dont-show-hide" />
+    <label for="dont-show-hide" class="ml-2 mr-auto"
+      >Only Show me delinquent accounts</label
+    >
+    <brave-credit-report-card
+      *ngFor="let card of report.cards"
+      [creditorName]="card.creditorName"
+      [isOpen]="card.isOpen"
+      [firstFieldName]="card.firstFieldName"
+      [firstFieldValue]="card.firstFieldValue.toString()"
+      [secondFieldName]="card.secondFieldName"
+      [secondFieldValue]="card.secondFieldValue.toString()"
+      [thirdFieldName]="card.thirdFieldName"
+      [thirdFieldValue]="card.thirdFieldValue.toString()"
+    ></brave-credit-report-card>
+  </div>
 </div>

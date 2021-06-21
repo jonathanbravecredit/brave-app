@@ -1,1 +1,7 @@
-<brave-credit-report-pure [creditReports]="creditReports"></brave-credit-report-pure>
+<div *ngIf="creditReport$ | async as creditReports">
+  <div *ngIf="transunion$ | async as agency">
+    <brave-credit-report-pure
+      [creditReports]="creditReports | creditReport: agency"
+    ></brave-credit-report-pure>
+  </div>
+</div>

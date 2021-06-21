@@ -9,6 +9,7 @@ import {
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
+import { TransunionInput } from '@shared/services/aws/api.service';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -26,6 +27,8 @@ const parserOptions = {
 export class CreditreportService implements OnDestroy {
   tuReport: IMergeReport = {} as IMergeReport;
   tuReport$: Subject<IMergeReport> = new Subject();
+  tuAgency: TransunionInput = {} as TransunionInput;
+  tuAgency$: Subject<TransunionInput> = new Subject();
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
@@ -34,6 +37,9 @@ export class CreditreportService implements OnDestroy {
     this.agenciesSub$ = this.agencies$
       .pipe()
       .subscribe((agencies: AgenciesStateModel) => {
+        const tu = this.getTransunion(agencies);
+        this.tuAgency$.next(tu);
+        this.tuAgency = tu;
         const unparsed = this.getUnparsedCreditReport(agencies);
         const parsedReport = this.parseCreditReport(unparsed['#text']);
         this.tuReport$.next(parsedReport);
@@ -43,6 +49,16 @@ export class CreditreportService implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
+  }
+
+  /**
+   * Return the TU data from provided agency state model
+   * @param {AgenciesStateModel} agencies
+   * @returns
+   */
+  getTransunion(agencies: AgenciesStateModel): TransunionInput {
+    if (!agencies.transunion) return {} as TransunionInput;
+    return agencies.transunion;
   }
 
   /**

@@ -6,7 +6,6 @@ import {
 } from '@shared/data/pay-status-codes';
 import {
   IMergeReport,
-  ITradeline,
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
 
@@ -14,94 +13,121 @@ import {
   name: 'negativeTradelines',
 })
 export class NegativeTradelinesPipe implements PipeTransform {
+  private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
+
   transform(report: IMergeReport): INegativeAccountCardInputs[] | undefined {
     console.log('report in pipe', report);
-    const tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
-    if (!tradeLines) return [defaultTradeline];
-    // TODO convert these to look up the values from the dictionary
-    if (tradeLines instanceof Array) {
-      return tradeLines
-        .filter((item) => {
-          const status =
-            NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
-          console.log('status in pipe', status, !!status);
-          return !!status;
-        })
-        .sort((a, b) => {
-          if (
-            a.accountTypeSymbol?.toLowerCase() === 'y' &&
-            b.accountTypeDescription?.toLowerCase() !== 'y'
-          ) {
-            return 1;
-          }
-          if (
-            a.accountTypeSymbol?.toLowerCase() !== 'y' &&
-            b.accountTypeDescription?.toLowerCase() === 'y'
-          ) {
-            return -1;
-          }
-          return 0;
-        })
-        .sort((a, b) => {
-          if (a.Tradeline?.dateOpened !== b.Tradeline?.dateOpened) {
-            return 0;
-          }
-          if (a.Tradeline?.dateOpened! < b.Tradeline?.dateOpened!) {
-            return 1;
-          }
-          if (a.Tradeline?.dateOpened! > b.Tradeline?.dateOpened!) {
-            return -1;
-          }
-          return 0;
-        })
-        .map((item) => {
-          return {
-            creditorName: item.Tradeline?.creditorName || '',
-            lastReported: item.Tradeline?.dateReported || '',
-            accountTypeDescription: this.lookupAccountType(item),
-            accountTypeDescriptionValue:
-              item.Tradeline?.OpenClosed?.description || '',
-            disputeFlag: 'Previously Disputed?',
-            originalCreditor: 'Original Creditor',
-            originalCreditorValue: this.lookupOriginalCreditor(item),
-            disputeFlagValue: this.lookupDisputeFlag(item),
-            accountDetail: {
-              accountNumber: item.Tradeline?.accountNumber || '',
-              typeOfCollection: item.accountTypeAbbreviation || '',
-              amountPastDue: item.Tradeline?.currentBalance || 0,
-              dateOpened: item.Tradeline?.dateOpened || '',
-              dateLastPayment:
-                item.Tradeline?.GrantedTrade?.dateLastPayment || '',
-              remarks: item.Tradeline?.Remark?.customRemark || '',
-            },
-          };
-        });
-    } else {
-      return [
-        {
-          creditorName: tradeLines.Tradeline?.creditorName || '',
-          lastReported: tradeLines.Tradeline?.dateReported || '',
-          accountTypeDescription: this.lookupAccountType(tradeLines),
-          accountTypeDescriptionValue:
-            tradeLines.Tradeline?.OpenClosed?.description || '',
-          disputeFlag: 'Previously Disputed?',
-          originalCreditor: 'Original Creditor',
-          originalCreditorValue: this.lookupOriginalCreditor(tradeLines),
-          disputeFlagValue: this.lookupDisputeFlag(tradeLines),
-          accountDetail: {
-            accountNumber: tradeLines.Tradeline?.accountNumber || '',
-            typeOfCollection: tradeLines.accountTypeAbbreviation || '',
-            amountPastDue: tradeLines.Tradeline?.currentBalance || 0,
-            dateOpened: tradeLines.Tradeline?.dateOpened || '',
-            dateLastPayment:
-              tradeLines.Tradeline?.GrantedTrade?.dateLastPayment || '',
-            remarks: tradeLines.Tradeline?.Remark?.customRemark || '',
-          },
-        },
-      ];
-    }
+    this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
+    if (!this.tradeLines) return [defaultTradeline];
+    return this.tradeLines instanceof Array
+      ? this.filterTradelines(this.tradeLines)
+          .sortByAccountType(this.tradeLines)
+          .sortByDateOpened(this.tradeLines)
+          .mapTradeLineToAccount(this.tradeLines)
+      : this.mapTradeLineToAccount([this.tradeLines]);
   }
 
+  /**
+   * Filters the tradeline by the negative status code
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  filterTradelines(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
+    this.tradeLines = tradeLines.filter((item) => {
+      const status =
+        NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
+      console.log('status in pipe', status, !!status);
+      return !!status;
+    });
+    return this;
+  }
+
+  /**
+   * Sorts the tradeline by the account type
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  sortByAccountType(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
+    this.tradeLines = [
+      ...tradeLines.sort((a, b) => {
+        if (
+          a.accountTypeSymbol?.toLowerCase() === 'y' &&
+          b.accountTypeDescription?.toLowerCase() !== 'y'
+        ) {
+          return 1;
+        }
+        if (
+          a.accountTypeSymbol?.toLowerCase() !== 'y' &&
+          b.accountTypeDescription?.toLowerCase() === 'y'
+        ) {
+          return -1;
+        }
+        return 0;
+      }),
+    ];
+    return this;
+  }
+
+  /**
+   * Sorts the tradeline by the date opened keeping the sort by account type
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  sortByDateOpened(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
+    this.tradeLines = [
+      ...tradeLines.sort((a, b) => {
+        if (a.accountTypeSymbol !== b.accountTypeSymbol) {
+          return 0;
+        }
+        if (a.Tradeline?.dateOpened! < b.Tradeline?.dateOpened!) {
+          return 1;
+        }
+        if (a.Tradeline?.dateOpened! > b.Tradeline?.dateOpened!) {
+          return -1;
+        }
+        return 0;
+      }),
+    ];
+    return this;
+  }
+
+  /**
+   * Map the tradeline object to the negative account object
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  mapTradeLineToAccount(
+    tradeLines: ITradeLinePartition[]
+  ): INegativeAccountCardInputs[] {
+    const negativeAccounts = tradeLines.map((item) => {
+      return {
+        creditorName: item.Tradeline?.creditorName || '',
+        lastReported: item.Tradeline?.dateReported || '',
+        accountTypeDescription: this.lookupAccountType(item),
+        accountTypeDescriptionValue:
+          item.Tradeline?.OpenClosed?.description || '',
+        disputeFlag: 'Previously Disputed?',
+        originalCreditor: 'Original Creditor',
+        originalCreditorValue: this.lookupOriginalCreditor(item),
+        disputeFlagValue: this.lookupDisputeFlag(item),
+        accountDetail: {
+          accountNumber: item.Tradeline?.accountNumber || '',
+          typeOfCollection: item.accountTypeAbbreviation || '',
+          amountPastDue: item.Tradeline?.currentBalance || 0,
+          dateOpened: item.Tradeline?.dateOpened || '',
+          dateLastPayment: item.Tradeline?.GrantedTrade?.dateLastPayment || '',
+          remarks: item.Tradeline?.Remark?.customRemark || '',
+        },
+      };
+    });
+    return negativeAccounts;
+  }
+
+  /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
   lookupAccountType(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'unknown';
     const description = partition.accountTypeDescription;
@@ -112,6 +138,11 @@ export class NegativeTradelinesPipe implements PipeTransform {
       : status;
   }
 
+  /**
+   * Helper function to securey look up the original creditor
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
   lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'unknown';
     const originalCreditor =
@@ -124,6 +155,11 @@ export class NegativeTradelinesPipe implements PipeTransform {
     }
   }
 
+  /**
+   * Helper function to securely look up the dispute flag
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
   lookupDisputeFlag(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'No';
     const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';

@@ -1,15 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
+
+export interface ICreditReportCardGroup {
+  title: string;
+  cards: ICreditReportCardInputs[];
+}
 
 @Component({
   selector: 'brave-credit-report-pure',
   templateUrl: './credit-report-pure.component.html',
-  styleUrls: ['./credit-report-pure.component.css']
+  styleUrls: ['./credit-report-pure.component.css'],
 })
 export class CreditReportPureComponent implements OnInit {
-  @Input() creditReports: any[] = [];
+  @Input() creditReports: ICreditReportCardGroup[] = [];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
