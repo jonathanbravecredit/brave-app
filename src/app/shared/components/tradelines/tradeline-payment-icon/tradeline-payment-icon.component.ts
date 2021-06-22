@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import {
   LATE_PAY_STATUS_CODES,
   COLLECTION_PAY_STATUS_CODES,
-  REPO_PAY_STATUS_CODES,
+  UNKNOWN_PAY_STATUS_CODES,
   OTHER_PAY_STATUS_CODES,
   ONTIME_PAY_STATUS_CODES,
 } from '@shared/data';
@@ -10,7 +10,7 @@ import {
 export enum TradelineIcons {
   Late = 'late',
   Collection = 'collection',
-  Repossession = 'repossesion',
+  Unknown = 'unknown',
   Current = 'current',
   Other = 'other',
 }
@@ -20,21 +20,21 @@ export enum TradelineIcons {
   templateUrl: './tradeline-payment-icon.component.html',
 })
 export class TradelinePaymentIconComponent implements OnInit {
-  @Input() code: string = 'u';
+  @Input() code: string = 'U';
   tradelineIcons = TradelineIcons;
   constructor() {}
 
   ngOnInit(): void {}
 
   parseCode(code: string): TradelineIcons {
-    if (LATE_PAY_STATUS_CODES[code.toLowerCase()]) return TradelineIcons.Late;
-    if (COLLECTION_PAY_STATUS_CODES[code.toLowerCase()])
+    if (LATE_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Late;
+    if (UNKNOWN_PAY_STATUS_CODES[code.toUpperCase()])
+      return TradelineIcons.Unknown;
+    if (COLLECTION_PAY_STATUS_CODES[code.toUpperCase()])
       return TradelineIcons.Collection;
-    if (REPO_PAY_STATUS_CODES[code.toLowerCase()])
-      return TradelineIcons.Repossession;
-    if (ONTIME_PAY_STATUS_CODES[code.toLowerCase()])
+    if (ONTIME_PAY_STATUS_CODES[code.toUpperCase()])
       return TradelineIcons.Current;
-    if (OTHER_PAY_STATUS_CODES[code.toLowerCase()]) return TradelineIcons.Other;
+    if (OTHER_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Other;
     return TradelineIcons.Other;
   }
 }

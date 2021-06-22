@@ -48,16 +48,17 @@ export const COLLECTION_PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff Account`,
 };
 
-export const REPO_PAY_STATUS_CODES: Record<string, any> = {
-  '8R': `Repossesion Account`,
-};
-
 export const OTHER_PAY_STATUS_CODES: Record<string, any> = {
-  U: `No Data / Unknown`,
-  '0': `Too New to Rate`,
+  '8R': `Repossesion Account`,
   '7': `Wage Earner Plan`,
 };
 
 export const ONTIME_PAY_STATUS_CODES: Record<string, any> = {
   C: `Current`,
+};
+
+export const UNKNOWN_PAY_STATUS_CODES: Record<string, any> = {
+  U: `No Data / Unknown`,
+  '0': `Too New to Rate`,
+  '7': `Wage Earner Plan`,
 };

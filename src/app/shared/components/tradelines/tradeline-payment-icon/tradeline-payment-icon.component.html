@@ -1,11 +1,27 @@
 <div class="h-4 w-4">
-  <div [ngSwitch]="code" class="flex justify-center items-center">
-    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Late">
-      <div class="w-full"><span class="material-icons">check</span></div>
+  <div class="flex justify-center items-center">
+    <div *ngIf="this.parseCode(code) === tradelineIcons.Late">
+      <div class="w-full">
+        <i class="material-icons text-xs text-orange-600">close</i>
+      </div>
     </div>
-    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Collection"></div>
-    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Repossession"></div>
-    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Current"></div>
-    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Other"></div>
+    <div *ngIf="this.parseCode(code) === tradelineIcons.Collection">
+      <div class="w-full"><span class="text-xs text-coolGray-600">C</span></div>
+    </div>
+    <div *ngIf="this.parseCode(code) === tradelineIcons.Unknown">
+      <div class="w-full">
+        <i class="rounded-full w-1 bg-gray-500"></i>
+      </div>
+    </div>
+    <div *ngIf="this.parseCode(code) === tradelineIcons.Current">
+      <div class="w-full">
+        <i class="material-icons text-xs text-emerald-500">check</i>
+      </div>
+    </div>
+    <div *ngIf="this.parseCode(code) === tradelineIcons.Other">
+      <div class="w-full">
+        <i class="material-icons text-xs text-coolGray-600">info_outline</i>
+      </div>
+    </div>
   </div>
 </div>
