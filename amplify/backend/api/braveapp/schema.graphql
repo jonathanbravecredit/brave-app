@@ -71,10 +71,13 @@ type Agencies {
   experian: Experian
 }
 type Preferences {
-  hideCreditCardAccounts: boolean
-  hideCollectionsAccounts: boolean
-  hideInstallmentAccounts: boolean
-  hideMortgageAccounts: boolean
+  showAllAccounts: ShowAccountsPreference
+}
+type ShowAccountsPreference {
+  hideCreditCardAccounts: Boolean
+  hideCollectionsAccounts: Boolean
+  hideInstallmentAccounts: Boolean
+  hideMortgageAccounts: Boolean
 }
 type Transunion {
   authenticated: Boolean
