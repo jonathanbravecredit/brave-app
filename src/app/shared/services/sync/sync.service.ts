@@ -100,12 +100,12 @@ export class SyncService {
         },
         preferences: {
           showAllAccounts: {
-            hideCreditCardAccounts: false,
-            hideCollectionsAccounts: false,
-            hideInstallmentAccounts: false,
-            hideMortgageAccounts: false
-          }
-        }
+            creditCards: false,
+            collectionsAccounts: false,
+            installmentLoans: false,
+            mortgages: false,
+          },
+        },
       };
       console.log('input', input);
       const data = await this.api.CreateAppData(input);
