@@ -47,7 +47,6 @@ export class CreditReportPipe implements PipeTransform {
     prefs: PreferencesStateModel
   ): CreditReportPipe {
     const filters = prefs.showAllAccounts;
-    console.log('prefs', prefs);
     if (!filters) return this;
     if (partitions instanceof Array) {
       this.tradeLines = partitions.filter((item) => {
