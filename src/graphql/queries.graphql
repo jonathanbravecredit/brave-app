@@ -78,12 +78,24 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt
@@ -172,12 +184,24 @@ query ListAppDatas(
             serviceProductValue
             status
           }
+          hidePositiveCreditCardAccounts
+          hidePositiveCollectionAccounts
+          hidePositiveInstallmentAccounts
+          hidePositiveMortgageAccounts
         }
         equifax {
           authenticated
         }
         experian {
           authenticated
+        }
+      }
+      preferences {
+        showAllAccounts {
+          hideCreditCardAccounts
+          hideCollectionsAccounts
+          hideInstallmentAccounts
+          hideMortgageAccounts
         }
       }
       createdAt

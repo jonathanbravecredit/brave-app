@@ -75,12 +75,24 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt
@@ -164,12 +176,24 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt
@@ -253,12 +277,24 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt

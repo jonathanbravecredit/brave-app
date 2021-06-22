@@ -74,10 +74,10 @@ type Preferences {
   showAllAccounts: ShowAccountsPreference
 }
 type ShowAccountsPreference {
-  hideCreditCardAccounts: Boolean
-  hideCollectionsAccounts: Boolean
-  hideInstallmentAccounts: Boolean
-  hideMortgageAccounts: Boolean
+  creditCards: Boolean
+  collectionsAccounts: Boolean
+  installmentLoans: Boolean
+  mortgages: Boolean
 }
 type Transunion {
   authenticated: Boolean

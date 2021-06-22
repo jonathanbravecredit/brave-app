@@ -78,12 +78,24 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt
@@ -170,12 +182,24 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt
@@ -262,12 +286,24 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
       }
     }
     createdAt
