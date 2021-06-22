@@ -86,12 +86,14 @@ const views = [
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
   CreditReportComponent,
+  TradelinesComponent,
+  TradelinesPureComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes, TradelinesComponent, TradelinesPureComponent],
+  declarations: [...views, ...pipes],
   imports: [
     CommonModule,
     ReactiveFormsModule,

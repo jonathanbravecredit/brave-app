@@ -1,1 +1,11 @@
-<p>tradeline-payment-icon works!</p>
+<div class="h-4 w-4">
+  <div [ngSwitch]="code" class="flex justify-center items-center">
+    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Late">
+      <div class="w-full"><span class="material-icons">check</span></div>
+    </div>
+    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Collection"></div>
+    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Repossession"></div>
+    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Current"></div>
+    <div [ngSwitchCase]="parseCode(code) === tradelineIcons.Other"></div>
+  </div>
+</div>

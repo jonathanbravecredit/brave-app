@@ -25,23 +25,23 @@ import {
 import { returnNestedObject } from '@shared/utils/utils';
 import { AgenciesStateModel } from '@store/agencies';
 
-export const enum KYCResponse {
+export enum KYCResponse {
   Failed = 'failed',
   Success = 'success',
 }
 
-export const enum OTPQuestion {
+export enum OTPQuestion {
   FullText = 'Please select your preferred method of Authentication?(Standard text message and voice rates apply)*</FullQuestionText',
   PartialOne = 'preferred method of Authentication',
   PartialTwo = 'Standard text message and voice rates apply',
 }
 
-export const enum OTPReponse {
+export enum OTPReponse {
   FullText = 'Deliver passcode via Text Message',
   PartialOne = 'via Text Message',
 }
 
-export const enum PassCodeQuestion {
+export enum PassCodeQuestion {
   FullText = 'Enter the passcode you received',
   PartialOne = 'passcode',
 }

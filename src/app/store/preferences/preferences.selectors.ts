@@ -1,5 +1,6 @@
 import { Selector } from '@ngxs/store';
-import { PreferencesState, PreferencesStateModel } from '@store/preferences';
+import { PreferencesStateModel } from '@store/preferences/preferences.model';
+import { PreferencesState } from '@store/preferences/preferences.state';
 
 export class PreferencesSelectors {
   @Selector([PreferencesState])

@@ -13,7 +13,7 @@ import { PreferencesStateModel } from '@store/preferences';
 import { CreditReportGroups } from '@shared/data/credit-report';
 
 export default {
-  title: 'app/views/credit-report/credit-report',
+  title: 'app/views/creditreport/credit-report',
   component: CreditReportPureComponent,
   decorators: [
     moduleMetadata({
