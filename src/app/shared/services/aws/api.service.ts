@@ -13,6 +13,7 @@ export type CreateAppDataInput = {
   id?: string | null;
   user: UserInput;
   agencies: AgenciesInput;
+  preferences: PreferencesInput;
 };
 
 export type UserInput = {
@@ -81,6 +82,10 @@ export type TransunionInput = {
   enrollReport?: TUEnrollResponseInput | null;
   enrollMergeReport?: TUEnrollResponseInput | null;
   enrollVantageScore?: TUEnrollResponseInput | null;
+  hidePositiveCreditCardAccounts?: boolean | null;
+  hidePositiveCollectionAccounts?: boolean | null;
+  hidePositiveInstallmentAccounts?: boolean | null;
+  hidePositiveMortgageAccounts?: boolean | null;
 };
 
 export type TUEnrollResponseInput = {
@@ -102,6 +107,17 @@ export type ExperianInput = {
   authenticated?: boolean | null;
 };
 
+export type PreferencesInput = {
+  showAllAccounts?: ShowAccountsPreferenceInput | null;
+};
+
+export type ShowAccountsPreferenceInput = {
+  hideCreditCardAccounts?: boolean | null;
+  hideCollectionsAccounts?: boolean | null;
+  hideInstallmentAccounts?: boolean | null;
+  hideMortgageAccounts?: boolean | null;
+};
+
 export type ModelAppDataConditionInput = {
   and?: Array<ModelAppDataConditionInput | null> | null;
   or?: Array<ModelAppDataConditionInput | null> | null;
@@ -113,6 +129,7 @@ export type AppData = {
   id?: string;
   user?: User;
   agencies?: Agencies;
+  preferences?: Preferences;
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
@@ -194,6 +211,10 @@ export type Transunion = {
   enrollReport?: TUEnrollResponse;
   enrollMergeReport?: TUEnrollResponse;
   enrollVantageScore?: TUEnrollResponse;
+  hidePositiveCreditCardAccounts?: boolean | null;
+  hidePositiveCollectionAccounts?: boolean | null;
+  hidePositiveInstallmentAccounts?: boolean | null;
+  hidePositiveMortgageAccounts?: boolean | null;
 };
 
 export type TUEnrollResponse = {
@@ -218,10 +239,24 @@ export type Experian = {
   authenticated?: boolean | null;
 };
 
+export type Preferences = {
+  __typename: "Preferences";
+  showAllAccounts?: ShowAccountsPreference;
+};
+
+export type ShowAccountsPreference = {
+  __typename: "ShowAccountsPreference";
+  hideCreditCardAccounts?: boolean | null;
+  hideCollectionsAccounts?: boolean | null;
+  hideInstallmentAccounts?: boolean | null;
+  hideMortgageAccounts?: boolean | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
+  preferences?: PreferencesInput | null;
 };
 
 export type DeleteAppDataInput = {
@@ -369,6 +404,10 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -377,6 +416,16 @@ export type CreateAppDataMutation = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -473,6 +522,10 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -481,6 +534,16 @@ export type UpdateAppDataMutation = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -577,6 +640,10 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -585,6 +652,16 @@ export type DeleteAppDataMutation = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -681,6 +758,10 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -689,6 +770,16 @@ export type GetAppDataQuery = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -787,6 +878,10 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
+        hidePositiveCreditCardAccounts?: boolean | null;
+        hidePositiveCollectionAccounts?: boolean | null;
+        hidePositiveInstallmentAccounts?: boolean | null;
+        hidePositiveMortgageAccounts?: boolean | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -795,6 +890,16 @@ export type ListAppDatasQuery = {
       experian?: {
         __typename: "Experian";
         authenticated?: boolean | null;
+      } | null;
+    };
+    preferences: {
+      __typename: "Preferences";
+      showAllAccounts?: {
+        __typename: "ShowAccountsPreference";
+        hideCreditCardAccounts?: boolean | null;
+        hideCollectionsAccounts?: boolean | null;
+        hideInstallmentAccounts?: boolean | null;
+        hideMortgageAccounts?: boolean | null;
       } | null;
     };
     createdAt: string;
@@ -893,6 +998,10 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -901,6 +1010,16 @@ export type OnCreateAppDataSubscription = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -997,6 +1116,10 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1005,6 +1128,16 @@ export type OnUpdateAppDataSubscription = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1101,6 +1234,10 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1109,6 +1246,16 @@ export type OnDeleteAppDataSubscription = {
     experian?: {
       __typename: "Experian";
       authenticated?: boolean | null;
+    } | null;
+  };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1214,6 +1361,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1222,6 +1373,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
@@ -1334,6 +1495,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1342,6 +1507,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
@@ -1454,6 +1629,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1462,6 +1641,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
@@ -1584,6 +1773,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1592,6 +1785,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
@@ -1704,6 +1907,10 @@ export class APIService {
                   serviceProductValue
                   status
                 }
+                hidePositiveCreditCardAccounts
+                hidePositiveCollectionAccounts
+                hidePositiveInstallmentAccounts
+                hidePositiveMortgageAccounts
               }
               equifax {
                 __typename
@@ -1712,6 +1919,16 @@ export class APIService {
               experian {
                 __typename
                 authenticated
+              }
+            }
+            preferences {
+              __typename
+              showAllAccounts {
+                __typename
+                hideCreditCardAccounts
+                hideCollectionsAccounts
+                hideInstallmentAccounts
+                hideMortgageAccounts
               }
             }
             createdAt
@@ -1829,6 +2046,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1837,6 +2058,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
@@ -1946,6 +2177,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1954,6 +2189,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
@@ -2063,6 +2308,10 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -2071,6 +2320,16 @@ export class APIService {
             experian {
               __typename
               authenticated
+            }
+          }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
             }
           }
           createdAt
