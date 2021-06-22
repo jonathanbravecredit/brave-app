@@ -39,6 +39,11 @@ import { SigninRedirectComponent } from './signin-redirect/signin-redirect.compo
 import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
+import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
+import { NegativeTradelinesPipe } from './negative-account/negative-account-initial/negative-tradelines.pipe';
+import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
+import { CreditReportPipe } from '@views/credit-report/credit-report/credit-report.pipe';
 
 const views = [
   SignupComponent,
@@ -76,9 +81,12 @@ const views = [
   ComplianceTosComponent,
   DashboardInitComponent,
   NegativeAccountInitialComponent,
+  NegativeAccountInitialPureComponent,
+  CreditReportPureComponent,
+  CreditReportComponent,
 ];
 
-const pipes = [KycKbaquestionsPipe];
+const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
 
 @NgModule({
   declarations: [...views, ...pipes],

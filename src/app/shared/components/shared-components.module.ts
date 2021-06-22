@@ -72,6 +72,9 @@ import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-statu
 import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
 import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
 import { NegativeAccountCardComponent } from './cards/negative-account-card/negative-account-card.component';
+import { SpinnerComponent } from './interstitials/spinner/spinner.component';
+import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
+import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
 
 const components = [
   BaseFormComponent,
@@ -129,6 +132,8 @@ const components = [
   SnapshotDisplayCardComponent,
   NegativeAccountCardComponent,
   KbaMultiplechoiceInputComponent,
+  CreditReportCardComponent,
+  SpinnerComponent,
 ];
 
 // component specific pipes only
@@ -144,7 +149,7 @@ const pipes = [
   AccountStatusPipe,
   SnapshotLabelPipe,
   SnapshotStatusPipe,
-  KbaMultiplechoiceInputComponent,
+  CreditReportGraphicPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
