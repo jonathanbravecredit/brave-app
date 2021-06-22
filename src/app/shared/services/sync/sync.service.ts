@@ -98,6 +98,14 @@ export class SyncService {
           experian: { authenticated: false },
           equifax: { authenticated: false },
         },
+        preferences: {
+          showAllAccounts: {
+            hideCreditCardAccounts: false,
+            hideCollectionsAccounts: false,
+            hideInstallmentAccounts: false,
+            hideMortgageAccounts: false
+          }
+        }
       };
       console.log('input', input);
       const data = await this.api.CreateAppData(input);
