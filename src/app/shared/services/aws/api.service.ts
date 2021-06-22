@@ -112,10 +112,10 @@ export type PreferencesInput = {
 };
 
 export type ShowAccountsPreferenceInput = {
-  hideCreditCardAccounts?: boolean | null;
-  hideCollectionsAccounts?: boolean | null;
-  hideInstallmentAccounts?: boolean | null;
-  hideMortgageAccounts?: boolean | null;
+  creditCards?: boolean | null;
+  collectionsAccounts?: boolean | null;
+  installmentLoans?: boolean | null;
+  mortgages?: boolean | null;
 };
 
 export type ModelAppDataConditionInput = {
@@ -246,10 +246,10 @@ export type Preferences = {
 
 export type ShowAccountsPreference = {
   __typename: "ShowAccountsPreference";
-  hideCreditCardAccounts?: boolean | null;
-  hideCollectionsAccounts?: boolean | null;
-  hideInstallmentAccounts?: boolean | null;
-  hideMortgageAccounts?: boolean | null;
+  creditCards?: boolean | null;
+  collectionsAccounts?: boolean | null;
+  installmentLoans?: boolean | null;
+  mortgages?: boolean | null;
 };
 
 export type UpdateAppDataInput = {
@@ -422,10 +422,10 @@ export type CreateAppDataMutation = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -540,10 +540,10 @@ export type UpdateAppDataMutation = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -658,10 +658,10 @@ export type DeleteAppDataMutation = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -776,10 +776,10 @@ export type GetAppDataQuery = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -896,10 +896,10 @@ export type ListAppDatasQuery = {
       __typename: "Preferences";
       showAllAccounts?: {
         __typename: "ShowAccountsPreference";
-        hideCreditCardAccounts?: boolean | null;
-        hideCollectionsAccounts?: boolean | null;
-        hideInstallmentAccounts?: boolean | null;
-        hideMortgageAccounts?: boolean | null;
+        creditCards?: boolean | null;
+        collectionsAccounts?: boolean | null;
+        installmentLoans?: boolean | null;
+        mortgages?: boolean | null;
       } | null;
     };
     createdAt: string;
@@ -1016,10 +1016,10 @@ export type OnCreateAppDataSubscription = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1134,10 +1134,10 @@ export type OnUpdateAppDataSubscription = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1252,10 +1252,10 @@ export type OnDeleteAppDataSubscription = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1379,10 +1379,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1513,10 +1513,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1647,10 +1647,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1791,10 +1791,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1925,10 +1925,10 @@ export class APIService {
               __typename
               showAllAccounts {
                 __typename
-                hideCreditCardAccounts
-                hideCollectionsAccounts
-                hideInstallmentAccounts
-                hideMortgageAccounts
+                creditCards
+                collectionsAccounts
+                installmentLoans
+                mortgages
               }
             }
             createdAt
@@ -2064,10 +2064,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -2195,10 +2195,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -2326,10 +2326,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt

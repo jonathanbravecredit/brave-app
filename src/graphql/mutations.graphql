@@ -92,10 +92,10 @@ mutation CreateAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -196,10 +196,10 @@ mutation UpdateAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -300,10 +300,10 @@ mutation DeleteAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
