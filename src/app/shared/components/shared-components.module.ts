@@ -75,6 +75,11 @@ import { NegativeAccountCardComponent } from './cards/negative-account-card/nega
 import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
+import { TradelineMetricsComponent } from './tradelines/tradeline-metrics/tradeline-metrics.component';
+import { TradelineSummaryComponent } from './tradelines/tradeline-summary/tradeline-summary.component';
+import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradeline-details.component';
+import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
+import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 
 const components = [
   BaseFormComponent,
@@ -134,6 +139,8 @@ const components = [
   KbaMultiplechoiceInputComponent,
   CreditReportCardComponent,
   SpinnerComponent,
+  TradelineMetricsComponent,
+  TradelineSummaryComponent,
 ];
 
 // component specific pipes only
@@ -155,7 +162,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, TradelineDetailsComponent, TradelinePaymentsComponent, TradelinePaymentIconComponent],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

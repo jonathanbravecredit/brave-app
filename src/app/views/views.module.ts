@@ -44,8 +44,8 @@ import { NegativeTradelinesPipe } from './negative-account/negative-account-init
 import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
 import { CreditReportPipe } from '@views/credit-report/credit-report/credit-report.pipe';
-import { TradeAccountSummaryComponent } from './trade-account-summary/trade-account-summary/trade-account-summary.component';
-import { TradeAccountSummaryPureComponent } from './trade-account-summary/trade-account-summary-pure/trade-account-summary-pure.component';
+import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
+import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 
 const views = [
   SignupComponent,
@@ -86,14 +86,12 @@ const views = [
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
   CreditReportComponent,
-  TradeAccountSummaryComponent,
-  TradeAccountSummaryPureComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes],
+  declarations: [...views, ...pipes, TradelinesComponent, TradelinesPureComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
