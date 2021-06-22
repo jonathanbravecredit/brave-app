@@ -141,6 +141,9 @@ const components = [
   SpinnerComponent,
   TradelineMetricsComponent,
   TradelineSummaryComponent,
+  TradelineDetailsComponent,
+  TradelinePaymentsComponent,
+  TradelinePaymentIconComponent,
 ];
 
 // component specific pipes only
@@ -162,7 +165,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives, TradelineDetailsComponent, TradelinePaymentsComponent, TradelinePaymentIconComponent],
+  declarations: [...components, ...pipes, ...directives],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
