@@ -10,7 +10,11 @@
     </div>
     <div *ngIf="this.parseCode(code) === tradelineIcons.Unknown">
       <div class="w-full">
-        <i class="rounded-full w-1 bg-gray-500"></i>
+        <i
+          class="material-icons text-coolGray-300"
+          style="font-size: 0.5rem; line-height: 0.75rem"
+          >circle</i
+        >
       </div>
     </div>
     <div *ngIf="this.parseCode(code) === tradelineIcons.Current">
