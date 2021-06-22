@@ -43,7 +43,7 @@ import { NegativeAccountInitialPureComponent } from './negative-account/negative
 import { NegativeTradelinesPipe } from './negative-account/negative-account-initial/negative-tradelines.pipe';
 import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
-import { CreditReportPipe } from './credit-report/credit-report/credit-report.pipe';
+import { CreditReportPipe } from '@views/credit-report/credit-report/credit-report.pipe';
 
 const views = [
   SignupComponent,
@@ -83,13 +83,13 @@ const views = [
   NegativeAccountInitialComponent,
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
-  CreditReportComponent
+  CreditReportComponent,
 ];
 
-const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe];
+const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes, CreditReportPipe],
+  declarations: [...views, ...pipes],
   imports: [
     CommonModule,
     ReactiveFormsModule,

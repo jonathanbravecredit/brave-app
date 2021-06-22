@@ -53,10 +53,8 @@ export class CreditReportPipe implements PipeTransform {
     console.log('prefs', prefs);
     if (!filters) return this;
     if (partitions instanceof Array) {
-      console.log('initial tradelines', partitions.length);
       this.tradeLines = partitions.filter((item) => {
         const sym = item.accountTypeSymbol?.toLowerCase() || '';
-        console.log('sym and type', sym, item.accountTypeSymbol?.toLowerCase());
         const group: CreditReportGroups =
           CREDIT_REPORT_GROUPS[sym]?.group || '';
         const status = item.Tradeline?.PayStatus?.symbol || '';
@@ -75,7 +73,6 @@ export class CreditReportPipe implements PipeTransform {
         ] || null;
       this.tradeLines = !(!filters[group] && pos) ? [partitions] : [];
     }
-    console.log('this.tradelines', this.tradeLines);
     return this;
   }
 
@@ -149,7 +146,6 @@ export class CreditReportPipe implements PipeTransform {
         thirdFieldValue: item.Tradeline?.PayStatus?.description,
       } as ICreditReportCardInputs;
     });
-    console.log('credit report accounts', this.creditReportAccounts);
     return this;
   }
 
@@ -221,10 +217,8 @@ export class CreditReportPipe implements PipeTransform {
     partition: ITradeLinePartition | undefined
   ): { firstFieldName: string; firstFieldValue: string | number } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
-    console.log('sym in first field', sym);
     if (!sym) return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown' };
     const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym]['group'];
-    console.log('group in first field', group);
     switch (group) {
       case CreditReportGroups.CreditCards:
       case CreditReportGroups.InstallmentLoans:
