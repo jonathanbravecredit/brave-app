@@ -1,6 +1,6 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateAppData {
-  onCreateAppData {
+subscription OnCreateAppData($owner: String) {
+  onCreateAppData(owner: $owner) {
     id
     user {
       id
@@ -33,11 +33,52 @@ subscription OnCreateAppData {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -46,12 +87,21 @@ subscription OnCreateAppData {
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
-subscription OnUpdateAppData {
-  onUpdateAppData {
+subscription OnUpdateAppData($owner: String) {
+  onUpdateAppData(owner: $owner) {
     id
     user {
       id
@@ -84,11 +134,52 @@ subscription OnUpdateAppData {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -97,12 +188,21 @@ subscription OnUpdateAppData {
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
-subscription OnDeleteAppData {
-  onDeleteAppData {
+subscription OnDeleteAppData($owner: String) {
+  onDeleteAppData(owner: $owner) {
     id
     user {
       id
@@ -135,11 +235,52 @@ subscription OnDeleteAppData {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -148,7 +289,16 @@ subscription OnDeleteAppData {
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }

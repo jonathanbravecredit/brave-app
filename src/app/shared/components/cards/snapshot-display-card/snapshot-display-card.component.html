@@ -1,0 +1,35 @@
+<!-- no-purge for component -->
+<div class="text-brave-danger bg-brave-danger bg-brave-critical bg-brave-safe text-brave-danger text-brave-critical text-brave-safe mt-4 mt-3" *ngIf="false"></div>
+
+<div class="relative flex break-words w-full py-2 rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-3">
+  <!-- tag div: Display of current type of snapshot -->
+  <div class="absolute -mt-5 ml-3 px-1 font-semibold bg-white" *ngIf="label !== undefined"><span class="font-sans" [ngClass]="label | snapshotLabel:'color-class'">{{ label | snapshotLabel:'text' }}</span></div>
+  <!-- left column  section 1: Display of current snapshot status indicator-->
+  <div class="flex items-center ml-3 mr-6">
+    <div class="rounded-full border-none w-4 h-4"></div>
+  </div>
+  <div class="flex flex-col mr-auto justify-center">
+    <!--  center column section 2: Display of snapshot card information -->
+    <div class="flex flex-row items-center">
+      <p class="text-base font-semibold font-sans text-dk-gray">{{ title }}</p>
+      <div class="ml-2" *ngIf="tendency !== 'no-tendency'">
+        <span *ngIf="tendency === 'down'">&darr;</span>
+        <span *ngIf="tendency === 'up'">&uarr;</span>
+      </div>
+    </div>
+    <div class="flex flex-row items-center">
+      <p class="text-2.5 text-opacity-50 font-sans text-dk-gray">Learn More</p>
+      <span class="ml-2 text-little-card-icon text-md-gray">&#10095;</span>
+    </div>
+  </div>
+  <!-- right column section 3: Display of values -->
+  <div class="flex flex-col items-center mr-8 text-center">
+    <span class="text-xl m-auto">
+      <p class="font-bold font-headings" *ngIf="typeOfSnapshot === 'tag'" [ngClass]="status | snapshotStatus: 'text'">{{ value }}</p>
+      <p class="font-bold font-headings text-dk-gray" *ngIf="typeOfSnapshot !== 'tag'">{{ value }}<span *ngIf="typeOfSnapshot === 'percentage'">%</span></p>
+    </span>
+    <span class="text-2.5 -mt-1" *ngIf="typeOfSnapshot === 'date'">
+      <p class="font-sans text-dk-gray">{{ typeOfDate }}</p>
+    </span>
+  </div>
+</div>

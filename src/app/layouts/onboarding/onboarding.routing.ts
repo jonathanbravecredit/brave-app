@@ -10,21 +10,65 @@ import { KycIdverificationComponent } from '@views/kyc-idverification/kyc-idveri
 import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
 import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
 import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
+import { AuthGuard } from '@shared/guards/auth.guard';
+import { KycErrorComponent } from '@views/kyc-error/kyc-error.component';
 
 const OnboardingRoutes: Routes = [
   {
     path: '',
     component: OnboardingComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: 'name', component: KycWelcomeComponent },
-      { path: 'address', component: KycAddressComponent },
-      { path: 'identity', component: KycSsnComponent },
-      { path: 'identityfull', component: KycSsnFullComponent },
-      { path: 'verify', component: KycPhonenumberComponent },
-      { path: 'code', component: KycIdverificationComponent },
-      { path: 'kba', component: KycKbaquestionsComponent },
-      { path: 'congratulations', component: KycCongratulationsComponent },
-      { path: 'returning', component: KycWelcomebackComponent },
+      {
+        path: 'name',
+        component: KycWelcomeComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'address',
+        component: KycAddressComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'identity',
+        component: KycSsnComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'identityfull',
+        component: KycSsnFullComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'verify',
+        component: KycPhonenumberComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'code',
+        component: KycIdverificationComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'kba',
+        component: KycKbaquestionsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'congratulations',
+        component: KycCongratulationsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'returning',
+        component: KycWelcomebackComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'error',
+        component: KycErrorComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];

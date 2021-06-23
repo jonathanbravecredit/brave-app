@@ -4,7 +4,9 @@
     class="container mx-auto max-w-xs h-full"
   >
     <brave-filled-checktext-progressbar
-      [steps]="data.steps"
+      [steps]="steps"
+      [activatedStep]="data.lastActive"
+      [completedStep]="data.lastComplete"
     ></brave-filled-checktext-progressbar>
   </div>
   <main>

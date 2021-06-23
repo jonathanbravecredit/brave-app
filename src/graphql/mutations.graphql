@@ -36,11 +36,52 @@ mutation CreateAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -49,8 +90,17 @@ mutation CreateAppData(
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
 mutation UpdateAppData(
@@ -90,11 +140,52 @@ mutation UpdateAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -103,8 +194,17 @@ mutation UpdateAppData(
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
 mutation DeleteAppData(
@@ -144,11 +244,52 @@ mutation DeleteAppData(
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -157,7 +298,16 @@ mutation DeleteAppData(
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }

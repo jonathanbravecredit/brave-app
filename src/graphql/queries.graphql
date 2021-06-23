@@ -1,4 +1,7 @@
 # this is an auto generated file. This will be overwritten
+query Transunion($action: String!, $message: String!) {
+  transunion(action: $action, message: $message)
+}
 query GetAppData($id: ID!) {
   getAppData(id: $id) {
     id
@@ -33,11 +36,52 @@ query GetAppData($id: ID!) {
       onboarding {
         lastActive
         lastComplete
+        started
       }
     }
     agencies {
       transunion {
         authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        hidePositiveCreditCardAccounts
+        hidePositiveCollectionAccounts
+        hidePositiveInstallmentAccounts
+        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -46,8 +90,17 @@ query GetAppData($id: ID!) {
         authenticated
       }
     }
+    preferences {
+      showAllAccounts {
+        hideCreditCardAccounts
+        hideCollectionsAccounts
+        hideInstallmentAccounts
+        hideMortgageAccounts
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
 query ListAppDatas(
@@ -89,11 +142,52 @@ query ListAppDatas(
         onboarding {
           lastActive
           lastComplete
+          started
         }
       }
       agencies {
         transunion {
           authenticated
+          indicativeEnrichmentSuccess
+          getAuthenticationQuestionsSuccess
+          serviceBundleFulfillmentKey
+          currentRawQuestions
+          currentRawAuthDetails
+          enrollmentKey
+          enrollReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollMergeReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollVantageScore {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          hidePositiveCreditCardAccounts
+          hidePositiveCollectionAccounts
+          hidePositiveInstallmentAccounts
+          hidePositiveMortgageAccounts
         }
         equifax {
           authenticated
@@ -102,8 +196,17 @@ query ListAppDatas(
           authenticated
         }
       }
+      preferences {
+        showAllAccounts {
+          hideCreditCardAccounts
+          hideCollectionsAccounts
+          hideInstallmentAccounts
+          hideMortgageAccounts
+        }
+      }
       createdAt
       updatedAt
+      owner
     }
     nextToken
   }

@@ -19,7 +19,11 @@
               "userPoolId": "authbraveapp0ea8ea07"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }

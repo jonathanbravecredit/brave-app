@@ -13,6 +13,7 @@ export type CreateAppDataInput = {
   id?: string | null;
   user: UserInput;
   agencies: AgenciesInput;
+  preferences: PreferencesInput;
 };
 
 export type UserInput = {
@@ -61,6 +62,7 @@ export type SsnInput = {
 export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
+  started?: boolean | null;
 };
 
 export type AgenciesInput = {
@@ -71,6 +73,30 @@ export type AgenciesInput = {
 
 export type TransunionInput = {
   authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
+  currentRawAuthDetails?: string | null;
+  enrollmentKey?: string | null;
+  enrollReport?: TUEnrollResponseInput | null;
+  enrollMergeReport?: TUEnrollResponseInput | null;
+  enrollVantageScore?: TUEnrollResponseInput | null;
+  hidePositiveCreditCardAccounts?: boolean | null;
+  hidePositiveCollectionAccounts?: boolean | null;
+  hidePositiveInstallmentAccounts?: boolean | null;
+  hidePositiveMortgageAccounts?: boolean | null;
+};
+
+export type TUEnrollResponseInput = {
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: string | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
 };
 
 export type EquifaxInput = {
@@ -79,6 +105,17 @@ export type EquifaxInput = {
 
 export type ExperianInput = {
   authenticated?: boolean | null;
+};
+
+export type PreferencesInput = {
+  showAllAccounts?: ShowAccountsPreferenceInput | null;
+};
+
+export type ShowAccountsPreferenceInput = {
+  hideCreditCardAccounts?: boolean | null;
+  hideCollectionsAccounts?: boolean | null;
+  hideInstallmentAccounts?: boolean | null;
+  hideMortgageAccounts?: boolean | null;
 };
 
 export type ModelAppDataConditionInput = {
@@ -92,8 +129,10 @@ export type AppData = {
   id?: string;
   user?: User;
   agencies?: Agencies;
+  preferences?: Preferences;
   createdAt?: string;
   updatedAt?: string;
+  owner?: string | null;
 };
 
 export type User = {
@@ -150,6 +189,7 @@ export type Onboarding = {
   __typename: "Onboarding";
   lastActive?: number;
   lastComplete?: number;
+  started?: boolean | null;
 };
 
 export type Agencies = {
@@ -162,6 +202,31 @@ export type Agencies = {
 export type Transunion = {
   __typename: "Transunion";
   authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
+  currentRawAuthDetails?: string | null;
+  enrollmentKey?: string | null;
+  enrollReport?: TUEnrollResponse;
+  enrollMergeReport?: TUEnrollResponse;
+  enrollVantageScore?: TUEnrollResponse;
+  hidePositiveCreditCardAccounts?: boolean | null;
+  hidePositiveCollectionAccounts?: boolean | null;
+  hidePositiveInstallmentAccounts?: boolean | null;
+  hidePositiveMortgageAccounts?: boolean | null;
+};
+
+export type TUEnrollResponse = {
+  __typename: "TUEnrollResponse";
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: string | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
 };
 
 export type Equifax = {
@@ -174,10 +239,24 @@ export type Experian = {
   authenticated?: boolean | null;
 };
 
+export type Preferences = {
+  __typename: "Preferences";
+  showAllAccounts?: ShowAccountsPreference;
+};
+
+export type ShowAccountsPreference = {
+  __typename: "ShowAccountsPreference";
+  hideCreditCardAccounts?: boolean | null;
+  hideCollectionsAccounts?: boolean | null;
+  hideInstallmentAccounts?: boolean | null;
+  hideMortgageAccounts?: boolean | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
+  preferences?: PreferencesInput | null;
 };
 
 export type DeleteAppDataInput = {
@@ -278,6 +357,7 @@ export type CreateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -285,6 +365,49 @@ export type CreateAppDataMutation = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -295,8 +418,19 @@ export type CreateAppDataMutation = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateAppDataMutation = {
@@ -341,6 +475,7 @@ export type UpdateAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -348,6 +483,49 @@ export type UpdateAppDataMutation = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -358,8 +536,19 @@ export type UpdateAppDataMutation = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteAppDataMutation = {
@@ -404,6 +593,7 @@ export type DeleteAppDataMutation = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -411,6 +601,49 @@ export type DeleteAppDataMutation = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -421,8 +654,19 @@ export type DeleteAppDataMutation = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type GetAppDataQuery = {
@@ -467,6 +711,7 @@ export type GetAppDataQuery = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -474,6 +719,49 @@ export type GetAppDataQuery = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -484,8 +772,19 @@ export type GetAppDataQuery = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListAppDatasQuery = {
@@ -532,6 +831,7 @@ export type ListAppDatasQuery = {
         __typename: "Onboarding";
         lastActive: number;
         lastComplete: number;
+        started?: boolean | null;
       } | null;
     };
     agencies: {
@@ -539,6 +839,49 @@ export type ListAppDatasQuery = {
       transunion?: {
         __typename: "Transunion";
         authenticated?: boolean | null;
+        indicativeEnrichmentSuccess?: boolean | null;
+        getAuthenticationQuestionsSuccess?: boolean | null;
+        serviceBundleFulfillmentKey?: string | null;
+        currentRawQuestions?: string | null;
+        currentRawAuthDetails?: string | null;
+        enrollmentKey?: string | null;
+        enrollReport?: {
+          __typename: "TUEnrollResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        enrollMergeReport?: {
+          __typename: "TUEnrollResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        enrollVantageScore?: {
+          __typename: "TUEnrollResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        hidePositiveCreditCardAccounts?: boolean | null;
+        hidePositiveCollectionAccounts?: boolean | null;
+        hidePositiveInstallmentAccounts?: boolean | null;
+        hidePositiveMortgageAccounts?: boolean | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -549,8 +892,19 @@ export type ListAppDatasQuery = {
         authenticated?: boolean | null;
       } | null;
     };
+    preferences: {
+      __typename: "Preferences";
+      showAllAccounts?: {
+        __typename: "ShowAccountsPreference";
+        hideCreditCardAccounts?: boolean | null;
+        hideCollectionsAccounts?: boolean | null;
+        hideInstallmentAccounts?: boolean | null;
+        hideMortgageAccounts?: boolean | null;
+      } | null;
+    };
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -597,6 +951,7 @@ export type OnCreateAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -604,6 +959,49 @@ export type OnCreateAppDataSubscription = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -614,8 +1012,19 @@ export type OnCreateAppDataSubscription = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateAppDataSubscription = {
@@ -660,6 +1069,7 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -667,6 +1077,49 @@ export type OnUpdateAppDataSubscription = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -677,8 +1130,19 @@ export type OnUpdateAppDataSubscription = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteAppDataSubscription = {
@@ -723,6 +1187,7 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Onboarding";
       lastActive: number;
       lastComplete: number;
+      started?: boolean | null;
     } | null;
   };
   agencies: {
@@ -730,6 +1195,49 @@ export type OnDeleteAppDataSubscription = {
     transunion?: {
       __typename: "Transunion";
       authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: "TUEnrollResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      hidePositiveCreditCardAccounts?: boolean | null;
+      hidePositiveCollectionAccounts?: boolean | null;
+      hidePositiveInstallmentAccounts?: boolean | null;
+      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -740,8 +1248,19 @@ export type OnDeleteAppDataSubscription = {
       authenticated?: boolean | null;
     } | null;
   };
+  preferences: {
+    __typename: "Preferences";
+    showAllAccounts?: {
+      __typename: "ShowAccountsPreference";
+      hideCreditCardAccounts?: boolean | null;
+      hideCollectionsAccounts?: boolean | null;
+      hideInstallmentAccounts?: boolean | null;
+      hideMortgageAccounts?: boolean | null;
+    } | null;
+  };
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 @Injectable({
@@ -795,6 +1314,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -802,6 +1322,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -812,8 +1375,19 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -874,6 +1448,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -881,6 +1456,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -891,8 +1509,19 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -953,6 +1582,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -960,6 +1590,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -970,8 +1643,19 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -984,6 +1668,19 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteAppDataMutation>response.data.deleteAppData;
+  }
+  async Transunion(action: string, message: string): Promise<string | null> {
+    const statement = `query Transunion($action: String!, $message: String!) {
+        transunion(action: $action, message: $message)
+      }`;
+    const gqlAPIServiceArguments: any = {
+      action,
+      message
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <string | null>response.data.transunion;
   }
   async GetAppData(id: string): Promise<GetAppDataQuery> {
     const statement = `query GetAppData($id: ID!) {
@@ -1029,6 +1726,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1036,6 +1734,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1046,8 +1787,19 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1108,6 +1860,7 @@ export class APIService {
                 __typename
                 lastActive
                 lastComplete
+                started
               }
             }
             agencies {
@@ -1115,6 +1868,49 @@ export class APIService {
               transunion {
                 __typename
                 authenticated
+                indicativeEnrichmentSuccess
+                getAuthenticationQuestionsSuccess
+                serviceBundleFulfillmentKey
+                currentRawQuestions
+                currentRawAuthDetails
+                enrollmentKey
+                enrollReport {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                enrollMergeReport {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                enrollVantageScore {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                hidePositiveCreditCardAccounts
+                hidePositiveCollectionAccounts
+                hidePositiveInstallmentAccounts
+                hidePositiveMortgageAccounts
               }
               equifax {
                 __typename
@@ -1125,8 +1921,19 @@ export class APIService {
                 authenticated
               }
             }
+            preferences {
+              __typename
+              showAllAccounts {
+                __typename
+                hideCreditCardAccounts
+                hideCollectionsAccounts
+                hideInstallmentAccounts
+                hideMortgageAccounts
+              }
+            }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1146,12 +1953,11 @@ export class APIService {
     )) as any;
     return <ListAppDatasQuery>response.data.listAppDatas;
   }
-  OnCreateAppDataListener: Observable<
-    SubscriptionResponse<OnCreateAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateAppData {
-        onCreateAppData {
+  OnCreateAppDataListener(
+    owner?: string
+  ): Observable<SubscriptionResponse<OnCreateAppDataSubscription>> {
+    const statement = `subscription OnCreateAppData($owner: String) {
+        onCreateAppData(owner: $owner) {
           __typename
           id
           user {
@@ -1193,6 +1999,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1200,6 +2007,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1210,19 +2060,35 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
+  }
 
-  OnUpdateAppDataListener: Observable<
-    SubscriptionResponse<OnUpdateAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateAppData {
-        onUpdateAppData {
+  OnUpdateAppDataListener(
+    owner?: string
+  ): Observable<SubscriptionResponse<OnUpdateAppDataSubscription>> {
+    const statement = `subscription OnUpdateAppData($owner: String) {
+        onUpdateAppData(owner: $owner) {
           __typename
           id
           user {
@@ -1264,6 +2130,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1271,6 +2138,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1281,19 +2191,35 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+  }
 
-  OnDeleteAppDataListener: Observable<
-    SubscriptionResponse<OnDeleteAppDataSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteAppData {
-        onDeleteAppData {
+  OnDeleteAppDataListener(
+    owner?: string
+  ): Observable<SubscriptionResponse<OnDeleteAppDataSubscription>> {
+    const statement = `subscription OnDeleteAppData($owner: String) {
+        onDeleteAppData(owner: $owner) {
           __typename
           id
           user {
@@ -1335,6 +2261,7 @@ export class APIService {
               __typename
               lastActive
               lastComplete
+              started
             }
           }
           agencies {
@@ -1342,6 +2269,49 @@ export class APIService {
             transunion {
               __typename
               authenticated
+              indicativeEnrichmentSuccess
+              getAuthenticationQuestionsSuccess
+              serviceBundleFulfillmentKey
+              currentRawQuestions
+              currentRawAuthDetails
+              enrollmentKey
+              enrollReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              enrollVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              hidePositiveCreditCardAccounts
+              hidePositiveCollectionAccounts
+              hidePositiveInstallmentAccounts
+              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1352,10 +2322,27 @@ export class APIService {
               authenticated
             }
           }
+          preferences {
+            __typename
+            showAllAccounts {
+              __typename
+              hideCreditCardAccounts
+              hideCollectionsAccounts
+              hideInstallmentAccounts
+              hideMortgageAccounts
+            }
+          }
           createdAt
           updatedAt
+          owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (owner) {
+      gqlAPIServiceArguments.owner = owner;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
+  }
 }

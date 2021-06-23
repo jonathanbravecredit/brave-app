@@ -65,6 +65,16 @@ import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
 import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 import { AccountStatusPipe } from './cards/creditcard-card/account-status.pipe';
+import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
+import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
+import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
+import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
+import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
+import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
+import { NegativeAccountCardComponent } from './cards/negative-account-card/negative-account-card.component';
+import { SpinnerComponent } from './interstitials/spinner/spinner.component';
+import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
+import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
 
 const components = [
   BaseFormComponent,
@@ -108,6 +118,7 @@ const components = [
   FilledChecktextProgressbarComponent,
   SidebarComponent,
   FilledOnlytextTabsComponent,
+  NavigationTabsComponent,
   OutlineTooltipComponent,
   KbaquestionsFormComponent,
   OutlineNamedobFormComponent,
@@ -116,6 +127,13 @@ const components = [
   CreditcardCardComponent,
   ViewdetailButtonComponent,
   LoanCardComponent,
+  SnapshotDisplayCardComponent,
+  CreditBuilderCardComponent,
+  SnapshotDisplayCardComponent,
+  NegativeAccountCardComponent,
+  KbaMultiplechoiceInputComponent,
+  CreditReportCardComponent,
+  SpinnerComponent,
 ];
 
 // component specific pipes only
@@ -129,6 +147,9 @@ const pipes = [
   FilledOnlytextBadgePipe,
   FilledChecktextProgressbarPipe,
   AccountStatusPipe,
+  SnapshotLabelPipe,
+  SnapshotStatusPipe,
+  CreditReportGraphicPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
