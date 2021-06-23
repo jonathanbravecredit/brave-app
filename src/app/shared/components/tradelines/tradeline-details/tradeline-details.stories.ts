@@ -47,10 +47,15 @@ const collections: ICollectionsTradelineDetails = {
   disputeFlag: 'No',
 };
 
+const remarks = `This account was investigated two weeks ago per the client's request`;
+const address = '123 Main Street, Hollywood, CA';
+
 const Template: Story<TradelineDetailsComponent> = (args: any) => ({
   component: TradelineDetailsComponent,
   props: {
     ...args,
+    remarks: remarks,
+    address: address,
   },
 });
 

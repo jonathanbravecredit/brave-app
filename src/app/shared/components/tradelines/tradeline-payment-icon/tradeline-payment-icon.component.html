@@ -1,14 +1,14 @@
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Late"
   [ngClass]="[height, width]"
-  class="flex justify-center"
+  class="flex justify-center items-center"
 >
   <i class="material-icons text-xs text-orange-600">close</i>
 </div>
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Collection"
   [ngClass]="[height, width]"
-  class="flex justify-center"
+  class="flex justify-center items-center"
 >
   <span class="text-xs text-coolGray-600">C</span>
 </div>
@@ -24,14 +24,14 @@
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Current"
   [ngClass]="[height, width]"
-  class="flex justify-center"
+  class="flex justify-center items-center"
 >
   <i class="material-icons text-xs text-emerald-500">check</i>
 </div>
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Other"
   [ngClass]="[height, width]"
-  class="flex justify-center"
+  class="flex justify-center items-center"
 >
   <i class="material-icons text-xs text-coolGray-600">info_outline</i>
 </div>

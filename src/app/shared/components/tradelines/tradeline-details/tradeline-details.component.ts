@@ -49,6 +49,8 @@ export interface ITradelineDetailsConfig {
 export class TradelineDetailsComponent implements OnInit {
   @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
   @Input() payments: any;
+  @Input() remarks: string = '';
+  @Input() address: string = '';
   constructor() {}
 
   ngOnInit(): void {}

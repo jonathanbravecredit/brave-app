@@ -7,6 +7,8 @@ import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline
 })
 export class TradelinesPureComponent implements OnInit {
   @Input() details: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
+  @Input() remarks: string = '';
+  @Input() address: string = '';
 
   constructor() {}
 

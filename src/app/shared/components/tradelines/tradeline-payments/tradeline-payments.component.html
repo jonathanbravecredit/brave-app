@@ -1,3 +1,8 @@
 <div class="px-1">
   <brave-tradeline-payment-history></brave-tradeline-payment-history>
+  <brave-tradeline-remarks
+    [remarks]="remarks"
+    [address]="address"
+    (disputeClick)="onDisputeClick.emit()"
+  ></brave-tradeline-remarks>
 </div>

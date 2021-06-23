@@ -83,6 +83,7 @@ import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-ic
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
 import { ParseTradelineDetailsPipe } from './tradelines/tradeline-details/parse-tradeline-details.pipe';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
+import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 
 const components = [
   BaseFormComponent,
@@ -149,6 +150,7 @@ const components = [
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
+  TradelineRemarksComponent,
 ];
 
 // component specific pipes only

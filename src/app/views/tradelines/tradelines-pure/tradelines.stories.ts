@@ -29,11 +29,16 @@ const installment: IInstallmentTradelineDetails = {
   disputeFlag: 'No',
 };
 
+const remarks = `This account was investigated two weeks ago per the client's request`;
+const address = '123 Main Street, Hollywood, CA';
+
 const Template: Story<TradelinesPureComponent> = (args: any) => ({
   component: TradelinesPureComponent,
   props: {
     ...args,
     details: installment,
+    remarks: remarks,
+    address: address,
   },
 });
 
