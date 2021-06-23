@@ -8,8 +8,8 @@ export enum LabelOfSnapshot {
 }
 
 const enumStrNameOfLabel = {
-  [LabelOfSnapshot.Update]: { text: 'Update', colorClass: 'text-brave-magenta' },
-  [LabelOfSnapshot.Hidden]: { text: 'Hidden', colorClass: 'text-lt-gray' },
+  [LabelOfSnapshot.Update]: { text: 'Updates', colorClass: 'text-brave-magenta' },
+  [LabelOfSnapshot.Hidden]: { text: 'Hidden Items', colorClass: 'text-lt-gray' },
   [LabelOfSnapshot.New]: { text: 'New', colorClass: 'text-brave-blurple' },
   [LabelOfSnapshot.NoLabel]: { text: '', colorClass: '' }
 };
