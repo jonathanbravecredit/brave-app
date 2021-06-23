@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import * as PreferencesActions from './preferences.actions';
-import { PreferencesStateModel } from '@store/preferences';
+import { PreferencesStateModel } from '@store/preferences/preferences.model';
 import { CreditReportGroups } from '@shared/data/credit-report';
 
 @State<PreferencesStateModel>({

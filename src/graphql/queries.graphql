@@ -92,10 +92,10 @@ query GetAppData($id: ID!) {
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -198,10 +198,10 @@ query ListAppDatas(
       }
       preferences {
         showAllAccounts {
-          hideCreditCardAccounts
-          hideCollectionsAccounts
-          hideInstallmentAccounts
-          hideMortgageAccounts
+          creditCards
+          collectionsAccounts
+          installmentLoans
+          mortgages
         }
       }
       createdAt

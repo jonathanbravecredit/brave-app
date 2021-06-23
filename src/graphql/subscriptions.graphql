@@ -89,10 +89,10 @@ subscription OnCreateAppData($owner: String) {
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -190,10 +190,10 @@ subscription OnUpdateAppData($owner: String) {
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -291,10 +291,10 @@ subscription OnDeleteAppData($owner: String) {
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
