@@ -90,10 +90,6 @@ type Transunion {
   enrollReport: TUEnrollResponse
   enrollMergeReport: TUEnrollResponse
   enrollVantageScore: TUEnrollResponse
-  hidePositiveCreditCardAccounts: Boolean
-  hidePositiveCollectionAccounts: Boolean
-  hidePositiveInstallmentAccounts: Boolean
-  hidePositiveMortgageAccounts: Boolean
 }
 type Equifax {
   authenticated: Boolean

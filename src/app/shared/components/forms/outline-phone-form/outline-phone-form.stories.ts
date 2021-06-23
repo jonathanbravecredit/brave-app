@@ -7,7 +7,7 @@ import { OutlineInputComponent } from '@shared/components/inputs/outline-input/o
 import { OutlineInputPipe } from '@shared/components/inputs/outline-input/outline-input.pipe';
 
 export default {
-  title: 'app/components/forms/outline-address-form',
+  title: 'app/components/forms/outline-phone-form',
   component: OutlinePhoneFormComponent,
   decorators: [
     moduleMetadata({
