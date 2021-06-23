@@ -1,1 +1,135 @@
-<p>tradeline-details works!</p>
+<!-- <div class="border-t border-blueGray-300 my-2"></div> -->
+<div class="flex items-center mb-3">
+  <span>Account Details</span>
+</div>
+<div class="card">
+  <div class="space-y-2 divide-y divide-blueGray-300">
+    <!-- Original Creditor -->
+    <div *ngIf="originalCreditor !== undefined" class="flex justify-between">
+      <span>
+        <p class="text-xs text-dk-gray">Original Creditor:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ originalCreditor }}
+        </p>
+      </span>
+    </div>
+    <!-- creditType -->
+    <div *ngIf="creditType !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Type of Account:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ creditType }}
+        </p>
+      </span>
+    </div>
+    <!-- Date opened -->
+    <div *ngIf="dateOpened !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Opened:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ dateOpened }}
+        </p>
+      </span>
+    </div>
+    <!-- Responsibility -->
+    <div
+      *ngIf="accountDesignator !== undefined"
+      class="flex justify-between pt-2"
+    >
+      <span>
+        <p class="text-xs text-dk-gray">Responsibility:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ accountDesignator }}
+        </p></span
+      >
+    </div>
+    <!-- Term -->
+    <div *ngIf="termMonths !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Term:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ termMonths }}
+        </p></span
+      >
+    </div>
+    <!-- Times - 30 -->
+    <div *ngIf="late30Count !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Times 30/60/90 Days Late:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ late30Count }}
+        </p>
+      </span>
+    </div>
+    <!-- Times - 60 -->
+    <div *ngIf="late60Count !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Times 30/60/90 Days Late:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ late60Count }}
+        </p>
+      </span>
+    </div>
+
+    <!-- Times - 90 -->
+    <div *ngIf="late90Count !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Times 30/60/90 Days Late:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ late90Count }}
+        </p>
+      </span>
+    </div>
+
+    <!-- Amount past due -->
+    <div
+      *ngIf="accountDesignator !== undefined"
+      class="flex justify-between pt-2"
+    >
+      <span>
+        <p class="text-xs text-dk-gray">Amount Past Due:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ amountPastDue }}
+        </p>
+      </span>
+    </div>
+    <!-- Previously Disputed -->
+    <div *ngIf="disputeFlag !== undefined" class="flex justify-between pt-2">
+      <span>
+        <p class="text-xs text-dk-gray">Disputed:</p>
+      </span>
+      <span>
+        <p class="text-xs text-dk-gray text-opacity-50 text-right">
+          {{ disputeFlag }}
+        </p>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="viewDetail.open$ | async as open">
+    <brave-tradeline-payments [payments]="payments"></brave-tradeline-payments>
+  </div>
+  <div class="flex justify-center mt-6">
+    <brave-viewdetail-button #viewDetail>
+      <p class="text-sm hover:cursor-pointer">See Payment History</p>
+    </brave-viewdetail-button>
+  </div>
+</div>
+<div class="border-t border-blueGray-300 my-2"></div>
