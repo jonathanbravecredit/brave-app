@@ -1,28 +1,26 @@
-<div class="grid grid-cols-12 grid-gap-2">
-  <!-- c1 left hand w/years -->
-  <div class="col-span-2">
-    <!-- blank space -->
-    <div>&nbsp;</div>
-    <div *ngFor="let year of test.years">
-      {{ year.year }}
+<div class="p-2">
+  <!-- header -->
+  <div class="flex mb-4">
+    <div class="w-11">&nbsp;</div>
+    <div
+      *ngFor="let month of test.headers.months"
+      style="font-size: 0.75rem"
+      class="font-sans w-4 mr-1 text-dk-gray"
+    >
+      <div class="w-4 flex justify-center">
+        {{ month.toUpperCase() }}
+      </div>
     </div>
   </div>
-  <!-- c2 right hand w/months and data -->
-  <div class="col-span-11">
-    <div class="grid grid-cols-12 grid-gap-1">
-      <!-- months abbreviations -->
-      <div *ngFor="let month of test.headers.months" class="col-span-1">
-        {{ month }}
-      </div>
-      <!-- <div *ngFor="let year of test.years">
-        <div class="grid grid-cols-12 grid-gap-1">
-          <div *ngFor="let month of year.months" class="col-span-1">
-            <brave-tradeline-payment-icon
-              [code]="month"
-            ></brave-tradeline-payment-icon>
-          </div>
-        </div>
-      </div> -->
+  <!-- data -->
+  <div *ngFor="let year of test.years" class="flex mb-2">
+    <div style="font-size: 0.75rem" class="w-11 text-dk-gray">
+      {{ year.year }}
+    </div>
+    <div *ngFor="let month of year.months" class="w-4 mr-1">
+      <brave-tradeline-payment-icon
+        [code]="month"
+      ></brave-tradeline-payment-icon>
     </div>
   </div>
 </div>
