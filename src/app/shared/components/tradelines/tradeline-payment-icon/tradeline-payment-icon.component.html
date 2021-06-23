@@ -1,29 +1,37 @@
-<div *ngIf="this.parseCode(code) === tradelineIcons.Late">
-  <div class="h-4 w-4 flex justify-center">
-    <i class="material-icons text-xs text-orange-600">close</i>
-  </div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Late"
+  [ngClass]="[height, width]"
+  class="flex justify-center"
+>
+  <i class="material-icons text-xs text-orange-600">close</i>
 </div>
-<div *ngIf="this.parseCode(code) === tradelineIcons.Collection">
-  <div class="h-4 w-4 flex justify-center">
-    <span class="text-xs text-coolGray-600">C</span>
-  </div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Collection"
+  [ngClass]="[height, width]"
+  class="flex justify-center"
+>
+  <span class="text-xs text-coolGray-600">C</span>
 </div>
-<div *ngIf="this.parseCode(code) === tradelineIcons.Unknown">
-  <div class="h-4 w-4 flex justify-center">
-    <i
-      class="material-icons text-coolGray-300"
-      style="font-size: 0.5rem; line-height: 0.75rem"
-      >circle</i
-    >
-  </div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Unknown"
+  [ngClass]="[height, width]"
+  class="flex justify-center items-center"
+>
+  <i style="font-size: 0.5rem" class="material-icons text-coolGray-300"
+    >circle</i
+  >
 </div>
-<div *ngIf="this.parseCode(code) === tradelineIcons.Current">
-  <div class="h-4 w-4 flex justify-center">
-    <i class="material-icons text-xs text-emerald-500">check</i>
-  </div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Current"
+  [ngClass]="[height, width]"
+  class="flex justify-center"
+>
+  <i class="material-icons text-xs text-emerald-500">check</i>
 </div>
-<div *ngIf="this.parseCode(code) === tradelineIcons.Other">
-  <div class="h-4 w-4 flex justify-center">
-    <i class="material-icons text-xs text-coolGray-600">info_outline</i>
-  </div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Other"
+  [ngClass]="[height, width]"
+  class="flex justify-center"
+>
+  <i class="material-icons text-xs text-coolGray-600">info_outline</i>
 </div>

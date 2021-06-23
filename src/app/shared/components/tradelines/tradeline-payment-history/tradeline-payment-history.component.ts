@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './tradeline-payment-history.component.html',
 })
 export class TradelinePaymentHistoryComponent implements OnInit {
+  gridWidth: string = 'w-3';
+  gridHeight: string = 'h-3';
   test = {
     headers: {
       year: null,

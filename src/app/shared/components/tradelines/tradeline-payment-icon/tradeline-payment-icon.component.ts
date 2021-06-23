@@ -21,6 +21,8 @@ export enum TradelineIcons {
 })
 export class TradelinePaymentIconComponent implements OnInit {
   @Input() code: string = 'U';
+  @Input() height: string = 'h-4';
+  @Input() width: string = 'w-4';
   tradelineIcons = TradelineIcons;
   constructor() {}
 
