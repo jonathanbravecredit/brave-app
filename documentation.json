@@ -27390,7 +27390,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
+                "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27398,7 +27398,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
+                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27478,14 +27478,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -27494,7 +27486,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27510,7 +27502,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27519,6 +27511,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27542,39 +27542,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27606,14 +27574,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -27622,7 +27582,23 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/forms/select-dob-form/select-dob-form.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27654,7 +27630,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/modals/base-modal-small/base-modal-small.stories.ts",
+                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27662,7 +27638,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.stories.ts",
+                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27678,7 +27654,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
+                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27686,7 +27662,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
+                "file": "src/app/shared/components/modals/base-modal-regular/base-modal-regular.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27702,7 +27678,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.stories.ts",
+                "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27710,7 +27686,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
+                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27718,7 +27694,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                "file": "src/app/shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -27766,7 +27742,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -28839,6 +28815,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
+                "type": "Story<KycSsnPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
                 "type": "Story<KycSsnFullPureComponent>",
                 "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -28927,6 +28911,38 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "Story<OutlineOnlytextButtonComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-outline-onlytext-button>Default</brave-outline-onlytext-button>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                "type": "Story<ViewdetailButtonComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                "type": "Story<CreditBuilderCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "Story<LinksOnlytextButtonComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
                 "type": "Story<ViewdetailButtonComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
@@ -28991,38 +29007,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                "type": "Story<HiddenAsteriskInputComponent>",
-                "defaultValue": "(args: any) => ({\n  component: HiddenAsteriskInputComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                "type": "Story<KbaMultiplechoiceInputComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                "type": "Story<OutlineInputComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                "type": "Story<OutlineSelectInputComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
                 "type": "Story<KbaquestionsFormComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    kbas,\n    required: true,\n  },\n  template: `<brave-kbaquestions-form [kbas]=\"kbas\"></brave-kbaquestions-form>`,\n})"
@@ -29055,17 +29039,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                "type": "Story<OutlinePhoneFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
+                "type": "Story<OutlineVerificationcodeFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
-                "type": "Story<OutlineVerificationcodeFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                "type": "Story<OutlinePhoneFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -29087,17 +29071,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                "type": "Story<SpinnerComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/modals/base-modal-regular/base-modal-regular.stories.ts",
-                "type": "Story<BaseModalRegularComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    config,\n  },\n  template: `<brave-base-modal-regular [config]=\"config\"></brave-base-modal-regular>`,\n})"
+                "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
+                "type": "Story<SsnFullFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: SsnFullFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -29119,17 +29095,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                "type": "Story<KbaMultiplechoiceInputComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  component: NavigationTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
+                "type": "Story<OutlineInputComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -29143,17 +29119,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
-                "type": "Story<SimpleSignupFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: SimpleSignupFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "type": "Story<SpinnerComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.stories.ts",
-                "type": "Story<OutlineTooltipComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineTooltipComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/modals/base-modal-regular/base-modal-regular.stories.ts",
+                "type": "Story<BaseModalRegularComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    config,\n  },\n  template: `<brave-base-modal-regular [config]=\"config\"></brave-base-modal-regular>`,\n})"
             },
             {
                 "name": "Template",
@@ -29167,9 +29143,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payment-icon/tradeline-payment-icon.stories.ts",
-                "type": "Story<TradelinePaymentIconComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentIconComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
+                "type": "Story<DashboardNavbarComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
             },
             {
                 "name": "Template",
@@ -29183,17 +29167,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
-                "type": "Story<TradelinePaymentsComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentsComponent,\n  props: {\n    ...args,\n    remarks,\n    address,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts",
-                "type": "Story<TradelineSummaryComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelineSummaryComponent,\n  props: {\n    ...args,\n  },\n  template: `\n    <div class=\"container mx-auto max-w-xs h-full\">\n      <brave-tradeline-summary\n        [status]=\"'Open'\"\n      ></brave-tradeline-summary>\n    </div>`,\n})"
+                "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -29223,17 +29199,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
-                "type": "Story<TableDropdownComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TableDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "type": "Story<UserDropdownComponent>",
+                "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                "type": "Story<UserDropdownComponent>",
-                "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
+                "type": "Story<TableDropdownComponent>",
+                "defaultValue": "(args: any) => ({\n  component: TableDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -29312,7 +29288,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/views.module.ts",
                 "type": "[]",
-                "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n  TradelinesComponent,\n  TradelinesPureComponent,\n]"
+                "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n]"
             }
         ],
         "functions": [
@@ -29766,15 +29742,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "",
-                "file": "src/app/store/app-data/app-data.model.ts",
-                "description": "",
-                "kind": 177
-            },
-            {
-                "name": "typename",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "",
                 "file": "src/app/store/onboarding/onboarding.model.ts",
                 "description": "",
                 "kind": 177
@@ -29785,6 +29752,15 @@
                 "subtype": "typealias",
                 "rawtype": "",
                 "file": "src/app/store/user/user.model.ts",
+                "description": "",
+                "kind": 177
+            },
+            {
+                "name": "typename",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "",
+                "file": "src/app/store/app-data/app-data.model.ts",
                 "description": "",
                 "kind": 177
             },
@@ -31356,6 +31332,24 @@
                     "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
+                    "type": "Story<KycSsnPureComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -31372,24 +31366,6 @@
                     "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
                     "type": "Story<KycSsnFullPureComponent>",
                     "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
-                    "type": "Story<KycWelcomePureComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts": [
@@ -31480,7 +31456,91 @@
                     "defaultValue": "(args: any) => ({\n  component: TradelinesPureComponent,\n  props: {\n    ...args,\n    details: installment,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "largeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "IOutlineOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "primaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "IOutlineOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "smallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "IOutlineOnlyTextButtonConfig",
+                    "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                    "type": "Story<OutlineOnlytextButtonComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-outline-onlytext-button>Default</brave-outline-onlytext-button>`,\n})"
+                }
+            ],
             "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/viewdetail-button/viewdetail-button.stories.ts",
+                    "type": "Story<ViewdetailButtonComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
+                }
+            ],
+            "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
@@ -31704,166 +31764,6 @@
                     "defaultValue": "Template.bind({})"
                 }
             ],
-            "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
-                    "type": "Story<HiddenAsteriskInputComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: HiddenAsteriskInputComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "question",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "ITransunionKBAQuestion",
-                    "defaultValue": "{} as ITransunionKBAQuestion"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "Story<KbaMultiplechoiceInputComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
-                }
-            ],
-            "src/app/shared/components/inputs/outline-input/outline-input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "largeConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                    "type": "IOutlineInputeConfig",
-                    "defaultValue": "{\n  size: 'lg',\n  type: 'text',\n  label: 'Input label',\n  placeholder: 'Input text',\n  autocomplete: 'off',\n  value: '',\n}"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "smallConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                    "type": "IOutlineInputeConfig",
-                    "defaultValue": "{\n  size: 'sm',\n  type: 'text',\n  label: 'Input label',\n  placeholder: 'Input text',\n  autocomplete: 'off',\n  value: '',\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
-                    "type": "Story<OutlineInputComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "largeConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                    "type": "IOutlineSelectInputConfig",
-                    "defaultValue": "{\n  size: 'lg',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],\n}"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "smallConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                    "type": "IOutlineSelectInputConfig",
-                    "defaultValue": "{\n  size: 'sm',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['one', 'two', 'three'],\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                    "type": "Story<OutlineSelectInputComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts": [
                 {
                     "name": "Default",
@@ -31898,6 +31798,38 @@
                     "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "largeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "IOutlineSelectInputConfig",
+                    "defaultValue": "{\n  size: 'lg',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],\n}"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "smallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                    "type": "IOutlineSelectInputConfig",
+                    "defaultValue": "{\n  size: 'sm',\n  label: 'Input label',\n  autocomplete: 'off',\n  options: ['one', 'two', 'three'],\n}"
                 },
                 {
                     "name": "Template",
@@ -31944,24 +31876,6 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                    "type": "Story<OutlinePhoneFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts": [
                 {
                     "name": "Default",
@@ -31980,7 +31894,61 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
+                    "type": "Story<OutlineNameFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlineNameFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/shared/components/forms/select-dob-form/select-dob-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                    "type": "Story<OutlinePhoneFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                    "type": "Story<SimpleSignupFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: SimpleSignupFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
@@ -32052,7 +32020,33 @@
                     "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts": [
+            "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "question",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "ITransunionKBAQuestion",
+                    "defaultValue": "{} as ITransunionKBAQuestion"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "Story<KbaMultiplechoiceInputComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
+                }
+            ],
+            "src/app/shared/components/inputs/outline-input/outline-input.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
@@ -32070,25 +32064,7 @@
                     "defaultValue": "(args: any) => ({\n  component: NavigationTabsComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
-                    "type": "Story<SsnFullFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: SsnFullFormComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts": [
+            "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
@@ -32122,24 +32098,6 @@
                     "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
                     "type": "Story<TradelinePaymentHistoryComponent>",
                     "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts",
-                    "type": "Story<TradelineSummaryComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: TradelineSummaryComponent,\n  props: {\n    ...args,\n  },\n  template: `\n    <div class=\"container mx-auto max-w-xs h-full\">\n      <brave-tradeline-summary\n        [status]=\"'Open'\"\n      ></brave-tradeline-summary>\n    </div>`,\n})"
                 }
             ],
             "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts": [
@@ -32178,6 +32136,24 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
                 }
             ],
+            "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
+                    "type": "Story<DashboardNavbarComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
+                }
+            ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
                 {
                     "name": "Default",
@@ -32196,12 +32172,12 @@
                     "defaultValue": "(args: any) => ({\n  component: NotificationDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts": [
+            "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
+                    "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -32209,9 +32185,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
-                    "type": "Story<TableDropdownComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: TableDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                    "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
+                    "type": "Story<NotificationDropdownComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: NotificationDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts": [
@@ -32230,6 +32206,24 @@
                     "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
                     "type": "Story<UserDropdownComponent>",
                     "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/popdowns/table-dropdown/table-dropdown.stories.ts",
+                    "type": "Story<TableDropdownComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: TableDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
@@ -32533,7 +32527,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/views.module.ts",
                     "type": "[]",
-                    "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n  TradelinesComponent,\n  TradelinesPureComponent,\n]"
+                    "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n]"
                 }
             ],
             "src/app/shared/data/positive-reason-codes.ts": [
@@ -33465,17 +33459,6 @@
                     "kind": 168
                 }
             ],
-            "src/app/store/app-data/app-data.model.ts": [
-                {
-                    "name": "typename",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "",
-                    "file": "src/app/store/app-data/app-data.model.ts",
-                    "description": "",
-                    "kind": 177
-                }
-            ],
             "src/app/store/onboarding/onboarding.model.ts": [
                 {
                     "name": "typename",
@@ -33494,6 +33477,17 @@
                     "subtype": "typealias",
                     "rawtype": "",
                     "file": "src/app/store/user/user.model.ts",
+                    "description": "",
+                    "kind": 177
+                }
+            ],
+            "src/app/store/app-data/app-data.model.ts": [
+                {
+                    "name": "typename",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "",
+                    "file": "src/app/store/app-data/app-data.model.ts",
                     "description": "",
                     "kind": 177
                 }
