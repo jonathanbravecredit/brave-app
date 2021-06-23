@@ -5,9 +5,9 @@
 <div class="card">
   <div
     *ngIf="config | parseTradelineDetails as rows"
-    class="space-y-2 divide-y divide-blueGray-300"
+    class="divide-y divide-blueGray-300"
   >
-    <div *ngFor="let row of rows" class="pt-2">
+    <div *ngFor="let row of rows" class="p-2">
       <brave-tradeline-detail-row
         [label]="row.label"
         [value]="row.value"

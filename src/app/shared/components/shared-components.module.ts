@@ -82,6 +82,7 @@ import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/trad
 import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
 import { ParseTradelineDetailsPipe } from './tradelines/tradeline-details/parse-tradeline-details.pipe';
+import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 
 const components = [
   BaseFormComponent,
@@ -147,6 +148,7 @@ const components = [
   TradelineDetailRowComponent,
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
+  TradelinePaymentHistoryComponent,
 ];
 
 // component specific pipes only
@@ -163,12 +165,13 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
+  ParseTradelineDetailsPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives, ParseTradelineDetailsPipe],
+  declarations: [...components, ...pipes, ...directives],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

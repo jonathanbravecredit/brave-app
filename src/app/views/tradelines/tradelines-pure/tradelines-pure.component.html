@@ -1,9 +1,20 @@
 <div class="px-4">
-  <brave-tradeline-summary></brave-tradeline-summary>
-  <brave-tradeline-metrics></brave-tradeline-metrics>
-  <brave-tradeline-details></brave-tradeline-details>
-  <brave-tradeline-payments></brave-tradeline-payments>
-  <div style="padding: 2.25rem 0" class="flex justify-center border-black">
+  <div>
+    <brave-tradeline-summary></brave-tradeline-summary>
+  </div>
+
+  <div>
+    <brave-tradeline-metrics></brave-tradeline-metrics>
+  </div>
+
+  <div class="mt-6">
+    <brave-tradeline-details [config]="details"></brave-tradeline-details>
+  </div>
+
+  <div
+    style="padding: 2.25rem 0"
+    class="flex justify-center border border-coolGray-300 bg-coolGray-300"
+  >
     <span>
       <p>Ad text here</p>
     </span>

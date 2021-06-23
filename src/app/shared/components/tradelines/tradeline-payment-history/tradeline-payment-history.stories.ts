@@ -2,12 +2,11 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { TradelinesPureComponent } from '@views/tradelines/tradelines-pure/tradelines-pure.component';
-import { IInstallmentTradelineDetails } from '@shared/components/tradelines/tradeline-details/tradeline-details.component';
+import { TradelinePaymentHistoryComponent } from '@shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.component';
 
 export default {
-  title: 'app/views/tradelines/tradelines',
-  component: TradelinesPureComponent,
+  title: 'app/components/tradelines/tradeline-payment-history',
+  component: TradelinePaymentHistoryComponent,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -20,20 +19,10 @@ export default {
   ],
 } as Meta;
 
-const installment: IInstallmentTradelineDetails = {
-  dateOpened: '2019-01-01',
-  accountDesignator: 'James Credit',
-  termMonths: '48',
-  late90Count: '3',
-  amountPastDue: '950',
-  disputeFlag: 'No',
-};
-
-const Template: Story<TradelinesPureComponent> = (args: any) => ({
-  component: TradelinesPureComponent,
+const Template: Story<TradelinePaymentHistoryComponent> = (args: any) => ({
+  component: TradelinePaymentHistoryComponent,
   props: {
     ...args,
-    details: installment,
   },
 });
 

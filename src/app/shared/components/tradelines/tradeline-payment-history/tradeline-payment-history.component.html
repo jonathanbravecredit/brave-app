@@ -1,0 +1,28 @@
+<div class="grid grid-cols-12 grid-gap-2">
+  <!-- c1 left hand w/years -->
+  <div class="col-span-2">
+    <!-- blank space -->
+    <div>&nbsp;</div>
+    <div *ngFor="let year of test.years">
+      {{ year.year }}
+    </div>
+  </div>
+  <!-- c2 right hand w/months and data -->
+  <div class="col-span-11">
+    <div class="grid grid-cols-12 grid-gap-1">
+      <!-- months abbreviations -->
+      <div *ngFor="let month of test.headers.months" class="col-span-1">
+        {{ month }}
+      </div>
+      <!-- <div *ngFor="let year of test.years">
+        <div class="grid grid-cols-12 grid-gap-1">
+          <div *ngFor="let month of year.months" class="col-span-1">
+            <brave-tradeline-payment-icon
+              [code]="month"
+            ></brave-tradeline-payment-icon>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

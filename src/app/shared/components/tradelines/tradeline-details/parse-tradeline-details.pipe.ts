@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ParseTradelineDetailsPipe implements PipeTransform {
   transform(input: Record<string, any>): { label: string; value: string }[] {
-    if (!Object.keys(input).length)
-      return [{ label: 'unknown', value: 'unknown' }];
+    if (!input) return [];
+    if (!Object.keys(input).length) return [];
     return Object.keys(input).map((k) => {
       return {
         label: labelMapping[k],
