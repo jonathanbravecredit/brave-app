@@ -28,23 +28,27 @@ export interface ICollectionsTradelineDetails {
   disputeFlag?: string;
 }
 
+export interface ITradelineDetailsConfig {
+  originalCreditor?: string | undefined;
+  creditType?: string | undefined;
+  dateOpened?: string | undefined;
+  accountDesignator?: string | undefined;
+  termMonths?: number | string | undefined;
+  late30Count?: number | string | undefined;
+  late60Count?: number | string | undefined;
+  late90Count?: number | string | undefined;
+  amountPastDue?: number | string | undefined;
+  disputeFlag?: string | undefined;
+  payments?: any | undefined;
+}
+
 @Component({
   selector: 'brave-tradeline-details',
   templateUrl: './tradeline-details.component.html',
 })
 export class TradelineDetailsComponent implements OnInit {
-  @Input() originalCreditor: string | undefined;
-  @Input() creditType: string | undefined;
-  @Input() dateOpened: string | undefined;
-  @Input() accountDesignator: string | undefined;
-  @Input() termMonths: number | string | undefined;
-  @Input() late30Count: number | string | undefined;
-  @Input() late60Count: number | string | undefined;
-  @Input() late90Count: number | string | undefined;
-  @Input() amountPastDue: number | string | undefined;
-  @Input() disputeFlag: string | undefined;
-  @Input() payments: any | undefined;
-
+  @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
+  @Input() payments: any;
   constructor() {}
 
   ngOnInit(): void {}

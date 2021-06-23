@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
-import { moduleMetadata } from '@storybook/angular';
+import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import {
   ICollectionsTradelineDetails,
@@ -18,20 +18,11 @@ export default {
       imports: [SharedComponentsModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
+    componentWrapperDecorator((story) => {
+      return `<div class="container mx-auto max-w-xs h-full">${story}</div>`;
+    }),
   ],
 } as Meta;
-
-const Template: Story<Partial<TradelineDetailsComponent>> = (args: any) => ({
-  component: TradelineDetailsComponent,
-  props: {
-    ...args,
-  },
-  template: `
-    <div class="container mx-auto max-w-xs h-full">
-      <brave-tradeline-details
-      ></brave-tradeline-details>
-    </div>`,
-});
 
 const revolving: IRevolvingTradelineDetails = {
   dateOpened: '2020-01-10',
@@ -56,17 +47,24 @@ const collections: ICollectionsTradelineDetails = {
   disputeFlag: 'No',
 };
 
+const Template: Story<TradelineDetailsComponent> = (args: any) => ({
+  component: TradelineDetailsComponent,
+  props: {
+    ...args,
+  },
+});
+
 export const Revolving = Template.bind({});
 Revolving.args = {
-  ...revolving,
+  config: revolving,
 };
 
 export const Installment = Template.bind({});
 Installment.args = {
-  ...installment,
+  config: installment,
 };
 
 export const Collections = Template.bind({});
 Collections.args = {
-  ...collections,
+  config: collections,
 };
