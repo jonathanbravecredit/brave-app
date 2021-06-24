@@ -78,10 +78,6 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -184,10 +180,6 @@ query ListAppDatas(
             serviceProductValue
             status
           }
-          hidePositiveCreditCardAccounts
-          hidePositiveCollectionAccounts
-          hidePositiveInstallmentAccounts
-          hidePositiveMortgageAccounts
         }
         equifax {
           authenticated

@@ -82,10 +82,6 @@ export type TransunionInput = {
   enrollReport?: TUEnrollResponseInput | null;
   enrollMergeReport?: TUEnrollResponseInput | null;
   enrollVantageScore?: TUEnrollResponseInput | null;
-  hidePositiveCreditCardAccounts?: boolean | null;
-  hidePositiveCollectionAccounts?: boolean | null;
-  hidePositiveInstallmentAccounts?: boolean | null;
-  hidePositiveMortgageAccounts?: boolean | null;
 };
 
 export type TUEnrollResponseInput = {
@@ -211,10 +207,6 @@ export type Transunion = {
   enrollReport?: TUEnrollResponse;
   enrollMergeReport?: TUEnrollResponse;
   enrollVantageScore?: TUEnrollResponse;
-  hidePositiveCreditCardAccounts?: boolean | null;
-  hidePositiveCollectionAccounts?: boolean | null;
-  hidePositiveInstallmentAccounts?: boolean | null;
-  hidePositiveMortgageAccounts?: boolean | null;
 };
 
 export type TUEnrollResponse = {
@@ -404,10 +396,6 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -522,10 +510,6 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -640,10 +624,6 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -758,10 +738,6 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -878,10 +854,6 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
-        hidePositiveCreditCardAccounts?: boolean | null;
-        hidePositiveCollectionAccounts?: boolean | null;
-        hidePositiveInstallmentAccounts?: boolean | null;
-        hidePositiveMortgageAccounts?: boolean | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -998,10 +970,6 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1116,10 +1084,6 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1234,10 +1198,6 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1361,10 +1321,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1495,10 +1451,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1629,10 +1581,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1773,10 +1721,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -1907,10 +1851,6 @@ export class APIService {
                   serviceProductValue
                   status
                 }
-                hidePositiveCreditCardAccounts
-                hidePositiveCollectionAccounts
-                hidePositiveInstallmentAccounts
-                hidePositiveMortgageAccounts
               }
               equifax {
                 __typename
@@ -2046,10 +1986,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -2177,10 +2113,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename
@@ -2308,10 +2240,6 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
             }
             equifax {
               __typename

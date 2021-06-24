@@ -78,10 +78,6 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -182,10 +178,6 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
@@ -286,10 +278,6 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
       }
       equifax {
         authenticated
