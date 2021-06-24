@@ -33,4 +33,9 @@ const Template: Story<DashboardNavbarComponent> = (args: any) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
-Default.parameters;
+
+export const BackButton = Template.bind({});
+BackButton.args = {
+  isBackButton: true
+};
+

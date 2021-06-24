@@ -27,10 +27,6 @@ export interface INegativeAccountCardInputs {
   styleUrls: ['./negative-account-card.component.css'],
 })
 export class NegativeAccountCardComponent {
-  private $isIgnored = new BehaviorSubject(false);
-  isIgnored = this.$isIgnored.asObservable();
-  private $isClosed = new BehaviorSubject(false);
-  isClosed = this.$isClosed.asObservable();
   @Input() creditorName: string = '';
   @Input() lastReported: string = '';
   @Input() originalCreditor: string = '';
@@ -52,16 +48,4 @@ export class NegativeAccountCardComponent {
 
   constructor() {}
 
-  ignore() {
-    this.$isIgnored.next(true);
-  }
-
-  undoIgnore() {
-    this.$isIgnored.next(false);
-    this.viewDetail?.open$.next(true);
-  }
-
-  close() {
-    this.$isClosed.next(true);
-  }
 }
