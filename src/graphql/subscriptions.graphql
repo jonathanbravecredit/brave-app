@@ -75,10 +75,18 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -176,10 +184,18 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -277,10 +293,18 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated

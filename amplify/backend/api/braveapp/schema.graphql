@@ -3,16 +3,7 @@ type Query {
 }
 type AppData
   @model
-  @auth(
-    rules: [
-      { allow: owner }
-      {
-        allow: private
-        provider: iam
-        operations: [read, update, create, delete]
-      }
-    ]
-  ) {
+  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }]) {
   id: ID!
   user: User!
   agencies: Agencies!
@@ -90,6 +81,7 @@ type Transunion {
   enrollReport: TUEnrollResponse
   enrollMergeReport: TUEnrollResponse
   enrollVantageScore: TUEnrollResponse
+  disputes: Disputes
 }
 type Equifax {
   authenticated: Boolean
@@ -106,4 +98,16 @@ type TUEnrollResponse {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
+}
+type Disputes {
+  disputePreflightStatus: String
+  disputeInflightStatus: String
+  disputeEligibility: String
+  disputeResults: AWSJSON
+  disputeHistory: [AWSJSON]
+  modifiedOn: Int
+  createdOn: Int
+  notificationStatus: String
+  notificationMessage: AWSJSON
+  notificationSentOn: Int
 }

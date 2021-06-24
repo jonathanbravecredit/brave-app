@@ -78,10 +78,18 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -182,10 +190,18 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -286,10 +302,18 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
