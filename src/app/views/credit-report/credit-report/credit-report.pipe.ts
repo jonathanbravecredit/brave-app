@@ -5,10 +5,7 @@ import {
   CreditReportGroups,
   CREDIT_REPORT_GROUPS,
 } from '@shared/data/credit-report';
-import {
-  BRAVE_ACCOUNT_TYPE,
-  POSITIVE_PAY_STATUS_CODES,
-} from '@shared/data/pay-status-codes';
+import { POSITIVE_PAY_STATUS_CODES } from '@shared/data/pay-status-codes';
 import {
   IMergeReport,
   ITradeLinePartition,
@@ -50,7 +47,6 @@ export class CreditReportPipe implements PipeTransform {
     prefs: PreferencesStateModel
   ): CreditReportPipe {
     const filters = prefs.showAllAccounts;
-    console.log('prefs', prefs);
     if (!filters) return this;
     if (partitions instanceof Array) {
       this.tradeLines = partitions.filter((item) => {
@@ -158,53 +154,18 @@ export class CreditReportPipe implements PipeTransform {
     reports: ICreditReportCardInputs[] | undefined
   ): ICreditReportCardGroup[] {
     if (!reports) return [{} as ICreditReportCardGroup];
-    const creditCards = reports.filter(
-      (r) => r.type.toLowerCase() === 'c' || r.type.toLowerCase() === 'r'
-    );
-    const collections = reports.filter((r) => r.type.toLowerCase() === 'y');
-    const installments = reports.filter((r) => r.type.toLowerCase() === 'i');
-    const mortgages = reports.filter((r) => r.type.toLowerCase() === 'm');
-    let results: ICreditReportCardGroup[] = [];
-    results = creditCards.length
-      ? [
-          ...results,
-          {
-            title: CREDIT_REPORT_GROUPS['c']['title'],
-            group: CREDIT_REPORT_GROUPS['c']['group'],
-            cards: creditCards,
-          },
-        ]
-      : results;
-    results = collections.length
-      ? [
-          ...results,
-          {
-            title: CREDIT_REPORT_GROUPS['y']['title'],
-            group: CREDIT_REPORT_GROUPS['y']['group'],
-            cards: collections,
-          },
-        ]
-      : results;
-    results = installments.length
-      ? [
-          ...results,
-          {
-            title: CREDIT_REPORT_GROUPS['i']['title'],
-            group: CREDIT_REPORT_GROUPS['i']['group'],
-            cards: installments,
-          },
-        ]
-      : results;
-    results = mortgages.length
-      ? [
-          ...results,
-          {
-            title: CREDIT_REPORT_GROUPS['m']['title'],
-            group: CREDIT_REPORT_GROUPS['m']['group'],
-            cards: mortgages,
-          },
-        ]
-      : results;
+    let res: Record<string, any> = {};
+    reports.forEach((r) => {
+      let index = CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['group'];
+      res[index] = {
+        title: CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['title'],
+        group: CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['group'],
+        cards: [...res[index]['cards'], r],
+      };
+    });
+    let results: ICreditReportCardGroup[] = Object.keys(res).map((k) => {
+      return { ...res[k] } as ICreditReportCardGroup;
+    });
     return results;
   }
 

@@ -7,7 +7,7 @@ import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-o
 export class FilledOnlytextButtonPipe implements PipeTransform {
   transform(value: IFilledOnlyTextButtonConfig): string {
     let cls = `${value.backgroundColor} ${value.color} active:${value.activeColor}`;
-    cls = `${cls} ${sizeSpecificClass[value.buttonSize]}`;
+    cls = `${cls} ${sizeSpecificClass[value.buttonSize]} ${value.full === true ? 'w-full' : ''}`;
     return cls;
   }
 }
