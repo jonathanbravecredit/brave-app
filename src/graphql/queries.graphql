@@ -78,6 +78,18 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -179,6 +191,18 @@ query ListAppDatas(
             serviceProductTypeId
             serviceProductValue
             status
+          }
+          disputes {
+            disputePreflightStatus
+            disputeInflightStatus
+            disputeEligibility
+            disputeResults
+            disputeHistory
+            modifiedOn
+            createdOn
+            notificationStatus
+            notificationMessage
+            notificationSentOn
           }
         }
         equifax {
