@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { IMenuDropdown } from '@shared/components/dropdowns/popdowns/menu-dropdown/menu-dropdown.component';
 
 @Component({
@@ -6,6 +6,7 @@ import { IMenuDropdown } from '@shared/components/dropdowns/popdowns/menu-dropdo
   templateUrl: './dashboard-navbar.component.html',
 })
 export class DashboardNavbarComponent implements OnInit {
+  @Input() isBackButton: boolean = false;
   public navbarOpen = false;
   public menuOne: IMenuDropdown = {
     menu: 'Discover',
