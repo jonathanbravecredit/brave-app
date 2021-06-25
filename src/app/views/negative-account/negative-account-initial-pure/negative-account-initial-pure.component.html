@@ -9,20 +9,7 @@
   <p class="text-sm mb-1">These are new negative accounts in the last 30 days that are in collections, have been charged off, or have late payments.</p>
   <p class="text-sm mb-6">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>
   <div *ngFor="let card of cards">
-    <brave-negative-account-card
-      [creditorName]="card.creditorName || ''"
-      [lastReported]="card.lastReported || ''"
-      [accountTypeDescription]="card.accountTypeDescription || ''"
-      [accountTypeDescriptionValue]="card.accountTypeDescriptionValue || ''"
-      [originalCreditor]="card.originalCreditor || ''"
-      [originalCreditorValue]="card.originalCreditorValue || ''"
-      [disputeFlag]="card.disputeFlag || ''"
-      [disputeFlagValue]="card.disputeFlagValue || ''"
-      [accountNumber]="card.accountDetail?.accountNumber || ''"
-      [typeOfCollection]="card.accountDetail?.typeOfCollection || ''"
-      [amountPastDue]="card.accountDetail?.amountPastDue || -1"
-      [dateOpened]="card.accountDetail?.dateOpened || ''"
-      [dateLastPayment]="card.accountDetail?.dateLastPayment || ''"
+    <brave-negative-account-card [data]="card"
     ></brave-negative-account-card>
   </div>
 </div>

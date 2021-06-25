@@ -44,6 +44,8 @@ import { NegativeTradelinesPipe } from './negative-account/negative-account-init
 import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
 import { CreditReportPipe } from '@views/credit-report/credit-report/credit-report.pipe';
+import { NewDisputeComponent } from './disputes/new-dispute/new-dispute.component';
+import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute-pure.component';
 
 const views = [
   SignupComponent,
@@ -84,6 +86,8 @@ const views = [
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
   CreditReportComponent,
+  NewDisputePureComponent,
+  NewDisputeComponent
 ];
 
 const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
