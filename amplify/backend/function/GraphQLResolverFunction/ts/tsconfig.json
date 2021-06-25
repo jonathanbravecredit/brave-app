@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "rootDir": ".",
     "lib": ["es2017"],
-    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "aws-lambda"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
