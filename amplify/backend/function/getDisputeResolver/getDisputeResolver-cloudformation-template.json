@@ -23,13 +23,7 @@
         "apibraveappGraphQLAPIEndpointOutput": {
             "Type": "String",
             "Default": "apibraveappGraphQLAPIEndpointOutput"
-        },
-        "APPDATATABLE": {
-            "Fn::ImportValue": {
-                "Fn::Sub": "${apibraveappGraphQLAPIIdOutput}:GetAtt:AppDataTable:Name"
-            }
-        },
-        "AWS_NODEJS_CONNECTION_REUSE_ENABLED": 1
+        }
     },
     "Conditions": {
         "ShouldNotCreateEnvResources": {
