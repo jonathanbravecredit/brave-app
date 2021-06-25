@@ -34,22 +34,7 @@
       "providerPlugin": "awscloudformation",
       "build": true
     },
-    "luxuria": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "braveapp",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
-    },
-    "getDisputeResolver": {
+    "GraphQLResolverFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",

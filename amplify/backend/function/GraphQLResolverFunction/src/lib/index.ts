@@ -4,14 +4,13 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
-
-import { IResolverEvent } from '@lib/interfaces/resolver.interface';
-import { getDispute } from '@lib/queries/getDisputes';
+import { IResolverEvent } from 'interfaces/resolver.interface';
+import { getDispute } from 'queries/getDisputes';
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */
-const resolvers = {
+const resolvers: Record<string, any> = {
   Query: {
     getDisputes: async (id: string) => {
       return await getDispute(id);

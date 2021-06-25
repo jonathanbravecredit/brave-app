@@ -55,12 +55,12 @@
                 "FunctionName": {
                     "Fn::If": [
                         "ShouldNotCreateEnvResources",
-                        "getDisputeResolver",
+                        "GraphQLResolverFunction",
                         {
                             "Fn::Join": [
                                 "",
                                 [
-                                    "getDisputeResolver",
+                                    "GraphQLResolverFunction",
                                     "-",
                                     {
                                         "Ref": "env"
@@ -103,12 +103,12 @@
                 "RoleName": {
                     "Fn::If": [
                         "ShouldNotCreateEnvResources",
-                        "braveappLambdaRole95993da6",
+                        "braveappLambdaRole4b35ec75",
                         {
                             "Fn::Join": [
                                 "",
                                 [
-                                    "braveappLambdaRole95993da6",
+                                    "braveappLambdaRole4b35ec75",
                                     "-",
                                     {
                                         "Ref": "env"

@@ -14,6 +14,7 @@
     "amplifyDev": "amplify env checkout dev",
     "amplifyQA": "amplify env checkout qa",
     "amplifyProd": "amplify env checkout production",
+    "amplify:GraphQLResolverFunction": "cd amplify/backend/function/GraphQLResolverFunction && npm install && npm run tsc && cd -",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
