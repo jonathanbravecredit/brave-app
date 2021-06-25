@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
-const getDisputes_1 = require("queries/getDisputes");
+const getDisputes_1 = require("./lib/queries/getDisputes");
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */

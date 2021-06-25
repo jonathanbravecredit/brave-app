@@ -1,9 +1,9 @@
 import { DynamoStore } from '@shiftcoders/dynamo-easy';
 import * as AWS from 'aws-sdk';
 import { UpdateItemOutput, PutItemOutput, DeleteItemOutput, Key } from 'aws-sdk/clients/dynamodb';
-import { Disputes } from 'aws/api.service';
-import { AppDataModel } from 'models/appdata.model';
-import { returnNestedObject } from 'utils/utils';
+import { Disputes } from '../aws/api.service';
+import { AppDataModel } from '../models/appdata.model';
+import { returnNestedObject } from '../utils/utils';
 
 const db = new AWS.DynamoDB();
 const AppDataStore = new DynamoStore(AppDataModel);
