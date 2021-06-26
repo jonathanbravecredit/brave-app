@@ -1,17 +1,12 @@
 "use strict";
+/* Amplify Params - DO NOT EDIT
+    API_BRAVEAPP_GRAPHQLAPIENDPOINTOUTPUT
+    API_BRAVEAPP_GRAPHQLAPIIDOUTPUT
+    ENV
+    REGION
+Amplify Params - DO NOT EDIT */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
-const getDisputes_1 = require("./lib/queries/getDisputes");
-/**
- * Using this as the entry point, you can use a single function to handle many resolvers.
- */
-const resolvers = {
-    Query: {
-        getDisputes: async (id) => {
-            return await getDisputes_1.getDispute(id);
-        },
-    },
-};
 /**
  *
  * @param {string} typeName ex: Query - Filled dynamically based on function usage location
@@ -25,13 +20,6 @@ const resolvers = {
  */
 const handler = async (event) => {
     console.log('event ===> ', event);
-    const typeHandler = resolvers[event.typeName];
-    if (typeHandler) {
-        const resolver = typeHandler[event.fieldName];
-        if (resolver) {
-            return await resolver(event);
-        }
-    }
-    throw new Error('Resolver not found.');
+    return event;
 };
 exports.handler = handler;

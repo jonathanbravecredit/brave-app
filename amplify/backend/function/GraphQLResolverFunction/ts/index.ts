@@ -4,19 +4,6 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
-import { IResolverEvent } from './lib/interfaces/resolver.interface';
-import { getDispute } from './lib/queries/getDisputes';
-
-/**
- * Using this as the entry point, you can use a single function to handle many resolvers.
- */
-const resolvers: Record<string, any> = {
-  Query: {
-    getDisputes: async (id: string) => {
-      return await getDispute(id);
-    },
-  },
-};
 
 /**
  *
@@ -29,14 +16,7 @@ const resolvers: Record<string, any> = {
  * @param {Object} prev If using the built-in pipeline resolver support, this contains the object returned by the previous function.
  * @returns
  */
-export const handler: any = async (event: IResolverEvent) => {
+export const handler: any = async (event: any) => {
   console.log('event ===> ', event);
-  const typeHandler = resolvers[event.typeName];
-  if (typeHandler) {
-    const resolver = typeHandler[event.fieldName];
-    if (resolver) {
-      return await resolver(event);
-    }
-  }
-  throw new Error('Resolver not found.');
+  return event;
 };
