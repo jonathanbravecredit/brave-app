@@ -4,7 +4,23 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
+import { AWSError } from 'aws-sdk';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { PromiseResult } from 'aws-sdk/lib/request';
+import { Disputes } from 'lib/aws/api.types';
+import { IResolverEvent } from 'lib/interfaces/resolver.interface';
+import { getDisputesFromDB } from 'lib/queries/dispute.queries';
 
+/**
+ * Using this as the entry point, you can use a single function to handle many resolvers.
+ */
+const resolvers: Record<string, any> = {
+  Query: {
+    getDisputes: (id: string): Promise<PromiseResult<DocumentClient.GetItemOutput, AWSError>> => {
+      return getDisputesFromDB(id);
+    },
+  },
+};
 /**
  *
  * @param {string} typeName ex: Query - Filled dynamically based on function usage location
@@ -16,7 +32,14 @@ Amplify Params - DO NOT EDIT */
  * @param {Object} prev If using the built-in pipeline resolver support, this contains the object returned by the previous function.
  * @returns
  */
-export const handler: any = async (event: any) => {
+export const handler: any = async (event: IResolverEvent) => {
   console.log('event ===> ', event);
-  return event;
+  const typeHandler = resolvers[event.typeName];
+  if (typeHandler) {
+    const resolver = typeHandler[event.fieldName];
+    if (resolver) {
+      return await resolver(event);
+    }
+  }
+  throw new Error('Resolver not found.');
 };
