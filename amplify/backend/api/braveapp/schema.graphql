@@ -3,6 +3,11 @@ type Query {
   getDisputes(id: ID!): Disputes @function(name: "GraphQLResolverFunction-${env}")
 }
 
+type Mutation {
+  createDisputes:(id: ID!, disputes: DisputesInput) @function(name: "GraphQLResolverFunction-${env}")
+  patchDisputes:(id: ID!, disputes: DisputesInput) @function(name: "GraphQLResolverFunction-${env}")
+}
+
 type AppData
   @model
   @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }]) {

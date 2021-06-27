@@ -16,16 +16,16 @@ import { getDisputesFromDB, patchDisputesInDB, putDisputesInDB } from 'lib/queri
  */
 const resolvers: Record<string, any> = {
   Query: {
-    getDisputes: (id: string): Promise<PromiseResult<DocumentClient.GetItemOutput, AWSError>> => {
-      return getDisputesFromDB(id);
+    getDisputes: (event: IResolverEvent): Promise<PromiseResult<DocumentClient.GetItemOutput, AWSError>> => {
+      return getDisputesFromDB(event.arguments.id);
     },
   },
   Mutation: {
-    createDisputes: (id: string, disputes: DisputesInput) => {
-      return putDisputesInDB(id, disputes);
+    createDisputes: (event: IResolverEvent) => {
+      return putDisputesInDB(event.arguments.id, event.arguments.disputes);
     },
-    patchDisputes: (id: string, disputes: Partial<DisputesInput>) => {
-      return patchDisputesInDB(id, disputes);
+    patchDisputes: (event: IResolverEvent) => {
+      return patchDisputesInDB(event.arguments.id, event.arguments.disputes);
     },
   },
 };
@@ -46,7 +46,13 @@ export const handler: any = async (event: IResolverEvent) => {
   if (typeHandler) {
     const resolver = typeHandler[event.fieldName];
     if (resolver) {
-      return await resolver(event);
+      try {
+        const results = resolver(event);
+        console.log('results', results);
+        return results;
+      } catch (err) {
+        throw new Error(`Resolver failed; error:${err}`);
+      }
     }
   }
   throw new Error('Resolver not found.');
