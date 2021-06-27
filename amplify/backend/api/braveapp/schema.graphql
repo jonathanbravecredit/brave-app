@@ -4,8 +4,8 @@ type Query {
 }
 
 type Mutation {
-  createDisputes(id: ID!, disputes: Disputes): Disputes @function(name: "GraphQLResolverFunction-${env}")
-  patchDisputes(id: ID!, disputes: Disputes): Disputes @function(name: "GraphQLResolverFunction-${env}")
+  createDisputes(input: { id: ID!, disputes: Disputes}): Disputes @function(name: "GraphQLResolverFunction-${env}")
+  patchDisputes(input: { id: ID!, disputes: Disputes}): Disputes @function(name: "GraphQLResolverFunction-${env}")
 }
 
 type AppData
