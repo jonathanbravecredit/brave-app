@@ -7,9 +7,9 @@ Amplify Params - DO NOT EDIT */
 import { AWSError } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { PromiseResult } from 'aws-sdk/lib/request';
-import { Disputes } from 'lib/aws/api.types';
+import { DisputesInput } from 'lib/aws/api.types';
 import { IResolverEvent } from 'lib/interfaces/resolver.interface';
-import { getDisputesFromDB } from 'lib/queries/dispute.queries';
+import { getDisputesFromDB, patchDisputesInDB, putDisputesInDB } from 'lib/queries/dispute.queries';
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
@@ -18,6 +18,14 @@ const resolvers: Record<string, any> = {
   Query: {
     getDisputes: (id: string): Promise<PromiseResult<DocumentClient.GetItemOutput, AWSError>> => {
       return getDisputesFromDB(id);
+    },
+  },
+  Mutation: {
+    createDisputes: (id: string, disputes: DisputesInput) => {
+      return putDisputesInDB(id, disputes);
+    },
+    patchDisputes: (id: string, disputes: Partial<DisputesInput>) => {
+      return patchDisputesInDB(id, disputes);
     },
   },
 };

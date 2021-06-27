@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
-import { GetItemOutput } from 'aws-sdk/clients/dynamodb';
+import { GetItemInput, GetItemOutput, PutItemInput } from 'aws-sdk/clients/dynamodb';
 import { PromiseResult } from 'aws-sdk/lib/request';
-import { AppData } from 'lib/aws/api.types';
+import { AppData, Disputes, DisputesInput } from 'lib/aws/api.types';
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 const table = `AppData-${process.env.API_BRAVEAPP_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 
@@ -22,5 +22,88 @@ export const getDisputesFromDB = (
       const item: AppData = (res.Item as unknown) as AppData;
       return item ? item.agencies?.transunion?.disputes : null;
     })
+    .catch((err) => err);
+};
+
+export const putDisputesInDB = (
+  id: string,
+  disputes: DisputesInput,
+): Promise<PromiseResult<AWS.DynamoDB.DocumentClient.PutItemInput, AWS.AWSError>> => {
+  let now = Date.now();
+  let timeStamp = new Date(now);
+
+  const params = {
+    TableName: table,
+    Key: {
+      id: id,
+    },
+    UpdateExpression: 'set #ag.#tu#.#di = :di, #ua = :ua',
+    ExpressionAttributeNames: {
+      '#ag': 'agencies',
+      '#tu': 'transunion',
+      '#di': 'disputes',
+      '#ua': 'updatedAt',
+    },
+    ExpressionAttributeValues: {
+      ':di': disputes,
+      ':ua': timeStamp.toISOString(),
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+
+  return db
+    .update(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
+};
+
+export const patchDisputesInDB = async (
+  id: string,
+  disputes: Partial<DisputesInput>,
+): Promise<PromiseResult<AWS.DynamoDB.DocumentClient.PutItemInput, AWS.AWSError>> => {
+  let now = Date.now();
+  let timeStamp = new Date(now);
+  const getParams = {
+    TableName: table,
+    Key: {
+      id: id,
+    },
+  };
+
+  let patched: DisputesInput = {} as DisputesInput;
+  try {
+    const prior = await getDisputesFromDB(id);
+    patched = {
+      ...prior,
+      ...disputes,
+    };
+  } catch (err) {
+    throw new Error('Error fetching prior state of disputes');
+  }
+
+  const updateParams = {
+    TableName: table,
+    Key: {
+      id: id,
+    },
+    UpdateExpression: 'set #ag.#tu#.#di = :di, #ua = :ua',
+    ExpressionAttributeNames: {
+      '#ag': 'agencies',
+      '#tu': 'transunion',
+      '#di': 'disputes',
+      '#ua': 'updatedAt',
+    },
+    ExpressionAttributeValues: {
+      ':di': patched,
+      ':ua': timeStamp.toISOString(),
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+
+  return db
+    .update(updateParams)
+    .promise()
+    .then((res) => res)
     .catch((err) => err);
 };
