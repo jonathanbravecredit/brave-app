@@ -1,6 +1,5 @@
 import * as AWS from 'aws-sdk';
 import { UpdateItemInput } from 'aws-sdk/clients/dynamodb';
-import { AppData } from 'lib/aws/api.types';
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 const table = `AppData-${process.env.API_BRAVEAPP_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 

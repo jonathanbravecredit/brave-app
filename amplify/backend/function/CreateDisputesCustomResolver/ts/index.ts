@@ -5,7 +5,7 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 import { IResolverEvent } from 'lib/interfaces/resolver.interface';
-import { getDisputesFromDB } from 'lib/queries/dispute.queries';
+import { putDisputesInDB } from 'lib/queries/dispute.queries';
 
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.

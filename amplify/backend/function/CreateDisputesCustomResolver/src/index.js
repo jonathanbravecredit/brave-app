@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
+const dispute_queries_1 = require("lib/queries/dispute.queries");
 /**
  * Using this as the entry point, you can use a single function to handle many resolvers.
  */
@@ -8,7 +9,7 @@ const resolvers = {
     Mutation: {
         createDisputes: async (event) => {
             try {
-                return await putDisputesInDB(event.arguments.id, event.arguments.msg);
+                return await dispute_queries_1.putDisputesInDB(event.arguments.id, event.arguments.msg);
             }
             catch (err) {
                 throw new Error(`Error in getDisputes, Error:${err}`);
