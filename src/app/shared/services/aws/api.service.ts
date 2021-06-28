@@ -82,6 +82,7 @@ export type TransunionInput = {
   enrollReport?: TUEnrollResponseInput | null;
   enrollMergeReport?: TUEnrollResponseInput | null;
   enrollVantageScore?: TUEnrollResponseInput | null;
+  disputes?: DisputesInput | null;
 };
 
 export type TUEnrollResponseInput = {
@@ -93,6 +94,19 @@ export type TUEnrollResponseInput = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type DisputesInput = {
+  disputePreflightStatus?: string | null;
+  disputeInflightStatus?: string | null;
+  disputeEligibility?: string | null;
+  disputeResults?: string | null;
+  disputeHistory?: Array<string | null> | null;
+  modifiedOn?: number | null;
+  createdOn?: number | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: number | null;
 };
 
 export type EquifaxInput = {
@@ -207,6 +221,7 @@ export type Transunion = {
   enrollReport?: TUEnrollResponse;
   enrollMergeReport?: TUEnrollResponse;
   enrollVantageScore?: TUEnrollResponse;
+  disputes?: Disputes;
 };
 
 export type TUEnrollResponse = {
@@ -219,6 +234,20 @@ export type TUEnrollResponse = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type Disputes = {
+  __typename: "Disputes";
+  disputePreflightStatus?: string | null;
+  disputeInflightStatus?: string | null;
+  disputeEligibility?: string | null;
+  disputeResults?: string | null;
+  disputeHistory?: Array<string | null> | null;
+  modifiedOn?: number | null;
+  createdOn?: number | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: number | null;
 };
 
 export type Equifax = {
@@ -396,6 +425,19 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -509,6 +551,19 @@ export type UpdateAppDataMutation = {
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
+      } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
       } | null;
     } | null;
     equifax?: {
@@ -624,6 +679,19 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -737,6 +805,19 @@ export type GetAppDataQuery = {
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
+      } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
       } | null;
     } | null;
     equifax?: {
@@ -854,6 +935,19 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
+        disputes?: {
+          __typename: "Disputes";
+          disputePreflightStatus?: string | null;
+          disputeInflightStatus?: string | null;
+          disputeEligibility?: string | null;
+          disputeResults?: string | null;
+          disputeHistory?: Array<string | null> | null;
+          modifiedOn?: number | null;
+          createdOn?: number | null;
+          notificationStatus?: string | null;
+          notificationMessage?: string | null;
+          notificationSentOn?: number | null;
+        } | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -970,6 +1064,19 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1084,6 +1191,19 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1197,6 +1317,19 @@ export type OnDeleteAppDataSubscription = {
         serviceProductTypeId?: string | null;
         serviceProductValue?: string | null;
         status?: string | null;
+      } | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
       } | null;
     } | null;
     equifax?: {
@@ -1320,6 +1453,19 @@ export class APIService {
                 serviceProductTypeId
                 serviceProductValue
                 status
+              }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
               }
             }
             equifax {
@@ -1451,6 +1597,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -1580,6 +1739,19 @@ export class APIService {
                 serviceProductTypeId
                 serviceProductValue
                 status
+              }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
               }
             }
             equifax {
@@ -1721,6 +1893,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -1850,6 +2035,19 @@ export class APIService {
                   serviceProductTypeId
                   serviceProductValue
                   status
+                }
+                disputes {
+                  __typename
+                  disputePreflightStatus
+                  disputeInflightStatus
+                  disputeEligibility
+                  disputeResults
+                  disputeHistory
+                  modifiedOn
+                  createdOn
+                  notificationStatus
+                  notificationMessage
+                  notificationSentOn
                 }
               }
               equifax {
@@ -1986,6 +2184,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2113,6 +2324,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2239,6 +2463,19 @@ export class APIService {
                 serviceProductTypeId
                 serviceProductValue
                 status
+              }
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
               }
             }
             equifax {
