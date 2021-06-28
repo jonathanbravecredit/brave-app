@@ -55,12 +55,12 @@
                 "FunctionName": {
                     "Fn::If": [
                         "ShouldNotCreateEnvResources",
-                        "GetDisputesCustomResolver",
+                        "CreateDisputesCustomResolver",
                         {
                             "Fn::Join": [
                                 "",
                                 [
-                                    "GetDisputesCustomResolver",
+                                    "CreateDisputesCustomResolver",
                                     "-",
                                     {
                                         "Ref": "env"
@@ -103,12 +103,12 @@
                 "RoleName": {
                     "Fn::If": [
                         "ShouldNotCreateEnvResources",
-                        "braveappLambdaRole19a5d87b",
+                        "braveappLambdaRole857db7e4",
                         {
                             "Fn::Join": [
                                 "",
                                 [
-                                    "braveappLambdaRole19a5d87b",
+                                    "braveappLambdaRole857db7e4",
                                     "-",
                                     {
                                         "Ref": "env"
