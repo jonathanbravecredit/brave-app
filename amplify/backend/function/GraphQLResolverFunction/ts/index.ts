@@ -22,10 +22,10 @@ const resolvers: Record<string, any> = {
   },
   Mutation: {
     createDisputes: (event: IResolverEvent) => {
-      return putDisputesInDB(event.arguments.id, event.arguments.disputes);
+      return putDisputesInDB(event.arguments.id, event.arguments.msg);
     },
     patchDisputes: (event: IResolverEvent) => {
-      return patchDisputesInDB(event.arguments.id, event.arguments.disputes);
+      return patchDisputesInDB(event.arguments.id, event.arguments.msg);
     },
   },
 };

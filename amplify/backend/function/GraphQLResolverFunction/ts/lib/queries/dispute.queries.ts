@@ -25,13 +25,19 @@ export const getDisputesFromDB = (
     .catch((err) => err);
 };
 
+/**
+ *
+ * @param id
+ * @param {string} msg JSON string representing Dispute object TODO add in ajv...https://www.npmjs.com/package/ajv
+ * @returns
+ */
 export const putDisputesInDB = (
   id: string,
-  disputes: DisputesInput,
+  msg: string,
 ): Promise<PromiseResult<AWS.DynamoDB.DocumentClient.PutItemInput, AWS.AWSError>> => {
   let now = Date.now();
   let timeStamp = new Date(now);
-
+  const disputes = JSON.parse(msg);
   const params = {
     TableName: table,
     Key: {
@@ -60,7 +66,7 @@ export const putDisputesInDB = (
 
 export const patchDisputesInDB = async (
   id: string,
-  disputes: Partial<DisputesInput>,
+  msg: string,
 ): Promise<PromiseResult<AWS.DynamoDB.DocumentClient.PutItemInput, AWS.AWSError>> => {
   let now = Date.now();
   let timeStamp = new Date(now);
@@ -70,7 +76,7 @@ export const patchDisputesInDB = async (
       id: id,
     },
   };
-
+  const disputes = JSON.parse(msg);
   let patched: DisputesInput = {} as DisputesInput;
   try {
     const prior = await getDisputesFromDB(id);
