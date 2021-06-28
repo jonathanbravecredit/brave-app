@@ -446,7 +446,7 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "GetDisputesLambdaDataSource",
+            "CreateDisputesLambdaDataSource",
             "Name"
           ]
         },
@@ -468,6 +468,157 @@
         "ResponseMappingTemplateS3Location": {
           "Fn::Sub": [
             "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Mutation.createdisputes.res.vtl",
+            {
+              "S3DeploymentBucket": {
+                "Ref": "S3DeploymentBucket"
+              },
+              "S3DeploymentRootKey": {
+                "Ref": "S3DeploymentRootKey"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "PatchDisputesLambdaDataSource": {
+      "Type": "AWS::AppSync::DataSource",
+      "Properties": {
+        "ApiId": {
+          "Ref": "AppSyncApiId"
+        },
+        "Name": "PatchDisputesFunction",
+        "Type": "AWS_LAMBDA",
+        "ServiceRoleArn": {
+          "Fn::GetAtt": [
+            "PatchDisputesLambdaDataSourceRole",
+            "Arn"
+          ]
+        },
+        "LambdaConfig": {
+          "LambdaFunctionArn": {
+            "Fn::Sub": [
+              "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:PatchDisputesCustomResolver-${env}",
+              {
+                "env": {
+                  "Ref": "env"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "PatchDisputesLambdaDataSourceRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::Sub": [
+            "PatchDisputesLambdaDataSourceRole-${env}",
+            {
+              "env": {
+                "Ref": "env"
+              }
+            }
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "appsync.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "InvokeLambdaFunction",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:invokeFunction"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": [
+                        "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:PatchDisputesCustomResolver-${env}",
+                        {
+                          "env": {
+                            "Ref": "env"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "PolicyName": "InvokeAppsync",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "appsync:*"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": [
+                        "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/*",
+                        {
+                          "env": {
+                            "Ref": "env"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "MutationPatchDisputesResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "AppSyncApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "PatchDisputesLambdaDataSource",
+            "Name"
+          ]
+        },
+        "TypeName": "Mutation",
+        "FieldName": "patchDisputes",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Sub": [
+            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Mutation.patchdisputes.req.vtl",
+            {
+              "S3DeploymentBucket": {
+                "Ref": "S3DeploymentBucket"
+              },
+              "S3DeploymentRootKey": {
+                "Ref": "S3DeploymentRootKey"
+              }
+            }
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Sub": [
+            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Mutation.patchdisputes.res.vtl",
             {
               "S3DeploymentBucket": {
                 "Ref": "S3DeploymentBucket"

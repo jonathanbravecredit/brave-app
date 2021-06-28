@@ -5,7 +5,7 @@ type Query {
 
 type Mutation {
   createDisputes(id: ID!, msg: String): Disputes
-  patchDisputes(id: ID!, msg: String): Disputes @function(name: "api-endpoints-${env}-customResolvers")
+  patchDisputes(id: ID!, msg: String): Disputes
 }
 
 type AppData

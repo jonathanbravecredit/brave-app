@@ -16,6 +16,8 @@
     "amplifyProd": "amplify env checkout production",
     "amplify:GraphQLResolverFunction": "cd amplify/backend/function/GraphQLResolverFunction/ts && npm install && npm run tsc && cd -",
     "amplify:GetDisputesCustomResolver": "cd amplify/backend/function/GetDisputesCustomResolver/ts && npm install && npm run tsc && cd -",
+    "amplify:CreateDisputesCustomResolver": "cd amplify/backend/function/CreateDisputesCustomResolver/ts && npm install && npm run tsc && cd -",
+    "amplify:PatchDisputesCustomResolver": "cd amplify/backend/function/PatchDisputesCustomResolver/ts && npm install && npm run tsc && cd -",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
