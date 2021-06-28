@@ -76,6 +76,7 @@ import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
+import { CreditReportGraphicComponent } from './graphics/credit-report-graphic/credit-report-graphic.component';
 
 const components = [
   BaseFormComponent,
@@ -135,7 +136,8 @@ const components = [
   KbaMultiplechoiceInputComponent,
   CreditReportCardComponent,
   SpinnerComponent,
-  OnboardingDisputeComponent
+  OnboardingDisputeComponent,
+  CreditReportGraphicComponent
 ];
 
 // component specific pipes only

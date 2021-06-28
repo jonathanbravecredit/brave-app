@@ -16,6 +16,7 @@ export interface ICreditReportCardGroup {
 })
 export class CreditReportPureComponent implements OnInit {
   @Input() creditReports: ICreditReportCardGroup[] = [];
+  @Input() creditReportScore = 0;
   @Input() preferences: PreferencesStateModel = {} as PreferencesStateModel;
   @Output() hide: EventEmitter<ICreditReportCardGroup> = new EventEmitter();
 
