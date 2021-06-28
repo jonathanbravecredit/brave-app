@@ -1,0 +1,14 @@
+<div class="container mx-auto max-w-xs h-full">
+  <div class="flex items-center mb-3">
+    <div style="transform:  rotate(180deg)"><span >&#10095;</span> </div>
+    <span class="ml-4">Back</span>
+  </div>
+  <brave-negative-account-card [data]="newDisputeData!" [showDisputeButton]="false"
+  ></brave-negative-account-card>
+  <h2 class="text-lg mb-8">Which option best matches your request?</h2>
+  <form>
+    <div class="ml-3 mb-8"><input type="radio" name="reason"> <label class="ml-2 text-sm">This is not mine</label></div>
+    <div class="ml-3 mb-8"><input type="radio" name="reason"> <label class="ml-2 text-sm">This is inaccurate</label></div>
+  </form>
+  <brave-filled-onlytext-button  [config]="{'buttonSize': 'sm', 'backgroundColor': 'bg-indigo-700', 'color':'text-black', 'activeColor': 'bg-indigo-700', 'full': true }">Continue</brave-filled-onlytext-button>
+</div>

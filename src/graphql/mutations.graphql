@@ -78,32 +78,12 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
-      }
-    }
-    preferences {
-      showAllAccounts {
-        creditCards
-        collectionsAccounts
-        installmentLoans
-        mortgages
       }
     }
     createdAt
@@ -190,32 +170,12 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
-      }
-    }
-    preferences {
-      showAllAccounts {
-        creditCards
-        collectionsAccounts
-        installmentLoans
-        mortgages
       }
     }
     createdAt
@@ -302,32 +262,12 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
-      }
-    }
-    preferences {
-      showAllAccounts {
-        creditCards
-        collectionsAccounts
-        installmentLoans
-        mortgages
       }
     }
     createdAt

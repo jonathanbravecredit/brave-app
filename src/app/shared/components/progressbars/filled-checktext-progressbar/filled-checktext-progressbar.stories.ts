@@ -7,7 +7,6 @@ import {
   IProgressStep,
 } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 import { FilledChecktextProgressbarPipe } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.pipe';
-
 export default {
   title: 'app/components/progressbar/filled-checktext-progressbar',
   component: FilledChecktextProgressbarComponent,
@@ -22,11 +21,9 @@ export default {
     }),
   ],
 } as Meta;
-
 const config: IFilledChecktextProgressbarConfig = {
   size: 'base',
 };
-
 const steps: IProgressStep[] = [
   { id: 0, active: true, complete: true, name: 'step 1' },
   { id: 1, active: true, complete: true, name: 'step 2' },
@@ -45,7 +42,6 @@ const Template: Story<FilledChecktextProgressbarComponent> = (args: any) => ({
     completedStep: 1,
   },
 });
-
 export const Default = Template.bind({});
 Default.args = {};
 Default.parameters;
