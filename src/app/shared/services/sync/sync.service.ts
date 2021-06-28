@@ -21,11 +21,7 @@ export class SyncService {
   // apiCreateListener$: ZenObservable.Subscription;
   // apiUpdateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
-  constructor(
-    private api: APIService,
-    private store: Store,
-    private router: Router
-  ) {
+  constructor(private api: APIService, private store: Store, private router: Router) {
     // this.apiCreateListener$ = this.api.OnCreateAppDataListener.subscribe(
     //   (resp: any) => {
     //     // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
@@ -79,9 +75,7 @@ export class SyncService {
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(
-    creds: ICredentials
-  ): Promise<CreateAppDataMutation | undefined> {
+  async initAppData(creds: ICredentials): Promise<CreateAppDataMutation | undefined> {
     try {
       const input: CreateAppDataInput = {
         id: creds.identityId,
@@ -98,14 +92,14 @@ export class SyncService {
           experian: { authenticated: false },
           equifax: { authenticated: false },
         },
-        preferences: {
-          showAllAccounts: {
-            creditCards: false,
-            collectionsAccounts: false,
-            installmentLoans: false,
-            mortgages: false,
-          },
-        },
+        // preferences: {
+        //   showAllAccounts: {
+        //     creditCards: false,
+        //     collectionsAccounts: false,
+        //     installmentLoans: false,
+        //     mortgages: false,
+        //   },
+        // },
       };
       console.log('input', input);
       const data = await this.api.CreateAppData(input);
@@ -150,10 +144,7 @@ export class SyncService {
    * @param {string} id user id
    * @param {AppDataStateModel} payload (optional)
    */
-  async syncDBDownToState(
-    id: string,
-    payload?: AppDataStateModel
-  ): Promise<AppDataStateModel> {
+  async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
     console.log('payload in sync db', payload);
     if (payload) {
       console.log('editing state with provided payload');
