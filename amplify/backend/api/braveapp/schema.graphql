@@ -1,11 +1,5 @@
 type Query {
   transunion(action: String!, message: String!): String
-  getDisputes(id: ID!): Disputes
-}
-
-type Mutation {
-  createDisputes(id: ID!, msg: String): Disputes
-  patchDisputes(id: ID!, msg: String): Disputes
 }
 
 type AppData
