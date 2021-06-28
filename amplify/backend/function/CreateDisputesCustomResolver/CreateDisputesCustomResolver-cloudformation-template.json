@@ -272,7 +272,7 @@
             ],
             "Type": "AWS::IAM::Policy",
             "Properties": {
-                "PolicyName": "amplify-lambda-execution-policy",
+                "PolicyName": "dynamo-lambda-execution-policy",
                 "Roles": [
                     {
                         "Ref": "LambdaExecutionRole"
