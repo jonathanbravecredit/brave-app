@@ -1,5 +1,6 @@
 type Query {
   transunion(action: String!, message: String!): String
+  getDisputes(id: ID!): Disputes @function(name: "GraphQLResolverFunction-${env}")
 }
 
 type AppData
