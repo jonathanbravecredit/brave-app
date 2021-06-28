@@ -14,7 +14,6 @@ type AppData
   id: ID!
   user: User!
   agencies: Agencies!
-  preferences: Preferences!
 }
 type User {
   id: ID!
