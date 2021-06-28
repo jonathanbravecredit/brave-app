@@ -1,5 +1,11 @@
 type Query {
   transunion(action: String!, message: String!): String
+  getDisputes(id: ID!): Disputes @function(name: "GraphQLResolverFunction-${env}")
+}
+
+type Mutation {
+  createDisputes(id: ID!, msg: String): Disputes @function(name: "GraphQLResolverFunction-${env}")
+  patchDisputes(id: ID!, msg: String): Disputes @function(name: "GraphQLResolverFunction-${env}")
 }
 
 type AppData
