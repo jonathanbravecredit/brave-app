@@ -1,21 +1,28 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
-import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { INegativeAccountCardInputs, NegativeAccountCardComponent } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { NewDisputeComponent } from './new-dispute.component';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { NewDisputePureComponent } from '../new-dispute-pure/new-dispute-pure.component';
 
 export default {
-  title: 'app/components/cards/negative-account',
-  component: NegativeAccountCardComponent,
+  title: 'app/views/disputes/new-dispute',
+  component: NewDisputeComponent,
   decorators: [
     moduleMetadata({
-      declarations: [],
-      imports: [SharedComponentsModule],
+      declarations: [
+        NewDisputePureComponent
+      ],
+      imports: [
+        SharedComponentsModule,
+        HttpClientModule,
+        RouterModule.forRoot([], { useHash: true }),
+      ],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
-    componentWrapperDecorator(
-      (story) => `<div class="container mx-auto max-w-xs h-full">${story}</div>`
-    ),
   ],
 } as Meta;
 
@@ -37,13 +44,14 @@ const data: INegativeAccountCardInputs = {
   }
 };
 
-const Template: Story<NegativeAccountCardComponent> = (args: any) => ({
-  component: NegativeAccountCardComponent,
+const Template: Story<NewDisputeComponent> = (args: any) => ({
+  component: NewDisputeComponent,
   props: {
-    ...args,
-    data
+    ...args
   },
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  newDisputeData: data
+};
