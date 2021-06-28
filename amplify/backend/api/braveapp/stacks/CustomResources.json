@@ -178,24 +178,24 @@
         }
       }
     },
-    "CustomResolverLambdaDataSource": {
+    "GetDisputesLambdaDataSource": {
       "Type": "AWS::AppSync::DataSource",
       "Properties": {
         "ApiId": {
           "Ref": "AppSyncApiId"
         },
-        "Name": "CustomResolverFunction",
+        "Name": "GetDisputesFunction",
         "Type": "AWS_LAMBDA",
         "ServiceRoleArn": {
           "Fn::GetAtt": [
-            "CustomResolverLambdaDataSourceRole",
+            "GetDisputesLambdaDataSourceRole",
             "Arn"
           ]
         },
         "LambdaConfig": {
           "LambdaFunctionArn": {
             "Fn::Sub": [
-              "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:api-endpoints-${env}-customResolvers",
+              "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:GetDisputesCustomResolver-${env}",
               {
                 "env": {
                   "Ref": "env"
@@ -206,12 +206,12 @@
         }
       }
     },
-    "CustomResolverLambdaDataSourceRole": {
+    "GetDisputesLambdaDataSourceRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "RoleName": {
           "Fn::Sub": [
-            "CustomResolverLambdaDataSourceRole-${env}",
+            "GetDisputesLambdaDataSourceRole-${env}",
             {
               "env": {
                 "Ref": "env"
@@ -245,7 +245,7 @@
                   "Resource": [
                     {
                       "Fn::Sub": [
-                        "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:api-endpoints-${env}-customResolvers",
+                        "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:GetDisputesCustomResolver-${env}",
                         {
                           "env": {
                             "Ref": "env"
@@ -287,7 +287,7 @@
         ]
       }
     },
-    "QueryCustomResolversResolver": {
+    "QueryGetDisputesResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
         "ApiId": {
@@ -295,15 +295,15 @@
         },
         "DataSourceName": {
           "Fn::GetAtt": [
-            "CustomResolversLambdaDataSource",
+            "GetDisputesLambdaDataSource",
             "Name"
           ]
         },
         "TypeName": "Query",
-        "FieldName": "customResolvers",
+        "FieldName": "getDisputes",
         "RequestMappingTemplateS3Location": {
           "Fn::Sub": [
-            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.customresolvers.req.vtl",
+            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.getdisputes.req.vtl",
             {
               "S3DeploymentBucket": {
                 "Ref": "S3DeploymentBucket"
@@ -316,7 +316,7 @@
         },
         "ResponseMappingTemplateS3Location": {
           "Fn::Sub": [
-            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.customresolvers.res.vtl",
+            "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Query.getdisputes.res.vtl",
             {
               "S3DeploymentBucket": {
                 "Ref": "S3DeploymentBucket"

@@ -100,6 +100,21 @@
         }
       ],
       "lastDevBuildTimeStamp": "2021-06-25T23:14:35.934Z"
+    },
+    "GetDisputesCustomResolver": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "braveapp",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ]
     }
   },
   "storage": {

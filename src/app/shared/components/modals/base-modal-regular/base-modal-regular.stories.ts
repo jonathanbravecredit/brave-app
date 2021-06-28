@@ -16,6 +16,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [
+         BaseModalRegularComponent,
         FilledOnlytextButtonComponent,
         LinksOnlytextButtonComponent,
         FilledOnlytextButtonPipe,
@@ -39,7 +40,7 @@ const config: IBaseModalRegularConfig = {
 const Template: Story<BaseModalRegularComponent> = (args: any) => ({
   props: {
     ...args,
-    config,
+    config
   },
   template: `<brave-base-modal-regular [config]="config"></brave-base-modal-regular>`,
 });

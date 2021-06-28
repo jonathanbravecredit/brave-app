@@ -2,7 +2,7 @@
   <div>
     <div class="border-t border-blueGray-300 py-2"></div>
     <span>
-      <p class="text-sm font-semibold">{{ creditorName }}</p>
+      <p class="text-sm font-semibold">{{ data.creditorName }}</p>
     </span>
     <div class="grid grid-cols-2 gap-4 mb-2">
       <span>
@@ -10,31 +10,31 @@
       </span>
       <span>
         <p class="text-sm font-semibold text-right">
-          {{ lastReported }}
+          {{ data.lastReported }}
         </p>
       </span>
       <span>
-        <p class="text-xs text-dk-gray">{{ accountTypeDescription }}</p>
+        <p class="text-xs text-dk-gray">{{ data.accountTypeDescription }}</p>
       </span>
       <span>
         <p class="text-xs text-dk-gray text-opacity-50 text-right">
-          {{ accountTypeDescriptionValue }}
+          {{ data.accountTypeDescriptionValue }}
         </p>
       </span>
       <span>
-        <p class="text-xs text-dk-gray">{{ disputeFlag }}</p>
+        <p class="text-xs text-dk-gray">{{ data.disputeFlag }}</p>
       </span>
       <span>
         <p class="text-xs text-dk-gray text-opacity-50 text-right">
-          {{ disputeFlagValue }}
+          {{ data.disputeFlagValue }}
         </p>
       </span>
       <span>
-        <p class="text-xs text-dk-gray">{{ originalCreditor }}</p>
+        <p class="text-xs text-dk-gray">{{ data.originalCreditor }}</p>
       </span>
       <span>
         <p class="text-xs text-dk-gray text-opacity-50 text-right">
-          {{ originalCreditorValue }}
+          {{ data.originalCreditorValue }}
         </p>
       </span>
     </div>
@@ -42,8 +42,9 @@
       <brave-viewdetail-button #viewDetail class="w-full" size="full">View Detail</brave-viewdetail-button>
     </div>
     <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full">
-      <div class="flex justify-center mb-8 px-16">
-        <brave-filled-onlytext-button class="w-100" [config]="{'buttonSize': 'sm', 'backgroundColor': 'bg-indigo-800', 'color':'text-white', 'activeColor': 'bg-indigo-800', 'full': true}">Dispute</brave-filled-onlytext-button>
+      <div class="flex justify-center mb-8 px-16" *ngIf="showDisputeButton">
+        <brave-filled-onlytext-button  class="w-100" (click)="showModal = true" [config]="{'buttonSize': 'sm', 'backgroundColor': 'bg-indigo-800', 'color':'text-white', 'activeColor': 'bg-indigo-800', 'full': true}">Dispute</brave-filled-onlytext-button>
+        <brave-onboarding-dispute class="w-device h-device fixed"[showModal]="showModal" (confirmation)="actionForDispute($event)"></brave-onboarding-dispute>
       </div>
       <span>
         <p class="text-lg">Account Details</p>
@@ -55,7 +56,7 @@
         </span>
         <span>
           <p class="text-xs text-dk-gray text-opacity-50 text-right">
-            {{ accountNumber }}
+            {{ data.accountDetail?.accountNumber }}
           </p>
         </span>
       </div>
@@ -66,7 +67,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ typeOfCollection }}
+            {{ data.accountDetail?.typeOfCollection }}
           </p>
         </span>
       </div>
@@ -77,7 +78,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ "$" + amountPastDue }}
+            {{ "$" + data.accountDetail?.amountPastDue }}
           </p>
         </span>
       </div>
@@ -88,7 +89,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ dateOpened }}
+            {{ data.accountDetail?.dateOpened }}
           </p>
         </span>
       </div>
@@ -99,7 +100,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ dateLastPayment }}
+            {{ data.accountDetail?.dateLastPayment }}
           </p>
         </span>
       </div>
@@ -110,7 +111,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ remarks }}
+            {{ data.accountDetail?.remarks }}
           </p>
         </span>
       </div>

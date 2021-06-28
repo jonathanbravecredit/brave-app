@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { BehaviorSubject } from 'rxjs';
+import { IOnboardingEvent, OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 
 export interface INegativeAccountCardInputs {
   creditorName?: string;
@@ -11,7 +11,7 @@ export interface INegativeAccountCardInputs {
   originalCreditorValue?: string;
   disputeFlag?: string;
   disputeFlagValue?: string;
-  accountDetail?: {
+  accountDetail: {
     accountNumber?: string;
     typeOfCollection?: string;
     amountPastDue?: number | string;
@@ -27,25 +27,37 @@ export interface INegativeAccountCardInputs {
   styleUrls: ['./negative-account-card.component.css'],
 })
 export class NegativeAccountCardComponent {
-  @Input() creditorName: string = '';
-  @Input() lastReported: string = '';
-  @Input() originalCreditor: string = '';
-  @Input() originalCreditorValue: string = '';
-  @Input() accountTypeDescription: string = '';
-  @Input() accountTypeDescriptionValue: string = '';
-  @Input() disputeFlag: string = '';
-  @Input() disputeFlagValue: string = '';
+  @ViewChild(OnboardingDisputeComponent)
+  disputeTermsModal: OnboardingDisputeComponent | undefined;
+  @Input() showDisputeButton = true;
+  @Input() data: INegativeAccountCardInputs = {
+    creditorName: '',
+    lastReported: '',
+    originalCreditor: '',
+    originalCreditorValue: '',
+    accountTypeDescription: '',
+    accountTypeDescriptionValue: '',
+    disputeFlag: '',
+    disputeFlagValue: '',
+    accountDetail: {
+      accountNumber: '',
+      typeOfCollection: '',
+      amountPastDue: 0,
+      dateOpened: '20/02/2021',
+      dateLastPayment: '20/02/2021',
+      remarks: ''
+    }
+  }
 
-  // Detail Information
-  @Input() accountNumber = '';
-  @Input() typeOfCollection = '';
-  @Input() amountPastDue: string | number = 0;
-  @Input() dateOpened = '20/02/2021';
-  @Input() dateLastPayment = '20/02/2021';
-  @Input() remarks = '';
+
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
-
+  showModal = false;
   constructor() {}
 
+  actionForDispute(e: IOnboardingEvent) {
+    if (e.isConfirmed) {
+      console.log('confirmed');
+    }
+  }
 }
