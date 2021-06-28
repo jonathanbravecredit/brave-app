@@ -42,9 +42,16 @@ const getDisputesFromDB = (id) => {
         .catch((err) => err);
 };
 exports.getDisputesFromDB = getDisputesFromDB;
-const putDisputesInDB = (id, disputes) => {
+/**
+ *
+ * @param id
+ * @param {string} msg JSON string representing Dispute object TODO add in ajv...https://www.npmjs.com/package/ajv
+ * @returns
+ */
+const putDisputesInDB = (id, msg) => {
     let now = Date.now();
     let timeStamp = new Date(now);
+    const disputes = JSON.parse(msg);
     const params = {
         TableName: table,
         Key: {
@@ -70,7 +77,7 @@ const putDisputesInDB = (id, disputes) => {
         .catch((err) => err);
 };
 exports.putDisputesInDB = putDisputesInDB;
-const patchDisputesInDB = async (id, disputes) => {
+const patchDisputesInDB = async (id, msg) => {
     let now = Date.now();
     let timeStamp = new Date(now);
     const getParams = {
@@ -79,6 +86,7 @@ const patchDisputesInDB = async (id, disputes) => {
             id: id,
         },
     };
+    const disputes = JSON.parse(msg);
     let patched = {};
     try {
         const prior = await exports.getDisputesFromDB(id);

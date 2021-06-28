@@ -13,10 +13,10 @@ const resolvers = {
     },
     Mutation: {
         createDisputes: (event) => {
-            return dispute_queries_1.putDisputesInDB(event.arguments.id, event.arguments.disputes);
+            return dispute_queries_1.putDisputesInDB(event.arguments.id, event.arguments.msg);
         },
         patchDisputes: (event) => {
-            return dispute_queries_1.patchDisputesInDB(event.arguments.id, event.arguments.disputes);
+            return dispute_queries_1.patchDisputesInDB(event.arguments.id, event.arguments.msg);
         },
     },
 };
