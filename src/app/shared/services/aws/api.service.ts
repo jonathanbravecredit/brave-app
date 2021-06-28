@@ -82,10 +82,7 @@ export type TransunionInput = {
   enrollReport?: TUEnrollResponseInput | null;
   enrollMergeReport?: TUEnrollResponseInput | null;
   enrollVantageScore?: TUEnrollResponseInput | null;
-  hidePositiveCreditCardAccounts?: boolean | null;
-  hidePositiveCollectionAccounts?: boolean | null;
-  hidePositiveInstallmentAccounts?: boolean | null;
-  hidePositiveMortgageAccounts?: boolean | null;
+  disputes?: DisputesInput | null;
 };
 
 export type TUEnrollResponseInput = {
@@ -97,6 +94,19 @@ export type TUEnrollResponseInput = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type DisputesInput = {
+  disputePreflightStatus?: string | null;
+  disputeInflightStatus?: string | null;
+  disputeEligibility?: string | null;
+  disputeResults?: string | null;
+  disputeHistory?: Array<string | null> | null;
+  modifiedOn?: number | null;
+  createdOn?: number | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: number | null;
 };
 
 export type EquifaxInput = {
@@ -112,10 +122,10 @@ export type PreferencesInput = {
 };
 
 export type ShowAccountsPreferenceInput = {
-  hideCreditCardAccounts?: boolean | null;
-  hideCollectionsAccounts?: boolean | null;
-  hideInstallmentAccounts?: boolean | null;
-  hideMortgageAccounts?: boolean | null;
+  creditCards?: boolean | null;
+  collectionsAccounts?: boolean | null;
+  installmentLoans?: boolean | null;
+  mortgages?: boolean | null;
 };
 
 export type ModelAppDataConditionInput = {
@@ -211,10 +221,7 @@ export type Transunion = {
   enrollReport?: TUEnrollResponse;
   enrollMergeReport?: TUEnrollResponse;
   enrollVantageScore?: TUEnrollResponse;
-  hidePositiveCreditCardAccounts?: boolean | null;
-  hidePositiveCollectionAccounts?: boolean | null;
-  hidePositiveInstallmentAccounts?: boolean | null;
-  hidePositiveMortgageAccounts?: boolean | null;
+  disputes?: Disputes;
 };
 
 export type TUEnrollResponse = {
@@ -227,6 +234,20 @@ export type TUEnrollResponse = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type Disputes = {
+  __typename: "Disputes";
+  disputePreflightStatus?: string | null;
+  disputeInflightStatus?: string | null;
+  disputeEligibility?: string | null;
+  disputeResults?: string | null;
+  disputeHistory?: Array<string | null> | null;
+  modifiedOn?: number | null;
+  createdOn?: number | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: number | null;
 };
 
 export type Equifax = {
@@ -246,10 +267,10 @@ export type Preferences = {
 
 export type ShowAccountsPreference = {
   __typename: "ShowAccountsPreference";
-  hideCreditCardAccounts?: boolean | null;
-  hideCollectionsAccounts?: boolean | null;
-  hideInstallmentAccounts?: boolean | null;
-  hideMortgageAccounts?: boolean | null;
+  creditCards?: boolean | null;
+  collectionsAccounts?: boolean | null;
+  installmentLoans?: boolean | null;
+  mortgages?: boolean | null;
 };
 
 export type UpdateAppDataInput = {
@@ -404,10 +425,19 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -422,10 +452,10 @@ export type CreateAppDataMutation = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -522,10 +552,19 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -540,10 +579,10 @@ export type UpdateAppDataMutation = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -640,10 +679,19 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -658,10 +706,10 @@ export type DeleteAppDataMutation = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -758,10 +806,19 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -776,10 +833,10 @@ export type GetAppDataQuery = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -878,10 +935,19 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
-        hidePositiveCreditCardAccounts?: boolean | null;
-        hidePositiveCollectionAccounts?: boolean | null;
-        hidePositiveInstallmentAccounts?: boolean | null;
-        hidePositiveMortgageAccounts?: boolean | null;
+        disputes?: {
+          __typename: "Disputes";
+          disputePreflightStatus?: string | null;
+          disputeInflightStatus?: string | null;
+          disputeEligibility?: string | null;
+          disputeResults?: string | null;
+          disputeHistory?: Array<string | null> | null;
+          modifiedOn?: number | null;
+          createdOn?: number | null;
+          notificationStatus?: string | null;
+          notificationMessage?: string | null;
+          notificationSentOn?: number | null;
+        } | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -896,10 +962,10 @@ export type ListAppDatasQuery = {
       __typename: "Preferences";
       showAllAccounts?: {
         __typename: "ShowAccountsPreference";
-        hideCreditCardAccounts?: boolean | null;
-        hideCollectionsAccounts?: boolean | null;
-        hideInstallmentAccounts?: boolean | null;
-        hideMortgageAccounts?: boolean | null;
+        creditCards?: boolean | null;
+        collectionsAccounts?: boolean | null;
+        installmentLoans?: boolean | null;
+        mortgages?: boolean | null;
       } | null;
     };
     createdAt: string;
@@ -998,10 +1064,19 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1016,10 +1091,10 @@ export type OnCreateAppDataSubscription = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1116,10 +1191,19 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1134,10 +1218,10 @@ export type OnUpdateAppDataSubscription = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1234,10 +1318,19 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      hidePositiveCreditCardAccounts?: boolean | null;
-      hidePositiveCollectionAccounts?: boolean | null;
-      hidePositiveInstallmentAccounts?: boolean | null;
-      hidePositiveMortgageAccounts?: boolean | null;
+      disputes?: {
+        __typename: "Disputes";
+        disputePreflightStatus?: string | null;
+        disputeInflightStatus?: string | null;
+        disputeEligibility?: string | null;
+        disputeResults?: string | null;
+        disputeHistory?: Array<string | null> | null;
+        modifiedOn?: number | null;
+        createdOn?: number | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: number | null;
+      } | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1252,10 +1345,10 @@ export type OnDeleteAppDataSubscription = {
     __typename: "Preferences";
     showAllAccounts?: {
       __typename: "ShowAccountsPreference";
-      hideCreditCardAccounts?: boolean | null;
-      hideCollectionsAccounts?: boolean | null;
-      hideInstallmentAccounts?: boolean | null;
-      hideMortgageAccounts?: boolean | null;
+      creditCards?: boolean | null;
+      collectionsAccounts?: boolean | null;
+      installmentLoans?: boolean | null;
+      mortgages?: boolean | null;
     } | null;
   };
   createdAt: string;
@@ -1361,10 +1454,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -1379,10 +1481,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1495,10 +1597,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -1513,10 +1624,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1629,10 +1740,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -1647,10 +1767,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1773,10 +1893,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -1791,10 +1920,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -1907,10 +2036,19 @@ export class APIService {
                   serviceProductValue
                   status
                 }
-                hidePositiveCreditCardAccounts
-                hidePositiveCollectionAccounts
-                hidePositiveInstallmentAccounts
-                hidePositiveMortgageAccounts
+                disputes {
+                  __typename
+                  disputePreflightStatus
+                  disputeInflightStatus
+                  disputeEligibility
+                  disputeResults
+                  disputeHistory
+                  modifiedOn
+                  createdOn
+                  notificationStatus
+                  notificationMessage
+                  notificationSentOn
+                }
               }
               equifax {
                 __typename
@@ -1925,10 +2063,10 @@ export class APIService {
               __typename
               showAllAccounts {
                 __typename
-                hideCreditCardAccounts
-                hideCollectionsAccounts
-                hideInstallmentAccounts
-                hideMortgageAccounts
+                creditCards
+                collectionsAccounts
+                installmentLoans
+                mortgages
               }
             }
             createdAt
@@ -2046,10 +2184,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2064,10 +2211,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -2177,10 +2324,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2195,10 +2351,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt
@@ -2308,10 +2464,19 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              hidePositiveCreditCardAccounts
-              hidePositiveCollectionAccounts
-              hidePositiveInstallmentAccounts
-              hidePositiveMortgageAccounts
+              disputes {
+                __typename
+                disputePreflightStatus
+                disputeInflightStatus
+                disputeEligibility
+                disputeResults
+                disputeHistory
+                modifiedOn
+                createdOn
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2326,10 +2491,10 @@ export class APIService {
             __typename
             showAllAccounts {
               __typename
-              hideCreditCardAccounts
-              hideCollectionsAccounts
-              hideInstallmentAccounts
-              hideMortgageAccounts
+              creditCards
+              collectionsAccounts
+              installmentLoans
+              mortgages
             }
           }
           createdAt

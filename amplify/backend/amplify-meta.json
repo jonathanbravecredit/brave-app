@@ -84,6 +84,22 @@
         "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
         "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
       }
+    },
+    "GraphQLResolverFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "braveapp",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ],
+      "lastDevBuildTimeStamp": "2021-06-25T23:14:35.934Z"
     }
   },
   "storage": {

@@ -78,10 +78,18 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -92,10 +100,10 @@ query GetAppData($id: ID!) {
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -184,10 +192,18 @@ query ListAppDatas(
             serviceProductValue
             status
           }
-          hidePositiveCreditCardAccounts
-          hidePositiveCollectionAccounts
-          hidePositiveInstallmentAccounts
-          hidePositiveMortgageAccounts
+          disputes {
+            disputePreflightStatus
+            disputeInflightStatus
+            disputeEligibility
+            disputeResults
+            disputeHistory
+            modifiedOn
+            createdOn
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
         }
         equifax {
           authenticated
@@ -198,10 +214,10 @@ query ListAppDatas(
       }
       preferences {
         showAllAccounts {
-          hideCreditCardAccounts
-          hideCollectionsAccounts
-          hideInstallmentAccounts
-          hideMortgageAccounts
+          creditCards
+          collectionsAccounts
+          installmentLoans
+          mortgages
         }
       }
       createdAt

@@ -78,10 +78,18 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -92,10 +100,10 @@ mutation CreateAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -182,10 +190,18 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -196,10 +212,10 @@ mutation UpdateAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -286,10 +302,18 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -300,10 +324,10 @@ mutation DeleteAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
