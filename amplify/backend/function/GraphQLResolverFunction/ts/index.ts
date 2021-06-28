@@ -47,7 +47,7 @@ export const handler: any = async (event: IResolverEvent) => {
     const resolver = typeHandler[event.fieldName];
     if (resolver) {
       try {
-        const results = resolver(event);
+        const results = await resolver(event);
         console.log('results', results);
         return results;
       } catch (err) {
