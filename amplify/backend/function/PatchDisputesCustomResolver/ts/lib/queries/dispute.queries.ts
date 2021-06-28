@@ -1,6 +1,7 @@
 import * as AWS from 'aws-sdk';
 import { GetItemOutput, UpdateItemOutput } from 'aws-sdk/clients/dynamodb';
 import { AppData, DisputesInput } from 'lib/aws/api.types';
+import { returnNestedObject } from 'lib/utils/helpers';
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 const table = `AppData-${process.env.API_BRAVEAPP_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 
@@ -65,6 +66,10 @@ export const patchDisputesInDB = async (id: string, msg: string): Promise<Update
   return db
     .update(updateParams)
     .promise()
-    .then((res) => res)
+    .then((res: UpdateItemOutput) => {
+      const attrs = res.Attributes;
+      const disputes = returnNestedObject(attrs, 'disputes');
+      return disputes;
+    })
     .catch((err) => err);
 };
