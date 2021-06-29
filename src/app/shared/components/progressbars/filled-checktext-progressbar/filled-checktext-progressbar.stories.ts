@@ -31,6 +31,7 @@ const steps: IProgressStep[] = [
   { id: 3, active: false, complete: false, name: 'step 4' },
   { id: 4, active: false, complete: false, name: 'step 5' },
 ]; // pre-populated only for storybook visuals
+
 const Template: Story<FilledChecktextProgressbarComponent> = (args: any) => ({
   component: FilledChecktextProgressbarComponent,
   props: {

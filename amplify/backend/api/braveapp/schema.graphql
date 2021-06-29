@@ -1,3 +1,14 @@
+type Query {
+  transunion(action: String!, message: String!): String
+  getDisputes(id: ID!): Disputes
+}
+
+type Mutation {
+  createDisputes(id: ID!, msg: String): Disputes
+  patchDisputes(id: ID!, msg: String): Disputes
+  patchTransunion(id: ID!, msg: String): Transunion
+}
+
 type AppData
   @model
   @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }]) {

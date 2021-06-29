@@ -1,3 +1,4 @@
+import { DisputesInput } from '@shared/services/aws/api.service';
 import { AgenciesStateModel } from '@store/agencies';
 
 export class Add {
@@ -7,9 +8,7 @@ export class Add {
 
 export class Edit {
   static readonly type = '[Agencies] Edit';
-  constructor(
-    public payload: AgenciesStateModel | Partial<AgenciesStateModel>
-  ) {}
+  constructor(public payload: AgenciesStateModel | Partial<AgenciesStateModel>) {}
 }
 
 export class Delete {
@@ -25,4 +24,9 @@ export class EditTransunionQuestions {
 export class EditTransunionAuthDetails {
   static readonly type = '[Agencies] EditTransunionAuthDetails';
   constructor(public payload: { currentRawAuthDetails: string }) {}
+}
+
+export class EditTransunionDisputes {
+  static readonly type = '[Agencies] EditTransunionDisputes';
+  constructor(public payload: DisputesInput) {}
 }

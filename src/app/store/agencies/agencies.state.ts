@@ -12,20 +12,14 @@ export class AgenciesState {
   constructor() {}
 
   @Action(AgenciesActions.Add)
-  addAgencies(
-    ctx: StateContext<AgenciesStateModel>,
-    { payload }: AgenciesActions.Add
-  ) {
+  addAgencies(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.Add) {
     ctx.patchState({
       ...payload,
     });
   }
 
   @Action(AgenciesActions.Edit)
-  updateAgencies(
-    ctx: StateContext<AgenciesStateModel>,
-    { payload }: AgenciesActions.Edit
-  ) {
+  updateAgencies(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.Edit) {
     ctx.patchState({
       ...payload,
     });
@@ -42,7 +36,7 @@ export class AgenciesState {
   @Action(AgenciesActions.EditTransunionQuestions)
   updateTransunionQuestions(
     ctx: StateContext<AgenciesStateModel>,
-    { payload }: AgenciesActions.EditTransunionQuestions
+    { payload }: AgenciesActions.EditTransunionQuestions,
   ) {
     const state = ctx.getState();
     ctx.patchState({
@@ -57,7 +51,7 @@ export class AgenciesState {
   @Action(AgenciesActions.EditTransunionAuthDetails)
   updateTransunionAuthDetails(
     ctx: StateContext<AgenciesStateModel>,
-    { payload }: AgenciesActions.EditTransunionAuthDetails
+    { payload }: AgenciesActions.EditTransunionAuthDetails,
   ) {
     const state = ctx.getState();
     ctx.patchState({
@@ -65,6 +59,18 @@ export class AgenciesState {
       transunion: {
         ...state.transunion,
         ...payload,
+      },
+    });
+  }
+
+  @Action(AgenciesActions.EditTransunionDisputes)
+  updateTransunionDisputes(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.EditTransunionDisputes) {
+    const state = ctx.getState();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        disputes: payload,
       },
     });
   }
