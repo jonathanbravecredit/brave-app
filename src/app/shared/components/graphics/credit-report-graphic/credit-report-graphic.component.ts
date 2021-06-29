@@ -6,14 +6,15 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./credit-report-graphic.component.css']
 })
 export class CreditReportGraphicComponent implements OnInit {
-  @Input() base: number = 0;
-  @Input() limit: number = 0;
-  @Input() currentValue: number = 0;
-  percentage = this.currentValue / this.limit;
-  
+  @Input() base = 0;
+  @Input() limit = 800;
+  @Input() currentValue = 0;
+  percentage = 0;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.percentage = this.currentValue / this.limit;
   }
 
 }
