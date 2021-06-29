@@ -7,12 +7,10 @@ import {
   CreateAppDataInput,
   CreateAppDataMutation,
   GetAppDataQuery,
-  UpdateAppDataInput,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
-import { AppDataSelectors, AppDataStateModel } from '@store/app-data';
+import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -92,14 +90,14 @@ export class SyncService {
           experian: { authenticated: false },
           equifax: { authenticated: false },
         },
-        // preferences: {
-        //   showAllAccounts: {
-        //     creditCards: false,
-        //     collectionsAccounts: false,
-        //     installmentLoans: false,
-        //     mortgages: false,
-        //   },
-        // },
+        preferences: {
+          showAllAccounts: {
+            creditCards: false,
+            collectionsAccounts: false,
+            installmentLoans: false,
+            mortgages: false,
+          },
+        },
       };
       console.log('input', input);
       const data = await this.api.CreateAppData(input);

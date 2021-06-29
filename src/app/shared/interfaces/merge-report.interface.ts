@@ -32,6 +32,10 @@ export interface IBorrower {
     Source?: ISource;
   };
   CreditScore?: {
+    riskScore: number | string;
+    scoreName: string;
+    populationRank: number | string;
+    inquiriesAffectedScore: boolean | string;
     CreditScoreFactor?: ICreditScoreFactor[];
     CreditScoreMode?: string;
     NoScoreReason?: string;

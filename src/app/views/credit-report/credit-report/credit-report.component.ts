@@ -15,10 +15,7 @@ export class CreditReportComponent implements OnInit {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
 
-  constructor(
-    private creditReportService: CreditreportService,
-    private store: Store
-  ) {
+  constructor(private creditReportService: CreditreportService, private store: Store) {
     this.creditReport$ = this.creditReportService.tuReport$.pipe();
     this.preferences$ = this.creditReportService.preferences$.pipe();
   }

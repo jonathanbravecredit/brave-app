@@ -1,4 +1,85 @@
 # this is an auto generated file. This will be overwritten
+mutation CreateDisputes($id: ID!, $msg: String) {
+  createDisputes(id: $id, msg: $msg) {
+    disputePreflightStatus
+    disputeInflightStatus
+    disputeEligibility
+    disputeResults
+    disputeHistory
+    modifiedOn
+    createdOn
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+  }
+}
+mutation PatchDisputes($id: ID!, $msg: String) {
+  patchDisputes(id: $id, msg: $msg) {
+    disputePreflightStatus
+    disputeInflightStatus
+    disputeEligibility
+    disputeResults
+    disputeHistory
+    modifiedOn
+    createdOn
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+  }
+}
+mutation PatchTransunion($id: ID!, $msg: String) {
+  patchTransunion(id: $id, msg: $msg) {
+    authenticated
+    indicativeEnrichmentSuccess
+    getAuthenticationQuestionsSuccess
+    serviceBundleFulfillmentKey
+    currentRawQuestions
+    currentRawAuthDetails
+    enrollmentKey
+    enrollReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    enrollMergeReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    enrollVantageScore {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    disputes {
+      disputePreflightStatus
+      disputeInflightStatus
+      disputeEligibility
+      disputeResults
+      disputeHistory
+      modifiedOn
+      createdOn
+      notificationStatus
+      notificationMessage
+      notificationSentOn
+    }
+  }
+}
 mutation CreateAppData(
   $input: CreateAppDataInput!
   $condition: ModelAppDataConditionInput
@@ -78,12 +159,32 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -170,12 +271,32 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -262,12 +383,32 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
