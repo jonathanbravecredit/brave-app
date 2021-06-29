@@ -4,34 +4,22 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () =>
-      import('./layouts/authentication/authentication.module').then(
-        (m) => m.AuthenticationModule
-      ),
+    loadChildren: () => import('./layouts/authentication/authentication.module').then((m) => m.AuthenticationModule),
   },
   {
     path: 'onboarding',
-    loadChildren: () =>
-      import('./layouts/onboarding/onboarding.module').then(
-        (m) => m.OnboardingModule
-      ),
+    loadChildren: () => import('./layouts/onboarding/onboarding.module').then((m) => m.OnboardingModule),
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./layouts/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+    loadChildren: () => import('./layouts/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'legal',
-    loadChildren: () =>
-      import('./layouts/compliance/compliance.module').then(
-        (m) => m.ComplianceModule
-      ),
+    loadChildren: () => import('./layouts/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
-  // { path: '', component: IndexComponent }, // TODO: replace with better page
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
+  { path: '**', redirectTo: '' }, // TODO: replace with page not found
 ];
 
 @NgModule({
