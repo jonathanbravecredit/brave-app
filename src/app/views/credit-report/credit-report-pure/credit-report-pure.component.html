@@ -1,9 +1,7 @@
 <div class="container mx-auto max-w-xs h-full">
   <div class="p-4">
     <span class="text-lg">Your TransUnion Credit Report</span>
-    <div class="w-full h-40 bg-gray-400 mt-4">
-      <!-- Placeholder -->
-    </div>
+      <brave-credit-report-graphic class="w-full mt-4" [currentValue]="creditReportScore"></brave-credit-report-graphic>
     <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
   </div>
   <div class="p-4" *ngFor="let report of creditReports">

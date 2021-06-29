@@ -4,6 +4,7 @@
       (hide)="onHide($event)"
       [preferences]="preferences"
       [creditReports]="creditReports | creditReport: preferences"
+      [creditReportScore]="creditReports.TrueLinkCreditReportType.Borrower?.CreditScore?.riskScore"
     ></brave-credit-report-pure>
   </div>
 </div>
