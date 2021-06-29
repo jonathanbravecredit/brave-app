@@ -1,3 +1,5 @@
+import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/snapshot-display-card.component';
+
 export const PAY_STATUS_CODES: Record<string, any> = {
   U: `No Data / Unknown`,
   C: `Current`,

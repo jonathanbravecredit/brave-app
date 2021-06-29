@@ -22,5 +22,7 @@ export class CreditReportPureComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('creditReports', this.creditReports);
+  }
 }

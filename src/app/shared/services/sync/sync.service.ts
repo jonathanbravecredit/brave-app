@@ -92,10 +92,10 @@ export class SyncService {
         },
         preferences: {
           showAllAccounts: {
-            creditCards: false,
-            collectionsAccounts: false,
-            installmentLoans: false,
-            mortgages: false,
+            creditCards: true,
+            collectionsAccounts: true,
+            installmentLoans: true,
+            mortgages: true,
           },
         },
       };

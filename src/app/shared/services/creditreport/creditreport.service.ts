@@ -40,23 +40,20 @@ export class CreditreportService implements OnDestroy {
   preferencesSub$: Subscription;
 
   constructor() {
-    this.agenciesSub$ = this.agencies$
-      .pipe()
-      .subscribe((agencies: AgenciesStateModel) => {
-        const tu = this.getTransunion(agencies);
-        this.tuAgency$.next(tu);
-        this.tuAgency = tu;
-        const unparsed = this.getUnparsedCreditReport(agencies);
-        const parsedReport = this.parseCreditReport(unparsed['#text']);
-        this.tuReport$.next(parsedReport);
-        this.tuReport = parsedReport;
-      });
-    this.preferencesSub$ = this.preferences$
-      .pipe()
-      .subscribe((pref: PreferencesStateModel) => {
-        this.tuPreferences$.next(pref);
-        this.tuPreferences = pref;
-      });
+    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
+      const tu = this.getTransunion(agencies);
+      this.tuAgency$.next(tu);
+      this.tuAgency = tu;
+      const unparsed = this.getUnparsedCreditReport(agencies);
+      const parsedReport = this.parseCreditReport(unparsed['#text']);
+      console.log('parsedReport', parsedReport);
+      this.tuReport$.next(parsedReport);
+      this.tuReport = parsedReport;
+    });
+    this.preferencesSub$ = this.preferences$.pipe().subscribe((pref: PreferencesStateModel) => {
+      this.tuPreferences$.next(pref);
+      this.tuPreferences = pref;
+    });
   }
 
   ngOnDestroy(): void {
@@ -82,15 +79,9 @@ export class CreditreportService implements OnDestroy {
    */
   getUnparsedCreditReport(agencies: AgenciesStateModel): IUnparsedCreditReport {
     if (!agencies) return JSON.parse('{"#text":""}');
-    const serviceProductString =
-      agencies.transunion?.enrollMergeReport?.serviceProductObject ||
-      '{"#text":""}';
-    const serviceProductObject: IUnparsedCreditReport = JSON.parse(
-      serviceProductString
-    );
-    return serviceProductObject
-      ? serviceProductObject
-      : ({} as IUnparsedCreditReport);
+    const serviceProductString = agencies.transunion?.enrollMergeReport?.serviceProductObject || '{"#text":""}';
+    const serviceProductObject: IUnparsedCreditReport = JSON.parse(serviceProductString);
+    return serviceProductObject ? serviceProductObject : ({} as IUnparsedCreditReport);
   }
 
   /**
@@ -99,10 +90,7 @@ export class CreditreportService implements OnDestroy {
    * @returns
    */
   parseCreditReport(xml: string): IMergeReport {
-    const clean = xml
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&#xD;/g, '');
+    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
     const report: IMergeReport = parser.parse(clean, parserOptions);
     return report;
   }
@@ -113,8 +101,7 @@ export class CreditreportService implements OnDestroy {
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
     if (!this.tuReport) return [{} as ITradeLinePartition];
-    const partitions = this.tuReport?.TrueLinkCreditReportType
-      ?.TradeLinePartition;
+    const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
   }
