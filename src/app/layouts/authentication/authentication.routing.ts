@@ -14,7 +14,7 @@ import { SigninRedirectComponent } from '@views/signin-redirect/signin-redirect.
 const AuthenticationRoutes: Routes = [
   {
     path: '',
-    component: AuthenticationComponent,
+    component: SigninComponent,
     children: [
       { path: 'signup', component: SignupComponent },
       { path: 'signin', component: SigninComponent },
@@ -27,7 +27,7 @@ const AuthenticationRoutes: Routes = [
       { path: 'resend', component: SignupResendComponent },
       {
         path: '',
-        redirectTo: 'auth/signup',
+        redirectTo: 'auth/signin',
         pathMatch: 'full',
       },
     ],

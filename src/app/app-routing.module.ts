@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'legal',
     loadChildren: () => import('./layouts/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
-  { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '**', redirectTo: '' }, // TODO: replace with page not found
 ];
 
