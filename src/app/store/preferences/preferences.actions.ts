@@ -1,4 +1,4 @@
-import { PreferencesStateModel } from '@store/preferences';
+import { PreferencesStateModel } from '@store/preferences/preferences.model';
 
 export class Add {
   static readonly type = '[Preferences] Add';

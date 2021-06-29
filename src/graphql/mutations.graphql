@@ -1,4 +1,32 @@
 # this is an auto generated file. This will be overwritten
+mutation CreateDisputes($id: ID!, $msg: String) {
+  createDisputes(id: $id, msg: $msg) {
+    disputePreflightStatus
+    disputeInflightStatus
+    disputeEligibility
+    disputeResults
+    disputeHistory
+    modifiedOn
+    createdOn
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+  }
+}
+mutation PatchDisputes($id: ID!, $msg: String) {
+  patchDisputes(id: $id, msg: $msg) {
+    disputePreflightStatus
+    disputeInflightStatus
+    disputeEligibility
+    disputeResults
+    disputeHistory
+    modifiedOn
+    createdOn
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+  }
+}
 mutation CreateAppData(
   $input: CreateAppDataInput!
   $condition: ModelAppDataConditionInput
@@ -78,10 +106,18 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -92,10 +128,10 @@ mutation CreateAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -182,10 +218,18 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -196,10 +240,10 @@ mutation UpdateAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -286,10 +330,18 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
-        hidePositiveCreditCardAccounts
-        hidePositiveCollectionAccounts
-        hidePositiveInstallmentAccounts
-        hidePositiveMortgageAccounts
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -300,10 +352,10 @@ mutation DeleteAppData(
     }
     preferences {
       showAllAccounts {
-        hideCreditCardAccounts
-        hideCollectionsAccounts
-        hideInstallmentAccounts
-        hideMortgageAccounts
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt

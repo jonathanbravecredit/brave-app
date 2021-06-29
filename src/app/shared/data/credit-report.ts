@@ -1,4 +1,4 @@
-export const enum CreditReportGroups {
+export enum CreditReportGroups {
   CreditCards = 'creditCards',
   CollectionsAccounts = 'collectionsAccounts',
   InstallmentLoans = 'installmentLoans',

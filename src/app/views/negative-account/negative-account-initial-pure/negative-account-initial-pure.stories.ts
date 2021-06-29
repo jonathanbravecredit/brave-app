@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { NegativeAccountInitialPureComponent } from '@views/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
 
 export default {
   title: 'app/views/negative-account/initial',
@@ -22,23 +23,47 @@ export default {
   ],
 } as Meta;
 
+const cards: INegativeAccountCardInputs[] = [
+  {
+    creditorName: 'ABC Collections',
+    lastReported: '2020-01-01',
+    accountTypeDescription: 'Collections Account',
+    accountTypeDescriptionValue: 'Open',
+    originalCreditor: 'Original Creditor',
+    originalCreditorValue: 'Loans R Us',
+    disputeFlag: 'Previously Disputed',
+    disputeFlagValue: 'No',
+    accountDetail: {
+      accountNumber: '12345678',
+      typeOfCollection: 'Collections',
+      amountPastDue: '700',
+      dateOpened: '2017-01-01',
+      dateLastPayment: '2019-01-01',
+    },
+  },
+  {
+    creditorName: 'XYZ Collections',
+    lastReported: '2020-01-01',
+    accountTypeDescription: 'Collections Account',
+    accountTypeDescriptionValue: 'Open',
+    originalCreditor: 'Original Creditor',
+    originalCreditorValue: 'Loans R Us',
+    disputeFlag: 'Previously Disputed',
+    disputeFlagValue: 'No',
+    accountDetail: {
+      accountNumber: '12345678',
+      typeOfCollection: 'Collections',
+      amountPastDue: '700',
+      dateOpened: '2017-01-01',
+      dateLastPayment: '2019-01-01',
+    },
+  },
+];
 const Template: Story<NegativeAccountInitialPureComponent> = (args: any) => ({
   component: NegativeAccountInitialPureComponent,
   props: {
     ...args,
-    creditorName: 'Hj National Collections',
-    lastReported: '29/09/2020',
-    accountTypeDescription: 'Collections Account',
-    accountTypeDescriptionValue: 'Open',
-    originalCreditor: 'Original Creditor',
-    originalCreditorValue: 'Wells Fargo Bank, N.A.',
-    disputeFlag: 'Previously Disputed?',
-    disputeFlagValue: 'No',
-    accountNumber: '066611222',
-    typeOfCollection: 'Collections',
-    amountPastDue: '700',
-    dateOpened: '04/12/2018',
-    dateLastPayment: '04/21/2018',
+    cards,
   },
 });
 
