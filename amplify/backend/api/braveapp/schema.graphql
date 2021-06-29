@@ -4,8 +4,9 @@ type Query {
 }
 
 type Mutation {
-  createDisputes(id: ID!, msg: String): Disputes @function(name: "api-endpoints-${env}-customResolvers")
-  patchDisputes(id: ID!, msg: String): Disputes @function(name: "api-endpoints-${env}-customResolvers")
+  createDisputes(id: ID!, msg: String): Disputes
+  patchDisputes(id: ID!, msg: String): Disputes
+  patchTransunion(id: ID!, msg: String): Transunion
 }
 
 type AppData
