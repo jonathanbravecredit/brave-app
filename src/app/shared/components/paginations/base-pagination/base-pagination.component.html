@@ -1,0 +1,27 @@
+<nav class="flex items-center" aria-label="Pagination">
+  <button class="mr-2 flex items-center" (click)="navigate('back')">
+    <!-- Prev Icon using Material Icon -->
+    <span class="material-icons-outlined {{ color | basePagination: 'text-class': true }}">
+      {{ baseConfiguration.prevIconName }}
+    </span>
+  </button>
+  <div class="flex">
+    <!-- List number pages // 1, 2, 3, 4 or * * * * * -->
+    <ng-template ngFor let-page [ngForOf]="localPages" let-i="index">
+      <div
+        class="ml-2 mr-2 cursor-pointer h-2 w-2 rounded-full border-none {{ color | basePagination: 'background-class':  localCurrentIndex === i }}"
+        *ngIf="paginationStyle === 'point'" (click)="setActivePage(i)">
+      </div>
+      <span *ngIf="paginationStyle === 'default'" (click)="setActivePage(i)"
+        class="ml-2 mr-2 font-bold {{ color | basePagination: 'text-class': localCurrentIndex === i }}">
+        {{ page }}
+      </span>
+    </ng-template>
+  </div>
+  <!-- Next Icon using Material Icon -->
+  <button class="ml-2 flex items-center" (click)="navigate('forward')">
+    <span class="material-icons-outlined {{ color | basePagination: 'text-class': true }}">
+      {{ baseConfiguration.nextIconName }}
+    </span>
+  </button>
+</nav>

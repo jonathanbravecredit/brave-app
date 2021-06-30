@@ -85,6 +85,8 @@ import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/t
 import { ParseTradelineDetailsPipe } from './tradelines/tradeline-details/parse-tradeline-details.pipe';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
+import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
+import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
 
 const components = [
   BaseFormComponent,
@@ -152,7 +154,8 @@ const components = [
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
-  TradelineRemarksComponent
+  TradelineRemarksComponent,
+  BasePaginationComponent
 ];
 
 // component specific pipes only
@@ -170,6 +173,7 @@ const pipes = [
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
   ParseTradelineDetailsPipe,
+  BasePaginationPipe
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
