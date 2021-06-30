@@ -3,25 +3,15 @@
   <span>Account Details</span>
 </div>
 <div class="card">
-  <div
-    *ngIf="config | parseTradelineDetails as rows"
-    class="divide-y divide-blueGray-300"
-  >
+  <div *ngIf="config | parseTradelineDetails: config.accountTypeSymbol as rows" class="divide-y divide-blueGray-300">
     <div *ngFor="let row of rows" class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="row.label"
-        [value]="row.value"
-      ></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row [label]="row.label" [value]="row.value"></brave-tradeline-detail-row>
     </div>
     <!-- Spacer -->
     <div></div>
   </div>
   <div *ngIf="viewDetail.open$ | async as open">
-    <brave-tradeline-payments
-      [payments]="payments"
-      [remarks]="remarks"
-      [address]="address"
-    ></brave-tradeline-payments>
+    <brave-tradeline-payments [payments]="payments" [remarks]="remarks" [address]="address"></brave-tradeline-payments>
   </div>
   <div class="flex justify-center my-6">
     <brave-viewdetail-button #viewDetail>

@@ -51,7 +51,8 @@ export class CreditReportComponent implements OnInit {
    * @param tradeline
    */
   onViewDetailClick(tradeline: ITradeLinePartition): void {
+    console.log('updating tradeline', tradeline);
     this.creditReportService.setTradeline(tradeline);
-    this.router.navigate(['/report/detail'], { relativeTo: this.route });
+    this.router.navigate(['../report/detail'], { relativeTo: this.route });
   }
 }

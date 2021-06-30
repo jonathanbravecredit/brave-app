@@ -25,12 +25,12 @@ const AuthenticationRoutes: Routes = [
       { path: 'error', component: SignupErrorComponent },
       { path: 'invalid', component: SignupErrorValidationComponent },
       { path: 'resend', component: SignupResendComponent },
-      {
-        path: '',
-        redirectTo: 'auth/signup',
-        pathMatch: 'full',
-      },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'auth/signup',
+    pathMatch: 'full',
   },
 ];
 

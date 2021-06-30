@@ -71,6 +71,11 @@ const OnboardingRoutes: Routes = [
       },
     ],
   },
+  {
+    path: '',
+    redirectTo: 'onboarding/returning',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

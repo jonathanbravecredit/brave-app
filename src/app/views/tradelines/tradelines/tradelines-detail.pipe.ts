@@ -7,7 +7,9 @@ import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 })
 export class TradelinesDetailPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition, ...args: string[]): ITradelineDetailsConfig {
+    console.log('tradeline in pipe', tradeline);
     return {
+      accountTypeSymbol: tradeline.accountTypeSymbol || '',
       creditorName: tradeline.Tradeline?.creditorName || '',
       originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',
       creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',

@@ -8,9 +8,9 @@ import { Observable, of, Subscription } from 'rxjs';
   templateUrl: './tradelines.component.html',
 })
 export class TradelinesComponent implements OnInit {
-  tradeline$: Observable<ITradeLinePartition>;
+  tradeline: ITradeLinePartition;
   constructor(private creditReportServices: CreditreportService) {
-    this.tradeline$ = this.creditReportServices.tuTradeline$.asObservable();
+    this.tradeline = this.creditReportServices.tuTradeline;
   }
 
   ngOnInit(): void {}

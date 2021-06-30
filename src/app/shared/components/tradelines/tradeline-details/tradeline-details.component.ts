@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 export interface IRevolvingTradelineDetails {
+  accountTypeSymbol?: string;
   creditorName?: string;
   dateOpened?: string;
   dateReported?: string;
@@ -16,6 +17,7 @@ export interface IRevolvingTradelineDetails {
 }
 
 export interface IInstallmentTradelineDetails {
+  accountTypeSymbol?: string;
   creditorName?: string;
   dateOpened?: string;
   dateReported?: string;
@@ -32,6 +34,7 @@ export interface IInstallmentTradelineDetails {
 }
 
 export interface ICollectionsTradelineDetails {
+  accountTypeSymbol?: string;
   creditorName?: string;
   originalCreditor?: string;
   creditType?: string;
@@ -44,6 +47,7 @@ export interface ICollectionsTradelineDetails {
 }
 
 export interface ITradelineDetailsConfig {
+  accountTypeSymbol?: string;
   creditorName?: string;
   originalCreditor?: string;
   creditType?: string;
