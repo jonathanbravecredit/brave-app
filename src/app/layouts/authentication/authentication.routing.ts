@@ -16,6 +16,11 @@ const AuthenticationRoutes: Routes = [
     path: '',
     component: AuthenticationComponent,
     children: [
+      {
+        path: '',
+        redirectTo: 'signin',
+        pathMatch: 'full',
+      },
       { path: 'signup', component: SignupComponent },
       { path: 'signin', component: SigninComponent },
       { path: 'forgot', component: SigninForgotComponent },
@@ -26,11 +31,6 @@ const AuthenticationRoutes: Routes = [
       { path: 'invalid', component: SignupErrorValidationComponent },
       { path: 'resend', component: SignupResendComponent },
     ],
-  },
-  {
-    path: '',
-    redirectTo: 'auth/signup',
-    pathMatch: 'full',
   },
 ];
 
