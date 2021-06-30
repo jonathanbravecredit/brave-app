@@ -8,6 +8,8 @@ export enum CreditReportGroups {
 export const CREDIT_REPORT_GROUPS: Record<string, any> = {
   c: { order: 1, group: CreditReportGroups.CreditCards, title: 'Credit Cards' },
   r: { order: 1, group: CreditReportGroups.CreditCards, title: 'Credit Cards' },
+  o: { order: 1, group: CreditReportGroups.CreditCards, title: 'Credit Cards' },
+  u: { order: 1, group: CreditReportGroups.CreditCards, title: 'Credit Cards' },
   y: {
     order: 2,
     group: CreditReportGroups.CollectionsAccounts,

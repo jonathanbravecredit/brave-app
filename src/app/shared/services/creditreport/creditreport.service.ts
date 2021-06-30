@@ -7,10 +7,11 @@ import {
   IUnparsedCreditReport,
 } from '@shared/interfaces/merge-report.interface';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
+import { filter, skip } from 'rxjs/operators';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -27,13 +28,13 @@ const parserOptions = {
 })
 export class CreditreportService implements OnDestroy {
   tuReport: IMergeReport = {} as IMergeReport;
-  tuReport$: Subject<IMergeReport> = new Subject();
+  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
   tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
-  tuTradeline$: Subject<ITradeLinePartition> = new Subject();
+  tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
   tuAgency: TransunionInput = {} as TransunionInput;
-  tuAgency$: Subject<TransunionInput> = new Subject();
+  tuAgency$: BehaviorSubject<TransunionInput> = new BehaviorSubject({} as TransunionInput);
   tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
-  tuPreferences$: Subject<PreferencesStateModel> = new Subject();
+  tuPreferences$: BehaviorSubject<PreferencesStateModel> = new BehaviorSubject({} as PreferencesStateModel);
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;

@@ -23,7 +23,6 @@ export class TradelinesDetailPipe implements PipeTransform {
       amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || 0,
       currentBalance: tradeline.Tradeline?.currentBalance || 0,
       disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',
-      payments: tradeline.Tradeline?.GrantedTrade?.PayStatusHistory,
       status: tradeline.Tradeline?.PayStatus?.symbol || '',
       openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',
     } as ITradelineDetailsConfig;

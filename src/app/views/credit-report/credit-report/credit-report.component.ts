@@ -6,7 +6,7 @@ import { CreditreportService } from '@shared/services/creditreport/creditreport.
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'brave-credit-report',
@@ -22,8 +22,8 @@ export class CreditReportComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.creditReport$ = this.creditReportService.tuReport$.pipe();
-    this.preferences$ = this.creditReportService.preferences$.pipe();
+    this.creditReport$ = this.creditReportService.tuReport$.asObservable();
+    this.preferences$ = this.creditReportService.preferences$;
   }
 
   ngOnInit(): void {}

@@ -83,7 +83,6 @@ import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradel
 import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
 import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
-import { ParseTradelineDetailsPipe } from './tradelines/tradeline-details/parse-tradeline-details.pipe';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 
@@ -154,7 +153,7 @@ const components = [
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
-  TradelineRemarksComponent
+  TradelineRemarksComponent,
 ];
 
 // component specific pipes only
@@ -171,7 +170,6 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
-  ParseTradelineDetailsPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

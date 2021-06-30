@@ -1,9 +1,10 @@
-<div class="container mx-auto max-w-xs h-full">
-  <div *ngIf="tradeline">
+<div style="min-width: 20rem" class="container mx-auto max-w-xs h-full px-4">
+  <ng-container *ngIf="tradeline">
     <brave-tradelines-pure
       [tradeline]="tradeline"
       [details]="tradeline | tradelinesDetail"
+      [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
       [remarks]="tradeline.Tradeline?.Remark?.customRemark || ''"
     ></brave-tradelines-pure>
-  </div>
+  </ng-container>
 </div>
