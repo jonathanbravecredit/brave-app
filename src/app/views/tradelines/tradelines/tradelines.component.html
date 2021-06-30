@@ -1,3 +1,9 @@
 <div class="container mx-auto max-w-xs h-full">
-  <brave-tradelines-pure></brave-tradelines-pure>
+  <div *ngIf="tradeline$ | async as tradeline">
+    <brave-tradelines-pure
+      [tradeline]="tradeline"
+      [details]="tradeline | tradelinesDetail"
+      [remarks]="tradeline.Tradeline?.Remark?.customRemark || ''"
+    ></brave-tradelines-pure>
+  </div>
 </div>

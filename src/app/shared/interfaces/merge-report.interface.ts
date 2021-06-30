@@ -1,8 +1,4 @@
-import {
-  ISource,
-  ICreditScoreFactor,
-  ICreditScoreAttributes,
-} from '@shared/interfaces/common-tu.interface';
+import { ISource, ICreditScoreFactor, ICreditScoreAttributes } from '@shared/interfaces/common-tu.interface';
 
 export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
@@ -12,9 +8,7 @@ export interface ITrueLinkCreditReportType {
   Borrower?: IBorrower;
   TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
   InquiryPartition?: IInquiryPartition;
-  Message?:
-    | { code?: string; type?: string }[]
-    | { code?: string; type?: string };
+  Message?: { code?: string; type?: string }[] | { code?: string; type?: string };
   Summary?: ISummary;
   Sources?: { Source?: ISource };
   SafetyCheckPassed?: boolean | string;
@@ -74,7 +68,7 @@ export interface ITradeline {
   PayStatus?: ICreditScoreAttributes;
   VerificationIndicator?: ICreditScoreAttributes;
   Remark?: ITradelineRemark;
-  GrantedTrade: any;
+  GrantedTrade: IGrantedTrade;
   CollectionTrade?: ITradelineCollection;
   Source?: ISource;
 }

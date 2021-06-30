@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { IMergeReport } from '@shared/interfaces/merge-report.interface';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
@@ -15,7 +16,12 @@ export class CreditReportComponent implements OnInit {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
 
-  constructor(private creditReportService: CreditreportService, private store: Store) {
+  constructor(
+    private creditReportService: CreditreportService,
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
     this.creditReport$ = this.creditReportService.tuReport$.pipe();
     this.preferences$ = this.creditReportService.preferences$.pipe();
   }
@@ -37,5 +43,15 @@ export class CreditReportComponent implements OnInit {
       },
     };
     this.store.dispatch(new PreferenceActions.Edit(updated));
+  }
+
+  /**
+   * When the view detail button is clicked set the tradeline to the one clicked
+   * and navigate to the detail view
+   * @param tradeline
+   */
+  onViewDetailClick(tradeline: ITradeLinePartition): void {
+    this.creditReportService.setTradeline(tradeline);
+    this.router.navigate(['/report/detail'], { relativeTo: this.route });
   }
 }

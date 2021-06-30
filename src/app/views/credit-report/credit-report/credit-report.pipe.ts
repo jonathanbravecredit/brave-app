@@ -118,6 +118,7 @@ export class CreditReportPipe implements PipeTransform {
         thirdFieldName: 'Payment Status',
         thirdFieldValue: item.Tradeline?.PayStatus?.description,
         status: item.Tradeline?.PayStatus?.symbol,
+        tradeline: item,
       } as ICreditReportCardInputs;
     });
     return this;

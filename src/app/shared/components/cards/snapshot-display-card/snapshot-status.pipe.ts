@@ -14,7 +14,6 @@ const enumStrColorCLassIndicator = {
 export class SnapshotStatusPipe implements PipeTransform {
   transform(value: string, ...args: any[]): string {
     let result = '';
-    console.log('snapshot pipe', value);
     let status = BRAVE_STATUS_SNAPSHOT[value.toUpperCase()];
 
     const outputStyle = args[0];

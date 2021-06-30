@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { CreditReportGroups } from '@shared/data/credit-report';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 
 export interface ICreditReportCardGroup {
@@ -19,10 +20,9 @@ export class CreditReportPureComponent implements OnInit {
   @Input() creditReportScore: number = 0;
   @Input() preferences: PreferencesStateModel = {} as PreferencesStateModel;
   @Output() hide: EventEmitter<ICreditReportCardGroup> = new EventEmitter();
+  @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('creditReports', this.creditReports);
-  }
+  ngOnInit(): void {}
 }

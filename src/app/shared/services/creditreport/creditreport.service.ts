@@ -28,6 +28,8 @@ const parserOptions = {
 export class CreditreportService implements OnDestroy {
   tuReport: IMergeReport = {} as IMergeReport;
   tuReport$: Subject<IMergeReport> = new Subject();
+  tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
+  tuTradeline$: Subject<ITradeLinePartition> = new Subject();
   tuAgency: TransunionInput = {} as TransunionInput;
   tuAgency$: Subject<TransunionInput> = new Subject();
   tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
@@ -113,5 +115,15 @@ export class CreditreportService implements OnDestroy {
     if (!this.tuReport) return {} as IBorrower;
     const borrower = this.tuReport?.TrueLinkCreditReportType?.Borrower;
     return borrower ? borrower : ({} as IBorrower);
+  }
+
+  /**
+   * Sets the current tradeline partition. Can only set one at a time
+   * - Makes the detail available for the tradeline detail view.
+   * @param tradeline
+   */
+  setTradeline(tradeline: ITradeLinePartition): void {
+    this.tuTradeline = tradeline;
+    this.tuTradeline$.next(tradeline);
   }
 }

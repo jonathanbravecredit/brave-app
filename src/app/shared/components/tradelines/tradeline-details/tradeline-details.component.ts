@@ -1,45 +1,65 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 export interface IRevolvingTradelineDetails {
+  creditorName?: string;
   dateOpened?: string;
+  dateReported?: string;
   accountDesignator?: string;
   late30Count?: number | string;
   late60Count?: number | string;
   late90Count?: number | string;
   amountPastDue?: number | string;
+  currentBalance?: number | string;
   disputeFlag?: string;
+  status?: string;
+  openClosed: string;
 }
 
 export interface IInstallmentTradelineDetails {
+  creditorName?: string;
   dateOpened?: string;
+  dateReported?: string;
   accountDesignator?: string;
   termMonths?: number | string;
   late30Count?: number | string;
   late60Count?: number | string;
   late90Count?: number | string;
   amountPastDue?: number | string;
+  currentBalance?: number | string;
   disputeFlag?: string;
+  status?: string;
+  openClosed: string;
 }
 
 export interface ICollectionsTradelineDetails {
+  creditorName?: string;
   originalCreditor?: string;
   creditType?: string;
   dateOpened?: string;
+  dateReported?: string;
+  currentBalance?: number | string;
   disputeFlag?: string;
+  status?: string;
+  openClosed: string;
 }
 
 export interface ITradelineDetailsConfig {
-  originalCreditor?: string | undefined;
-  creditType?: string | undefined;
-  dateOpened?: string | undefined;
-  accountDesignator?: string | undefined;
-  termMonths?: number | string | undefined;
-  late30Count?: number | string | undefined;
-  late60Count?: number | string | undefined;
-  late90Count?: number | string | undefined;
-  amountPastDue?: number | string | undefined;
-  disputeFlag?: string | undefined;
-  payments?: any | undefined;
+  creditorName?: string;
+  originalCreditor?: string;
+  creditType?: string;
+  dateOpened?: string;
+  dateReported?: string;
+  accountDesignator?: string;
+  termMonths?: number | string;
+  late30Count?: number | string;
+  late60Count?: number | string;
+  late90Count?: number | string;
+  amountPastDue?: number | string;
+  currentBalance?: number | string;
+  disputeFlag?: string;
+  payments?: any;
+  status?: string;
+  openClosed: string;
 }
 
 @Component({
