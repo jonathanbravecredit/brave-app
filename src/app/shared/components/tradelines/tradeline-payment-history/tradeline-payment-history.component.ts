@@ -49,7 +49,6 @@ export class TradelinePaymentHistoryComponent implements OnInit {
    * @returns {ITradelinePaymentHistory}
    */
   parsePaymentHistory(payments: IPayStatusHistory = {} as IPayStatusHistory): ITradelinePaymentHistory {
-    console.log('payments 2', payments, Object.keys(payments).length);
     const parsed = !Object.keys(payments).length
       ? {
           headers: {
@@ -80,7 +79,6 @@ export class TradelinePaymentHistoryComponent implements OnInit {
             };
           }),
         };
-    console.log('parsed', parsed);
     return parsed;
   }
   /**
@@ -99,10 +97,8 @@ export class TradelinePaymentHistoryComponent implements OnInit {
     let payments = monthlyPayments.filter((pay) => new Date(pay.date).getFullYear() === year);
     payments.forEach((pay) => {
       const status = `${pay.status}`.length ? `${pay.status}`.toLowerCase() : 'u';
-      console.log('test date', new Date(pay.date).getMonth(), 'status: ', status);
       months[new Date(pay.date).getMonth()] = status;
     });
-    console.log('months', months);
     return months;
   }
 }
