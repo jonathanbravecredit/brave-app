@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 
 @Component({
   selector: 'brave-negative-account-initial-pure',

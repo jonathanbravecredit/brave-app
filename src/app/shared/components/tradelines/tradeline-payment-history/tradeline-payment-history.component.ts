@@ -6,7 +6,7 @@ import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merg
   selector: 'brave-tradeline-payment-history',
   templateUrl: './tradeline-payment-history.component.html',
 })
-export class TradelinePaymentHistoryComponent {
+export class TradelinePaymentHistoryComponent implements OnInit {
   /**
    * Payment status history mapped directly from Merge Report
    * @property {IPayStatusHistory | undefined} paymentHistory
@@ -34,9 +34,11 @@ export class TradelinePaymentHistoryComponent {
    * Reconstituted payment history from Merge Report
    * @property {ITradelinePaymentHistory} history
    */
-  history: ITradelinePaymentHistory;
+  history!: ITradelinePaymentHistory;
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit() {
     this.history = this.parsePaymentHistory(this.paymentHistory);
   }
 
@@ -93,7 +95,7 @@ export class TradelinePaymentHistoryComponent {
     if (monthlyPayments === undefined) return months;
     let payments = monthlyPayments.filter((pay) => new Date(pay.date).getFullYear() === year);
     payments.forEach((pay) => {
-      months[new Date(pay.date).getMonth()] = pay.status.toLowerCase();
+      months[new Date(pay.date).getMonth()] = `${pay.status}`.toLowerCase();
     });
     return months;
   }
