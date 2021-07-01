@@ -1,19 +1,18 @@
 <div class="flex items-center">
-  <div
-    class="h-4 w-4 bg-blue-500 rounded-full border-none"
-    [ngClass]="status | snapshotStatus: 'background'"
-  ></div>
-  <span class="ml-3">Creditor Name (open)</span>
+  <div class="h-4 w-4 bg-blue-500 rounded-full border-none" [ngClass]="status | snapshotStatus: 'background'"></div>
+  <span class="ml-3">{{ creditorName }} {{ openClosed.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}</span>
 </div>
 <div class="card pl-7 pr-3 mt-2">
   <div class="mb-2">
-    <span><p class="text-xs text-dk-gray">Date Reported: 2020-01-01</p></span>
+    <span
+      ><p class="text-xs text-dk-gray">Date Reported: {{ dateReported | date }}</p></span
+    >
   </div>
 </div>
 <div class="py-9">
   <div class="flex flex-col justify-center items-center">
     <span
-      ><p class="text-4xl font-semibold mb-3">{{ 1200 | currency }}</p></span
+      ><p class="text-4xl font-semibold mb-3">{{ currentBalance | currency }}</p></span
     >
     <span><p class="text-xs text-dk-gray">Current Balance</p></span>
   </div>

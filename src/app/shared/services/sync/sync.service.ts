@@ -92,10 +92,10 @@ export class SyncService {
         },
         preferences: {
           showAllAccounts: {
-            creditCards: false,
-            collectionsAccounts: false,
-            installmentLoans: false,
-            mortgages: false,
+            creditCards: true,
+            collectionsAccounts: true,
+            installmentLoans: true,
+            mortgages: true,
           },
         },
       };
@@ -113,6 +113,7 @@ export class SyncService {
   /**
    * Takes the last completed step by the user and routes them to
    *   where they left off if they haven't finishd onboarding
+   *   Applies only if they have not completed onboarding
    * @param {number} lastComplete
    */
   routeUser(lastComplete: number): void {

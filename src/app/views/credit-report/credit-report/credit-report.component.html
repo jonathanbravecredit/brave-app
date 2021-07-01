@@ -2,6 +2,7 @@
   <div *ngIf="preferences$ | async as preferences">
     <brave-credit-report-pure
       (hide)="onHide($event)"
+      (viewDetailClick)="onViewDetailClick($event)"
       [preferences]="preferences"
       [creditReports]="creditReports | creditReport: preferences"
       [creditReportScore]="+(creditReports.TrueLinkCreditReportType.Borrower?.CreditScore?.riskScore || 0)"
