@@ -105,9 +105,12 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   currentRawQuestions: String
   currentRawAuthDetails: String
   enrollmentKey: String
-  enrollReport: TUEnrollResponse
-  enrollMergeReport: TUEnrollResponse
-  enrollVantageScore: TUEnrollResponse
+  enrollReport: TUReportResponse
+  enrollMergeReport: TUReportResponse
+  enrollVantageScore: TUReportResponse
+  fulfillReport: TUReportResponse
+  fulfillMergeReport: TUReportResponse
+  fulfillVantageScore: TUReportResponse
   disputes: Disputes
 }
 
@@ -119,7 +122,7 @@ type Experian @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
 }
 
-type TUEnrollResponse @aws_iam @aws_cognito_user_pools {
+type TUReportResponse @aws_iam @aws_cognito_user_pools {
   bureau: String
   errorResponse: String
   serviceProduct: String
@@ -206,13 +209,16 @@ input TransunionInput {
   currentRawQuestions: String
   currentRawAuthDetails: String
   enrollmentKey: String
-  enrollReport: TUEnrollResponseInput
-  enrollMergeReport: TUEnrollResponseInput
-  enrollVantageScore: TUEnrollResponseInput
+  enrollReport: TUReportResponseInput
+  enrollMergeReport: TUReportResponseInput
+  enrollVantageScore: TUReportResponseInput
+  fulfillReport: TUReportResponseInput
+  fulfillMergeReport: TUReportResponseInput
+  fulfillVantageScore: TUReportResponseInput
   disputes: DisputesInput
 }
 
-input TUEnrollResponseInput {
+input TUReportResponseInput {
   bureau: String
   errorResponse: String
   serviceProduct: String

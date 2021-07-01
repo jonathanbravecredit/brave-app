@@ -39,7 +39,7 @@ export class OnboardingDisputeComponent implements OnInit {
       termsTitle: 'Refresh Credit Score Statement',
       terms: [
         "TransUnion Interactive's contracts require us to obtain 'written instructions' from you to give us permission to obtain your TransUnion credit history",
-        "TransUnion Interactive's contracts require us to obtain 'written instructions' from you to give us permission to obtain your TransUnion credit history",
+        'You understand by checking on the "I Agree and Confirm" box, you are providing "written instructions" to [!!!NEED THE REST!!!]',
       ],
       buttonText: 'I Agree & Confirm.',
     },
@@ -52,8 +52,9 @@ export class OnboardingDisputeComponent implements OnInit {
       ],
       termsTitle: 'New Dispute Information',
       terms: [
-        "TransUnion Interactive's contracts require us to obtain 'written instructions' from you to give us permission to obtain your TransUnion credit history",
-        "TransUnion Interactive's contracts require us to obtain 'written instructions' from you to give us permission to obtain your TransUnion credit history",
+        'As part of the dispute process, TransUnion may contact the data furnisher that reported the information being disputed.',
+        'Any disputed information that is verified as accurate will remain on the credit report.',
+        'The dispute options provided through this dispute service do not include "all" possible disputes',
       ],
       buttonText: 'I Acknowledge & Agree to the terms.',
     },
@@ -75,6 +76,7 @@ export class OnboardingDisputeComponent implements OnInit {
 
   confirm() {
     if (this.currentStep === 0) {
+      // call fulfill
       this.currentModalContent = this.modalContents[1];
       this.currentStep = this.currentModalContent.stepId;
     } else {
