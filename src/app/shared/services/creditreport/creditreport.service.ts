@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import {
   IBorrower,
   IMergeReport,
@@ -7,17 +7,11 @@ import {
   IUnparsedCreditReport,
 } from '@shared/interfaces/merge-report.interface';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
-
-const parserOptions = {
-  attributeNamePrefix: '',
-  ignoreAttributes: false,
-  ignoreNameSpace: true,
-  parseAttributeValue: true,
-};
+import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
 
 /**
  * Service to parse and pull information from credit reports
@@ -27,11 +21,15 @@ const parserOptions = {
 })
 export class CreditreportService implements OnDestroy {
   tuReport: IMergeReport = {} as IMergeReport;
-  tuReport$: Subject<IMergeReport> = new Subject();
+  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
+  tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
+  tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
+  tuDispute: any;
+  tuDispute$: BehaviorSubject<any> = new BehaviorSubject({});
   tuAgency: TransunionInput = {} as TransunionInput;
-  tuAgency$: Subject<TransunionInput> = new Subject();
+  tuAgency$: BehaviorSubject<TransunionInput> = new BehaviorSubject({} as TransunionInput);
   tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
-  tuPreferences$: Subject<PreferencesStateModel> = new Subject();
+  tuPreferences$: BehaviorSubject<PreferencesStateModel> = new BehaviorSubject({} as PreferencesStateModel);
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
@@ -40,23 +38,20 @@ export class CreditreportService implements OnDestroy {
   preferencesSub$: Subscription;
 
   constructor() {
-    this.agenciesSub$ = this.agencies$
-      .pipe()
-      .subscribe((agencies: AgenciesStateModel) => {
-        const tu = this.getTransunion(agencies);
-        this.tuAgency$.next(tu);
-        this.tuAgency = tu;
-        const unparsed = this.getUnparsedCreditReport(agencies);
-        const parsedReport = this.parseCreditReport(unparsed['#text']);
-        this.tuReport$.next(parsedReport);
-        this.tuReport = parsedReport;
-      });
-    this.preferencesSub$ = this.preferences$
-      .pipe()
-      .subscribe((pref: PreferencesStateModel) => {
-        this.tuPreferences$.next(pref);
-        this.tuPreferences = pref;
-      });
+    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
+      const tu = this.getTransunion(agencies);
+      this.tuAgency$.next(tu);
+      this.tuAgency = tu;
+      const unparsed = this.getUnparsedCreditReport(agencies);
+      const parsedReport = this.parseCreditReport(unparsed['#text']);
+      console.log('parsedReport', parsedReport);
+      this.tuReport$.next(parsedReport);
+      this.tuReport = parsedReport;
+    });
+    this.preferencesSub$ = this.preferences$.pipe().subscribe((pref: PreferencesStateModel) => {
+      this.tuPreferences$.next(pref);
+      this.tuPreferences = pref;
+    });
   }
 
   ngOnDestroy(): void {
@@ -67,7 +62,7 @@ export class CreditreportService implements OnDestroy {
   /**
    * Return the TU data from provided agency state model
    * @param {AgenciesStateModel} agencies
-   * @returns
+   * @returns {TransunionInput}
    */
   getTransunion(agencies: AgenciesStateModel): TransunionInput {
     if (!agencies.transunion) return {} as TransunionInput;
@@ -78,53 +73,66 @@ export class CreditreportService implements OnDestroy {
    * Takes the agency state model and returns the unparsed TU credit report
    *   - TUCredit report agency stored as AWS JSON string in DB
    * @param {AgenciesStateModel} agencies
-   * @returns
+   * @returns {IUnparsedCreditReport}
    */
   getUnparsedCreditReport(agencies: AgenciesStateModel): IUnparsedCreditReport {
     if (!agencies) return JSON.parse('{"#text":""}');
-    const serviceProductString =
-      agencies.transunion?.enrollMergeReport?.serviceProductObject ||
-      '{"#text":""}';
-    const serviceProductObject: IUnparsedCreditReport = JSON.parse(
-      serviceProductString
-    );
-    return serviceProductObject
-      ? serviceProductObject
-      : ({} as IUnparsedCreditReport);
+    const serviceProductString = agencies.transunion?.enrollMergeReport?.serviceProductObject || '{"#text":""}';
+    const serviceProductObject: IUnparsedCreditReport = JSON.parse(serviceProductString);
+    return serviceProductObject ? serviceProductObject : ({} as IUnparsedCreditReport);
   }
 
   /**
    * Parses the xml string into a JSON object of the IMergeReport form
    * @param {string} xml
-   * @returns
+   * @returns {IMergeReport}
    */
   parseCreditReport(xml: string): IMergeReport {
-    const clean = xml
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&#xD;/g, '');
-    const report: IMergeReport = parser.parse(clean, parserOptions);
+    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+    const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
     return report;
   }
 
   /**
    * Returns the tradeline partitions from the current TU report
-   * @returns
+   * @returns {ITradeLinePartition[]}
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
     if (!this.tuReport) return [{} as ITradeLinePartition];
-    const partitions = this.tuReport?.TrueLinkCreditReportType
-      ?.TradeLinePartition;
+    const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
   }
 
   /**
    * Returns the borrower from the current TU report
+   * @returns {IBorrower}
    */
   getBorrower(): IBorrower {
     if (!this.tuReport) return {} as IBorrower;
     const borrower = this.tuReport?.TrueLinkCreditReportType?.Borrower;
     return borrower ? borrower : ({} as IBorrower);
+  }
+
+  /**
+   * Sets the current tradeline partition. Can only set one at a time
+   * - Makes the detail available for the tradeline detail view.
+   * @param tradeline
+   * @returns {void}
+   */
+  setTradeline(tradeline: ITradeLinePartition): void {
+    this.tuTradeline = tradeline;
+    this.tuTradeline$.next(tradeline);
+  }
+
+  /**
+   * Sets the current dispute item. Can only set one at a time currently
+   * - TODO may need to make more like a storage array
+   * @param dispute
+   * @return {void}
+   */
+  setDispute(dispute: any): void {
+    this.tuDispute = dispute;
+    this.tuDispute$.next(dispute);
   }
 }

@@ -7,12 +7,10 @@ import {
   CreateAppDataInput,
   CreateAppDataMutation,
   GetAppDataQuery,
-  UpdateAppDataInput,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
-import { AppDataSelectors, AppDataStateModel } from '@store/app-data';
+import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -92,14 +90,14 @@ export class SyncService {
           experian: { authenticated: false },
           equifax: { authenticated: false },
         },
-        // preferences: {
-        //   showAllAccounts: {
-        //     creditCards: false,
-        //     collectionsAccounts: false,
-        //     installmentLoans: false,
-        //     mortgages: false,
-        //   },
-        // },
+        preferences: {
+          showAllAccounts: {
+            creditCards: true,
+            collectionsAccounts: true,
+            installmentLoans: true,
+            mortgages: true,
+          },
+        },
       };
       console.log('input', input);
       const data = await this.api.CreateAppData(input);
@@ -115,6 +113,7 @@ export class SyncService {
   /**
    * Takes the last completed step by the user and routes them to
    *   where they left off if they haven't finishd onboarding
+   *   Applies only if they have not completed onboarding
    * @param {number} lastComplete
    */
   routeUser(lastComplete: number): void {

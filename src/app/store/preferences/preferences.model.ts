@@ -1,4 +1,4 @@
-import { CreditReportGroups } from '@shared/data/credit-report';
+import { CreditReportGroups } from '@shared/constants/credit-report';
 
 export class PreferencesStateModel {
   showAllAccounts!: {

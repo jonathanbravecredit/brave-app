@@ -8,6 +8,7 @@ type Query {
 type Mutation {
   createDisputes(id: ID!, msg: String): Disputes
   patchDisputes(id: ID!, msg: String): Disputes
+  patchTransunion(id: ID!, msg: String): Transunion
   createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools

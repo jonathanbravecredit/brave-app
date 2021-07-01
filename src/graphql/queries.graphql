@@ -2,6 +2,20 @@
 query Transunion($action: String!, $message: String!) {
   transunion(action: $action, message: $message)
 }
+query GetDisputes($id: ID!) {
+  getDisputes(id: $id) {
+    disputePreflightStatus
+    disputeInflightStatus
+    disputeEligibility
+    disputeResults
+    disputeHistory
+    modifiedOn
+    createdOn
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+  }
+}
 query GetAppData($id: ID!) {
   getAppData(id: $id) {
     id
@@ -78,12 +92,32 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -172,12 +206,32 @@ query ListAppDatas(
             serviceProductValue
             status
           }
+          disputes {
+            disputePreflightStatus
+            disputeInflightStatus
+            disputeEligibility
+            disputeResults
+            disputeHistory
+            modifiedOn
+            createdOn
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
         }
         equifax {
           authenticated
         }
         experian {
           authenticated
+        }
+      }
+      preferences {
+        showAllAccounts {
+          creditCards
+          collectionsAccounts
+          installmentLoans
+          mortgages
         }
       }
       createdAt

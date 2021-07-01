@@ -75,12 +75,32 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -164,12 +184,32 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
@@ -253,12 +293,32 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
+        disputes {
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
       }
       experian {
         authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
       }
     }
     createdAt
