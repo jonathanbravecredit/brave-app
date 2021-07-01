@@ -1,36 +1,49 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ITradelinePaymentHistory } from '@shared/components/tradelines/tradeline-payment-history/interfaces';
 import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
-
-export interface ITradelinePaymentHistory {
-  headers: {
-    year: string | null;
-    months: string[];
-  };
-  years: {
-    year: string;
-    months: string[];
-  }[];
-}
 
 @Component({
   selector: 'brave-tradeline-payment-history',
   templateUrl: './tradeline-payment-history.component.html',
 })
-export class TradelinePaymentHistoryComponent implements OnInit {
+export class TradelinePaymentHistoryComponent {
+  /**
+   * Payment status history mapped directly from Merge Report
+   * @property {IPayStatusHistory | undefined} payments
+   */
   @Input() payments: IPayStatusHistory | undefined = {} as IPayStatusHistory;
-
+  /**
+   * Default gridWidth in rem units
+   * @property {string} gridWidth
+   * @example
+   *
+   * gridWidth = 'w-3'
+   *
+   */
   gridWidth: string = 'w-3';
+  /**
+   * Default gridHeight in rem units
+   * @property {string} gridHeight - Should be same in REM as width
+   * @example
+   *
+   * gridWidth = 'h-3'
+   *
+   */
   gridHeight: string = 'h-3';
+  /**
+   * Reconstituted payment history from Merge Report
+   * @property {ITradelinePaymentHistory} history
+   */
   history: ITradelinePaymentHistory;
+
   constructor() {
     this.history = this.parsePaymentHistory(this.payments);
   }
 
-  ngOnInit(): void {}
-
   /**
-   *
+   * Reconstitutes raw mapped Payment Status history from Merged Report to payment history table format
    * @param {IPayStatusHistory | undefined} payments
+   * @returns {ITradelinePaymentHistory}
    */
   parsePaymentHistory(payments: IPayStatusHistory = {} as IPayStatusHistory): ITradelinePaymentHistory {
     console.log('payments 2', payments, Object.keys(payments).length);
@@ -65,12 +78,15 @@ export class TradelinePaymentHistoryComponent implements OnInit {
           }),
         };
   }
-
   /**
-   * Takes the payments and fills out the month array with available status values
+   * Constructs month array for complete list of monthly pay status
    * @param {number} year
    * @param {IMonthyPayStatusItem[]} monthlyPayments
-   * @returns
+   * @returns {string[]}
+   * @example
+   *
+   * months = ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u']
+   *
    */
   parseMonthlyPayments(year: number, monthlyPayments: IMonthyPayStatusItem[] | undefined): string[] {
     let months = ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'];

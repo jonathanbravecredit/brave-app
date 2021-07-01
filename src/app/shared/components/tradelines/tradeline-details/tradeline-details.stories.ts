@@ -2,12 +2,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import {
-  ICollectionsTradelineDetails,
-  IInstallmentTradelineDetails,
-  IRevolvingTradelineDetails,
-  TradelineDetailsComponent,
-} from '@shared/components/tradelines/tradeline-details/tradeline-details.component';
+import { TradelineDetailsComponent } from '@shared/components/tradelines/tradeline-details/tradeline-details.component';
+import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 
 export default {
   title: 'app/components/tradelines/tradeline-details',
@@ -24,28 +20,28 @@ export default {
   ],
 } as Meta;
 
-const revolving: IRevolvingTradelineDetails = {
+const revolving: ITradelineDetailsConfig = {
   dateOpened: '2020-01-10',
   accountDesignator: 'James Credit',
   late60Count: '10',
   amountPastDue: 1200,
   disputeFlag: 'No',
-};
-const installment: IInstallmentTradelineDetails = {
+} as ITradelineDetailsConfig;
+const installment: ITradelineDetailsConfig = {
   dateOpened: '2019-01-01',
   accountDesignator: 'James Credit',
   termMonths: '48',
   late90Count: '3',
   amountPastDue: '950',
   disputeFlag: 'No',
-};
+} as ITradelineDetailsConfig;
 
-const collections: ICollectionsTradelineDetails = {
+const collections: ITradelineDetailsConfig = {
   originalCreditor: 'ABC Financing',
   creditType: 'Collection',
   dateOpened: '2018-01-01',
   disputeFlag: 'No',
-};
+} as ITradelineDetailsConfig;
 
 const remarks = `This account was investigated two weeks ago per the client's request`;
 const address = '123 Main Street, Hollywood, CA';

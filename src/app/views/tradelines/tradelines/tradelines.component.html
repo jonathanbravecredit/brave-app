@@ -2,7 +2,7 @@
   <ng-container *ngIf="tradeline">
     <brave-tradelines-pure
       [tradeline]="tradeline"
-      [details]="tradeline | tradelinesDetail"
+      [config]="tradeline | tradelinesDetail"
       [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
       [remarks]="tradeline.Tradeline?.Remark?.customRemark || ''"
     ></brave-tradelines-pure>

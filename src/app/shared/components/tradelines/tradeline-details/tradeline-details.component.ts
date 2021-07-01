@@ -1,36 +1,49 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
-
-export interface ITradelineDetailsConfig {
-  accountTypeSymbol?: string;
-  creditorName?: string;
-  originalCreditor?: string;
-  creditType?: string;
-  dateOpened?: string;
-  dateReported?: string;
-  accountDesignator?: string;
-  termMonths?: number | string;
-  late30Count?: number | string;
-  late60Count?: number | string;
-  late90Count?: number | string;
-  amountPastDue?: number | string;
-  currentBalance?: number | string;
-  disputeFlag?: string;
-  status?: string;
-  openClosed: string;
-}
 
 @Component({
   selector: 'brave-tradeline-details',
   templateUrl: './tradeline-details.component.html',
 })
-export class TradelineDetailsComponent implements OnInit {
+export class TradelineDetailsComponent {
+  /**
+   * Config parameters with parsed tradeline data
+   * @property {ITradelineDetailsConfig} config
+   */
   @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
-  @Input() payments: IPayStatusHistory | undefined = {} as IPayStatusHistory;
+  /**
+   * Payments Status History from Merge Report
+   * @property {IPayStatusHistory | undefined} paymentHistory
+   */
+  @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
+  /**
+   * Remarks from Merge Report
+   * @property {string} remarks
+   */
   @Input() remarks: string = '';
+  /**
+   * Address from Merge Report...TODO need better definition
+   * @property {string} address
+   */
   @Input() address: string = '';
+  /**
+   * One of three different display configs presented as a map
+   * @property {Record<string, any>} mapper
+   */
   mapper: Record<string, any>;
-  mapperType: string;
+  /**
+   * Textual key of display config
+   * @property {'revolving' | 'installment' | 'collections'} mapperType
+   * @example
+   *
+   * mapperType: 'revolving' | 'installment' | 'collections'
+   */
+  mapperType: 'revolving' | 'installment' | 'collections';
+  /**
+   * Revolving account display mapping
+   * @property {Record<string, any>} revolvingAccountMapping
+   */
   private revolvingAccountMapping: Record<string, any> = {
     dateOpened: 'Opened:',
     accountDesignator: 'Responsibility:',
@@ -40,7 +53,10 @@ export class TradelineDetailsComponent implements OnInit {
     amountPastDue: 'Amount Past Due:',
     disputeFlag: 'Disputed:',
   };
-
+  /**
+   * Installment account mapping
+   * @property {Record<string, any>} installmentAccountMapping
+   */
   private installmentAccountMapping: Record<string, any> = {
     dateOpened: 'Opened:',
     accountDesignator: 'Responsibility:',
@@ -50,7 +66,10 @@ export class TradelineDetailsComponent implements OnInit {
     amountPastDue: 'Amount Past Due:',
     disputeFlag: 'Disputed:',
   };
-
+  /**
+   * Collections account mapping
+   * @property {Record<string, any>} collectionAccountMapping
+   */
   private collectionAccountMapping: Record<string, any> = {
     dateOpened: 'Opened:',
     accountDesignator: 'Responsibility:',
@@ -86,8 +105,13 @@ export class TradelineDetailsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
-
+  /**
+   * Sums up the counts of late 30, 60, and 90 for one total figure
+   * @param {ITradelineDetailsConfig} config
+   * @returns
+   *
+   * number
+   */
   sumLateCount(config: ITradelineDetailsConfig): number {
     let late30 = config.late30Count || 0;
     let late60 = config.late60Count || 0;

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
-import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/data/credit-report';
-import { POSITIVE_PAY_STATUS_CODES } from '@shared/data/pay-status-codes';
+import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
+import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';

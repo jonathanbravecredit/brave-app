@@ -1,10 +1,10 @@
 <div>
   <brave-tradeline-summary
-    [status]="details.status || ''"
-    [creditorName]="details.creditorName || ''"
-    [dateReported]="details.dateReported || ''"
-    [currentBalance]="details.currentBalance || 0"
-    [openClosed]="details.openClosed || ''"
+    [status]="config.status || ''"
+    [creditorName]="config.creditorName || ''"
+    [dateReported]="config.dateReported || ''"
+    [currentBalance]="config.currentBalance || 0"
+    [openClosed]="config.openClosed || ''"
   ></brave-tradeline-summary>
 </div>
 
@@ -14,8 +14,8 @@
 
 <div class="mt-6">
   <brave-tradeline-details
-    [config]="details"
-    [payments]="paymentHistory"
+    [config]="config"
+    [paymentHistory]="paymentHistory"
     [remarks]="remarks"
     [address]="address"
   ></brave-tradeline-details>

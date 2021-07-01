@@ -1,13 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/tradeline-details.component';
+import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
+/**
+ * Pipe: parses the raw tradeline partition into a config format
+ * @class
+ * @implements {PipeTransform}
+ * @param {ITradeLinePartition} tradeline - data required for transform function
+ * @returns {ITradelineDetailsConfig}
+ */
 @Pipe({
   name: 'tradelinesDetail',
 })
 export class TradelinesDetailPipe implements PipeTransform {
-  transform(tradeline: ITradeLinePartition, ...args: string[]): ITradelineDetailsConfig {
-    console.log('tradeline in pipe', tradeline);
+  transform(tradeline: ITradeLinePartition): ITradelineDetailsConfig {
     return {
       accountTypeSymbol: tradeline.accountTypeSymbol || '',
       creditorName: tradeline.Tradeline?.creditorName || '',
