@@ -5,7 +5,7 @@ import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
   selector: 'brave-tradeline-payments',
   templateUrl: './tradeline-payments.component.html',
 })
-export class TradelinePaymentsComponent implements OnInit {
+export class TradelinePaymentsComponent  {
   /**
    * Raw pay status history from Merge Report
    * @property {IPayStatusHistory | undefined} paymentHistory
@@ -32,7 +32,4 @@ export class TradelinePaymentsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log('paymentHistory', this.paymentHistory);
-  }
 }
