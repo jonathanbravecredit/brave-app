@@ -99,11 +99,11 @@ export interface IFulfillResult {
   EnrollmentKey: string;
   ServiceBundleFulfillmentKey: string;
   ServiceProductFulfillments: {
-    ServiceProductResponse: IFulfillResultServiceProductResponse[] | IFulfillResultServiceProductResponse;
+    ServiceProductResponse: IFulfillServiceProductResponse[] | IFulfillServiceProductResponse;
   };
 }
 
-export interface IFulfillResultServiceProductResponse {
+export interface IFulfillServiceProductResponse {
   Bureau: string;
   ErrorResponse: string;
   ServiceBundleResponse: {

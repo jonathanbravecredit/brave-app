@@ -6,7 +6,7 @@ import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
 import {
-  TUEnrollResponseInput,
+  TUReportResponseInput,
   UpdateAppDataInput,
 } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
@@ -319,7 +319,7 @@ const codeMap: Record<string, any> = {
 };
 
 // TODO use a pascal to camel converter
-const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
+const mapEnrollResponse = (res: any): TUReportResponseInput => {
   return {
     bureau: res['Bureau'],
     errorResponse: res['ErrorResponse'],
@@ -329,5 +329,5 @@ const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
     serviceProductTypeId: res['ServiceProductTypeId'],
     serviceProductValue: res['ServiceProductValue'],
     status: res['Status'],
-  } as TUEnrollResponseInput;
+  } as TUReportResponseInput;
 };

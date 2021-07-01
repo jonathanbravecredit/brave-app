@@ -5,14 +5,106 @@ import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentic
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
-import { SsnInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { APIService, SsnInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransunionService {
-  constructor() {}
+  constructor(private api: APIService) {}
+
+  /**
+   * Send the indicative enrichment message to the Transunion backend and await a response
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendIndicativeEnrichment(data: UpdateAppDataInput | AppDataStateModel): Promise<any | undefined> {
+    if (!data.id || !data.user) throw new Error(`Missing id and user; id:${data.id} and user:${data.user}`);
+    try {
+      const msg = this.createIndicativeEnrichmentPayload(data);
+      const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(msg));
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendGetAuthenticationQuestions(
+    data: UpdateAppDataInput | AppDataStateModel,
+    ssn: string = '',
+  ): Promise<any | undefined> {
+    if (!ssn) throw new Error(`Missing ssn; ssn:${ssn}`);
+    try {
+      const msg = this.createGetAuthenticationQuestionsPayload(data, ssn);
+      const res = await this.api.Transunion('GetAuthenticationQuestions', JSON.stringify(msg));
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendVerifyAuthenticationQuestions(
+    data: UpdateAppDataInput | AppDataStateModel,
+    answers: IVerifyAuthenticationAnswer[],
+  ): Promise<string | undefined> {
+    if (!answers.length) throw new Error(`No answers submitted; Answers:${answers}`);
+    try {
+      const msg = this.createVerifyAuthenticationQuestionsPayload(data, answers);
+      const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(msg));
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the verified user to transunion to enroll them and receive their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+    try {
+      const msg = this.createEnrollPayload(data);
+      const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send fulfillment key to Transunion to refresh their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async refreshCreditReport(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+    try {
+      const msg = this.createFulfillPayload(data);
+      const res = await this.api.Transunion('Fulfull', JSON.stringify(msg));
+      console.log(res);
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
 
   /**
    * Generates the message payload for TU services

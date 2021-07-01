@@ -5,12 +5,7 @@ import * as parser from 'fast-xml-parser';
 import * as OnboardingActions from '@store/onboarding/onboarding.actions';
 import * as UserActions from '@store/user/user.actions';
 import * as AgenciesActions from '@store/agencies/agencies.actions';
-import {
-  AgenciesInput,
-  APIService,
-  UpdateAppDataInput,
-  UserAttributesInput,
-} from '@shared/services/aws/api.service';
+import { AgenciesInput, APIService, UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
@@ -52,7 +47,7 @@ export class KycService {
     private api: APIService,
     private store: Store,
     private auth: AuthService,
-    private transunion: TransunionService
+    private transunion: TransunionService,
   ) {}
 
   /**
@@ -139,7 +134,7 @@ export class KycService {
   updateStep(
     lastActive: number,
     lastComplete: number,
-    started: boolean = true
+    started: boolean = true,
   ): OnboardingStateModel | undefined | void {
     const state = this.store.snapshot();
     return { ...state.user?.onboarding, lastActive, lastComplete, started };
@@ -150,26 +145,22 @@ export class KycService {
    * @param {UserAttributesInput} attributes
    */
   updateUserAttributes(attrs: UserAttributesInput): void {
-    this.store
-      .dispatch(new UserActions.UpdateAttributes(attrs))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
+    this.store.dispatch(new UserActions.UpdateAttributes(attrs)).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        this.auth.reloadCredentials();
+        return;
+      } else {
+        this.api.UpdateAppData(input);
+      }
+    });
   }
 
   /**
    * Takes the attributes and updates the state with them
    * @param {UserAttributesInput} attributes
    */
-  async updateUserAttributesAsync(
-    attrs: UserAttributesInput
-  ): Promise<UpdateAppDataInput> {
+  async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
     return await new Promise((resolve, reject) => {
       this.store
         .dispatch(new UserActions.UpdateAttributes(attrs))
@@ -192,17 +183,15 @@ export class KycService {
    * @param {AgenciesInput} agency the new agency input data to write to db and state
    */
   updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
-    this.store
-      .dispatch(new AgenciesActions.Edit(agency))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
+    this.store.dispatch(new AgenciesActions.Edit(agency)).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        this.auth.reloadCredentials();
+        return;
+      } else {
+        this.api.UpdateAppData(input);
+      }
+    });
   }
 
   /**
@@ -210,15 +199,9 @@ export class KycService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendIndicativeEnrichment(
-    data: UpdateAppDataInput | AppDataStateModel
-  ): Promise<any | undefined> {
+  async sendIndicativeEnrichment(data: UpdateAppDataInput | AppDataStateModel): Promise<any | undefined> {
     try {
-      const msg = this.transunion.createIndicativeEnrichmentPayload(data);
-      const res = await this.api.Transunion(
-        'IndicativeEnrichment',
-        JSON.stringify(msg)
-      );
+      const res = await this.transunion.sendIndicativeEnrichment(data);
       return res ? res : undefined;
     } catch (err) {
       console.log('err ', err);
@@ -231,15 +214,11 @@ export class KycService {
    * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
    */
-  async processIndicativeEnrichmentResponse(
-    resp: string
-  ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
+  async processIndicativeEnrichmentResponse(resp: string): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
     const enrichment: IIndicativeEnrichmentResponseSuccess = JSON.parse(
-      JSON.parse(resp)['IndicativeEnrichmentResults']
+      JSON.parse(resp)['IndicativeEnrichmentResults'],
     );
-    const responseType = returnNestedObject(enrichment, 'a:ResponseType')[
-      '_text'
-    ];
+    const responseType = returnNestedObject(enrichment, 'a:ResponseType')['_text'];
     if (responseType === 'Success') {
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
@@ -259,18 +238,14 @@ export class KycService {
    * @param {UpdateAppDataInput} data
    * @returns Full ssn or a failure (TODO: handle failures)
    */
-  async getIndicativeEnrichmentResults(
-    data: UpdateAppDataInput
-  ): Promise<KYCResponse | string> {
+  async getIndicativeEnrichmentResults(data: UpdateAppDataInput): Promise<KYCResponse | string> {
     let enrichmentResponse;
     let enrichment;
 
     try {
       enrichmentResponse = await this.sendIndicativeEnrichment(data);
       if (!enrichmentResponse) return KYCResponse.Failed;
-      enrichment = await this.processIndicativeEnrichmentResponse(
-        enrichmentResponse
-      );
+      enrichment = await this.processIndicativeEnrichmentResponse(enrichmentResponse);
       if (!enrichment) return KYCResponse.Failed;
       const ssn = returnNestedObject(enrichment, 'a:SSN')['_text'];
       return ssn ? ssn : KYCResponse.Failed;
@@ -287,18 +262,11 @@ export class KycService {
    */
   async sendGetAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
-    ssn: string = ''
+    ssn: string = '',
   ): Promise<any | undefined> {
     if (!ssn) return;
     try {
-      const msg = this.transunion.createGetAuthenticationQuestionsPayload(
-        data,
-        ssn
-      );
-      const res = await this.api.Transunion(
-        'GetAuthenticationQuestions',
-        JSON.stringify(msg)
-      );
+      const res = await this.transunion.sendGetAuthenticationQuestions(data, ssn);
       return res ? res : undefined;
     } catch (err) {
       console.log('err ', err);
@@ -312,19 +280,14 @@ export class KycService {
    * @returns
    */
   async processGetAutthenticationQuestionsResponse(
-    resp: string
+    resp: string,
   ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
     const questions: IGetAuthenticationQuestionsResponseSuccess = JSON.parse(
-      JSON.parse(resp)['GetAuthenticationQuestions']
+      JSON.parse(resp)['GetAuthenticationQuestions'],
     );
-    const responseType = returnNestedObject(questions, 'a:ResponseType')[
-      '_text'
-    ];
+    const responseType = returnNestedObject(questions, 'a:ResponseType')['_text'];
     if (responseType === 'Success') {
-      const fulfillmentKey = returnNestedObject(
-        questions,
-        'a:ServiceBundleFulfillmentKey'
-      )['_text'];
+      const fulfillmentKey = returnNestedObject(questions, 'a:ServiceBundleFulfillmentKey')['_text'];
       console.log('fulfillmentkey', fulfillmentKey);
       // update indicative enrichment as success
       await this.updateTransunionIndicativeEnrichment({
@@ -348,9 +311,7 @@ export class KycService {
    * @param {UpdateAppDataInput} data
    * @returns
    */
-  async getGetAuthenticationQuestionsResults(
-    data: UpdateAppDataInput
-  ): Promise<KYCResponse | string> {
+  async getGetAuthenticationQuestionsResults(data: UpdateAppDataInput): Promise<KYCResponse | string> {
     let questionResponse;
     let questions;
     const ssn = data.user?.userAttributes?.ssn?.full;
@@ -359,9 +320,7 @@ export class KycService {
     try {
       questionResponse = await this.sendGetAuthenticationQuestions(data, ssn);
       if (!questionResponse) return KYCResponse.Failed;
-      questions = await this.processGetAutthenticationQuestionsResponse(
-        questionResponse
-      );
+      questions = await this.processGetAutthenticationQuestionsResponse(questionResponse);
       if (!questions) return KYCResponse.Failed;
       // Sucess...parse questions and pass to question component
       const questionXml = returnNestedObject(questions, 'a:Questions');
@@ -380,10 +339,7 @@ export class KycService {
    * @returns
    */
   parseCurrentRawQuestions(xml: string): ITransunionKBAQuestions {
-    const clean = xml
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&#xD;/g, '');
+    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
     const questions: ITransunionKBAQuestions = parser.parse(clean);
     return questions;
   }
@@ -397,7 +353,7 @@ export class KycService {
     this.store.dispatch(
       new AgenciesActions.EditTransunionQuestions({
         currentRawQuestions: questions,
-      })
+      }),
     );
   }
 
@@ -406,15 +362,13 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawQuestionsAsync(
-    questions: string
-  ): Promise<UpdateAppDataInput> {
+  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput> {
     return await new Promise((resolve, reject) => {
       this.store
         .dispatch(
           new AgenciesActions.EditTransunionQuestions({
             currentRawQuestions: questions,
-          })
+          }),
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
@@ -429,17 +383,15 @@ export class KycService {
    */
   updateAgencies(agencies: AgenciesStateModel | undefined): void {
     if (!agencies) return;
-    this.store
-      .dispatch(new AgenciesActions.Edit(agencies))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
+    this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        this.auth.reloadCredentials();
+        return;
+      } else {
+        this.api.UpdateAppData(input);
+      }
+    });
   }
 
   /**
@@ -448,23 +400,21 @@ export class KycService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   async updateAgenciesAsync(
-    agencies: AgenciesStateModel | null | undefined
+    agencies: AgenciesStateModel | null | undefined,
   ): Promise<UpdateAppDataInput | null | undefined> {
     if (!agencies) return;
     return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.Edit(agencies))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            this.auth.reloadCredentials();
-            reject();
-            return;
-          } else {
-            this.api.UpdateAppData(input);
-            resolve(input);
-          }
-        });
+      this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          this.auth.reloadCredentials();
+          reject();
+          return;
+        } else {
+          this.api.UpdateAppData(input);
+          resolve(input);
+        }
+      });
     });
   }
 
@@ -474,10 +424,7 @@ export class KycService {
    * @returns
    */
   parseCurrentRawAuthDetails(xml: string): ITransunionKBAChallengeAnswer {
-    const clean = xml
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&#xD;/g, '');
+    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
     const questions: ITransunionKBAChallengeAnswer = parser.parse(clean);
     return questions;
   }
@@ -491,7 +438,7 @@ export class KycService {
     this.store.dispatch(
       new AgenciesActions.EditTransunionAuthDetails({
         currentRawAuthDetails: questions,
-      })
+      }),
     );
   }
 
@@ -500,15 +447,13 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawAuthDetailsAsync(
-    questions: string
-  ): Promise<UpdateAppDataInput> {
+  async updateCurrentRawAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput> {
     return await new Promise((resolve, reject) => {
       this.store
         .dispatch(
           new AgenciesActions.EditTransunionAuthDetails({
             currentRawAuthDetails: questions,
-          })
+          }),
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
@@ -522,19 +467,16 @@ export class KycService {
    * @param {ITransunionKBAQuestions} questions
    * @returns
    */
-  getOTPQuestion(
-    questions: ITransunionKBAQuestions
-  ): ITransunionKBAQuestion | undefined {
+  getOTPQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
     const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
-      questions?.ChallengeConfigurationType?.MultiChoiceQuestion instanceof
-      Array
+      questions?.ChallengeConfigurationType?.MultiChoiceQuestion instanceof Array
         ? questions?.ChallengeConfigurationType?.MultiChoiceQuestion
         : new Array(questions?.ChallengeConfigurationType?.MultiChoiceQuestion);
     return series.find(
       (q) =>
         q.FullQuestionText === OTPQuestion.FullText ||
         q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0
+        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0,
     );
   }
 
@@ -543,18 +485,12 @@ export class KycService {
    * @param {ITransunionKBAQuestion} question
    * @returns
    */
-  getOTPSendTextAnswer(
-    question: ITransunionKBAQuestion
-  ): IVerifyAuthenticationAnswer {
+  getOTPSendTextAnswer(question: ITransunionKBAQuestion): IVerifyAuthenticationAnswer {
     const answerChoice =
-      question?.AnswerChoice instanceof Array
-        ? question?.AnswerChoice
-        : new Array(question?.AnswerChoice);
+      question?.AnswerChoice instanceof Array ? question?.AnswerChoice : new Array(question?.AnswerChoice);
 
     let answer = answerChoice.find(
-      (c) =>
-        c.AnswerChoiceText === OTPReponse.FullText ||
-        c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0
+      (c) => c.AnswerChoiceText === OTPReponse.FullText || c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0,
     );
     return {
       VerifyChallengeAnswersRequestMultiChoiceQuestion: {
@@ -571,9 +507,7 @@ export class KycService {
    * @param {ITransunionKBAQuestions} questions
    * @returns
    */
-  getPassCodeQuestion(
-    questions: ITransunionKBAQuestions
-  ): ITransunionKBAQuestion | undefined {
+  getPassCodeQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
     const series: ITransunionKBAQuestion[] =
       questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
         ? questions.ChallengeConfigurationType.MultiChoiceQuestion
@@ -581,7 +515,7 @@ export class KycService {
     return series.find(
       (q) =>
         q.FullQuestionText === PassCodeQuestion.FullText ||
-        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0
+        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0,
     );
   }
 
@@ -590,18 +524,13 @@ export class KycService {
    * @param {ITransunionKBAQuestion} question
    * @returns
    */
-  getPassCodeAnswer(
-    question: ITransunionKBAQuestion,
-    input: string
-  ): IVerifyAuthenticationAnswer {
+  getPassCodeAnswer(question: ITransunionKBAQuestion, input: string): IVerifyAuthenticationAnswer {
     const answerChoice =
-      question.AnswerChoice instanceof Array
-        ? question.AnswerChoice
-        : new Array(question.AnswerChoice);
+      question.AnswerChoice instanceof Array ? question.AnswerChoice : new Array(question.AnswerChoice);
     const answer = answerChoice.find(
       (c) =>
         c.AnswerChoiceText === PassCodeQuestion.FullText ||
-        c.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0
+        c.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0,
     );
     return {
       VerifyChallengeAnswersRequestMultiChoiceQuestion: {
@@ -615,46 +544,34 @@ export class KycService {
   }
 
   /**
-   * Send the full ssn to the Transunion backend and await the KBA questions
+   * Invoke the service method to send the full ssn to the Transunion backend and await the KBA questions
    *   - questions can be actual questions or a passcode for the phone
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
   async sendVerifyAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
-    answers: IVerifyAuthenticationAnswer[]
+    answers: IVerifyAuthenticationAnswer[],
   ): Promise<string | undefined> {
     if (!answers.length) return;
     try {
-      const msg = this.transunion.createVerifyAuthenticationQuestionsPayload(
-        data,
-        answers
-      );
-      const res = await this.api.Transunion(
-        'VerifyAuthenticationQuestions',
-        JSON.stringify(msg)
-      );
+      const res = await this.transunion.sendVerifyAuthenticationQuestions(data, answers);
       return res ? res : undefined;
     } catch (err) {
-      console.log('err ', err);
       return;
     }
   }
 
   /**
-   * Send the verified user to transunion to enroll them and receive their report
+   * Invoke the service method to send the verified user to transunion to enroll them and receive their report
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendEnrollRequest(
-    data: UpdateAppDataInput | AppDataStateModel
-  ): Promise<string | undefined> {
+  async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
     try {
-      const msg = this.transunion.createEnrollPayload(data);
-      const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
+      const res = await this.transunion.sendEnrollRequest(data);
       return res ? res : undefined;
     } catch (err) {
-      console.log('err ', err);
       return;
     }
   }
