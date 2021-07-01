@@ -66,6 +66,36 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       serviceProductValue
       status
     }
+    fulfillReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfillMergeReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfillVantageScore {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
     disputes {
       disputePreflightStatus
       disputeInflightStatus
@@ -150,6 +180,36 @@ mutation CreateAppData(
           status
         }
         enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
           bureau
           errorResponse
           serviceProduct
@@ -271,6 +331,36 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -374,6 +464,36 @@ mutation DeleteAppData(
           status
         }
         enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
           bureau
           errorResponse
           serviceProduct
