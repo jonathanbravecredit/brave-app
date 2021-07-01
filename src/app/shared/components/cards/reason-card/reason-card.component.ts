@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'brave-reason-card',
@@ -13,9 +13,11 @@ export class ReasonCardComponent implements OnInit {
   // Text that the card will hold inside.
   @Input() text = '';
   // Text that the card will hold inside.
-  @Input() userInputDescriptionText = '';
+  @Input() userInputDescriptionText: string | undefined = '';
   // Input provided by the user. This is the user's custom "reason".
   customUserInput = '';
+
+  @Output() clicked: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 

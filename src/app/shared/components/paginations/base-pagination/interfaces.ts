@@ -19,3 +19,5 @@ export interface IBasePaginationNavigationConfiguration {
   truncateAt?: number;
   truncateLimit?: number;
 }
+
+export type TBasePaginationNavigationDirection = 'forward' | 'back';

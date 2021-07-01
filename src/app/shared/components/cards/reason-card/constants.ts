@@ -10,7 +10,6 @@ export const MOCK_TRADELINE_REASON_CARD: { DEFAULT: IDTLRC; CUSTOM_USER_REASON: 
   CUSTOM_USER_REASON: {
     allowUserInput: true,
     text: 'This is a test example.',
-    isSelected: false,
-    userInputDescriptionText: 'This is an example advice over user input.'
+    isSelected: false
   }
 };

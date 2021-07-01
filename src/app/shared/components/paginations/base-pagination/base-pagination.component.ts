@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BASE_PAGINATION_DEFAULT_NAVIGATION_CONFIGURATION as defaultConfig } from './constants';
-import { IBasePaginationNavigationConfiguration } from './interfaces';
+import { IBasePaginationNavigationConfiguration, TBasePaginationNavigationDirection } from './interfaces';
 
 @Component({
   selector: 'brave-base-pagination',
@@ -102,7 +102,7 @@ export class BasePaginationComponent implements OnInit, OnChanges {
     this.localCurrentIndex = pageIndex;
   }
 
-  navigate(direction: 'back' | 'forward'): void {
+  navigate(direction: TBasePaginationNavigationDirection): void {
     const isLimitReached = this.isLimitReached(direction);
     if (!isLimitReached) {
       let currentIndex = this.localCurrentIndex;
@@ -112,7 +112,7 @@ export class BasePaginationComponent implements OnInit, OnChanges {
     }
   }
 
-  private isLimitReached(direction: 'back' | 'forward'): boolean {
+  private isLimitReached(direction: TBasePaginationNavigationDirection): boolean {
     const cIndex = this.localCurrentIndex;
     const cMaxLimit = this.localPages.length - 1;
     return direction === 'back' ? cIndex === 0 : cIndex === cMaxLimit;

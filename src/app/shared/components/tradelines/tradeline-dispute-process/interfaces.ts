@@ -2,5 +2,10 @@ import { IDisputeTradelineReasonCard } from '@shared/components/cards/reason-car
 
 export interface IDisputeTradelineReasonCardPage {
   pageIndex: number;
-  cards: IDisputeTradelineReasonCard[];
+  items: IDisputeTradelineReasonCard[];
+}
+
+export interface IDisputeTradelineSelectedObj {
+  pageIndex: number;
+  itemIndex: number;
 }

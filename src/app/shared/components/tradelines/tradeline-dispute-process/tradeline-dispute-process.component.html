@@ -1,17 +1,37 @@
-<div class="w-100" (swipe)="onSwipe($event)">
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
-  <p>dasd</p>
+<div class="w-full">
+  <div class="w-full" (swipe)="onSwipe($event)">
+    <ng-template ngFor let-page [ngForOf]="reasonOptionPages" let-pageIndex="index">
+      <ng-template [ngIf]="(basePagination.currentActivePage$ | async)?.valueOf() === page.pageIndex">
+        <brave-reason-card 
+        *ngFor="let reason of page.items; let itemIndex = index"
+        class="my-4"
+        (clicked)="switchOption(pageIndex, itemIndex)"
+        [allowUserInput]="reason.allowUserInput"
+        [text]="reason.text"
+        [isSelected]="isSelected(pageIndex, itemIndex)"
+        [userInputDescriptionText]="reason.userInputDescriptionText">
+      </brave-reason-card>
+      </ng-template>
+    </ng-template>
+  </div>
+  <div class="p-4">
+    <brave-base-pagination #basePagination paginationStyle="point" [numberOfPages]="reasonOptionPages.length"></brave-base-pagination>
+  </div>
+</div>
+<div class="p-4">
+  <p class="text-lg font-bold mb-6">Reason(s) selected:</p>
+  <span *ngIf="selectedIndexes.length === 0">You have not selected any reasons.</span>
+  <div>
+    <ng-template ngFor let-indexObj [ngForOf]="selectedIndexes">
+      <brave-reason-card 
+      (clicked)="switchOption(indexObj.pageIndex, indexObj.itemIndex)"
+      [allowUserInput]="false"
+      [text]="getTargetSelectedCard(indexObj).text"
+      [isSelected]="isSelected(indexObj.pageIndex, indexObj.itemIndex)"
+      [userInputDescriptionText]="getTargetSelectedCard(indexObj).userInputDescriptionText"></brave-reason-card>
+    </ng-template>
+  </div>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button class="mt-4 w-100">Continue to your summary</brave-filled-onlytext-button>
+  </div>
 </div>

@@ -62,7 +62,6 @@ import { ViewsModule } from '@views/views.module';
 import { AuthenticationModule } from './layouts/authentication/authentication.module';
 import { OnboardingModule } from './layouts/onboarding/onboarding.module';
 import { braveState } from '@store/index';
-import { DisputeTradelineComponent } from './layouts/disputes/dispute-tradeline/dispute-tradeline.component';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
 @Injectable()
@@ -73,7 +72,7 @@ export class MyHammerConfig extends HammerGestureConfig {
 }
 
 @NgModule({
-  declarations: [AppComponent, DisputeTradelineComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     NgxsModule.forRoot(braveState, {

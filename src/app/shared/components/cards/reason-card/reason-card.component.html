@@ -1,14 +1,17 @@
 <div 
-  class="p-4 rounded-lg border flex flex-row items-center"
+  class="p-4 rounded-lg border"
   [ngClass]="{ 'border-indigo-800': isSelected, 'border-blueGray-500': !isSelected }">
   <div>
-    <span class="text-xs">{{ text }}</span>
-    <div *ngIf="isSelected && allowUserInput">
-      <p>{{ userInputDescriptionText }}</p>
-      <textarea [(ngModel)]="customUserInput" class="bg-blueGray-300"></textarea>
+    <div class="flex flex-row items-center">
+      <span class="text-sm font-semibold">{{ text }}</span>
+      <div class="ml-auto cursor-pointer flex justify-end" (click)="clicked.emit()">
+        <span class="material-icons-outlined">{{ isSelected ? 'remove' : 'add' }}</span>
+      </div>
     </div>
-  </div>
-  <div class="ml-auto mr-2 cursor-pointer flex">
-    <span class="material-icons-outlined">{{ isSelected ? 'remove' : 'add' }}</span>
+    <div *ngIf="isSelected && allowUserInput">
+      <p class="my-2 text-sm font-semibold ">If you can't find your reason, provide details below.</p>
+      <p class="my-2 text-xs font-light">{{ userInputDescriptionText }}</p>
+      <textarea [(ngModel)]="customUserInput" class="resize-none w-full rounded-sm h-6 text-xs bg-blueGray-300" placeholder="Add your reason to dispute here"></textarea>
+    </div>
   </div>
 </div>
