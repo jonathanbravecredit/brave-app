@@ -99,7 +99,12 @@
   </div>
 
   <div *ngIf="viewDetail.open$ | async as open">
-    <brave-tradeline-payments [payments]="payments" [remarks]="remarks" [address]="address"></brave-tradeline-payments>
+    <brave-tradeline-payments
+      [paymentHistory]="paymentHistory"
+      [remarks]="remarks"
+      [address]="address"
+      (disputeClick)="disputeClick.emit()"
+    ></brave-tradeline-payments>
   </div>
   <div class="flex justify-center my-6">
     <brave-viewdetail-button #viewDetail>

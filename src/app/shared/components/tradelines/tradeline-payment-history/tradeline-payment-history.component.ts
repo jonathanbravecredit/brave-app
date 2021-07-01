@@ -9,9 +9,9 @@ import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merg
 export class TradelinePaymentHistoryComponent {
   /**
    * Payment status history mapped directly from Merge Report
-   * @property {IPayStatusHistory | undefined} payments
+   * @property {IPayStatusHistory | undefined} paymentHistory
    */
-  @Input() payments: IPayStatusHistory | undefined = {} as IPayStatusHistory;
+  @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
   /**
    * Default gridWidth in rem units
    * @property {string} gridWidth
@@ -37,7 +37,7 @@ export class TradelinePaymentHistoryComponent {
   history: ITradelinePaymentHistory;
 
   constructor() {
-    this.history = this.parsePaymentHistory(this.payments);
+    this.history = this.parsePaymentHistory(this.paymentHistory);
   }
 
   /**

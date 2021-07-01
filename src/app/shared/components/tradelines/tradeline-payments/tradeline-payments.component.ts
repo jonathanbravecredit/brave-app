@@ -24,7 +24,7 @@ export class TradelinePaymentsComponent {
    */
   @Input() address: string = '';
   /**
-   * Event emitter when dispute button clicked
+   * Event emitter when dispute button clicked on tradeline detail
    * @property {EventEmitter<void>} disputeClick
    * @default
    */

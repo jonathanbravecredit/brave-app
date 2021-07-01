@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 
@@ -27,6 +27,12 @@ export class TradelineDetailsComponent {
    * @property {string} address
    */
   @Input() address: string = '';
+  /**
+   * Event emitter when dispute button clicked on tradeline detail
+   * @property {EventEmitter<void>} disputeClick
+   * @default
+   */
+  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
   /**
    * One of three different display configs presented as a map
    * @property {Record<string, any>} mapper
