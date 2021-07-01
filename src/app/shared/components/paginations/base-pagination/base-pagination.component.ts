@@ -66,7 +66,7 @@ export class BasePaginationComponent implements OnInit, OnChanges {
    */
   baseConfiguration: IBasePaginationNavigationConfiguration = defaultConfig;
 
-  private currentActivePageModifier$: BehaviorSubject<number> = new BehaviorSubject(1);
+  private currentActivePageModifier$: BehaviorSubject<number> = new BehaviorSubject(0);
   /**
    * An Observable that holds the current active index.
    *

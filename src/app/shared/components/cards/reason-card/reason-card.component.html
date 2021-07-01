@@ -1,0 +1,14 @@
+<div 
+  class="p-4 rounded-lg border flex flex-row items-center"
+  [ngClass]="{ 'border-indigo-800': isSelected, 'border-blueGray-500': !isSelected }">
+  <div>
+    <span class="text-xs">{{ text }}</span>
+    <div *ngIf="isSelected && allowUserInput">
+      <p>{{ userInputDescriptionText }}</p>
+      <textarea [(ngModel)]="customUserInput" class="bg-blueGray-300"></textarea>
+    </div>
+  </div>
+  <div class="ml-auto mr-2 cursor-pointer flex">
+    <span class="material-icons-outlined">{{ isSelected ? 'remove' : 'add' }}</span>
+  </div>
+</div>

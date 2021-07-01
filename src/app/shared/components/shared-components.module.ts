@@ -87,6 +87,8 @@ import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
 import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
+import { TradelineDisputeProcessComponent } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
 
 const components = [
   BaseFormComponent,
@@ -155,7 +157,9 @@ const components = [
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
-  BasePaginationComponent
+  BasePaginationComponent,
+  ReasonCardComponent,
+  TradelineDisputeProcessComponent
 ];
 
 // component specific pipes only

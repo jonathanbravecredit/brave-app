@@ -30,6 +30,13 @@ const routes: Routes = [
         (m) => m.ComplianceModule
       ),
   },
+  {
+    path: 'tradeline-dispute',
+    loadChildren: () =>
+      import('./layouts/disputes/dispute-tradeline/dispute-tradeline.module').then(
+        (m) => m.DisputeTradelineModule
+      ),
+  },
   // { path: '', component: IndexComponent }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

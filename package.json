@@ -46,6 +46,7 @@
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.935.0",
     "chart.js": "^2.9.4",
+    "hammerjs": "^2.0.8",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
@@ -60,6 +61,7 @@
     "@storybook/addon-essentials": "^6.3.0",
     "@storybook/addon-links": "^6.3.0",
     "@storybook/angular": "^6.3.0",
+    "@types/hammerjs": "^2.0.39",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "babel-loader": "^8.2.2",
