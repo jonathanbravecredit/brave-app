@@ -108,9 +108,14 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
   enrollVantageScore: TUReportResponse
+  enrolled: Boolean
+  enrolledOn: String
   fulfillReport: TUReportResponse
   fulfillMergeReport: TUReportResponse
   fulfillVantageScore: TUReportResponse
+  lastFufilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
   disputes: Disputes
 }
 
@@ -212,9 +217,14 @@ input TransunionInput {
   enrollReport: TUReportResponseInput
   enrollMergeReport: TUReportResponseInput
   enrollVantageScore: TUReportResponseInput
+  enrolled: Boolean
+  enrolledOn: String
   fulfillReport: TUReportResponseInput
   fulfillMergeReport: TUReportResponseInput
   fulfillVantageScore: TUReportResponseInput
+  lastFufilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
   disputes: DisputesInput
 }
 
