@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
 import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
-import { IGetDisputeStatusResponse } from '@shared/interfaces/get-dispute-status.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
-import { APIService, SsnInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { AppDataStateModel } from '@store/app-data';
 
@@ -101,7 +100,6 @@ export class TransunionService {
     try {
       const msg = this.createFulfillPayload(data);
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
-      console.log(res);
       return res ? res : undefined;
     } catch (err) {
       console.log('err ', err);
@@ -341,7 +339,7 @@ export class TransunionService {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
       return;
     }
-
+    console.log('id in getDisputeStatus', id);
     return {
       ClientKey: id,
       Customer: {

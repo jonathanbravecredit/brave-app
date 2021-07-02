@@ -97,6 +97,7 @@ type Transunion {
   fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
+  disputeStatus: String
   disputes: Disputes
 }
 type Equifax {

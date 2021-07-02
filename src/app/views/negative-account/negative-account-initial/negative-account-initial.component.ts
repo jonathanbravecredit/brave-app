@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import { IFulfillResult, IFulfillServiceProductResponse } from '@shared/interfaces/fulfill.interface';
 import { IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
@@ -17,7 +18,13 @@ import { Observable } from 'rxjs';
 export class NegativeAccountInitialComponent {
   creditReport$: Observable<IMergeReport>;
 
-  constructor(private transunion: TransunionService, private creditReportService: CreditreportService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private transunion: TransunionService,
+    private creditReportService: CreditreportService,
+    private disputeService: DisputeService,
+  ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 
@@ -31,8 +38,8 @@ export class NegativeAccountInitialComponent {
     try {
       const res = await this.transunion.getCreditReport(state);
       if (!res) throw new Error(`Failed to refresh report; response:${res}`);
-      const parsed = res ? JSON.parse(res) : undefined;
-      const fulfillResult = returnNestedObject(JSON.parse(parsed.Fulfill), 'FulfillResult');
+      const fulfillRaw = res ? JSON.parse(res) : undefined;
+      const fulfillResult = returnNestedObject(JSON.parse(fulfillRaw.Fulfill), 'FulfillResult');
       const enrich = this.enrichFulfillData(state, fulfillResult);
       if (!enrich?.agencies) throw new Error('Fufill failed');
       const data = await this.creditReportService.updateReportAsync(enrich.agencies);
@@ -40,6 +47,13 @@ export class NegativeAccountInitialComponent {
       if (!data) throw new Error('Failed to update state with refreshed report');
       const disputeStatus = await this.transunion.getDisputeStatus(data as AppDataStateModel);
       console.log('status back', disputeStatus);
+      const disputeRaw = disputeStatus ? JSON.parse(disputeStatus) : undefined;
+      const disputeResult = returnNestedObject(JSON.parse(disputeRaw.GetDisputeStatus), 'GetDisputeStatusResult');
+      //if (disputeResult.ResponseType.toLowerCase() !== 'success') throw new Error('GetDisputeStatus filed');
+      // TODO error in request...question out to Evadney for better guidance
+      // assume it comes back successfully for now
+      this.disputeService.setDisputeItem(card);
+      this.router.navigate(['../dispute'], { relativeTo: this.route });
     } catch (err) {
       throw new Error(err);
     }
@@ -60,7 +74,7 @@ export class NegativeAccountInitialComponent {
     let fulfillReport;
     let fulfillMergeReport;
     let fulfillVantageScore;
-    let lastFulfilledOn = new Date().toISOString();
+    let fulfilledOn = new Date().toISOString();
     const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
     if (!prodResponse) return;
     if (prodResponse instanceof Array) {
@@ -94,7 +108,7 @@ export class NegativeAccountInitialComponent {
         ...state.agencies,
         transunion: {
           ...state.agencies?.transunion,
-          lastFulfilledOn: lastFulfilledOn,
+          fulfilledOn: fulfilledOn,
           fulfillReport: mapFulfillResponse(fulfillReport),
           fulfillMergeReport: mapFulfillResponse(fulfillMergeReport),
           fulfillVantageScore: mapFulfillResponse(fulfillVantageScore),
