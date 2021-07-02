@@ -107,7 +107,7 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {
@@ -251,7 +251,7 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {
@@ -395,7 +395,7 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {

@@ -124,7 +124,7 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {
@@ -273,7 +273,7 @@ query ListAppDatas(
             serviceProductValue
             status
           }
-          lastFufilledOn
+          fulfilledOn
           acknowledgedDisputeTerms
           acknowledgedDisputeTermsOn
           disputes {

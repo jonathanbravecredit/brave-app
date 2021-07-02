@@ -40,7 +40,7 @@ export type Transunion = {
   fulfillReport?: TUReportResponse;
   fulfillMergeReport?: TUReportResponse;
   fulfillVantageScore?: TUReportResponse;
-  lastFufilledOn?: string | null;
+  fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
   disputes?: Disputes;
@@ -136,7 +136,7 @@ export type TransunionInput = {
   fulfillReport?: TUReportResponseInput | null;
   fulfillMergeReport?: TUReportResponseInput | null;
   fulfillVantageScore?: TUReportResponseInput | null;
-  lastFufilledOn?: string | null;
+  fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
   disputes?: DisputesInput | null;
@@ -457,7 +457,7 @@ export type PatchTransunionMutation = {
     serviceProductValue?: string | null;
     status?: string | null;
   } | null;
-  lastFufilledOn?: string | null;
+  fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
   disputes?: {
@@ -599,7 +599,7 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -764,7 +764,7 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -929,7 +929,7 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -1108,7 +1108,7 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -1275,7 +1275,7 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
-        lastFufilledOn?: string | null;
+        fulfilledOn?: string | null;
         acknowledgedDisputeTerms?: boolean | null;
         acknowledgedDisputeTermsOn?: string | null;
         disputes?: {
@@ -1442,7 +1442,7 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -1607,7 +1607,7 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -1772,7 +1772,7 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
-      lastFufilledOn?: string | null;
+      fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
@@ -1959,7 +1959,7 @@ export class APIService {
             serviceProductValue
             status
           }
-          lastFufilledOn
+          fulfilledOn
           acknowledgedDisputeTerms
           acknowledgedDisputeTermsOn
           disputes {
@@ -2117,7 +2117,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
@@ -2298,7 +2298,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
@@ -2479,7 +2479,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
@@ -2694,7 +2694,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
@@ -2875,7 +2875,7 @@ export class APIService {
                   serviceProductValue
                   status
                 }
-                lastFufilledOn
+                fulfilledOn
                 acknowledgedDisputeTerms
                 acknowledgedDisputeTermsOn
                 disputes {
@@ -3061,7 +3061,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
@@ -3239,7 +3239,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
@@ -3417,7 +3417,7 @@ export class APIService {
                 serviceProductValue
                 status
               }
-              lastFufilledOn
+              fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
               disputes {
