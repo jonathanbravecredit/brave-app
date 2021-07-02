@@ -35,9 +35,14 @@ export type Transunion = {
   enrollReport?: TUReportResponse;
   enrollMergeReport?: TUReportResponse;
   enrollVantageScore?: TUReportResponse;
+  enrolled?: boolean | null;
+  enrolledOn?: string | null;
   fulfillReport?: TUReportResponse;
   fulfillMergeReport?: TUReportResponse;
   fulfillVantageScore?: TUReportResponse;
+  lastFufilledOn?: string | null;
+  acknowledgedDisputeTerms?: boolean | null;
+  acknowledgedDisputeTermsOn?: string | null;
   disputes?: Disputes;
 };
 
@@ -126,9 +131,14 @@ export type TransunionInput = {
   enrollReport?: TUReportResponseInput | null;
   enrollMergeReport?: TUReportResponseInput | null;
   enrollVantageScore?: TUReportResponseInput | null;
+  enrolled?: boolean | null;
+  enrolledOn?: string | null;
   fulfillReport?: TUReportResponseInput | null;
   fulfillMergeReport?: TUReportResponseInput | null;
   fulfillVantageScore?: TUReportResponseInput | null;
+  lastFufilledOn?: string | null;
+  acknowledgedDisputeTerms?: boolean | null;
+  acknowledgedDisputeTermsOn?: string | null;
   disputes?: DisputesInput | null;
 };
 
@@ -412,6 +422,8 @@ export type PatchTransunionMutation = {
     serviceProductValue?: string | null;
     status?: string | null;
   } | null;
+  enrolled?: boolean | null;
+  enrolledOn?: string | null;
   fulfillReport?: {
     __typename: "TUReportResponse";
     bureau?: string | null;
@@ -445,6 +457,9 @@ export type PatchTransunionMutation = {
     serviceProductValue?: string | null;
     status?: string | null;
   } | null;
+  lastFufilledOn?: string | null;
+  acknowledgedDisputeTerms?: boolean | null;
+  acknowledgedDisputeTermsOn?: string | null;
   disputes?: {
     __typename: "Disputes";
     disputePreflightStatus?: string | null;
@@ -549,6 +564,8 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -582,6 +599,9 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -709,6 +729,8 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -742,6 +764,9 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -869,6 +894,8 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -902,6 +929,9 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1043,6 +1073,8 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -1076,6 +1108,9 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1205,6 +1240,8 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
+        enrolled?: boolean | null;
+        enrolledOn?: string | null;
         fulfillReport?: {
           __typename: "TUReportResponse";
           bureau?: string | null;
@@ -1238,6 +1275,9 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
+        lastFufilledOn?: string | null;
+        acknowledgedDisputeTerms?: boolean | null;
+        acknowledgedDisputeTermsOn?: string | null;
         disputes?: {
           __typename: "Disputes";
           disputePreflightStatus?: string | null;
@@ -1367,6 +1407,8 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -1400,6 +1442,9 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1527,6 +1572,8 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -1560,6 +1607,9 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1687,6 +1737,8 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
         bureau?: string | null;
@@ -1720,6 +1772,9 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      lastFufilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1869,6 +1924,8 @@ export class APIService {
             serviceProductValue
             status
           }
+          enrolled
+          enrolledOn
           fulfillReport {
             __typename
             bureau
@@ -1902,6 +1959,9 @@ export class APIService {
             serviceProductValue
             status
           }
+          lastFufilledOn
+          acknowledgedDisputeTerms
+          acknowledgedDisputeTermsOn
           disputes {
             __typename
             disputePreflightStatus
@@ -2022,6 +2082,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -2055,6 +2117,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2198,6 +2263,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -2231,6 +2298,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2374,6 +2444,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -2407,6 +2479,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2584,6 +2659,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -2617,6 +2694,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2760,6 +2840,8 @@ export class APIService {
                   serviceProductValue
                   status
                 }
+                enrolled
+                enrolledOn
                 fulfillReport {
                   __typename
                   bureau
@@ -2793,6 +2875,9 @@ export class APIService {
                   serviceProductValue
                   status
                 }
+                lastFufilledOn
+                acknowledgedDisputeTerms
+                acknowledgedDisputeTermsOn
                 disputes {
                   __typename
                   disputePreflightStatus
@@ -2941,6 +3026,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -2974,6 +3061,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -3114,6 +3204,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -3147,6 +3239,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -3287,6 +3382,8 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
               fulfillReport {
                 __typename
                 bureau
@@ -3320,6 +3417,9 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              lastFufilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus

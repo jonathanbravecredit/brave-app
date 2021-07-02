@@ -75,6 +75,8 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
         fulfillReport {
           bureau
           errorResponse
@@ -105,6 +107,9 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
+        lastFufilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -214,6 +219,8 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
         fulfillReport {
           bureau
           errorResponse
@@ -244,6 +251,9 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
+        lastFufilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -353,6 +363,8 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
         fulfillReport {
           bureau
           errorResponse
@@ -383,6 +395,9 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
+        lastFufilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
