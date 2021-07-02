@@ -20,7 +20,6 @@ export class TradelinesComponent {
    */
   constructor(private creditReportServices: CreditreportService) {
     this.tradeline = this.creditReportServices.tuTradeline;
-    console.log('tradeline', this.tradeline);
   }
 
   /**

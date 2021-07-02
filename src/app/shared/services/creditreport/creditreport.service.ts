@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import {
   IBorrower,
   IMergeReport,
@@ -9,9 +9,18 @@ import {
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
-import { TransunionInput } from '@shared/services/aws/api.service';
+import * as AgencyActions from '@store/agencies/agencies.actions';
+import {
+  APIService,
+  PatchTransunionMutation,
+  TransunionInput,
+  UpdateAppDataInput,
+  UpdateAppDataMutation,
+} from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
+import { AppDataStateModel } from '@store/app-data';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -37,7 +46,7 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$: Subscription;
 
-  constructor() {
+  constructor(private auth: AuthService, private api: APIService, private store: Store) {
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       this.tuAgency$.next(tu);
@@ -134,5 +143,48 @@ export class CreditreportService implements OnDestroy {
   setDispute(dispute: any): void {
     this.tuDispute = dispute;
     this.tuDispute$.next(dispute);
+  }
+
+  /**
+   * (Asynchronous) Takes the refreshed credit report returned by the agency service and stores them in state
+   * @param {AgenciesStateModel | null | undefined} agencies the string of xml questions returned by Transunion or other agency
+   *
+   */
+  updateReport(agencies: AgenciesStateModel | null | undefined): void {
+    if (!agencies) return;
+    this.store.dispatch(new AgencyActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        throw new Error(`No id provided; id:${input.id}`);
+      } else {
+        this.api.UpdateAppData(input);
+      }
+    });
+  }
+
+  /**
+   * (Promise) Takes the refreshed credit report returned by the agency service and stores them in state
+   * @param {AgenciesStateModel | null | undefined} agencies the string of xml questions returned by Transunion or other agency
+   */
+  async updateReportAsync(
+    agencies: AgenciesStateModel | null | undefined,
+  ): Promise<UpdateAppDataMutation | null | undefined> {
+    if (!agencies) return;
+    return await new Promise((resolve, reject) => {
+      // TODO can move this to a subscription when we have it built out
+      // won't have to try and keep state and db in sync
+      this.store.dispatch(new AgencyActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        console.log('data to input', input);
+        if (!input.id) {
+          throw new Error(`No id provided; id:${input.id}`);
+        } else {
+          this.api
+            .UpdateAppData(input)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        }
+      });
+    });
   }
 }

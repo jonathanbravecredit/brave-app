@@ -6,6 +6,7 @@ import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-aut
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
 import { APIService, SsnInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { AppDataStateModel } from '@store/app-data';
 
 @Injectable({
@@ -97,7 +98,7 @@ export class TransunionService {
   async refreshCreditReport(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
     try {
       const msg = this.createFulfillPayload(data);
-      const res = await this.api.Transunion('Fulfull', JSON.stringify(msg));
+      const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
       console.log(res);
       return res ? res : undefined;
     } catch (err) {
@@ -141,7 +142,7 @@ export class TransunionService {
           Zipcode: attrs.address?.zip || '',
         },
         PreviousAddress: {},
-        DateOfBirth: `${attrs.dob?.year}-${monthMap[dob.month.toLowerCase()]}-${`0${dob.day}`.slice(-2)}` || '',
+        DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob.month.toLowerCase()]}-${`0${dob.day}`.slice(-2)}` || '',
         FullName: {
           FirstName: attrs.name?.first || '',
           LastName: attrs.name?.last || '',
@@ -192,7 +193,8 @@ export class TransunionService {
           Zipcode: attrs.address?.zip || '',
         },
         PreviousAddress: {},
-        DateOfBirth: `${attrs.dob?.year}-${monthMap[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+        DateOfBirth:
+          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
         FullName: {
           FirstName: attrs.name?.first || '',
           LastName: attrs.name?.last || '',
@@ -255,7 +257,8 @@ export class TransunionService {
           State: attrs.address?.state || '',
           Zipcode: attrs.address?.zip || '',
         },
-        DateOfBirth: `${attrs.dob?.year}-${monthMap[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+        DateOfBirth:
+          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
         FullName: {
           FirstName: attrs.name?.first || '',
           LastName: attrs.name?.last || '',
@@ -291,7 +294,8 @@ export class TransunionService {
           State: attrs.address?.state || '',
           Zipcode: attrs.address?.zip || '',
         },
-        DateOfBirth: `${attrs.dob?.year}-${monthMap[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+        DateOfBirth:
+          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
         FullName: {
           FirstName: attrs.name?.first || '',
           LastName: attrs.name?.last || '',
@@ -304,18 +308,3 @@ export class TransunionService {
     } as IFulfillRequest;
   }
 }
-
-const monthMap: Record<string, any> = {
-  jan: '01',
-  feb: '02',
-  mar: '03',
-  apr: '04',
-  may: '05',
-  jun: '06',
-  jul: '07',
-  aug: '08',
-  sep: '09',
-  oct: '10',
-  nov: '11',
-  dec: '12',
-};

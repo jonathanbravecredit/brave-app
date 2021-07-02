@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 
 @Component({
@@ -7,6 +7,7 @@ import { INegativeAccountCardInputs } from '@shared/components/cards/negative-ac
 })
 export class NegativeAccountInitialPureComponent implements OnInit {
   @Input() cards: INegativeAccountCardInputs[] | undefined;
+  @Output() confirmed: EventEmitter<INegativeAccountCardInputs> = new EventEmitter();
 
   constructor() {}
 

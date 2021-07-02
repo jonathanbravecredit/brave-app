@@ -6,5 +6,5 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
   providedIn: 'root',
 })
 export class DisputeService {
-  constructor(private api: APIService, private transunion: TransunionService) {}
+  constructor() {}
 }

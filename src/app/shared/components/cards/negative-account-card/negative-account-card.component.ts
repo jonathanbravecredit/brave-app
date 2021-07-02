@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import {
@@ -14,6 +14,7 @@ import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 export class NegativeAccountCardComponent {
   @ViewChild(OnboardingDisputeComponent)
   disputeTermsModal: OnboardingDisputeComponent | undefined;
+  @Output() confirmed: EventEmitter<void> = new EventEmitter();
   @Input() showDisputeButton = true;
   @Input() data: INegativeAccountCardInputs = {
     tradeline: {} as ITradeLinePartition,
@@ -42,6 +43,8 @@ export class NegativeAccountCardComponent {
 
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
+      this.showModal = false;
+      this.confirmed.emit();
       console.log('confirmed');
     }
   }
