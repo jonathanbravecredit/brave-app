@@ -167,12 +167,12 @@ export class KycService {
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
-            this.auth.reloadCredentials();
-            reject();
-            return;
+            throw new Error(`No id provided; id:${input.id}`);
           } else {
-            this.api.UpdateAppData(input);
-            resolve(input);
+            this.api
+              .UpdateAppData(input)
+              .then((res) => resolve(res))
+              .catch((err) => reject(err));
           }
         });
     });
@@ -407,12 +407,12 @@ export class KycService {
       this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          this.auth.reloadCredentials();
-          reject();
-          return;
+          throw new Error(`No id provided; id:${input.id}`);
         } else {
-          this.api.UpdateAppData(input);
-          resolve(input);
+          this.api
+            .UpdateAppData(input)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
         }
       });
     });
