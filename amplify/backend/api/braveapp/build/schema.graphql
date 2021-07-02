@@ -113,7 +113,7 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   fulfillReport: TUReportResponse
   fulfillMergeReport: TUReportResponse
   fulfillVantageScore: TUReportResponse
-  lastFufilledOn: String
+  fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
   disputes: Disputes
@@ -222,7 +222,7 @@ input TransunionInput {
   fulfillReport: TUReportResponseInput
   fulfillMergeReport: TUReportResponseInput
   fulfillVantageScore: TUReportResponseInput
-  lastFufilledOn: String
+  fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
   disputes: DisputesInput
