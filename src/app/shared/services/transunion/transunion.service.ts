@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
+import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
+import { IGetDisputeStatusResponse } from '@shared/interfaces/get-dispute-status.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
@@ -95,10 +97,27 @@ export class TransunionService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async refreshCreditReport(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+  async getCreditReport(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
     try {
       const msg = this.createFulfillPayload(data);
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
+      console.log(res);
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send fulfillment key to Transunion to refresh their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async getDisputeStatus(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+    try {
+      const msg = this.createGetDisputeStatusPayload(data);
+      const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
       console.log(res);
       return res ? res : undefined;
     } catch (err) {
@@ -274,7 +293,7 @@ export class TransunionService {
    * @param { UpdateAppDataInput | AppDataStateModel} data
    * @returns {IFulfillRequest | undefined }
    */
-  createFulfillPayload(data: UpdateAppDataInput | AppDataStateModel): IEnrollRequest | undefined {
+  createFulfillPayload(data: UpdateAppDataInput | AppDataStateModel): IFulfillRequest | undefined {
     const id = data.id?.split(':')?.pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
@@ -306,5 +325,43 @@ export class TransunionService {
       EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
       ServiceBundleCode: 'CC2BraveCreditTUReportV3Score',
     } as IFulfillRequest;
+  }
+
+  /**
+   * Genarates the message payload for TU Fulfill request
+   * @param { UpdateAppDataInput | AppDataStateModel} data
+   * @returns {IGetDisputeStatusRequest | undefined }
+   */
+  createGetDisputeStatusPayload(data: UpdateAppDataInput | AppDataStateModel): IGetDisputeStatusRequest | undefined {
+    const id = data.id?.split(':')?.pop();
+    const attrs = data.user?.userAttributes;
+    const dob = attrs?.dob;
+
+    if (!id || !attrs || !dob) {
+      console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+      return;
+    }
+
+    return {
+      ClientKey: id,
+      Customer: {
+        CurrentAddress: {
+          AddressLine1: attrs.address?.addressOne || '',
+          AddressLine2: attrs.address?.addressTwo || '',
+          City: attrs.address?.city || '',
+          State: attrs.address?.state || '',
+          Zipcode: attrs.address?.zip || '',
+        },
+        DateOfBirth:
+          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+        FullName: {
+          FirstName: attrs.name?.first || '',
+          LastName: attrs.name?.last || '',
+          MiddleName: attrs.name?.middle || '',
+        },
+        Ssn: attrs.ssn?.full || '',
+      },
+      EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
+    } as IGetDisputeStatusRequest;
   }
 }

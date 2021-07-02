@@ -33,13 +33,17 @@ export class NegativeAccountInitialComponent {
     const state = this.store.snapshot()['appData'];
     console.log('onConfirmed state', state);
     try {
-      const res = await this.transunion.refreshCreditReport(state);
+      const res = await this.transunion.getCreditReport(state);
+      if (!res) throw new Error(`Failed to refresh report; response:${res}`);
       const parsed = res ? JSON.parse(res) : undefined;
       const fulfillResult = returnNestedObject(JSON.parse(parsed.Fulfill), 'FulfillResult');
       const enrich = this.enrichFulfillData(state, fulfillResult);
       if (!enrich?.agencies) throw new Error('Fufill failed');
-      const agencies = await this.creditReportService.updateReportAsync(enrich.agencies);
-      console.log('updated state', agencies);
+      const data = await this.creditReportService.updateReportAsync(enrich.agencies);
+      console.log('updated state', data);
+      if (!data) throw new Error('Failed to update state with refreshed report');
+      const disputeStatus = await this.transunion.getDisputeStatus(data as AppDataStateModel);
+      console.log('status back', disputeStatus);
     } catch (err) {
       throw new Error(err);
     }
