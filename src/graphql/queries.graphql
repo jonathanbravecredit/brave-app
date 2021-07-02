@@ -92,6 +92,8 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
         fulfillReport {
           bureau
           errorResponse
@@ -122,6 +124,9 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
+        lastFufilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -236,6 +241,8 @@ query ListAppDatas(
             serviceProductValue
             status
           }
+          enrolled
+          enrolledOn
           fulfillReport {
             bureau
             errorResponse
@@ -266,6 +273,9 @@ query ListAppDatas(
             serviceProductValue
             status
           }
+          lastFufilledOn
+          acknowledgedDisputeTerms
+          acknowledgedDisputeTermsOn
           disputes {
             disputePreflightStatus
             disputeInflightStatus

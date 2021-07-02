@@ -94,7 +94,7 @@ type Transunion {
   fulfillReport: TUReportResponse
   fulfillMergeReport: TUReportResponse
   fulfillVantageScore: TUReportResponse
-  lastFufilledOn: String
+  fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
   disputes: Disputes
