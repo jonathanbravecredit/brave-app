@@ -9,18 +9,11 @@ import {
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
-import * as AgencyActions from '@store/agencies/agencies.actions';
-import {
-  APIService,
-  PatchTransunionMutation,
-  TransunionInput,
-  UpdateAppDataInput,
-  UpdateAppDataMutation,
-} from '@shared/services/aws/api.service';
+import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
+import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
-import { AuthService } from '@shared/services/auth/auth.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -46,7 +39,7 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$: Subscription;
 
-  constructor(private auth: AuthService, private api: APIService, private store: Store) {
+  constructor(private statesvc: StateService) {
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       this.tuAgency$.next(tu);
@@ -67,6 +60,12 @@ export class CreditreportService implements OnDestroy {
     if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
   }
 
+  /**
+   * Return the saved state snapshot on the state svc
+   */
+  getStateSnapshot(): { appData: AppDataStateModel } | undefined {
+    return this.statesvc.state;
+  }
   /**
    * Return the TU data from provided agency state model
    * @param {AgenciesStateModel} agencies
@@ -151,14 +150,7 @@ export class CreditreportService implements OnDestroy {
    */
   updateReport(agencies: AgenciesStateModel | null | undefined): void {
     if (!agencies) return;
-    this.store.dispatch(new AgencyActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        throw new Error(`No id provided; id:${input.id}`);
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    this.statesvc.updateAgencies(agencies);
   }
 
   /**
@@ -167,23 +159,12 @@ export class CreditreportService implements OnDestroy {
    */
   async updateReportAsync(
     agencies: AgenciesStateModel | null | undefined,
-  ): Promise<UpdateAppDataMutation | null | undefined> {
-    if (!agencies) return;
-    return await new Promise((resolve, reject) => {
-      // TODO can move this to a subscription when we have it built out
-      // won't have to try and keep state and db in sync
-      this.store.dispatch(new AgencyActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        console.log('data to input', input);
-        if (!input.id) {
-          throw new Error(`No id provided; id:${input.id}`);
-        } else {
-          this.api
-            .UpdateAppData(input)
-            .then((res) => resolve(res))
-            .catch((err) => reject(err));
-        }
-      });
-    });
+  ): Promise<UpdateAppDataInput | null | undefined> {
+    if (!agencies) throw new Error(`Error in creditreportService:updateReportAsync=Missing agency`);
+    try {
+      return await this.statesvc.updateAgenciesAsync(agencies);
+    } catch (err) {
+      throw new Error(`Error in creditreportService:updateReportAsync=${err}`);
+    }
   }
 }

@@ -17,11 +17,7 @@ import { Observable } from 'rxjs';
 export class NegativeAccountInitialComponent {
   creditReport$: Observable<IMergeReport>;
 
-  constructor(
-    private store: Store,
-    private transunion: TransunionService,
-    private creditReportService: CreditreportService,
-  ) {
+  constructor(private transunion: TransunionService, private creditReportService: CreditreportService) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 
@@ -30,8 +26,8 @@ export class NegativeAccountInitialComponent {
    * @param card
    */
   async onConfirmed(card: INegativeAccountCardInputs): Promise<void> {
-    const state = this.store.snapshot()['appData'];
-    console.log('onConfirmed state', state);
+    const state = this.creditReportService.getStateSnapshot()?.appData;
+    if (!state) throw new Error(`Error in negativeAccountInitialComponent:onConfirmed=Missing state`);
     try {
       const res = await this.transunion.getCreditReport(state);
       if (!res) throw new Error(`Failed to refresh report; response:${res}`);
@@ -49,6 +45,7 @@ export class NegativeAccountInitialComponent {
     }
   }
 
+  acknowledgeDisputeTerms(): void {}
   /**
    * This method parses and enriches the state data
    * @param {AppDataStateModel | UpdateAppDataInput} state
@@ -63,6 +60,7 @@ export class NegativeAccountInitialComponent {
     let fulfillReport;
     let fulfillMergeReport;
     let fulfillVantageScore;
+    let lastFulfilledOn = new Date().toISOString();
     const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
     if (!prodResponse) return;
     if (prodResponse instanceof Array) {
@@ -96,6 +94,7 @@ export class NegativeAccountInitialComponent {
         ...state.agencies,
         transunion: {
           ...state.agencies?.transunion,
+          lastFulfilledOn: lastFulfilledOn,
           fulfillReport: mapFulfillResponse(fulfillReport),
           fulfillMergeReport: mapFulfillResponse(fulfillMergeReport),
           fulfillVantageScore: mapFulfillResponse(fulfillVantageScore),

@@ -2,9 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
 import * as parser from 'fast-xml-parser';
-import * as OnboardingActions from '@store/onboarding/onboarding.actions';
-import * as UserActions from '@store/user/user.actions';
-import * as AgenciesActions from '@store/agencies/agencies.actions';
 import { AgenciesInput, APIService, UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { AuthService } from '@shared/services/auth/auth.service';
@@ -19,6 +16,7 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AgenciesStateModel } from '@store/agencies';
+import { StateService } from '@shared/services/state/state.service';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -43,12 +41,7 @@ export enum PassCodeQuestion {
 
 @Injectable()
 export class KycService {
-  constructor(
-    private api: APIService,
-    private store: Store,
-    private auth: AuthService,
-    private transunion: TransunionService,
-  ) {}
+  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {}
 
   /**
    * Takes a progress step ID and sets the status to true
@@ -56,17 +49,7 @@ export class KycService {
    * @param {number} step the progress step ID
    */
   activateStep(step: number): void {
-    this.store
-      .dispatch(new OnboardingActions.UpdateLastActive(step))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input); // the listener will update the state.
-        }
-      });
+    this.statesvc.updateLastActive(step);
   }
 
   /**
@@ -75,17 +58,7 @@ export class KycService {
    * @param {number} step the progress step ID
    */
   inactivateStep(step: number): void {
-    this.store
-      .dispatch(new OnboardingActions.UpdateLastActive(step))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input); // the listener will update the state.
-        }
-      });
+    this.statesvc.updateLastActive(step);
   }
 
   /**
@@ -94,17 +67,7 @@ export class KycService {
    * @param {number} step the progress step ID
    */
   completeStep(step: number): void {
-    this.store
-      .dispatch(new OnboardingActions.UpdateLastComplete(step))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input); // the listener will update the state.
-        }
-      });
+    this.statesvc.updateLastComplete(step);
   }
 
   /**
@@ -113,17 +76,7 @@ export class KycService {
    * @param {number} step the progress step ID
    */
   incompleteStep(step: number): void {
-    this.store
-      .dispatch(new OnboardingActions.UpdateLastComplete(step))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          this.auth.reloadCredentials();
-          return;
-        } else {
-          this.api.UpdateAppData(input); // the listener will update the state.
-        }
-      });
+    this.statesvc.updateLastComplete(step);
   }
 
   /**
@@ -145,15 +98,7 @@ export class KycService {
    * @param {UserAttributesInput} attributes
    */
   updateUserAttributes(attrs: UserAttributesInput): void {
-    this.store.dispatch(new UserActions.UpdateAttributes(attrs)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        this.auth.reloadCredentials();
-        return;
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    this.statesvc.updateUserAttributes(attrs);
   }
 
   /**
@@ -161,21 +106,11 @@ export class KycService {
    * @param {UserAttributesInput} attributes
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new UserActions.UpdateAttributes(attrs))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            throw new Error(`No id provided; id:${input.id}`);
-          } else {
-            this.api
-              .UpdateAppData(input)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          }
-        });
-    });
+    try {
+      return await this.statesvc.updateUserAttributesAsync(attrs);
+    } catch (err) {
+      throw new Error(`Error in kycService:updateUserAttributesAsync=${err}`);
+    }
   }
 
   /**
@@ -183,15 +118,7 @@ export class KycService {
    * @param {AgenciesInput} agency the new agency input data to write to db and state
    */
   updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
-    this.store.dispatch(new AgenciesActions.Edit(agency)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        this.auth.reloadCredentials();
-        return;
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    this.statesvc.updateAgencies(agency);
   }
 
   /**
@@ -201,11 +128,9 @@ export class KycService {
    */
   async sendIndicativeEnrichment(data: UpdateAppDataInput | AppDataStateModel): Promise<any | undefined> {
     try {
-      const res = await this.transunion.sendIndicativeEnrichment(data);
-      return res ? res : undefined;
+      return await this.transunion.sendIndicativeEnrichment(data);
     } catch (err) {
-      console.log('err ', err);
-      return;
+      throw new Error(`Error in kycService:sendIndicativeEnrichment=${err}`);
     }
   }
 
@@ -266,11 +191,9 @@ export class KycService {
   ): Promise<any | undefined> {
     if (!ssn) return;
     try {
-      const res = await this.transunion.sendGetAuthenticationQuestions(data, ssn);
-      return res ? res : undefined;
+      return await this.transunion.sendGetAuthenticationQuestions(data, ssn);
     } catch (err) {
-      console.log('err ', err);
-      return;
+      throw new Error(`Error in kycService:sendGetAuthenticationQuestions=${err}`);
     }
   }
 
@@ -350,11 +273,7 @@ export class KycService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   updateCurrentRawQuestions(questions: string): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunionQuestions({
-        currentRawQuestions: questions,
-      }),
-    );
+    this.statesvc.updateTransunionQuestions(questions);
   }
 
   /**
@@ -362,36 +281,22 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunionQuestions({
-            currentRawQuestions: questions,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput | undefined> {
+    try {
+      return await this.statesvc.updateTransunionQuestionsAsync(questions);
+    } catch (err) {
+      throw new Error(`Error in kycService:updateCurrentRawQuestionsAsync=${err}`);
+    }
   }
 
   /**
-   *
+   * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
    * @param agencies
    */
   updateAgencies(agencies: AgenciesStateModel | undefined): void {
     if (!agencies) return;
-    this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        this.auth.reloadCredentials();
-        return;
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    this.statesvc.updateAgencies(agencies);
   }
 
   /**
@@ -403,19 +308,7 @@ export class KycService {
     agencies: AgenciesStateModel | null | undefined,
   ): Promise<UpdateAppDataInput | null | undefined> {
     if (!agencies) return;
-    return await new Promise((resolve, reject) => {
-      this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          throw new Error(`No id provided; id:${input.id}`);
-        } else {
-          this.api
-            .UpdateAppData(input)
-            .then((res) => resolve(res))
-            .catch((err) => reject(err));
-        }
-      });
-    });
+    return await this.statesvc.updateAgenciesAsync(agencies);
   }
 
   /**
@@ -435,11 +328,7 @@ export class KycService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   updateCurrentRawAuthDetails(questions: string): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunionAuthDetails({
-        currentRawAuthDetails: questions,
-      }),
-    );
+    this.statesvc.updateTransunionAuthDetails(questions);
   }
 
   /**
@@ -447,19 +336,12 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunionAuthDetails({
-            currentRawAuthDetails: questions,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+  async updateCurrentRawAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput | undefined> {
+    try {
+      return this.statesvc.updateTransunionAuthDetailsAsync(questions);
+    } catch (err) {
+      throw new Error(`Error in kycService:updateCurrentRawAuthDetailsAsync=${err}`);
+    }
   }
 
   /**
@@ -553,12 +435,11 @@ export class KycService {
     data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[],
   ): Promise<string | undefined> {
-    if (!answers.length) return;
+    if (!answers.length) throw new Error('No answers provided');
     try {
-      const res = await this.transunion.sendVerifyAuthenticationQuestions(data, answers);
-      return res ? res : undefined;
+      return await this.transunion.sendVerifyAuthenticationQuestions(data, answers);
     } catch (err) {
-      return;
+      throw new Error(`Error in kycService:sendVerifyAuthenticationQuestions=${err}`);
     }
   }
 
@@ -569,10 +450,9 @@ export class KycService {
    */
   async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
     try {
-      const res = await this.transunion.sendEnrollRequest(data);
-      return res ? res : undefined;
+      return await this.transunion.sendEnrollRequest(data);
     } catch (err) {
-      return;
+      throw new Error(`Error in kycService:sendEnrollRequest=${err}`);
     }
   }
 }
