@@ -74,4 +74,16 @@ export class AgenciesState {
       },
     });
   }
+
+  @Action(AgenciesActions.EditTransunionDisputes)
+  updateTransunionReports(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.EditTransunionReports) {
+    const state = ctx.getState();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        ...payload.transunion,
+      },
+    });
+  }
 }

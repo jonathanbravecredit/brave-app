@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { DEFAULT_TRADELINE } from '@views/negative-account/negative-account-initial/constants';
 
 @Pipe({
   name: 'negativeTradelines',
@@ -11,7 +12,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
 
   transform(report: IMergeReport): INegativeAccountCardInputs[] | undefined {
     this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
-    if (!this.tradeLines) return [defaultTradeline];
+    if (!this.tradeLines) return [DEFAULT_TRADELINE];
     return this.tradeLines instanceof Array
       ? this.filterTradelines(this.tradeLines)
           .sortByAccountType(this.tradeLines)
@@ -84,6 +85,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
   mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): INegativeAccountCardInputs[] {
     const negativeAccounts = tradeLines.map((item) => {
       return {
+        tradeline: item,
         creditorName: item.Tradeline?.creditorName || '',
         lastReported: item.Tradeline?.dateReported || '',
         accountTypeDescription: this.lookupAccountType(item),
@@ -144,22 +146,3 @@ export class NegativeTradelinesPipe implements PipeTransform {
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
   }
 }
-
-const defaultTradeline = {
-  creditorName: '',
-  lastReported: '',
-  accountTypeDescription: '',
-  accountTypeDescriptionValue: 'No account type',
-  disputeFlag: 'Previously Disputed?',
-  originalCreditor: 'Original Creditor',
-  originalCreditorValue: '',
-  disputeFlagValue: '',
-  accountDetail: {
-    accountNumber: '',
-    typeOfCollection: '',
-    amountPastDue: -1,
-    dateOpened: '',
-    dateLastPayment: '',
-    remarks: '',
-  },
-};

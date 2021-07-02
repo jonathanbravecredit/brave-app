@@ -18,3 +18,5 @@ export interface ISource {
   InquiryDate?: string;
   Reference?: string;
 }
+
+export interface IErrorResponse {}

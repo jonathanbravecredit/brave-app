@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MONTH_ABBREVIATIONS, MONTH_DEFAULTS } from '@shared/components/tradelines/tradeline-payment-history/constants';
 import { ITradelinePaymentHistory } from '@shared/components/tradelines/tradeline-payment-history/interfaces';
 import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 
@@ -6,7 +7,7 @@ import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merg
   selector: 'brave-tradeline-payment-history',
   templateUrl: './tradeline-payment-history.component.html',
 })
-export class TradelinePaymentHistoryComponent {
+export class TradelinePaymentHistoryComponent implements OnInit {
   /**
    * Payment status history mapped directly from Merge Report
    * @property {IPayStatusHistory | undefined} paymentHistory
@@ -34,9 +35,11 @@ export class TradelinePaymentHistoryComponent {
    * Reconstituted payment history from Merge Report
    * @property {ITradelinePaymentHistory} history
    */
-  history: ITradelinePaymentHistory;
+  history!: ITradelinePaymentHistory;
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit() {
     this.history = this.parsePaymentHistory(this.paymentHistory);
   }
 
@@ -46,12 +49,11 @@ export class TradelinePaymentHistoryComponent {
    * @returns {ITradelinePaymentHistory}
    */
   parsePaymentHistory(payments: IPayStatusHistory = {} as IPayStatusHistory): ITradelinePaymentHistory {
-    console.log('payments 2', payments, Object.keys(payments).length);
-    return !Object.keys(payments).length
+    const parsed = !Object.keys(payments).length
       ? {
           headers: {
             year: null,
-            months: months,
+            months: MONTH_ABBREVIATIONS,
           },
           years: [0, 1, 2].map((item, i) => {
             let dte = new Date();
@@ -66,7 +68,7 @@ export class TradelinePaymentHistoryComponent {
       : {
           headers: {
             year: null,
-            months: months,
+            months: MONTH_ABBREVIATIONS,
           },
           years: [0, 1, 2].map((item, i) => {
             let dte = new Date(payments.startDate);
@@ -77,6 +79,7 @@ export class TradelinePaymentHistoryComponent {
             };
           }),
         };
+    return parsed;
   }
   /**
    * Constructs month array for complete list of monthly pay status
@@ -89,14 +92,13 @@ export class TradelinePaymentHistoryComponent {
    *
    */
   parseMonthlyPayments(year: number, monthlyPayments: IMonthyPayStatusItem[] | undefined): string[] {
-    let months = ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'];
+    let months = [...MONTH_DEFAULTS];
     if (monthlyPayments === undefined) return months;
     let payments = monthlyPayments.filter((pay) => new Date(pay.date).getFullYear() === year);
     payments.forEach((pay) => {
-      months[new Date(pay.date).getMonth()] = pay.status.toLowerCase();
+      const status = `${pay.status}`.length ? `${pay.status}`.toLowerCase() : 'u';
+      months[new Date(pay.date).getMonth()] = status;
     });
     return months;
   }
 }
-
-const months = ['j', 'f', 'm', 'a', 'm', 'j', 'j', 'a', 's', 'o', 'n', 'd'];

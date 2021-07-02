@@ -98,7 +98,7 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       serviceProductValue
       status
     }
-    lastFufilledOn
+    fulfilledOn
     acknowledgedDisputeTerms
     acknowledgedDisputeTermsOn
     disputes {
@@ -226,7 +226,7 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {
@@ -373,7 +373,7 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {
@@ -520,7 +520,7 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
-        lastFufilledOn
+        fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
         disputes {

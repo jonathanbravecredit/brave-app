@@ -2,6 +2,7 @@
   <div *ngIf="creditReport$ | async as report">
     <brave-negative-account-initial-pure
       [cards]="report | negativeTradelines"
+      (confirmed)="onConfirmed($event)"
     ></brave-negative-account-initial-pure>
   </div>
 </div>

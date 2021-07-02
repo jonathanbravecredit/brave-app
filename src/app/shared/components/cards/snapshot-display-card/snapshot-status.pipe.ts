@@ -13,8 +13,9 @@ const enumStrColorCLassIndicator = {
 })
 export class SnapshotStatusPipe implements PipeTransform {
   transform(value: string, ...args: any[]): string {
+    if (!value) return SnapshotStatus.Default;
     let result = '';
-    let status = BRAVE_STATUS_SNAPSHOT[value.toUpperCase()];
+    let status = BRAVE_STATUS_SNAPSHOT[`${value}`.toUpperCase()];
 
     const outputStyle = args[0];
     if (outerHeight !== undefined) {

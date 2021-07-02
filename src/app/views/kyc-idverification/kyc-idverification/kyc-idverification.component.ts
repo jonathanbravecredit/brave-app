@@ -69,33 +69,26 @@ export class KycIdverificationComponent extends KycBaseComponent {
           .parseAuthDetails(this.authXML)
           .createChallengeConfig(this.authQuestions)
           .getPasscodeQuestion(this.authChallenge);
-
         if (!this.passcodeQuestion) throw 'No passcode question found';
-
         // passcodeAnswer > verifyResponse > authResponse
         this.getPasscodeAnswer(this.passcodeQuestion, this.code);
         (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
           .parseVerifyResponse(this.verifyResponse)
           .isVerificationSuccesful(this.authResponse);
-
         if (!this.authSuccessful) throw 'Authentication request failed';
-
         // fetching reports
         await this.sendEnrollRequest(this.state);
-
         if (!this.enrollResult) throw 'Enroll request failed';
         // need to add to state and then update the db
         const enriched = this.enrichEnrollmentData(this.state, this.enrollResult);
-
         if (!enriched) throw 'Enrichment failed';
-
         await this.kycService.updateAgenciesAsync(enriched.agencies);
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
           relativeTo: this.route,
         });
       } catch (err) {
-        console.log('error ===> ', err);
+        console.log('error ===> ', err); // TODO can better handle errors
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }
@@ -229,7 +222,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
     let enrollReport;
     let enrollMergeReport;
     let enrollVantageScore;
-    console.log('enroll in enrich', enroll, state);
+    let enrolledOn = new Date().toISOString();
     const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
     const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
     if (!prodResponse) return;
@@ -264,6 +257,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
         ...state.agencies,
         transunion: {
           ...state.agencies?.transunion,
+          enrolled: true,
+          enrolledOn: enrolledOn,
           enrollmentKey: enrollmentKey,
           enrollReport: mapEnrollResponse(enrollReport),
           enrollMergeReport: mapEnrollResponse(enrollMergeReport),
