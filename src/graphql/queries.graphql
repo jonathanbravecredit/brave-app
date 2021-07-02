@@ -92,6 +92,36 @@ query GetAppData($id: ID!) {
           serviceProductValue
           status
         }
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -197,6 +227,36 @@ query ListAppDatas(
             status
           }
           enrollVantageScore {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillMergeReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillVantageScore {
             bureau
             errorResponse
             serviceProduct

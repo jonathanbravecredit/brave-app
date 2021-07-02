@@ -89,9 +89,14 @@ type Transunion {
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
   enrollVantageScore: TUReportResponse
+  enrolled: Boolean
+  enrolledOn: String
   fulfillReport: TUReportResponse
   fulfillMergeReport: TUReportResponse
   fulfillVantageScore: TUReportResponse
+  lastFufilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
   disputes: Disputes
 }
 type Equifax {
