@@ -1,0 +1,10 @@
+<div class="border">
+  <p class="text-lg">{{ title }}</p>
+  <div class="overflow-y-scroll h-50">
+    <ng-content></ng-content>
+  </div>
+  <div class="flex">
+    <input type="checkbox" name="condition-approval" />
+    <label for="condition-approval" class="ml-2 text-xs">{{ termDescription }}</label>
+  </div>
+</div>

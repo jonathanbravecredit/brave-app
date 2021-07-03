@@ -46,7 +46,7 @@ export class TradelineDisputeProcessComponent implements OnInit {
     }
   }
 
-  findIndexInSelected(pageIndex: number, itemIndex: number): number {
+  private findIndexInSelected(pageIndex: number, itemIndex: number): number {
     return this.selectedIndexes.findIndex((indexObj) => indexObj.pageIndex === pageIndex && indexObj.itemIndex === itemIndex);
   }
 
@@ -76,5 +76,9 @@ export class TradelineDisputeProcessComponent implements OnInit {
         this.basePagination.navigate(direction);
       }
     }
+  }
+
+  goToSummary(): void {
+    
   }
 }

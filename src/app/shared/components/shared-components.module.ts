@@ -89,6 +89,10 @@ import { BasePaginationComponent } from './paginations/base-pagination/base-pagi
 import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
 import { TradelineDisputeProcessComponent } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
+import { BaseModalComponent } from './modals/base-modal/base-modal.component';
+import { BaseModalPipe } from './modals/base-modal/base-modal.pipe';
+import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
+import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
 
 const components = [
   BaseFormComponent,
@@ -183,7 +187,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, BaseModalComponent, BaseModalPipe, ConfirmationModalComponent, ConditionalTermComponent],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

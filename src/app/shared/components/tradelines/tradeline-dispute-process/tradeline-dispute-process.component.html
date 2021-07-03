@@ -32,6 +32,15 @@
     </ng-template>
   </div>
   <div class="flex justify-center">
-    <brave-filled-onlytext-button class="mt-4 w-100">Continue to your summary</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button class="mt-4 w-full" (click)="goToSummary()">Continue to your summary</brave-filled-onlytext-button>
+  </div>
+  <div>
+    <brave-conditional-term 
+    title="Dispute Terms & Conditions"
+    termDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis">
+      <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis, mi quis bibendum mattis, eros enim maximus nisl, non convallis nisi sem vel est. Curabitur et congue velit, eu dapibus lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vestibulum vel odio vel aliquam.</p>
+      </div>
+  </brave-conditional-term>
   </div>
 </div>
