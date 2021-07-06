@@ -1209,6 +1209,11 @@ select {
   background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
 }
 
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(212, 212, 216, var(--tw-bg-opacity));
+}
+
 .bg-gray-400 {
   --tw-bg-opacity: 1;
   background-color: rgba(161, 161, 170, var(--tw-bg-opacity));
@@ -1232,6 +1237,11 @@ select {
 .bg-blueGray-200 {
   --tw-bg-opacity: 1;
   background-color: rgba(226, 232, 240, var(--tw-bg-opacity));
+}
+
+.bg-blueGray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(203, 213, 225, var(--tw-bg-opacity));
 }
 
 .bg-blueGray-800 {
@@ -1301,6 +1311,14 @@ select {
   --tw-gradient-to: #ef4444;
 }
 
+.bg-opacity-0 {
+  --tw-bg-opacity: 0;
+}
+
+.bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
+}
+
 .border-indigo-500 {
   --tw-border-opacity: 1;
   border-color: rgba(99, 102, 241, var(--tw-border-opacity));
@@ -1359,6 +1377,10 @@ select {
 .focus\:border-indigo-500:focus {
   --tw-border-opacity: 1;
   border-color: rgba(99, 102, 241, var(--tw-border-opacity));
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
 }
 
 .rounded {
@@ -1568,6 +1590,10 @@ select {
   font-family: Biryani, Open Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.font-light {
+  font-weight: 300;
+}
+
 .font-normal {
   font-weight: 400;
 }
@@ -1608,6 +1634,10 @@ select {
   height: 1.25rem;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .h-8 {
   height: 2rem;
 }
@@ -1646,6 +1676,10 @@ select {
 
 .h-full {
   height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .text-xs {
@@ -2045,6 +2079,10 @@ select {
   overflow-x: hidden;
 }
 
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
 .p-0 {
   padding: 0px;
 }
@@ -2146,6 +2184,11 @@ select {
 .py-9 {
   padding-top: 2.25rem;
   padding-bottom: 2.25rem;
+}
+
+.px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .pt-0 {
@@ -2297,6 +2340,10 @@ select {
   bottom: auto;
 }
 
+.resize-none {
+  resize: none;
+}
+
 * {
   --tw-shadow: 0 0 #0000;
 }
@@ -2437,6 +2484,11 @@ select {
   color: rgba(16, 185, 129, var(--tw-text-opacity));
 }
 
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgba(249, 115, 22, var(--tw-text-opacity));
+}
+
 .text-orange-600 {
   --tw-text-opacity: 1;
   color: rgba(234, 88, 12, var(--tw-text-opacity));
@@ -2445,6 +2497,11 @@ select {
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgba(220, 38, 38, var(--tw-text-opacity));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgba(212, 212, 216, var(--tw-text-opacity));
 }
 
 .text-gray-400 {
@@ -2641,6 +2698,10 @@ select {
   overflow-wrap: break-word;
 }
 
+.w-2 {
+  width: 0.5rem;
+}
+
 .w-3 {
   width: 0.75rem;
 }
@@ -2695,6 +2756,10 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 .z-0 {

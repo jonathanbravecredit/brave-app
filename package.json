@@ -19,7 +19,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "npm run docs:json && start-storybook -p 6006",
+    "storybook": "npm run docs:json && start-storybook -p 6006 --no-manager-cache",
     "build-storybook": "npm run docs:json && build-storybook",
     "build-storybook-big": "node --max_old_space_size=2000 ./node_modules/@storybook/angular/bin/index.js --quiet -p 6006 -c .storybook",
     "chromatic": "npx chromatic --project-token 897995d581ea -d storybook-static/"

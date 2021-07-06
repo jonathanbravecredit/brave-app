@@ -8139,7 +8139,7 @@
         },
         {
             "name": "MyHammerConfig",
-            "id": "injectable-MyHammerConfig-58a0ae1a812c4800c310fedf98a1bd72",
+            "id": "injectable-MyHammerConfig-c1afe8e6bd12671ddc89c750629c63bc",
             "file": "src/app/app.module.ts",
             "properties": [
                 {
@@ -8148,12 +8148,12 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 71
+                    "line": 69
                 }
             ],
             "methods": [],
             "description": "",
-            "sourceCode": "import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { NgxsModule } from '@ngxs/store';\nimport { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';\nimport { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';\nimport { environment } from '@environments/environment';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { AppDataState } from '@store/app-data/app-data.state';\n\n/* Add Amplify imports */\nimport { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';\nimport Amplify from 'aws-amplify';\nimport awsconfig from '../aws-exports';\n\n/* social sign in configuration */\nconst isLocalhost = Boolean(\n  window.location.hostname === 'localhost' ||\n    window.location.hostname === '[::1]' ||\n    window.location.hostname.match(\n      /^127(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/\n    )\n);\n\n// for two redirects (local host and production)\nconst [\n  localRedirectSignIn,\n  productionRedirectSignIn,\n] = awsconfig.oauth.redirectSignIn.split(',');\n\nconst [\n  localRedirectSignOut,\n  productionRedirectSignOut,\n] = awsconfig.oauth.redirectSignOut.split(',');\n\nconst updatedAwsConfig = {\n  ...awsconfig,\n  oauth: {\n    ...awsconfig.oauth,\n    redirectSignIn: isLocalhost\n      ? localRedirectSignIn\n      : productionRedirectSignIn,\n    redirectSignOut: isLocalhost\n      ? localRedirectSignOut\n      : productionRedirectSignOut,\n  },\n};\n/* Configure Amplify resources */\nAmplify.configure(updatedAwsConfig);\n\n/* Add HammerJs for gesture support */\nimport * as Hammer from 'hammerjs';\nimport { HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';\n\n/* shared modules */\nimport { SharedComponentsModule } from '@shared/components/shared-components.module';\nimport { SharedDirectivesModule } from '@shared/directives/shared-directives.module';\nimport { SharedServicesModule } from '@shared/services/shared-services.module';\nimport { SharedPipesModule } from '@shared/pipes/shared-pipes.module';\nimport { ViewsModule } from '@views/views.module';\nimport { AuthenticationModule } from './layouts/authentication/authentication.module';\nimport { OnboardingModule } from './layouts/onboarding/onboarding.module';\nimport { braveState } from '@store/index';\nimport { TradelineDisputeProcessSuccessComponent } from './shared/component/tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';\nimport { BaseTooltipComponent } from './shared/component/tooltips/base-tooltip/base-tooltip.component';\n// import { LayoutsModule } from '@layouts/layouts.module';\n\n@Injectable()\nexport class MyHammerConfig extends HammerGestureConfig {\n  overrides = {\n    swipe: { direction: Hammer.DIRECTION_ALL },\n  } as any;\n}\n\n@NgModule({\n  declarations: [AppComponent, TradelineDisputeProcessSuccessComponent, BaseTooltipComponent],\n  imports: [\n    BrowserModule,\n    NgxsModule.forRoot(braveState, {\n      developmentMode: !environment.production,\n    }),\n    NgxsReduxDevtoolsPluginModule.forRoot(),\n    NgxsLoggerPluginModule.forRoot({\n      disabled: environment.production,\n    }),\n    HammerModule,\n    AmplifyUIAngularModule,\n    SharedComponentsModule,\n    SharedDirectivesModule,\n    SharedServicesModule,\n    SharedPipesModule,\n    AuthenticationModule,\n    OnboardingModule,\n    ViewsModule,\n    AppRoutingModule,\n  ],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n  providers: [{\n    provide: HAMMER_GESTURE_CONFIG,\n    useClass: MyHammerConfig,\n  }],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
+            "sourceCode": "import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { NgxsModule } from '@ngxs/store';\nimport { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';\nimport { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';\nimport { environment } from '@environments/environment';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { AppDataState } from '@store/app-data/app-data.state';\n\n/* Add Amplify imports */\nimport { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';\nimport Amplify from 'aws-amplify';\nimport awsconfig from '../aws-exports';\n\n/* social sign in configuration */\nconst isLocalhost = Boolean(\n  window.location.hostname === 'localhost' ||\n    window.location.hostname === '[::1]' ||\n    window.location.hostname.match(\n      /^127(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/\n    )\n);\n\n// for two redirects (local host and production)\nconst [\n  localRedirectSignIn,\n  productionRedirectSignIn,\n] = awsconfig.oauth.redirectSignIn.split(',');\n\nconst [\n  localRedirectSignOut,\n  productionRedirectSignOut,\n] = awsconfig.oauth.redirectSignOut.split(',');\n\nconst updatedAwsConfig = {\n  ...awsconfig,\n  oauth: {\n    ...awsconfig.oauth,\n    redirectSignIn: isLocalhost\n      ? localRedirectSignIn\n      : productionRedirectSignIn,\n    redirectSignOut: isLocalhost\n      ? localRedirectSignOut\n      : productionRedirectSignOut,\n  },\n};\n/* Configure Amplify resources */\nAmplify.configure(updatedAwsConfig);\n\n/* Add HammerJs for gesture support */\nimport * as Hammer from 'hammerjs';\nimport { HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';\n\n/* shared modules */\nimport { SharedComponentsModule } from '@shared/components/shared-components.module';\nimport { SharedDirectivesModule } from '@shared/directives/shared-directives.module';\nimport { SharedServicesModule } from '@shared/services/shared-services.module';\nimport { SharedPipesModule } from '@shared/pipes/shared-pipes.module';\nimport { ViewsModule } from '@views/views.module';\nimport { AuthenticationModule } from './layouts/authentication/authentication.module';\nimport { OnboardingModule } from './layouts/onboarding/onboarding.module';\nimport { braveState } from '@store/index';\n// import { LayoutsModule } from '@layouts/layouts.module';\n\n@Injectable()\nexport class MyHammerConfig extends HammerGestureConfig {\n  overrides = {\n    swipe: { direction: Hammer.DIRECTION_ALL },\n  } as any;\n}\n\n@NgModule({\n  declarations: [AppComponent],\n  imports: [\n    BrowserModule,\n    NgxsModule.forRoot(braveState, {\n      developmentMode: !environment.production,\n    }),\n    NgxsReduxDevtoolsPluginModule.forRoot(),\n    NgxsLoggerPluginModule.forRoot({\n      disabled: environment.production,\n    }),\n    HammerModule,\n    AmplifyUIAngularModule,\n    SharedComponentsModule,\n    SharedDirectivesModule,\n    SharedServicesModule,\n    SharedPipesModule,\n    AuthenticationModule,\n    OnboardingModule,\n    ViewsModule,\n    AppRoutingModule,\n  ],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n  providers: [{\n    provide: HAMMER_GESTURE_CONFIG,\n    useClass: MyHammerConfig,\n  }],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
             "extends": "HammerGestureConfig",
             "type": "injectable"
         },
@@ -12722,62 +12722,6 @@
             "templateData": "<nav class=\"flex items-center mx-auto justify-center\" aria-label=\"Pagination\">\n  <button class=\"mr-2 flex items-center\" (click)=\"navigate('back')\">\n    <!-- Prev Icon using Material Icon -->\n    <span class=\"material-icons-outlined {{ color | basePagination: 'text-class': true }}\">\n      {{ baseConfiguration.prevIconName }}\n    </span>\n  </button>\n  <div class=\"flex\">\n    <!-- List number pages // 1, 2, 3, 4 or * * * * * -->\n    <ng-template ngFor let-page [ngForOf]=\"localPages\" let-i=\"index\">\n      <div\n        class=\"ml-2 mr-2 cursor-pointer h-2 w-2 rounded-full border-none {{ color | basePagination: 'background-class':  localCurrentIndex === i }}\"\n        *ngIf=\"paginationStyle === 'point'\" (click)=\"setActivePage(i)\">\n      </div>\n      <span *ngIf=\"paginationStyle === 'default'\" (click)=\"setActivePage(i)\"\n        class=\"ml-2 mr-2 font-bold {{ color | basePagination: 'text-class': localCurrentIndex === i }}\">\n        {{ page }}\n      </span>\n    </ng-template>\n  </div>\n  <!-- Next Icon using Material Icon -->\n  <button class=\"ml-2 flex items-center\" (click)=\"navigate('forward')\">\n    <span class=\"material-icons-outlined {{ color | basePagination: 'text-class': true }}\">\n      {{ baseConfiguration.nextIconName }}\n    </span>\n  </button>\n</nav>\n"
         },
         {
-            "name": "BaseTooltipComponent",
-            "id": "component-BaseTooltipComponent-ac828c0224f902f8c9284525b17f97f2",
-            "file": "src/app/shared/component/tooltips/base-tooltip/base-tooltip.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "brave-base-tooltip",
-            "styleUrls": [
-                "./base-tooltip.component.css"
-            ],
-            "styles": [],
-            "templateUrl": [
-                "./base-tooltip.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 12
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-base-tooltip',\n  templateUrl: './base-tooltip.component.html',\n  styleUrls: ['./base-tooltip.component.css']\n})\nexport class BaseTooltipComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./base-tooltip.component.css"
-                }
-            ],
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 8
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<p>base-tooltip works!</p>\n"
-        },
-        {
             "name": "ComplianceComponent",
             "id": "component-ComplianceComponent-2ffa76b092b35abba1bd3e239db9082c",
             "file": "src/app/layouts/compliance/compliance.component.ts",
@@ -12940,7 +12884,7 @@
         },
         {
             "name": "ConditionalTermComponent",
-            "id": "component-ConditionalTermComponent-75fa24793514ce9d3aec8b13796bdafb",
+            "id": "component-ConditionalTermComponent-77b2d3b7048713094faef6b6589fb2e4",
             "file": "src/app/shared/components/terms/conditional-term/conditional-term.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -12970,7 +12914,14 @@
                     "type": "string"
                 }
             ],
-            "outputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "accepted",
+                    "defaultValue": "new EventEmitter()",
+                    "line": 12,
+                    "type": "EventEmitter<void>"
+                }
+            ],
             "propertiesClass": [
                 {
                     "name": "isConfirmed",
@@ -12978,7 +12929,7 @@
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 13
                 }
             ],
             "methodsClass": [
@@ -13034,7 +12985,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input, OnInit } from '@angular/core';\nimport { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';\n\n@Component({\n  selector: 'brave-conditional-term',\n  templateUrl: './conditional-term.component.html',\n  styleUrls: ['./conditional-term.component.css']\n})\nexport class ConditionalTermComponent implements OnInit {\n  @Input() title: string = '';\n  @Input() termDescription: string = '';\n  isConfirmed: boolean = false;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n  setValue(e: any): void {\n    this.isConfirmed = e.target.checked;\n  }\n\n  getButtonConfig(): IFilledOnlyTextButtonConfig {\n    let defaultConfig: IFilledOnlyTextButtonConfig = {\n      buttonSize: 'base',\n      backgroundColor: 'bg-indigo-800',\n      activeColor: 'bg-indigo-900',\n      color: 'text-white',\n      full: false\n    }\n\n    if (this.isConfirmed) {\n      return defaultConfig;\n    } else {\n      defaultConfig.backgroundColor = 'black';\n      defaultConfig.activeColor = 'black';\n      return defaultConfig;\n    }\n  }\n\n  getBtnInteractionClass(): string {\n    return this.isConfirmed === false ? 'pointer-events-none' : '';\n  }\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';\nimport { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';\n\n@Component({\n  selector: 'brave-conditional-term',\n  templateUrl: './conditional-term.component.html',\n  styleUrls: ['./conditional-term.component.css']\n})\nexport class ConditionalTermComponent implements OnInit {\n  @Input() title: string = '';\n  @Input() termDescription: string = '';\n  @Output() accepted: EventEmitter<void> = new EventEmitter(); \n  isConfirmed: boolean = false;\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n  setValue(e: any): void {\n    this.isConfirmed = e.target.checked;\n  }\n\n  getButtonConfig(): IFilledOnlyTextButtonConfig {\n    let defaultConfig: IFilledOnlyTextButtonConfig = {\n      buttonSize: 'base',\n      backgroundColor: 'bg-indigo-800',\n      activeColor: 'bg-indigo-900',\n      color: 'text-white',\n      full: false\n    }\n\n    if (this.isConfirmed) {\n      return defaultConfig;\n    } else {\n      defaultConfig.backgroundColor = 'black';\n      defaultConfig.activeColor = 'black';\n      return defaultConfig;\n    }\n  }\n\n  getBtnInteractionClass(): string {\n    return this.isConfirmed === false ? 'pointer-events-none' : '';\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -13047,12 +12998,12 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 12
+                "line": 13
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div>\n  <p class=\"text-lg font-bold p-4\">{{ title }}</p>\n  <div class=\"overflow-y-scroll h-60 p-4 border border-blueGray-300 rounded-sm\">\n    <ng-content></ng-content>\n  </div>\n  <div class=\"flex p-4\">\n    <input #checkbox type=\"checkbox\" name=\"condition-approval\" (change)=\"setValue($event)\"/>\n    <label for=\"condition-approval\" class=\"ml-2 text-xs\">{{ termDescription }}</label>\n  </div>\n  <brave-filled-onlytext-button class=\"{{ getBtnInteractionClass() }}\" [config]=\"getButtonConfig()\">Submit my dispute</brave-filled-onlytext-button>\n</div>\n"
+            "templateData": "<div>\n  <p class=\"text-lg font-bold p-4\">{{ title }}</p>\n  <div class=\"overflow-y-scroll h-60 p-4 border border-blueGray-300 rounded-sm\">\n    <ng-content></ng-content>\n  </div>\n  <div class=\"flex p-4\">\n    <input #checkbox type=\"checkbox\" name=\"condition-approval\" (change)=\"setValue($event)\"/>\n    <label for=\"condition-approval\" class=\"ml-2 text-xs\">{{ termDescription }}</label>\n  </div>\n  <div class=\"flex justify-center\">\n    <brave-filled-onlytext-button class=\"{{ getBtnInteractionClass() }}\" [config]=\"getButtonConfig()\" (click)=\"accepted.emit()\">Submit my dispute</brave-filled-onlytext-button>\n  </div>\n</div>\n"
         },
         {
             "name": "ConfirmationModalComponent",
@@ -24638,7 +24589,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div \n  class=\"p-4 rounded-lg border\"\n  [ngClass]=\"{ 'border-indigo-800': isSelected, 'border-blueGray-500': !isSelected }\">\n  <div>\n    <div class=\"flex flex-row items-center\">\n      <span class=\"text-sm font-semibold\">{{ text }}</span>\n      <div class=\"ml-auto cursor-pointer flex justify-end\" (click)=\"requestClick()\">\n        <span class=\"material-icons-outlined\">{{ isSelected ? 'remove' : 'add' }}</span>\n      </div>\n    </div>\n    <div *ngIf=\"isSelected && allowUserInput\">\n      <p class=\"my-2 text-sm font-semibold \">If you can't find your reason, provide details below.</p>\n      <p class=\"my-2 text-xs font-light\">{{ userInputDescriptionText }}</p>\n      <textarea [(ngModel)]=\"customUserInput\" class=\"resize-none w-full rounded-sm h-6 text-xs bg-blueGray-300\" placeholder=\"Add your reason to dispute here\"></textarea>\n    </div>\n  </div>\n</div>\n\n<brave-confirmation-modal \n  (confirmed)=\"modalActionHandler($event)\" \n  btnTextConfirm=\"Continue providing details\"\n  btnTextCancel=\"Choose other reasons\">\n  <div>\n    <p class=\"font-semibold text-sm\">Alert:</p>\n    <p class=\"text-xs\">If selecting 'Other, provide details in \"Additional Comments\" field below', you cannot select any additional reasons to dispute.</p>\n    <p class=\"text-xs\">You may neither continue to provide details for your dispute, or select up to two alternative reasons.</p>\n  </div>\n</brave-confirmation-modal>\n"
+            "templateData": "<div \n  class=\"p-4 rounded-lg border\"\n  [ngClass]=\"{ 'border-indigo-800': isSelected, 'border-blueGray-500': !isSelected }\">\n  <div>\n    <div class=\"flex flex-row items-center\">\n      <span class=\"text-sm font-semibold\">{{ text }}</span>\n      <div class=\"ml-auto cursor-pointer flex justify-end\" (click)=\"requestClick()\">\n        <span class=\"material-icons-outlined\">{{ isSelected ? 'remove' : 'add' }}</span>\n      </div>\n    </div>\n    <div *ngIf=\"isSelected && allowUserInput\">\n      <p class=\"my-2 text-sm font-semibold \">If you can't find your reason, provide details below.</p>\n      <p class=\"my-2 text-xs font-light\">{{ userInputDescriptionText }}</p>\n      <textarea [(ngModel)]=\"customUserInput\" class=\"resize-none w-full rounded-sm h-32 text-xs bg-blueGray-300\" placeholder=\"Add your reason to dispute here\"></textarea>\n    </div>\n  </div>\n</div>\n\n<brave-confirmation-modal \n  (confirmed)=\"modalActionHandler($event)\" \n  btnTextConfirm=\"Continue providing details\"\n  btnTextCancel=\"Choose other reasons\">\n  <div>\n    <p class=\"font-semibold text-sm\">Alert:</p>\n    <p class=\"text-xs\">If selecting 'Other, provide details in \"Additional Comments\" field below', you cannot select any additional reasons to dispute.</p>\n    <p class=\"text-xs\">You may neither continue to provide details for your dispute, or select up to two alternative reasons.</p>\n  </div>\n</brave-confirmation-modal>\n"
         },
         {
             "name": "SelectDobFormComponent",
@@ -27074,7 +27025,7 @@
         },
         {
             "name": "TradelineDisputeProcessComponent",
-            "id": "component-TradelineDisputeProcessComponent-b7fa26808cf805f4c4db9b0065886181",
+            "id": "component-TradelineDisputeProcessComponent-c7d64c16980f03be84bd77fcea92743d",
             "file": "src/app/shared/components/tradelines/tradeline-dispute-process/tradeline-dispute-process.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -27098,7 +27049,7 @@
                     "type": "BasePaginationComponent | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 15,
+                    "line": 16,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -27112,7 +27063,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 23
                 },
                 {
                     "name": "navigationStack",
@@ -27120,7 +27071,7 @@
                     "type": "any[]",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 22
                 },
                 {
                     "name": "reasonOptionPages",
@@ -27128,7 +27079,7 @@
                     "type": "IDisputeTradelineReasonCardPage[]",
                     "optional": false,
                     "description": "<p>The array of pages and child items inside of them that displays the reason cards.</p>\n",
-                    "line": 19
+                    "line": 20
                 },
                 {
                     "name": "selectedIndexes",
@@ -27136,7 +27087,7 @@
                     "type": "IDisputeTradelineSelectedObj[]",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 21
                 },
                 {
                     "name": "showCustomInputError",
@@ -27144,7 +27095,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 23
+                    "line": 24
                 },
                 {
                     "name": "showMaxError",
@@ -27152,7 +27103,14 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 24
+                    "line": 25
+                },
+                {
+                    "name": "timeout",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
                 }
             ],
             "methodsClass": [
@@ -27171,7 +27129,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 75,
+                    "line": 77,
                     "modifierKind": [
                         112
                     ],
@@ -27198,7 +27156,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 107
+                    "line": 109
                 },
                 {
                     "name": "getTargetSelectedCard",
@@ -27211,7 +27169,7 @@
                     "optional": false,
                     "returnType": "IDisputeTradelineReasonCard",
                     "typeParameters": [],
-                    "line": 83,
+                    "line": 85,
                     "jsdoctags": [
                         {
                             "name": "indexObj",
@@ -27228,7 +27186,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 119
+                    "line": 121
                 },
                 {
                     "name": "goToSummary",
@@ -27236,7 +27194,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 111
+                    "line": 113
                 },
                 {
                     "name": "isLimitOfSelectionReached",
@@ -27244,7 +27202,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 87,
+                    "line": 89,
                     "modifierKind": [
                         112
                     ]
@@ -27264,7 +27222,7 @@
                     "optional": false,
                     "returnType": "boolean",
                     "typeParameters": [],
-                    "line": 79,
+                    "line": 81,
                     "jsdoctags": [
                         {
                             "name": "pageIndex",
@@ -27288,7 +27246,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 27
+                    "line": 28
                 },
                 {
                     "name": "onSwipe",
@@ -27301,7 +27259,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 93,
+                    "line": 95,
                     "jsdoctags": [
                         {
                             "name": "e",
@@ -27327,7 +27285,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 41,
+                    "line": 42,
                     "description": "<p>Changes the &quot;selected&quot; state flag of the target option.</p>\n",
                     "jsdoctags": [
                         {
@@ -27346,8 +27304,8 @@
                         },
                         {
                             "tagName": {
-                                "pos": 1638,
-                                "end": 1645,
+                                "pos": 1654,
+                                "end": 1661,
                                 "flags": 0,
                                 "escapedText": "example"
                             },
@@ -27361,7 +27319,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { IDisputeTradelineReasonCard } from '@shared/components/cards/reason-card/interfaces';\nimport { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';\nimport { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';\nimport { MOCK_TRADELINE_DISPUTE_PROCESS_REASONS as reasonPages } from './constants';\nimport { IDisputeTradelineReasonCardPage, IDisputeTradelineSelectedObj } from './interfaces';\nimport { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';\n\n@Component({\n  selector: 'brave-tradeline-dispute-process',\n  templateUrl: './tradeline-dispute-process.component.html',\n  styleUrls: ['./tradeline-dispute-process.component.css']\n})\nexport class TradelineDisputeProcessComponent implements OnInit {\n  @ViewChild(BasePaginationComponent) basePagination: BasePaginationComponent | undefined;\n  /**\n   * The array of pages and child items inside of them that displays the reason cards.\n   */\n  reasonOptionPages: IDisputeTradelineReasonCardPage[] = reasonPages;\n  selectedIndexes: IDisputeTradelineSelectedObj[] = [];\n  navigationStack: any[] = [];\n  isCustomInputSelected = false;\n  showCustomInputError = false;\n  showMaxError = false;\n  constructor() { }\n\n  ngOnInit(): void {\n    // Set the pages to default;\n    this.navigationStack.push({\n      id: 'reason'\n    });\n  }\n\n  /**\n   * Changes the \"selected\" state flag of the target option.\n   * @param index - The position inside of the option array\n   * @example\n   *\n   *   switchOption(1); // Switch or Swap the values of the option in position 1.\n   */\n  switchOption(pageIndex: number, itemIndex: number): void {\n    const isCustomInput = this.reasonOptionPages[pageIndex].items[itemIndex].allowUserInput\n    const indexInSelectedArr = this.findIndexInSelected(pageIndex, itemIndex);\n    const isSelected = indexInSelectedArr !== -1;\n    if (isSelected) {\n      this.selectedIndexes.splice(indexInSelectedArr, 1);\n      if (isCustomInput) { \n        this.isCustomInputSelected = false;\n      }\n    } else {\n      if (isCustomInput) {\n        this.selectedIndexes = [];\n        this.selectedIndexes.push({ pageIndex, itemIndex });\n        this.isCustomInputSelected = true;\n      } else {\n        if (this.isCustomInputSelected) {\n          this.showCustomInputError = true;\n        } else {\n          const isLimitReached = this.isLimitOfSelectionReached();\n          if (!isLimitReached) {\n            this.selectedIndexes.push({ pageIndex, itemIndex });\n          } else {\n            this.showMaxError = true;\n          }\n        }\n      }\n\n      setTimeout(() => {\n        this.showMaxError = false;\n        this.showCustomInputError = false;\n      } ,2000)\n    }\n  }\n\n  private findIndexInSelected(pageIndex: number, itemIndex: number): number {\n    return this.selectedIndexes.findIndex((indexObj) => indexObj.pageIndex === pageIndex && indexObj.itemIndex === itemIndex);\n  }\n\n  isSelected(pageIndex: number, itemIndex: number): boolean {\n    return this.findIndexInSelected(pageIndex, itemIndex) !== -1;\n  }\n\n  getTargetSelectedCard(indexObj: IDisputeTradelineSelectedObj): IDisputeTradelineReasonCard {\n    return this.reasonOptionPages[indexObj.pageIndex].items[indexObj.itemIndex];\n  }\n\n  private isLimitOfSelectionReached(): boolean {\n    const max = maxSelectedItemAmount;\n    const numberOfSelectedReasons = this.selectedIndexes.length;\n    return numberOfSelectedReasons >= max;\n  }\n\n  onSwipe(e: any): void {\n    if (e.type === 'swipe') {\n      if (this.basePagination !== undefined) {\n        let direction: TBasePaginationNavigationDirection | undefined = 'forward';\n        if (e.offsetDirection === 2) {\n          direction = 'forward';\n        } else if (e.offsetDirection === 4) {\n          direction = 'back';\n        }\n        this.basePagination.navigate(direction);\n      }\n    }\n  }\n\n  getLastNavigationStackId(): string {\n    return this.navigationStack[this.navigationStack.length - 1].id;\n  }\n\n  goToSummary(): void {\n    if (this.selectedIndexes.length > 0) {\n      this.navigationStack.push({\n        id: 'summary'\n      });\n    }\n  }\n\n  goBack(): void {\n    this.navigationStack.pop();\n  }\n}\n",
+            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { IDisputeTradelineReasonCard } from '@shared/components/cards/reason-card/interfaces';\nimport { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';\nimport { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';\nimport { MOCK_TRADELINE_DISPUTE_PROCESS_REASONS as reasonPages } from './constants';\nimport { IDisputeTradelineReasonCardPage, IDisputeTradelineSelectedObj } from './interfaces';\nimport { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';\n\n@Component({\n  selector: 'brave-tradeline-dispute-process',\n  templateUrl: './tradeline-dispute-process.component.html',\n  styleUrls: ['./tradeline-dispute-process.component.css']\n})\nexport class TradelineDisputeProcessComponent implements OnInit {\n  timeout: any;\n  @ViewChild(BasePaginationComponent) basePagination: BasePaginationComponent | undefined;\n  /**\n   * The array of pages and child items inside of them that displays the reason cards.\n   */\n  reasonOptionPages: IDisputeTradelineReasonCardPage[] = reasonPages;\n  selectedIndexes: IDisputeTradelineSelectedObj[] = [];\n  navigationStack: any[] = [];\n  isCustomInputSelected = false;\n  showCustomInputError = false;\n  showMaxError = false;\n  constructor() { }\n\n  ngOnInit(): void {\n    // Set the pages to default;\n    this.navigationStack.push({\n      id: 'reason'\n    });\n  }\n\n  /**\n   * Changes the \"selected\" state flag of the target option.\n   * @param index - The position inside of the option array\n   * @example\n   *\n   *   switchOption(1); // Switch or Swap the values of the option in position 1.\n   */\n  switchOption(pageIndex: number, itemIndex: number): void {\n    const isCustomInput = this.reasonOptionPages[pageIndex].items[itemIndex].allowUserInput\n    const indexInSelectedArr = this.findIndexInSelected(pageIndex, itemIndex);\n    const isSelected = indexInSelectedArr !== -1;\n    if (isSelected) {\n      this.selectedIndexes.splice(indexInSelectedArr, 1);\n      if (isCustomInput) { \n        this.isCustomInputSelected = false;\n      }\n    } else {\n      if (isCustomInput) {\n        this.selectedIndexes = [];\n        this.selectedIndexes.push({ pageIndex, itemIndex });\n        this.isCustomInputSelected = true;\n      } else {\n        if (this.isCustomInputSelected) {\n          this.showCustomInputError = true;\n        } else {\n          const isLimitReached = this.isLimitOfSelectionReached();\n          if (!isLimitReached) {\n            this.selectedIndexes.push({ pageIndex, itemIndex });\n          } else {\n            this.showMaxError = true;\n          }\n        }\n      }\n      \n      clearTimeout(this.timeout);\n      this.timeout = setTimeout(() => {\n        this.showMaxError = false;\n        this.showCustomInputError = false;\n      } ,3000)\n    }\n  }\n\n  private findIndexInSelected(pageIndex: number, itemIndex: number): number {\n    return this.selectedIndexes.findIndex((indexObj) => indexObj.pageIndex === pageIndex && indexObj.itemIndex === itemIndex);\n  }\n\n  isSelected(pageIndex: number, itemIndex: number): boolean {\n    return this.findIndexInSelected(pageIndex, itemIndex) !== -1;\n  }\n\n  getTargetSelectedCard(indexObj: IDisputeTradelineSelectedObj): IDisputeTradelineReasonCard {\n    return this.reasonOptionPages[indexObj.pageIndex].items[indexObj.itemIndex];\n  }\n\n  private isLimitOfSelectionReached(): boolean {\n    const max = maxSelectedItemAmount;\n    const numberOfSelectedReasons = this.selectedIndexes.length;\n    return numberOfSelectedReasons >= max;\n  }\n\n  onSwipe(e: any): void {\n    if (e.type === 'swipe') {\n      if (this.basePagination !== undefined) {\n        let direction: TBasePaginationNavigationDirection | undefined = 'forward';\n        if (e.offsetDirection === 2) {\n          direction = 'forward';\n        } else if (e.offsetDirection === 4) {\n          direction = 'back';\n        }\n        this.basePagination.navigate(direction);\n      }\n    }\n  }\n\n  getLastNavigationStackId(): string {\n    return this.navigationStack[this.navigationStack.length - 1].id;\n  }\n\n  goToSummary(): void {\n    if (this.selectedIndexes.length > 0) {\n      this.navigationStack.push({\n        id: 'summary'\n      });\n    }\n  }\n\n  goBack(): void {\n    this.navigationStack.pop();\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -27374,17 +27332,17 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 24
+                "line": 25
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"w-full\" *ngIf=\"getLastNavigationStackId() === 'reason'\">\n  <div class=\"w-full\" (swipe)=\"onSwipe($event)\">\n    <ng-template ngFor let-page [ngForOf]=\"reasonOptionPages\" let-pageIndex=\"index\">\n      <ng-template [ngIf]=\"(basePagination.currentActivePage$ | async)?.valueOf() === page.pageIndex\">\n        <brave-reason-card \n        *ngFor=\"let reason of page.items; let itemIndex = index\"\n        class=\"mt-4\"\n        (clicked)=\"switchOption(pageIndex, itemIndex)\"\n        [allowUserInput]=\"reason.allowUserInput\"\n        [text]=\"reason.text\"\n        [isSelected]=\"isSelected(pageIndex, itemIndex)\"\n        [userInputDescriptionText]=\"reason.userInputDescriptionText\">\n      </brave-reason-card>\n      </ng-template>\n    </ng-template>\n  </div>\n  <div class=\"p-4\">\n    <brave-base-pagination #basePagination paginationStyle=\"point\" [numberOfPages]=\"reasonOptionPages.length\"></brave-base-pagination>\n  </div>\n  <div class=\"p-4\">\n    <p class=\"text-lg font-bold mb-6\">Reason(s) selected:</p>\n    <span *ngIf=\"selectedIndexes.length === 0\">You have not selected any reasons.</span>\n    <div>\n      <ng-template ngFor let-indexObj [ngForOf]=\"selectedIndexes\">\n        <brave-reason-card \n        (clicked)=\"switchOption(indexObj.pageIndex, indexObj.itemIndex)\"\n        [allowUserInput]=\"false\"\n        [text]=\"getTargetSelectedCard(indexObj).text\"\n        [isSelected]=\"isSelected(indexObj.pageIndex, indexObj.itemIndex)\"\n        [userInputDescriptionText]=\"getTargetSelectedCard(indexObj).userInputDescriptionText\"></brave-reason-card>\n      </ng-template>\n    </div>\n    <div class=\"flex justify-center\">\n      <brave-filled-onlytext-button class=\"mt-4 w-full\" (click)=\"goToSummary()\">Continue to your summary</brave-filled-onlytext-button>\n    </div>\n  </div>\n</div>\n<div *ngIf=\"getLastNavigationStackId() === 'summary'\">\n  <div class=\"p-4\">\n    <p class=\"text-lg font-bold mb-6\">Reason(s)</p>\n    <div>\n      <ng-template ngFor let-indexObj [ngForOf]=\"selectedIndexes\">\n        <brave-reason-card \n        (clicked)=\"switchOption(indexObj.pageIndex, indexObj.itemIndex)\"\n        [allowUserInput]=\"false\"\n        [text]=\"getTargetSelectedCard(indexObj).text\"\n        [isSelected]=\"isSelected(indexObj.pageIndex, indexObj.itemIndex)\"\n        [userInputDescriptionText]=\"getTargetSelectedCard(indexObj).userInputDescriptionText\"></brave-reason-card>\n      </ng-template>\n    </div>\n  </div>\n  <brave-conditional-term \n    title=\"Dispute Terms & Conditions\"\n    termDescription=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus\">\n      <div>\n        <p class=\"text-sm\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis, mi quis bibendum mattis, eros enim maximus nisl.</p>\n      </div>\n  </brave-conditional-term>\n</div>\n\n<brave-outline-tooltip position=\"bottom\" body=\"Please\"></brave-outline-tooltip>\n\n"
+            "templateData": "<div class=\"w-full\" *ngIf=\"getLastNavigationStackId() === 'reason'\">\n  <div class=\"w-full\" (swipe)=\"onSwipe($event)\">\n    <ng-template ngFor let-page [ngForOf]=\"reasonOptionPages\" let-pageIndex=\"index\">\n      <ng-template [ngIf]=\"(basePagination.currentActivePage$ | async)?.valueOf() === page.pageIndex\">\n        <brave-reason-card \n        *ngFor=\"let reason of page.items; let itemIndex = index\"\n        class=\"mt-4\"\n        (clicked)=\"switchOption(pageIndex, itemIndex)\"\n        [allowUserInput]=\"reason.allowUserInput\"\n        [text]=\"reason.text\"\n        [isSelected]=\"isSelected(pageIndex, itemIndex)\"\n        [userInputDescriptionText]=\"reason.userInputDescriptionText\">\n      </brave-reason-card>\n      </ng-template>\n    </ng-template>\n  </div>\n  <div class=\"p-4\">\n    <brave-base-pagination #basePagination paginationStyle=\"point\" [numberOfPages]=\"reasonOptionPages.length\"></brave-base-pagination>\n  </div>\n  <div class=\"p-4\">\n    <p class=\"text-lg font-bold mb-6\">Reason(s) selected:</p>\n    <span *ngIf=\"selectedIndexes.length === 0\">You have not selected any reasons.</span>\n    <div>\n      <ng-template ngFor let-indexObj [ngForOf]=\"selectedIndexes\">\n        <brave-reason-card \n        (clicked)=\"switchOption(indexObj.pageIndex, indexObj.itemIndex)\"\n        [allowUserInput]=\"false\"\n        [text]=\"getTargetSelectedCard(indexObj).text\"\n        [isSelected]=\"isSelected(indexObj.pageIndex, indexObj.itemIndex)\"\n        [userInputDescriptionText]=\"getTargetSelectedCard(indexObj).userInputDescriptionText\"></brave-reason-card>\n      </ng-template>\n    </div>\n    <div class=\"flex justify-center\">\n      <brave-filled-onlytext-button class=\"mt-4 w-full\" (click)=\"goToSummary()\">Continue to your summary</brave-filled-onlytext-button>\n    </div>\n    <div *ngIf=\"showCustomInputError || showMaxError\" class=\"fixed inset-x-0 bottom-0 mb-4 g-red-500 text-white bg-red-600 font-bold text-sm px-6 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150\">\n      <p>You can only choose 2 preset reasons and only 1 custom reason</p>\n    </div>\n  </div>\n</div>\n<div *ngIf=\"getLastNavigationStackId() === 'summary'\">\n  <div class=\"p-4\">\n    <p class=\"text-lg font-bold mb-6\">Reason(s)</p>\n    <div>\n      <ng-template ngFor let-indexObj [ngForOf]=\"selectedIndexes\">\n        <brave-reason-card \n        (clicked)=\"switchOption(indexObj.pageIndex, indexObj.itemIndex)\"\n        [allowUserInput]=\"false\"\n        [text]=\"getTargetSelectedCard(indexObj).text\"\n        [isSelected]=\"isSelected(indexObj.pageIndex, indexObj.itemIndex)\"\n        [userInputDescriptionText]=\"getTargetSelectedCard(indexObj).userInputDescriptionText\"></brave-reason-card>\n      </ng-template>\n    </div>\n  </div>\n  <brave-conditional-term \n    title=\"Dispute Terms & Conditions\"\n    termDescription=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus\">\n      <div>\n        <p class=\"text-sm\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis, mi quis bibendum mattis, eros enim maximus nisl.</p>\n      </div>\n  </brave-conditional-term>\n</div>\n\n"
         },
         {
             "name": "TradelineDisputeProcessSuccessComponent",
             "id": "component-TradelineDisputeProcessSuccessComponent-bad163c64aac857f345697529ea0a875",
-            "file": "src/app/shared/component/tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component.ts",
+            "file": "src/app/shared/components/tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -28161,12 +28119,6 @@
                     "elements": [
                         {
                             "name": "AppComponent"
-                        },
-                        {
-                            "name": "BaseTooltipComponent"
-                        },
-                        {
-                            "name": "TradelineDisputeProcessSuccessComponent"
                         }
                     ]
                 },
@@ -28251,7 +28203,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28270,7 +28222,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28324,7 +28276,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28343,7 +28295,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28397,7 +28349,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28416,7 +28368,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28470,7 +28422,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28489,7 +28441,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28547,7 +28499,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28566,7 +28518,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -28620,13 +28572,13 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
-                        },
-                        {
                             "name": "BaseModalComponent"
                         },
                         {
                             "name": "BaseModalPipe"
+                        },
+                        {
+                            "name": "ComplianceComponent"
                         },
                         {
                             "name": "ConditionalTermComponent"
@@ -28648,6 +28600,9 @@
                         },
                         {
                             "name": "OutlineTooltipDirective"
+                        },
+                        {
+                            "name": "TradelineDisputeProcessSuccessComponent"
                         }
                     ]
                 },
@@ -28659,7 +28614,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         },
                         {
                             "name": "CreditReportPipe"
@@ -29124,14 +29079,6 @@
                 "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Accent",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -29153,12 +29100,12 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "accentConfig",
+                "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "IFilledClosingAlertConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "accentConfig",
@@ -29183,6 +29130,14 @@
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "ILinksOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-fuchsia-500',\n}"
+            },
+            {
+                "name": "accentConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "IFilledClosingAlertConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
             },
             {
                 "name": "address",
@@ -29340,17 +29295,17 @@
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/authentication/authentication.module.ts",
+                "file": "src/app/layouts/compliance/compliance.module.ts",
                 "type": "[]",
-                "defaultValue": "[AuthenticationComponent]"
+                "defaultValue": "[ComplianceComponent]"
             },
             {
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/compliance/compliance.module.ts",
+                "file": "src/app/layouts/authentication/authentication.module.ts",
                 "type": "[]",
-                "defaultValue": "[ComplianceComponent]"
+                "defaultValue": "[AuthenticationComponent]"
             },
             {
                 "name": "components",
@@ -29508,14 +29463,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/typography/typography-accent-bg.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -29524,7 +29471,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29533,6 +29480,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29604,14 +29559,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -29660,7 +29607,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29708,14 +29655,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -29724,7 +29663,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29740,7 +29679,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29748,7 +29687,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/reason-card/reason-card.stories.ts",
+                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29852,6 +29791,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -29868,7 +29815,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29876,7 +29823,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -29932,14 +29879,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -29948,7 +29887,23 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/reason-card/reason-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -30237,14 +30192,6 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Large",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -30277,6 +30224,14 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Large",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -30288,14 +30243,6 @@
                 "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "largeConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "IFilledClosingAlertConfig",
-                "defaultValue": "{\n  size: 'lg',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
             },
             {
                 "name": "largeConfig",
@@ -30320,6 +30267,14 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "IOutlineOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "largeConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "IFilledClosingAlertConfig",
+                "defaultValue": "{\n  size: 'lg',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
             },
             {
                 "name": "largeConfig",
@@ -30581,14 +30536,6 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -30621,17 +30568,17 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/paginations/base-pagination/base-pagination.stories.ts",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "primaryConfig",
+                "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "IFilledClosingAlertConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                "file": "src/app/shared/components/paginations/base-pagination/base-pagination.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "primaryConfig",
@@ -30664,6 +30611,14 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "IOutlineOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "primaryConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "IFilledClosingAlertConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
             },
             {
                 "name": "question",
@@ -30781,14 +30736,6 @@
                 "name": "sizeSpecificClass",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts",
-                "type": "Record<string, any>",
-                "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
-            },
-            {
-                "name": "sizeSpecificClass",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
@@ -30821,6 +30768,14 @@
                 "name": "sizeSpecificClass",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts",
+                "type": "Record<string, any>",
+                "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
+            },
+            {
+                "name": "sizeSpecificClass",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  sm: 'text-sm px-3 py-1',\n  base: 'text-sm px-3 py-3',\n  lg: 'text-base px-3 py-4',\n}"
@@ -30832,14 +30787,6 @@
                 "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  sm: 'text-sm px-1 py-1',\n  base: 'text-sm px-1 py-3',\n  lg: 'text-base px-1 py-4',\n}"
-            },
-            {
-                "name": "Small",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Small",
@@ -30877,6 +30824,14 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Small",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -30888,14 +30843,6 @@
                 "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "smallConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "IFilledClosingAlertConfig",
-                "defaultValue": "{\n  size: 'sm',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
             },
             {
                 "name": "smallConfig",
@@ -30920,6 +30867,14 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "IOutlineOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "smallConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "IFilledClosingAlertConfig",
+                "defaultValue": "{\n  size: 'sm',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
             },
             {
                 "name": "smallConfig",
@@ -31045,14 +31000,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-fuchsia-500 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/typography/typography-accent-bg.stories.ts",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-fuchsia-500 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-white'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-white'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\n  </div>\n    `,\n})"
@@ -31061,9 +31008,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
                 "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-indigo-800 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-fuchsia-500 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
             },
             {
                 "name": "Template",
@@ -31072,6 +31019,14 @@
                 "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-indigo-800 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-white'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-white'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\n  </div>\n    `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-indigo-800 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
             },
             {
                 "name": "Template",
@@ -31141,14 +31096,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
-                "type": "Story<KycSsnPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
                 "type": "Story<KycSsnFullPureComponent>",
                 "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -31197,9 +31144,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                "type": "Story<FilledClosingAlertComponent>",
-                "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
+                "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
+                "type": "Story<KycSsnPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -31245,14 +31192,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                "type": "Story<CreditBuilderCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                 "type": "Story<CreditReportCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
@@ -31261,9 +31200,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                "type": "Story<CreditcardCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                "type": "Story<CreditBuilderCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
             },
             {
                 "name": "Template",
@@ -31277,17 +31216,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                "type": "Story<NegativeAccountCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data\n  },\n})"
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "Story<CreditcardCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/reason-card/reason-card.stories.ts",
-                "type": "Story<ReasonCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: ReasonCardComponent,\n  props: {\n    ...args\n  },\n})"
+                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                "type": "Story<NegativeAccountCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data\n  },\n})"
             },
             {
                 "name": "Template",
@@ -31389,6 +31328,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "Story<FilledClosingAlertComponent>",
+                "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
                 "type": "Story<KbaMultiplechoiceInputComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
@@ -31405,17 +31352,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                "type": "Story<OutlineSelectInputComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "type": "Story<SpinnerComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                "type": "Story<SpinnerComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                "type": "Story<OutlineSelectInputComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -31469,14 +31416,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
-                "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.stories.ts",
                 "type": "Story<FilledChecktextProgressbarComponent>",
                 "defaultValue": "(args: any) => ({\n  component: FilledChecktextProgressbarComponent,\n  props: {\n    ...args,\n    steps,\n    config,\n    activatedStep: 2,\n    completedStep: 1,\n  },\n})"
@@ -31485,9 +31424,25 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/reason-card/reason-card.stories.ts",
+                "type": "Story<ReasonCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: ReasonCardComponent,\n  props: {\n    ...args\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32098,7 +32053,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
                 "description": "",
                 "kind": 168
             },
@@ -32107,7 +32062,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
                 "description": "",
                 "kind": 168
             },
@@ -32581,120 +32536,6 @@
                     "description": "<p>A utility function to update deep nested objects\nWill update all keys of the name you specify</p>\n"
                 }
             ],
-            "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts": [
-                {
-                    "name": "Accent",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "accentConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "IFilledClosingAlertConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "ExtraLarge",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "extraLargeConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "IFilledClosingAlertConfig",
-                    "defaultValue": "{\n  size: 'xl',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-                },
-                {
-                    "name": "ExtraSmall",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "extraSmallConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "IFilledClosingAlertConfig",
-                    "defaultValue": "{\n  size: 'xs',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-                },
-                {
-                    "name": "Large",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "largeConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "IFilledClosingAlertConfig",
-                    "defaultValue": "{\n  size: 'lg',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "primaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "IFilledClosingAlertConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-                },
-                {
-                    "name": "Small",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "smallConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "IFilledClosingAlertConfig",
-                    "defaultValue": "{\n  size: 'sm',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
-                    "type": "Story<FilledClosingAlertComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts": [
                 {
                     "name": "Accent",
@@ -32955,6 +32796,120 @@
                     "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                     "type": "Story<LinksOnlytextButtonComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
+                }
+            ],
+            "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "accentConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "IFilledClosingAlertConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "ExtraLarge",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "extraLargeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "IFilledClosingAlertConfig",
+                    "defaultValue": "{\n  size: 'xl',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                },
+                {
+                    "name": "ExtraSmall",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "extraSmallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "IFilledClosingAlertConfig",
+                    "defaultValue": "{\n  size: 'xs',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                },
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "largeConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "IFilledClosingAlertConfig",
+                    "defaultValue": "{\n  size: 'lg',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "primaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "IFilledClosingAlertConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "smallConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "IFilledClosingAlertConfig",
+                    "defaultValue": "{\n  size: 'sm',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                    "type": "Story<FilledClosingAlertComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
                 }
             ],
             "src/app/views/kyc-address/kyc-address/kyc-address.component.ts": [
@@ -33415,16 +33370,6 @@
                     "defaultValue": "Template.bind({})"
                 }
             ],
-            "src/app/layouts/authentication/authentication.module.ts": [
-                {
-                    "name": "components",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/layouts/authentication/authentication.module.ts",
-                    "type": "[]",
-                    "defaultValue": "[AuthenticationComponent]"
-                }
-            ],
             "src/app/layouts/compliance/compliance.module.ts": [
                 {
                     "name": "components",
@@ -33433,6 +33378,16 @@
                     "file": "src/app/layouts/compliance/compliance.module.ts",
                     "type": "[]",
                     "defaultValue": "[ComplianceComponent]"
+                }
+            ],
+            "src/app/layouts/authentication/authentication.module.ts": [
+                {
+                    "name": "components",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/layouts/authentication/authentication.module.ts",
+                    "type": "[]",
+                    "defaultValue": "[AuthenticationComponent]"
                 }
             ],
             "src/app/layouts/dashboard/dashboard.module.ts": [
@@ -33806,24 +33761,6 @@
                     "defaultValue": "(args: any) => ({\n  component: SignupThankyouComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
-                    "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-fuchsia-500 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
-                }
-            ],
             "src/app/shared/components/typography/typography-accent-bg.stories.ts": [
                 {
                     "name": "Default",
@@ -33842,12 +33779,12 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-fuchsia-500 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-white'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-white'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\n  </div>\n    `,\n})"
                 }
             ],
-            "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts": [
+            "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                    "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -33855,9 +33792,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                    "file": "src/app/shared/components/typography/typography-accent-bg-cooltext.stories.ts",
                     "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-indigo-800 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-fuchsia-500 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
                 }
             ],
             "src/app/shared/components/typography/typography-primary-bg.stories.ts": [
@@ -33876,6 +33813,24 @@
                     "file": "src/app/shared/components/typography/typography-primary-bg.stories.ts",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-indigo-800 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-white'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-white'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-white'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-white'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-white'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-white'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-white'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-white'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-white'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-white'>Body 2-semibold</p>\n  </div>\n    `,\n})"
+                }
+            ],
+            "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/typography/typography-primary-bg-cooltext.stories.ts",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <div class=\"bg-indigo-800 p-4\">\n    <h1 class='font-headings font-extrabold text-5xl text-lightBlue-100'>H1 Heading</h1>\n    <h2 class='font-headings font-extrabold text-4xl text-lightBlue-100'>H2 Heading</h2>\n    <h3 class='font-headings font-extrabold text-3xl text-lightBlue-100'>H3 Heading</h3>\n    <h4 class='font-headings font-extrabold text-2xl text-lightBlue-100'>H4 Heading</h4>\n    <h5 class='font-headings font-extrabold text-xl text-lightBlue-100'>H5 Heading</h5>\n    <h6 class='font-headings font-extrabold text-lg text-lightBlue-100'>H6 Heading</h6>\n    <div style=\"margin: 10px 0px\"></div>\n    <p class='font-sans text-base text-lightBlue-100'>Body 1</p>\n    <p class='font-sans font-semibold text-base text-lightBlue-100'>Body 1-semibold</p>\n    <p class='font-sans text-sm text-lightBlue-100'>Body 2</p>\n    <p class='font-sans font-semibold text-sm text-lightBlue-100'>Body 2-semibold</p>\n  </div>\n    `,\n})"
                 }
             ],
             "src/app/shared/components/typography/typography-transparent-bg.stories.ts": [
@@ -33994,24 +33949,6 @@
                     "defaultValue": "(args: any) => ({\n  component: KycPhonenumberPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
-                    "type": "Story<KycSsnPureComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -34082,6 +34019,24 @@
                     "file": "src/app/views/signup/signup-pure/signup-pure.stories.ts",
                     "type": "Story<SignupPureComponent>",
                     "defaultValue": "(args: any) => ({\n  component: SignupPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.stories.ts",
+                    "type": "Story<KycSsnPureComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts": [
@@ -34168,24 +34123,6 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
                 }
             ],
-            "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                    "type": "Story<CreditBuilderCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
-                }
-            ],
             "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts": [
                 {
                     "name": "Default",
@@ -34204,12 +34141,12 @@
                     "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
                 }
             ],
-            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
+            "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -34217,9 +34154,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "Story<CreditcardCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                    "type": "Story<CreditBuilderCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
@@ -34238,6 +34175,24 @@
                     "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
                     "type": "Story<LoanCardComponent>",
                     "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "Story<CreditcardCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
@@ -34588,6 +34543,24 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/interstitials/spinner/spinner.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                    "type": "Story<SpinnerComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
+                }
+            ],
             "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts": [
                 {
                     "name": "Default",
@@ -34636,24 +34609,6 @@
                     "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                     "type": "Story<OutlineSelectInputComponent>",
                     "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/interstitials/spinner/spinner.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                    "type": "Story<SpinnerComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
                 }
             ],
             "src/app/shared/components/modals/base-modal/base-modal.stories.ts": [
@@ -35232,16 +35187,6 @@
                     "defaultValue": "[\n  AuthService,\n  APIService,\n  SyncService,\n  GuestService,\n  IamService,\n  KycService,\n  DashboardService,\n  TransunionService,\n]"
                 }
             ],
-            "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
-                }
-            ],
             "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
                 {
                     "name": "sizeSpecificClass",
@@ -35280,6 +35225,16 @@
                     "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
+                }
+            ],
+            "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
@@ -36174,17 +36129,6 @@
                     "kind": 168
                 }
             ],
-            "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts": [
-                {
-                    "name": "Status",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
-                    "description": "",
-                    "kind": 168
-                }
-            ],
             "src/app/shared/components/cards/loan-card/loan-card.component.ts": [
                 {
                     "name": "Status",
@@ -36192,6 +36136,17 @@
                     "subtype": "typealias",
                     "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
                     "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
+                    "description": "",
+                    "kind": 168
+                }
+            ],
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts": [
+                {
+                    "name": "Status",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
                     "description": "",
                     "kind": 168
                 }
@@ -36579,24 +36534,6 @@
                 "name": "OnboardingService",
                 "coveragePercent": 0,
                 "coverageCount": "0/6",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/component/tooltips/base-tooltip/base-tooltip.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "BaseTooltipComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/3",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/component/tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "TradelineDisputeProcessSuccessComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -39257,7 +39194,7 @@
                 "linktype": "component",
                 "name": "ConditionalTermComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/9",
+                "coverageCount": "0/10",
                 "status": "low"
             },
             {
@@ -39502,6 +39439,15 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TradelineDisputeProcessSuccessComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/components/tradelines/tradeline-dispute-process/constants.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -39545,7 +39491,7 @@
                 "linktype": "component",
                 "name": "TradelineDisputeProcessComponent",
                 "coveragePercent": 10,
-                "coverageCount": "2/19",
+                "coverageCount": "2/20",
                 "status": "low"
             },
             {
