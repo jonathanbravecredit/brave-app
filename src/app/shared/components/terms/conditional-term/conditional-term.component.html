@@ -1,10 +1,13 @@
-<div class="border">
-  <p class="text-lg">{{ title }}</p>
-  <div class="overflow-y-scroll h-50">
+<div>
+  <p class="text-lg font-bold p-4">{{ title }}</p>
+  <div class="overflow-y-scroll h-60 p-4 border border-blueGray-300 rounded-sm">
     <ng-content></ng-content>
   </div>
-  <div class="flex">
-    <input type="checkbox" name="condition-approval" />
+  <div class="flex p-4">
+    <input #checkbox type="checkbox" name="condition-approval" (change)="setValue($event)"/>
     <label for="condition-approval" class="ml-2 text-xs">{{ termDescription }}</label>
+  </div>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button class="{{ getBtnInteractionClass() }}" [config]="getButtonConfig()" (click)="accepted.emit()">Submit my dispute</brave-filled-onlytext-button>
   </div>
 </div>

@@ -12,18 +12,24 @@ import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedIte
   styleUrls: ['./tradeline-dispute-process.component.css']
 })
 export class TradelineDisputeProcessComponent implements OnInit {
+  timeout: any;
+  @ViewChild(BasePaginationComponent) basePagination: BasePaginationComponent | undefined;
   /**
    * The array of pages and child items inside of them that displays the reason cards.
    */
-  @Input() reasonOptionPages: IDisputeTradelineReasonCardPage[] = [];
-  @ViewChild(BasePaginationComponent) basePagination: BasePaginationComponent | undefined;
+  reasonOptionPages: IDisputeTradelineReasonCardPage[] = reasonPages;
   selectedIndexes: IDisputeTradelineSelectedObj[] = [];
-
+  navigationStack: any[] = [];
+  isCustomInputSelected = false;
+  showCustomInputError = false;
+  showMaxError = false;
   constructor() { }
 
   ngOnInit(): void {
     // Set the pages to default;
-    this.reasonOptionPages = reasonPages;
+    this.navigationStack.push({
+      id: 'reason'
+    });
   }
 
   /**
@@ -34,15 +40,37 @@ export class TradelineDisputeProcessComponent implements OnInit {
    *   switchOption(1); // Switch or Swap the values of the option in position 1.
    */
   switchOption(pageIndex: number, itemIndex: number): void {
+    const isCustomInput = this.reasonOptionPages[pageIndex].items[itemIndex].allowUserInput
     const indexInSelectedArr = this.findIndexInSelected(pageIndex, itemIndex);
     const isSelected = indexInSelectedArr !== -1;
     if (isSelected) {
       this.selectedIndexes.splice(indexInSelectedArr, 1);
-    } else {
-      const isLimitReached = this.isLimitOfSelectionReached();
-      if (!isLimitReached) {
-        this.selectedIndexes.push({ pageIndex, itemIndex });
+      if (isCustomInput) { 
+        this.isCustomInputSelected = false;
       }
+    } else {
+      if (isCustomInput) {
+        this.selectedIndexes = [];
+        this.selectedIndexes.push({ pageIndex, itemIndex });
+        this.isCustomInputSelected = true;
+      } else {
+        if (this.isCustomInputSelected) {
+          this.showCustomInputError = true;
+        } else {
+          const isLimitReached = this.isLimitOfSelectionReached();
+          if (!isLimitReached) {
+            this.selectedIndexes.push({ pageIndex, itemIndex });
+          } else {
+            this.showMaxError = true;
+          }
+        }
+      }
+      
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.showMaxError = false;
+        this.showCustomInputError = false;
+      } ,3000)
     }
   }
 
@@ -78,7 +106,19 @@ export class TradelineDisputeProcessComponent implements OnInit {
     }
   }
 
+  getLastNavigationStackId(): string {
+    return this.navigationStack[this.navigationStack.length - 1].id;
+  }
+
   goToSummary(): void {
-    
+    if (this.selectedIndexes.length > 0) {
+      this.navigationStack.push({
+        id: 'summary'
+      });
+    }
+  }
+
+  goBack(): void {
+    this.navigationStack.pop();
   }
 }

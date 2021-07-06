@@ -1,10 +1,10 @@
-<div class="w-full">
+<div class="w-full" *ngIf="getLastNavigationStackId() === 'reason'">
   <div class="w-full" (swipe)="onSwipe($event)">
     <ng-template ngFor let-page [ngForOf]="reasonOptionPages" let-pageIndex="index">
       <ng-template [ngIf]="(basePagination.currentActivePage$ | async)?.valueOf() === page.pageIndex">
         <brave-reason-card 
         *ngFor="let reason of page.items; let itemIndex = index"
-        class="my-4"
+        class="mt-4"
         (clicked)="switchOption(pageIndex, itemIndex)"
         [allowUserInput]="reason.allowUserInput"
         [text]="reason.text"
@@ -17,30 +17,47 @@
   <div class="p-4">
     <brave-base-pagination #basePagination paginationStyle="point" [numberOfPages]="reasonOptionPages.length"></brave-base-pagination>
   </div>
+  <div class="p-4">
+    <p class="text-lg font-bold mb-6">Reason(s) selected:</p>
+    <span *ngIf="selectedIndexes.length === 0">You have not selected any reasons.</span>
+    <div>
+      <ng-template ngFor let-indexObj [ngForOf]="selectedIndexes">
+        <brave-reason-card 
+        (clicked)="switchOption(indexObj.pageIndex, indexObj.itemIndex)"
+        [allowUserInput]="false"
+        [text]="getTargetSelectedCard(indexObj).text"
+        [isSelected]="isSelected(indexObj.pageIndex, indexObj.itemIndex)"
+        [userInputDescriptionText]="getTargetSelectedCard(indexObj).userInputDescriptionText"></brave-reason-card>
+      </ng-template>
+    </div>
+    <div class="flex justify-center">
+      <brave-filled-onlytext-button class="mt-4 w-full" (click)="goToSummary()">Continue to your summary</brave-filled-onlytext-button>
+    </div>
+    <div *ngIf="showCustomInputError || showMaxError" class="fixed inset-x-0 bottom-0 mb-4 g-red-500 text-white bg-red-600 font-bold text-sm px-6 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150">
+      <p>You can only choose 2 preset reasons and only 1 custom reason</p>
+    </div>
+  </div>
 </div>
-<div class="p-4">
-  <p class="text-lg font-bold mb-6">Reason(s) selected:</p>
-  <span *ngIf="selectedIndexes.length === 0">You have not selected any reasons.</span>
-  <div>
-    <ng-template ngFor let-indexObj [ngForOf]="selectedIndexes">
-      <brave-reason-card 
-      (clicked)="switchOption(indexObj.pageIndex, indexObj.itemIndex)"
-      [allowUserInput]="false"
-      [text]="getTargetSelectedCard(indexObj).text"
-      [isSelected]="isSelected(indexObj.pageIndex, indexObj.itemIndex)"
-      [userInputDescriptionText]="getTargetSelectedCard(indexObj).userInputDescriptionText"></brave-reason-card>
-    </ng-template>
+<div *ngIf="getLastNavigationStackId() === 'summary'">
+  <div class="p-4">
+    <p class="text-lg font-bold mb-6">Reason(s)</p>
+    <div>
+      <ng-template ngFor let-indexObj [ngForOf]="selectedIndexes">
+        <brave-reason-card 
+        (clicked)="switchOption(indexObj.pageIndex, indexObj.itemIndex)"
+        [allowUserInput]="false"
+        [text]="getTargetSelectedCard(indexObj).text"
+        [isSelected]="isSelected(indexObj.pageIndex, indexObj.itemIndex)"
+        [userInputDescriptionText]="getTargetSelectedCard(indexObj).userInputDescriptionText"></brave-reason-card>
+      </ng-template>
+    </div>
   </div>
-  <div class="flex justify-center">
-    <brave-filled-onlytext-button class="mt-4 w-full" (click)="goToSummary()">Continue to your summary</brave-filled-onlytext-button>
-  </div>
-  <div>
-    <brave-conditional-term 
+  <brave-conditional-term 
     title="Dispute Terms & Conditions"
-    termDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis">
+    termDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus">
       <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis, mi quis bibendum mattis, eros enim maximus nisl, non convallis nisi sem vel est. Curabitur et congue velit, eu dapibus lectus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vestibulum vel odio vel aliquam.</p>
+        <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus ante diam, eu dapibus eros mattis ac. Nulla tincidunt est condimentum, ornare tellus at, fermentum nisl. Vivamus ornare ipsum nec ipsum tincidunt, vitae egestas ante ultrices. Nullam sit amet turpis ullamcorper, volutpat mi nec, ullamcorper magna. Vestibulum convallis, mi quis bibendum mattis, eros enim maximus nisl.</p>
       </div>
   </brave-conditional-term>
-  </div>
 </div>
+

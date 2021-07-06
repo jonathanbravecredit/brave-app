@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 
 @Component({
   selector: 'brave-conditional-term',
@@ -8,11 +9,36 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ConditionalTermComponent implements OnInit {
   @Input() title: string = '';
   @Input() termDescription: string = '';
-  accepted: boolean = false;
-
+  @Output() accepted: EventEmitter<void> = new EventEmitter(); 
+  isConfirmed: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  setValue(e: any): void {
+    this.isConfirmed = e.target.checked;
+  }
+
+  getButtonConfig(): IFilledOnlyTextButtonConfig {
+    let defaultConfig: IFilledOnlyTextButtonConfig = {
+      buttonSize: 'base',
+      backgroundColor: 'bg-indigo-800',
+      activeColor: 'bg-indigo-900',
+      color: 'text-white',
+      full: false
+    }
+
+    if (this.isConfirmed) {
+      return defaultConfig;
+    } else {
+      defaultConfig.backgroundColor = 'black';
+      defaultConfig.activeColor = 'black';
+      return defaultConfig;
+    }
+  }
+
+  getBtnInteractionClass(): string {
+    return this.isConfirmed === false ? 'pointer-events-none' : '';
+  }
 }
