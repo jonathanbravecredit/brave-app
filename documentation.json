@@ -36,29 +36,29 @@
         },
         {
             "name": "CreditReportGraphicPipe",
-            "id": "pipe-CreditReportGraphicPipe-d12ce394f19bc409ea85c3e6c6cec495",
+            "id": "pipe-CreditReportGraphicPipe-0fd32fd900a0de147ffb2b334c6b410d",
             "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe.ts",
             "type": "pipe",
             "description": "",
             "properties": [
                 {
                     "name": "possibleStatusFromValue",
-                    "defaultValue": "[\n    {\n      percentage: 25,\n      status: CreditReportStatus.Safe,\n    },\n    {\n      percentage: 50,\n      status: CreditReportStatus.Danger\n    },\n    {\n      percentage: 75,\n      status: CreditReportStatus.Critical\n    }\n  ]",
+                    "defaultValue": "[\n    {\n      percentage: 300,\n      status: CreditReportStatus.VeryPoor,\n    },\n    {\n      percentage: 500,\n      status: CreditReportStatus.Poor,\n    },\n    {\n      percentage: 601,\n      status: CreditReportStatus.Fair,\n    },\n    {\n      percentage: 661,\n      status: CreditReportStatus.Good,\n    },\n    {\n      percentage: 781,\n      status: CreditReportStatus.Excellent,\n    },\n  ]",
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 20,
+                    "line": 15,
                     "modifierKind": [
                         112
                     ]
                 },
                 {
                     "name": "possibleValues",
-                    "defaultValue": "[\n    0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100\n  ]",
+                    "defaultValue": "[0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]",
                     "type": "[]",
                     "optional": false,
                     "description": "",
-                    "line": 35,
+                    "line": 38,
                     "modifierKind": [
                         112
                     ]
@@ -76,7 +76,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 52,
                     "modifierKind": [
                         112
                     ],
@@ -91,7 +91,7 @@
                     ]
                 },
                 {
-                    "name": "getPossibeStatusFromPercentage",
+                    "name": "getStatusFromCurrentValue",
                     "args": [
                         {
                             "name": "value",
@@ -101,7 +101,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 39,
+                    "line": 40,
                     "modifierKind": [
                         112
                     ],
@@ -131,7 +131,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 56,
+                    "line": 62,
                     "jsdoctags": [
                         {
                             "name": "value",
@@ -152,7 +152,7 @@
                 }
             ],
             "ngname": "creditReportGraphic",
-            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nexport enum CreditReportStatus {\n  Critical = 'critical',\n  Danger = 'danger',\n  Safe = 'safe',\n  Default = 'default',\n}\n\nconst enumStrColorCLassIndicator = {\n  [CreditReportStatus.Danger]: 'brave-danger',\n  [CreditReportStatus.Safe]: 'brave-safe',\n  [CreditReportStatus.Critical]: 'brave-critical',\n  [CreditReportStatus.Default]: 'lt-gray'\n};\n\n@Pipe({\n  name: 'creditReportGraphic'\n})\nexport class CreditReportGraphicPipe implements PipeTransform {\n  private possibleStatusFromValue = [\n    {\n      percentage: 25,\n      status: CreditReportStatus.Safe,\n    },\n    {\n      percentage: 50,\n      status: CreditReportStatus.Danger\n    },\n    {\n      percentage: 75,\n      status: CreditReportStatus.Critical\n    }\n  ];\n\n  private possibleValues = [\n    0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100\n  ];\n\n  private getPossibeStatusFromPercentage(value: number): string {\n    let result = CreditReportStatus.Default;\n    this.possibleStatusFromValue.reverse().forEach((possibleValue) => {\n       if (value <= possibleValue.percentage) { result = possibleValue.status; }\n    });\n\n    return result;\n  }\n\n  private getAverageThresholdFromValue(value: number): number {\n    let result = 0;\n    this.possibleValues.forEach((possibleValue) => {\n      if (value >= possibleValue) { result = possibleValue; }\n    });\n    return result;\n  }\n\n  transform(value: number, ...args: string[]): string {\n    const outputType: string = args[0];\n    let result = '';\n    if (outputType === 'css-class') {\n      result = enumStrColorCLassIndicator[this.getPossibeStatusFromPercentage(value) as CreditReportStatus];\n    } else if (outputType === 'margin-placement') {\n      result = 'ml-' + this.getAverageThresholdFromValue(value).toString() + 'percent';\n    } else if (outputType === 'status') {\n      result = this.getPossibeStatusFromPercentage(value);\n    }\n\n    return result;\n  }\n}\n"
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nexport enum CreditReportStatus {\n  VeryPoor = 'Very Poor',\n  Poor = 'Poor',\n  Fair = 'Fair',\n  Good = 'Good',\n  Excellent = 'Excellent',\n  Default = 'Default',\n}\n\n@Pipe({\n  name: 'creditReportGraphic',\n})\nexport class CreditReportGraphicPipe implements PipeTransform {\n  private possibleStatusFromValue = [\n    {\n      percentage: 300,\n      status: CreditReportStatus.VeryPoor,\n    },\n    {\n      percentage: 500,\n      status: CreditReportStatus.Poor,\n    },\n    {\n      percentage: 601,\n      status: CreditReportStatus.Fair,\n    },\n    {\n      percentage: 661,\n      status: CreditReportStatus.Good,\n    },\n    {\n      percentage: 781,\n      status: CreditReportStatus.Excellent,\n    },\n  ];\n\n  private possibleValues = [0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];\n\n  private getStatusFromCurrentValue(value: number): string {\n    console.log('percentage', value);\n    let result = CreditReportStatus.Default;\n    this.possibleStatusFromValue.forEach((possibleValue) => {\n      if (value >= possibleValue.percentage) {\n        result = possibleValue.status;\n      }\n    });\n\n    return result;\n  }\n\n  private getAverageThresholdFromValue(value: number): number {\n    let result = 0;\n    this.possibleValues.forEach((possibleValue) => {\n      if (value >= possibleValue) {\n        result = possibleValue;\n      }\n    });\n    return result;\n  }\n\n  transform(value: number, ...args: string[]): string {\n    const outputType: string = args[0];\n    let result = '';\n    if (outputType === 'margin-placement') {\n      result = 'ml-' + this.getAverageThresholdFromValue(value).toString() + 'percent';\n    } else if (outputType === 'status') {\n      result = this.getStatusFromCurrentValue(value);\n    }\n\n    return result;\n  }\n}\n"
         },
         {
             "name": "CreditReportPipe",
@@ -14907,7 +14907,7 @@
         },
         {
             "name": "CreditReportGraphicComponent",
-            "id": "component-CreditReportGraphicComponent-425c5492b04817186a5bcd36bf5c0fef",
+            "id": "component-CreditReportGraphicComponent-d56256cef07669fef532f5b8eb0a964f",
             "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -14915,9 +14915,7 @@
             "outputs": [],
             "providers": [],
             "selector": "brave-credit-report-graphic",
-            "styleUrls": [
-                "./credit-report-graphic.component.css"
-            ],
+            "styleUrls": [],
             "styles": [],
             "templateUrl": [
                 "./credit-report-graphic.component.html"
@@ -14926,23 +14924,27 @@
             "inputsClass": [
                 {
                     "name": "base",
-                    "defaultValue": "0",
-                    "line": 9
+                    "defaultValue": "300",
+                    "line": 8,
+                    "type": "number"
                 },
                 {
                     "name": "currentValue",
-                    "defaultValue": "0",
-                    "line": 11
+                    "defaultValue": "350",
+                    "line": 10,
+                    "type": "number"
                 },
                 {
                     "name": "limit",
-                    "defaultValue": "800",
-                    "line": 10
+                    "defaultValue": "850",
+                    "line": 9,
+                    "type": "number"
                 },
                 {
                     "name": "ptsChange",
                     "defaultValue": "0",
-                    "line": 12
+                    "line": 11,
+                    "type": "number"
                 }
             ],
             "outputsClass": [],
@@ -14951,6 +14953,14 @@
                     "name": "percentage",
                     "defaultValue": "0",
                     "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "percentageStr",
+                    "defaultValue": "'0%'",
+                    "type": "string",
                     "optional": false,
                     "description": "",
                     "line": 13
@@ -14971,14 +14981,9 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report-graphic',\n  templateUrl: './credit-report-graphic.component.html',\n  styleUrls: ['./credit-report-graphic.component.css'],\n})\nexport class CreditReportGraphicComponent implements OnInit {\n  @Input() base = 0;\n  @Input() limit = 800;\n  @Input() currentValue = 0;\n  @Input() ptsChange = 0;\n  percentage = 0;\n\n  constructor() {}\n\n  ngOnInit(): void {\n    this.percentage = this.currentValue / this.limit;\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report-graphic',\n  templateUrl: './credit-report-graphic.component.html',\n})\nexport class CreditReportGraphicComponent implements OnInit {\n  @Input() base: number = 300;\n  @Input() limit: number = 850;\n  @Input() currentValue: number = 350;\n  @Input() ptsChange: number = 0;\n  percentage: number = 0;\n  percentageStr: string = '0%';\n\n  constructor() {}\n\n  ngOnInit(): void {\n    this.percentage = Math.round(((this.currentValue - 300) / 550) * 100);\n    this.percentageStr = `${this.percentage}%`;\n  }\n}\n",
             "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": "",
-                    "styleUrl": "./credit-report-graphic.component.css"
-                }
-            ],
+            "styleUrlsData": "",
             "stylesData": "",
             "constructorObj": {
                 "name": "constructor",
@@ -14989,7 +14994,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"flex flex-col items-center bg-indigo-700 pt-3 pb-5 px-4\">\n  <p class=\"font-bold text-white\">Your Score</p>\n  <div class=\"font-bold text-white flex mt-3\">\n    <div class=\"mr-2 text-2xl -mt-2\">&#9650;</div>\n    <span>+5 points</span>\n  </div>\n  <p class=\"text-white text-xs text-opacity-50\">since last month</p>\n  <p class=\"text-5xl text-white font-bold\">{{ currentValue }}</p>\n  <p class=\"text-white font-extrabold\">{{ percentage | creditReportGraphic: 'status' }}</p>\n  <div class=\"mt-2 h-4 w-full bg-gradient-to-r from-amber-500 via-pink-500 to-red-500\">\n    <div class=\"text-2xl text-white fixed {{ percentage | creditReportGraphic: 'css-class' }}\">&#9650;</div>\n  </div>\n  <div class=\"w-full flex justify-between mt-2\">\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ base }}</p>\n    </div>\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ limit }}</p>\n    </div>\n  </div>\n  <p class=\"mt-4 text-lg font-bold text-white text-center\">TransUnion<br />VantageScore 3.0</p>\n</div>\n"
+            "templateData": "<div class=\"flex flex-col items-center rounded-l-md bg-indigo-700 pt-3 pb-5 px-4\">\n  <p class=\"font-bold text-white\">Your Score</p>\n  <div class=\"font-bold text-white flex mt-3\">\n    <div class=\"mr-2 text-2xl -mt-2\">\n      <span class=\"material-icons text-fuchsia-500 align-bottom transform -rotate-90\"> play_arrow </span>\n    </div>\n    <span>{{ ptsChange >= 0 ? '+' : '-' }}{{ ptsChange }} points</span>\n  </div>\n  <p class=\"text-white text-xs text-opacity-50 mt-1\">since last month</p>\n  <p class=\"text-5xl text-white font-bold my-4\">{{ currentValue }}</p>\n  <p class=\"text-white font-extrabold\">{{ currentValue | creditReportGraphic: 'status' }}</p>\n  <div class=\"relative mt-2 h-4 w-full bg-gradient-to-r from-orange-500 via-yelow-300 to-emerald-400\">\n    <div [ngStyle]=\"{ left: percentageStr }\" class=\"absolute text-2xl text-white\">\n      <span class=\"material-icons text-white align-bottom transform -rotate-90\"> play_arrow </span>\n    </div>\n  </div>\n  <div class=\"w-full flex justify-between mt-2\">\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ base }}</p>\n    </div>\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ limit }}</p>\n    </div>\n  </div>\n  <p class=\"mt-4 mb-2 text-lg font-bold text-white text-center\">TransUnion<br />VantageScore 3.0</p>\n</div>\n"
         },
         {
             "name": "CreditReportPureComponent",
@@ -15071,6 +15076,205 @@
                 "OnInit"
             ],
             "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\n  <div class=\"p-4\">\n    <span class=\"text-lg\">Your TransUnion Credit Report</span>\n    <brave-credit-report-graphic class=\"w-full mt-4\" [currentValue]=\"creditReportScore\"></brave-credit-report-graphic>\n    <p class=\"text-xs mt-3 text-gray-600\">As of 03/17/2021</p>\n  </div>\n  <div class=\"p-4\" *ngFor=\"let report of creditReports\">\n    <h6 class=\"text-lg\">{{ report.title }}</h6>\n    <div *ngIf=\"preferences.showAllAccounts[report.group]\">\n      <input type=\"checkbox\" id=\"dont-show-hide\" (click)=\"hide.emit(report)\" />\n      <label for=\"dont-show-hide\" class=\"ml-2 mr-auto\">Only Show me delinquent accounts</label>\n    </div>\n    <brave-credit-report-card\n      *ngFor=\"let card of report.cards\"\n      [creditorName]=\"card.creditorName\"\n      [isOpen]=\"card.isOpen\"\n      [firstFieldName]=\"card.firstFieldName\"\n      [firstFieldValue]=\"card.firstFieldValue.toString()\"\n      [secondFieldName]=\"card.secondFieldName\"\n      [secondFieldValue]=\"card.secondFieldValue.toString()\"\n      [thirdFieldName]=\"card.thirdFieldName\"\n      [thirdFieldValue]=\"card.thirdFieldValue.toString()\"\n      [status]=\"card.status\"\n      (viewDetailClick)=\"viewDetailClick.emit(card.tradeline)\"\n    ></brave-credit-report-card>\n  </div>\n</div>\n"
+        },
+        {
+            "name": "CreditScoreGraphicTabsComponent",
+            "id": "component-CreditScoreGraphicTabsComponent-3b00f46fa89e8b592dfdde3e977f2023",
+            "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-credit-score-graphic-tabs",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./credit-score-graphic-tabs.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "openTab",
+                    "defaultValue": "1",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 11
+                },
+                {
+                    "name": "toggleTabs",
+                    "args": [
+                        {
+                            "name": "tabNumber",
+                            "type": "number"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 13,
+                    "jsdoctags": [
+                        {
+                            "name": "tabNumber",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-score-graphic-tabs',\n  templateUrl: './credit-score-graphic-tabs.component.html',\n})\nexport class CreditScoreGraphicTabsComponent implements OnInit {\n  openTab = 1;\n  constructor() {}\n\n  ngOnInit(): void {}\n\n  toggleTabs(tabNumber: number) {\n    this.openTab = tabNumber;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 8
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div style=\"background-color: rgb(211, 242, 246)\" class=\"py-4 px-2 rounded-r\">\n  <div class=\"w-full mb-2\">\n    <p class=\"font-bold text-black text-center\">Score History</p>\n  </div>\n  <div class=\"w-full\">\n    <div class=\"flex flex-shrink flex-wrap justify-center\">\n      <ul class=\"flex mb-0 list-none p-1 bg-white rounded\">\n        <li class=\"-mb-px mr-2 last:mr-0 sm:text-center w-20\">\n          <a\n            class=\"font-sans text-sm px-4 py-1 rounded block leading-normal\"\n            (click)=\"toggleTabs(1)\"\n            [ngClass]=\"{\n              'bg-white text-coolGray-700': openTab !== 1,\n              'text-white font-bold bg-indigo-800': openTab === 1\n            }\"\n          >\n            3 MONTHS\n          </a>\n        </li>\n        <li class=\"-mb-px mr-2 last:mr-0 text-center w-20\">\n          <a\n            class=\"font-sans text-sm px-4 py-1 rounded block leading-normal\"\n            (click)=\"toggleTabs(2)\"\n            [ngClass]=\"{\n              'bg-white text-coolGray-700': openTab !== 2,\n              'text-white font-bold bg-indigo-800': openTab === 2\n            }\"\n          >\n            6 MONTHS\n          </a>\n        </li>\n      </ul>\n    </div>\n    <div class=\"relative flex flex-col min-w-0 break-word w-full mb-6 rounded\">\n      <div class=\"px-4 py-5 flex-auto\">\n        <div class=\"tab-content tab-space\">\n          <div [ngClass]=\"{ hidden: openTab !== 1, block: openTab === 1 }\">\n            <p>3 month chart goes here</p>\n          </div>\n          <div [ngClass]=\"{ hidden: openTab !== 2, block: openTab === 2 }\">\n            <p>6 month chart goes here</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+        },
+        {
+            "name": "CreditScoreHistoryChartComponent",
+            "id": "component-CreditScoreHistoryChartComponent-9a8cc3d2eda68b489d1c92689fa30d54",
+            "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-credit-score-history-chart",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./credit-score-history-chart.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "lineChartLabels",
+                    "defaultValue": "['January', 'February', 'March', 'April', 'May', 'June']",
+                    "line": 11,
+                    "type": "Label[]"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "chart",
+                    "type": "BaseChartDirective",
+                    "optional": false,
+                    "description": "",
+                    "line": 49,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "BaseChartDirective, {static: true}"
+                        }
+                    ]
+                },
+                {
+                    "name": "lineChartColors",
+                    "defaultValue": "[\n    {\n      // grey\n      backgroundColor: 'rgba(148,159,177,0.2)',\n      borderColor: 'rgba(148,159,177,1)',\n      pointBackgroundColor: 'rgba(148,159,177,1)',\n      pointBorderColor: '#fff',\n      pointHoverBackgroundColor: '#fff',\n      pointHoverBorderColor: 'rgba(148,159,177,0.8)',\n    },\n  ]",
+                    "type": "Color[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 35,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "lineChartData",
+                    "defaultValue": "[{ data: [550, 590, 586, 581, 620, 621], label: 'Series A' }]",
+                    "type": "ChartDataSets[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "lineChartLegend",
+                    "defaultValue": "false",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 46
+                },
+                {
+                    "name": "lineChartOptions",
+                    "defaultValue": "{\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [{}],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n        },\n        {\n          id: 'y-axis-1',\n          position: 'right',\n          gridLines: {\n            color: 'rgba(255,0,0,0.3)',\n          },\n          ticks: {\n            fontColor: 'red',\n          },\n        },\n      ],\n    },\n  }",
+                    "type": "ChartOptions",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "lineChartType",
+                    "defaultValue": "'line'",
+                    "type": "ChartType",
+                    "optional": false,
+                    "description": "",
+                    "line": 47
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 53
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { ChartDataSets, ChartOptions, ChartType } from 'chart.js';\nimport { Color, BaseChartDirective, Label } from 'ng2-charts';\n\n@Component({\n  selector: 'brave-credit-score-history-chart',\n  templateUrl: './credit-score-history-chart.component.html',\n})\nexport class CreditScoreHistoryChartComponent implements OnInit {\n  public lineChartData: ChartDataSets[] = [{ data: [550, 590, 586, 581, 620, 621], label: 'Series A' }];\n  @Input() lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];\n  public lineChartOptions: ChartOptions = {\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [{}],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n        },\n        {\n          id: 'y-axis-1',\n          position: 'right',\n          gridLines: {\n            color: 'rgba(255,0,0,0.3)',\n          },\n          ticks: {\n            fontColor: 'red',\n          },\n        },\n      ],\n    },\n  };\n  public lineChartColors: Color[] = [\n    {\n      // grey\n      backgroundColor: 'rgba(148,159,177,0.2)',\n      borderColor: 'rgba(148,159,177,1)',\n      pointBackgroundColor: 'rgba(148,159,177,1)',\n      pointBorderColor: '#fff',\n      pointHoverBackgroundColor: '#fff',\n      pointHoverBorderColor: 'rgba(148,159,177,0.8)',\n    },\n  ];\n  lineChartLegend = false;\n  lineChartType: ChartType = 'line';\n\n  @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 49
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"flex-item\">\n  <div style=\"display: block\">\n    <canvas\n      baseChart\n      width=\"200\"\n      height=\"200\"\n      [datasets]=\"lineChartData\"\n      [labels]=\"lineChartLabels\"\n      [options]=\"lineChartOptions\"\n      [colors]=\"lineChartColors\"\n      [legend]=\"lineChartLegend\"\n      [chartType]=\"lineChartType\"\n    ></canvas>\n  </div>\n</div>\n"
         },
         {
             "name": "DashboardComponent",
@@ -30663,14 +30867,6 @@
                 "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Accent",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -30684,20 +30880,20 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Accent",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "accentConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "IFilledClosingAlertConfig",
                 "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-            },
-            {
-                "name": "accentConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "IFilledOnlytextBadgeConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
             },
             {
                 "name": "accentConfig",
@@ -30714,6 +30910,14 @@
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "ILinksOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-fuchsia-500',\n}"
+            },
+            {
+                "name": "accentConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "IFilledOnlytextBadgeConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
             },
             {
                 "name": "address",
@@ -30754,6 +30958,14 @@
                 "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "base",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentValue: 350,\n  ptsChange: 0,\n}"
             },
             {
                 "name": "Bottom",
@@ -30873,7 +31085,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/shared-components.module.ts",
                 "type": "[]",
-                "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n]"
+                "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n  CreditScoreGraphicTabsComponent,\n  CreditScoreHistoryChartComponent,\n]"
             },
             {
                 "name": "config",
@@ -30924,10 +31136,42 @@
                 "defaultValue": "[\n  {\n    title: 'Credit Cards',\n    group: CreditReportGroups.CreditCards,\n    cards: [\n      {\n        type: 'c',\n        creditorName: 'ABC Financial',\n        isOpen: true,\n        firstFieldName: 'Current Balance',\n        firstFieldValue: '1,200',\n        secondFieldName: 'Credit Limit',\n        secondFieldValue: '1,200',\n        thirdFieldName: 'Payment Status',\n        thirdFieldValue: 'Paid',\n        status: '',\n      } as ICreditReportCardInputs,\n      {\n        type: 'c',\n        creditorName: 'XYZ Financial',\n        isOpen: true,\n        firstFieldName: 'Current Balance',\n        firstFieldValue: '200',\n        secondFieldName: 'Credit Limit',\n        secondFieldValue: '200',\n        thirdFieldName: 'Payment Status',\n        thirdFieldValue: 'Paid',\n        status: '',\n      } as ICreditReportCardInputs,\n    ],\n  },\n  {\n    title: 'Collection Accounts',\n    group: CreditReportGroups.CollectionsAccounts,\n    cards: [\n      {\n        type: 'c',\n        creditorName: 'ABC Services',\n        isOpen: true,\n        firstFieldName: 'Current Balance',\n        firstFieldValue: '1,200',\n        secondFieldName: 'Credit Limit',\n        secondFieldValue: '1,200',\n        thirdFieldName: 'Payment Status',\n        thirdFieldValue: 'Paid',\n        status: '',\n      } as ICreditReportCardInputs,\n    ],\n  },\n]"
             },
             {
+                "name": "critical",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentValue: 500,\n  ptsChange: 0,\n}"
+            },
+            {
+                "name": "Critical",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Current",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/tradelines/tradeline-payment-icon/tradeline-payment-icon.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "danger",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentValue: 600,\n  ptsChange: 0,\n}"
+            },
+            {
+                "name": "Danger",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31031,7 +31275,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
+                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31039,7 +31283,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
+                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31151,14 +31395,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31191,6 +31427,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31200,14 +31444,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31231,7 +31467,23 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31351,7 +31603,23 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31383,14 +31651,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31400,6 +31660,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31455,6 +31723,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31472,14 +31748,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31531,14 +31799,6 @@
                 "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-status.pipe.ts",
                 "type": "object",
                 "defaultValue": "{\n  [SnapshotStatus.Danger]: 'brave-danger',\n  [SnapshotStatus.Safe]: 'brave-safe',\n  [SnapshotStatus.Critical]: 'brave-critical',\n  [SnapshotStatus.Default]: 'lt-gray',\n}"
-            },
-            {
-                "name": "enumStrColorCLassIndicator",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe.ts",
-                "type": "object",
-                "defaultValue": "{\n  [CreditReportStatus.Danger]: 'brave-danger',\n  [CreditReportStatus.Safe]: 'brave-safe',\n  [CreditReportStatus.Critical]: 'brave-critical',\n  [CreditReportStatus.Default]: 'lt-gray'\n}"
             },
             {
                 "name": "enumStrNameOfLabel",
@@ -31658,7 +31918,7 @@
                 "subtype": "variable",
                 "file": "src/app/app.module.ts",
                 "type": "",
-                "defaultValue": "Boolean(\n  window.location.hostname === 'localhost' ||\n    window.location.hostname === '[::1]' ||\n    window.location.hostname.match(\n      /^127(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/\n    )\n)"
+                "defaultValue": "Boolean(\n  window.location.hostname === 'localhost' ||\n    window.location.hostname === '[::1]' ||\n    window.location.hostname.match(/^127(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/),\n)"
             },
             {
                 "name": "items",
@@ -32040,14 +32300,6 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -32069,20 +32321,20 @@
                 "defaultValue": "Template.bind({})"
             },
             {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "IFilledClosingAlertConfig",
                 "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
-            },
-            {
-                "name": "primaryConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "IFilledOnlytextBadgeConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "primaryConfig",
@@ -32107,6 +32359,46 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "IOutlineOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "primaryConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "IFilledOnlytextBadgeConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "ptsDecrease",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentValue: 650,\n  ptsChange: -5,\n}"
+            },
+            {
+                "name": "PtsDecrease",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "ptsIncrease",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentValue: 650,\n  ptsChange: 5,\n}"
+            },
+            {
+                "name": "PtsIncrease",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "question",
@@ -32189,10 +32481,18 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Secondary",
+                "name": "safe",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "object",
+                "defaultValue": "{\n  currentValue: 750,\n  ptsChange: 0,\n}"
+            },
+            {
+                "name": "Safe",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -32205,12 +32505,12 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "secondaryConfig",
+                "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "IFilledOnlytextBadgeConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "secondaryConfig",
@@ -32219,6 +32519,14 @@
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "IFilledOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  activeColor: 'bg-lightBlue-200',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "secondaryConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "IFilledOnlytextBadgeConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "services",
@@ -32235,14 +32543,6 @@
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
-            },
-            {
-                "name": "sizeSpecificClass",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
-                "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
             },
             {
                 "name": "sizeSpecificClass",
@@ -32267,6 +32567,14 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
+            },
+            {
+                "name": "sizeSpecificClass",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
+                "type": "Record<string, any>",
+                "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
             },
             {
                 "name": "sizeSpecificClass",
@@ -32536,17 +32844,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "Story<NewDisputeComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args,\n    newDisputeData: data,\n  },\n})"
+                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
+                "type": "Story<CreditReportPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditReportPureComponent,\n  props: {\n    ...args,\n    creditReports: creditReports,\n    preferences: preferences,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
-                "type": "Story<CreditReportPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditReportPureComponent,\n  props: {\n    ...args,\n    creditReports: creditReports,\n    preferences: preferences,\n  },\n})"
+                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
+                "type": "Story<NewDisputeComponent>",
+                "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args,\n    newDisputeData: data,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32656,14 +32964,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "Story<FilledOnlytextBadgeComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "Story<FilledOnlytextButtonComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-button>Default</brave-filled-onlytext-button>`,\n})"
@@ -32696,6 +32996,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "Story<FilledOnlytextBadgeComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                 "type": "Story<CreditBuilderCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
@@ -32707,14 +33015,6 @@
                 "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                 "type": "Story<CreditReportCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                "type": "Story<CreditcardCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32736,9 +33036,25 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "Story<CreditcardCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
                 "type": "Story<SnapshotDisplayCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
+                "type": "Story<CreditScoreHistoryChartComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditScoreHistoryChartComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32856,9 +33172,25 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "Story<CreditReportGraphicComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-credit-report-graphic [currentValue]=\"750\"></brave-credit-report-graphic>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
                 "type": "Story<SpinnerComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
+                "type": "Story<DashboardNavbarComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
             },
             {
                 "name": "Template",
@@ -32888,14 +33220,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
-                "type": "Story<DashboardNavbarComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -32907,6 +33231,14 @@
                 "file": "src/app/shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.stories.ts",
                 "type": "Story<FilledChecktextProgressbarComponent>",
                 "defaultValue": "(args: any) => ({\n  component: FilledChecktextProgressbarComponent,\n  props: {\n    ...args,\n    steps,\n    config,\n    activatedStep: 2,\n    completedStep: 1,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                "type": "Story<any>",
+                "defaultValue": "(args: any) => ({\n  component: CreditScoreGraphicTabsComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32976,6 +33308,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "type": "Story<OutlineOnlytextSelectComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                 "type": "Story<NotificationDropdownComponent>",
                 "defaultValue": "(args: any) => ({\n  component: NotificationDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -32995,14 +33335,6 @@
                 "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
                 "type": "Story<UserDropdownComponent>",
                 "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                "type": "Story<OutlineOnlytextSelectComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
             },
             {
                 "name": "Time",
@@ -33056,7 +33388,7 @@
                 "subtype": "variable",
                 "file": "src/app/app.module.ts",
                 "type": "object",
-                "defaultValue": "{\n  ...awsconfig,\n  oauth: {\n    ...awsconfig.oauth,\n    redirectSignIn: isLocalhost\n      ? localRedirectSignIn\n      : productionRedirectSignIn,\n    redirectSignOut: isLocalhost\n      ? localRedirectSignOut\n      : productionRedirectSignOut,\n  },\n}"
+                "defaultValue": "{\n  ...awsconfig,\n  oauth: {\n    ...awsconfig.oauth,\n    redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,\n    redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,\n  },\n}"
             },
             {
                 "name": "updateNestedObject",
@@ -33518,7 +33850,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
                 "description": "",
                 "kind": 168
             },
@@ -33527,7 +33859,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
                 "description": "",
                 "kind": 168
             },
@@ -33706,20 +34038,28 @@
                 "name": "CreditReportStatus",
                 "childs": [
                     {
-                        "name": "Critical",
-                        "value": "critical"
+                        "name": "VeryPoor",
+                        "value": "Very Poor"
                     },
                     {
-                        "name": "Danger",
-                        "value": "danger"
+                        "name": "Poor",
+                        "value": "Poor"
                     },
                     {
-                        "name": "Safe",
-                        "value": "safe"
+                        "name": "Fair",
+                        "value": "Fair"
+                    },
+                    {
+                        "name": "Good",
+                        "value": "Good"
+                    },
+                    {
+                        "name": "Excellent",
+                        "value": "Excellent"
                     },
                     {
                         "name": "Default",
-                        "value": "default"
+                        "value": "Default"
                     }
                 ],
                 "ctype": "miscellaneous",
@@ -34088,88 +34428,6 @@
                     "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts": [
-                {
-                    "name": "Accent",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "accentConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "primaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Secondary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "secondaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Strong",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "strongConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-lightBlue-100',\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "Story<FilledOnlytextBadgeComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
-                }
-            ],
             "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts": [
                 {
                     "name": "Accent",
@@ -34348,6 +34606,88 @@
                     "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                     "type": "Story<LinksOnlytextButtonComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
+                }
+            ],
+            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "accentConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "primaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Secondary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "secondaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Strong",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "strongConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-lightBlue-100',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "Story<FilledOnlytextBadgeComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
                 }
             ],
             "src/app/views/kyc-address/kyc-address/kyc-address.component.ts": [
@@ -34534,6 +34874,112 @@
                     "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                     "type": "Story<DashboardNavbarComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
+                }
+            ],
+            "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts": [
+                {
+                    "name": "base",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentValue: 350,\n  ptsChange: 0,\n}"
+                },
+                {
+                    "name": "critical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentValue: 500,\n  ptsChange: 0,\n}"
+                },
+                {
+                    "name": "Critical",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "danger",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentValue: 600,\n  ptsChange: 0,\n}"
+                },
+                {
+                    "name": "Danger",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "ptsDecrease",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentValue: 650,\n  ptsChange: -5,\n}"
+                },
+                {
+                    "name": "PtsDecrease",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "ptsIncrease",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentValue: 650,\n  ptsChange: 5,\n}"
+                },
+                {
+                    "name": "PtsIncrease",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "safe",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  currentValue: 750,\n  ptsChange: 0,\n}"
+                },
+                {
+                    "name": "Safe",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                    "type": "Story<CreditReportGraphicComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-credit-report-graphic [currentValue]=\"750\"></brave-credit-report-graphic>`,\n})"
                 }
             ],
             "src/app/shared/components/tooltips/outline-tooltip/outline-tooltip.stories.ts": [
@@ -34829,7 +35275,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/shared-components.module.ts",
                     "type": "[]",
-                    "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n]"
+                    "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n  CreditScoreGraphicTabsComponent,\n  CreditScoreHistoryChartComponent,\n]"
                 },
                 {
                     "name": "directives",
@@ -35535,24 +35981,6 @@
                     "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
                 }
             ],
-            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "Story<CreditcardCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
-                }
-            ],
             "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
                 {
                     "name": "Default",
@@ -35569,6 +35997,24 @@
                     "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
                     "type": "Story<LoanCardComponent>",
                     "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "Story<CreditcardCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
@@ -35619,6 +36065,24 @@
                     "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
+                }
+            ],
+            "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
+                    "type": "Story<CreditScoreHistoryChartComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditScoreHistoryChartComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts": [
@@ -36023,6 +36487,24 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditScoreGraphicTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts": [
                 {
                     "name": "Default",
@@ -36095,6 +36577,32 @@
                     "defaultValue": "(args: any) => ({\n  component: TradelineSummaryComponent,\n  props: {\n    ...args,\n  },\n  template: `\n    <div class=\"container mx-auto max-w-xs h-full\">\n      <brave-tradeline-summary\n        [status]=\"'Open'\"\n      ></brave-tradeline-summary>\n    </div>`,\n})"
                 }
             ],
+            "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "items",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                    "type": "IOutlineOnlyTextItem[]",
+                    "defaultValue": "[\n  { value: 'Item 1' },\n  { value: 'Item 2' },\n  { value: 'Item 3' },\n  { value: 'Item 4' },\n  { value: 'Item 5' },\n]"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                    "type": "Story<OutlineOnlytextSelectComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
+                }
+            ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
                 {
                     "name": "Default",
@@ -36149,32 +36657,6 @@
                     "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "items",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                    "type": "IOutlineOnlyTextItem[]",
-                    "defaultValue": "[\n  { value: 'Item 1' },\n  { value: 'Item 2' },\n  { value: 'Item 3' },\n  { value: 'Item 4' },\n  { value: 'Item 5' },\n]"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                    "type": "Story<OutlineOnlytextSelectComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
-                }
-            ],
             "src/app/views/negative-account/negative-account-initial/constants.ts": [
                 {
                     "name": "DEFAULT_TRADELINE",
@@ -36201,16 +36683,6 @@
                     "file": "src/app/views/kyc-welcome/kyc-welcome/kyc-welcome.component.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  first: true,\n  middle: true,\n  last: true,\n}"
-                }
-            ],
-            "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe.ts": [
-                {
-                    "name": "enumStrColorCLassIndicator",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  [CreditReportStatus.Danger]: 'brave-danger',\n  [CreditReportStatus.Safe]: 'brave-safe',\n  [CreditReportStatus.Critical]: 'brave-critical',\n  [CreditReportStatus.Default]: 'lt-gray'\n}"
                 }
             ],
             "src/app/shared/components/cards/snapshot-display-card/snapshot-label.pipe.ts": [
@@ -36290,7 +36762,7 @@
                     "subtype": "variable",
                     "file": "src/app/app.module.ts",
                     "type": "",
-                    "defaultValue": "Boolean(\n  window.location.hostname === 'localhost' ||\n    window.location.hostname === '[::1]' ||\n    window.location.hostname.match(\n      /^127(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/\n    )\n)"
+                    "defaultValue": "Boolean(\n  window.location.hostname === 'localhost' ||\n    window.location.hostname === '[::1]' ||\n    window.location.hostname.match(/^127(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/),\n)"
                 },
                 {
                     "ctype": "miscellaneous",
@@ -36312,7 +36784,7 @@
                     "subtype": "variable",
                     "file": "src/app/app.module.ts",
                     "type": "object",
-                    "defaultValue": "{\n  ...awsconfig,\n  oauth: {\n    ...awsconfig.oauth,\n    redirectSignIn: isLocalhost\n      ? localRedirectSignIn\n      : productionRedirectSignIn,\n    redirectSignOut: isLocalhost\n      ? localRedirectSignOut\n      : productionRedirectSignOut,\n  },\n}"
+                    "defaultValue": "{\n  ...awsconfig,\n  oauth: {\n    ...awsconfig.oauth,\n    redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,\n    redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,\n  },\n}"
                 }
             ],
             "src/app/views/negative-account/negative-account-initial/negative-account-initial.component.ts": [
@@ -36509,16 +36981,6 @@
                     "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
                 }
             ],
-            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
-                }
-            ],
             "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe.ts": [
                 {
                     "name": "sizeSpecificClass",
@@ -36547,6 +37009,16 @@
                     "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
+                }
+            ],
+            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
@@ -36667,20 +37139,28 @@
                     "name": "CreditReportStatus",
                     "childs": [
                         {
-                            "name": "Critical",
-                            "value": "critical"
+                            "name": "VeryPoor",
+                            "value": "Very Poor"
                         },
                         {
-                            "name": "Danger",
-                            "value": "danger"
+                            "name": "Poor",
+                            "value": "Poor"
                         },
                         {
-                            "name": "Safe",
-                            "value": "safe"
+                            "name": "Fair",
+                            "value": "Fair"
+                        },
+                        {
+                            "name": "Good",
+                            "value": "Good"
+                        },
+                        {
+                            "name": "Excellent",
+                            "value": "Excellent"
                         },
                         {
                             "name": "Default",
-                            "value": "default"
+                            "value": "Default"
                         }
                     ],
                     "ctype": "miscellaneous",
@@ -37440,17 +37920,6 @@
                     "kind": 168
                 }
             ],
-            "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts": [
-                {
-                    "name": "Status",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
-                    "description": "",
-                    "kind": 168
-                }
-            ],
             "src/app/shared/components/cards/loan-card/loan-card.component.ts": [
                 {
                     "name": "Status",
@@ -37458,6 +37927,17 @@
                     "subtype": "typealias",
                     "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
                     "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
+                    "description": "",
+                    "kind": 168
+                }
+            ],
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts": [
+                {
+                    "name": "Status",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
                     "description": "",
                     "kind": 168
                 }
@@ -38902,6 +39382,35 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CreditScoreHistoryChartComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/components/dropdowns/popdowns/index-dropdown/index-dropdown.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -39462,7 +39971,7 @@
                 "linktype": "component",
                 "name": "CreditReportGraphicComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/8",
+                "coverageCount": "0/9",
                 "status": "low"
             },
             {
@@ -39475,11 +39984,131 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe.ts",
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "enumStrColorCLassIndicator",
+                "name": "base",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "critical",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Critical",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "danger",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Danger",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ptsDecrease",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "PtsDecrease",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ptsIncrease",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "PtsIncrease",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "safe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Safe",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -40184,6 +40813,35 @@
                 "name": "SidebarComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CreditScoreGraphicTabsComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {

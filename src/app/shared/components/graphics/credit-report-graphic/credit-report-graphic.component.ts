@@ -3,7 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'brave-credit-report-graphic',
   templateUrl: './credit-report-graphic.component.html',
-  styleUrls: ['./credit-report-graphic.component.css'],
 })
 export class CreditReportGraphicComponent implements OnInit {
   @Input() base: number = 300;

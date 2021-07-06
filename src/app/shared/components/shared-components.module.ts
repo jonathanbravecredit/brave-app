@@ -85,6 +85,9 @@ import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-ic
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
+import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
+import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 const components = [
   BaseFormComponent,
@@ -154,6 +157,8 @@ const components = [
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
+  CreditScoreGraphicTabsComponent,
+  CreditScoreHistoryChartComponent,
 ];
 
 // component specific pipes only
@@ -176,7 +181,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
   declarations: [...components, ...pipes, ...directives],
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
+  imports: [ChartsModule, ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
