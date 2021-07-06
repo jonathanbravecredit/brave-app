@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { TradelinesPureComponent } from '@views/tradelines/tradelines-pure/tradelines-pure.component';
-import { IInstallmentTradelineDetails } from '@shared/components/tradelines/tradeline-details/tradeline-details.component';
+import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 
 export default {
   title: 'app/views/tradelines/tradelines',
@@ -20,7 +20,7 @@ export default {
   ],
 } as Meta;
 
-const installment: IInstallmentTradelineDetails = {
+const installment: ITradelineDetailsConfig = {
   dateOpened: '2019-01-01',
   accountDesignator: 'James Credit',
   termMonths: '48',
@@ -36,7 +36,7 @@ const Template: Story<TradelinesPureComponent> = (args: any) => ({
   component: TradelinesPureComponent,
   props: {
     ...args,
-    details: installment,
+    config: installment,
     remarks: remarks,
     address: address,
   },

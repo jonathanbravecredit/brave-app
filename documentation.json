@@ -14907,7 +14907,7 @@
         },
         {
             "name": "CreditReportGraphicComponent",
-            "id": "component-CreditReportGraphicComponent-3429960ec0c18df6db4bfc4c2ba7d898",
+            "id": "component-CreditReportGraphicComponent-425c5492b04817186a5bcd36bf5c0fef",
             "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -14938,6 +14938,11 @@
                     "name": "limit",
                     "defaultValue": "800",
                     "line": 10
+                },
+                {
+                    "name": "ptsChange",
+                    "defaultValue": "0",
+                    "line": 12
                 }
             ],
             "outputsClass": [],
@@ -14948,7 +14953,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 13
                 }
             ],
             "methodsClass": [
@@ -14958,7 +14963,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 16
+                    "line": 17
                 }
             ],
             "hostBindings": [],
@@ -14966,7 +14971,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report-graphic',\n  templateUrl: './credit-report-graphic.component.html',\n  styleUrls: ['./credit-report-graphic.component.css'],\n})\nexport class CreditReportGraphicComponent implements OnInit {\n  @Input() base = 0;\n  @Input() limit = 800;\n  @Input() currentValue = 0;\n  percentage = 0;\n\n  constructor() {}\n\n  ngOnInit(): void {\n    this.percentage = this.currentValue / this.limit;\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit, Input } from '@angular/core';\n\n@Component({\n  selector: 'brave-credit-report-graphic',\n  templateUrl: './credit-report-graphic.component.html',\n  styleUrls: ['./credit-report-graphic.component.css'],\n})\nexport class CreditReportGraphicComponent implements OnInit {\n  @Input() base = 0;\n  @Input() limit = 800;\n  @Input() currentValue = 0;\n  @Input() ptsChange = 0;\n  percentage = 0;\n\n  constructor() {}\n\n  ngOnInit(): void {\n    this.percentage = this.currentValue / this.limit;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -14979,12 +14984,12 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 12
+                "line": 13
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"flex flex-col items-center bg-indigo-700 pt-3 pb-5 px-4\">\n  <p class=\"font-bold text-white\">Your Score</p>\n  <div class=\"font-bold text-white flex mt-3\">\n    <div class=\"mr-2 text-2xl -mt-2\">&#9650;</div>\n    <span>+5 points</span>\n  </div>\n  <p class=\"text-white text-xs text-opacity-50\">since last month</p>\n  <p class=\"text-5xl text-white font-bold\">{{ currentValue }}</p>\n  <p class=\"text-white font-extrabold\">{{ percentage | creditReportGraphic: 'status' }}</p>\n  <div class=\"mt-2 h-4 w-full bg-gradient-to-r from-purple-400 via-pink-500 to-red-500\">\n    <div class=\"text-2xl text-white fixed {{ percentage | creditReportGraphic: 'css-class' }}\">&#9650;</div>\n  </div>\n  <div class=\"w-full flex justify-between mt-2\">\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ base }}</p>\n    </div>\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ limit }}</p>\n    </div>\n  </div>\n  <p class=\"mt-4 text-lg font-bold text-white text-center\">TransUnion<br />VantageScore 3.0</p>\n</div>\n"
+            "templateData": "<div class=\"flex flex-col items-center bg-indigo-700 pt-3 pb-5 px-4\">\n  <p class=\"font-bold text-white\">Your Score</p>\n  <div class=\"font-bold text-white flex mt-3\">\n    <div class=\"mr-2 text-2xl -mt-2\">&#9650;</div>\n    <span>+5 points</span>\n  </div>\n  <p class=\"text-white text-xs text-opacity-50\">since last month</p>\n  <p class=\"text-5xl text-white font-bold\">{{ currentValue }}</p>\n  <p class=\"text-white font-extrabold\">{{ percentage | creditReportGraphic: 'status' }}</p>\n  <div class=\"mt-2 h-4 w-full bg-gradient-to-r from-amber-500 via-pink-500 to-red-500\">\n    <div class=\"text-2xl text-white fixed {{ percentage | creditReportGraphic: 'css-class' }}\">&#9650;</div>\n  </div>\n  <div class=\"w-full flex justify-between mt-2\">\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ base }}</p>\n    </div>\n    <div>\n      <p class=\"text-white text-xs font-bold\">{{ limit }}</p>\n    </div>\n  </div>\n  <p class=\"mt-4 text-lg font-bold text-white text-center\">TransUnion<br />VantageScore 3.0</p>\n</div>\n"
         },
         {
             "name": "CreditReportPureComponent",
@@ -30788,7 +30793,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
                 "type": "INegativeAccountCardInputs[]",
-                "defaultValue": "[\n  {\n    creditorName: 'ABC Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  },\n  {\n    creditorName: 'XYZ Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  },\n]"
+                "defaultValue": "[\n  {\n    creditorName: 'ABC Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  } as INegativeAccountCardInputs,\n  {\n    creditorName: 'XYZ Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  } as INegativeAccountCardInputs,\n]"
             },
             {
                 "name": "codeMap",
@@ -30850,17 +30855,17 @@
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/dashboard/dashboard.module.ts",
+                "file": "src/app/layouts/onboarding/onboarding.module.ts",
                 "type": "[]",
-                "defaultValue": "[DashboardComponent]"
+                "defaultValue": "[OnboardingComponent]"
             },
             {
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/onboarding/onboarding.module.ts",
+                "file": "src/app/layouts/dashboard/dashboard.module.ts",
                 "type": "[]",
-                "defaultValue": "[OnboardingComponent]"
+                "defaultValue": "[DashboardComponent]"
             },
             {
                 "name": "components",
@@ -30931,16 +30936,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "INegativeAccountCardInputs",
-                "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018'\n  }\n}"
+                "type": "",
+                "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
             },
             {
                 "name": "data",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                "type": "INegativeAccountCardInputs",
-                "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018'\n  }\n}"
+                "type": "",
+                "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
             },
             {
                 "name": "Default",
@@ -31026,7 +31031,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
+                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31034,7 +31039,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
+                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31194,7 +31199,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31202,7 +31207,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31628,7 +31633,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/views/tradelines/tradelines-pure/tradelines.stories.ts",
-                "type": "IInstallmentTradelineDetails",
+                "type": "ITradelineDetailsConfig",
                 "defaultValue": "{\n  dateOpened: '2019-01-01',\n  accountDesignator: 'James Credit',\n  termMonths: '48',\n  late90Count: '3',\n  amountPastDue: '950',\n  disputeFlag: 'No',\n}"
             },
             {
@@ -32531,17 +32536,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
-                "type": "Story<CreditReportPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditReportPureComponent,\n  props: {\n    ...args,\n    creditReports: creditReports,\n    preferences: preferences,\n  },\n})"
+                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
+                "type": "Story<NewDisputeComponent>",
+                "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args,\n    newDisputeData: data,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "Story<NewDisputeComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args\n  },\n})"
+                "file": "src/app/views/credit-report/credit-report-pure/credit-report-pure.stories.ts",
+                "type": "Story<CreditReportPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditReportPureComponent,\n  props: {\n    ...args,\n    creditReports: creditReports,\n    preferences: preferences,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32637,7 +32642,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/tradelines/tradelines-pure/tradelines.stories.ts",
                 "type": "Story<TradelinesPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelinesPureComponent,\n  props: {\n    ...args,\n    details: installment,\n    remarks: remarks,\n    address: address,\n  },\n})"
+                "defaultValue": "(args: any) => ({\n  component: TradelinesPureComponent,\n  props: {\n    ...args,\n    config: installment,\n    remarks: remarks,\n    address: address,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32699,17 +32704,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                "type": "Story<CreditcardCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "type": "Story<CreditReportCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
-                "type": "Story<CreditReportCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "Story<CreditcardCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32725,7 +32730,7 @@
                 "subtype": "variable",
                 "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
                 "type": "Story<NegativeAccountCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data\n  },\n})"
+                "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -34377,7 +34382,7 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/views/tradelines/tradelines-pure/tradelines.stories.ts",
-                    "type": "IInstallmentTradelineDetails",
+                    "type": "ITradelineDetailsConfig",
                     "defaultValue": "{\n  dateOpened: '2019-01-01',\n  accountDesignator: 'James Credit',\n  termMonths: '48',\n  late90Count: '3',\n  amountPastDue: '950',\n  disputeFlag: 'No',\n}"
                 },
                 {
@@ -34394,7 +34399,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/tradelines/tradelines-pure/tradelines.stories.ts",
                     "type": "Story<TradelinesPureComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: TradelinesPureComponent,\n  props: {\n    ...args,\n    details: installment,\n    remarks: remarks,\n    address: address,\n  },\n})"
+                    "defaultValue": "(args: any) => ({\n  component: TradelinesPureComponent,\n  props: {\n    ...args,\n    config: installment,\n    remarks: remarks,\n    address: address,\n  },\n})"
                 }
             ],
             "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts": [
@@ -34690,7 +34695,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
                     "type": "INegativeAccountCardInputs[]",
-                    "defaultValue": "[\n  {\n    creditorName: 'ABC Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  },\n  {\n    creditorName: 'XYZ Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  },\n]"
+                    "defaultValue": "[\n  {\n    creditorName: 'ABC Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  } as INegativeAccountCardInputs,\n  {\n    creditorName: 'XYZ Collections',\n    lastReported: '2020-01-01',\n    accountTypeDescription: 'Collections Account',\n    accountTypeDescriptionValue: 'Open',\n    originalCreditor: 'Original Creditor',\n    originalCreditorValue: 'Loans R Us',\n    disputeFlag: 'Previously Disputed',\n    disputeFlagValue: 'No',\n    accountDetail: {\n      accountNumber: '12345678',\n      typeOfCollection: 'Collections',\n      amountPastDue: '700',\n      dateOpened: '2017-01-01',\n      dateLastPayment: '2019-01-01',\n    },\n  } as INegativeAccountCardInputs,\n]"
                 },
                 {
                     "name": "Default",
@@ -34797,16 +34802,6 @@
                     "defaultValue": "[ComplianceComponent]"
                 }
             ],
-            "src/app/layouts/dashboard/dashboard.module.ts": [
-                {
-                    "name": "components",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/layouts/dashboard/dashboard.module.ts",
-                    "type": "[]",
-                    "defaultValue": "[DashboardComponent]"
-                }
-            ],
             "src/app/layouts/onboarding/onboarding.module.ts": [
                 {
                     "name": "components",
@@ -34815,6 +34810,16 @@
                     "file": "src/app/layouts/onboarding/onboarding.module.ts",
                     "type": "[]",
                     "defaultValue": "[OnboardingComponent]"
+                }
+            ],
+            "src/app/layouts/dashboard/dashboard.module.ts": [
+                {
+                    "name": "components",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/layouts/dashboard/dashboard.module.ts",
+                    "type": "[]",
+                    "defaultValue": "[DashboardComponent]"
                 }
             ],
             "src/app/shared/components/shared-components.module.ts": [
@@ -34996,8 +35001,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                    "type": "INegativeAccountCardInputs",
-                    "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018'\n  }\n}"
+                    "type": "",
+                    "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
                 },
                 {
                     "name": "Default",
@@ -35013,7 +35018,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
                     "type": "Story<NewDisputeComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args\n  },\n})"
+                    "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args,\n    newDisputeData: data,\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts": [
@@ -35022,8 +35027,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                    "type": "INegativeAccountCardInputs",
-                    "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018'\n  }\n}"
+                    "type": "",
+                    "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
                 },
                 {
                     "name": "Default",
@@ -35039,7 +35044,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
                     "type": "Story<NegativeAccountCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data\n  },\n})"
+                    "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data,\n  },\n})"
                 }
             ],
             "src/app/views/dashboard-init/dashboard-init.stories.ts": [
@@ -35512,24 +35517,6 @@
                     "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
                 }
             ],
-            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "Story<CreditcardCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
-                }
-            ],
             "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts": [
                 {
                     "name": "Default",
@@ -35546,6 +35533,24 @@
                     "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
                     "type": "Story<CreditReportCardComponent>",
                     "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "Story<CreditcardCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
@@ -39457,7 +39462,7 @@
                 "linktype": "component",
                 "name": "CreditReportGraphicComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/7",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
