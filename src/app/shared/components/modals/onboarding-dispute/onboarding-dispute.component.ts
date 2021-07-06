@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ONLINE_DISPUTE_TERMS, REFRESH_TERMS } from '@shared/components/modals/onboarding-dispute/constants';
 
 interface IModalContent {
   stepId: number;
@@ -37,10 +38,7 @@ export class OnboardingDisputeComponent implements OnInit {
         'Review the Refresh Credit Score Statement below and confirm to refresh your credit report.',
       ],
       termsTitle: 'Refresh Credit Score Statement',
-      terms: [
-        "TransUnion Interactive's contracts require us to obtain 'written instructions' from you to give us permission to obtain your TransUnion credit history",
-        'You understand by checking on the "I Agree and Confirm" box, you are providing "written instructions" to [!!!NEED THE REST!!!]',
-      ],
+      terms: REFRESH_TERMS,
       buttonText: 'I Agree & Confirm.',
     },
     {
@@ -51,11 +49,7 @@ export class OnboardingDisputeComponent implements OnInit {
         'Review the Terms and Conditions below to get started.',
       ],
       termsTitle: 'New Dispute Information',
-      terms: [
-        'As part of the dispute process, TransUnion may contact the data furnisher that reported the information being disputed.',
-        'Any disputed information that is verified as accurate will remain on the credit report.',
-        'The dispute options provided through this dispute service do not include "all" possible disputes',
-      ],
+      terms: ONLINE_DISPUTE_TERMS,
       buttonText: 'I Acknowledge & Agree to the terms.',
     },
   ];
