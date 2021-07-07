@@ -7,9 +7,16 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
   templateUrl: './credit-score-history-chart.component.html',
 })
 export class CreditScoreHistoryChartComponent implements OnInit {
-  public lineChartData: ChartDataSets[] = [{ data: [550, 590, 586, 581, 620, 621, null], label: 'Series A' }];
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartData: ChartDataSets[] = [
+    { data: [550, 590, 586, 581, 620, 621, null], label: 'Series A', fill: false },
+  ];
+  public lineChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
   public lineChartOptions: ChartOptions = {
+    plugins: {
+      datalabels: {
+        color: '#3730A3',
+      },
+    },
     elements: {
       line: {
         tension: 0,
@@ -21,8 +28,20 @@ export class CreditScoreHistoryChartComponent implements OnInit {
       xAxes: [
         {
           id: 'x-axis-0',
+          position: 'bottom',
+          ticks: {
+            padding: 8,
+            major: {
+              enabled: true,
+            },
+          },
           gridLines: {
-            display: false,
+            lineWidth: 1,
+            drawBorder: true,
+            drawOnChartArea: false,
+            drawTicks: true,
+            tickMarkLength: 8,
+            color: '#3730A3',
           },
         },
       ],
@@ -30,17 +49,26 @@ export class CreditScoreHistoryChartComponent implements OnInit {
         {
           id: 'y-axis-0',
           position: 'left',
-          offset: true,
           ticks: {
+            fontSize: 10,
+            padding: 4,
             major: {
               enabled: true,
             },
-            stepSize: 100,
+            stepSize: 50,
             min: 300,
             max: 850,
+            callback: (value, idx) => {
+              if (value === 850) return value;
+              return idx % 2 === 0 ? '' : value;
+            },
           },
           gridLines: {
+            borderDashOffset: 4,
+            drawBorder: false,
+            lineWidth: 0.5,
             color: '#fff',
+            zeroLineWidth: 0,
           },
         },
       ],

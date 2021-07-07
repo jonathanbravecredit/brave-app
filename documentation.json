@@ -15159,7 +15159,7 @@
         },
         {
             "name": "CreditScoreHistoryChartComponent",
-            "id": "component-CreditScoreHistoryChartComponent-9a8cc3d2eda68b489d1c92689fa30d54",
+            "id": "component-CreditScoreHistoryChartComponent-0ab42fbe9e8f68f27fdca1330dcfae04",
             "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -15173,14 +15173,7 @@
                 "./credit-score-history-chart.component.html"
             ],
             "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "lineChartLabels",
-                    "defaultValue": "['January', 'February', 'March', 'April', 'May', 'June']",
-                    "line": 11,
-                    "type": "Label[]"
-                }
-            ],
+            "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [
                 {
@@ -15188,7 +15181,7 @@
                     "type": "BaseChartDirective",
                     "optional": false,
                     "description": "",
-                    "line": 49,
+                    "line": 60,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -15198,22 +15191,33 @@
                 },
                 {
                     "name": "lineChartColors",
-                    "defaultValue": "[\n    {\n      // grey\n      backgroundColor: 'rgba(148,159,177,0.2)',\n      borderColor: 'rgba(148,159,177,1)',\n      pointBackgroundColor: 'rgba(148,159,177,1)',\n      pointBorderColor: '#fff',\n      pointHoverBackgroundColor: '#fff',\n      pointHoverBorderColor: 'rgba(148,159,177,0.8)',\n    },\n  ]",
+                    "defaultValue": "[\n    {\n      // grey\n      borderColor: '#D946EF',\n      pointBackgroundColor: '#3730A3',\n      pointBorderColor: '#3730A3',\n      pointHoverBackgroundColor: '#3730A3',\n      pointHoverBorderColor: '#3730A3',\n    },\n  ]",
                     "type": "Color[]",
                     "optional": false,
                     "description": "",
-                    "line": 35,
+                    "line": 47,
                     "modifierKind": [
                         114
                     ]
                 },
                 {
                     "name": "lineChartData",
-                    "defaultValue": "[{ data: [550, 590, 586, 581, 620, 621], label: 'Series A' }]",
+                    "defaultValue": "[{ data: [550, 590, 586, 581, 620, 621, null], label: 'Series A' }]",
                     "type": "ChartDataSets[]",
                     "optional": false,
                     "description": "",
                     "line": 10,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "lineChartLabels",
+                    "defaultValue": "['January', 'February', 'March', 'April', 'May', 'June', 'July']",
+                    "type": "Label[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
                     "modifierKind": [
                         114
                     ]
@@ -15224,11 +15228,11 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 46
+                    "line": 57
                 },
                 {
                     "name": "lineChartOptions",
-                    "defaultValue": "{\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [{}],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n        },\n        {\n          id: 'y-axis-1',\n          position: 'right',\n          gridLines: {\n            color: 'rgba(255,0,0,0.3)',\n          },\n          ticks: {\n            fontColor: 'red',\n          },\n        },\n      ],\n    },\n  }",
+                    "defaultValue": "{\n    elements: {\n      line: {\n        tension: 0,\n      },\n    },\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [\n        {\n          id: 'x-axis-0',\n          gridLines: {\n            display: false,\n          },\n        },\n      ],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n          offset: true,\n          ticks: {\n            major: {\n              enabled: true,\n            },\n            stepSize: 100,\n          },\n          gridLines: {\n            color: '#fff',\n          },\n        },\n      ],\n    },\n  }",
                     "type": "ChartOptions",
                     "optional": false,
                     "description": "",
@@ -15243,7 +15247,7 @@
                     "type": "ChartType",
                     "optional": false,
                     "description": "",
-                    "line": 47
+                    "line": 58
                 }
             ],
             "methodsClass": [
@@ -15253,7 +15257,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 53
+                    "line": 64
                 }
             ],
             "hostBindings": [],
@@ -15261,7 +15265,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { ChartDataSets, ChartOptions, ChartType } from 'chart.js';\nimport { Color, BaseChartDirective, Label } from 'ng2-charts';\n\n@Component({\n  selector: 'brave-credit-score-history-chart',\n  templateUrl: './credit-score-history-chart.component.html',\n})\nexport class CreditScoreHistoryChartComponent implements OnInit {\n  public lineChartData: ChartDataSets[] = [{ data: [550, 590, 586, 581, 620, 621], label: 'Series A' }];\n  @Input() lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];\n  public lineChartOptions: ChartOptions = {\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [{}],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n        },\n        {\n          id: 'y-axis-1',\n          position: 'right',\n          gridLines: {\n            color: 'rgba(255,0,0,0.3)',\n          },\n          ticks: {\n            fontColor: 'red',\n          },\n        },\n      ],\n    },\n  };\n  public lineChartColors: Color[] = [\n    {\n      // grey\n      backgroundColor: 'rgba(148,159,177,0.2)',\n      borderColor: 'rgba(148,159,177,1)',\n      pointBackgroundColor: 'rgba(148,159,177,1)',\n      pointBorderColor: '#fff',\n      pointHoverBackgroundColor: '#fff',\n      pointHoverBorderColor: 'rgba(148,159,177,0.8)',\n    },\n  ];\n  lineChartLegend = false;\n  lineChartType: ChartType = 'line';\n\n  @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { ChartDataSets, ChartOptions, ChartType } from 'chart.js';\nimport { Color, BaseChartDirective, Label } from 'ng2-charts';\n\n@Component({\n  selector: 'brave-credit-score-history-chart',\n  templateUrl: './credit-score-history-chart.component.html',\n})\nexport class CreditScoreHistoryChartComponent implements OnInit {\n  public lineChartData: ChartDataSets[] = [{ data: [550, 590, 586, 581, 620, 621, null], label: 'Series A' }];\n  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];\n  public lineChartOptions: ChartOptions = {\n    elements: {\n      line: {\n        tension: 0,\n      },\n    },\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [\n        {\n          id: 'x-axis-0',\n          gridLines: {\n            display: false,\n          },\n        },\n      ],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n          offset: true,\n          ticks: {\n            major: {\n              enabled: true,\n            },\n            stepSize: 100,\n          },\n          gridLines: {\n            color: '#fff',\n          },\n        },\n      ],\n    },\n  };\n  public lineChartColors: Color[] = [\n    {\n      // grey\n      borderColor: '#D946EF',\n      pointBackgroundColor: '#3730A3',\n      pointBorderColor: '#3730A3',\n      pointHoverBackgroundColor: '#3730A3',\n      pointHoverBorderColor: '#3730A3',\n    },\n  ];\n  lineChartLegend = false;\n  lineChartType: ChartType = 'line';\n\n  @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -15269,12 +15273,12 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 49
+                "line": 60
             },
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"flex-item\">\n  <div style=\"display: block\">\n    <canvas\n      baseChart\n      width=\"200\"\n      height=\"200\"\n      [datasets]=\"lineChartData\"\n      [labels]=\"lineChartLabels\"\n      [options]=\"lineChartOptions\"\n      [colors]=\"lineChartColors\"\n      [legend]=\"lineChartLegend\"\n      [chartType]=\"lineChartType\"\n    ></canvas>\n  </div>\n</div>\n"
+            "templateData": "<div class=\"flex-item\" style=\"background-color: lightskyblue\">\n  <div style=\"display: block\">\n    <canvas\n      baseChart\n      width=\"200\"\n      height=\"200\"\n      [datasets]=\"lineChartData\"\n      [labels]=\"lineChartLabels\"\n      [options]=\"lineChartOptions\"\n      [colors]=\"lineChartColors\"\n      [legend]=\"lineChartLegend\"\n      [chartType]=\"lineChartType\"\n    ></canvas>\n  </div>\n</div>\n"
         },
         {
             "name": "DashboardComponent",
@@ -30867,6 +30871,14 @@
                 "name": "Accent",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Accent",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -30880,20 +30892,20 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Accent",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "accentConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "IFilledClosingAlertConfig",
                 "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-500',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+            },
+            {
+                "name": "accentConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "IFilledOnlytextBadgeConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
             },
             {
                 "name": "accentConfig",
@@ -30910,14 +30922,6 @@
                 "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "ILinksOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-fuchsia-500',\n}"
-            },
-            {
-                "name": "accentConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "IFilledOnlytextBadgeConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
             },
             {
                 "name": "address",
@@ -31355,7 +31359,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31363,7 +31367,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31388,6 +31392,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31427,14 +31439,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31451,6 +31455,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31460,14 +31472,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31571,6 +31575,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31603,23 +31615,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31644,6 +31640,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/modals/onboarding-dispute/onboarding-dispute.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31723,14 +31727,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31748,6 +31744,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31828,17 +31832,17 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.qa.ts",
+                "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n}"
+                "defaultValue": "{\n  production: false\n}"
             },
             {
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "src/environments/environment.qa.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false\n}"
+                "defaultValue": "{\n  production: false,\n}"
             },
             {
                 "name": "ExtraLarge",
@@ -32300,6 +32304,14 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -32321,20 +32333,20 @@
                 "defaultValue": "Template.bind({})"
             },
             {
-                "name": "Primary",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "IFilledClosingAlertConfig",
                 "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-white',\n  alertTitle: 'Alert!',\n  alertBody: 'Something went wrong. Please try again.',\n}"
+            },
+            {
+                "name": "primaryConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "IFilledOnlytextBadgeConfig",
+                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "primaryConfig",
@@ -32359,14 +32371,6 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "IOutlineOnlyTextButtonConfig",
                 "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
-            },
-            {
-                "name": "primaryConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "IFilledOnlytextBadgeConfig",
-                "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "ptsDecrease",
@@ -32500,7 +32504,7 @@
                 "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -32508,17 +32512,9 @@
                 "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "secondaryConfig",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
-                "type": "IFilledOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  activeColor: 'bg-lightBlue-200',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "secondaryConfig",
@@ -32527,6 +32523,14 @@
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "IFilledOnlytextBadgeConfig",
                 "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
+            },
+            {
+                "name": "secondaryConfig",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
+                "type": "IFilledOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  activeColor: 'bg-lightBlue-200',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "services",
@@ -32543,6 +32547,14 @@
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
+            },
+            {
+                "name": "sizeSpecificClass",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
+                "type": "Record<string, any>",
+                "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
             },
             {
                 "name": "sizeSpecificClass",
@@ -32567,14 +32579,6 @@
                 "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                 "type": "Record<string, any>",
                 "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
-            },
-            {
-                "name": "sizeSpecificClass",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
-                "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
             },
             {
                 "name": "sizeSpecificClass",
@@ -32924,17 +32928,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
-                "type": "Story<KycWelcomebackPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
+                "type": "Story<NegativeAccountInitialPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: NegativeAccountInitialPureComponent,\n  props: {\n    ...args,\n    cards,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
-                "type": "Story<NegativeAccountInitialPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NegativeAccountInitialPureComponent,\n  props: {\n    ...args,\n    cards,\n  },\n})"
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "type": "Story<KycWelcomebackPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32959,6 +32963,14 @@
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "Story<FilledClosingAlertComponent>",
                 "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "Story<FilledOnlytextBadgeComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
             },
             {
                 "name": "Template",
@@ -32996,14 +33008,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                "type": "Story<FilledOnlytextBadgeComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
                 "type": "Story<CreditBuilderCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
@@ -33020,6 +33024,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "Story<CreditcardCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
                 "type": "Story<LoanCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
@@ -33031,14 +33043,6 @@
                 "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
                 "type": "Story<NegativeAccountCardComponent>",
                 "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                "type": "Story<CreditcardCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33140,6 +33144,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
+                "type": "Story<CreditReportGraphicComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-credit-report-graphic [currentValue]=\"750\"></brave-credit-report-graphic>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
                 "type": "Story<HiddenAsteriskInputComponent>",
                 "defaultValue": "(args: any) => ({\n  component: HiddenAsteriskInputComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -33172,25 +33184,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/graphics/credit-report-graphic/credit-report-graphic.stories.ts",
-                "type": "Story<CreditReportGraphicComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-credit-report-graphic [currentValue]=\"750\"></brave-credit-report-graphic>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
                 "type": "Story<SpinnerComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
-                "type": "Story<DashboardNavbarComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
             },
             {
                 "name": "Template",
@@ -33215,6 +33211,14 @@
                 "file": "src/app/shared/components/modals/onboarding-dispute/onboarding-dispute.stories.ts",
                 "type": "Story<OnboardingDisputeComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args\n  },\n  template: `<brave-onboarding-dispute></brave-onboarding-dispute>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
+                "type": "Story<DashboardNavbarComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
             },
             {
                 "name": "Template",
@@ -33308,14 +33312,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                "type": "Story<OutlineOnlytextSelectComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                 "type": "Story<NotificationDropdownComponent>",
                 "defaultValue": "(args: any) => ({\n  component: NotificationDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -33335,6 +33331,14 @@
                 "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
                 "type": "Story<UserDropdownComponent>",
                 "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "type": "Story<OutlineOnlytextSelectComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
             },
             {
                 "name": "Time",
@@ -33850,7 +33854,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
                 "description": "",
                 "kind": 168
             },
@@ -33859,7 +33863,7 @@
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
                 "description": "",
                 "kind": 168
             },
@@ -34428,6 +34432,88 @@
                     "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts": [
+                {
+                    "name": "Accent",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "accentConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "primaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Secondary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "secondaryConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
+                },
+                {
+                    "name": "Strong",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "strongConfig",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "IFilledOnlytextBadgeConfig",
+                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-lightBlue-100',\n}"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                    "type": "Story<FilledOnlytextBadgeComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
+                }
+            ],
             "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts": [
                 {
                     "name": "Accent",
@@ -34606,88 +34692,6 @@
                     "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                     "type": "Story<LinksOnlytextButtonComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
-                }
-            ],
-            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts": [
-                {
-                    "name": "Accent",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "accentConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-fuchsia-200',\n  color: 'text-fuchsia-500',\n}"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Primary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "primaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-200',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Secondary",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "secondaryConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-lightBlue-100',\n  color: 'text-indigo-800',\n}"
-                },
-                {
-                    "name": "Strong",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "strongConfig",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "IFilledOnlytextBadgeConfig",
-                    "defaultValue": "{\n  size: 'base',\n  backgroundColor: 'bg-indigo-800',\n  color: 'text-lightBlue-100',\n}"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
-                    "type": "Story<FilledOnlytextBadgeComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
                 }
             ],
             "src/app/views/kyc-address/kyc-address/kyc-address.component.ts": [
@@ -35981,24 +35985,6 @@
                     "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
                 }
             ],
-            "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                    "type": "Story<LoanCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
-                }
-            ],
             "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
                 {
                     "name": "Default",
@@ -36015,6 +36001,24 @@
                     "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
                     "type": "Story<CreditcardCardComponent>",
                     "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                    "type": "Story<LoanCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
@@ -36577,32 +36581,6 @@
                     "defaultValue": "(args: any) => ({\n  component: TradelineSummaryComponent,\n  props: {\n    ...args,\n  },\n  template: `\n    <div class=\"container mx-auto max-w-xs h-full\">\n      <brave-tradeline-summary\n        [status]=\"'Open'\"\n      ></brave-tradeline-summary>\n    </div>`,\n})"
                 }
             ],
-            "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "items",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                    "type": "IOutlineOnlyTextItem[]",
-                    "defaultValue": "[\n  { value: 'Item 1' },\n  { value: 'Item 2' },\n  { value: 'Item 3' },\n  { value: 'Item 4' },\n  { value: 'Item 5' },\n]"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                    "type": "Story<OutlineOnlytextSelectComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
-                }
-            ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
                 {
                     "name": "Default",
@@ -36655,6 +36633,32 @@
                     "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
                     "type": "Story<UserDropdownComponent>",
                     "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "items",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                    "type": "IOutlineOnlyTextItem[]",
+                    "defaultValue": "[\n  { value: 'Item 1' },\n  { value: 'Item 2' },\n  { value: 'Item 3' },\n  { value: 'Item 4' },\n  { value: 'Item 5' },\n]"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                    "type": "Story<OutlineOnlytextSelectComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
                 }
             ],
             "src/app/views/negative-account/negative-account-initial/constants.ts": [
@@ -36715,16 +36719,6 @@
                     "defaultValue": "{\n  production: true\n}"
                 }
             ],
-            "src/environments/environment.qa.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.qa.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n}"
-                }
-            ],
             "src/environments/environment.ts": [
                 {
                     "name": "environment",
@@ -36733,6 +36727,16 @@
                     "file": "src/environments/environment.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false\n}"
+                }
+            ],
+            "src/environments/environment.qa.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.qa.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n}"
                 }
             ],
             "src/app/views/kyc-kbaquestions/example-questions.ts": [
@@ -36981,6 +36985,16 @@
                     "defaultValue": "{\n  xs: 'max-w-xs',\n  sm: 'max-w-sm',\n  base: 'max-w-md',\n  lg: 'max-w-lg',\n  xl: 'max-w-xl',\n}"
                 }
             ],
+            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
+                }
+            ],
             "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe.ts": [
                 {
                     "name": "sizeSpecificClass",
@@ -37009,16 +37023,6 @@
                     "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
-                }
-            ],
-            "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  sm: 'text-xs px-2 py-1',\n  base: 'text-xs px-2 py-1',\n  lg: 'text-xs px-2 py-1',\n}"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
@@ -37920,17 +37924,6 @@
                     "kind": 168
                 }
             ],
-            "src/app/shared/components/cards/loan-card/loan-card.component.ts": [
-                {
-                    "name": "Status",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
-                    "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
-                    "description": "",
-                    "kind": 168
-                }
-            ],
             "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts": [
                 {
                     "name": "Status",
@@ -37938,6 +37931,17 @@
                     "subtype": "typealias",
                     "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
                     "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.component.ts",
+                    "description": "",
+                    "kind": 168
+                }
+            ],
+            "src/app/shared/components/cards/loan-card/loan-card.component.ts": [
+                {
+                    "name": "Status",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"excellent\" | \"good\" | \"okay\" | \"poor\"",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.component.ts",
                     "description": "",
                     "kind": 168
                 }
