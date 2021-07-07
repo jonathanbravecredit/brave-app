@@ -165,7 +165,11 @@ const components = [
   TradelineRemarksComponent,
   BasePaginationComponent,
   ReasonCardComponent,
-  TradelineDisputeProcessComponent
+  TradelineDisputeProcessComponent,
+  BaseModalComponent,
+  ConfirmationModalComponent,
+  ConditionalTermComponent,
+  TradelineDisputeProcessSuccessComponent,
 ];
 
 // component specific pipes only
@@ -182,14 +186,14 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
-  ParseTradelineDetailsPipe,
-  BasePaginationPipe
+  BasePaginationPipe,
+  BaseModalPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives, BaseModalComponent, BaseModalPipe, ConfirmationModalComponent, ConditionalTermComponent, TradelineDisputeProcessSuccessComponent],
+  declarations: [...components, ...pipes, ...directives],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
