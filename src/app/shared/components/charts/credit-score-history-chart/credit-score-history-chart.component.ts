@@ -7,15 +7,15 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
   templateUrl: './credit-score-history-chart.component.html',
 })
 export class CreditScoreHistoryChartComponent implements OnInit {
-  public lineChartData: ChartDataSets[] = [
+  @Input() lineChartData: ChartDataSets[] = [
     {
-      data: [550, 590, 586, 581, 620, 621, null],
+      data: [null, 550, 590, 586, 581, 620, 621],
       label: 'Series A',
       fill: false,
       borderWidth: 2,
     },
   ];
-  public lineChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+  @Input() lineChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
   public lineChartOptions: ChartOptions = {
     plugins: {
       datalabels: {

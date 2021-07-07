@@ -28,3 +28,8 @@ const Template: Story<CreditReportGraphicWithGraphComponent> = (args: any) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const NegativePtsChange = Template.bind({});
+NegativePtsChange.args = {
+  ptsChange: -5,
+};

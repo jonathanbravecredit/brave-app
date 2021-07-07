@@ -1169,11 +1169,6 @@ select {
   background-color: rgba(49, 46, 129, var(--tw-bg-opacity));
 }
 
-.bg-blue-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(191, 219, 254, var(--tw-bg-opacity));
-}
-
 .bg-blue-500 {
   --tw-bg-opacity: 1;
   background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
@@ -1408,6 +1403,11 @@ select {
 .rounded-t {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+}
+
+.rounded-r {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 
 .rounded-b {
@@ -2513,6 +2513,11 @@ select {
   color: rgba(234, 88, 12, var(--tw-text-opacity));
 }
 
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgba(220, 38, 38, var(--tw-text-opacity));
@@ -2825,6 +2830,10 @@ select {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
   transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-90 {
+  --tw-rotate: 90deg;
 }
 
 .-rotate-90 {
