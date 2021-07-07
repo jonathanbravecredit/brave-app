@@ -3,6 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { TradelineDisputeProcessView } from './tradeline-dispute-process.component';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
 
 export default {
   title: 'app/views/tradelines/tradeline-dispute-process',

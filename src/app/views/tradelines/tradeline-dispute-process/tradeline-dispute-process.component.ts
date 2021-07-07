@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
 import { IDisputeTradelineProcessResult } from '@shared/components/tradelines/tradeline-dispute-process/interfaces';
 import { TradelineDisputeProcessComponent } from '@shared/components/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 
@@ -11,6 +12,20 @@ export class TradelineDisputeProcessView implements OnInit {
   @ViewChild(TradelineDisputeProcessComponent) tradelineDisputeProcess: TradelineDisputeProcessComponent | undefined;
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
+  
+  negativeAccountCardData: INegativeAccountCardInputs = {
+    creditorName: 'H.J National Collections',
+    lastReported: '05/15/21',
+    originalCreditor: 'Original Creditor',
+    originalCreditorValue: 'Wells Fargo Bank, N.A.',
+    accountDetail: {
+      accountNumber: '066611222',
+      typeOfCollection: 'Collections',
+      amountPastDue: 700,
+      dateOpened: '04/12/2018',
+      dateLastPayment: '04/21/2018'
+    }
+  };
   constructor() { }
 
   ngOnInit(): void {

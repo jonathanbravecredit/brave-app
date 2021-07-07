@@ -1,10 +1,13 @@
-<div class="container mx-auto max-w-xs h-full">
+<div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
   <div class="flex items-center" (click)="requestGoBack()">
     <span class="material-icons px-1">arrow_back</span>&nbsp;Back
   </div>
-  <p class="text-lg">New Dispute</p>
+  <p class="text-lg mt-4 mb-4">New Dispute</p>
+  <brave-negative-account-card class="mt-4" [data]="negativeAccountCardData" [showDisputeButton]="false"></brave-negative-account-card>
   <brave-tradeline-dispute-process (disputeProcessResult)="onDisputeProcessResult($event)" *ngIf="isDisputeProcessInProgress"></brave-tradeline-dispute-process>
-  <div clas="flex justify-center" *ngIf="isDisputeSent">
+</div>
+<div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
+  <div clas="flex justify-center" >
     <div class="h-10 w-10 rounded-full bg-blueGray-300 m-auto"></div>
     <h1 class="text-lg font-bold text-center mt-4">Your dispute is on its way!</h1>
     <p class="text-sm font-semibold mt-4">Here’s some important information about the next steps:</p>
