@@ -86,6 +86,15 @@ import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-ic
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
+import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
+import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
+import { TradelineDisputeProcessComponent } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
+import { BaseModalComponent } from './modals/base-modal/base-modal.component';
+import { BaseModalPipe } from './modals/base-modal/base-modal.pipe';
+import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
+import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
+import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
 import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
@@ -165,6 +174,13 @@ const components = [
   CreditScoreHistoryChartComponent,
   CreditScoreHistoryNgxChartComponent,
   CreditReportGraphicWithGraphComponent,
+  BasePaginationComponent,
+  ReasonCardComponent,
+  TradelineDisputeProcessComponent,
+  BaseModalComponent,
+  ConfirmationModalComponent,
+  ConditionalTermComponent,
+  TradelineDisputeProcessSuccessComponent,
 ];
 
 // component specific pipes only
@@ -181,12 +197,13 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
+  BasePaginationPipe,
+  BaseModalPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
   imports: [
     CommonModule,
     NgxChartsModule,
@@ -196,6 +213,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     FormsModule,
     RouterModule,
   ],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -37,6 +37,10 @@ const updatedAwsConfig = {
 /* Configure Amplify resources */
 Amplify.configure(updatedAwsConfig);
 
+/* Add HammerJs for gesture support */
+import * as Hammer from 'hammerjs';
+import { HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
 /* shared modules */
 import { ChartsModule } from 'ng2-charts';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
@@ -51,6 +55,13 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
+@Injectable()
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  } as any;
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -63,6 +74,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxsLoggerPluginModule.forRoot({
       disabled: environment.production,
     }),
+    HammerModule,
     AmplifyUIAngularModule,
     NgxChartsModule,
     ChartsModule,
@@ -76,7 +88,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [{
+    provide: HAMMER_GESTURE_CONFIG,
+    useClass: MyHammerConfig,
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
