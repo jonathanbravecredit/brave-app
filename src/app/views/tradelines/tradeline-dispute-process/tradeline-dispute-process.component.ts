@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
 import { IDisputeTradelineProcessResult } from '@shared/components/tradelines/tradeline-dispute-process/interfaces';
 import { TradelineDisputeProcessComponent } from '@shared/components/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+
 
 @Component({
   selector: 'brave-tradeline-dispute-process-view',
@@ -11,7 +12,10 @@ import { TradelineDisputeProcessComponent } from '@shared/components/tradelines/
 export class TradelineDisputeProcessView implements OnInit {
   @ViewChild(TradelineDisputeProcessComponent) tradelineDisputeProcess: TradelineDisputeProcessComponent | undefined;
   isDisputeProcessInProgress = true;
-  isDisputeSent = false;
+  @Input() isDisputeSent = false;
+  @Input() initialStepId = 'select';
+  @Input() forceNavigation = false;
+  @Input() initialDisputeType: string | undefined = undefined;
   
   negativeAccountCardData: INegativeAccountCardInputs = {
     creditorName: 'H.J National Collections',

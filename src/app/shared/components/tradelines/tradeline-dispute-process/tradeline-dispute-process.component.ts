@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
 import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
@@ -24,18 +24,20 @@ export class TradelineDisputeProcessComponent implements OnInit {
   showCustomInputError = false;
   showMaxError = false;
   customReason: string = '';
-  disputeType: string | undefined = undefined;
+  @Input() disputeType: string | undefined = undefined;
+  @Input() initialStepId: string = 'select';
   @Output() disputeProcessResult: EventEmitter<IDisputeTradelineProcessResult> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
     // Set the pages to default;
-     this.navigationStack.push({
-      id: 'select',
+    this.navigationStack.push({
+      id: this.initialStepId,
       data: undefined
     });
-  }
 
+    this.reasonOptionPages = this.disputeType === 'not-mine' ? defaultReasons.NOT_MINE : defaultReasons.INACCURATE;
+  }
   /**
    * Changes the "selected" state flag of the target option.
    * @param index - The position inside of the option array
@@ -124,7 +126,6 @@ export class TradelineDisputeProcessComponent implements OnInit {
   }
 
   goToReasons(): void {
-    this.reasonOptionPages = this.disputeType === 'not-mine' ? defaultReasons.NOT_MINE : defaultReasons.INACCURATE;
     this.navigationStack.push({
       id: 'reason'
     });

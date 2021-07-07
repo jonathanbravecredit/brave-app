@@ -3,7 +3,6 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { TradelineDisputeProcessView } from './tradeline-dispute-process.component';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
 
 export default {
   title: 'app/views/tradelines/tradeline-dispute-process',
@@ -29,3 +28,21 @@ const Template: Story<TradelineDisputeProcessView> = (args: any) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Reasons = Template.bind({});
+Reasons.args = {
+  initialStepId: 'reason',
+  initialDisputeType: 'inaccurate',
+  forceNavigation: true
+};
+
+export const Summary = Template.bind({});
+Summary.args = {
+  initialStepId: 'summary',
+  forceNavigation: true
+};
+
+export const Success = Template.bind({});
+Success.args = {
+  isDisputeSent: true
+};
