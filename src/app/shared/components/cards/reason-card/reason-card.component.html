@@ -11,7 +11,7 @@
     <div *ngIf="isSelected && allowUserInput">
       <p class="my-2 text-sm font-semibold ">If you can't find your reason, provide details below.</p>
       <p class="my-2 text-xs font-light">{{ userInputDescriptionText }}</p>
-      <textarea [(ngModel)]="customUserInput" class="resize-none w-full rounded-sm h-32 text-xs bg-blueGray-300" placeholder="Add your reason to dispute here"></textarea>
+      <textarea [value]="customUserInput" class="resize-none w-full rounded-sm h-32 text-xs bg-blueGray-300" placeholder="Add your reason to dispute here" (change)="emitCustomInputChanges($event)"></textarea>
     </div>
   </div>
 </div>

@@ -2,10 +2,27 @@ import { IDisputeTradelineReasonCard } from '@shared/components/cards/reason-car
 
 export interface IDisputeTradelineReasonCardPage {
   pageIndex: number;
-  items: IDisputeTradelineReasonCard[];
+  items: IDisputeTradelineReasonCardPageItem[];
 }
+
+export type IDisputeTradelineReasonCardPageItem = { reason: IDisputeReason } & Partial<IDisputeTradelineReasonCard>
 
 export interface IDisputeTradelineSelectedObj {
   pageIndex: number;
   itemIndex: number;
+}
+
+export interface IDisputeTradelineProcessResult {
+  isFinished: boolean;
+  data: {
+    hasCustomInput: boolean;
+    customInput: string;
+    reasonsId: string[];
+  }
+}
+
+export interface IDisputeReason {
+  id: string;
+  text: string;
+  userInputDescriptionText?: string | null;
 }

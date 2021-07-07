@@ -2,11 +2,11 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { TradelineDisputeProcessComponent } from './tradeline-dispute-process.component';
+import { TradelineDisputeProcessView } from './tradeline-dispute-process.component';
 
 export default {
-  title: 'app/components/tradelines/tradeline-dispute-process',
-  component: TradelineDisputeProcessComponent,
+  title: 'app/views/tradelines/tradeline-dispute-process',
+  component: TradelineDisputeProcessView,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -19,12 +19,12 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<TradelineDisputeProcessComponent> = (args: any) => ({
-  component: TradelineDisputeProcessComponent,
+const Template: Story<TradelineDisputeProcessView> = (args: any) => ({
+  component: TradelineDisputeProcessView,
   props: {
-    ...args,
+    ...args
   },
 });
 
 export const Default = Template.bind({});
-Default.args = { };
+Default.args = {};

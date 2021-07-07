@@ -17,10 +17,11 @@ export class ReasonCardComponent implements OnInit {
   // Text that the card will hold inside.
   @Input() userInputDescriptionText: string | undefined = '';
   // Input provided by the user. This is the user's custom "reason".
-  customUserInput = '';
+  @Input() customUserInput = '';
 
   @Output() clicked: EventEmitter<void> = new EventEmitter();
-
+  @Output() customInputChanged: EventEmitter<string> = new EventEmitter();
+  
   constructor() { }
 
   ngOnInit(): void {
@@ -34,6 +35,10 @@ export class ReasonCardComponent implements OnInit {
     } else {
       this.clicked.emit();
     }
+  }
+
+  emitCustomInputChanges(event: any): void {
+    this.customInputChanged.emit(event.target.value);
   }
 
   modalActionHandler(isConfirmed: boolean): void {
