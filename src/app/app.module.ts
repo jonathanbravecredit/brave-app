@@ -47,12 +47,15 @@ import { ViewsModule } from '@views/views.module';
 import { AuthenticationModule } from './layouts/authentication/authentication.module';
 import { OnboardingModule } from './layouts/onboarding/onboarding.module';
 import { braveState } from '@store/index';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     NgxsModule.forRoot(braveState, {
       developmentMode: !environment.production,
     }),
@@ -61,6 +64,7 @@ import { braveState } from '@store/index';
       disabled: environment.production,
     }),
     AmplifyUIAngularModule,
+    NgxChartsModule,
     ChartsModule,
     SharedComponentsModule,
     SharedDirectivesModule,

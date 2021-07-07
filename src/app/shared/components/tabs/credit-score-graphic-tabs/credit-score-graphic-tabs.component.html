@@ -5,9 +5,10 @@
   <div class="w-full">
     <div class="flex flex-shrink flex-wrap justify-center">
       <ul class="flex mb-0 list-none p-1 bg-white rounded">
-        <li class="-mb-px mr-2 last:mr-0 sm:text-center w-20">
+        <li class="-mb-px mr-2 last:mr-0 text-center">
           <a
-            class="font-sans text-sm px-4 py-1 rounded block leading-normal"
+            class="font-sans text-xs px-4 py-1 rounded block leading-normal"
+            style="white-space: nowrap"
             (click)="toggleTabs(1)"
             [ngClass]="{
               'bg-white text-coolGray-700': openTab !== 1,
@@ -17,9 +18,10 @@
             3 MONTHS
           </a>
         </li>
-        <li class="-mb-px mr-2 last:mr-0 text-center w-20">
+        <li class="-mb-px mr-2 last:mr-0 text-center">
           <a
-            class="font-sans text-sm px-4 py-1 rounded block leading-normal"
+            class="font-sans text-xs px-4 py-1 rounded block leading-normal"
+            style="white-space: nowrap"
             (click)="toggleTabs(2)"
             [ngClass]="{
               'bg-white text-coolGray-700': openTab !== 2,
@@ -35,10 +37,10 @@
       <div class="px-4 py-5 flex-auto">
         <div class="tab-content tab-space">
           <div [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
-            <p>3 month chart goes here</p>
+            <brave-credit-score-history-ngx-chart></brave-credit-score-history-ngx-chart>
           </div>
           <div [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
-            <p>6 month chart goes here</p>
+            <brave-credit-score-history-ngx-chart></brave-credit-score-history-ngx-chart>
           </div>
         </div>
       </div>

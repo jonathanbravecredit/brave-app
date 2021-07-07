@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 // pipes
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
@@ -87,7 +88,10 @@ import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
-import { ChartsModule } from 'ng2-charts';
+import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
 
 const components = [
   BaseFormComponent,
@@ -159,6 +163,8 @@ const components = [
   TradelineRemarksComponent,
   CreditScoreGraphicTabsComponent,
   CreditScoreHistoryChartComponent,
+  CreditScoreHistoryNgxChartComponent,
+  CreditReportGraphicWithGraphComponent,
 ];
 
 // component specific pipes only
@@ -181,7 +187,15 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
   declarations: [...components, ...pipes, ...directives],
-  imports: [ChartsModule, ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    ChartsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+  ],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

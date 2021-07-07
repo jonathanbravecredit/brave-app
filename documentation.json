@@ -15159,7 +15159,7 @@
         },
         {
             "name": "CreditScoreHistoryChartComponent",
-            "id": "component-CreditScoreHistoryChartComponent-0ab42fbe9e8f68f27fdca1330dcfae04",
+            "id": "component-CreditScoreHistoryChartComponent-c73a480ad89980548c6bc6dd8af6a16a",
             "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -15181,7 +15181,7 @@
                     "type": "BaseChartDirective",
                     "optional": false,
                     "description": "",
-                    "line": 60,
+                    "line": 90,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -15195,14 +15195,14 @@
                     "type": "Color[]",
                     "optional": false,
                     "description": "",
-                    "line": 47,
+                    "line": 77,
                     "modifierKind": [
                         114
                     ]
                 },
                 {
                     "name": "lineChartData",
-                    "defaultValue": "[{ data: [550, 590, 586, 581, 620, 621, null], label: 'Series A' }]",
+                    "defaultValue": "[\n    { data: [550, 590, 586, 581, 620, 621, null], label: 'Series A', fill: false },\n  ]",
                     "type": "ChartDataSets[]",
                     "optional": false,
                     "description": "",
@@ -15213,11 +15213,11 @@
                 },
                 {
                     "name": "lineChartLabels",
-                    "defaultValue": "['January', 'February', 'March', 'April', 'May', 'June', 'July']",
+                    "defaultValue": "['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']",
                     "type": "Label[]",
                     "optional": false,
                     "description": "",
-                    "line": 11,
+                    "line": 13,
                     "modifierKind": [
                         114
                     ]
@@ -15228,15 +15228,15 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 57
+                    "line": 87
                 },
                 {
                     "name": "lineChartOptions",
-                    "defaultValue": "{\n    elements: {\n      line: {\n        tension: 0,\n      },\n    },\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [\n        {\n          id: 'x-axis-0',\n          gridLines: {\n            display: false,\n          },\n        },\n      ],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n          offset: true,\n          ticks: {\n            major: {\n              enabled: true,\n            },\n            stepSize: 100,\n          },\n          gridLines: {\n            color: '#fff',\n          },\n        },\n      ],\n    },\n  }",
+                    "defaultValue": "{\n    plugins: {\n      datalabels: {\n        color: '#3730A3',\n      },\n    },\n    elements: {\n      line: {\n        tension: 0,\n      },\n    },\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [\n        {\n          id: 'x-axis-0',\n          position: 'bottom',\n          ticks: {\n            padding: 8,\n            major: {\n              enabled: true,\n            },\n          },\n          gridLines: {\n            lineWidth: 1,\n            drawBorder: true,\n            drawOnChartArea: false,\n            drawTicks: true,\n            tickMarkLength: 8,\n            color: '#3730A3',\n          },\n        },\n      ],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n          ticks: {\n            fontSize: 10,\n            padding: 4,\n            major: {\n              enabled: true,\n            },\n            stepSize: 50,\n            min: 300,\n            max: 850,\n            callback: (value, idx) => {\n              if (value === 850) return value;\n              return idx % 2 === 0 ? '' : value;\n            },\n          },\n          gridLines: {\n            borderDashOffset: 4,\n            drawBorder: false,\n            lineWidth: 0.5,\n            color: '#fff',\n            zeroLineWidth: 0,\n          },\n        },\n      ],\n    },\n  }",
                     "type": "ChartOptions",
                     "optional": false,
                     "description": "",
-                    "line": 12,
+                    "line": 14,
                     "modifierKind": [
                         114
                     ]
@@ -15247,7 +15247,7 @@
                     "type": "ChartType",
                     "optional": false,
                     "description": "",
-                    "line": 58
+                    "line": 88
                 }
             ],
             "methodsClass": [
@@ -15257,7 +15257,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 64
+                    "line": 94
                 }
             ],
             "hostBindings": [],
@@ -15265,7 +15265,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { ChartDataSets, ChartOptions, ChartType } from 'chart.js';\nimport { Color, BaseChartDirective, Label } from 'ng2-charts';\n\n@Component({\n  selector: 'brave-credit-score-history-chart',\n  templateUrl: './credit-score-history-chart.component.html',\n})\nexport class CreditScoreHistoryChartComponent implements OnInit {\n  public lineChartData: ChartDataSets[] = [{ data: [550, 590, 586, 581, 620, 621, null], label: 'Series A' }];\n  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];\n  public lineChartOptions: ChartOptions = {\n    elements: {\n      line: {\n        tension: 0,\n      },\n    },\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [\n        {\n          id: 'x-axis-0',\n          gridLines: {\n            display: false,\n          },\n        },\n      ],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n          offset: true,\n          ticks: {\n            major: {\n              enabled: true,\n            },\n            stepSize: 100,\n          },\n          gridLines: {\n            color: '#fff',\n          },\n        },\n      ],\n    },\n  };\n  public lineChartColors: Color[] = [\n    {\n      // grey\n      borderColor: '#D946EF',\n      pointBackgroundColor: '#3730A3',\n      pointBorderColor: '#3730A3',\n      pointHoverBackgroundColor: '#3730A3',\n      pointHoverBorderColor: '#3730A3',\n    },\n  ];\n  lineChartLegend = false;\n  lineChartType: ChartType = 'line';\n\n  @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
+            "sourceCode": "import { Component, Input, OnInit, ViewChild } from '@angular/core';\nimport { ChartDataSets, ChartOptions, ChartType } from 'chart.js';\nimport { Color, BaseChartDirective, Label } from 'ng2-charts';\n\n@Component({\n  selector: 'brave-credit-score-history-chart',\n  templateUrl: './credit-score-history-chart.component.html',\n})\nexport class CreditScoreHistoryChartComponent implements OnInit {\n  public lineChartData: ChartDataSets[] = [\n    { data: [550, 590, 586, 581, 620, 621, null], label: 'Series A', fill: false },\n  ];\n  public lineChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];\n  public lineChartOptions: ChartOptions = {\n    plugins: {\n      datalabels: {\n        color: '#3730A3',\n      },\n    },\n    elements: {\n      line: {\n        tension: 0,\n      },\n    },\n    responsive: true,\n    scales: {\n      // We use this empty structure as a placeholder for dynamic theming.\n      xAxes: [\n        {\n          id: 'x-axis-0',\n          position: 'bottom',\n          ticks: {\n            padding: 8,\n            major: {\n              enabled: true,\n            },\n          },\n          gridLines: {\n            lineWidth: 1,\n            drawBorder: true,\n            drawOnChartArea: false,\n            drawTicks: true,\n            tickMarkLength: 8,\n            color: '#3730A3',\n          },\n        },\n      ],\n      yAxes: [\n        {\n          id: 'y-axis-0',\n          position: 'left',\n          ticks: {\n            fontSize: 10,\n            padding: 4,\n            major: {\n              enabled: true,\n            },\n            stepSize: 50,\n            min: 300,\n            max: 850,\n            callback: (value, idx) => {\n              if (value === 850) return value;\n              return idx % 2 === 0 ? '' : value;\n            },\n          },\n          gridLines: {\n            borderDashOffset: 4,\n            drawBorder: false,\n            lineWidth: 0.5,\n            color: '#fff',\n            zeroLineWidth: 0,\n          },\n        },\n      ],\n    },\n  };\n  public lineChartColors: Color[] = [\n    {\n      // grey\n      borderColor: '#D946EF',\n      pointBackgroundColor: '#3730A3',\n      pointBorderColor: '#3730A3',\n      pointHoverBackgroundColor: '#3730A3',\n      pointHoverBorderColor: '#3730A3',\n    },\n  ];\n  lineChartLegend = false;\n  lineChartType: ChartType = 'line';\n\n  @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;\n\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -15273,12 +15273,227 @@
                 "name": "constructor",
                 "description": "",
                 "args": [],
-                "line": 60
+                "line": 90
             },
             "implements": [
                 "OnInit"
             ],
             "templateData": "<div class=\"flex-item\" style=\"background-color: lightskyblue\">\n  <div style=\"display: block\">\n    <canvas\n      baseChart\n      width=\"200\"\n      height=\"200\"\n      [datasets]=\"lineChartData\"\n      [labels]=\"lineChartLabels\"\n      [options]=\"lineChartOptions\"\n      [colors]=\"lineChartColors\"\n      [legend]=\"lineChartLegend\"\n      [chartType]=\"lineChartType\"\n    ></canvas>\n  </div>\n</div>\n"
+        },
+        {
+            "name": "CreditScoreHistoryNgxChartComponent",
+            "id": "component-CreditScoreHistoryNgxChartComponent-c20eb7f4b2b27c466df05e895422629f",
+            "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "brave-credit-score-history-ngx-chart",
+            "styleUrls": [
+                "./credit-score-history-ngx-chart.component.css"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./credit-score-history-ngx-chart.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "animations",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                },
+                {
+                    "name": "colorScheme",
+                    "defaultValue": "{\n    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],\n  }",
+                    "type": "object",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
+                },
+                {
+                    "name": "legend",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
+                    "name": "multi",
+                    "type": "any[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                },
+                {
+                    "name": "showLabels",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
+                },
+                {
+                    "name": "showXAxisLabel",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "showYAxisLabel",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "timeline",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "view",
+                    "defaultValue": "[700, 300]",
+                    "type": "any[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "xAxis",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "xAxisLabel",
+                    "defaultValue": "'Year'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "yAxis",
+                    "defaultValue": "true",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                },
+                {
+                    "name": "yAxisLabel",
+                    "defaultValue": "'Population'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "onActivate",
+                    "args": [
+                        {
+                            "name": "data",
+                            "type": "any"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 38,
+                    "jsdoctags": [
+                        {
+                            "name": "data",
+                            "type": "any",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onDeactivate",
+                    "args": [
+                        {
+                            "name": "data",
+                            "type": "any"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42,
+                    "jsdoctags": [
+                        {
+                            "name": "data",
+                            "type": "any",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onSelect",
+                    "args": [
+                        {
+                            "name": "data",
+                            "type": "any"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 34,
+                    "jsdoctags": [
+                        {
+                            "name": "data",
+                            "type": "any",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { multi } from './data';\nimport { NgxChartsModule } from '@swimlane/ngx-charts';\n\n@Component({\n  selector: 'brave-credit-score-history-ngx-chart',\n  templateUrl: './credit-score-history-ngx-chart.component.html',\n  styleUrls: ['./credit-score-history-ngx-chart.component.css'],\n})\nexport class CreditScoreHistoryNgxChartComponent {\n  multi!: any[];\n  view: any[] = [700, 300];\n\n  // options\n  legend: boolean = true;\n  showLabels: boolean = true;\n  animations: boolean = true;\n  xAxis: boolean = true;\n  yAxis: boolean = true;\n  showYAxisLabel: boolean = true;\n  showXAxisLabel: boolean = true;\n  xAxisLabel: string = 'Year';\n  yAxisLabel: string = 'Population';\n  timeline: boolean = true;\n\n  colorScheme = {\n    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],\n  };\n\n  constructor() {\n    Object.assign(this, { multi });\n  }\n\n  onSelect(data: any): void {\n    console.log('Item clicked', JSON.parse(JSON.stringify(data)));\n  }\n\n  onActivate(data: any): void {\n    console.log('Activate', JSON.parse(JSON.stringify(data)));\n  }\n\n  onDeactivate(data: any): void {\n    console.log('Deactivate', JSON.parse(JSON.stringify(data)));\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./credit-score-history-ngx-chart.component.css"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 28
+            },
+            "templateData": "<ngx-charts-line-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [legend]=\"legend\"\n  [showXAxisLabel]=\"showXAxisLabel\"\n  [showYAxisLabel]=\"showYAxisLabel\"\n  [xAxis]=\"xAxis\"\n  [yAxis]=\"yAxis\"\n  [xAxisLabel]=\"xAxisLabel\"\n  [yAxisLabel]=\"yAxisLabel\"\n  [timeline]=\"timeline\"\n  [results]=\"multi\"\n  (select)=\"onSelect($event)\"\n  (activate)=\"onActivate($event)\"\n  (deactivate)=\"onDeactivate($event)\"\n>\n</ngx-charts-line-chart>\n"
         },
         {
             "name": "DashboardComponent",
@@ -30943,7 +31158,7 @@
                 "name": "address",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
+                "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
                 "type": "string",
                 "defaultValue": "'123 Main Street, Hollywood, CA'"
             },
@@ -30951,7 +31166,7 @@
                 "name": "address",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
                 "type": "string",
                 "defaultValue": "'123 Main Street, Hollywood, CA'"
             },
@@ -31079,17 +31294,17 @@
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/dashboard/dashboard.module.ts",
+                "file": "src/app/shared/components/shared-components.module.ts",
                 "type": "[]",
-                "defaultValue": "[DashboardComponent]"
+                "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n  CreditScoreGraphicTabsComponent,\n  CreditScoreHistoryChartComponent,\n  CreditScoreHistoryNgxChartComponent,\n]"
             },
             {
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/shared-components.module.ts",
+                "file": "src/app/layouts/dashboard/dashboard.module.ts",
                 "type": "[]",
-                "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n  CreditScoreGraphicTabsComponent,\n  CreditScoreHistoryChartComponent,\n]"
+                "defaultValue": "[DashboardComponent]"
             },
             {
                 "name": "config",
@@ -31311,14 +31526,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31343,14 +31550,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31359,7 +31558,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
+                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31368,6 +31567,14 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31391,6 +31598,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31400,6 +31615,46 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31439,54 +31694,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31495,7 +31702,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
+                "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31511,7 +31718,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
+                "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31519,7 +31726,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
+                "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31535,7 +31742,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
+                "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31551,7 +31758,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31560,14 +31767,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31591,14 +31790,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31607,15 +31798,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31631,7 +31814,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/modals/base-modal-small/base-modal-small.stories.ts",
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31647,6 +31830,22 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/modals/base-modal-small/base-modal-small.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31655,7 +31854,23 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31703,14 +31918,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -31720,6 +31927,22 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -31824,6 +32047,14 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/environments/environment.qa.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/environments/environment.prod.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: true\n}"
@@ -31835,14 +32066,6 @@
                 "file": "src/environments/environment.ts",
                 "type": "object",
                 "defaultValue": "{\n  production: false\n}"
-            },
-            {
-                "name": "environment",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/environments/environment.qa.ts",
-                "type": "object",
-                "defaultValue": "{\n  production: false,\n}"
             },
             {
                 "name": "ExtraLarge",
@@ -32157,6 +32380,14 @@
                 "defaultValue": "[\n  'Jan',\n  'Feb',\n  'Mar',\n  'Apr',\n  'May',\n  'Jun',\n  'Jul',\n  'Aug',\n  'Sep',\n  'Oct',\n  'Nov',\n  'Dec',\n]"
             },
             {
+                "name": "multi",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/data.ts",
+                "type": "[]",
+                "defaultValue": "[\n  {\n    name: 'Germany',\n    series: [\n      {\n        name: '1990',\n        value: 62000000,\n      },\n      {\n        name: '2010',\n        value: 73000000,\n      },\n      {\n        name: '2011',\n        value: 89400000,\n      },\n    ],\n  },\n\n  {\n    name: 'USA',\n    series: [\n      {\n        name: '1990',\n        value: 250000000,\n      },\n      {\n        name: '2010',\n        value: 309000000,\n      },\n      {\n        name: '2011',\n        value: 311000000,\n      },\n    ],\n  },\n\n  {\n    name: 'France',\n    series: [\n      {\n        name: '1990',\n        value: 58000000,\n      },\n      {\n        name: '2010',\n        value: 50000020,\n      },\n      {\n        name: '2011',\n        value: 58000000,\n      },\n    ],\n  },\n  {\n    name: 'UK',\n    series: [\n      {\n        name: '1990',\n        value: 57000000,\n      },\n      {\n        name: '2010',\n        value: 62000000,\n      },\n    ],\n  },\n]"
+            },
+            {
                 "name": "name",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -32432,7 +32663,7 @@
                 "name": "remarks",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
+                "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
                 "type": "",
                 "defaultValue": "`This account was investigated two weeks ago per the client's request`"
             },
@@ -32440,7 +32671,7 @@
                 "name": "remarks",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
                 "type": "",
                 "defaultValue": "`This account was investigated two weeks ago per the client's request`"
             },
@@ -32880,14 +33111,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
-                "type": "Story<KycIdverificationPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: KycIdverificationPureComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts",
                 "type": "Story<KycKbaquestionsPureComponent>",
                 "defaultValue": "(args: any) => ({\n  component: KycKbaquestionsPureComponent,\n  props: {\n    ...args,\n    kbas,\n  },\n})"
@@ -32912,14 +33135,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
-                "type": "Story<KycSsnFullPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
                 "type": "Story<KycWelcomePureComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n})"
@@ -32928,9 +33143,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
-                "type": "Story<NegativeAccountInitialPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NegativeAccountInitialPureComponent,\n  props: {\n    ...args,\n    cards,\n  },\n})"
+                "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
+                "type": "Story<KycSsnFullPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32939,6 +33154,14 @@
                 "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
                 "type": "Story<KycWelcomebackPureComponent>",
                 "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/negative-account/negative-account-initial-pure/negative-account-initial-pure.stories.ts",
+                "type": "Story<NegativeAccountInitialPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: NegativeAccountInitialPureComponent,\n  props: {\n    ...args,\n    cards,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -32960,6 +33183,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
+                "type": "Story<KycIdverificationPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycIdverificationPureComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/alerts/filled-closing-alert/filled-closing-alert.stories.ts",
                 "type": "Story<FilledClosingAlertComponent>",
                 "defaultValue": "(args: any) => ({\n  component: FilledClosingAlertComponent,\n  props: {\n    ...args,\n    showAlert: true,\n  },\n})"
@@ -32971,6 +33202,46 @@
                 "file": "src/app/shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.stories.ts",
                 "type": "Story<FilledOnlytextBadgeComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-badge>Badge</brave-filled-onlytext-badge>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                "type": "Story<CreditcardCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                "type": "Story<CreditReportCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                "type": "Story<LoanCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
+                "type": "Story<NegativeAccountCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                "type": "Story<SnapshotDisplayCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33008,54 +33279,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                "type": "Story<CreditBuilderCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
-                "type": "Story<CreditReportCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                "type": "Story<CreditcardCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                "type": "Story<LoanCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
-                "type": "Story<NegativeAccountCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NegativeAccountCardComponent,\n  props: {\n    ...args,\n    data,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                "type": "Story<SnapshotDisplayCardComponent>",
-                "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
                 "type": "Story<CreditScoreHistoryChartComponent>",
                 "defaultValue": "(args: any) => ({\n  component: CreditScoreHistoryChartComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -33064,9 +33287,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
-                "type": "Story<KbaquestionsFormComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    kbas,\n    required: true,\n  },\n  template: `<brave-kbaquestions-form [kbas]=\"kbas\"></brave-kbaquestions-form>`,\n})"
+                "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts",
+                "type": "Story<CreditScoreHistoryNgxChartComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditScoreHistoryNgxChartComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33080,17 +33303,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
-                "type": "Story<OutlineNameFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineNameFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
+                "type": "Story<KbaquestionsFormComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    kbas,\n    required: true,\n  },\n  template: `<brave-kbaquestions-form [kbas]=\"kbas\"></brave-kbaquestions-form>`,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
-                "type": "Story<OutlineOnecolumnFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
+                "type": "Story<OutlineNameFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineNameFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33104,9 +33327,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
-                "type": "Story<OutlineVerificationcodeFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
+                "type": "Story<OutlineOnecolumnFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33120,9 +33343,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
-                "type": "Story<SimpleSignupFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: SimpleSignupFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
+                "type": "Story<OutlineVerificationcodeFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33131,14 +33354,6 @@
                 "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
                 "type": "Story<SsnFullFormComponent>",
                 "defaultValue": "(args: any) => ({\n  component: SsnFullFormComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
-                "type": "Story<SsnLastfourFormComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,\n})"
             },
             {
                 "name": "Template",
@@ -33160,14 +33375,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                "type": "Story<KbaMultiplechoiceInputComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/inputs/outline-input/outline-input.stories.ts",
                 "type": "Story<OutlineInputComponent>",
                 "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -33176,17 +33383,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
-                "type": "Story<OutlineSelectInputComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                "type": "Story<SpinnerComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
+                "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                "type": "Story<KbaMultiplechoiceInputComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
             },
             {
                 "name": "Template",
@@ -33200,9 +33399,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/modals/base-modal-small/base-modal-small.stories.ts",
-                "type": "Story<BaseModalSmallComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    config,\n  },\n  template: `<brave-base-modal-small [config]=\"config\"></brave-base-modal-small>`,\n})"
+                "file": "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts",
+                "type": "Story<OutlineSelectInputComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33216,6 +33415,22 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/modals/base-modal-small/base-modal-small.stories.ts",
+                "type": "Story<BaseModalSmallComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    config,\n  },\n  template: `<brave-base-modal-small [config]=\"config\"></brave-base-modal-small>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                "type": "Story<SpinnerComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts",
                 "type": "Story<DashboardNavbarComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-dashboard-navbar><brave-dashboard-navbar>`,\n})"
@@ -33224,9 +33439,25 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
+                "type": "Story<SsnLastfourFormComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
                 "type": "Story<any>",
                 "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                "type": "Story<SimpleSignupFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: SimpleSignupFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -33272,22 +33503,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
-                "type": "Story<TradelineDetailsComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelineDetailsComponent,\n  props: {\n    ...args,\n    remarks: remarks,\n    address: address,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
-                "type": "Story<TradelinePaymentHistoryComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/tradelines/tradeline-payment-icon/tradeline-payment-icon.stories.ts",
                 "type": "Story<TradelinePaymentIconComponent>",
                 "defaultValue": "(args: any) => ({\n  component: TradelinePaymentIconComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -33307,6 +33522,30 @@
                 "file": "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts",
                 "type": "Story<TradelineSummaryComponent>",
                 "defaultValue": "(args: any) => ({\n  component: TradelineSummaryComponent,\n  props: {\n    ...args,\n  },\n  template: `\n    <div class=\"container mx-auto max-w-xs h-full\">\n      <brave-tradeline-summary\n        [status]=\"'Open'\"\n      ></brave-tradeline-summary>\n    </div>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                "type": "Story<CreditBuilderCardComponent>",
+                "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
+                "type": "Story<TradelineDetailsComponent>",
+                "defaultValue": "(args: any) => ({\n  component: TradelineDetailsComponent,\n  props: {\n    ...args,\n    remarks: remarks,\n    address: address,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
+                "type": "Story<TradelinePaymentHistoryComponent>",
+                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -34746,6 +34985,40 @@
                     "defaultValue": "(args: any) => ({\n  component: TradelinesPureComponent,\n  props: {\n    ...args,\n    config: installment,\n    remarks: remarks,\n    address: address,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts": [
+                {
+                    "name": "address",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                    "type": "string",
+                    "defaultValue": "'123 Main Street, Hollywood, CA'"
+                },
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "remarks",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                    "type": "",
+                    "defaultValue": "`This account was investigated two weeks ago per the client's request`"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
+                    "type": "Story<TradelinePaymentsComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: TradelinePaymentsComponent,\n  props: {\n    ...args,\n    remarks: remarks,\n    address: address,\n  },\n})"
+                }
+            ],
             "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts": [
                 {
                     "name": "address",
@@ -34818,40 +35091,6 @@
                     "file": "src/app/shared/components/tradelines/tradeline-details/tradeline-details.stories.ts",
                     "type": "Story<TradelineDetailsComponent>",
                     "defaultValue": "(args: any) => ({\n  component: TradelineDetailsComponent,\n  props: {\n    ...args,\n    remarks: remarks,\n    address: address,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts": [
-                {
-                    "name": "address",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
-                    "type": "string",
-                    "defaultValue": "'123 Main Street, Hollywood, CA'"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "remarks",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
-                    "type": "",
-                    "defaultValue": "`This account was investigated two weeks ago per the client's request`"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-payments/tradeline-payments.stories.ts",
-                    "type": "Story<TradelinePaymentsComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: TradelinePaymentsComponent,\n  props: {\n    ...args,\n    remarks: remarks,\n    address: address,\n  },\n})"
                 }
             ],
             "src/app/shared/components/navbars/dashboard-navbar/dashboard-navbar.stories.ts": [
@@ -35262,16 +35501,6 @@
                     "defaultValue": "[OnboardingComponent]"
                 }
             ],
-            "src/app/layouts/dashboard/dashboard.module.ts": [
-                {
-                    "name": "components",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/layouts/dashboard/dashboard.module.ts",
-                    "type": "[]",
-                    "defaultValue": "[DashboardComponent]"
-                }
-            ],
             "src/app/shared/components/shared-components.module.ts": [
                 {
                     "name": "components",
@@ -35279,7 +35508,7 @@
                     "subtype": "variable",
                     "file": "src/app/shared/components/shared-components.module.ts",
                     "type": "[]",
-                    "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n  CreditScoreGraphicTabsComponent,\n  CreditScoreHistoryChartComponent,\n]"
+                    "defaultValue": "[\n  BaseFormComponent,\n  SignInComponent,\n  SignUpComponent,\n  FilledOnlytextButtonComponent,\n  LinksOnlytextButtonComponent,\n  OutlineOnlytextButtonComponent,\n  OutlineInputComponent,\n  OutlineOnecolumnFormComponent,\n  GoogleIconsigninButtonComponent,\n  FacebookOnlytextsigninButtonComponent,\n  SimpleSignupFormComponent,\n  OutlineSelectInputComponent,\n  FilledClosingAlertComponent,\n  FilledOnlytextBadgeComponent,\n  IndexDropdownComponent,\n  MenuDropdownComponent,\n  NotificationDropdownComponent,\n  PagesDropdownComponent,\n  TableDropdownComponent,\n  UserDropdownComponent,\n  OutlineOnlytextSelectComponent,\n  FooterComponent,\n  FooterAdminComponent,\n  FooterSmallComponent,\n  HiddenAsteriskInputComponent,\n  OutlineAddressFormComponent,\n  OutlinePhoneFormComponent,\n  OutlineVerificationcodeFormComponent,\n  SsnFullFormComponent,\n  SsnLastfourFormComponent,\n  HiddenAsteriskInputComponent,\n  BaseModalRegularComponent,\n  BaseModalSmallComponent,\n  AdminNavbarComponent,\n  AuthNavbarComponent,\n  DashboardNavbarComponent,\n  IndexNavbarComponent,\n  OutlinePrevnextPaginationComponent,\n  FilledChecktextProgressbarComponent,\n  SidebarComponent,\n  FilledOnlytextTabsComponent,\n  NavigationTabsComponent,\n  OutlineTooltipComponent,\n  KbaquestionsFormComponent,\n  OutlineNamedobFormComponent,\n  SelectDobFormComponent,\n  OutlineNameFormComponent,\n  CreditcardCardComponent,\n  ViewdetailButtonComponent,\n  LoanCardComponent,\n  SnapshotDisplayCardComponent,\n  CreditBuilderCardComponent,\n  SnapshotDisplayCardComponent,\n  NegativeAccountCardComponent,\n  KbaMultiplechoiceInputComponent,\n  CreditReportCardComponent,\n  SpinnerComponent,\n  OnboardingDisputeComponent,\n  CreditReportGraphicComponent,\n  TradelineMetricsComponent,\n  TradelineSummaryComponent,\n  TradelineDetailsComponent,\n  TradelineDetailRowComponent,\n  TradelinePaymentsComponent,\n  TradelinePaymentIconComponent,\n  TradelinePaymentHistoryComponent,\n  TradelineRemarksComponent,\n  CreditScoreGraphicTabsComponent,\n  CreditScoreHistoryChartComponent,\n  CreditScoreHistoryNgxChartComponent,\n]"
                 },
                 {
                     "name": "directives",
@@ -35296,6 +35525,16 @@
                     "file": "src/app/shared/components/shared-components.module.ts",
                     "type": "[]",
                     "defaultValue": "[\n  FilledOnlytextButtonPipe,\n  LinksOnlytextButtonPipe,\n  OutlineOnlytextButtonPipe,\n  OutlineInputPipe,\n  OutlineSelectInputPipe,\n  FilledClosingAlertPipe,\n  FilledOnlytextBadgePipe,\n  FilledChecktextProgressbarPipe,\n  AccountStatusPipe,\n  SnapshotLabelPipe,\n  SnapshotStatusPipe,\n  CreditReportGraphicPipe,\n]"
+                }
+            ],
+            "src/app/layouts/dashboard/dashboard.module.ts": [
+                {
+                    "name": "components",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/layouts/dashboard/dashboard.module.ts",
+                    "type": "[]",
+                    "defaultValue": "[DashboardComponent]"
                 }
             ],
             "src/app/shared/components/modals/base-modal-regular/base-modal-regular.stories.ts": [
@@ -35713,24 +35952,6 @@
                     "defaultValue": "(args: any) => ({\n  component: KycCongratulationsPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
-                    "type": "Story<KycIdverificationPureComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: KycIdverificationPureComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -35793,24 +36014,6 @@
                     "defaultValue": "(args: any) => ({\n  component: KycSsnPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
-                    "type": "Story<KycSsnFullPureComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -35827,6 +36030,24 @@
                     "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
                     "type": "Story<KycWelcomePureComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.stories.ts",
+                    "type": "Story<KycSsnFullPureComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts": [
@@ -35863,6 +36084,128 @@
                     "file": "src/app/views/signup/signup-pure/signup-pure.stories.ts",
                     "type": "Story<SignupPureComponent>",
                     "defaultValue": "(args: any) => ({\n  component: SignupPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.stories.ts",
+                    "type": "Story<KycIdverificationPureComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: KycIdverificationPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
+                    "type": "Story<CreditcardCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
+                    "type": "Story<CreditReportCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
+                    "type": "Story<LoanCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Digit",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Percentage",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Tag",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "Story<SnapshotDisplayCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
+                },
+                {
+                    "name": "Time",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
                 }
             ],
             "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts": [
@@ -35949,128 +36292,6 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `\n  <span style=\"p-6 width: 120px\">\n    <brave-viewdetail-button>View Details</brave-viewdetail-button>\n  </span>\n  `,\n})"
                 }
             ],
-            "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
-                    "type": "Story<CreditBuilderCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/credit-report-card/credit-report-card.stories.ts",
-                    "type": "Story<CreditReportCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditReportCardComponent,\n  props: {\n    ...args\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/creditcard-card/creditcard-card.stories.ts",
-                    "type": "Story<CreditcardCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditcardCardComponent,\n  props: {\n    ...args,\n    status: 'excellent',\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/cards/loan-card/loan-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/loan-card/loan-card.stories.ts",
-                    "type": "Story<LoanCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: LoanCardComponent,\n  props: {\n    ...args,\n    status: 'good',\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Digit",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Percentage",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Tag",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                    "type": "Story<SnapshotDisplayCardComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: SnapshotDisplayCardComponent,\n  props: {\n    ...args\n  },\n})"
-                },
-                {
-                    "name": "Time",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/cards/snapshot-display-card/snapshot-display-card.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                }
-            ],
             "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts": [
                 {
                     "name": "Default",
@@ -36087,6 +36308,42 @@
                     "file": "src/app/shared/components/charts/credit-score-history-chart/credit-score-history-chart.stories.ts",
                     "type": "Story<CreditScoreHistoryChartComponent>",
                     "defaultValue": "(args: any) => ({\n  component: CreditScoreHistoryChartComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts",
+                    "type": "Story<CreditScoreHistoryNgxChartComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditScoreHistoryNgxChartComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
+                    "type": "Story<OutlineAddressFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlineAddressFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts": [
@@ -36115,24 +36372,6 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    kbas,\n    required: true,\n  },\n  template: `<brave-kbaquestions-form [kbas]=\"kbas\"></brave-kbaquestions-form>`,\n})"
                 }
             ],
-            "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-address-form/outline-address-form.stories.ts",
-                    "type": "Story<OutlineAddressFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlineAddressFormComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts": [
                 {
                     "name": "Default",
@@ -36149,24 +36388,6 @@
                     "file": "src/app/shared/components/forms/outline-name-form/outline-name-form.stories.ts",
                     "type": "Story<OutlineNameFormComponent>",
                     "defaultValue": "(args: any) => ({\n  component: OutlineNameFormComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
-                    "type": "Story<OutlineOnecolumnFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts": [
@@ -36187,12 +36408,12 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts": [
+            "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
+                    "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -36200,9 +36421,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
-                    "type": "Story<OutlineVerificationcodeFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                    "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
+                    "type": "Story<OutlineOnecolumnFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/forms/select-dob-form/select-dob-form.stories.ts": [
@@ -36223,12 +36444,12 @@
                     "defaultValue": "(args: any) => ({\n  component: SelectDobFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts": [
+            "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts": [
                 {
                     "name": "Default",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                    "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
@@ -36236,9 +36457,9 @@
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
-                    "type": "Story<SimpleSignupFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: SimpleSignupFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                    "file": "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts",
+                    "type": "Story<OutlineVerificationcodeFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlineVerificationcodeFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts": [
@@ -36257,24 +36478,6 @@
                     "file": "src/app/shared/components/forms/ssn-full-form/ssn-full-form.stories.ts",
                     "type": "Story<SsnFullFormComponent>",
                     "defaultValue": "(args: any) => ({\n  component: SsnFullFormComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
-                    "type": "Story<SsnLastfourFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,\n})"
                 }
             ],
             "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts": [
@@ -36309,32 +36512,6 @@
                     "file": "src/app/shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.stories.ts",
                     "type": "Story<HiddenAsteriskInputComponent>",
                     "defaultValue": "(args: any) => ({\n  component: HiddenAsteriskInputComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "question",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "ITransunionKBAQuestion",
-                    "defaultValue": "{} as ITransunionKBAQuestion"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
-                    "type": "Story<KbaMultiplechoiceInputComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.stories.ts": [
@@ -36387,6 +36564,32 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlineInputComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
+            "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "question",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "ITransunionKBAQuestion",
+                    "defaultValue": "{} as ITransunionKBAQuestion"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.stories.ts",
+                    "type": "Story<KbaMultiplechoiceInputComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    question,\n  },\n  template: `<brave-kba-multiplechoice-input [question]=\"question\"></brave-kba-multiplechoice-input>`,\n})"
+                }
+            ],
             "src/app/shared/components/inputs/outline-select-input/outline-select-input.stories.ts": [
                 {
                     "name": "Default",
@@ -36437,24 +36640,6 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlineSelectInputComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/interstitials/spinner/spinner.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
-                    "type": "Story<SpinnerComponent>",
-                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
-                }
-            ],
             "src/app/shared/components/modals/onboarding-dispute/onboarding-dispute.stories.ts": [
                 {
                     "name": "Default",
@@ -36473,6 +36658,42 @@
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args\n  },\n  template: `<brave-onboarding-dispute></brave-onboarding-dispute>`,\n})"
                 }
             ],
+            "src/app/shared/components/interstitials/spinner/spinner.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/interstitials/spinner/spinner.stories.ts",
+                    "type": "Story<SpinnerComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<div style=\"width: 75vw; height: 74vh\"><brave-spinner></brave-spinner></div>`,\n})"
+                }
+            ],
+            "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.stories.ts",
+                    "type": "Story<SsnLastfourFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-ssn-lastfour-form></brave-ssn-lastfour-form>`,\n})"
+                }
+            ],
             "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts": [
                 {
                     "name": "Default",
@@ -36489,6 +36710,24 @@
                     "file": "src/app/shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.stories.ts",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/simple-signup-form/simple-signup-form.stories.ts",
+                    "type": "Story<SimpleSignupFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: SimpleSignupFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts": [
@@ -36545,24 +36784,6 @@
                     "defaultValue": "(args: any) => ({\n  component: NavigationTabsComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
-                    "type": "Story<TradelinePaymentHistoryComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts": [
                 {
                     "name": "Default",
@@ -36579,6 +36800,42 @@
                     "file": "src/app/shared/components/tradelines/tradeline-summary/tradeline-summary.stories.ts",
                     "type": "Story<TradelineSummaryComponent>",
                     "defaultValue": "(args: any) => ({\n  component: TradelineSummaryComponent,\n  props: {\n    ...args,\n  },\n  template: `\n    <div class=\"container mx-auto max-w-xs h-full\">\n      <brave-tradeline-summary\n        [status]=\"'Open'\"\n      ></brave-tradeline-summary>\n    </div>`,\n})"
+                }
+            ],
+            "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/cards/credit-builder-card/credit-builder-card.stories.ts",
+                    "type": "Story<CreditBuilderCardComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditBuilderCardComponent,\n  props: {\n    ...args\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
+                    "type": "Story<TradelinePaymentHistoryComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
@@ -36709,6 +36966,16 @@
                     "defaultValue": "{\n  production: false,\n  API: 'https://jokbs4tpn3.execute-api.us-east-2.amazonaws.com/dev',\n}"
                 }
             ],
+            "src/environments/environment.qa.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.qa.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n}"
+                }
+            ],
             "src/environments/environment.prod.ts": [
                 {
                     "name": "environment",
@@ -36727,16 +36994,6 @@
                     "file": "src/environments/environment.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false\n}"
-                }
-            ],
-            "src/environments/environment.qa.ts": [
-                {
-                    "name": "environment",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/environments/environment.qa.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: false,\n}"
                 }
             ],
             "src/app/views/kyc-kbaquestions/example-questions.ts": [
@@ -36877,6 +37134,16 @@
                     "file": "src/app/shared/components/forms/select-dob-form/select-dob-form.component.ts",
                     "type": "string[]",
                     "defaultValue": "[\n  'Jan',\n  'Feb',\n  'Mar',\n  'Apr',\n  'May',\n  'Jun',\n  'Jul',\n  'Aug',\n  'Sep',\n  'Oct',\n  'Nov',\n  'Dec',\n]"
+                }
+            ],
+            "src/app/shared/components/charts/credit-score-history-ngx-chart/data.ts": [
+                {
+                    "name": "multi",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/charts/credit-score-history-ngx-chart/data.ts",
+                    "type": "[]",
+                    "defaultValue": "[\n  {\n    name: 'Germany',\n    series: [\n      {\n        name: '1990',\n        value: 62000000,\n      },\n      {\n        name: '2010',\n        value: 73000000,\n      },\n      {\n        name: '2011',\n        value: 89400000,\n      },\n    ],\n  },\n\n  {\n    name: 'USA',\n    series: [\n      {\n        name: '1990',\n        value: 250000000,\n      },\n      {\n        name: '2010',\n        value: 309000000,\n      },\n      {\n        name: '2011',\n        value: 311000000,\n      },\n    ],\n  },\n\n  {\n    name: 'France',\n    series: [\n      {\n        name: '1990',\n        value: 58000000,\n      },\n      {\n        name: '2010',\n        value: 50000020,\n      },\n      {\n        name: '2011',\n        value: 58000000,\n      },\n    ],\n  },\n  {\n    name: 'UK',\n    series: [\n      {\n        name: '1990',\n        value: 57000000,\n      },\n      {\n        name: '2010',\n        value: 62000000,\n      },\n    ],\n  },\n]"
                 }
             ],
             "src/app/views/signin-redirect/signin-redirect.component.ts": [
@@ -39410,6 +39677,45 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "CreditScoreHistoryNgxChartComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/18",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/charts/credit-score-history-ngx-chart/data.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "multi",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

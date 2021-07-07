@@ -1,11 +1,12 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
-import { CreditScoreGraphicTabsComponent } from '@shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { CreditReportGraphicWithGraphComponent } from '@shared/components/graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
 
 export default {
-  title: 'app/components/tabs/credit-score-graphic-tabs',
+  title: 'app/components/graphics/credit-report-graphic-with-graph',
+  component: CreditReportGraphicWithGraphComponent,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -18,11 +19,12 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<any> = (args: any) => ({
-  component: CreditScoreGraphicTabsComponent,
+const Template: Story<CreditReportGraphicWithGraphComponent> = (args: any) => ({
+  component: CreditReportGraphicWithGraphComponent,
   props: {
     ...args,
   },
 });
 
 export const Default = Template.bind({});
+Default.args = {};
