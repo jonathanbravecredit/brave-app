@@ -176,7 +176,11 @@ const components = [
   CreditReportGraphicWithGraphComponent,
   BasePaginationComponent,
   ReasonCardComponent,
-  TradelineDisputeProcessComponent
+  TradelineDisputeProcessComponent,
+  BaseModalComponent,
+  ConfirmationModalComponent,
+  ConditionalTermComponent,
+  TradelineDisputeProcessSuccessComponent,
 ];
 
 // component specific pipes only
@@ -193,8 +197,8 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
-  ParseTradelineDetailsPipe,
-  BasePaginationPipe
+  BasePaginationPipe,
+  BaseModalPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -209,7 +213,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     FormsModule,
     RouterModule,
   ],
-  declarations: [...components, ...pipes, ...directives, BaseModalComponent, BaseModalPipe, ConfirmationModalComponent, ConditionalTermComponent, TradelineDisputeProcessSuccessComponent],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
