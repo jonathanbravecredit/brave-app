@@ -1,7 +1,24 @@
+type Query {
+  transunion(action: String!, message: String!): String
+  getDisputes(id: ID!): Disputes
+  getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
+}
+
+type Mutation {
+  createDisputes(id: ID!, msg: String): Disputes
+  patchDisputes(id: ID!, msg: String): Disputes
+  patchTransunion(id: ID!, msg: String): Transunion
+  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+}
+
 type AppData @aws_iam @aws_cognito_user_pools {
   id: ID!
   user: User!
   agencies: Agencies!
+  preferences: Preferences!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
@@ -69,6 +86,17 @@ type Agencies @aws_iam @aws_cognito_user_pools {
   experian: Experian
 }
 
+type Preferences @aws_iam @aws_cognito_user_pools {
+  showAllAccounts: ShowAccountsPreference
+}
+
+type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
+  creditCards: Boolean
+  collectionsAccounts: Boolean
+  installmentLoans: Boolean
+  mortgages: Boolean
+}
+
 type Transunion @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
@@ -77,9 +105,18 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   currentRawQuestions: String
   currentRawAuthDetails: String
   enrollmentKey: String
-  enrollReport: TUEnrollResponse
-  enrollMergeReport: TUEnrollResponse
-  enrollVantageScore: TUEnrollResponse
+  enrollReport: TUReportResponse
+  enrollMergeReport: TUReportResponse
+  enrollVantageScore: TUReportResponse
+  enrolled: Boolean
+  enrolledOn: String
+  fulfillReport: TUReportResponse
+  fulfillMergeReport: TUReportResponse
+  fulfillVantageScore: TUReportResponse
+  fulfilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
+  disputes: Disputes
 }
 
 type Equifax @aws_iam @aws_cognito_user_pools {
@@ -90,21 +127,28 @@ type Experian @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
 }
 
-type Query {
-  transunion(action: String!, message: String!): String
-  getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
-  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
-}
-
-type TUEnrollResponse @aws_iam @aws_cognito_user_pools {
+type TUReportResponse @aws_iam @aws_cognito_user_pools {
   bureau: String
   errorResponse: String
   serviceProduct: String
   serviceProductFullfillmentKey: String
-  serviceProductObject: String
+  serviceProductObject: AWSJSON
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
+}
+
+type Disputes @aws_iam @aws_cognito_user_pools {
+  disputePreflightStatus: String
+  disputeInflightStatus: String
+  disputeEligibility: String
+  disputeResults: AWSJSON
+  disputeHistory: [AWSJSON]
+  modifiedOn: Int
+  createdOn: Int
+  notificationStatus: String
+  notificationMessage: AWSJSON
+  notificationSentOn: Int
 }
 
 input UserInput {
@@ -170,20 +214,42 @@ input TransunionInput {
   currentRawQuestions: String
   currentRawAuthDetails: String
   enrollmentKey: String
-  enrollReport: TUEnrollResponseInput
-  enrollMergeReport: TUEnrollResponseInput
-  enrollVantageScore: TUEnrollResponseInput
+  enrollReport: TUReportResponseInput
+  enrollMergeReport: TUReportResponseInput
+  enrollVantageScore: TUReportResponseInput
+  enrolled: Boolean
+  enrolledOn: String
+  fulfillReport: TUReportResponseInput
+  fulfillMergeReport: TUReportResponseInput
+  fulfillVantageScore: TUReportResponseInput
+  fulfilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
+  disputes: DisputesInput
 }
 
-input TUEnrollResponseInput {
+input TUReportResponseInput {
   bureau: String
   errorResponse: String
   serviceProduct: String
   serviceProductFullfillmentKey: String
-  serviceProductObject: String
+  serviceProductObject: AWSJSON
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
+}
+
+input DisputesInput {
+  disputePreflightStatus: String
+  disputeInflightStatus: String
+  disputeEligibility: String
+  disputeResults: AWSJSON
+  disputeHistory: [AWSJSON]
+  modifiedOn: Int
+  createdOn: Int
+  notificationStatus: String
+  notificationMessage: AWSJSON
+  notificationSentOn: Int
 }
 
 input EquifaxInput {
@@ -192,6 +258,17 @@ input EquifaxInput {
 
 input ExperianInput {
   authenticated: Boolean
+}
+
+input PreferencesInput {
+  showAllAccounts: ShowAccountsPreferenceInput
+}
+
+input ShowAccountsPreferenceInput {
+  creditCards: Boolean
+  collectionsAccounts: Boolean
+  installmentLoans: Boolean
+  mortgages: Boolean
 }
 
 enum ModelSortDirection {
@@ -301,22 +378,18 @@ input CreateAppDataInput {
   id: ID
   user: UserInput!
   agencies: AgenciesInput!
+  preferences: PreferencesInput!
 }
 
 input UpdateAppDataInput {
   id: ID!
   user: UserInput
   agencies: AgenciesInput
+  preferences: PreferencesInput
 }
 
 input DeleteAppDataInput {
   id: ID
-}
-
-type Mutation {
-  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
 }
 
 input ModelAppDataConditionInput {

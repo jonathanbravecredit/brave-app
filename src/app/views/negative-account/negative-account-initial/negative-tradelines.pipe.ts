@@ -1,13 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
-import {
-  BRAVE_ACCOUNT_TYPE,
-  NEGATIVE_PAY_STATUS_CODES,
-} from '@shared/data/pay-status-codes';
-import {
-  IMergeReport,
-  ITradeLinePartition,
-} from '@shared/interfaces/merge-report.interface';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
+import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { DEFAULT_TRADELINE } from '@views/negative-account/negative-account-initial/constants';
 
 @Pipe({
   name: 'negativeTradelines',
@@ -17,7 +12,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
 
   transform(report: IMergeReport): INegativeAccountCardInputs[] | undefined {
     this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
-    if (!this.tradeLines) return [defaultTradeline];
+    if (!this.tradeLines) return [DEFAULT_TRADELINE];
     return this.tradeLines instanceof Array
       ? this.filterTradelines(this.tradeLines)
           .sortByAccountType(this.tradeLines)
@@ -33,8 +28,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
    */
   filterTradelines(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
     this.tradeLines = tradeLines.filter((item) => {
-      const status =
-        NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
+      const status = NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
       return !!status;
     });
     return this;
@@ -48,16 +42,10 @@ export class NegativeTradelinesPipe implements PipeTransform {
   sortByAccountType(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
-        if (
-          a.accountTypeSymbol?.toLowerCase() === 'y' &&
-          b.accountTypeDescription?.toLowerCase() !== 'y'
-        ) {
+        if (a.accountTypeSymbol?.toLowerCase() === 'y' && b.accountTypeDescription?.toLowerCase() !== 'y') {
           return 1;
         }
-        if (
-          a.accountTypeSymbol?.toLowerCase() !== 'y' &&
-          b.accountTypeDescription?.toLowerCase() === 'y'
-        ) {
+        if (a.accountTypeSymbol?.toLowerCase() !== 'y' && b.accountTypeDescription?.toLowerCase() === 'y') {
           return -1;
         }
         return 0;
@@ -94,16 +82,14 @@ export class NegativeTradelinesPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  mapTradeLineToAccount(
-    tradeLines: ITradeLinePartition[]
-  ): INegativeAccountCardInputs[] {
+  mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): INegativeAccountCardInputs[] {
     const negativeAccounts = tradeLines.map((item) => {
       return {
+        tradeline: item,
         creditorName: item.Tradeline?.creditorName || '',
         lastReported: item.Tradeline?.dateReported || '',
         accountTypeDescription: this.lookupAccountType(item),
-        accountTypeDescriptionValue:
-          item.Tradeline?.OpenClosed?.description || '',
+        accountTypeDescriptionValue: item.Tradeline?.OpenClosed?.description || '',
         disputeFlag: 'Previously Disputed?',
         originalCreditor: 'Original Creditor',
         originalCreditorValue: this.lookupOriginalCreditor(item),
@@ -129,11 +115,8 @@ export class NegativeTradelinesPipe implements PipeTransform {
   lookupAccountType(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'unknown';
     const description = partition.accountTypeDescription;
-    const status =
-      BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
-    return partition.accountTypeSymbol?.toLowerCase() === 'y'
-      ? description || 'No Data / Unknown'
-      : status;
+    const status = BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
+    return partition.accountTypeSymbol?.toLowerCase() === 'y' ? description || 'No Data / Unknown' : status;
   }
 
   /**
@@ -143,8 +126,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
    */
   lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'unknown';
-    const originalCreditor =
-      partition.Tradeline?.CollectionTrade?.originalCreditor;
+    const originalCreditor = partition.Tradeline?.CollectionTrade?.originalCreditor;
     const creditorName = partition.Tradeline?.creditorName || 'unknown';
     if (partition.accountTypeSymbol?.toLowerCase() === 'y') {
       return originalCreditor ? originalCreditor : creditorName;
@@ -164,22 +146,3 @@ export class NegativeTradelinesPipe implements PipeTransform {
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
   }
 }
-
-const defaultTradeline = {
-  creditorName: '',
-  lastReported: '',
-  accountTypeDescription: '',
-  accountTypeDescriptionValue: 'No account type',
-  disputeFlag: 'Previously Disputed?',
-  originalCreditor: 'Original Creditor',
-  originalCreditorValue: '',
-  disputeFlagValue: '',
-  accountDetail: {
-    accountNumber: '',
-    typeOfCollection: '',
-    amountPastDue: -1,
-    dateOpened: '',
-    dateLastPayment: '',
-    remarks: '',
-  },
-};

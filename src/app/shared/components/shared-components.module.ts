@@ -76,13 +76,13 @@ import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
+import { CreditReportGraphicComponent } from './graphics/credit-report-graphic/credit-report-graphic.component';
 import { TradelineMetricsComponent } from './tradelines/tradeline-metrics/tradeline-metrics.component';
 import { TradelineSummaryComponent } from './tradelines/tradeline-summary/tradeline-summary.component';
 import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradeline-details.component';
 import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
 import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
-import { ParseTradelineDetailsPipe } from './tradelines/tradeline-details/parse-tradeline-details.pipe';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
@@ -154,6 +154,7 @@ const components = [
   CreditReportCardComponent,
   SpinnerComponent,
   OnboardingDisputeComponent,
+  CreditReportGraphicComponent,
   TradelineMetricsComponent,
   TradelineSummaryComponent,
   TradelineDetailsComponent,

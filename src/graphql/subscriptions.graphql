@@ -75,6 +75,41 @@ subscription OnCreateAppData($owner: String) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -184,6 +219,41 @@ subscription OnUpdateAppData($owner: String) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -293,6 +363,41 @@ subscription OnDeleteAppData($owner: String) {
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus

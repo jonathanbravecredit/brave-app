@@ -4,7 +4,7 @@ export enum CreditReportStatus {
   Danger = 'danger',
   Safe = 'safe',
   Default = 'default',
-};
+}
 
 const enumStrColorCLassIndicator = {
   [CreditReportStatus.Danger]: 'brave-danger',
@@ -18,7 +18,7 @@ const enumStrColorCLassIndicator = {
 })
 export class CreditReportGraphicPipe implements PipeTransform {
   private possibleStatusFromValue = [
-    { 
+    {
       percentage: 25,
       status: CreditReportStatus.Safe,
     },
@@ -32,30 +32,30 @@ export class CreditReportGraphicPipe implements PipeTransform {
     }
   ];
 
+  private possibleValues = [
+    0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+  ];
+
   private getPossibeStatusFromPercentage(value: number): string {
     let result = CreditReportStatus.Default;
     this.possibleStatusFromValue.reverse().forEach((possibleValue) => {
-       if (value <= possibleValue.percentage) { result = possibleValue.status}
+       if (value <= possibleValue.percentage) { result = possibleValue.status; }
     });
 
     return result;
   }
 
-  private possibleValues = [
-    0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
-  ];
-
   private getAverageThresholdFromValue(value: number): number {
-    let result: number = 0;
+    let result = 0;
     this.possibleValues.forEach((possibleValue) => {
-      if (value >= possibleValue) { result = possibleValue }
+      if (value >= possibleValue) { result = possibleValue; }
     });
     return result;
   }
 
   transform(value: number, ...args: string[]): string {
-    const outputType: string = args[0]
-    let result= '';
+    const outputType: string = args[0];
+    let result = '';
     if (outputType === 'css-class') {
       result = enumStrColorCLassIndicator[this.getPossibeStatusFromPercentage(value) as CreditReportStatus];
     } else if (outputType === 'margin-placement') {

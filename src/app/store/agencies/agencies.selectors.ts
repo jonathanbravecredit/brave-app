@@ -1,4 +1,5 @@
 import { Selector } from '@ngxs/store';
+import { DisputesInput } from '@shared/services/aws/api.service';
 import { AgenciesStateModel } from '@store/agencies/agencies.model';
 
 export class AgenciesSelectors {
@@ -15,5 +16,10 @@ export class AgenciesSelectors {
   @Selector([AgenciesStateModel])
   static getTransunionRawAuthDetails(state: AgenciesStateModel): string {
     return state.transunion?.currentRawAuthDetails || '';
+  }
+
+  @Selector([AgenciesStateModel])
+  static getTransunionDisputes(state: AgenciesStateModel): DisputesInput | null | undefined {
+    return state.transunion?.disputes;
   }
 }

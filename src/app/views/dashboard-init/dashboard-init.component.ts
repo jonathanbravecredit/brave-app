@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/snapshot-display-card.component';
 import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/snapshot-label.pipe';
 
 @Component({
   selector: 'brave-dashboard-init',
   templateUrl: './dashboard-init.component.html',
-  styleUrls: ['./dashboard-init.component.css'],
 })
 export class DashboardInitComponent implements OnInit {
   name = 'Emily';
@@ -19,7 +19,11 @@ export class DashboardInitComponent implements OnInit {
   danger = 'danger ' as SnapshotStatus;
   lastUpdated = 'Today';
 
-  constructor() {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
+
+  goToReport() {
+    this.router.navigate(['../report'], { relativeTo: this.route });
+  }
 }

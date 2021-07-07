@@ -49,6 +49,7 @@ import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { TradelinesDetailPipe } from './tradelines/tradelines/tradelines-detail.pipe';
 
 const views = [
   SignupComponent,
@@ -96,7 +97,7 @@ const views = [
   TradelineDisputeProcessView
 ];
 
-const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
+const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe, TradelinesDetailPipe];
 
 @NgModule({
   declarations: [...views, ...pipes],

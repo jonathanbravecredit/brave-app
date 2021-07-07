@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'brave-tradeline-metrics',
   templateUrl: './tradeline-metrics.component.html',
 })
-export class TradelineMetricsComponent implements OnInit {
+export class TradelineMetricsComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
