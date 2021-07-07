@@ -1,14 +1,23 @@
-<div class="flex flex-col items-center bg-indigo-700 pt-3 pb-5 px-4">
+<div class="h-full flex flex-col items-center rounded-l-md bg-indigo-700 pt-3 pb-5 px-4">
   <p class="font-bold text-white">Your Score</p>
   <div class="font-bold text-white flex mt-3">
-    <div class="mr-2 text-2xl -mt-2">&#9650;</div>
-    <span>+5 points</span>
+    <div class="mr-2 text-2xl -mt-2">
+      <span
+        class="material-icons align-bottom transform"
+        [ngClass]="ptsChange < 0 ? 'rotate-90 text-red-500' : '-rotate-90 text-fuchsia-500'"
+      >
+        play_arrow
+      </span>
+    </div>
+    <span>{{ ptsChange >= 0 ? '+' : '' }}{{ ptsChange }} points</span>
   </div>
-  <p class="text-white text-xs text-opacity-50">since last month</p>
-  <p class="text-5xl text-white font-bold">{{ currentValue }}</p>
-  <p class="text-white font-extrabold">{{ percentage | creditReportGraphic: 'status' }}</p>
-  <div class="mt-2 h-4 w-full bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-    <div class="text-2xl text-white fixed {{ percentage | creditReportGraphic: 'css-class' }}">&#9650;</div>
+  <p class="text-white text-xs text-opacity-50 mt-1">since last month</p>
+  <p class="text-5xl text-white font-bold my-4">{{ currentValue }}</p>
+  <p class="text-white font-extrabold">{{ currentValue | creditReportGraphic: 'status' }}</p>
+  <div class="relative mt-2 h-4 w-full bg-gradient-to-r from-orange-500 via-yelow-300 to-emerald-400">
+    <div [ngStyle]="{ left: percentageStr }" class="absolute text-2xl text-white">
+      <span class="material-icons text-white align-bottom transform -rotate-90"> play_arrow </span>
+    </div>
   </div>
   <div class="w-full flex justify-between mt-2">
     <div>
@@ -18,5 +27,5 @@
       <p class="text-white text-xs font-bold">{{ limit }}</p>
     </div>
   </div>
-  <p class="mt-4 text-lg font-bold text-white text-center">TransUnion<br />VantageScore 3.0</p>
+  <p class="mt-4 mb-2 text-lg font-bold text-white text-center">TransUnion<br />VantageScore 3.0</p>
 </div>
