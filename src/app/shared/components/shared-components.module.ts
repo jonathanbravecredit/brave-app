@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 // pipes
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
@@ -94,6 +95,12 @@ import { BaseModalPipe } from './modals/base-modal/base-modal.pipe';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
 import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
+import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
+import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
+import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
 
 const components = [
   BaseFormComponent,
@@ -163,6 +170,10 @@ const components = [
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
+  CreditScoreGraphicTabsComponent,
+  CreditScoreHistoryChartComponent,
+  CreditScoreHistoryNgxChartComponent,
+  CreditReportGraphicWithGraphComponent,
   BasePaginationComponent,
   ReasonCardComponent,
   TradelineDisputeProcessComponent,
@@ -193,8 +204,16 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
+  imports: [
+    CommonModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    ChartsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+  ],
   declarations: [...components, ...pipes, ...directives],
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
