@@ -8,7 +8,12 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 })
 export class CreditScoreHistoryChartComponent implements OnInit {
   public lineChartData: ChartDataSets[] = [
-    { data: [550, 590, 586, 581, 620, 621, null], label: 'Series A', fill: false },
+    {
+      data: [550, 590, 586, 581, 620, 621, null],
+      label: 'Series A',
+      fill: false,
+      borderWidth: 2,
+    },
   ];
   public lineChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
   public lineChartOptions: ChartOptions = {
