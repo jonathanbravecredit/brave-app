@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IDisputeTradelineReasonCard } from '@shared/components/cards/reason-card/interfaces';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
 import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
-import { MOCK_TRADELINE_DISPUTE_PROCESS_REASONS as reasonPages } from './constants';
-import { IDisputeTradelineReasonCardPage, IDisputeTradelineSelectedObj } from './interfaces';
+import { DEFAULT_TRADELINE_REASONS as defaultReasons } from './constants';
+import { IDisputeTradelineProcessResult, IDisputeTradelineReasonCardPage, IDisputeTradelineReasonCardPageItem, IDisputeTradelineSelectedObj } from './interfaces';
 import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';
 
 @Component({
@@ -17,21 +17,27 @@ export class TradelineDisputeProcessComponent implements OnInit {
   /**
    * The array of pages and child items inside of them that displays the reason cards.
    */
-  reasonOptionPages: IDisputeTradelineReasonCardPage[] = reasonPages;
+  reasonOptionPages: IDisputeTradelineReasonCardPage[] = [];
   selectedIndexes: IDisputeTradelineSelectedObj[] = [];
-  navigationStack: any[] = [];
+  private navigationStack: any[] = [];
   isCustomInputSelected = false;
   showCustomInputError = false;
   showMaxError = false;
+  customReason: string = '';
+  @Input() disputeType: string | undefined = undefined;
+  @Input() initialStepId: string = 'select';
+  @Output() disputeProcessResult: EventEmitter<IDisputeTradelineProcessResult> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
     // Set the pages to default;
     this.navigationStack.push({
-      id: 'reason'
+      id: this.initialStepId,
+      data: undefined
     });
-  }
 
+    this.reasonOptionPages = this.disputeType === 'not-mine' ? defaultReasons.NOT_MINE : defaultReasons.INACCURATE;
+  }
   /**
    * Changes the "selected" state flag of the target option.
    * @param index - The position inside of the option array
@@ -82,8 +88,13 @@ export class TradelineDisputeProcessComponent implements OnInit {
     return this.findIndexInSelected(pageIndex, itemIndex) !== -1;
   }
 
-  getTargetSelectedCard(indexObj: IDisputeTradelineSelectedObj): IDisputeTradelineReasonCard {
+  getTargetSelectedPageItem(indexObj: IDisputeTradelineSelectedObj): IDisputeTradelineReasonCardPageItem {
     return this.reasonOptionPages[indexObj.pageIndex].items[indexObj.itemIndex];
+  }
+
+  getCurrentNavigationIndex(): number {
+    const navStackLength = this.navigationStack.length;
+    return navStackLength === 0 ? 0 : navStackLength - 1;
   }
 
   private isLimitOfSelectionReached(): boolean {
@@ -106,8 +117,18 @@ export class TradelineDisputeProcessComponent implements OnInit {
     }
   }
 
+  onRadioChanges(event: any): void {
+    this.disputeType = event.target.value;
+  }
+
   getLastNavigationStackId(): string {
     return this.navigationStack[this.navigationStack.length - 1].id;
+  }
+
+  goToReasons(): void {
+    this.navigationStack.push({
+      id: 'reason'
+    });
   }
 
   goToSummary(): void {
@@ -119,6 +140,68 @@ export class TradelineDisputeProcessComponent implements OnInit {
   }
 
   goBack(): void {
+    const currentStackId = this.getLastNavigationStackId();
+    if (currentStackId === 'reason') {
+      this.selectedIndexes = [];
+      this.customReason = '';
+      this.isCustomInputSelected = false;
+      this.disputeType = '';
+    }
+
     this.navigationStack.pop();
+  }
+
+  sendDispute(): void {
+    this.disputeProcessResult.emit(
+      {
+        isFinished: true,
+        data: {
+          hasCustomInput: this.isCustomInputInSelectedArr(),
+          customInput: this.customReason,
+          reasonsId: this.parseSelectedItemsToIdArray()
+        }
+      }
+    )
+  }
+
+  parseSelectedItemsToIdArray(): string[] {
+    let resultArr: string[] = [];
+
+    this.selectedIndexes.forEach(item => {
+      const target = this.getTargetSelectedPageItem(item);
+      resultArr.push(target.reason.id);
+    });
+
+    return resultArr;
+  }
+
+  isCustomInputInSelectedArr(): boolean {
+    let result: boolean = false;
+    this.selectedIndexes.forEach(item => {
+      const target = this.getTargetSelectedPageItem(item);
+      if (target.allowUserInput === true) {
+        result = true;
+      }
+    });
+
+    return result;
+  }
+  
+  getButtonConfig(): IFilledOnlyTextButtonConfig {
+    let defaultConfig: IFilledOnlyTextButtonConfig = {
+      buttonSize: 'base',
+      backgroundColor: 'bg-indigo-800',
+      activeColor: 'bg-indigo-900',
+      color: 'text-white',
+      full: false
+    }
+
+    if (this.disputeType !== undefined) {
+      return defaultConfig;
+    } else {
+      defaultConfig.backgroundColor = 'bg-black';
+      defaultConfig.activeColor = 'bg-black';
+      return defaultConfig;
+    }
   }
 }

@@ -3,7 +3,6 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { TradelineDisputeProcessComponent } from './tradeline-dispute-process.component';
-import { MOCK_TRADELINE_DISPUTE_PROCESS_REASONS as mock } from './constants';
 
 export default {
   title: 'app/components/tradelines/tradeline-dispute-process',

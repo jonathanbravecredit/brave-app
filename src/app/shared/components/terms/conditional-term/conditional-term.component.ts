@@ -32,8 +32,8 @@ export class ConditionalTermComponent implements OnInit {
     if (this.isConfirmed) {
       return defaultConfig;
     } else {
-      defaultConfig.backgroundColor = 'black';
-      defaultConfig.activeColor = 'black';
+      defaultConfig.backgroundColor = 'bg-black';
+      defaultConfig.activeColor = 'bg-black';
       return defaultConfig;
     }
   }
