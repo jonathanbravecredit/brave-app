@@ -21,6 +21,14 @@ const routes: Routes = [
     path: 'legal',
     loadChildren: () => import('./layouts/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
+  {
+    path: 'tradeline-dispute',
+    loadChildren: () =>
+      import('./layouts/disputes/dispute-tradeline/dispute-tradeline.module').then(
+        (m) => m.DisputeTradelineModule
+      ),
+  },
+  // { path: '', component: IndexComponent }, // TODO: replace with better page
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

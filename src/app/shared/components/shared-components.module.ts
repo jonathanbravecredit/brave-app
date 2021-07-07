@@ -85,6 +85,15 @@ import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-ic
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
+import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
+import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
+import { TradelineDisputeProcessComponent } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
+import { BaseModalComponent } from './modals/base-modal/base-modal.component';
+import { BaseModalPipe } from './modals/base-modal/base-modal.pipe';
+import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
+import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
+import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
 
 const components = [
   BaseFormComponent,
@@ -154,6 +163,9 @@ const components = [
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
+  BasePaginationComponent,
+  ReasonCardComponent,
+  TradelineDisputeProcessComponent
 ];
 
 // component specific pipes only
@@ -170,12 +182,14 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
+  ParseTradelineDetailsPipe,
+  BasePaginationPipe
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, BaseModalComponent, BaseModalPipe, ConfirmationModalComponent, ConditionalTermComponent, TradelineDisputeProcessSuccessComponent],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

@@ -1,0 +1,25 @@
+<div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
+  <div class="flex items-center" (click)="requestGoBack()">
+    <span class="material-icons px-1">arrow_back</span>&nbsp;Back
+  </div>
+  <p class="text-lg mt-4 mb-4">New Dispute</p>
+  <!-- TODO: (html) Create an ng-container to allow  -->
+  <brave-negative-account-card class="mt-4" [data]="negativeAccountCardData" [showDisputeButton]="false"></brave-negative-account-card>
+  <brave-tradeline-dispute-process [disputeType]="initialDisputeType" [initialStepId]="initialStepId" (disputeProcessResult)="onDisputeProcessResult($event)" *ngIf="isDisputeProcessInProgress"></brave-tradeline-dispute-process>
+</div>
+<div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
+  <div clas="flex justify-center" >
+    <div class="h-10 w-10 rounded-full bg-blueGray-300 m-auto"></div>
+    <h1 class="text-lg font-bold text-center mt-4">Your dispute is on its way!</h1>
+    <p class="text-sm font-semibold mt-4">Here’s some important information about the next steps:</p>
+    <ul class="list-disc">
+      <li class="text-sm mt-4">It can take up to 30 days or more to get the investigation results </li>
+      <li class="text-sm mt-4">You can check the current status of the dispute by clicking on the ‘my disputes’ icon at the bottom of all screens, then click on ‘Current disputes’ </li>
+      <li class="text-sm mt-4">You can check the current status of the dispute by clicking on the ‘my disputes’ icon at the bottom of all screens, then click on ‘Current disputes’ </li>
+      <li class="text-sm mt-4">We will send you an email once you receive the results, and you can view them by clicking on the ‘my disputes’ icon at the bottom of the screen, then click in the ‘Current Disputes’ section</li>
+    </ul>
+    <div class="mt-4 flex justify-center">
+      <brave-filled-onlytext-button>Go back to my dashboard</brave-filled-onlytext-button>
+    </div>
+  </div>
+</div>
