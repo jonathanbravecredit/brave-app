@@ -5,7 +5,7 @@ import { ITradeLinePartition, IMergeReport } from "@shared/interfaces/merge-repo
 import { DEFAULT_TRADELINE } from '@views/negative-account/negative-account-initial/constants';
 
 @Pipe({
-  name: 'mergereportToNegativeTradelines',
+  name: "mergereportToNegativeTradelines",
 })
 export class MergereportToNegativeTradelinesPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
