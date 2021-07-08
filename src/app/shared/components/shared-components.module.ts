@@ -95,6 +95,9 @@ import { BaseModalPipe } from './modals/base-modal/base-modal.pipe';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
 import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
+
+import { TradelineDisputePublicRecordsComponent } from './tradelines/tradeline-dispute-public-records/tradeline-dispute-public-records.component';
+
 import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
@@ -177,6 +180,7 @@ const components = [
   BasePaginationComponent,
   ReasonCardComponent,
   TradelineDisputeProcessComponent,
+  TradelineDisputePublicRecordsComponent,
   BaseModalComponent,
   ConfirmationModalComponent,
   ConditionalTermComponent,
@@ -198,8 +202,9 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
+  ParseTradelineDetailsPipe,
   BasePaginationPipe,
-  BaseModalPipe,
+  BaseModalPipe
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

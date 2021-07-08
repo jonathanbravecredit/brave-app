@@ -47,7 +47,10 @@ import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { TradelineDisputePublicRecordsView } from './tradlines/tradline-dispute-public-records/tradline-dispute-public-records.view';
+import { TradelinesDetailPipe } from './tradelines/tradelines/tradelines-detail.pipe';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+
 
 const views = [
   SignupComponent,
@@ -93,6 +96,7 @@ const views = [
   TradelinesComponent,
   TradelinesPureComponent,
   TradelineDisputeProcessView,
+  TradelineDisputePublicRecordsView
 ];
 
 const pipes = [KycKbaquestionsPipe];
