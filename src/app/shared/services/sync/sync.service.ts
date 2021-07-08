@@ -11,7 +11,6 @@ import {
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { isNullOrUndefined } from 'util';
 import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject } from 'rxjs';
 
@@ -36,6 +35,7 @@ export class SyncService {
     // user signsIn and is new user
     console.log('calling hallmonitor');
     const { identityId: id } = creds;
+    // TODO: BETTER USE OF ROUND TRIP CALLS...USE SUBJECT
     // Handle new users
     // 1. No ID from Amplify to validate against...bail out
     // 2. Brand New User and signn event..initialize DB and go to dashboard
@@ -45,7 +45,7 @@ export class SyncService {
     if (isUserBrandNew && signInEvent) this.initAppData(creds); // refreshed event
     if (isUserBrandNew && !signInEvent) this.initAppData(creds); // refreshed event
 
-    // Handle returning users (implicit) !isUserBrandNEw
+    // Handle returning users (implicit) !isUserBrandNew
     // 1. No ID from Amplify to validate against...bail out
     // 2. User has fully onboarded and a signin event...go to dashboard
     // 3. User has fully onboarded and NOT a signin event...stay put
@@ -195,6 +195,11 @@ export class SyncService {
     }
   }
 
+  /**
+   * Removes the '__typename' fields from query results
+   * @param {GetAppDataQuery} data
+   * @returns
+   */
   cleanBackendData(data: GetAppDataQuery): AppDataStateModel {
     let clean = deleteKeyNestedObject(data, '__typename');
     delete clean.createdAt; // this is a graphql managed field

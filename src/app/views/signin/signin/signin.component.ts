@@ -18,7 +18,7 @@ export class SigninComponent {
     private route: ActivatedRoute,
     private store: Store,
     private auth: AuthService,
-    private api: APIService
+    private api: APIService,
   ) {}
 
   ngOnInit(): void {}
@@ -32,15 +32,8 @@ export class SigninComponent {
     let isValid = true;
     if (isValid) {
       try {
-        const cognitorUser = await this.auth.signIn(
-          user.username,
-          user.password
-        );
-        // TODO need to get data from backend and find out what last step was
-        if (
-          cognitorUser?.challengeName === 'SMS_MFA' ||
-          cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA'
-        ) {
+        const cognitorUser = await this.auth.signIn(user.username, user.password);
+        if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
           console.log('MFA challenge');
           // this.router.navigate(['/account/submitmfa']);
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
@@ -48,24 +41,6 @@ export class SigninComponent {
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
           console.log('OTP setup');
           // this.auth.setupTOTP(user);
-        } else {
-          // TODO go to dashboard...default to assume no data for now
-          // handled by auth listener for SignIn event
-
-          const creds = await this.auth.getAuthCredentials();
-          if (creds) {
-            // await this.store
-            //   .dispatch(new AppDataActions.Edit({ id: creds.identityId }))
-            //   .toPromise();
-            // await this.store
-            //   .dispatch(new UserActions.Edit({ id: creds.identityId }))
-            //   .toPromise();
-            // this.auth.seedAppData(creds); //possibly update to async
-          }
-          // TODO add condition to check if onboarding is complete
-          // need to get the results from the database
-          //   ...check onboarding status and then route accordingly
-          this.router.navigate(['/onboarding/name']);
         }
       } catch (err) {
         if (err.code === 'UserNotConfirmedException') {
