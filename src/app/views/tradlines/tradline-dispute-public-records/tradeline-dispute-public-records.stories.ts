@@ -38,7 +38,7 @@ Reasons.args = {
 
 export const Summary = Template.bind({});
 Summary.args = {
-  initialStepId: 'summary',
+  initialStepId: "summary",
 };
 
 export const Success = Template.bind({});
