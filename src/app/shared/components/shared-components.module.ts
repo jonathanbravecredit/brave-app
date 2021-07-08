@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 // pipes
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
@@ -76,13 +77,13 @@ import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { CreditReportGraphicPipe } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.pipe';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
+import { CreditReportGraphicComponent } from './graphics/credit-report-graphic/credit-report-graphic.component';
 import { TradelineMetricsComponent } from './tradelines/tradeline-metrics/tradeline-metrics.component';
 import { TradelineSummaryComponent } from './tradelines/tradeline-summary/tradeline-summary.component';
 import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradeline-details.component';
 import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
 import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
-import { ParseTradelineDetailsPipe } from './tradelines/tradeline-details/parse-tradeline-details.pipe';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
@@ -94,8 +95,16 @@ import { BaseModalPipe } from './modals/base-modal/base-modal.pipe';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
 import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
+
 import { TradelineDisputePublicRecordsComponent } from './tradelines/tradeline-dispute-public-records/tradeline-dispute-public-records.component';
 import { TradelineDisputePersonalInformationComponent } from './tradelines/tradeline-dispute-personal-information/tradeline-dispute-personal-information.component';
+
+import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
+import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
+import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
+import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-header-card.component';
 
 const components = [
   BaseFormComponent,
@@ -156,6 +165,7 @@ const components = [
   CreditReportCardComponent,
   SpinnerComponent,
   OnboardingDisputeComponent,
+  CreditReportGraphicComponent,
   TradelineMetricsComponent,
   TradelineSummaryComponent,
   TradelineDetailsComponent,
@@ -164,6 +174,10 @@ const components = [
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
+  CreditScoreGraphicTabsComponent,
+  CreditScoreHistoryChartComponent,
+  CreditScoreHistoryNgxChartComponent,
+  CreditReportGraphicWithGraphComponent,
   BasePaginationComponent,
   ReasonCardComponent,
   TradelineDisputeProcessComponent,
@@ -172,6 +186,7 @@ const components = [
   ConfirmationModalComponent,
   ConditionalTermComponent,
   TradelineDisputeProcessSuccessComponent,
+  DisputeHeaderCardComponent,
   TradelineDisputePersonalInformationComponent
 ];
 
@@ -197,8 +212,8 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives,  ],
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
+  imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

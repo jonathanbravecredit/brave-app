@@ -10,7 +10,8 @@ import {
   ICreditReportCardGroup,
 } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { PreferencesStateModel } from '@store/preferences';
-import { CreditReportGroups } from '@shared/data/credit-report';
+import { CreditReportGroups } from '@shared/constants/credit-report';
+import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 
 export default {
   title: 'app/views/creditreport/credit-report',
@@ -18,11 +19,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [
-        SharedComponentsModule,
-        HttpClientModule,
-        RouterModule.forRoot([], { useHash: true }),
-      ],
+      imports: [SharedComponentsModule, HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],
@@ -44,7 +41,7 @@ const creditReports: ICreditReportCardGroup[] = [
         thirdFieldName: 'Payment Status',
         thirdFieldValue: 'Paid',
         status: '',
-      },
+      } as ICreditReportCardInputs,
       {
         type: 'c',
         creditorName: 'XYZ Financial',
@@ -56,7 +53,7 @@ const creditReports: ICreditReportCardGroup[] = [
         thirdFieldName: 'Payment Status',
         thirdFieldValue: 'Paid',
         status: '',
-      },
+      } as ICreditReportCardInputs,
     ],
   },
   {
@@ -74,7 +71,7 @@ const creditReports: ICreditReportCardGroup[] = [
         thirdFieldName: 'Payment Status',
         thirdFieldValue: 'Paid',
         status: '',
-      },
+      } as ICreditReportCardInputs,
     ],
   },
 ];

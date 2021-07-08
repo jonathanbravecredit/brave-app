@@ -20,6 +20,11 @@ const OnboardingRoutes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'returning',
+        pathMatch: 'full',
+      },
+      {
         path: 'name',
         component: KycWelcomeComponent,
         canActivate: [AuthGuard],

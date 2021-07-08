@@ -1,36 +1,23 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { IOnboardingEvent, OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-
-export interface INegativeAccountCardInputs {
-  creditorName?: string;
-  lastReported?: string;
-  accountTypeDescription?: string;
-  accountTypeDescriptionValue?: string;
-  originalCreditor?: string;
-  originalCreditorValue?: string;
-  disputeFlag?: string;
-  disputeFlagValue?: string;
-  accountDetail: {
-    accountNumber?: string;
-    typeOfCollection?: string;
-    amountPastDue?: number | string;
-    dateOpened?: string;
-    dateLastPayment?: string;
-    remarks?: string;
-  };
-}
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
+import {
+  IOnboardingEvent,
+  OnboardingDisputeComponent,
+} from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Component({
   selector: 'brave-negative-account-card',
   templateUrl: './negative-account-card.component.html',
-  styleUrls: ['./negative-account-card.component.css'],
 })
 export class NegativeAccountCardComponent {
   @ViewChild(OnboardingDisputeComponent)
   disputeTermsModal: OnboardingDisputeComponent | undefined;
+  @Output() confirmed: EventEmitter<void> = new EventEmitter();
   @Input() showDisputeButton = true;
   @Input() data: INegativeAccountCardInputs = {
+    tradeline: {} as ITradeLinePartition,
     creditorName: '',
     lastReported: '',
     originalCreditor: '',
@@ -45,10 +32,9 @@ export class NegativeAccountCardComponent {
       amountPastDue: 0,
       dateOpened: '20/02/2021',
       dateLastPayment: '20/02/2021',
-      remarks: ''
-    }
-  }
-
+      remarks: '',
+    },
+  };
 
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
@@ -57,6 +43,8 @@ export class NegativeAccountCardComponent {
 
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
+      this.showModal = false;
+      this.confirmed.emit();
       console.log('confirmed');
     }
   }

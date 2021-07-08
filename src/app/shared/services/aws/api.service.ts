@@ -23,6 +23,41 @@ export type Disputes = {
   notificationSentOn?: number | null;
 };
 
+export type Transunion = {
+  __typename: "Transunion";
+  authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
+  currentRawAuthDetails?: string | null;
+  enrollmentKey?: string | null;
+  enrollReport?: TUReportResponse;
+  enrollMergeReport?: TUReportResponse;
+  enrollVantageScore?: TUReportResponse;
+  enrolled?: boolean | null;
+  enrolledOn?: string | null;
+  fulfillReport?: TUReportResponse;
+  fulfillMergeReport?: TUReportResponse;
+  fulfillVantageScore?: TUReportResponse;
+  fulfilledOn?: string | null;
+  acknowledgedDisputeTerms?: boolean | null;
+  acknowledgedDisputeTermsOn?: string | null;
+  disputes?: Disputes;
+};
+
+export type TUReportResponse = {
+  __typename: "TUReportResponse";
+  bureau?: string | null;
+  errorResponse?: string | null;
+  serviceProduct?: string | null;
+  serviceProductFullfillmentKey?: string | null;
+  serviceProductObject?: string | null;
+  serviceProductTypeId?: string | null;
+  serviceProductValue?: string | null;
+  status?: string | null;
+};
+
 export type CreateAppDataInput = {
   id?: string | null;
   user: UserInput;
@@ -93,13 +128,21 @@ export type TransunionInput = {
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
   enrollmentKey?: string | null;
-  enrollReport?: TUEnrollResponseInput | null;
-  enrollMergeReport?: TUEnrollResponseInput | null;
-  enrollVantageScore?: TUEnrollResponseInput | null;
+  enrollReport?: TUReportResponseInput | null;
+  enrollMergeReport?: TUReportResponseInput | null;
+  enrollVantageScore?: TUReportResponseInput | null;
+  enrolled?: boolean | null;
+  enrolledOn?: string | null;
+  fulfillReport?: TUReportResponseInput | null;
+  fulfillMergeReport?: TUReportResponseInput | null;
+  fulfillVantageScore?: TUReportResponseInput | null;
+  fulfilledOn?: string | null;
+  acknowledgedDisputeTerms?: boolean | null;
+  acknowledgedDisputeTermsOn?: string | null;
   disputes?: DisputesInput | null;
 };
 
-export type TUEnrollResponseInput = {
+export type TUReportResponseInput = {
   bureau?: string | null;
   errorResponse?: string | null;
   serviceProduct?: string | null;
@@ -223,33 +266,6 @@ export type Agencies = {
   experian?: Experian;
 };
 
-export type Transunion = {
-  __typename: "Transunion";
-  authenticated?: boolean | null;
-  indicativeEnrichmentSuccess?: boolean | null;
-  getAuthenticationQuestionsSuccess?: boolean | null;
-  serviceBundleFulfillmentKey?: string | null;
-  currentRawQuestions?: string | null;
-  currentRawAuthDetails?: string | null;
-  enrollmentKey?: string | null;
-  enrollReport?: TUEnrollResponse;
-  enrollMergeReport?: TUEnrollResponse;
-  enrollVantageScore?: TUEnrollResponse;
-  disputes?: Disputes;
-};
-
-export type TUEnrollResponse = {
-  __typename: "TUEnrollResponse";
-  bureau?: string | null;
-  errorResponse?: string | null;
-  serviceProduct?: string | null;
-  serviceProductFullfillmentKey?: string | null;
-  serviceProductObject?: string | null;
-  serviceProductTypeId?: string | null;
-  serviceProductValue?: string | null;
-  status?: string | null;
-};
-
 export type Equifax = {
   __typename: "Equifax";
   authenticated?: boolean | null;
@@ -364,6 +380,101 @@ export type PatchDisputesMutation = {
   notificationSentOn?: number | null;
 };
 
+export type PatchTransunionMutation = {
+  __typename: "Transunion";
+  authenticated?: boolean | null;
+  indicativeEnrichmentSuccess?: boolean | null;
+  getAuthenticationQuestionsSuccess?: boolean | null;
+  serviceBundleFulfillmentKey?: string | null;
+  currentRawQuestions?: string | null;
+  currentRawAuthDetails?: string | null;
+  enrollmentKey?: string | null;
+  enrollReport?: {
+    __typename: "TUReportResponse";
+    bureau?: string | null;
+    errorResponse?: string | null;
+    serviceProduct?: string | null;
+    serviceProductFullfillmentKey?: string | null;
+    serviceProductObject?: string | null;
+    serviceProductTypeId?: string | null;
+    serviceProductValue?: string | null;
+    status?: string | null;
+  } | null;
+  enrollMergeReport?: {
+    __typename: "TUReportResponse";
+    bureau?: string | null;
+    errorResponse?: string | null;
+    serviceProduct?: string | null;
+    serviceProductFullfillmentKey?: string | null;
+    serviceProductObject?: string | null;
+    serviceProductTypeId?: string | null;
+    serviceProductValue?: string | null;
+    status?: string | null;
+  } | null;
+  enrollVantageScore?: {
+    __typename: "TUReportResponse";
+    bureau?: string | null;
+    errorResponse?: string | null;
+    serviceProduct?: string | null;
+    serviceProductFullfillmentKey?: string | null;
+    serviceProductObject?: string | null;
+    serviceProductTypeId?: string | null;
+    serviceProductValue?: string | null;
+    status?: string | null;
+  } | null;
+  enrolled?: boolean | null;
+  enrolledOn?: string | null;
+  fulfillReport?: {
+    __typename: "TUReportResponse";
+    bureau?: string | null;
+    errorResponse?: string | null;
+    serviceProduct?: string | null;
+    serviceProductFullfillmentKey?: string | null;
+    serviceProductObject?: string | null;
+    serviceProductTypeId?: string | null;
+    serviceProductValue?: string | null;
+    status?: string | null;
+  } | null;
+  fulfillMergeReport?: {
+    __typename: "TUReportResponse";
+    bureau?: string | null;
+    errorResponse?: string | null;
+    serviceProduct?: string | null;
+    serviceProductFullfillmentKey?: string | null;
+    serviceProductObject?: string | null;
+    serviceProductTypeId?: string | null;
+    serviceProductValue?: string | null;
+    status?: string | null;
+  } | null;
+  fulfillVantageScore?: {
+    __typename: "TUReportResponse";
+    bureau?: string | null;
+    errorResponse?: string | null;
+    serviceProduct?: string | null;
+    serviceProductFullfillmentKey?: string | null;
+    serviceProductObject?: string | null;
+    serviceProductTypeId?: string | null;
+    serviceProductValue?: string | null;
+    status?: string | null;
+  } | null;
+  fulfilledOn?: string | null;
+  acknowledgedDisputeTerms?: boolean | null;
+  acknowledgedDisputeTermsOn?: string | null;
+  disputes?: {
+    __typename: "Disputes";
+    disputePreflightStatus?: string | null;
+    disputeInflightStatus?: string | null;
+    disputeEligibility?: string | null;
+    disputeResults?: string | null;
+    disputeHistory?: Array<string | null> | null;
+    modifiedOn?: number | null;
+    createdOn?: number | null;
+    notificationStatus?: string | null;
+    notificationMessage?: string | null;
+    notificationSentOn?: number | null;
+  } | null;
+};
+
 export type CreateAppDataMutation = {
   __typename: "AppData";
   id: string;
@@ -421,7 +532,7 @@ export type CreateAppDataMutation = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -432,7 +543,7 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -443,7 +554,7 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -453,6 +564,44 @@ export type CreateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -548,7 +697,7 @@ export type UpdateAppDataMutation = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -559,7 +708,7 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -570,7 +719,7 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -580,6 +729,44 @@ export type UpdateAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -675,7 +862,7 @@ export type DeleteAppDataMutation = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -686,7 +873,7 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -697,7 +884,7 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -707,6 +894,44 @@ export type DeleteAppDataMutation = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -816,7 +1041,7 @@ export type GetAppDataQuery = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -827,7 +1052,7 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -838,7 +1063,7 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -848,6 +1073,44 @@ export type GetAppDataQuery = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -945,7 +1208,7 @@ export type ListAppDatasQuery = {
         currentRawAuthDetails?: string | null;
         enrollmentKey?: string | null;
         enrollReport?: {
-          __typename: "TUEnrollResponse";
+          __typename: "TUReportResponse";
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -956,7 +1219,7 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         enrollMergeReport?: {
-          __typename: "TUEnrollResponse";
+          __typename: "TUReportResponse";
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -967,7 +1230,7 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         enrollVantageScore?: {
-          __typename: "TUEnrollResponse";
+          __typename: "TUReportResponse";
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -977,6 +1240,44 @@ export type ListAppDatasQuery = {
           serviceProductValue?: string | null;
           status?: string | null;
         } | null;
+        enrolled?: boolean | null;
+        enrolledOn?: string | null;
+        fulfillReport?: {
+          __typename: "TUReportResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        fulfillMergeReport?: {
+          __typename: "TUReportResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        fulfillVantageScore?: {
+          __typename: "TUReportResponse";
+          bureau?: string | null;
+          errorResponse?: string | null;
+          serviceProduct?: string | null;
+          serviceProductFullfillmentKey?: string | null;
+          serviceProductObject?: string | null;
+          serviceProductTypeId?: string | null;
+          serviceProductValue?: string | null;
+          status?: string | null;
+        } | null;
+        fulfilledOn?: string | null;
+        acknowledgedDisputeTerms?: boolean | null;
+        acknowledgedDisputeTermsOn?: string | null;
         disputes?: {
           __typename: "Disputes";
           disputePreflightStatus?: string | null;
@@ -1074,7 +1375,7 @@ export type OnCreateAppDataSubscription = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1085,7 +1386,7 @@ export type OnCreateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1096,7 +1397,7 @@ export type OnCreateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1106,6 +1407,44 @@ export type OnCreateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1201,7 +1540,7 @@ export type OnUpdateAppDataSubscription = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1212,7 +1551,7 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1223,7 +1562,7 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1233,6 +1572,44 @@ export type OnUpdateAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1328,7 +1705,7 @@ export type OnDeleteAppDataSubscription = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1339,7 +1716,7 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1350,7 +1727,7 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUEnrollResponse";
+        __typename: "TUReportResponse";
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1360,6 +1737,44 @@ export type OnDeleteAppDataSubscription = {
         serviceProductValue?: string | null;
         status?: string | null;
       } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: "TUReportResponse";
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
       disputes?: {
         __typename: "Disputes";
         disputePreflightStatus?: string | null;
@@ -1462,6 +1877,117 @@ export class APIService {
     )) as any;
     return <PatchDisputesMutation>response.data.patchDisputes;
   }
+  async PatchTransunion(
+    id: string,
+    msg?: string
+  ): Promise<PatchTransunionMutation> {
+    const statement = `mutation PatchTransunion($id: ID!, $msg: String) {
+        patchTransunion(id: $id, msg: $msg) {
+          __typename
+          authenticated
+          indicativeEnrichmentSuccess
+          getAuthenticationQuestionsSuccess
+          serviceBundleFulfillmentKey
+          currentRawQuestions
+          currentRawAuthDetails
+          enrollmentKey
+          enrollReport {
+            __typename
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollMergeReport {
+            __typename
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollVantageScore {
+            __typename
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrolled
+          enrolledOn
+          fulfillReport {
+            __typename
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillMergeReport {
+            __typename
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillVantageScore {
+            __typename
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfilledOn
+          acknowledgedDisputeTerms
+          acknowledgedDisputeTermsOn
+          disputes {
+            __typename
+            disputePreflightStatus
+            disputeInflightStatus
+            disputeEligibility
+            disputeResults
+            disputeHistory
+            modifiedOn
+            createdOn
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    if (msg) {
+      gqlAPIServiceArguments.msg = msg;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <PatchTransunionMutation>response.data.patchTransunion;
+  }
   async CreateAppData(
     input: CreateAppDataInput,
     condition?: ModelAppDataConditionInput
@@ -1556,6 +2082,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -1699,6 +2263,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -1842,6 +2444,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2019,6 +2659,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2162,6 +2840,44 @@ export class APIService {
                   serviceProductValue
                   status
                 }
+                enrolled
+                enrolledOn
+                fulfillReport {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                fulfillMergeReport {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                fulfillVantageScore {
+                  __typename
+                  bureau
+                  errorResponse
+                  serviceProduct
+                  serviceProductFullfillmentKey
+                  serviceProductObject
+                  serviceProductTypeId
+                  serviceProductValue
+                  status
+                }
+                fulfilledOn
+                acknowledgedDisputeTerms
+                acknowledgedDisputeTermsOn
                 disputes {
                   __typename
                   disputePreflightStatus
@@ -2310,6 +3026,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2450,6 +3204,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus
@@ -2590,6 +3382,44 @@ export class APIService {
                 serviceProductValue
                 status
               }
+              enrolled
+              enrolledOn
+              fulfillReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillMergeReport {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfillVantageScore {
+                __typename
+                bureau
+                errorResponse
+                serviceProduct
+                serviceProductFullfillmentKey
+                serviceProductObject
+                serviceProductTypeId
+                serviceProductValue
+                status
+              }
+              fulfilledOn
+              acknowledgedDisputeTerms
+              acknowledgedDisputeTermsOn
               disputes {
                 __typename
                 disputePreflightStatus

@@ -27,6 +27,94 @@ mutation PatchDisputes($id: ID!, $msg: String) {
     notificationSentOn
   }
 }
+mutation PatchTransunion($id: ID!, $msg: String) {
+  patchTransunion(id: $id, msg: $msg) {
+    authenticated
+    indicativeEnrichmentSuccess
+    getAuthenticationQuestionsSuccess
+    serviceBundleFulfillmentKey
+    currentRawQuestions
+    currentRawAuthDetails
+    enrollmentKey
+    enrollReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    enrollMergeReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    enrollVantageScore {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    enrolled
+    enrolledOn
+    fulfillReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfillMergeReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfillVantageScore {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfilledOn
+    acknowledgedDisputeTerms
+    acknowledgedDisputeTermsOn
+    disputes {
+      disputePreflightStatus
+      disputeInflightStatus
+      disputeEligibility
+      disputeResults
+      disputeHistory
+      modifiedOn
+      createdOn
+      notificationStatus
+      notificationMessage
+      notificationSentOn
+    }
+  }
+}
 mutation CreateAppData(
   $input: CreateAppDataInput!
   $condition: ModelAppDataConditionInput
@@ -106,6 +194,41 @@ mutation CreateAppData(
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -218,6 +341,41 @@ mutation UpdateAppData(
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus
@@ -330,6 +488,41 @@ mutation DeleteAppData(
           serviceProductValue
           status
         }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
         disputes {
           disputePreflightStatus
           disputeInflightStatus

@@ -1,17 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-new-dispute',
   templateUrl: './new-dispute.component.html',
-  styleUrls: ['./new-dispute.component.css']
 })
 export class NewDisputeComponent implements OnInit {
-  @Input() newDisputeData: INegativeAccountCardInputs | undefined;
-
-  constructor() { }
-
-  ngOnInit(): void {
+  dispute$: Observable<ITradeLinePartition>;
+  constructor(private disputeService: DisputeService) {
+    this.dispute$ = this.disputeService.tradeline$.asObservable();
   }
 
+  ngOnInit(): void {}
 }
