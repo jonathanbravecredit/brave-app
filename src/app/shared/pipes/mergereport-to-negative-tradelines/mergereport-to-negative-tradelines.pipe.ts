@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { NEGATIVE_PAY_STATUS_CODES, BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import { NEGATIVE_PAY_STATUS_CODES, BRAVE_ACCOUNT_TYPE } from "@shared/constants";
 import { ITradeLinePartition, IMergeReport } from "@shared/interfaces/merge-report.interface";
 import { DEFAULT_TRADELINE } from '@views/negative-account/negative-account-initial/constants';
 
