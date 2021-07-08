@@ -16,7 +16,7 @@ const DisputeTradelineRoutes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'tradeline-dispute',
+        path: "tradeline-dispute",
         component: TradelineDisputeProcessComponent,
         canActivate: [AuthGuard],
       },
