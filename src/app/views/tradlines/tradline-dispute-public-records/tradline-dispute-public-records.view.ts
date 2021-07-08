@@ -1,34 +1,19 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
 import { IDisputeTradelineProcessResult } from '@shared/components/tradelines/tradeline-dispute-process/interfaces';
 import { TradelineDisputeProcessComponent } from '@shared/components/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 
-
 @Component({
-  selector: 'brave-tradeline-dispute-process-view',
-  templateUrl: './tradeline-dispute-process.component.html',
-  styleUrls: ['./tradeline-dispute-process.component.css']
+  selector: 'brave-tradline-dispute-public-records-view',
+  templateUrl: './tradline-dispute-public-records.view.html',
+  styleUrls: ['./tradline-dispute-public-records.view.css']
 })
-export class TradelineDisputeProcessView implements OnInit {
+export class TradelineDisputePublicRecordsView implements OnInit {
   @ViewChild(TradelineDisputeProcessComponent) tradelineDisputeProcess: TradelineDisputeProcessComponent | undefined;
   isDisputeProcessInProgress = true;
   @Input() isDisputeSent = false;
   @Input() initialStepId = 'select';
   @Input() initialDisputeType: string | undefined = undefined;
-  
-  negativeAccountCardData: INegativeAccountCardInputs = {
-    creditorName: 'H.J National Collections',
-    lastReported: '05/15/21',
-    originalCreditor: 'Original Creditor',
-    originalCreditorValue: 'Wells Fargo Bank, N.A.',
-    accountDetail: {
-      accountNumber: '066611222',
-      typeOfCollection: 'Collections',
-      amountPastDue: 700,
-      dateOpened: '04/12/2018',
-      dateLastPayment: '04/21/2018'
-    }
-  };
+
   constructor() { }
 
   ngOnInit(): void {
