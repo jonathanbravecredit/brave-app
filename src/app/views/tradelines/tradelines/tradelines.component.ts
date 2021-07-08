@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -22,7 +22,6 @@ export class TradelinesComponent {
    */
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private creditReportServices: CreditreportService,
     private disputeService: DisputeService,
   ) {
@@ -37,6 +36,6 @@ export class TradelinesComponent {
    */
   onDisputeClicked(tradeline: ITradeLinePartition): void {
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['../tradeline-dispute'], { relativeTo: this.route });
+    this.router.navigate(['/report/accounts/dispute/tradelines']);
   }
 }

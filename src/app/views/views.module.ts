@@ -52,12 +52,12 @@ import { NewDisputeComponent } from './disputes/new-dispute/new-dispute.componen
 import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute-pure.component';
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
-import { TradelinesDisputePublicRecordsPureView } from './tradelines-dispute-public/tradelines-dispute-public-records-pure/tradelines-dispute-public-records-pure.view';
-import { TradelinesDisputePublicRecordsView } from '@views/tradelines-dispute-public/tradelines-dispute-public-records/tradelines-dispute-public-records.view';
-import { TradelinesDisputePersonalInformationPureComponent } from './tradelines-dispute-personal/tradelines-dispute-personal-information-pure/tradelines-dispute-personal-information-pure.component';
-import { TradelinesDisputePersonalInformationComponent } from './tradelines-dispute-personal/tradelines-dispute-personal-information/tradelines-dispute-personal-information.component';
-import { TradelinesDisputeProcessPureView } from './tradelines-dispute-process/tradelines-dispute-process-pure/tradelines-dispute-process-pure.view';
-import { TradelinesDisputeProcessView } from '@views/tradelines-dispute-process/tradelines-dispute-process/tradelines-dispute-process.view';
+import { DisputesPersonalView } from './disputes-personal/disputes-personal/disputes-personal.view';
+import { DisputesPersonalPureView } from './disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
+import { DisputesPublicPureView } from './disputes-public/disputes-public-pure/disputes-public-pure.view';
+import { DisputesPublicView } from './disputes-public/disputes-public/disputes-public.view';
+import { DisputesTradelinePureView } from './disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { DisputesTradelineView } from './disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 
 const views = [
   SignupComponent,
@@ -102,12 +102,12 @@ const views = [
   NewDisputeComponent,
   TradelinesComponent,
   TradelinesPureComponent,
-  TradelinesDisputeProcessView,
-  TradelinesDisputeProcessPureView,
-  TradelinesDisputePublicRecordsView,
-  TradelinesDisputePublicRecordsPureView,
-  TradelinesDisputePersonalInformationComponent,
-  TradelinesDisputePersonalInformationPureComponent,
+  DisputesPersonalView,
+  DisputesPersonalPureView,
+  DisputesPublicPureView,
+  DisputesPublicView,
+  DisputesTradelinePureView,
+  DisputesTradelineView,
 ];
 
 const pipes = [KycKbaquestionsPipe];

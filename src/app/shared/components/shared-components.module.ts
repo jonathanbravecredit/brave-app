@@ -103,6 +103,10 @@ import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
 import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
 import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-header-card.component';
+import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes-personal.component';
+import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
+import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
+import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
 
 const components = [
   BaseFormComponent,
@@ -210,7 +214,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
   imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, DisputesPersonalComponent, DisputesTradelineComponent, DisputesPublicComponent, DisputesSuccessComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
