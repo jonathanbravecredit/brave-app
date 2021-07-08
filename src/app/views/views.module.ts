@@ -1,8 +1,15 @@
+// MODULES
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+
+// PIPES
+import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
+
+// COMPONENTS
 import { SigninComponent } from './signin/signin/signin.component';
 import { SigninPureComponent } from './signin/signin-pure/signin-pure.component';
 import { SigninForgotComponent } from './signin-forgot/signin-forgot.component';
@@ -36,7 +43,6 @@ import { ComplianceTosComponent } from './compliance-tos/compliance-tos.componen
 import { KycErrorComponent } from './kyc-error/kyc-error.component';
 import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
-import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
@@ -46,10 +52,12 @@ import { NewDisputeComponent } from './disputes/new-dispute/new-dispute.componen
 import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute-pure.component';
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
-import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
-import { TradelineDisputePersonalInformationView } from './tradelines/tradeline-dispute-personal-information/tradeline-dispute-personal-information.view';
-import { TradelineDisputePublicRecordsView } from '@views/tradelines/tradline-dispute-public-records/tradline-dispute-public-records.view';
-import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { TradelinesDisputePublicRecordsPureView } from './tradelines-dispute-public/tradelines-dispute-public-records-pure/tradelines-dispute-public-records-pure.view';
+import { TradelinesDisputePublicRecordsView } from '@views/tradelines-dispute-public/tradelines-dispute-public-records/tradelines-dispute-public-records.view';
+import { TradelinesDisputePersonalInformationPureComponent } from './tradelines-dispute-personal/tradelines-dispute-personal-information-pure/tradelines-dispute-personal-information-pure.component';
+import { TradelinesDisputePersonalInformationComponent } from './tradelines-dispute-personal/tradelines-dispute-personal-information/tradelines-dispute-personal-information.component';
+import { TradelinesDisputeProcessPureView } from './tradelines-dispute-process/tradelines-dispute-process-pure/tradelines-dispute-process-pure.view';
+import { TradelinesDisputeProcessView } from '@views/tradelines-dispute-process/tradelines-dispute-process/tradelines-dispute-process.view';
 
 const views = [
   SignupComponent,
@@ -94,9 +102,12 @@ const views = [
   NewDisputeComponent,
   TradelinesComponent,
   TradelinesPureComponent,
-  TradelineDisputeProcessView,
-  TradelineDisputePublicRecordsView,
-  TradelineDisputePersonalInformationView,
+  TradelinesDisputeProcessView,
+  TradelinesDisputeProcessPureView,
+  TradelinesDisputePublicRecordsView,
+  TradelinesDisputePublicRecordsPureView,
+  TradelinesDisputePersonalInformationComponent,
+  TradelinesDisputePersonalInformationPureComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];

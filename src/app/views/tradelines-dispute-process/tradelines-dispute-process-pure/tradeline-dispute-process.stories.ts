@@ -1,18 +1,17 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
-import { SharedComponentsModule } from "@shared/components/shared-components.module";
-import { TradelineDisputeProcessView } from '@views/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
-import { TradelineDisputePublicRecordsView } from './tradline-dispute-public-records.view';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { TradelinesDisputeProcessPureView } from '@views/tradelines-dispute-process/tradelines-dispute-process-pure/tradelines-dispute-process-pure.view';
 
 export default {
   title: 'app/views/tradelines/tradeline-dispute-process',
-  component: TradelineDisputePublicRecordsView,
+  component: TradelinesDisputeProcessPureView,
   decorators: [
     moduleMetadata({
       declarations: [],
       imports: [SharedComponentsModule],
-      providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
+      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
       return `<div class="container mx-auto max-w-xs h-full">${story}</div>`;
@@ -20,10 +19,10 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<TradelineDisputePublicRecordsView> = (args: any) => ({
-  component: TradelineDisputePublicRecordsView,
+const Template: Story<TradelinesDisputeProcessPureView> = (args: any) => ({
+  component: TradelinesDisputeProcessPureView,
   props: {
-    ...args
+    ...args,
   },
 });
 
@@ -32,16 +31,16 @@ Default.args = {};
 
 export const Reasons = Template.bind({});
 Reasons.args = {
-  initialStepId: "reason",
+  initialStepId: 'reason',
   initialDisputeType: 'inaccurate',
 };
 
 export const Summary = Template.bind({});
 Summary.args = {
-  initialStepId: "summary",
+  initialStepId: 'summary',
 };
 
 export const Success = Template.bind({});
 Success.args = {
-  isDisputeSent: true
+  isDisputeSent: true,
 };
