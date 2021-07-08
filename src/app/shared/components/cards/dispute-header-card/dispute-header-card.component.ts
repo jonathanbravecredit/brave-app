@@ -7,7 +7,7 @@ import {
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Component({
-  selector: 'brave-dispute-header-card',
+  selector: "brave-dispute-header-card",
   templateUrl: './dispute-header-card.component.html',
 })
 export class DisputeHeaderCardComponent {
