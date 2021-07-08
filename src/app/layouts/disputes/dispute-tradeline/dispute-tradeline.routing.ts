@@ -13,10 +13,10 @@ const DisputeTradelineRoutes: Routes = [
       {
         path: '',
         redirectTo: 'tradeline-dispute',
-        pathMatch: 'full',
+        pathMatch: "full",
       },
       {
-        path: 'tradeline-dispute',
+        path: "tradeline-dispute",
         component: TradelineDisputeProcessComponent,
         canActivate: [AuthGuard],
       },

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeItem } from "@shared/services/dispute/dispute.interfaces";
 
 @Pipe({
   name: 'tradelineToDispute',
@@ -25,7 +25,7 @@ export class TradelineToDisputePipe implements PipeTransform {
       accountTypeDescription: this.lookupAccountType(tradeline),
       accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
       disputeFlag: 'Previously Disputed?',
-      originalCreditor: 'Original Creditor',
+      originalCreditor: "Original Creditor",
       originalCreditorValue: this.lookupOriginalCreditor(tradeline),
       disputeFlagValue: this.lookupDisputeFlag(tradeline),
       accountDetail: {

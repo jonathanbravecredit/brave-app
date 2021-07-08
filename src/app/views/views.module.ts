@@ -48,6 +48,7 @@ import { TradelinesComponent } from './tradelines/tradelines/tradelines.componen
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 import { TradelineDisputePersonalInformationView } from './tradelines/tradeline-dispute-personal-information/tradeline-dispute-personal-information.view';
+import { TradelineDisputePublicRecordsView } from './tradlines/tradline-dispute-public-records/tradline-dispute-public-records.view';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 const views = [
@@ -94,6 +95,7 @@ const views = [
   TradelinesComponent,
   TradelinesPureComponent,
   TradelineDisputeProcessView,
+  TradelineDisputePublicRecordsView,
   TradelineDisputePersonalInformationView,
 ];
 

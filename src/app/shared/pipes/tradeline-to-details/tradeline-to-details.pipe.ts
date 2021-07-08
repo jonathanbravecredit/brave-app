@@ -3,7 +3,7 @@ import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Pipe({
-  name: 'tradelineToDetails',
+  name: "tradelineToDetails",
 })
 export class TradelineToDetailsPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition): ITradelineDetailsConfig {

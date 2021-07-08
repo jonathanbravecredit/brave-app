@@ -12,7 +12,7 @@ import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { INIT_DATA } from '@shared/services/sync/constants';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -41,8 +41,8 @@ export class SyncService {
     // 2. Brand New User and signn event..initialize DB and go to dashboard
     // 3. Brand New User and NOT a signin event....initialize DB and go to dashboard
     const isUserBrandNew = await this.isUserBrandNew(id);
-    if (isUserBrandNew === undefined) return;
-    if (isUserBrandNew && signInEvent) this.initAppData(creds); // refreshed event
+    if (isUserBrandNew === undefined) {return;}
+    if (isUserBrandNew && signInEvent) {this.initAppData(creds);} // refreshed event
     if (isUserBrandNew && !signInEvent) this.initAppData(creds); // refreshed event
 
     // Handle returning users (implicit) !isUserBrandNew
