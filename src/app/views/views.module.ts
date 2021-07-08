@@ -94,20 +94,14 @@ const views = [
   NewDisputeComponent,
   TradelinesComponent,
   TradelinesPureComponent,
-  TradelineDisputeProcessView
+  TradelineDisputeProcessView,
 ];
 
 const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe, TradelinesDetailPipe];
 
 @NgModule({
   declarations: [...views, ...pipes],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    SharedComponentsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],
 })

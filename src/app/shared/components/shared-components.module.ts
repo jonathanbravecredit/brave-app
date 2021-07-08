@@ -98,7 +98,6 @@ import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-
 import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
 
@@ -204,15 +203,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NgxChartsModule,
-    BrowserAnimationsModule,
-    ChartsModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
   declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
