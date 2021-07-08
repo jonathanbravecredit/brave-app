@@ -13,7 +13,7 @@ const DisputeTradelineRoutes: Routes = [
       {
         path: '',
         redirectTo: 'tradeline-dispute',
-        pathMatch: 'full',
+        pathMatch: "full",
       },
       {
         path: "tradeline-dispute",
