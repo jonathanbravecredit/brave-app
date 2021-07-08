@@ -12,7 +12,7 @@ export default {
     moduleMetadata({
       declarations: [],
       imports: [SharedComponentsModule],
-      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+      providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
     }),
     componentWrapperDecorator((story) => {
       return `<div class="container mx-auto max-w-xs h-full">${story}</div>`;
