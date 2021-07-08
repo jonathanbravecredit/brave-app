@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IDisputeTradelineProcessResult } from '../tradeline-dispute-process/interfaces';
+import { IDisputeTradelineProcessResult } from "../tradeline-dispute-process/interfaces";
 import { DEFAULT_TRADELINE_DISPUTE_PUBLIC_RECORDS_REASONS as defaultReasons } from './constants';
 @Component({
   selector: 'brave-tradeline-dispute-public-records',
