@@ -1,7 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
-import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SharedComponentsModule } from "@shared/components/shared-components.module";
 import { TradelineDisputeProcessView } from '@views/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 import { TradelineDisputePublicRecordsView } from './tradline-dispute-public-records.view';
 
