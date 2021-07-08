@@ -42,7 +42,7 @@ export class SyncService {
     // 3. Brand New User and NOT a signin event....initialize DB and go to dashboard
     const isUserBrandNew = await this.isUserBrandNew(id);
     if (isUserBrandNew === undefined) return;
-    if (isUserBrandNew && signInEvent) this.initAppData(creds); // refreshed event
+    if (isUserBrandNew && signInEvent) {this.initAppData(creds);} // refreshed event
     if (isUserBrandNew && !signInEvent) this.initAppData(creds); // refreshed event
 
     // Handle returning users (implicit) !isUserBrandNew
