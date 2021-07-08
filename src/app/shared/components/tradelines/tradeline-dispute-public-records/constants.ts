@@ -11,7 +11,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS = [
   },
   {
     id: 'pr-2',
-    text: 'The amount is incorrect'
+    text: "The amount is incorrect"
   },
   {
     id: 'pr-3',
