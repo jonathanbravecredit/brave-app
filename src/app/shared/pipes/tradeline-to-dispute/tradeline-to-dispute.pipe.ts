@@ -25,7 +25,7 @@ export class TradelineToDisputePipe implements PipeTransform {
       accountTypeDescription: this.lookupAccountType(tradeline),
       accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
       disputeFlag: 'Previously Disputed?',
-      originalCreditor: 'Original Creditor',
+      originalCreditor: "Original Creditor",
       originalCreditorValue: this.lookupOriginalCreditor(tradeline),
       disputeFlagValue: this.lookupDisputeFlag(tradeline),
       accountDetail: {
