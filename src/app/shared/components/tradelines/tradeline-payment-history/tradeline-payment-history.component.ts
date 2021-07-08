@@ -49,7 +49,8 @@ export class TradelinePaymentHistoryComponent implements OnInit {
    * @returns {ITradelinePaymentHistory}
    */
   parsePaymentHistory(payments: IPayStatusHistory = {} as IPayStatusHistory): ITradelinePaymentHistory {
-    const parsed = !Object.keys(payments).length
+    const history = payments === undefined || payments === null ? ({} as IPayStatusHistory) : payments;
+    const parsed = !Object.keys(history).length
       ? {
           headers: {
             year: null,
@@ -58,7 +59,6 @@ export class TradelinePaymentHistoryComponent implements OnInit {
           years: [0, 1, 2].map((item, i) => {
             let dte = new Date();
             let year = dte.getFullYear() - i;
-            console.log('year', year);
             return {
               year: year.toString(),
               months: ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'],
@@ -71,11 +71,11 @@ export class TradelinePaymentHistoryComponent implements OnInit {
             months: MONTH_ABBREVIATIONS,
           },
           years: [0, 1, 2].map((item, i) => {
-            let dte = new Date(payments.startDate);
+            let dte = new Date(history.startDate);
             let year = dte.getFullYear() - i;
             return {
               year: year.toString(),
-              months: this.parseMonthlyPayments(year, payments.MonthlyPayStatus),
+              months: this.parseMonthlyPayments(year, history.MonthlyPayStatus),
             };
           }),
         };

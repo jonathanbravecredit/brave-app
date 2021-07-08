@@ -40,10 +40,8 @@ import { KycKbaquestionsPipe } from './kyc-kbaquestions/kyc-kbaquestions/kyc-kba
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
-import { NegativeTradelinesPipe } from './negative-account/negative-account-initial/negative-tradelines.pipe';
 import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
-import { CreditReportPipe } from '@views/credit-report/credit-report/credit-report.pipe';
 import { NewDisputeComponent } from './disputes/new-dispute/new-dispute.component';
 import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute-pure.component';
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
@@ -51,6 +49,7 @@ import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines
 import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 import { TradelineDisputePublicRecordsView } from './tradlines/tradline-dispute-public-records/tradline-dispute-public-records.view';
 import { TradelinesDetailPipe } from './tradelines/tradelines/tradelines-detail.pipe';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 
 const views = [
@@ -100,17 +99,11 @@ const views = [
   TradelineDisputePublicRecordsView
 ];
 
-const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe, TradelinesDetailPipe];
+const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
   declarations: [...views, ...pipes],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    SharedComponentsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],
 })

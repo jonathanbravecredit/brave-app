@@ -2,13 +2,8 @@ import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { Subject, Observable, Subscription } from 'rxjs';
-import {
-  CognitoUser,
-  CognitoUserSession,
-  ISignUpResult,
-} from 'amazon-cognito-identity-js';
+import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';
-import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';
 
 export interface NewUser {
@@ -33,7 +28,7 @@ export class AuthService {
           console.log('in signin');
           const creds: ICredentials = await this.getCurrentUserCredentials();
           console.log('current credentials', creds);
-          if (creds) await this.sync.hallmonitor(creds);
+          if (creds) await this.sync.hallmonitor(creds, true);
           break;
         case 'signOut':
           // handle sign out
@@ -126,9 +121,7 @@ export class AuthService {
    * @param {CognitoHostedUIIdentityProvider} provider
    * @returns
    */
-  socialSignIn(
-    provider: CognitoHostedUIIdentityProvider
-  ): Promise<ICredentials> {
+  socialSignIn(provider: CognitoHostedUIIdentityProvider): Promise<ICredentials> {
     return Auth.federatedSignIn({
       provider: provider,
     });
@@ -150,14 +143,8 @@ export class AuthService {
    * @param pw
    * @returns
    */
-  forgotPasswordSubmit(
-    email: string,
-    code: string,
-    pw: string
-  ): Promise<void> | undefined {
-    return email
-      ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw)
-      : undefined;
+  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<void> | undefined {
+    return email ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
   }
 
   /**

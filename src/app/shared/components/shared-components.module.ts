@@ -101,9 +101,9 @@ import { TradelineDisputePublicRecordsComponent } from './tradelines/tradeline-d
 import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
+import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-header-card.component';
 
 const components = [
   BaseFormComponent,
@@ -184,7 +184,8 @@ const components = [
   BaseModalComponent,
   ConfirmationModalComponent,
   ConditionalTermComponent,
-  TradelineDisputeProcessSuccessComponent
+  TradelineDisputeProcessSuccessComponent,
+  DisputeHeaderCardComponent,
 ];
 
 // component specific pipes only
@@ -209,17 +210,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives ],
-
-  imports: [
-    CommonModule,
-    NgxChartsModule,
-    BrowserAnimationsModule,
-    ChartsModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
   declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })

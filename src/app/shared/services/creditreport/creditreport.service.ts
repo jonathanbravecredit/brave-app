@@ -26,8 +26,6 @@ export class CreditreportService implements OnDestroy {
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
   tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
   tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
-  tuDispute: any;
-  tuDispute$: BehaviorSubject<any> = new BehaviorSubject({});
   tuAgency: TransunionInput = {} as TransunionInput;
   tuAgency$: BehaviorSubject<TransunionInput> = new BehaviorSubject({} as TransunionInput);
   tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
@@ -130,17 +128,6 @@ export class CreditreportService implements OnDestroy {
   setTradeline(tradeline: ITradeLinePartition): void {
     this.tuTradeline = tradeline;
     this.tuTradeline$.next(tradeline);
-  }
-
-  /**
-   * Sets the current dispute item. Can only set one at a time currently
-   * - TODO may need to make more like a storage array
-   * @param dispute
-   * @return {void}
-   */
-  setDispute(dispute: any): void {
-    this.tuDispute = dispute;
-    this.tuDispute$.next(dispute);
   }
 
   /**
