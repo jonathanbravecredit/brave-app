@@ -3,11 +3,11 @@
   <form class="mt-4"> 
     <div class="flex items-center">
       <input type="radio" name="disputeType" value="not-mine" (change)="onRadioChanges($event)">
-      <label class="ml-4">This is not mine</label>
+      <label class="ml-4">{{ firstOptionDescription }}</label>
     </div>
     <div class="flex items-center">
       <input type="radio" name="disputeType" value="inaccurate" (change)="onRadioChanges($event)">
-      <label class="ml-4">This is inaccurate</label>
+      <label class="ml-4">{{ secondOptionDescription }}</label>
     </div>
   </form>
   <div class="flex justify-center mt-4">

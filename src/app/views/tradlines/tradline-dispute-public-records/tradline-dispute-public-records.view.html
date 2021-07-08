@@ -4,8 +4,7 @@
   </div>
   <p class="text-lg mt-4 mb-4">New Dispute</p>
   <!-- TODO: (html) Create an ng-container to allow  -->
-  <brave-negative-account-card class="mt-4" [data]="negativeAccountCardData" [showDisputeButton]="false"></brave-negative-account-card>
-  <brave-tradeline-dispute-process [disputeType]="initialDisputeType" [initialStepId]="initialStepId" (disputeProcessResult)="onDisputeProcessResult($event)" *ngIf="isDisputeProcessInProgress"></brave-tradeline-dispute-process>
+  <brave-tradeline-dispute-public-records [disputeType]="initialDisputeType" [initialStepId]="initialStepId" (disputeProcessResult)="onDisputeProcessResult($event)" ></brave-tradeline-dispute-public-records>
 </div>
 <div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
   <brave-tradeline-dispute-process-success></brave-tradeline-dispute-process-success>
