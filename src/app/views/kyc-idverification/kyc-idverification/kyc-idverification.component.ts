@@ -5,10 +5,7 @@ import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import {
-  TUEnrollResponseInput,
-  UpdateAppDataInput,
-} from '@shared/services/aws/api.service';
+import { TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
@@ -17,10 +14,7 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
-import {
-  IEnrollResult,
-  IEnrollServiceProductResponse,
-} from '@shared/interfaces/enroll.interface';
+import { IEnrollResult, IEnrollServiceProductResponse } from '@shared/interfaces/enroll.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -47,7 +41,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
     private router: Router,
     private route: ActivatedRoute,
     private store: Store,
-    private kycService: KycService
+    private kycService: KycService,
   ) {
     super();
   }
@@ -75,36 +69,26 @@ export class KycIdverificationComponent extends KycBaseComponent {
           .parseAuthDetails(this.authXML)
           .createChallengeConfig(this.authQuestions)
           .getPasscodeQuestion(this.authChallenge);
-
         if (!this.passcodeQuestion) throw 'No passcode question found';
-
         // passcodeAnswer > verifyResponse > authResponse
         this.getPasscodeAnswer(this.passcodeQuestion, this.code);
         (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
           .parseVerifyResponse(this.verifyResponse)
           .isVerificationSuccesful(this.authResponse);
-
         if (!this.authSuccessful) throw 'Authentication request failed';
-
         // fetching reports
         await this.sendEnrollRequest(this.state);
-
         if (!this.enrollResult) throw 'Enroll request failed';
         // need to add to state and then update the db
-        const enriched = this.enrichEnrollmentData(
-          this.state,
-          this.enrollResult
-        );
-
+        const enriched = this.enrichEnrollmentData(this.state, this.enrollResult);
         if (!enriched) throw 'Enrichment failed';
-
         await this.kycService.updateAgenciesAsync(enriched.agencies);
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
           relativeTo: this.route,
         });
       } catch (err) {
-        console.log('error ===> ', err);
+        console.log('error ===> ', err); // TODO can better handle errors
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }
@@ -119,9 +103,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
    * @returns
    */
-  getAuthDetails(
-    state: UpdateAppDataInput | AppDataStateModel | undefined
-  ): KycIdverificationComponent {
+  getAuthDetails(state: UpdateAppDataInput | AppDataStateModel | undefined): KycIdverificationComponent {
     if (!state) return this;
     this.authXML = returnNestedObject(state, 'currentRawQuestions');
     return this;
@@ -138,9 +120,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
     return this;
   }
 
-  createChallengeConfig(
-    questions: ITransunionKBAChallengeAnswer | undefined
-  ): KycIdverificationComponent {
+  createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): KycIdverificationComponent {
     if (!questions) return this;
     const config = returnNestedObject(questions, 'ChallengeConfiguration');
     this.authChallenge = {
@@ -156,9 +136,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {ITransunionKBAQuestions | undefined} questions
    * @returns
    */
-  getPasscodeQuestion(
-    questions: ITransunionKBAQuestions | undefined
-  ): KycIdverificationComponent {
+  getPasscodeQuestion(questions: ITransunionKBAQuestions | undefined): KycIdverificationComponent {
     if (!questions) return this;
     this.passcodeQuestion = this.kycService.getPassCodeQuestion(questions);
     return this;
@@ -170,15 +148,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {ITransunionKBAQuestion | undefined} otpQuestion
    * @returns
    */
-  getPasscodeAnswer(
-    passcodeQuestion: ITransunionKBAQuestion | undefined,
-    code: string
-  ): KycIdverificationComponent {
+  getPasscodeAnswer(passcodeQuestion: ITransunionKBAQuestion | undefined, code: string): KycIdverificationComponent {
     if (!passcodeQuestion) return this;
-    this.passcodeAnswer = this.kycService.getPassCodeAnswer(
-      passcodeQuestion,
-      code
-    );
+    this.passcodeAnswer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
     return this;
   }
 
@@ -187,12 +159,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {string | undefined} verifyResp
    * @returns
    */
-  parseVerifyResponse(
-    verifyResp: string | undefined
-  ): KycIdverificationComponent {
-    this.authResponse = verifyResp
-      ? JSON.parse(verifyResp)
-      : ({} as IVerifyAuthenticationResponseSuccess);
+  parseVerifyResponse(verifyResp: string | undefined): KycIdverificationComponent {
+    this.authResponse = verifyResp ? JSON.parse(verifyResp) : ({} as IVerifyAuthenticationResponseSuccess);
     return this;
   }
 
@@ -206,13 +174,10 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   async sendVerifyAuthQuestions(
     state: UpdateAppDataInput | AppDataStateModel | undefined,
-    passcodeAnswer: IVerifyAuthenticationAnswer | undefined
+    passcodeAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycIdverificationComponent> {
     if (!passcodeAnswer || !state) return this;
-    this.verifyResponse = await this.kycService.sendVerifyAuthenticationQuestions(
-      state,
-      [passcodeAnswer]
-    );
+    this.verifyResponse = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
     return this;
   }
 
@@ -221,12 +186,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {IVerifyAuthenticationResponseSuccess | undefined} resp
    * @returns
    */
-  isVerificationSuccesful(
-    resp: IVerifyAuthenticationResponseSuccess | undefined
-  ): KycIdverificationComponent {
+  isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
     if (!resp) return this;
-    this.authSuccessful =
-      returnNestedObject(resp, 'a:ResponseType')?.toLowerCase() === 'success';
+    this.authSuccessful = returnNestedObject(resp, 'a:ResponseType')?.toLowerCase() === 'success';
     return this;
   }
 
@@ -236,15 +198,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   async sendEnrollRequest(
-    state: UpdateAppDataInput | AppDataStateModel | undefined
+    state: UpdateAppDataInput | AppDataStateModel | undefined,
   ): Promise<KycIdverificationComponent> {
     if (!state) return this;
     const resp = await this.kycService.sendEnrollRequest(state);
     const parsed = resp ? JSON.parse(resp) : undefined;
-    const enrollResult = returnNestedObject(
-      JSON.parse(parsed.Enroll),
-      'EnrollResult'
-    );
+    const enrollResult = returnNestedObject(JSON.parse(parsed.Enroll), 'EnrollResult');
     this.enrollResult = enrollResult ? enrollResult : undefined;
     return this;
   }
@@ -257,32 +216,26 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   enrichEnrollmentData(
     state: UpdateAppDataInput | undefined,
-    enroll: IEnrollResult
+    enroll: IEnrollResult,
   ): AppDataStateModel | UpdateAppDataInput | undefined {
     if (!state) return;
     let enrollReport;
     let enrollMergeReport;
     let enrollVantageScore;
-    console.log('enroll in enrich', enroll, state);
+    let enrolledOn = new Date().toISOString();
     const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
     const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
     if (!prodResponse) return;
     if (prodResponse instanceof Array) {
-      enrollReport = prodResponse.find(
-        (item: IEnrollServiceProductResponse) => {
-          return item['ServiceProduct'] === 'TUCReport';
-        }
-      );
-      enrollMergeReport = prodResponse.find(
-        (item: IEnrollServiceProductResponse) => {
-          return item['ServiceProduct'] === 'MergeCreditReports';
-        }
-      );
-      enrollVantageScore = prodResponse.find(
-        (item: IEnrollServiceProductResponse) => {
-          return item['ServiceProduct'] === 'TUCVantageScore3';
-        }
-      );
+      enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCReport';
+      });
+      enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+        return item['ServiceProduct'] === 'MergeCreditReports';
+      });
+      enrollVantageScore = prodResponse.find((item: IEnrollServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCVantageScore3';
+      });
     } else {
       switch (prodResponse['ServiceProduct']) {
         case 'TUCReport':
@@ -304,6 +257,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
         ...state.agencies,
         transunion: {
           ...state.agencies?.transunion,
+          enrolled: true,
+          enrolledOn: enrolledOn,
           enrollmentKey: enrollmentKey,
           enrollReport: mapEnrollResponse(enrollReport),
           enrollMergeReport: mapEnrollResponse(enrollMergeReport),
@@ -319,7 +274,7 @@ const codeMap: Record<string, any> = {
 };
 
 // TODO use a pascal to camel converter
-const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
+const mapEnrollResponse = (res: any): TUReportResponseInput => {
   return {
     bureau: res['Bureau'],
     errorResponse: res['ErrorResponse'],
@@ -329,5 +284,5 @@ const mapEnrollResponse = (res: any): TUEnrollResponseInput => {
     serviceProductTypeId: res['ServiceProductTypeId'],
     serviceProductValue: res['ServiceProductValue'],
     status: res['Status'],
-  } as TUEnrollResponseInput;
+  } as TUReportResponseInput;
 };

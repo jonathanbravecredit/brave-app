@@ -7,12 +7,10 @@ import {
   CreateAppDataInput,
   CreateAppDataMutation,
   GetAppDataQuery,
-  UpdateAppDataInput,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
-import { AppDataSelectors, AppDataStateModel } from '@store/app-data';
+import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +19,7 @@ export class SyncService {
   // apiCreateListener$: ZenObservable.Subscription;
   // apiUpdateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
-  constructor(
-    private api: APIService,
-    private store: Store,
-    private router: Router
-  ) {
+  constructor(private api: APIService, private store: Store, private router: Router) {
     // this.apiCreateListener$ = this.api.OnCreateAppDataListener.subscribe(
     //   (resp: any) => {
     //     // bad data type defined for response...see this issue: https://github.com/aws-amplify/amplify-cli/issues/5284
@@ -79,9 +73,7 @@ export class SyncService {
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(
-    creds: ICredentials
-  ): Promise<CreateAppDataMutation | undefined> {
+  async initAppData(creds: ICredentials): Promise<CreateAppDataMutation | undefined> {
     try {
       const input: CreateAppDataInput = {
         id: creds.identityId,
@@ -100,10 +92,10 @@ export class SyncService {
         },
         preferences: {
           showAllAccounts: {
-            creditCards: false,
-            collectionsAccounts: false,
-            installmentLoans: false,
-            mortgages: false,
+            creditCards: true,
+            collectionsAccounts: true,
+            installmentLoans: true,
+            mortgages: true,
           },
         },
       };
@@ -121,6 +113,7 @@ export class SyncService {
   /**
    * Takes the last completed step by the user and routes them to
    *   where they left off if they haven't finishd onboarding
+   *   Applies only if they have not completed onboarding
    * @param {number} lastComplete
    */
   routeUser(lastComplete: number): void {
@@ -150,10 +143,7 @@ export class SyncService {
    * @param {string} id user id
    * @param {AppDataStateModel} payload (optional)
    */
-  async syncDBDownToState(
-    id: string,
-    payload?: AppDataStateModel
-  ): Promise<AppDataStateModel> {
+  async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
     console.log('payload in sync db', payload);
     if (payload) {
       console.log('editing state with provided payload');

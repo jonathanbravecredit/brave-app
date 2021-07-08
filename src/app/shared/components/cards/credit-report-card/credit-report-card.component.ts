@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface ICreditReportCardInputs {
   type: string;
@@ -11,6 +12,7 @@ export interface ICreditReportCardInputs {
   thirdFieldName: string;
   thirdFieldValue: string | number;
   status: string;
+  tradeline: ITradeLinePartition;
 }
 
 @Component({
@@ -28,6 +30,9 @@ export class CreditReportCardComponent implements OnInit {
   @Input() thirdFieldName: string = '';
   @Input() thirdFieldValue: string = '';
   @Input() status: string = '';
+  @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
+  @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {}

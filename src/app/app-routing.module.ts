@@ -1,34 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () =>
-      import('./layouts/authentication/authentication.module').then(
-        (m) => m.AuthenticationModule
-      ),
+    loadChildren: () => import('./layouts/authentication/authentication.module').then((m) => m.AuthenticationModule),
   },
   {
     path: 'onboarding',
-    loadChildren: () =>
-      import('./layouts/onboarding/onboarding.module').then(
-        (m) => m.OnboardingModule
-      ),
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./layouts/onboarding/onboarding.module').then((m) => m.OnboardingModule),
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./layouts/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./layouts/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'legal',
-    loadChildren: () =>
-      import('./layouts/compliance/compliance.module').then(
-        (m) => m.ComplianceModule
-      ),
+    loadChildren: () => import('./layouts/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
   {
     path: 'tradeline-dispute',
@@ -38,6 +29,7 @@ const routes: Routes = [
       ),
   },
   // { path: '', component: IndexComponent }, // TODO: replace with better page
+  { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -50,6 +50,8 @@ import { TradelinesComponent } from './tradelines/tradelines/tradelines.componen
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 import { TradelineDisputePublicRecordsView } from './tradlines/tradline-dispute-public-records/tradline-dispute-public-records.view';
+import { TradelinesDetailPipe } from './tradelines/tradelines/tradelines-detail.pipe';
+
 
 const views = [
   SignupComponent,
@@ -98,7 +100,7 @@ const views = [
   TradelineDisputePublicRecordsView
 ];
 
-const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];
+const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe, TradelinesDetailPipe];
 
 @NgModule({
   declarations: [...views, ...pipes],

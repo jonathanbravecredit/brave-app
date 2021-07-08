@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 })
 export class ViewdetailButtonComponent implements OnInit {
   @Input() size = '';
+  @Input() horizontal: boolean = false;
   open: boolean = false;
   open$: Subject<boolean> = new Subject();
   constructor() {}

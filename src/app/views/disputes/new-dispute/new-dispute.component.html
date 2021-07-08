@@ -1,1 +1,5 @@
-<brave-new-dispute-pure [newDisputeData]="newDisputeData"></brave-new-dispute-pure>
+<div class="container mx-auto max-w-xs h-full">
+  <ng-container *ngIf="dispute$ | async as dispute">
+    <brave-new-dispute-pure [newDisputeData]="dispute"></brave-new-dispute-pure>
+  </ng-container>
+</div>

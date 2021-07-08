@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 
 @Component({
   selector: 'brave-negative-account-initial-pure',
@@ -7,6 +7,7 @@ import { INegativeAccountCardInputs } from '@shared/components/cards/negative-ac
 })
 export class NegativeAccountInitialPureComponent implements OnInit {
   @Input() cards: INegativeAccountCardInputs[] | undefined;
+  @Output() confirmed: EventEmitter<INegativeAccountCardInputs> = new EventEmitter();
 
   constructor() {}
 

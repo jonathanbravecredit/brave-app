@@ -9,6 +9,6 @@ export class AuthenticationComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   async ngOnInit(): Promise<void> {
-    await this.auth.reloadCredentials();
+    // await this.auth.reloadCredentials();
   }
 }
