@@ -24,7 +24,7 @@ export class DisputeHeaderCardComponent {
   @Input() originalCreditorValue: string | undefined = "";
   @Input() accountTypeDescription: string | undefined = '';
   @Input() accountTypeDescriptionValue: string | undefined = '';
-  @Input() disputeFlag: string | undefined = '';
+  @Input() disputeFlag: string | undefined = "";
   @Input() disputeFlagValue: string | undefined = "";
   @Input() accountNumber: string | undefined = '';
   @Input() typeOfCollection: string | undefined = '';
