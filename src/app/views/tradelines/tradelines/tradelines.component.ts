@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
 
 @Component({
   selector: 'brave-tradelines',
@@ -18,7 +20,12 @@ export class TradelinesComponent {
    * @constructor
    * @param creditReportServices
    */
-  constructor(private creditReportServices: CreditreportService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private creditReportServices: CreditreportService,
+    private disputeService: DisputeService,
+  ) {
     this.tradeline = this.creditReportServices.tuTradeline;
   }
 
@@ -29,6 +36,7 @@ export class TradelinesComponent {
    * @returns {void}
    */
   onDisputeClicked(tradeline: ITradeLinePartition): void {
-    this.creditReportServices.setDispute(tradeline);
+    this.disputeService.setTradelineItem(tradeline);
+    this.router.navigate(['../tradeline-dispute'], { relativeTo: this.route });
   }
 }

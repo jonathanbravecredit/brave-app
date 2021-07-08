@@ -41,7 +41,7 @@ export class SigninComponent {
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
           console.log('OTP setup');
           // this.auth.setupTOTP(user);
-        }
+        } // don't do anything...routing handled by HUB
       } catch (err) {
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};

@@ -100,6 +100,7 @@ import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
+import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-header-card.component';
 
 const components = [
   BaseFormComponent,
@@ -180,6 +181,7 @@ const components = [
   ConfirmationModalComponent,
   ConditionalTermComponent,
   TradelineDisputeProcessSuccessComponent,
+  DisputeHeaderCardComponent,
 ];
 
 // component specific pipes only

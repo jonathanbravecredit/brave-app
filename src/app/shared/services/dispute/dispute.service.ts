@@ -1,27 +1,26 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DisputeService implements OnDestroy {
-  dispute: IDisputeItem | undefined;
-  dispute$: BehaviorSubject<IDisputeItem> = new BehaviorSubject({} as IDisputeItem);
-  disputeSub$: Subscription;
+  tradeline: ITradeLinePartition | undefined;
+  tradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
+  tradelineSub$: Subscription;
 
   constructor() {
-    this.disputeSub$ = this.dispute$.subscribe((dispute) => {
-      this.dispute = dispute;
+    this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
+      this.tradeline = tradeline;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.disputeSub$) this.disputeSub$.unsubscribe();
+    if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
   }
 
-  setDisputeItem(dispute: IDisputeItem): void {
-    this.dispute = dispute;
-    this.dispute$.next(dispute);
+  setTradelineItem(tradeline: ITradeLinePartition): void {
+    this.tradeline$.next(tradeline);
   }
 }

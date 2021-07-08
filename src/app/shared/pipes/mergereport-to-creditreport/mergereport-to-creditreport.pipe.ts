@@ -1,15 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
+import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
-import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 
 @Pipe({
-  name: 'creditReport',
+  name: 'mergereportToCreditreport',
 })
-export class CreditReportPipe implements PipeTransform {
+export class MergereportToCreditreportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
   transform(report: IMergeReport, prefs: PreferencesStateModel): ICreditReportCardGroup[] {
@@ -35,7 +35,7 @@ export class CreditReportPipe implements PipeTransform {
   private filterTradelines(
     partitions: ITradeLinePartition[] | ITradeLinePartition,
     prefs: PreferencesStateModel,
-  ): CreditReportPipe {
+  ): MergereportToCreditreportPipe {
     const showPositive = prefs.showAllAccounts;
     if (!showPositive) return this;
     if (partitions instanceof Array) {
@@ -63,7 +63,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private sortByAccountType(tradeLines: ITradeLinePartition[]): CreditReportPipe {
+  private sortByAccountType(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
         const symA = a.accountTypeSymbol?.toLowerCase();
@@ -80,7 +80,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private sortByDateOpened(tradeLines: ITradeLinePartition[]): CreditReportPipe {
+  private sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
         if (a.accountTypeSymbol !== b.accountTypeSymbol) {
@@ -103,7 +103,7 @@ export class CreditReportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): CreditReportPipe {
+  private mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
     this.creditReportAccounts = tradeLines.map((item) => {
       const firstField = this.getFirstFields(item);
       const secondField = this.getSecondFields(item);
