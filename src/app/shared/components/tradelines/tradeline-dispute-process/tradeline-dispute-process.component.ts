@@ -26,6 +26,10 @@ export class TradelineDisputeProcessComponent implements OnInit {
   customReason: string = '';
   @Input() disputeType: string | undefined = undefined;
   @Input() initialStepId: string = 'select';
+  @Input() firstOptionDescription = "This is not mine";
+  @Input() secondOptionDescription = 'This is inaccurate';
+  @Input() firstOptionReasonPages = defaultReasons.NOT_MINE;
+  @Input() secondOptionReasonPages = defaultReasons.INACCURATE;
   @Output() disputeProcessResult: EventEmitter<IDisputeTradelineProcessResult> = new EventEmitter();
   constructor() { }
 
@@ -36,7 +40,7 @@ export class TradelineDisputeProcessComponent implements OnInit {
       data: undefined
     });
 
-    this.reasonOptionPages = this.disputeType === 'not-mine' ? defaultReasons.NOT_MINE : defaultReasons.INACCURATE;
+    this.reasonOptionPages = this.disputeType === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
   }
   /**
    * Changes the "selected" state flag of the target option.
@@ -126,6 +130,14 @@ export class TradelineDisputeProcessComponent implements OnInit {
   }
 
   goToReasons(): void {
+    if (this.reasonOptionPages.length === 1) {
+      if (this.reasonOptionPages[0].items.length === 1) {
+        this.switchOption(0, 0);
+        this.goToSummary();
+        return;
+      }
+    }
+
     this.navigationStack.push({
       id: 'reason'
     });
