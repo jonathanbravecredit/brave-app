@@ -26,7 +26,7 @@ export class TradelineDisputeProcessComponent implements OnInit {
   customReason: string = '';
   @Input() disputeType: string | undefined = undefined;
   @Input() initialStepId: string = 'select';
-  @Input() firstOptionDescription = 'This is not mine';
+  @Input() firstOptionDescription = "This is not mine";
   @Input() secondOptionDescription = 'This is inaccurate';
   @Input() firstOptionReasonPages = defaultReasons.NOT_MINE;
   @Input() secondOptionReasonPages = defaultReasons.INACCURATE;
