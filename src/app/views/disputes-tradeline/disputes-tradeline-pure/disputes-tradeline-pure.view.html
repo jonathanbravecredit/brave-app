@@ -9,13 +9,13 @@
     [data]="negativeAccountCardData"
     [showDisputeButton]="false"
   ></brave-negative-account-card>
-  <brave-tradeline-dispute-process
+  <brave-disputes-tradeline
     [disputeType]="initialDisputeType"
     [initialStepId]="initialStepId"
     (disputeProcessResult)="onDisputeProcessResult($event)"
     *ngIf="isDisputeProcessInProgress"
-  ></brave-tradeline-dispute-process>
+  ></brave-disputes-tradeline>
 </div>
 <div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
-  <brave-tradeline-dispute-process-success></brave-tradeline-dispute-process-success>
+  <brave-disputes-success></brave-disputes-success>
 </div>

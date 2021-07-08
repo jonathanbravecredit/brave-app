@@ -5,12 +5,12 @@
       <span class="font-semibold">Date Reported: </span> <span>{{ dateReported }}</span>
     </p>
   </div>
-  <brave-tradeline-dispute-process
+  <brave-disputes-tradeline
     [disputeType]="disputeType"
     [initialStepId]="initialStepId"
     (disputeProcessResult)="disputeProcessResult.emit($event)"
     [firstOptionReasonPages]="firstOptionReasonPages"
     [secondOptionReasonPages]="secondOptionReasonPages"
   >
-  </brave-tradeline-dispute-process>
+  </brave-disputes-tradeline>
 </div>

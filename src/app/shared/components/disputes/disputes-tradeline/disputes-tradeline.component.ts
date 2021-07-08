@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
-import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
-import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
 import {
   IDisputeTradelineReasonCardPage,
   IDisputeTradelineSelectedObj,
   IDisputeTradelineProcessResult,
   IDisputeTradelineReasonCardPageItem,
-} from '@shared/components/tradelines/tradeline-dispute-process/interfaces';
+} from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
+import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
 import { DEFAULT_TRADELINE_REASONS as defaultReasons } from './constants';
 import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';
 

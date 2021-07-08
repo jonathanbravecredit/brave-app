@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IDisputeTradelineProcessResult } from '@shared/components/tradelines/tradeline-dispute-process/interfaces';
-import { TradelineDisputeProcessComponent } from '@shared/components/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
+import { IDisputeTradelineProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 
 @Component({
-  selector: 'brave-disputes-public-pure',
+  selector: 'brave-disputes-public-pure-view',
   templateUrl: './disputes-public-pure.view.html',
 })
 export class DisputesPublicPureView implements OnInit {
-  @ViewChild(TradelineDisputeProcessComponent) disputeProcess: TradelineDisputeProcessComponent | undefined;
+  @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
   isDisputeProcessInProgress = true;
   @Input() isDisputeSent = false;
   @Input() initialStepId = 'select';
