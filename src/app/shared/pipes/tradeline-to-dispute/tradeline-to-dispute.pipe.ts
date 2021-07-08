@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeItem } from "@shared/services/dispute/dispute.interfaces";
 
 @Pipe({
   name: 'tradelineToDispute',
