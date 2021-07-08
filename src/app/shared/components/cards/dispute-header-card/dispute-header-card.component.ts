@@ -7,7 +7,7 @@ import {
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Component({
-  selector: 'brave-dispute-header-card',
+  selector: "brave-dispute-header-card",
   templateUrl: './dispute-header-card.component.html',
 })
 export class DisputeHeaderCardComponent {
@@ -21,11 +21,11 @@ export class DisputeHeaderCardComponent {
   @Input() creditorName: string | undefined = '';
   @Input() lastReported: string | undefined = '';
   @Input() originalCreditor: string | undefined = '';
-  @Input() originalCreditorValue: string | undefined = '';
+  @Input() originalCreditorValue: string | undefined = "";
   @Input() accountTypeDescription: string | undefined = '';
   @Input() accountTypeDescriptionValue: string | undefined = '';
-  @Input() disputeFlag: string | undefined = '';
-  @Input() disputeFlagValue: string | undefined = '';
+  @Input() disputeFlag: string | undefined = "";
+  @Input() disputeFlagValue: string | undefined = "";
   @Input() accountNumber: string | undefined = '';
   @Input() typeOfCollection: string | undefined = '';
   @Input() amountPastDue: string | number | undefined = 0;

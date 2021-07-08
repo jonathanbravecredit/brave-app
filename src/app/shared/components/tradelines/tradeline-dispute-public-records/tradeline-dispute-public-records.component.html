@@ -1,6 +1,8 @@
 <div class="w-full p-4">
-  <p class="text-sm font-semibold"> >{{ description }}</p>
-  <p class="text-sm"><span class="font-semibold">Date Reported: </span> <span>{{ dateReported }}</span></p>
+  <div class="grid grid-cols-2 gap-4 mb-2">
+    <p class="text-sm font-semibold">{{ description }}</p>
+    <p class="text-sm"><span class="font-semibold">Date Reported: </span> <span>{{ dateReported }}</span></p>
+  </div>
   <brave-tradeline-dispute-process
   [disputeType]="disputeType"
   [initialStepId]="initialStepId"
