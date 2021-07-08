@@ -1,4 +1,4 @@
-import { IDisputeTradelineReasonCardPage } from "../tradeline-dispute-process/interfaces";
+import { IDisputeTradelineReasonCardPage } from '../tradeline-dispute-process/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS = [
   {

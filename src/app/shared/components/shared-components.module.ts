@@ -95,6 +95,7 @@ import { ConfirmationModalComponent } from './modals/confirmation-modal/confirma
 import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
 import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
 import { TradelineDisputePublicRecordsComponent } from './tradelines/tradeline-dispute-public-records/tradeline-dispute-public-records.component';
+import { TradelineDisputePersonalInformationComponent } from './tradelines/tradeline-dispute-personal-information/tradeline-dispute-personal-information.component';
 
 const components = [
   BaseFormComponent,
@@ -170,7 +171,8 @@ const components = [
   BaseModalComponent,
   ConfirmationModalComponent,
   ConditionalTermComponent,
-  TradelineDisputeProcessSuccessComponent
+  TradelineDisputeProcessSuccessComponent,
+  TradelineDisputePersonalInformationComponent
 ];
 
 // component specific pipes only
@@ -195,7 +197,7 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  declarations: [...components, ...pipes, ...directives ],
+  declarations: [...components, ...pipes, ...directives,  ],
   imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
   exports: [...components, ...pipes, ...directives],
 })

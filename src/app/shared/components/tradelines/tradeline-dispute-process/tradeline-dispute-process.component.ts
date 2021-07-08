@@ -35,6 +35,10 @@ export class TradelineDisputeProcessComponent implements OnInit {
 
   ngOnInit(): void {
     // Set the pages to default;
+    if (this.initialStepId === 'summary') {
+      this.switchOption(0, 0);
+    }
+
     this.navigationStack.push({
       id: this.initialStepId,
       data: undefined

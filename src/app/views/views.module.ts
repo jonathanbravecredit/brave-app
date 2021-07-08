@@ -49,7 +49,8 @@ import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { TradelineDisputeProcessView } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
-import { TradelineDisputePublicRecordsView } from './tradlines/tradline-dispute-public-records/tradline-dispute-public-records.view';
+import { TradelineDisputePublicRecordsView } from './tradelines/tradline-dispute-public-records/tradline-dispute-public-records.view';
+import { TradelineDisputePersonalInformationView } from './tradelines/tradeline-dispute-personal-information/tradeline-dispute-personal-information.view';
 
 const views = [
   SignupComponent,
@@ -95,7 +96,8 @@ const views = [
   TradelinesComponent,
   TradelinesPureComponent,
   TradelineDisputeProcessView,
-  TradelineDisputePublicRecordsView
+  TradelineDisputePublicRecordsView,
+  TradelineDisputePersonalInformationView
 ];
 
 const pipes = [KycKbaquestionsPipe, NegativeTradelinesPipe, CreditReportPipe];

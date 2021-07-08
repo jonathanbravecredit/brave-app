@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TradelineDisputePublicRecordsComponent } from './tradeline-dispute-public-records.component';
 
 describe('TradelineDisputePublicRecordsComponent', () => {
