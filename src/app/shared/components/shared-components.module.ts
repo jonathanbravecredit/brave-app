@@ -202,9 +202,8 @@ const pipes = [
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
-  ParseTradelineDetailsPipe,
   BasePaginationPipe,
-  BaseModalPipe
+  BaseModalPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
