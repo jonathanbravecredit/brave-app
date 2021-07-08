@@ -2,9 +2,10 @@
   <ng-container *ngIf="tradeline">
     <brave-tradelines-pure
       [tradeline]="tradeline"
-      [config]="tradeline | tradelinesDetail"
+      [config]="tradeline | tradelineToDetails"
       [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
       [remarks]="tradeline.Tradeline?.Remark?.customRemark || ''"
+      (disputeClick)="onDisputeClicked($event)"
     ></brave-tradelines-pure>
   </ng-container>
 </div>

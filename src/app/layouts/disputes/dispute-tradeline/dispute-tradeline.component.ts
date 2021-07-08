@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'brave-dispute-tradeline',
   templateUrl: './dispute-tradeline.component.html',
-  styleUrls: ['./dispute-tradeline.component.css']
+  styleUrls: ['./dispute-tradeline.component.css'],
 })
-export class DisputeTradelineTestComponent implements OnInit {
+export class DisputeTradelineComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

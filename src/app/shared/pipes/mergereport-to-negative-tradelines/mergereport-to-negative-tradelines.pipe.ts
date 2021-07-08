@@ -1,13 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { NEGATIVE_PAY_STATUS_CODES, BRAVE_ACCOUNT_TYPE } from "@shared/constants";
+import { ITradeLinePartition, IMergeReport } from "@shared/interfaces/merge-report.interface";
 import { DEFAULT_TRADELINE } from '@views/negative-account/negative-account-initial/constants';
 
 @Pipe({
-  name: 'negativeTradelines',
+  name: "mergereportToNegativeTradelines",
 })
-export class NegativeTradelinesPipe implements PipeTransform {
+export class MergereportToNegativeTradelinesPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
 
   transform(report: IMergeReport): INegativeAccountCardInputs[] | undefined {
@@ -26,7 +26,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  filterTradelines(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
+  filterTradelines(tradeLines: ITradeLinePartition[]): MergereportToNegativeTradelinesPipe {
     this.tradeLines = tradeLines.filter((item) => {
       const status = NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
       return !!status;
@@ -39,7 +39,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  sortByAccountType(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
+  sortByAccountType(tradeLines: ITradeLinePartition[]): MergereportToNegativeTradelinesPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
         if (a.accountTypeSymbol?.toLowerCase() === 'y' && b.accountTypeDescription?.toLowerCase() !== 'y') {
@@ -59,7 +59,7 @@ export class NegativeTradelinesPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  sortByDateOpened(tradeLines: ITradeLinePartition[]): NegativeTradelinesPipe {
+  sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToNegativeTradelinesPipe {
     this.tradeLines = [
       ...tradeLines.sort((a, b) => {
         if (a.accountTypeSymbol !== b.accountTypeSymbol) {

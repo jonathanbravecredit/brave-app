@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
 
 @Component({
@@ -7,7 +6,7 @@ import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
   templateUrl: './new-dispute-pure.component.html',
 })
 export class NewDisputePureComponent implements OnInit {
-  @Input() newDisputeData: INegativeAccountCardInputs | IDisputeItem | undefined;
+  @Input() dispute: IDisputeItem | undefined;
   constructor() {}
 
   ngOnInit(): void {}

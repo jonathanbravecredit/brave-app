@@ -50,6 +50,6 @@ export class TradelinePaymentIconComponent {
     if (COLLECTION_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Collection;
     if (ONTIME_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Current;
     if (OTHER_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Other;
-    return TradelineIcons.Other;
+    return TradelineIcons.Unknown;
   }
 }

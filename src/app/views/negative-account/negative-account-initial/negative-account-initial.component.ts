@@ -52,7 +52,7 @@ export class NegativeAccountInitialComponent {
       //if (disputeResult.ResponseType.toLowerCase() !== 'success') throw new Error('GetDisputeStatus filed');
       // TODO error in request...question out to Evadney for better guidance
       // assume it comes back successfully for now
-      this.disputeService.setDisputeItem(card);
+      this.disputeService.setTradelineItem(card);
       this.router.navigate(['../dispute'], { relativeTo: this.route });
     } catch (err) {
       throw new Error(err);
