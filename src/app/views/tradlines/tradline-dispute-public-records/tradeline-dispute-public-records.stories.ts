@@ -32,7 +32,7 @@ Default.args = {};
 
 export const Reasons = Template.bind({});
 Reasons.args = {
-  initialStepId: 'reason',
+  initialStepId: "reason",
   initialDisputeType: 'inaccurate',
 };
 
