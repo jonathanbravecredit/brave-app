@@ -25,7 +25,7 @@ export class DisputeHeaderCardComponent {
   @Input() accountTypeDescription: string | undefined = '';
   @Input() accountTypeDescriptionValue: string | undefined = '';
   @Input() disputeFlag: string | undefined = '';
-  @Input() disputeFlagValue: string | undefined = '';
+  @Input() disputeFlagValue: string | undefined = "";
   @Input() accountNumber: string | undefined = '';
   @Input() typeOfCollection: string | undefined = '';
   @Input() amountPastDue: string | number | undefined = 0;
