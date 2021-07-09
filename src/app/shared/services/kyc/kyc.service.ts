@@ -199,6 +199,7 @@ export class KycService {
 
   /**
    * Process and clean the indicative enrichment response back from Transunion
+   * TODO move parsers to Transunion Service and then eventually backend
    * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
    */
