@@ -35,13 +35,13 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/accounts/negative',
-        component: NegativeAccountInitialComponent,
+        path: 'report/detail/dispute/tradelines',
+        component: DisputesTradelineView,
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/accounts/dispute/tradelines',
-        component: DisputesTradelineView,
+        path: 'report/accounts/negative',
+        component: NegativeAccountInitialComponent,
         canActivate: [AuthGuard],
       },
     ],

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Injectable, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -53,6 +53,9 @@ import { OnboardingModule } from './layouts/onboarding/onboarding.module';
 import { braveState } from '@store/index';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ServerErrorInterceptor } from '@shared/interceptors/server-error.interceptor';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
 @Injectable()
@@ -88,10 +91,14 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{
-    provide: HAMMER_GESTURE_CONFIG,
-    useClass: MyHammerConfig,
-  }],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
