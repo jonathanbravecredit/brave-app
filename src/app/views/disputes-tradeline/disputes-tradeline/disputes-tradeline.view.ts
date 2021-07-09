@@ -36,6 +36,7 @@ export class DisputesTradelineView {
     this.disputeService.pushDispute(event);
     if (result.isFinished) {
       try {
+        // TODO need to handle the response appropriately now that we are set up with TU
         await this.disputeService.sendStartDispute();
         this.isDisputeSent = true;
         this.isDisputeProcessInProgress = false;
