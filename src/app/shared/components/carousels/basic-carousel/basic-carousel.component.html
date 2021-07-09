@@ -1,0 +1,24 @@
+<!-- Display Container (not part of component) START -->
+<div class="window-wrapper flex justify-center items-center w-full">
+  <!-- Carousel Body -->
+  <div #sliderWindow class="window justify-center overflow-hidden">
+    <div #slider class="slider transition-all">
+      <!-- put the questions here -->
+      <div class="items flex overflow-x-hidden">
+        <div *ngFor="let page of pages; index as i">
+          <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
+            <!-- put the page item here -->
+            Index of pages {{ i }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex justify-center">
+  <!-- put the # / 4 here -->
+  <div class="p-4">
+    <brave-base-pagination #pagination paginationStyle="point" [numberOfPages]="pages.length"></brave-base-pagination>
+  </div>
+  <!-- <p class="text-center">{{ tracker.length }} / {{ kbas?.length }}</p> -->
+</div>
