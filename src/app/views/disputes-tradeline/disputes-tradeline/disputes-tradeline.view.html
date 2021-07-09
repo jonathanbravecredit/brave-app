@@ -1,5 +1,11 @@
 <div class="container mx-auto max-w-xs h-full">
   <ng-container *ngIf="dispute$ | async | tradelineToDispute as dispute">
-    <brave-disputes-tradeline-pure-view [dispute]="dispute"></brave-disputes-tradeline-pure-view>
+    <brave-disputes-tradeline-pure-view
+      [dispute]="dispute"
+      [isDisputeSent]="isDisputeSent"
+      [isDisputeProcessInProgress]="isDisputeProcessInProgress"
+      (goBack)="onGoBack()"
+      (processResult)="onProcessResult($event)"
+    ></brave-disputes-tradeline-pure-view>
   </ng-container>
 </div>

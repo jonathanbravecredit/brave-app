@@ -198,14 +198,14 @@ export class DisputesTradelineComponent implements OnInit {
     return resultArr;
   }
 
-  parseSelectedReasonsToArray(): IDisputeReason[] {
-    let resultsArr: IDisputeReason[] = [];
+  parseSelectedReasonsToArray(): [IDisputeReason?, IDisputeReason?] {
+    let resultsArr: [IDisputeReason?, IDisputeReason?] = [];
     let reasonIds: [string?, string?] = this.parseSelectedItemsToIdArray(); // never more than two...switch to tuple
     let reasons = [...DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS];
 
     reasonIds.filter(Boolean).forEach((item) => {
       const reason = reasons.find((r) => r.id === item);
-      if (reason?.claimCode) resultsArr = [...resultsArr, reason];
+      if (reason?.claimCode) resultsArr.push(reason);
     });
     return resultsArr;
   }

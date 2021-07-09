@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
 import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
+import { IClaimCode, ILineItem } from '@shared/interfaces/start-dispute.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
@@ -9,6 +11,7 @@ import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { AppDataStateModel } from '@store/app-data';
+import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 @Injectable({
   providedIn: 'root',
@@ -116,6 +119,26 @@ export class TransunionService {
     try {
       const msg = this.createGetDisputeStatusPayload(data);
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
+      console.log(res);
+      return res ? res : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send disputes to Transunion
+   * @param {IProcessDisputeTradelineResult[]} disputes AppData state
+   * @returns
+   */
+  async sendStartDispute(
+    data: UpdateAppDataInput | AppDataStateModel,
+    disputes: IProcessDisputeTradelineResult[],
+  ): Promise<string | undefined> {
+    try {
+      const msg = this.createStartDisputePayload(data, disputes);
+      const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
       console.log(res);
       return res ? res : undefined;
     } catch (err) {
@@ -361,5 +384,70 @@ export class TransunionService {
       },
       EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
     } as IGetDisputeStatusRequest;
+  }
+
+  /**
+   * Genarates the message payload for TU Fulfill request
+   * @param { UpdateAppDataInput | AppDataStateModel} data
+   * @returns {IGetDisputeStatusRequest | undefined }
+   */
+  createStartDisputePayload(
+    data: UpdateAppDataInput | AppDataStateModel,
+    disputes: IProcessDisputeTradelineResult[],
+  ): IGetDisputeStatusRequest | undefined {
+    const id = data.id?.split(':')?.pop();
+    const attrs = data.user?.userAttributes;
+    const dob = attrs?.dob;
+
+    if (!id || !attrs || !dob) {
+      console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+      return;
+    }
+    console.log('id in StartDispute', id);
+    return {
+      ClientKey: id,
+      Customer: {
+        CurrentAddress: {
+          AddressLine1: attrs.address?.addressOne || '',
+          AddressLine2: attrs.address?.addressTwo || '',
+          City: attrs.address?.city || '',
+          State: attrs.address?.state || '',
+          Zipcode: attrs.address?.zip || '',
+        },
+        DateOfBirth:
+          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+        FullName: {
+          FirstName: attrs.name?.first || '',
+          LastName: attrs.name?.last || '',
+          MiddleName: attrs.name?.middle || '',
+        },
+        Ssn: attrs.ssn?.full || '',
+      },
+      LineItems: this.parseDisputeToLineItem(disputes),
+      EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
+    } as IGetDisputeStatusRequest;
+  }
+
+  parseDisputeToLineItem(disputes: IProcessDisputeTradelineResult[]): ILineItem[] | any {
+    return disputes.map((item) => {
+      const reasons = item.result.data.reasons;
+      return reasons !== undefined
+        ? {
+            ClaimCodes: this.parseReasonsToClaimCodes(reasons),
+            CreditReportItem: item.tradeline?.Tradeline?.handle,
+            LineItemComment: 'Account Tradeline',
+          }
+        : {};
+    });
+  }
+
+  parseReasonsToClaimCodes(reasons: [IDisputeReason?, IDisputeReason?]): IClaimCode[] {
+    return reasons.map((code) => {
+      return {
+        ClaimCode: {
+          Code: code?.claimCode || '',
+        },
+      };
+    });
   }
 }

@@ -18,7 +18,7 @@ export interface IDisputeTradelineProcessResult {
     hasCustomInput: boolean;
     customInput: string;
     reasonsId: [string?, string?];
-    reasons?: IDisputeReason[];
+    reasons?: [IDisputeReason?, IDisputeReason?];
   };
 }
 

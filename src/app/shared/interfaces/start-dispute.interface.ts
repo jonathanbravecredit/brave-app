@@ -94,8 +94,8 @@ export interface ILineItem {
     ClaimCodes: IClaimCode | IClaimCode[];
     CreditReportItem: string;
     LineItemComment: string;
-    LineItemCommentType: string;
-    UploadDocumentId: string;
+    LineItemCommentType?: string;
+    UploadDocumentId?: string;
   };
 }
 
