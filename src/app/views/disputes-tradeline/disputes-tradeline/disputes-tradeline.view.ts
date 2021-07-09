@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IStartDisputeResult } from '@shared/interfaces/start-dispute.interface';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { Observable } from 'rxjs';
@@ -27,15 +28,20 @@ export class DisputesTradelineView {
     }
   }
 
-  onProcessResult(event: IProcessDisputeTradelineResult): void {
+  async onProcessResult(event: IProcessDisputeTradelineResult): Promise<void> {
     // result event has a data property where the reason ids can be pull out and find them in the constants of the tradeline component
     const { result, tradeline } = event;
     if (tradeline === undefined) throw new Error(`Tradeline is missing from dispute`);
     // TODO need to handle submitting multiple items.
     this.disputeService.pushDispute(event);
     if (result.isFinished) {
-      this.isDisputeSent = true;
-      this.isDisputeProcessInProgress = false;
+      try {
+        await this.disputeService.sendStartDispute();
+        this.isDisputeSent = true;
+        this.isDisputeProcessInProgress = false;
+      } catch (err) {
+        throw new Error(`Error in disputesTradeline:onProcessResult=${err}`);
+      }
     }
   }
 }

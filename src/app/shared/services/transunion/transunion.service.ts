@@ -3,7 +3,7 @@ import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/i
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
 import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
-import { IClaimCode, ILineItem } from '@shared/interfaces/start-dispute.interface';
+import { ILineItem, IClaimCode } from '@shared/interfaces/start-dispute.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
@@ -81,6 +81,7 @@ export class TransunionService {
   /**
    * Send the verified user to transunion to enroll them and receive their report
    * @param {UpdateAppDataInput} data AppData state
+   * @param {boolean} dispute Flag to enroll the user in the dispute process
    * @returns
    */
   async sendEnrollRequest(

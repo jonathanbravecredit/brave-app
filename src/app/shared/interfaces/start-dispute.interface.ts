@@ -104,3 +104,12 @@ export interface IClaimCode {
     Code: string;
   };
 }
+
+export interface IStartDisputeResult {
+  AccountName?: string;
+  ErrorResponse?: any;
+  RequestKey?: string;
+  ResponseType?: string;
+  ClientKey?: string;
+  DisputeStatus?: string;
+}
