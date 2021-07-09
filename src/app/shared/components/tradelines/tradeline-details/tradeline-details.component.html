@@ -4,100 +4,13 @@
 </div>
 <div class="card">
   <!-- ============================== -->
-  <!--       REV/INST ACCOUNTS        -->
+  <!--       AccountDetails Comp      -->
   <!-- ============================== -->
-  <div *ngIf="mapperType === 'revolving' || mapperType === 'installment'" class="divide-y divide-blueGray-300">
-    <!-- Date Opened -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['dateOpened']"
-        [value]="config.dateOpened"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Responsibility -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['accountDesignator']"
-        [value]="config.accountDesignator"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Terms -->
-    <div *ngIf="mapperType === 'installment'" class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['termMonths']"
-        [value]="config.termMonths"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Times 30/60/90 -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['late90Count']"
-        [value]="sumLateCount(config)"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Amount Past due -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['amountPastDue']"
-        [value]="config.amountPastDue"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Disputed -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['disputeFlag']"
-        [value]="config.disputeFlag"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- spacer for bottom -->
-    <div></div>
-  </div>
+  <brave-tradeline-details-table [config]="config"></brave-tradeline-details-table>
 
   <!-- ============================== -->
-  <!--        COLLECT ACCOUNTS        -->
+  <!--       PaymentHistory Comp      -->
   <!-- ============================== -->
-  <div *ngIf="mapperType === 'collections'" class="divide-y divide-blueGray-300">
-    <!-- Original Creditor -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['originalCreditor']"
-        [value]="config.originalCreditor"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Type of account -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['creditType']"
-        [value]="config.creditType"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Date Openend -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['dateOpened']"
-        [value]="config.dateOpened"
-      ></brave-tradeline-detail-row>
-    </div>
-
-    <!-- Disputed -->
-    <div class="py-2 px-1">
-      <brave-tradeline-detail-row
-        [label]="mapper['disputeFlag']"
-        [value]="config.disputeFlag"
-      ></brave-tradeline-detail-row>
-    </div>
-    <!-- spacer for bottom -->
-    <div></div>
-  </div>
-
   <div *ngIf="viewDetail.open$ | async as open">
     <brave-tradeline-payments
       [paymentHistory]="paymentHistory"

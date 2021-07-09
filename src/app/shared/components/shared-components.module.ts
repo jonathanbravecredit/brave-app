@@ -87,6 +87,7 @@ import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradel
 import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
 import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
+import { TradelineDetailsTableComponent } from './tradelines/tradeline-details-table/tradeline-details-table.component';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
@@ -168,6 +169,7 @@ const components = [
   TradelineSummaryComponent,
   TradelineDetailsComponent,
   TradelineDetailRowComponent,
+  TradelineDetailsTableComponent,
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
