@@ -5,10 +5,11 @@ import {
   IDisputeTradelineSelectedObj,
   IDisputeTradelineProcessResult,
   IDisputeTradelineReasonCardPageItem,
+  IDisputeReason,
 } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
 import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
-import { DEFAULT_TRADELINE_REASONS as defaultReasons } from './constants';
+import { DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS, DEFAULT_TRADELINE_REASONS as defaultReasons } from './constants';
 import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';
 
 @Component({
@@ -181,12 +182,13 @@ export class DisputesTradelineComponent implements OnInit {
         hasCustomInput: this.isCustomInputInSelectedArr(),
         customInput: this.customReason,
         reasonsId: this.parseSelectedItemsToIdArray(),
+        reasons: this.parseSelectedReasonsToArray(),
       },
     });
   }
 
-  parseSelectedItemsToIdArray(): string[] {
-    let resultArr: string[] = [];
+  parseSelectedItemsToIdArray(): [string?, string?] {
+    let resultArr: [string?, string?] = [];
 
     this.selectedIndexes.forEach((item) => {
       const target = this.getTargetSelectedPageItem(item);
@@ -194,6 +196,18 @@ export class DisputesTradelineComponent implements OnInit {
     });
 
     return resultArr;
+  }
+
+  parseSelectedReasonsToArray(): IDisputeReason[] {
+    let resultsArr: IDisputeReason[] = [];
+    let reasonIds: [string?, string?] = this.parseSelectedItemsToIdArray(); // never more than two...switch to tuple
+    let reasons = [...DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS];
+
+    reasonIds.filter(Boolean).forEach((item) => {
+      const reason = reasons.find((r) => r.id === item);
+      if (reason?.claimCode) resultsArr = [...resultsArr, reason];
+    });
+    return resultsArr;
   }
 
   isCustomInputInSelectedArr(): boolean {

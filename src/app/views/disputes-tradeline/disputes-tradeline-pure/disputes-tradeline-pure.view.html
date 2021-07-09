@@ -4,15 +4,29 @@
   </div>
   <p class="text-lg mt-4 mb-4">New Dispute</p>
   <!-- TODO: (html) Create an ng-container to allow  -->
-  <brave-negative-account-card
+  <brave-dispute-header-card
     class="mt-4"
-    [data]="negativeAccountCardData"
+    [tradeline]="dispute?.tradeline"
+    [creditorName]="dispute?.creditorName"
+    [lastReported]="dispute?.lastReported"
+    [originalCreditor]="dispute?.originalCreditor"
+    [originalCreditorValue]="dispute?.originalCreditorValue"
+    [accountTypeDescription]="dispute?.accountTypeDescription"
+    [accountTypeDescriptionValue]="dispute?.accountTypeDescriptionValue"
+    [disputeFlag]="dispute?.disputeFlag"
+    [disputeFlagValue]="dispute?.disputeFlagValue"
+    [accountNumber]="dispute?.accountDetail?.accountNumber"
+    [typeOfCollection]="dispute?.accountDetail?.typeOfCollection"
+    [amountPastDue]="dispute?.accountDetail?.amountPastDue"
+    [dateOpened]="dispute?.accountDetail?.dateOpened"
+    [dateLastPayment]="dispute?.accountDetail?.dateLastPayment"
+    [remarks]="dispute?.accountDetail?.remarks"
     [showDisputeButton]="false"
-  ></brave-negative-account-card>
+  ></brave-dispute-header-card>
   <brave-disputes-tradeline
     [disputeType]="initialDisputeType"
     [initialStepId]="initialStepId"
-    (disputeProcessResult)="onDisputeProcessResult($event)"
+    (disputeProcessResult)="onDisputeProcessResult($event, dispute?.tradeline)"
     *ngIf="isDisputeProcessInProgress"
   ></brave-disputes-tradeline>
 </div>

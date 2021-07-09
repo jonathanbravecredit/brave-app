@@ -36,6 +36,6 @@ export class TradelinesComponent {
    */
   onDisputeClicked(tradeline: ITradeLinePartition): void {
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['/report/accounts/dispute/tradelines']);
+    this.router.navigate(['/dashboard/report/accounts/dispute/tradelines']);
   }
 }

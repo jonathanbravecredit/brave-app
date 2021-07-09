@@ -1,36 +1,47 @@
-import { IDisputeTradelineReasonCardPage } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import {
+  IDisputeReason,
+  IDisputeTradelineReasonCardPage,
+} from '@shared/components/disputes/disputes-tradeline/interfaces';
 
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS = [
+export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeReason[] = [
   {
     id: 'pr-0',
+    claimCode: 'P2',
     text: 'This public record is paid, satisfied or released',
   },
   {
     id: 'pr-1',
+    claimCode: 'P6',
     text: 'This public record was dismissed or filed in error',
   },
   {
     id: 'pr-2',
+    claimCode: 'P8',
     text: 'The amount is incorrect',
   },
   {
     id: 'pr-3',
+    claimCode: 'P8',
     text: 'The date(s) is(are) incorrect',
   },
   {
     id: 'pr-4',
+    claimCode: 'P7',
     text: 'This item never went to judgment',
   },
   {
     id: 'pr-5',
+    claimCode: 'P5',
     text: 'This public record contains multiple inaccuracies',
   },
   {
     id: 'pr-6',
+    claimCode: 'P4',
     text: 'The bankruptcy chapter, status and/or dates are incorrect',
   },
   {
     id: 'pr-7',
+    claimCode: 'P3',
     text: 'This is not my public record',
   },
 ];
