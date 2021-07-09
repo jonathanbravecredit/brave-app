@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DisputeTradelineComponent } from './dispute-tradeline.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
-import { TradelineDisputeProcessComponent } from '@shared/components/tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
+import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 
 const DisputeTradelineRoutes: Routes = [
   {
@@ -12,12 +12,12 @@ const DisputeTradelineRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'tradeline-dispute',
-        pathMatch: "full",
+        redirectTo: 'tradeline',
+        pathMatch: 'full',
       },
       {
-        path: "tradeline-dispute",
-        component: TradelineDisputeProcessComponent,
+        path: 'tradeline',
+        component: DisputesTradelineView,
         canActivate: [AuthGuard],
       },
     ],

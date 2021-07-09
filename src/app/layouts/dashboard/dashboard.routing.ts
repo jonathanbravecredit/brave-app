@@ -6,7 +6,7 @@ import { NegativeAccountInitialComponent } from '@views/negative-account/negativ
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
 import { TradelinesComponent } from '@views/tradelines/tradelines/tradelines.component';
 import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init.component';
-import { NewDisputeComponent } from '@views/disputes/new-dispute/new-dispute.component';
+import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 
 const DashboardRoutes: Routes = [
   {
@@ -35,13 +35,13 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/accounts/negative',
-        component: NegativeAccountInitialComponent,
+        path: 'report/detail/dispute/tradelines',
+        component: DisputesTradelineView,
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/accounts/dispute',
-        component: NewDisputeComponent,
+        path: 'report/accounts/negative',
+        component: NegativeAccountInitialComponent,
         canActivate: [AuthGuard],
       },
     ],

@@ -90,19 +90,19 @@ import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/t
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
-import { TradelineDisputeProcessComponent } from './tradelines/tradeline-dispute-process/tradeline-dispute-process.component';
 import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
 import { BaseModalComponent } from './modals/base-modal/base-modal.component';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
-import { TradelineDisputeProcessSuccessComponent } from './tradelines/tradeline-dispute-process-success/tradeline-dispute-process-success.component';
-import { TradelineDisputePublicRecordsComponent } from './tradelines/tradeline-dispute-public-records/tradeline-dispute-public-records.component';
-import { TradelineDisputePersonalInformationComponent } from './tradelines/tradeline-dispute-personal-information/tradeline-dispute-personal-information.component';
 import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component';
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
 import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
 import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-header-card.component';
+import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes-personal.component';
+import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
+import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
+import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
 
 const components = [
   BaseFormComponent,
@@ -178,14 +178,14 @@ const components = [
   CreditReportGraphicWithGraphComponent,
   BasePaginationComponent,
   ReasonCardComponent,
-  TradelineDisputeProcessComponent,
-  TradelineDisputePublicRecordsComponent,
   BaseModalComponent,
   ConfirmationModalComponent,
   ConditionalTermComponent,
-  TradelineDisputeProcessSuccessComponent,
   DisputeHeaderCardComponent,
-  TradelineDisputePersonalInformationComponent,
+  DisputesPersonalComponent,
+  DisputesTradelineComponent,
+  DisputesPublicComponent,
+  DisputesSuccessComponent,
 ];
 
 // component specific pipes only
