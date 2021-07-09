@@ -83,7 +83,10 @@ export class TransunionService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+  async sendEnrollRequest(
+    data: UpdateAppDataInput | AppDataStateModel,
+    dispute: boolean = false,
+  ): Promise<string | undefined> {
     try {
       const msg = this.createEnrollPayload(data);
       const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
@@ -97,11 +100,15 @@ export class TransunionService {
   /**
    * Send fulfillment key to Transunion to refresh their report
    * @param {UpdateAppDataInput} data AppData state
+   * @param {boolean} refresh flag to indicate it is only a 24 hour refresh call for disputes. Defaults to true
    * @returns
    */
-  async getCreditReport(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+  async getCreditReport(
+    data: UpdateAppDataInput | AppDataStateModel,
+    refresh: boolean = true,
+  ): Promise<string | undefined> {
     try {
-      const msg = this.createFulfillPayload(data);
+      const msg = this.createFulfillPayload(data, refresh);
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
       return res ? res : undefined;
     } catch (err) {
@@ -277,10 +284,14 @@ export class TransunionService {
    * @param { UpdateAppDataInput | AppDataStateModel} data
    * @returns
    */
-  createEnrollPayload(data: UpdateAppDataInput | AppDataStateModel): IEnrollRequest | undefined {
+  createEnrollPayload(
+    data: UpdateAppDataInput | AppDataStateModel,
+    dispute: boolean = false,
+  ): IEnrollRequest | undefined {
     const id = data.id?.split(':')?.pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
+    const serviceBundleCode = dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
 
     if (!id || !attrs || !dob) {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -306,7 +317,7 @@ export class TransunionService {
         },
         Ssn: attrs.ssn?.full || '',
       },
-      ServiceBundleCode: 'CC2BraveCreditTUReportV3Score',
+      ServiceBundleCode: serviceBundleCode,
     } as IEnrollRequest;
   }
   /**
@@ -314,10 +325,14 @@ export class TransunionService {
    * @param { UpdateAppDataInput | AppDataStateModel} data
    * @returns {IFulfillRequest | undefined }
    */
-  createFulfillPayload(data: UpdateAppDataInput | AppDataStateModel): IFulfillRequest | undefined {
+  createFulfillPayload(
+    data: UpdateAppDataInput | AppDataStateModel,
+    refresh: boolean = true,
+  ): IFulfillRequest | undefined {
     const id = data.id?.split(':')?.pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
+    const bundleCode = refresh ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
 
     if (!id || !attrs || !dob) {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -344,7 +359,7 @@ export class TransunionService {
         Ssn: attrs.ssn?.full || '',
       },
       EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
-      ServiceBundleCode: 'CC2BraveCreditTUReportV3Score',
+      ServiceBundleCode: bundleCode,
     } as IFulfillRequest;
   }
 
@@ -388,6 +403,7 @@ export class TransunionService {
 
   /**
    * Genarates the message payload for TU Fulfill request
+   * TODO: need to incorporate Personal and Public items
    * @param { UpdateAppDataInput | AppDataStateModel} data
    * @returns {IGetDisputeStatusRequest | undefined }
    */
@@ -423,25 +439,41 @@ export class TransunionService {
         },
         Ssn: attrs.ssn?.full || '',
       },
-      LineItems: this.parseDisputeToLineItem(disputes),
       EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
+      LineItems: this.parseDisputeToLineItem(disputes),
+      ServiceBundleFulfillmentKey: data.agencies?.transunion?.serviceBundleFulfillmentKey,
+      ServiceProductFulfillmentKey: null,
     } as IGetDisputeStatusRequest;
   }
 
-  parseDisputeToLineItem(disputes: IProcessDisputeTradelineResult[]): ILineItem[] | any {
+  /**
+   * Helper function to parse the disputes to Line Items
+   * @param {IProcessDisputeTradelineResult[]} disputes
+   * @returns {ILineItem[] | ILineItem}
+   */
+  private parseDisputeToLineItem(disputes: IProcessDisputeTradelineResult[]): ILineItem[] | ILineItem {
+    if (!disputes.length) return {} as ILineItem;
     return disputes.map((item) => {
       const reasons = item.result.data.reasons;
       return reasons !== undefined
-        ? {
-            ClaimCodes: this.parseReasonsToClaimCodes(reasons),
-            CreditReportItem: item.tradeline?.Tradeline?.handle,
-            LineItemComment: 'Account Tradeline',
-          }
-        : {};
+        ? ({
+            LineItem: {
+              ClaimCodes: this.parseReasonsToClaimCodes(reasons),
+              CreditReportItem: item.tradeline?.Tradeline?.handle,
+              LineItemComment: 'Account Tradeline',
+            },
+          } as ILineItem)
+        : ({} as ILineItem);
     });
   }
 
-  parseReasonsToClaimCodes(reasons: [IDisputeReason?, IDisputeReason?]): IClaimCode[] {
+  /**
+   * Helper function to parse the reasons to Claim Codes
+   * @param {[(IDisputeReason | undefined), (IDisputeReason | undefined)]} reasons
+   * @returns {IClaimCode[] | IClaimCode}
+   */
+  private parseReasonsToClaimCodes(reasons: [IDisputeReason?, IDisputeReason?]): IClaimCode[] | IClaimCode {
+    if (!reasons.length) return {} as IClaimCode;
     return reasons.map((code) => {
       return {
         ClaimCode: {

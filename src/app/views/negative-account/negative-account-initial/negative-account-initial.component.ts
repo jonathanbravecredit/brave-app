@@ -36,7 +36,7 @@ export class NegativeAccountInitialComponent {
     const state = this.creditReportService.getStateSnapshot()?.appData;
     if (!state) throw new Error(`Error in negativeAccountInitialComponent:onConfirmed=Missing state`);
     try {
-      const res = await this.transunion.getCreditReport(state);
+      const res = await this.transunion.getCreditReport(state, false);
       if (!res) throw new Error(`Failed to refresh report; response:${res}`);
       const fulfillRaw = res ? JSON.parse(res) : undefined;
       const fulfillResult = returnNestedObject(JSON.parse(fulfillRaw.Fulfill), 'FulfillResult');
