@@ -23,6 +23,7 @@ export class BasicCarouselComponent implements AfterViewInit, OnDestroy {
   paginationSub$!: Subscription;
 
   @Input() pages: any[] = [];
+  @Input() data: any[] = [];
   @Output() pageClicked: EventEmitter<any> = new EventEmitter();
 
   sliderWidth: number = 1200;

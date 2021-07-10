@@ -8,7 +8,7 @@
         <div *ngFor="let page of pages; index as i">
           <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
             <!-- put the page item here -->
-            <brave-basic-carousel-loader [component]="page"></brave-basic-carousel-loader>
+            <brave-basic-carousel-loader [component]="page" [data]="data[i]"></brave-basic-carousel-loader>
           </div>
         </div>
       </div>

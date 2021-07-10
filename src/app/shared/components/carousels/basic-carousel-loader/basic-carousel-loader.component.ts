@@ -1,3 +1,4 @@
+import { ChangeDetectorRef } from '@angular/core';
 import {
   Component,
   ComponentFactoryResolver,
@@ -14,13 +15,14 @@ import {
   selector: 'brave-basic-carousel-loader',
   templateUrl: './basic-carousel-loader.component.html',
 })
-export class BasicCarouselLoaderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
   @Input() component: any;
-  componentRef?: ComponentRef<any>;
+  @Input() data: Record<string, any> = {};
   @ViewChild('containerHost', { read: ViewContainerRef }) containerRef!: ViewContainerRef;
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+  componentRef?: ComponentRef<any>;
 
-  ngOnInit() {}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private changeDetector: ChangeDetectorRef) {}
+
   ngAfterViewInit(): void {
     this.loadComponent();
   }
@@ -34,13 +36,24 @@ export class BasicCarouselLoaderComponent implements OnInit, AfterViewInit, OnDe
     const viewContainerRef = this.containerRef;
     viewContainerRef.clear();
     this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.bindData(this.componentRef);
+    this.changeDetector.detectChanges();
+  }
+
+  bindData(ref: ComponentRef<any> | undefined) {
+    if (!this.data) return;
+    if (!ref) return;
+    Object.keys(this.data).forEach((key) => {
+      ref.instance[`${key}`] = this.data[key];
+    });
   }
 }
 
 @Component({
   selector: 'brave-dummy',
-  template: '<p>I work</p>',
+  template: '<p>{{test}} works</p>',
 })
 export class DummyComponent {
+  @Input() test: string = '';
   constructor() {}
 }

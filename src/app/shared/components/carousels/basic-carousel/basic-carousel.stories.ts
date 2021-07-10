@@ -20,12 +20,13 @@ export default {
     }),
   ],
 } as Meta;
-
 const pages: any = [DummyComponent, DummyComponent, DummyComponent, DummyComponent];
+const data: any = [{ test: 'Comp 1' }, { test: 'Comp 2' }, { test: 'Comp 33' }, { test: 'Comp 4' }];
 const Template: Story<BasicCarouselComponent> = (args: any) => ({
   props: {
     ...args,
     pages,
+    data,
   },
 });
 
