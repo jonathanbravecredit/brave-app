@@ -28,3 +28,8 @@ const Template: Story<BaseExceptionPureView> = (args: any) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Enroll =  Template.bind({});
+Enroll.args = {
+  code: '11'
+}
