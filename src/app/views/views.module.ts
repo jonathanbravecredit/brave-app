@@ -58,6 +58,8 @@ import { DisputesPublicPureView } from './disputes-public/disputes-public-pure/d
 import { DisputesPublicView } from './disputes-public/disputes-public/disputes-public.view';
 import { DisputesTradelinePureView } from './disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { DisputesTradelineView } from './disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
+import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
+import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
 
 const views = [
   SignupComponent,
@@ -108,12 +110,14 @@ const views = [
   DisputesPublicView,
   DisputesTradelinePureView,
   DisputesTradelineView,
+  BaseExceptionPureView,
+  BaseExceptionView
 ];
 
 const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes],
+  declarations: [...views, ...pipes ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],

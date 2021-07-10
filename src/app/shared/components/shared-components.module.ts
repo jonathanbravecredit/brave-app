@@ -103,6 +103,7 @@ import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes
 import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
 import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
 import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
+import { BaseExceptionComponent } from './exceptions/base-exception/base-exception.component';
 
 const components = [
   BaseFormComponent,
@@ -186,6 +187,7 @@ const components = [
   DisputesTradelineComponent,
   DisputesPublicComponent,
   DisputesSuccessComponent,
+  BaseExceptionComponent
 ];
 
 // component specific pipes only
