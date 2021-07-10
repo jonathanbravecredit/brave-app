@@ -16,31 +16,52 @@ import {
   templateUrl: './basic-carousel-loader.component.html',
 })
 export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
+  /**
+   * @property Component passed from carousel input
+   */
   @Input() component: any;
+  /**
+   * @property Data to map to the component
+   */
   @Input() data: Record<string, any> = {};
+  /**
+   * @property ViewContainerRef to bind component to
+   */
   @ViewChild('containerHost', { read: ViewContainerRef }) containerRef!: ViewContainerRef;
+  /**
+   * @property ComponentRef to control component lifecyle and data binding
+   */
   componentRef?: ComponentRef<any>;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    this.loadComponent();
+    this.loadComponent().bindData(this.componentRef);
   }
 
   ngOnDestroy() {
     if (this.componentRef) this.componentRef.destroy();
   }
 
-  loadComponent() {
+  /**
+   * Uses the component factory to generate the component
+   * @return BasicCarouselLoaderComponent
+   */
+  loadComponent(): BasicCarouselLoaderComponent {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.component);
     const viewContainerRef = this.containerRef;
     viewContainerRef.clear();
     this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.bindData(this.componentRef);
-    this.changeDetector.detectChanges();
+    return this;
   }
 
-  bindData(ref: ComponentRef<any> | undefined) {
+  /**
+   * Takes the data and binds it to the component
+   * - blindly maps the data in that is provided
+   * @param ref
+   * @returns void
+   */
+  bindData(ref: ComponentRef<any> | undefined): void {
     if (!this.data) return;
     if (!ref) return;
     Object.keys(this.data).forEach((key) => {
