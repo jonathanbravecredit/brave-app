@@ -25,6 +25,7 @@ export interface IBaseExceptionCategory {
   type: TExceptionCategoryType; 
   message: string;
   description: string;
+  actionText: string;
 }
 
 export interface IBaseException {

@@ -33,3 +33,23 @@ export const Enroll =  Template.bind({});
 Enroll.args = {
   code: '11'
 }
+
+export const OpenDispute =  Template.bind({});
+OpenDispute.args = {
+  code: '321'
+}
+
+export const Maintenance =  Template.bind({});
+Maintenance.args = {
+  code: '310'
+}
+
+export const NotEligible =  Template.bind({});
+NotEligible.args = {
+  code: '323'
+}
+
+export const Unavailable =  Template.bind({});
+NotEligible.args = {
+  code: '330'
+}
