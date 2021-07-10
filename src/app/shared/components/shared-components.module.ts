@@ -106,6 +106,7 @@ import { DisputesPublicComponent } from './disputes/disputes-public/disputes-pub
 import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
 import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
+import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 
 const components = [
   BaseFormComponent,
@@ -216,7 +217,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
   imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, BasicCarouselLoaderComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
