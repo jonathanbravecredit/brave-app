@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   selector: 'brave-tradeline-remarks',
   templateUrl: './tradeline-remarks.component.html',
 })
-export class TradelineRemarksComponent implements OnInit {
+export class TradelineRemarksComponent {
   /**
    * Raw remarks from Merge Report
    * @property {string} remarks
@@ -18,14 +18,5 @@ export class TradelineRemarksComponent implements OnInit {
    */
   @Input() address: string = '';
 
-  /**
-   * Event emitter when dispute button clicked
-   * @property {EventEmitter<void>} disputeClick
-   * @default
-   */
-  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
-
   constructor() {}
-
-  ngOnInit(): void {}
 }

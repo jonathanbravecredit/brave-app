@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { BASE_PAGINATION_DEFAULT_NAVIGATION_CONFIGURATION as defaultConfig } from './constants';
 import { IBasePaginationNavigationConfiguration, TBasePaginationNavigationDirection } from './interfaces';
 
 @Component({
   selector: 'brave-base-pagination',
-  templateUrl: './base-pagination.component.html'
+  templateUrl: './base-pagination.component.html',
 })
 /**
  * **TODO**:
@@ -26,7 +26,7 @@ export class BasePaginationComponent implements OnInit, OnChanges {
    *
    * color: 'point';
    */
-  @Input() paginationStyle: 'default' | 'point'  = 'default';
+  @Input() paginationStyle: 'default' | 'point' = 'default';
   /**
    * Value used to give color to the icons and items inside of the pagination
    * @defaultValue 'default'
@@ -78,11 +78,15 @@ export class BasePaginationComponent implements OnInit, OnChanges {
    *
    */
   public currentActivePage$: Observable<number> = this.currentActivePageModifier$.asObservable();
+  /**
+   * @property Observable that simply broadcasts the last navigation (forward/back)
+   */
+  public navigate$: Subject<TBasePaginationNavigationDirection> = new Subject();
 
   localPages: any[] = [];
   localCurrentIndex = 0;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     for (let i = 0; i < this.numberOfPages; i++) {
@@ -103,6 +107,7 @@ export class BasePaginationComponent implements OnInit, OnChanges {
   }
 
   navigate(direction: TBasePaginationNavigationDirection): void {
+    this.navigate$.next(direction);
     const isLimitReached = this.isLimitReached(direction);
     if (!isLimitReached) {
       let currentIndex = this.localCurrentIndex;

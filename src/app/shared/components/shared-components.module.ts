@@ -87,6 +87,7 @@ import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradel
 import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
 import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
 import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
+import { TradelineDetailsTableComponent } from './tradelines/tradeline-details-table/tradeline-details-table.component';
 import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
@@ -103,6 +104,10 @@ import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes
 import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
 import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
 import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
+import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
+import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
+import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 const components = [
   BaseFormComponent,
@@ -168,6 +173,7 @@ const components = [
   TradelineSummaryComponent,
   TradelineDetailsComponent,
   TradelineDetailRowComponent,
+  TradelineDetailsTableComponent,
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
   TradelinePaymentHistoryComponent,
@@ -186,6 +192,9 @@ const components = [
   DisputesTradelineComponent,
   DisputesPublicComponent,
   DisputesSuccessComponent,
+  DisputesDetailComponent,
+  BasicCarouselComponent,
+  BasicCarouselLoaderComponent,
 ];
 
 // component specific pipes only
@@ -209,7 +218,15 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    SharedPipesModule,
+    NgxChartsModule,
+    ChartsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+  ],
   declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
