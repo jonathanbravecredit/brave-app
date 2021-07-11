@@ -4,10 +4,12 @@ import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-t
 import { TradelineToDisputePipe } from '@shared/pipes/tradeline-to-dispute/tradeline-to-dispute.pipe';
 import { MergereportToCreditreportPipe } from '@shared/pipes/mergereport-to-creditreport/mergereport-to-creditreport.pipe';
 import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
+import { TradelineToPagesPipe } from './tradeline-to-pages/tradeline-to-pages.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
   TradelineToDetailsPipe,
+  TradelineToPagesPipe,
   MergereportToNegativeTradelinesPipe,
   MergereportToCreditreportPipe,
 ];

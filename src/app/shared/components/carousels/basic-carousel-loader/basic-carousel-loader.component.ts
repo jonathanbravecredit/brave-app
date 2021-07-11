@@ -5,7 +5,6 @@ import {
   ComponentRef,
   Input,
   OnDestroy,
-  OnInit,
   AfterViewInit,
   ViewChild,
   ViewContainerRef,
@@ -36,7 +35,8 @@ export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    this.loadComponent().bindData(this.componentRef);
+    // added Promise to resolve change after check error
+    Promise.resolve(null).then(() => this.loadComponent().bindData(this.componentRef));
   }
 
   ngOnDestroy() {
@@ -68,13 +68,4 @@ export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
       ref.instance[`${key}`] = this.data[key];
     });
   }
-}
-
-@Component({
-  selector: 'brave-dummy',
-  template: '<p>{{test}} works</p>',
-})
-export class DummyComponent {
-  @Input() test: string = '';
-  constructor() {}
 }

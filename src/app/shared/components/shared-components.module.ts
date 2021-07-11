@@ -107,6 +107,7 @@ import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-s
 import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 const components = [
   BaseFormComponent,
@@ -193,6 +194,7 @@ const components = [
   DisputesSuccessComponent,
   DisputesDetailComponent,
   BasicCarouselComponent,
+  BasicCarouselLoaderComponent,
 ];
 
 // component specific pipes only
@@ -216,8 +218,16 @@ const pipes = [
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
 
 @NgModule({
-  imports: [CommonModule, NgxChartsModule, ChartsModule, ReactiveFormsModule, FormsModule, RouterModule],
-  declarations: [...components, ...pipes, ...directives, BasicCarouselLoaderComponent],
+  imports: [
+    CommonModule,
+    SharedPipesModule,
+    NgxChartsModule,
+    ChartsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+  ],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
