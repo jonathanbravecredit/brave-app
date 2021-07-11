@@ -11,6 +11,8 @@ export class TradelineDetailsTableComponent {
    * @property {ITradelineDetailsConfig} config
    */
   @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
+  @Input() isDisputePageOne: boolean = false;
+  @Input() isDisputePageTwo: boolean = false;
   /**
    * One of three different display configs presented as a map
    * @property {Record<string, any>} mapper
@@ -18,12 +20,12 @@ export class TradelineDetailsTableComponent {
   mapper: Record<string, any>;
   /**
    * Textual key of display config
-   * @property {'revolving' | 'installment' | 'collections'} mapperType
+   * @property {'revolving' | 'installment' | 'collections' | 'disputeOne' | 'disputeTwo' | 'all'} mapperType
    * @example
    *
    * mapperType: 'revolving' | 'installment' | 'collections'
    */
-  mapperType: 'revolving' | 'installment' | 'collections';
+  mapperType: 'revolving' | 'installment' | 'collections' | 'disputeOne' | 'disputeTwo' | 'all';
   /**
    * Revolving account display mapping
    * @property {Record<string, any>} revolvingAccountMapping
@@ -64,7 +66,41 @@ export class TradelineDetailsTableComponent {
     disputeFlag: 'Disputed:',
   };
 
+  /**
+   * Dispute page one mapping
+   * @property {Record<string, any>} disputeOneMapping
+   */
+  private disputeOneMapping: Record<string, any> = {
+    accountNumber: 'Account Number',
+    accountType: 'Account Type',
+    dateOpened: 'Date Opened',
+    dateClosed: 'Date Closed',
+    creditLimie: 'Credit Limit',
+    termMonths: 'Term',
+  };
+
+  /**
+   * Dispute page two mapping
+   * @property {Record<string, any>} disputeTwoMapping
+   */
+  private disputeTwoMapping: Record<string, any> = {
+    accountNumber: 'Account Number',
+    accountType: 'Account Type',
+    dateOpened: 'Date Opened',
+    dateClosed: 'Date Closed',
+    creditLimie: 'Credit Limit',
+    termMonths: 'Term',
+  };
+
   constructor() {
+    if (this.isDisputePageOne) {
+      this.mapper = this.disputeOneMapping;
+      this.mapperType = 'disputeOne';
+    }
+    if (this.isDisputePageTwo) {
+      this.mapper = this.disputeTwoMapping;
+      this.mapperType = 'disputeTwo';
+    }
     switch (this.config.accountTypeSymbol?.toLowerCase()) {
       case 'c':
       case 'o':
