@@ -1,0 +1,8 @@
+<div class="flex justify-center items-center" *ngIf="exceptionCategory">
+  <div class="h-30 w-30 bg-blueGray-800 rounded-full m-auto"></div>
+  <h1 class="text-lg font-semibold">{{ exceptionCategory.message }}</h1>
+  <p class="text-sm text-center mt-8 mb-8">{{ exceptionCategory.description }}</p>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button (click)="actionButtonClicked.emit()">{{ exceptionCategory.actionText }}</brave-filled-onlytext-button>
+  </div>
+</div>
