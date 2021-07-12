@@ -1,8 +1,12 @@
-import { IDisputeTradelineReasonCardPage } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import {
+  IDisputeReason,
+  IDisputeTradelineReasonCardPage,
+} from '@shared/components/disputes/disputes-tradeline/interfaces';
 
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS = [
+export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS: IDisputeReason[] = [
   {
     id: 'pi-0',
+    claimCode: 'delete',
     text: 'To be removed',
   },
 ];

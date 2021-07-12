@@ -5,7 +5,7 @@ export interface IDisputeTradelineReasonCardPage {
   items: IDisputeTradelineReasonCardPageItem[];
 }
 
-export type IDisputeTradelineReasonCardPageItem = { reason: IDisputeReason } & Partial<IDisputeTradelineReasonCard>
+export type IDisputeTradelineReasonCardPageItem = { reason: IDisputeReason } & Partial<IDisputeTradelineReasonCard>;
 
 export interface IDisputeTradelineSelectedObj {
   pageIndex: number;
@@ -17,12 +17,14 @@ export interface IDisputeTradelineProcessResult {
   data: {
     hasCustomInput: boolean;
     customInput: string;
-    reasonsId: string[];
-  }
+    reasonsId: [string?, string?];
+    reasons?: [IDisputeReason?, IDisputeReason?];
+  };
 }
 
 export interface IDisputeReason {
   id: string;
   text: string;
+  claimCode: string;
   userInputDescriptionText?: string | null;
 }
