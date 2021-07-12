@@ -104,6 +104,7 @@ import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes
 import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
 import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
 import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
+import { BaseExceptionComponent } from './exceptions/base-exception/base-exception.component';
 import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
@@ -192,6 +193,7 @@ const components = [
   DisputesTradelineComponent,
   DisputesPublicComponent,
   DisputesSuccessComponent,
+  BaseExceptionComponent,
   DisputesDetailComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
