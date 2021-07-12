@@ -17,6 +17,10 @@ export class TradelineRemarksComponent {
    * @default
    */
   @Input() address: string = '';
+  /**
+   * @property showFooter - flag to turn off the 'Dispute' message
+   */
+  @Input() showFooter: boolean = true;
 
   constructor() {}
 }

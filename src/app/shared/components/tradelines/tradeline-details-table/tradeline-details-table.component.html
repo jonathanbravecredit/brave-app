@@ -12,7 +12,10 @@
 
   <!-- Type of account -->
   <div class="py-2 px-1">
-    <brave-tradeline-detail-row [label]="mapper['creditType']" [value]="config.creditType"></brave-tradeline-detail-row>
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol']"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-tradeline-detail-row>
   </div>
 
   <!-- Date Openend -->
@@ -54,11 +57,19 @@
     ></brave-tradeline-detail-row>
   </div>
 
-  <!-- current balance -->
+  <!-- highest balance -->
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
-      [label]="mapper['currentBalance']"
-      [value]="config.currentBalance"
+      [label]="mapper['highestBalance']"
+      [value]="config.highestBalance"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- late count -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['late90Count']"
+      [value]="sumLateCount(config)"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -88,7 +99,10 @@
 
   <!-- Type of account -->
   <div class="py-2 px-1">
-    <brave-tradeline-detail-row [label]="mapper['creditType']" [value]="config.creditType"></brave-tradeline-detail-row>
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol']"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-tradeline-detail-row>
   </div>
 
   <!-- Date Openend -->
@@ -121,7 +135,10 @@
 
   <!-- Type of account -->
   <div class="py-2 px-1">
-    <brave-tradeline-detail-row [label]="mapper['creditType']" [value]="config.creditType"></brave-tradeline-detail-row>
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol']"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-tradeline-detail-row>
   </div>
 
   <!-- Date Openend -->
@@ -171,11 +188,19 @@
     ></brave-tradeline-detail-row>
   </div>
 
-  <!-- current balance -->
+  <!-- highest balance -->
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
-      [label]="mapper['currentBalance']"
-      [value]="config.currentBalance"
+      [label]="mapper['highestBalance']"
+      [value]="config.highestBalance"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- late count -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['late90Count']"
+      [value]="sumLateCount(config)"
     ></brave-tradeline-detail-row>
   </div>
 
