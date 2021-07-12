@@ -2,12 +2,54 @@
 <!--       REV/INST ACCOUNTS        -->
 <!-- ============================== -->
 <div *ngIf="mapperType === 'revolving' || mapperType === 'installment'" class="divide-y divide-blueGray-300">
-  <!-- Date Opened -->
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountNumber']"
+      [value]="config.accountNumber"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type of account -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol']"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Openend -->
   <div class="py-2 px-1">
     <brave-tradeline-detail-row [label]="mapper['dateOpened']" [value]="config.dateOpened"></brave-tradeline-detail-row>
   </div>
 
-  <!-- Responsibility -->
+  <!-- Date Closed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row [label]="mapper['dateClosed']" [value]="config.dateClosed"></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Credit Limit -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['creditLimit']"
+      [value]="config.creditLimit"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Term -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row [label]="mapper['termMonths']" [value]="config.termMonths"></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Monthly payments -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['monthlyPayment']"
+      [value]="config.monthlyPayment"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- account designator -->
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountDesignator']"
@@ -15,12 +57,15 @@
     ></brave-tradeline-detail-row>
   </div>
 
-  <!-- Terms -->
-  <div *ngIf="mapperType === 'installment'" class="py-2 px-1">
-    <brave-tradeline-detail-row [label]="mapper['termMonths']" [value]="config.termMonths"></brave-tradeline-detail-row>
+  <!-- highest balance -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['highestBalance']"
+      [value]="config.highestBalance"
+    ></brave-tradeline-detail-row>
   </div>
 
-  <!-- Times 30/60/90 -->
+  <!-- late count -->
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['late90Count']"
@@ -28,15 +73,7 @@
     ></brave-tradeline-detail-row>
   </div>
 
-  <!-- Amount Past due -->
-  <div class="py-2 px-1">
-    <brave-tradeline-detail-row
-      [label]="mapper['amountPastDue']"
-      [value]="config.amountPastDue"
-    ></brave-tradeline-detail-row>
-  </div>
-
-  <!-- Disputed -->
+  <!-- dispute flag -->
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['disputeFlag']"
@@ -62,7 +99,10 @@
 
   <!-- Type of account -->
   <div class="py-2 px-1">
-    <brave-tradeline-detail-row [label]="mapper['creditType']" [value]="config.creditType"></brave-tradeline-detail-row>
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol']"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-tradeline-detail-row>
   </div>
 
   <!-- Date Openend -->
@@ -77,6 +117,101 @@
       [value]="config.disputeFlag"
     ></brave-tradeline-detail-row>
   </div>
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
+
+<!-- ============================== -->
+<!--        DISPUTE PAGE 1        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'disputeOne'" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountNumber']"
+      [value]="config.accountNumber"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type of account -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol']"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Openend -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row [label]="mapper['dateOpened']" [value]="config.dateOpened"></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Closed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row [label]="mapper['dateClosed']" [value]="config.dateClosed"></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Credit Limit -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['creditLimit']"
+      [value]="config.creditLimit"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Term -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row [label]="mapper['termMonths']" [value]="config.termMonths"></brave-tradeline-detail-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
+
+<!-- ============================== -->
+<!--        DISPUTE PAGE 2        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'disputeTwo'" class="divide-y divide-blueGray-300">
+  <!-- Monthly payments -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['monthlyPayment']"
+      [value]="config.monthlyPayment"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- account designator -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountDesignator']"
+      [value]="config.accountDesignator"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- highest balance -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['highestBalance']"
+      [value]="config.highestBalance"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- late count -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['late90Count']"
+      [value]="sumLateCount(config)"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- dispute flag -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['disputeFlag']"
+      [value]="config.disputeFlag"
+    ></brave-tradeline-detail-row>
+  </div>
+
   <!-- spacer for bottom -->
   <div></div>
 </div>

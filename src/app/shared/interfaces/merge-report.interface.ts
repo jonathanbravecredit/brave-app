@@ -55,6 +55,7 @@ export interface ITradeline {
   handle?: string;
   dateReported?: string;
   dateOpened?: string;
+  dateClosed?: string;
   accountNumber?: string;
   dateAccountStatus?: string;
   currentBalance?: number | string;
