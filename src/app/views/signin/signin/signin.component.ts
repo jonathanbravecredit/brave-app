@@ -1,25 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
-import { ICredentials } from '@aws-amplify/core';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { APIService } from '@shared/services/aws/api.service';
-import { Store } from '@ngxs/store';
-import * as AppDataActions from '@store/app-data/app-data.actions';
-import * as UserActions from '@store/user/user.actions';
 
 @Component({
   selector: 'brave-signin',
   templateUrl: './signin.component.html',
 })
 export class SigninComponent {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private store: Store,
-    private auth: AuthService,
-    private api: APIService,
-  ) {}
+  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
   ngOnInit(): void {}
 

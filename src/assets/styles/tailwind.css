@@ -1648,10 +1648,6 @@ select {
   height: 1.25rem;
 }
 
-.h-6 {
-  height: 1.5rem;
-}
-
 .h-8 {
   height: 2rem;
 }
@@ -1674,6 +1670,10 @@ select {
 
 .h-40 {
   height: 10rem;
+}
+
+.h-60 {
+  height: 15rem;
 }
 
 .h-64 {
@@ -2209,6 +2209,10 @@ select {
   padding-top: 0px;
 }
 
+.pr-0 {
+  padding-right: 0px;
+}
+
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -2269,8 +2273,16 @@ select {
   padding-bottom: 1.25rem;
 }
 
+.pr-6 {
+  padding-right: 1.5rem;
+}
+
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+
+.pr-7 {
+  padding-right: 1.75rem;
 }
 
 .pl-7 {
@@ -2332,6 +2344,11 @@ select {
 .inset-y-0 {
   top: 0px;
   bottom: 0px;
+}
+
+.inset-x-0 {
+  right: 0px;
+  left: 0px;
 }
 
 .top-0 {

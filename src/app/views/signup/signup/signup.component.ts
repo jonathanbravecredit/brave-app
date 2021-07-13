@@ -2,28 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { ICredentials } from '@aws-amplify/core';
-import {
-  APIService,
-  CreateAppDataInput,
-} from '@shared/services/aws/api.service';
 
 @Component({
   selector: 'brave-signup',
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private auth: AuthService,
-    private api: APIService
-  ) {}
+  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
   ngOnInit(): void {}
 
   /**
    * Method to sign user up
+   * @param user
+   * @returns Promise
    */
   async signUpWithCognito(user: NewUser): Promise<void> {
     if (!user) return;

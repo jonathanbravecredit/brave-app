@@ -32,6 +32,7 @@ import { OutlineOnecolumnFormComponent } from './forms/outline-onecolumn-form/ou
 import { GoogleIconsigninButtonComponent } from './buttons/google-iconsignin-button/google-iconsignin-button.component';
 import { FacebookOnlytextsigninButtonComponent } from './buttons/facebook-onlytextsignin-button/facebook-onlytextsignin-button.component';
 import { SimpleSignupFormComponent } from './forms/simple-signup-form/simple-signup-form.component';
+import { SimpleSigninFormComponent } from './forms/simple-signin-form/simple-signin-form.component';
 import { OutlineSelectInputComponent } from './inputs/outline-select-input/outline-select-input.component';
 import { FilledClosingAlertComponent } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
 import { IndexDropdownComponent } from '@shared/components/dropdowns/popdowns/index-dropdown/index-dropdown.component';
@@ -122,6 +123,7 @@ const components = [
   GoogleIconsigninButtonComponent,
   FacebookOnlytextsigninButtonComponent,
   SimpleSignupFormComponent,
+  SimpleSigninFormComponent,
   OutlineSelectInputComponent,
   FilledClosingAlertComponent,
   FilledOnlytextBadgeComponent,
