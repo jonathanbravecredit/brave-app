@@ -13,25 +13,25 @@ export const DEFAULT_VISUAL_EXCEPTION_CATEGORIES: IBaseExceptionCategory[] = [
   {
     type: "try_later_s",
     message: 'Online Dispute Functionality Temporarily Unavailable',
-    description: "We’re sorry! An error occurred when we tried to perform the action you requested. <br>We expect things to be back to normal soon, please wait and try again later.",
+    description: "We’re sorry! An error occurred when we tried to perform the action you requested. \n\nWe expect things to be back to normal soon, please wait and try again later.",
     actionText: 'Try Again'
 },
   {
     type: "try_later_tu",
     message: "Dispute Service Cannot Access Credit Report",
-    description: 'We’re sorry! An error occurred when we tried to perform the action you requested. Rest assured, we’re already working on the problem and expect things to be back to normal soon.<br><br>We expect things to be back to normal soon, please wait and try again later.',
+    description: 'We’re sorry! An error occurred when we tried to perform the action you requested. Rest assured, we’re already working on the problem and expect things to be back to normal soon.\n\nWe expect things to be back to normal soon, please wait and try again later.',
     actionText: 'Try Again'
   },
   {
     type: "file_maintenance",
     message: "Online Dispute Not Available for Credit Report",
-    description: "We're sorry, your TransUnion credit report is currently not eligible for the online Dispute process. due to file maintenance needed.  <br><br>For further assistance please contact the TransUnion Consumer Relations team at 800-916-8800, open Monday through Friday, 8:00 a.m. to 11:00 p.m. Eastern Standard Time, and they will attempt to resolve the issue.",
+    description: "We're sorry, your TransUnion credit report is currently not eligible for the online Dispute process. due to file maintenance needed.  \n\nFor further assistance please contact the TransUnion Consumer Relations team at 800-916-8800, open Monday through Friday, 8:00 a.m. to 11:00 p.m. Eastern Standard Time, and they will attempt to resolve the issue.",
     actionText: 'Go Home'
 },
   {
     type: "ineligible",
     message: "Credit Report Not Eligible for Online Dispute",
-    description: "We're sorry, online dispute functionality is not available for this TransUnion credit report.<br><br>For further assistance please contact the TransUnion Consumer Relations team at 800-916-8800, open Monday through Friday, 8:00 a.m. to 11:00 p.m. Eastern Standard Time, and  they will attempt to resolve the issue.",
+    description: "We're sorry, online dispute functionality is not available for this TransUnion credit report.\n\nFor further assistance please contact the TransUnion Consumer Relations team at 800-916-8800, open Monday through Friday, 8:00 a.m. to 11:00 p.m. Eastern Standard Time, and  they will attempt to resolve the issue.",
     actionText: 'Return to Dashboard'
   }
 ];
