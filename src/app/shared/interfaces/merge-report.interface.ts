@@ -5,7 +5,7 @@ export interface IMergeReport {
 }
 export interface ITrueLinkCreditReportType {
   SB168Frozen?: string;
-  Borrower?: IBorrower;
+  Borrower?: IBorrower | IBorrower[];
   TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
   InquiryPartition?: IInquiryPartition;
   Message?: { code?: string; type?: string }[] | { code?: string; type?: string };
@@ -13,14 +13,17 @@ export interface ITrueLinkCreditReportType {
   Sources?: { Source?: ISource };
   SafetyCheckPassed?: boolean | string;
 }
+export interface ISB168Frozen {
+  equifax?: boolean;
+  experian?: boolean;
+  transunion?: boolean;
+}
+
+/*=======================*/
+/*    Borrower Elements  */
+/*=======================*/
 export interface IBorrower {
-  BorrowerAddress?: {
-    CreditAddress?: string;
-    Dwelling?: string;
-    Origin?: string;
-    Ownership?: string;
-    Source?: ISource;
-  };
+  BorrowerAddress?: IBorrowerAddress | IBorrowerAddress[];
   Birth?: {
     BirthDate?: string;
     Source?: ISource;
@@ -41,6 +44,26 @@ export interface IBorrower {
       Source?: ISource;
     };
   };
+}
+export interface IBorrowerAddress {
+  CreditAddress?: ICreditAddress;
+  Dwelling?: string;
+  Origin?: string;
+  Ownership?: string;
+  Source?: ISource;
+}
+export interface ICreditAddress {
+  city?: string;
+  country?: string;
+  county?: string;
+  direction?: string;
+  houseNumber?: string;
+  postDirection?: string;
+  stateCode?: string;
+  streetName?: string;
+  unit?: string;
+  unparsedStreet?: string;
+  postalCode?: string;
 }
 export interface ITradeLinePartition {
   accountTypeDescription?: string;
