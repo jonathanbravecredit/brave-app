@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewDisputePureComponent } from './new-dispute-pure.component';
+import { UserDisputesView } from './user-disputes.view';
 
-describe('NewDisputePureComponent', () => {
-  let component: NewDisputePureComponent;
-  let fixture: ComponentFixture<NewDisputePureComponent>;
+describe('UserDisputesView', () => {
+  let component: UserDisputesView;
+  let fixture: ComponentFixture<UserDisputesView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewDisputePureComponent ]
+      declarations: [ UserDisputesView ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewDisputePureComponent);
+    fixture = TestBed.createComponent(UserDisputesView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

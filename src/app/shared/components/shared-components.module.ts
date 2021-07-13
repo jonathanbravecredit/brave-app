@@ -32,6 +32,7 @@ import { OutlineOnecolumnFormComponent } from './forms/outline-onecolumn-form/ou
 import { GoogleIconsigninButtonComponent } from './buttons/google-iconsignin-button/google-iconsignin-button.component';
 import { FacebookOnlytextsigninButtonComponent } from './buttons/facebook-onlytextsignin-button/facebook-onlytextsignin-button.component';
 import { SimpleSignupFormComponent } from './forms/simple-signup-form/simple-signup-form.component';
+import { SimpleSigninFormComponent } from './forms/simple-signin-form/simple-signin-form.component';
 import { OutlineSelectInputComponent } from './inputs/outline-select-input/outline-select-input.component';
 import { FilledClosingAlertComponent } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
 import { IndexDropdownComponent } from '@shared/components/dropdowns/popdowns/index-dropdown/index-dropdown.component';
@@ -109,6 +110,9 @@ import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-det
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { DisputeHistoryCardComponent } from './cards/dispute-cards/dispute-history-card/dispute-history-card.component';
+import { DisputeCurrentCardComponent } from './cards/dispute-cards/dispute-current-card/dispute-current-card.component';
+import { UserDisputesListComponent } from './disputes/user-disputes-list/user-disputes-list.component';
 
 const components = [
   BaseFormComponent,
@@ -122,6 +126,7 @@ const components = [
   GoogleIconsigninButtonComponent,
   FacebookOnlytextsigninButtonComponent,
   SimpleSignupFormComponent,
+  SimpleSigninFormComponent,
   OutlineSelectInputComponent,
   FilledClosingAlertComponent,
   FilledOnlytextBadgeComponent,
@@ -197,6 +202,9 @@ const components = [
   DisputesDetailComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
+  DisputeHistoryCardComponent,
+  DisputeCurrentCardComponent,
+  UserDisputesListComponent
 ];
 
 // component specific pipes only

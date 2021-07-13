@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewDisputeComponent } from './new-dispute.component';
+import { DisputeHistoryCardComponent } from './dispute-history-card.component';
 
-describe('NewDisputeComponent', () => {
-  let component: NewDisputeComponent;
-  let fixture: ComponentFixture<NewDisputeComponent>;
+describe('DisputeHistoryCardComponent', () => {
+  let component: DisputeHistoryCardComponent;
+  let fixture: ComponentFixture<DisputeHistoryCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewDisputeComponent ]
+      declarations: [ DisputeHistoryCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewDisputeComponent);
+    fixture = TestBed.createComponent(DisputeHistoryCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

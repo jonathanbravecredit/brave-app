@@ -48,8 +48,6 @@ import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
 import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
-import { NewDisputeComponent } from './disputes/new-dispute/new-dispute.component';
-import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute-pure.component';
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { DisputesPersonalView } from './disputes-personal/disputes-personal/disputes-personal.view';
@@ -60,6 +58,8 @@ import { DisputesTradelinePureView } from './disputes-tradeline/disputes-tradeli
 import { DisputesTradelineView } from './disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
 import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
+import { UserDisputesPureView } from './dashboard/disputes/user-disputes-pure/user-disputes-pure.view';
+import { UserDisputesView } from './dashboard/disputes/user-disputes/user-disputes.view';
 
 const views = [
   SignupComponent,
@@ -100,8 +100,6 @@ const views = [
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
   CreditReportComponent,
-  NewDisputePureComponent,
-  NewDisputeComponent,
   TradelinesComponent,
   TradelinesPureComponent,
   DisputesPersonalView,
@@ -111,13 +109,15 @@ const views = [
   DisputesTradelinePureView,
   DisputesTradelineView,
   BaseExceptionPureView,
-  BaseExceptionView
+  BaseExceptionView,
+  UserDisputesPureView,
+  UserDisputesView,
 ];
 
 const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes ],
+  declarations: [...views, ...pipes],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],
