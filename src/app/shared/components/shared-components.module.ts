@@ -109,6 +109,9 @@ import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-det
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { DisputeHistoryCardComponent } from './cards/dispute-cards/dispute-history-card/dispute-history-card.component';
+import { DisputeCurrentCardComponent } from './cards/dispute-cards/dispute-current-card/dispute-current-card.component';
+import { UserDisputesListComponent } from './disputes/user-disputes-list/user-disputes-list.component';
 
 const components = [
   BaseFormComponent,
@@ -197,6 +200,9 @@ const components = [
   DisputesDetailComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
+  DisputeHistoryCardComponent,
+  DisputeCurrentCardComponent,
+  UserDisputesListComponent
 ];
 
 // component specific pipes only

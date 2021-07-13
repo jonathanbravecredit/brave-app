@@ -1,0 +1,20 @@
+<div>
+  <div class="flex items-center mb-3">
+    <div style="transform: rotate(180deg)"><span>&#10095;</span></div>
+    <span class="ml-4">Back</span>
+  </div>
+  <brave-user-disputes-list 
+  *ngIf="currentDisputeCollection.length > 0 || historyDisputeCollection.length > 0"
+    [forceHistoryZeroDisputeCollection]="forceHistoryZeroDisputeCollection" 
+    [forceHistoryZeroDisputeCollection]="forceHistoryZeroDisputeCollection"
+    [currentDisputeCollection]="currentDisputeCollection"
+    [historyDisputeCollection]="historyDisputeCollection"
+  ></brave-user-disputes-list>
+  <div *ngIf="currentDisputeCollection.length === 0 && historyDisputeCollection.length === 0">
+    <div class="mx-auto mt-10 h-24 w-24 rounded-full bg-black">
+    </div>
+    <p class="mx-auto mt-6 text-center max-w-xs font-semibold">You have not started any disputes</p>
+    <p class="mx-auto mt-2 text-center text-sm max-w-sm">Review your credit history for errors and begin the process if you find anything wrong!</p>
+    <brave-filled-onlytext-button class="mx-auto mt-4">Review my credit history</brave-filled-onlytext-button>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="mx-6 mt-5">
+  <div class="flex items-center">
+    <span class="material-icons mr-4">view_list</span>
+    <p>Current Disputes</p>
+  </div>
+  <ng-template *ngIf="currentDisputeCollection.length > 0">
+    <brave-dispute-current-card 
+    *ngFor="let dispute of currentDisputeCollection"
+    [status]="dispute.status"
+    [creditorName]="dispute.creditorName"
+    [dateSubmitted]="dispute.dateSubmitted"
+    [accountType]="dispute.accountType"></brave-dispute-current-card>
+  </ng-template>
+  <ng-template *ngIf="currentDisputeCollection.length === 0">
+  <div>
+    <div class="mx-auto mt-10 h-24 w-24 rounded-full bg-black">
+    </div>
+    <p class="mx-auto mt-6 text-center max-w-xs">You don't have any dispute investigations in progress!</p>
+  </div>
+  </ng-template>
+</div>
+<div class="mx-6 mt-5">
+  <div class="flex items-center">
+    <span class="material-icons mr-4">view_list</span>
+    <p>Current Disputes</p>
+  </div>
+  <ng-template *ngIf="historyDisputeCollection.length > 0">
+    <brave-dispute-history-card 
+    *ngFor="let dispute of historyDisputeCollection"
+    [creditorName]="dispute.creditorName"
+    [latestDateSubmitted]="dispute.latestDateSubmitted"
+    [decision]="dispute.decision"></brave-dispute-history-card>
+  </ng-template>
+  <ng-template *ngIf="historyDisputeCollection.length === 0">
+  <div>
+    <div class="mx-auto mt-10 h-24 w-24 rounded-full bg-black">
+    </div>
+    <p class="mx-auto mt-6 text-center max-w-xs">You don't have any historical items!</p>
+  </div>
+  </ng-template>
+</div>
