@@ -60,6 +60,8 @@ import { DisputesTradelinePureView } from './disputes-tradeline/disputes-tradeli
 import { DisputesTradelineView } from './disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
 import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
+import { UserDisputesPureView } from './dashboard/disputes/user-disputes-pure/user-disputes-pure.view';
+import { UserDisputesView } from './dashboard/disputes/user-disputes/user-disputes.view';
 
 const views = [
   SignupComponent,
@@ -111,7 +113,9 @@ const views = [
   DisputesTradelinePureView,
   DisputesTradelineView,
   BaseExceptionPureView,
-  BaseExceptionView
+  BaseExceptionView,
+  UserDisputesPureView,
+  UserDisputesView
 ];
 
 const pipes = [KycKbaquestionsPipe];
