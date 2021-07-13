@@ -36,13 +36,13 @@ Empty.args = {
 };
 
 export const OnlyHistory = Template.bind({});
-Empty.args = {
+OnlyHistory.args = {
     forceStateTo: 'mock',
     forceCurrentZeroDisputeCollection: true,
 };
 
 export const OnlyCurrent = Template.bind({});
-Empty.args = {
+OnlyCurrent.args = {
     forceStateTo: 'mock',
     forceHistoryZeroDisputeCollection: true,
 };
