@@ -60,6 +60,7 @@ import { BaseExceptionPureView } from './exceptions/base-exception/base-exceptio
 import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
 import { UserDisputesPureView } from './dashboard/disputes/user-disputes-pure/user-disputes-pure.view';
 import { UserDisputesView } from './dashboard/disputes/user-disputes/user-disputes.view';
+import { ParseRiskScorePipe } from './credit-report/credit-report/parse-risk-score.pipe';
 
 const views = [
   SignupComponent,
@@ -114,7 +115,7 @@ const views = [
   UserDisputesView,
 ];
 
-const pipes = [KycKbaquestionsPipe];
+const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
 
 @NgModule({
   declarations: [...views, ...pipes],

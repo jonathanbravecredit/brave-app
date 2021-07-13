@@ -1,4 +1,4 @@
-import { ISource, ICodeRef, IPartitionElements, IPartitionSet } from '@shared/interfaces/common-tu.interface';
+import { ISource, ICodeRef, IPartitionElements, IPartitionSet, IRemark } from '@shared/interfaces/common-tu.interface';
 
 export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
@@ -7,11 +7,17 @@ export interface ITrueLinkCreditReportType {
   SB168Frozen?: string;
   Borrower?: IBorrower | IBorrower[];
   TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
-  InquiryPartition?: IInquiryPartition;
-  Message?: { code?: string; type?: string }[] | { code?: string; type?: string };
+  InquiryPartition?: IInquiryPartition | IInquiryPartition[];
+  BankingRecordPartition?: IBankingPartition | IBankingPartition[];
+  PublicRecordPartition?: IPublicPartition | IPublicPartition[];
+  Subscriber?: ISubscriber | ISubscriber[];
+  Message?: IMessage | IMessage[];
   Summary?: ISummary;
-  Sources?: { Source?: ISource };
+  Sources?: { Source?: ISource } | { Source?: ISource }[];
   SafetyCheckPassed?: boolean | string;
+  DeceasedIndicator?: boolean | string;
+  FraudIndicator?: boolean | string;
+  CreditVision?: boolean | string;
 }
 
 /*=======================*/
@@ -146,28 +152,24 @@ export interface ITradeline {
   OpenClosed?: ICodeRef;
   PayStatus?: ICodeRef;
   VerificationIndicator?: ICodeRef;
-  Remark?: ITradelineRemark | ITradelineRemark[];
-  WatchTrade: IWatchTrade | IWatchTrade[];
-  GrantedTrade: IGrantedTrade | IGrantedTrade[];
+  Remark?: IRemark | IRemark[];
+  WatchTrade: IWatchTrade;
+  GrantedTrade: IGrantedTrade;
   CollectionTrade?: ICollectionTrade;
   Source?: ISource;
   subscriberCode?: string;
   highBalance?: number | string;
   dateVerified?: string;
   handle?: string;
+  bureau?: string;
+  position?: number | string;
   dateReported?: string;
-  dateOpened?: string;
-  dateClosed?: string;
-  accountNumber?: string;
-  dateAccountStatus?: string;
   currentBalance?: number | string;
   creditorName?: string;
-  position?: number | string;
-  bureau?: string;
-}
-export interface ITradelineRemark {
-  RemarkCode?: ICodeRef;
-  customRemark?: string;
+  accountNumber?: string;
+  dateOpened?: string;
+  dateClosed?: string;
+  dateAccountStatus?: string;
 }
 export interface IWatchTrade {
   ContactMethod?: ICodeRef;
@@ -175,6 +177,11 @@ export interface IWatchTrade {
   PreviousAccountCondition?: ICodeRef;
   previousAmountPastDue?: number | string;
   amountPastDue?: number | string;
+}
+export interface ICollectionTrade {
+  creditType?: ICodeRef;
+  actualPaymentAmount?: number | string;
+  originalCreditor?: string;
 }
 export interface IGrantedTrade {
   AccountType?: ICodeRef;
@@ -217,41 +224,265 @@ export interface IMonthyPayStatusItem {
   currentBalance?: number | string;
   changed?: boolean | string;
 }
-export interface ICollectionTrade {
-  originalCreditor?: string;
-  creditType?: ICodeRef;
-}
+
+/*=======================*/
+/*   Inquiry Elements    */
+/*=======================*/
 export interface IInquiryPartition {
-  Inquiry?: {
-    inquiryDate?: string;
-    subscriberName?: string;
-    subscriberNumber?: number | string;
-    bureau?: string;
-    inquiryType?: string;
-    IndustryCode?: string;
-    Source?: ISource;
-  };
+  Inquiry?: IInquiry | IInquiry[];
 }
+export interface IInquiry {
+  IndustryCode?: ICodeRef;
+  Source?: ISource;
+  bureau?: string;
+  inquiryType?: string;
+  subscriberNumber?: string;
+  inquiryDate?: string;
+  subscriberName?: string;
+}
+
+/*=======================*/
+/*   Banking Elements    */
+/*=======================*/
+export interface IBankingPartition {
+  BankingRecord?: IBankingRecord | IBankingRecord[];
+}
+export interface IBankingRecord {
+  BankingType?: ICodeRef;
+  AccountDesignator?: ICodeRef;
+  IndustryCode?: ICodeRef;
+  Status?: ICodeRef;
+  Remark?: IRemark | IRemark[];
+  Source?: ISource;
+  dateOpened?: string;
+  dateClosed?: string;
+  bureau?: string;
+  dateVerified?: string;
+  subscriberCode?: string;
+  bankName?: string;
+  balance?: number | string;
+  accountNumber?: string;
+}
+
+/*=======================*/
+/*    Public Elements    */
+/*=======================*/
+export interface IPublicPartition {
+  PublicRecord?: IPublicRecord | IPublicRecord[];
+}
+export interface IPublicRecord {
+  AccountDesignator?: ICodeRef;
+  Classification?: ICodeRef;
+  IndustryCode?: ICodeRef;
+  Status?: ICodeRef;
+  Type?: ICodeRef;
+  ExpirationDate?: string;
+  MiscPublicRecord?: IMiscPublicRecord;
+  FinancingStatement?: IFinancingStatement;
+  Garnishment?: IGarnishment;
+  FinancialCounseling?: IFinancialCounseling;
+  MaritalItem?: IMaritalItem;
+  Bankruptcy?: IBankruptcy;
+  RegisteredItem?: IRegisteredItem;
+  TaxLien?: ITaxLien;
+  LegalItem?: ILegalItem;
+  Foreclosure?: IForeclosure;
+  Remark?: IRemark | IRemark[];
+  Source?: ISource;
+  subscriberCode?: string;
+  referenceNumber?: string;
+  handle?: string;
+  bureau?: string;
+  dateFiled?: string;
+  courtName?: string;
+  dateVerified?: string;
+  dateUpdated?: string;
+}
+export interface IMiscPublicRecord {
+  miscInformation?: string;
+}
+export interface IFinancingStatement {
+  CreditorType?: ICodeRef;
+  dateMaturity?: string;
+}
+export interface IGarnishment {
+  amount?: number | string;
+  dateSatisfied?: string;
+  garnishee?: string;
+  plaintiff?: string;
+}
+export interface IFinancialCounseling {
+  amount?: number | string;
+  dateChecked?: string;
+  dateSettled?: string;
+}
+export interface IMaritalItem {
+  spouse?: string;
+}
+export interface IBankruptcy {
+  courtNumber?: string;
+  division?: string;
+  assetAmount?: number | string;
+  dateResolved?: string;
+  exemptAmount?: number | string;
+  liabilityAmount?: number | string;
+  trustee?: string;
+  company?: string;
+  thirdParty?: string;
+}
+export interface IRegisteredItem {
+  Security?: ICodeRef | ICodeRef[];
+  originalBalance?: number | string;
+  dateMatures?: string;
+}
+export interface ITaxLien {
+  amount?: number | string;
+  dateReleased?: string;
+}
+export interface ILegalItem {
+  CourtLocation?: ICodeRef;
+  CourtType?: ICodeRef;
+  plaintiff?: string;
+  lawyer?: string;
+  thirdParty?: string;
+  actionAmount?: number | string;
+  balance?: number | string;
+  dateSatisfied?: string;
+}
+export interface IForeclosure {
+  dateSettled?: string;
+  liability?: number | string;
+}
+
+/*=======================*/
+/*  Subscriber Elements  */
+/*=======================*/
+export interface ISubscriber {
+  CreditAddress?: ICreditAddress;
+  IndustryCode?: ICodeRef;
+  Source?: ISource;
+  subscriberCode?: string;
+  telephone?: string;
+  name?: string;
+}
+
+/*=======================*/
+/*    Message Elements   */
+/*=======================*/
+export interface IMessage {
+  Code: ICodeRef;
+  Type: ICodeRef;
+}
+
+/*=======================*/
+/*   Summary Elements    */
+/*=======================*/
 export interface ISummary {
-  TradelineSummary?: {
-    TransUnion?: string;
-  };
-  InquirySummary?: {
-    TransUnion?: string;
-  };
-  PublicRecordSummary?: {
-    TransUnion?: string;
-  };
-  Sources?: {
-    Source?: {
-      Bureau?: string;
-      InquiryDate?: string;
-      OriginalData?: string;
-    };
-  };
-  SafetyCheckPassed?: string;
+  TradelineSummary?: ITradelineSummary;
+  InquirySummary?: IInquirySummary;
+  PublicRecordSummary?: IPublicRecordSummary;
+  PortfolioCreditSummary?: IPortfolioCreditSummary | IPortfolioCreditSummary[];
+  AccountHistorySummary?: IAccountHistorySummary | IAccountHistorySummary[];
 }
+export interface ITradelineSummary {
+  Experian?: ITradelineSummaryInfo;
+  Equifax?: ITradelineSummaryInfo;
+  Transunion?: ITradelineSummaryInfo;
+  Merge?: ITradelineSummaryInfo;
+}
+export interface ITradelineSummaryInfo {
+  RecentDeliquencyMOP?: ICodeRef;
+  TotalHistoricalNegatives?: number | string;
+  TotalCollectionAccounts?: number | string;
+  HistoricalNegativeAccounts?: number | string;
+  TotalInstallmentAccounts?: number | string;
+  OpenInstallmentAccounts?: number | string;
+  TotalOtherAccounts?: number | string;
+  OpenOtherAccounts?: number | string;
+  OpenMortgageAccounts?: number | string;
+  RecentDeliquencyDate?: string;
+  TotalMortgageAccounts?: number | string;
+  DelinquentAccounts?: number | string;
+  DerogatoryAccounts?: number | string;
+  CloseAccounts?: number | string;
+  TotalAccounts?: number | string;
+  OpenAccounts?: number | string;
+  TotalRevolvingAccounts?: number | string;
+  OpenRevolvingAccounts?: number | string;
+  CreditSummaryPeriod?: string;
+  TotalBalances?: number | string;
+  TotalMonthlyPayments?: number | string;
+}
+export interface IInquirySummary {
+  Experian?: IInquirySummaryInfo;
+  Equifax?: IInquirySummaryInfo;
+  Transunion?: IInquirySummaryInfo;
+  Merge?: IInquirySummaryInfo;
+}
+export interface IInquirySummaryInfo {
+  NumberInLast2Years?: number | string;
+}
+export interface IPublicRecordSummary {
+  Experian?: IPublicRecordSummaryInfo;
+  Equifax?: IPublicRecordSummaryInfo;
+  Transunion?: IPublicRecordSummaryInfo;
+  Merge?: IPublicRecordSummaryInfo;
+}
+export interface IPublicRecordSummaryInfo {
+  NumberOfRecords?: number | string;
+}
+export interface IPortfolioCreditSummary {
+  Transunion?: IPortfolioCreditSummaryInfo;
+}
+export interface IPortfolioCreditSummaryInfo {
+  SummaryType?: ICodeRef;
+  CurrentPaymentDueAmount?: number | string;
+  PriorPaymentDueAmount?: number | string;
+  CurrentActualPaymentAmount?: number | string;
+  PastDueAmount?: number | string;
+  CreditLimitAmount?: number | string;
+  BalanceAmount?: number | string;
+}
+export interface IAccountHistorySummary {
+  Transunion?: IAccountHistorySummaryInfo;
+}
+export interface IAccountHistorySummaryInfo {
+  SummaryType?: ICodeRef;
+  TotalPaymentRatio?: number | string;
+  ActualPaymentAmount?: number | string;
+  PaymentDueAmount?: number | string;
+  TransactorRevolverIndicator?: string;
+  EndingBalanceAmount?: number | string;
+  AggregateExcessPaymentAmount?: number | string;
+  ActiveAccounts?: number | string;
+  OpenAccounts?: number | string;
+  TimePeriod?: string;
+  EstimatedSpendAmount?: number | string;
+  PriorMonthBalance?: number | string;
+  CreditLimitAmount?: number | string;
+}
+
 export interface IUnparsedCreditReport {
   '#text': string;
   type: string;
 }
+
+// export interface ISummary {
+//   TradelineSummary?: {
+//     TransUnion?: string;
+//   };
+//   InquirySummary?: {
+//     TransUnion?: string;
+//   };
+//   PublicRecordSummary?: {
+//     TransUnion?: string;
+//   };
+//   Sources?: {
+//     Source?: {
+//       Bureau?: string;
+//       InquiryDate?: string;
+//       OriginalData?: string;
+//     };
+//   };
+//   SafetyCheckPassed?: string;
+// }

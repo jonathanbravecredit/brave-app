@@ -110,16 +110,6 @@ export class CreditreportService implements OnDestroy {
   }
 
   /**
-   * Returns the borrower from the current TU report
-   * @returns {IBorrower}
-   */
-  getBorrower(): IBorrower {
-    if (!this.tuReport) return {} as IBorrower;
-    const borrower = this.tuReport?.TrueLinkCreditReportType?.Borrower;
-    return borrower ? borrower : ({} as IBorrower);
-  }
-
-  /**
    * Sets the current tradeline partition. Can only set one at a time
    * - Makes the detail available for the tradeline detail view.
    * @param tradeline

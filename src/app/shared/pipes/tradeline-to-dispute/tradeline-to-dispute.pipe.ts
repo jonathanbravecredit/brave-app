@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import { IRemark } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeItem } from "@shared/services/dispute/dispute.interfaces";
+import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
 
 @Pipe({
   name: 'tradelineToDispute',
@@ -25,7 +26,7 @@ export class TradelineToDisputePipe implements PipeTransform {
       accountTypeDescription: this.lookupAccountType(tradeline),
       accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
       disputeFlag: 'Previously Disputed?',
-      originalCreditor: "Original Creditor",
+      originalCreditor: 'Original Creditor',
       originalCreditorValue: this.lookupOriginalCreditor(tradeline),
       disputeFlagValue: this.lookupDisputeFlag(tradeline),
       accountDetail: {
@@ -34,7 +35,7 @@ export class TradelineToDisputePipe implements PipeTransform {
         amountPastDue: tradeline.Tradeline?.currentBalance || 0,
         dateOpened: tradeline.Tradeline?.dateOpened || '',
         dateLastPayment: tradeline.Tradeline?.GrantedTrade?.dateLastPayment || '',
-        remarks: tradeline.Tradeline?.Remark?.customRemark || '',
+        remarks: this.parseRemarks(tradeline.Tradeline?.Remark),
       },
     };
     return mapped;
@@ -77,5 +78,17 @@ export class TradelineToDisputePipe implements PipeTransform {
     if (!partition) return 'No';
     const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
+  }
+
+  /**
+   * Flatten the remarks into one paragraph
+   * @param remarks
+   * @returns
+   */
+  parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
+    if (remarks === undefined) return '';
+    return remarks instanceof Array
+      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
+      : remarks.customRemark || '';
   }
 }

@@ -12,6 +12,11 @@ export interface ISource {
   Reference?: string;
 }
 
+export interface IRemark {
+  RemarkCode?: ICodeRef;
+  customRemark?: string;
+}
+
 export interface IPartitionSet {
   partitionSet?: number | string;
 }

@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { NEGATIVE_PAY_STATUS_CODES, BRAVE_ACCOUNT_TYPE } from "@shared/constants";
-import { ITradeLinePartition, IMergeReport } from "@shared/interfaces/merge-report.interface";
+import { NEGATIVE_PAY_STATUS_CODES, BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import { IRemark } from '@shared/interfaces/common-tu.interface';
+import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { DEFAULT_TRADELINE } from '@views/negative-account/negative-account-initial/constants';
 
 @Pipe({
-  name: "mergereportToNegativeTradelines",
+  name: 'mergereportToNegativeTradelines',
 })
 export class MergereportToNegativeTradelinesPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
@@ -100,7 +101,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
           amountPastDue: item.Tradeline?.currentBalance || 0,
           dateOpened: item.Tradeline?.dateOpened || '',
           dateLastPayment: item.Tradeline?.GrantedTrade?.dateLastPayment || '',
-          remarks: item.Tradeline?.Remark?.customRemark || '',
+          remarks: this.parseRemarks(item.Tradeline?.Remark),
         },
       };
     });
@@ -144,5 +145,17 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
     if (!partition) return 'No';
     const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
+  }
+
+  /**
+   * Flatten the remarks into one paragraph
+   * @param remarks
+   * @returns
+   */
+  parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
+    if (remarks === undefined) return '';
+    return remarks instanceof Array
+      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
+      : remarks.customRemark || '';
   }
 }
