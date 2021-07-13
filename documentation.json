@@ -2164,7 +2164,7 @@
         },
         {
             "name": "TradelineToPagesPipe",
-            "id": "pipe-TradelineToPagesPipe-97381c1a38c027c935bb68f0471ab518",
+            "id": "pipe-TradelineToPagesPipe-2ae8c3d18630bfee600b8b00b8973d27",
             "file": "src/app/shared/pipes/tradeline-to-pages/tradeline-to-pages.pipe.ts",
             "type": "pipe",
             "description": "",
@@ -2181,7 +2181,7 @@
                     "optional": false,
                     "returnType": "{ isDisputePageOne: boolean; config: { accountNumber: any; accountTypeSymbol: any; creditorName: ...",
                     "typeParameters": [],
-                    "line": 21,
+                    "line": 27,
                     "modifierKind": [
                         112
                     ],
@@ -2206,7 +2206,7 @@
                     "optional": false,
                     "returnType": "{ isDisputePageTwo: boolean; config: { accountNumber: any; accountTypeSymbol: any; creditorName: ...",
                     "typeParameters": [],
-                    "line": 49,
+                    "line": 55,
                     "modifierKind": [
                         112
                     ],
@@ -2231,7 +2231,7 @@
                     "optional": false,
                     "returnType": "{ paymentHistory: any; }",
                     "typeParameters": [],
-                    "line": 78,
+                    "line": 84,
                     "modifierKind": [
                         112
                     ],
@@ -2256,7 +2256,7 @@
                     "optional": false,
                     "returnType": "{ showFooter: boolean; remarks?: undefined; } | { remarks: any; showFooter: boolean; }",
                     "typeParameters": [],
-                    "line": 84,
+                    "line": 90,
                     "modifierKind": [
                         112
                     ],
@@ -2294,7 +2294,7 @@
                 }
             ],
             "ngname": "tradelineToPages",
-            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';\n\n@Pipe({\n  name: 'tradelineToPages',\n})\nexport class TradelineToPagesPipe implements PipeTransform {\n  transform(tradeline: ITradeLinePartition | undefined): any[] {\n    if (!tradeline || !Object.keys(tradeline).length) return [];\n    console.log('tradeline', tradeline);\n    const data = [\n      this.mapToDetailsPageOne(tradeline),\n      this.mapToDetailsPageTwo(tradeline),\n      this.mapToPaymentHistory(tradeline),\n      this.mapToRemarks(tradeline),\n    ];\n    console.log('data', data);\n    return data;\n  }\n\n  private mapToDetailsPageOne(tradeline: ITradeLinePartition) {\n    return {\n      isDisputePageOne: true,\n      config: {\n        accountNumber: tradeline.Tradeline?.accountNumber || '',\n        accountTypeSymbol: tradeline.accountTypeSymbol || '',\n        creditorName: tradeline.Tradeline?.creditorName || '',\n        originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',\n        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',\n        dateOpened: tradeline.Tradeline?.dateOpened || '',\n        dateClosed: tradeline.Tradeline?.dateClosed || '',\n        dateReported: tradeline.Tradeline?.dateReported || '',\n        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description || '',\n        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths || '',\n        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count || '',\n        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count || '',\n        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count || '',\n        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment || '',\n        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit || '',\n        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || '',\n        currentBalance: tradeline.Tradeline?.currentBalance || '',\n        highestBalance: tradeline.Tradeline?.highBalance || '',\n        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',\n        status: tradeline.Tradeline?.PayStatus?.symbol || '',\n        openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',\n      },\n    };\n  }\n  private mapToDetailsPageTwo(tradeline: ITradeLinePartition) {\n    return {\n      isDisputePageTwo: true,\n      config: {\n        accountNumber: tradeline.Tradeline?.accountNumber || '',\n        accountTypeSymbol: tradeline.accountTypeSymbol || '',\n        creditorName: tradeline.Tradeline?.creditorName || '',\n        originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',\n        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',\n        dateOpened: tradeline.Tradeline?.dateOpened || '',\n        dateClosed: tradeline.Tradeline?.dateClosed || '',\n        dateReported: tradeline.Tradeline?.dateReported || '',\n        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description || '',\n        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths || '',\n        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count || '',\n        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count || '',\n        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count || '',\n        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment || '',\n        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit || '',\n        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || '',\n        currentBalance: tradeline.Tradeline?.currentBalance || '',\n        highestBalance: tradeline.Tradeline?.highBalance || '',\n        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',\n        status: tradeline.Tradeline?.PayStatus?.symbol || '',\n        openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',\n      },\n    };\n  }\n\n  private mapToPaymentHistory(tradeline: ITradeLinePartition) {\n    const paymentHistory = tradeline.Tradeline?.GrantedTrade?.PayStatusHistory;\n    if (!paymentHistory || !Object.keys(paymentHistory).length) return null;\n    return { paymentHistory };\n  }\n\n  private mapToRemarks(tradeline: ITradeLinePartition) {\n    const remarks = tradeline.Tradeline?.Remark?.customRemark || '';\n    const showFooter = false;\n    if (!remarks || !Object.keys(remarks).length) return { showFooter };\n    return { remarks, showFooter };\n  }\n}\n"
+            "sourceCode": "import { Pipe, PipeTransform } from '@angular/core';\nimport { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';\n\n@Pipe({\n  name: 'tradelineToPages',\n})\nexport class TradelineToPagesPipe implements PipeTransform {\n  transform(tradeline: ITradeLinePartition | undefined): any[] {\n    if (!tradeline || !Object.keys(tradeline).length)\n      return [\n        this.mapToDetailsPageOne({}),\n        this.mapToDetailsPageTwo({}),\n        this.mapToPaymentHistory({}),\n        this.mapToRemarks({}),\n      ];\n    console.log('tradeline', tradeline);\n    const data = [\n      this.mapToDetailsPageOne(tradeline),\n      this.mapToDetailsPageTwo(tradeline),\n      this.mapToPaymentHistory(tradeline),\n      this.mapToRemarks(tradeline),\n    ];\n    console.log('data', data);\n    return data;\n  }\n\n  private mapToDetailsPageOne(tradeline: ITradeLinePartition) {\n    return {\n      isDisputePageOne: true,\n      config: {\n        accountNumber: tradeline.Tradeline?.accountNumber || '',\n        accountTypeSymbol: tradeline.accountTypeSymbol || '',\n        creditorName: tradeline.Tradeline?.creditorName || '',\n        originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',\n        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',\n        dateOpened: tradeline.Tradeline?.dateOpened || '',\n        dateClosed: tradeline.Tradeline?.dateClosed || '',\n        dateReported: tradeline.Tradeline?.dateReported || '',\n        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description || '',\n        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths || '',\n        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count || '',\n        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count || '',\n        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count || '',\n        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment || '',\n        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit || '',\n        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || '',\n        currentBalance: tradeline.Tradeline?.currentBalance || '',\n        highestBalance: tradeline.Tradeline?.highBalance || '',\n        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',\n        status: tradeline.Tradeline?.PayStatus?.symbol || '',\n        openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',\n      },\n    };\n  }\n  private mapToDetailsPageTwo(tradeline: ITradeLinePartition) {\n    return {\n      isDisputePageTwo: true,\n      config: {\n        accountNumber: tradeline.Tradeline?.accountNumber || '',\n        accountTypeSymbol: tradeline.accountTypeSymbol || '',\n        creditorName: tradeline.Tradeline?.creditorName || '',\n        originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',\n        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',\n        dateOpened: tradeline.Tradeline?.dateOpened || '',\n        dateClosed: tradeline.Tradeline?.dateClosed || '',\n        dateReported: tradeline.Tradeline?.dateReported || '',\n        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description || '',\n        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths || '',\n        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count || '',\n        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count || '',\n        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count || '',\n        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment || '',\n        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit || '',\n        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || '',\n        currentBalance: tradeline.Tradeline?.currentBalance || '',\n        highestBalance: tradeline.Tradeline?.highBalance || '',\n        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',\n        status: tradeline.Tradeline?.PayStatus?.symbol || '',\n        openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',\n      },\n    };\n  }\n\n  private mapToPaymentHistory(tradeline: ITradeLinePartition) {\n    const paymentHistory = tradeline.Tradeline?.GrantedTrade?.PayStatusHistory;\n    if (!paymentHistory || !Object.keys(paymentHistory).length) return null;\n    return { paymentHistory };\n  }\n\n  private mapToRemarks(tradeline: ITradeLinePartition) {\n    const remarks = tradeline.Tradeline?.Remark?.customRemark || '';\n    const showFooter = false;\n    if (!remarks || !Object.keys(remarks).length) return { showFooter };\n    return { remarks, showFooter };\n  }\n}\n"
         }
     ],
     "interfaces": [
@@ -20224,7 +20224,7 @@
         },
         {
             "name": "DisputeHeaderCardComponent",
-            "id": "component-DisputeHeaderCardComponent-e96e5b12094bd186dfde60fef48b293c",
+            "id": "component-DisputeHeaderCardComponent-8ad50408168944950e060e0e8bcb51b7",
             "file": "src/app/shared/components/cards/dispute-header-card/dispute-header-card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -20283,13 +20283,13 @@
                 },
                 {
                     "name": "disputeFlag",
-                    "defaultValue": "\"\"",
+                    "defaultValue": "''",
                     "line": 27,
                     "type": "string | undefined"
                 },
                 {
                     "name": "disputeFlagValue",
-                    "defaultValue": "\"\"",
+                    "defaultValue": "''",
                     "line": 28,
                     "type": "string | undefined"
                 },
@@ -20307,7 +20307,7 @@
                 },
                 {
                     "name": "originalCreditorValue",
-                    "defaultValue": "\"\"",
+                    "defaultValue": "''",
                     "line": 24,
                     "type": "string | undefined"
                 },
@@ -20319,7 +20319,7 @@
                 },
                 {
                     "name": "showDisputeButton",
-                    "defaultValue": "true",
+                    "defaultValue": "false",
                     "line": 19
                 },
                 {
@@ -20408,7 +20408,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';\nimport { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';\nimport {\n  OnboardingDisputeComponent,\n  IOnboardingEvent,\n} from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';\nimport { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';\n\n@Component({\n  selector: \"brave-dispute-header-card\",\n  templateUrl: './dispute-header-card.component.html',\n})\nexport class DisputeHeaderCardComponent {\n  @ViewChild(ViewdetailButtonComponent)\n  viewDetail: ViewdetailButtonComponent | undefined;\n  @ViewChild(OnboardingDisputeComponent)\n  disputeTermsModal: OnboardingDisputeComponent | undefined;\n  @Output() confirmed: EventEmitter<void> = new EventEmitter();\n  @Input() showDisputeButton = true;\n  @Input() tradeline: ITradeLinePartition | undefined = {} as ITradeLinePartition;\n  @Input() creditorName: string | undefined = '';\n  @Input() lastReported: string | undefined = '';\n  @Input() originalCreditor: string | undefined = '';\n  @Input() originalCreditorValue: string | undefined = \"\";\n  @Input() accountTypeDescription: string | undefined = '';\n  @Input() accountTypeDescriptionValue: string | undefined = '';\n  @Input() disputeFlag: string | undefined = \"\";\n  @Input() disputeFlagValue: string | undefined = \"\";\n  @Input() accountNumber: string | undefined = '';\n  @Input() typeOfCollection: string | undefined = '';\n  @Input() amountPastDue: string | number | undefined = 0;\n  @Input() dateOpened: string | undefined = '1900-01-01';\n  @Input() dateLastPayment: string | undefined = '1900-01-01';\n  @Input() remarks: string | undefined = '';\n\n  showModal = false;\n\n  constructor() {}\n\n  actionForDispute(e: IOnboardingEvent) {\n    if (e.isConfirmed) {\n      this.showModal = false;\n      this.confirmed.emit();\n      console.log('confirmed');\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';\nimport { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';\nimport {\n  OnboardingDisputeComponent,\n  IOnboardingEvent,\n} from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';\nimport { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';\n\n@Component({\n  selector: 'brave-dispute-header-card',\n  templateUrl: './dispute-header-card.component.html',\n})\nexport class DisputeHeaderCardComponent {\n  @ViewChild(ViewdetailButtonComponent)\n  viewDetail: ViewdetailButtonComponent | undefined;\n  @ViewChild(OnboardingDisputeComponent)\n  disputeTermsModal: OnboardingDisputeComponent | undefined;\n  @Output() confirmed: EventEmitter<void> = new EventEmitter();\n  @Input() showDisputeButton = false;\n  @Input() tradeline: ITradeLinePartition | undefined = {} as ITradeLinePartition;\n  @Input() creditorName: string | undefined = '';\n  @Input() lastReported: string | undefined = '';\n  @Input() originalCreditor: string | undefined = '';\n  @Input() originalCreditorValue: string | undefined = '';\n  @Input() accountTypeDescription: string | undefined = '';\n  @Input() accountTypeDescriptionValue: string | undefined = '';\n  @Input() disputeFlag: string | undefined = '';\n  @Input() disputeFlagValue: string | undefined = '';\n  @Input() accountNumber: string | undefined = '';\n  @Input() typeOfCollection: string | undefined = '';\n  @Input() amountPastDue: string | number | undefined = 0;\n  @Input() dateOpened: string | undefined = '1900-01-01';\n  @Input() dateLastPayment: string | undefined = '1900-01-01';\n  @Input() remarks: string | undefined = '';\n\n  showModal = false;\n\n  constructor() {}\n\n  actionForDispute(e: IOnboardingEvent) {\n    if (e.isConfirmed) {\n      this.showModal = false;\n      this.confirmed.emit();\n      console.log('confirmed');\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -29978,132 +29978,6 @@
             "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\n  <div class=\"flex items-center\">\n    <p><span style=\"transform: rotate(180deg)\">&#10095;</span> <span class=\"ml-4\">Back</span></p>\n  </div>\n  <div class=\"mb-2\">\n    <h2 class=\"font-semibold text-lg\">New Negative Accounts</h2>\n    <span><p class=\"text-brave-critical text-xs\">High Score Impact</p></span>\n  </div>\n  <p class=\"text-sm mb-1\">\n    These are new negative accounts in the last 30 days that are in collections, have been charged off, or have late\n    payments.\n  </p>\n  <p class=\"text-sm mb-6\">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>\n  <div *ngFor=\"let card of cards\">\n    <brave-negative-account-card [data]=\"card\" (confirmed)=\"confirmed.emit(card)\"></brave-negative-account-card>\n  </div>\n</div>\n"
         },
         {
-            "name": "NewDisputeComponent",
-            "id": "component-NewDisputeComponent-5057acbd459638825a7e991a31ca1ac1",
-            "file": "src/app/views/disputes/new-dispute/new-dispute.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "brave-new-dispute",
-            "styleUrls": [],
-            "styles": [],
-            "templateUrl": [
-                "./new-dispute.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "dispute$",
-                    "type": "Observable<ITradeLinePartition>",
-                    "optional": false,
-                    "description": "",
-                    "line": 11
-                }
-            ],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 16
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, Input, OnInit } from '@angular/core';\nimport { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';\nimport { DisputeService } from '@shared/services/dispute/dispute.service';\nimport { Observable } from 'rxjs';\n\n@Component({\n  selector: 'brave-new-dispute',\n  templateUrl: './new-dispute.component.html',\n})\nexport class NewDisputeComponent implements OnInit {\n  dispute$: Observable<ITradeLinePartition>;\n  constructor(private disputeService: DisputeService) {\n    this.dispute$ = this.disputeService.tradeline$.asObservable();\n  }\n\n  ngOnInit(): void {}\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [
-                    {
-                        "name": "disputeService",
-                        "type": "DisputeService"
-                    }
-                ],
-                "line": 11,
-                "jsdoctags": [
-                    {
-                        "name": "disputeService",
-                        "type": "DisputeService",
-                        "tagName": {
-                            "text": "param"
-                        }
-                    }
-                ]
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"container mx-auto max-w-xs h-full\">\n  <ng-container *ngIf=\"dispute$ | async | tradelineToDispute as dispute\">\n    <brave-new-dispute-pure [dispute]=\"dispute\"></brave-new-dispute-pure>\n  </ng-container>\n</div>\n"
-        },
-        {
-            "name": "NewDisputePureComponent",
-            "id": "component-NewDisputePureComponent-df45045b1a48b82b75c718dbc16fb47d",
-            "file": "src/app/views/disputes/new-dispute-pure/new-dispute-pure.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "brave-new-dispute-pure",
-            "styleUrls": [],
-            "styles": [],
-            "templateUrl": [
-                "./new-dispute-pure.component.html"
-            ],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "dispute",
-                    "line": 9,
-                    "type": "IDisputeItem | undefined"
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 12
-                }
-            ],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, Input, OnInit } from '@angular/core';\nimport { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';\n\n@Component({\n  selector: 'brave-new-dispute-pure',\n  templateUrl: './new-dispute-pure.component.html',\n})\nexport class NewDisputePureComponent implements OnInit {\n  @Input() dispute: IDisputeItem | undefined;\n  constructor() {}\n\n  ngOnInit(): void {}\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": "",
-            "constructorObj": {
-                "name": "constructor",
-                "description": "",
-                "args": [],
-                "line": 9
-            },
-            "implements": [
-                "OnInit"
-            ],
-            "templateData": "<div class=\"flex items-center mb-3\">\n  <div style=\"transform: rotate(180deg)\"><span>&#10095;</span></div>\n  <span class=\"ml-4\">Back</span>\n</div>\n<brave-dispute-header-card\n  [tradeline]=\"dispute?.tradeline\"\n  [creditorName]=\"dispute?.creditorName\"\n  [lastReported]=\"dispute?.lastReported\"\n  [originalCreditor]=\"dispute?.originalCreditor\"\n  [originalCreditorValue]=\"dispute?.originalCreditorValue\"\n  [accountTypeDescription]=\"dispute?.accountTypeDescription\"\n  [accountTypeDescriptionValue]=\"dispute?.accountTypeDescriptionValue\"\n  [disputeFlag]=\"dispute?.disputeFlag\"\n  [disputeFlagValue]=\"dispute?.disputeFlagValue\"\n  [accountNumber]=\"dispute?.accountDetail?.accountNumber\"\n  [typeOfCollection]=\"dispute?.accountDetail?.typeOfCollection\"\n  [amountPastDue]=\"dispute?.accountDetail?.amountPastDue\"\n  [dateOpened]=\"dispute?.accountDetail?.dateOpened\"\n  [dateLastPayment]=\"dispute?.accountDetail?.dateLastPayment\"\n  [remarks]=\"dispute?.accountDetail?.remarks\"\n  [showDisputeButton]=\"false\"\n></brave-dispute-header-card>\n<h2 class=\"text-lg mb-8\">Which option best matches your request?</h2>\n<form>\n  <div class=\"ml-3 mb-8\"><input type=\"radio\" name=\"reason\" /> <label class=\"ml-2 text-sm\">This is not mine</label></div>\n  <div class=\"ml-3 mb-8\">\n    <input type=\"radio\" name=\"reason\" /> <label class=\"ml-2 text-sm\">This is inaccurate</label>\n  </div>\n</form>\n<brave-filled-onlytext-button\n  [config]=\"{\n    buttonSize: 'sm',\n    backgroundColor: 'bg-indigo-700',\n    color: 'text-black',\n    activeColor: 'bg-indigo-700',\n    full: true\n  }\"\n  >Continue</brave-filled-onlytext-button\n>\n"
-        },
-        {
             "name": "NotificationDropdownComponent",
             "id": "component-NotificationDropdownComponent-5d98fa2f52a0d4d27b8f73f43ab08034",
             "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.component.ts",
@@ -36976,7 +36850,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -36995,7 +36869,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37049,7 +36923,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37068,7 +36942,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37122,7 +36996,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37141,7 +37015,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37195,7 +37069,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37214,7 +37088,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37272,7 +37146,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37291,7 +37165,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         }
                     ]
                 },
@@ -37345,7 +37219,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         },
                         {
                             "name": "HiddenAsteriskInputDirective"
@@ -37366,7 +37240,7 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "AuthenticationComponent"
+                            "name": "ComplianceComponent"
                         },
                         {
                             "name": "HiddenAsteriskInputDirective"
@@ -37638,12 +37512,6 @@
                             "name": "NegativeAccountInitialPureComponent"
                         },
                         {
-                            "name": "NewDisputeComponent"
-                        },
-                        {
-                            "name": "NewDisputePureComponent"
-                        },
-                        {
                             "name": "SigninComponent"
                         },
                         {
@@ -37804,12 +37672,6 @@
                         },
                         {
                             "name": "NegativeAccountInitialPureComponent"
-                        },
-                        {
-                            "name": "NewDisputeComponent"
-                        },
-                        {
-                            "name": "NewDisputePureComponent"
                         },
                         {
                             "name": "SigninComponent"
@@ -38131,17 +37993,17 @@
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/authentication/authentication.module.ts",
+                "file": "src/app/layouts/compliance/compliance.module.ts",
                 "type": "[]",
-                "defaultValue": "[AuthenticationComponent]"
+                "defaultValue": "[ComplianceComponent]"
             },
             {
                 "name": "components",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/layouts/compliance/compliance.module.ts",
+                "file": "src/app/layouts/authentication/authentication.module.ts",
                 "type": "[]",
-                "defaultValue": "[ComplianceComponent]"
+                "defaultValue": "[AuthenticationComponent]"
             },
             {
                 "name": "components",
@@ -38275,14 +38137,6 @@
                 "name": "data",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "",
-                "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
-            },
-            {
-                "name": "data",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts",
                 "type": "",
                 "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
@@ -38387,14 +38241,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/disputes-personal/disputes-personal-pure/disputes-personal.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -38475,7 +38321,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38483,7 +38329,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38540,14 +38386,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38651,6 +38489,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -38676,14 +38522,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38859,7 +38697,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38867,7 +38705,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
+                "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38931,6 +38769,14 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
@@ -38947,7 +38793,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -38955,7 +38801,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -39097,6 +38943,14 @@
                 "file": "src/app/shared/components/shared-components.module.ts",
                 "type": "[]",
                 "defaultValue": "[HiddenAsteriskInputDirective, OutlineTooltipDirective]"
+            },
+            {
+                "name": "dispute",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline.stories.ts",
+                "type": "IDisputeItem",
+                "defaultValue": "{\n  tradeline: {},\n  creditorName: 'ABC Collectinos',\n  lastReported: '1990-01-01',\n  accountTypeDescription: 'Example Type',\n  accountTypeDescriptionValue: 'Example Type',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'XYZ comp',\n  disputeFlag: 'Dispute Flag',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '123XXXX',\n    typeOfCollection: 'Past Dues',\n    amountPastDue: 0,\n    dateOpened: '1990-01-01',\n    dateLastPayment: '1990-03-01',\n    remarks: 'abc',\n  },\n}"
             },
             {
                 "name": "dob",
@@ -39256,7 +39110,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/tradelines/tradelines-pure/tradelines.stories.ts",
                 "type": "ITradelineDetailsConfig",
-                "defaultValue": "{\n  dateOpened: '2019-01-01',\n  accountDesignator: 'James Credit',\n  termMonths: '48',\n  late90Count: '3',\n  amountPastDue: '950',\n  disputeFlag: 'No',\n}"
+                "defaultValue": "{\n  accountNumber: 'accountNumber',\n  accountTypeSymbol: 'accountType',\n  creditorName: 'creditorName',\n  originalCreditor: 'originalCreditor',\n  creditType: 'creditType',\n  dateOpened: '1900-01-01',\n  dateClosed: '1900-01-01',\n  dateReported: '1900-01-01',\n  accountDesignator: 'accountDesignator',\n  termMonths: 'termMonths',\n  late30Count: 0,\n  late60Count: 0,\n  late90Count: 0,\n  monthlyPayment: 0,\n  creditLimit: 0,\n  amountPastDue: 0,\n  currentBalance: 0,\n  highestBalance: 0,\n  disputeFlag: 'disputeFlag',\n  status: 'status',\n  openClosed: 'openClosed',\n}"
             },
             {
                 "name": "installment",
@@ -39326,7 +39180,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -39334,7 +39188,7 @@
                 "name": "Large",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -39382,17 +39236,17 @@
                 "name": "largeConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'lg',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "largeConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'lg',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "ILinksOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'lg',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "largeConfig",
@@ -39782,7 +39636,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -39790,7 +39644,7 @@
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -39830,17 +39684,17 @@
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "primaryConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'base',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "ILinksOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'base',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "ptsDecrease",
@@ -40054,17 +39908,17 @@
                 "name": "sizeSpecificClass",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                 "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-3 py-1',\n  base: 'text-sm px-6 py-2',\n  lg: 'text-base px-8 py-3',\n}"
+                "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
             },
             {
                 "name": "sizeSpecificClass",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts",
                 "type": "Record<string, any>",
-                "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
+                "defaultValue": "{\n  sm: 'text-xs px-3 py-1',\n  base: 'text-sm px-6 py-2',\n  lg: 'text-base px-8 py-3',\n}"
             },
             {
                 "name": "sizeSpecificClass",
@@ -40102,7 +39956,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -40110,7 +39964,7 @@
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -40158,17 +40012,17 @@
                 "name": "smallConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "ILinksOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'sm',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
+                "type": "IOutlineOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "smallConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.stories.ts",
-                "type": "IOutlineOnlyTextButtonConfig",
-                "defaultValue": "{\n  buttonSize: 'sm',\n  borderColor: 'border-indigo-800',\n  activeColor: 'bg-indigo-900',\n  hoverColor: 'bg-indigo-800',\n  color: 'text-indigo-800',\n}"
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "ILinksOnlyTextButtonConfig",
+                "defaultValue": "{\n  buttonSize: 'sm',\n  color: 'text-indigo-800',\n}"
             },
             {
                 "name": "smallConfig",
@@ -40374,14 +40228,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "Story<NewDisputeComponent>",
-                "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args,\n    newDisputeData: data,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/views/disputes-personal/disputes-personal-pure/disputes-personal.stories.ts",
                 "type": "Story<DisputesPersonalPureView>",
                 "defaultValue": "(args: any) => ({\n  component: DisputesPersonalPureView,\n  props: {\n    ...args,\n  },\n})"
@@ -40400,7 +40246,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline.stories.ts",
                 "type": "Story<DisputesTradelinePureView>",
-                "defaultValue": "(args: any) => ({\n  component: DisputesTradelinePureView,\n  props: {\n    ...args,\n  },\n})"
+                "defaultValue": "(args: any) => ({\n  component: DisputesTradelinePureView,\n  props: {\n    ...args,\n    dispute,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -40462,17 +40308,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
-                "type": "Story<KycWelcomebackPureComponent>",
-                "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
+                "type": "Story<KycWelcomePureComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
-                "type": "Story<KycWelcomePureComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                "type": "Story<KycWelcomebackPureComponent>",
+                "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -40529,14 +40375,6 @@
                 "file": "src/app/shared/components/buttons/filled-onlytext-button/filled-onlytext-button.stories.ts",
                 "type": "Story<FilledOnlytextButtonComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-filled-onlytext-button>Default</brave-filled-onlytext-button>`,\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
-                "type": "Story<LinksOnlytextButtonComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
             },
             {
                 "name": "Template",
@@ -40638,6 +40476,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.stories.ts",
+                "type": "Story<LinksOnlytextButtonComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n  template: `<brave-links-onlytext-button>My Link</brave-links-onlytext-button>`,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/forms/kbaquestions-form/kbaquestions-form.stories.ts",
                 "type": "Story<KbaquestionsFormComponent>",
                 "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    kbas,\n    required: true,\n  },\n  template: `<brave-kbaquestions-form [kbas]=\"kbas\"></brave-kbaquestions-form>`,\n})"
@@ -40665,14 +40511,6 @@
                 "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
                 "type": "Story<OutlineOnecolumnFormComponent>",
                 "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                "type": "Story<OutlinePhoneFormComponent>",
-                "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -40846,17 +40684,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
                 "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  component: CreditScoreGraphicTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
+                "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
                 "type": "Story<any>",
-                "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                "defaultValue": "(args: any) => ({\n  component: CreditScoreGraphicTabsComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -40886,17 +40724,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
-                "type": "Story<TradelinePaymentHistoryComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/tradelines/tradeline-payment-icon/tradeline-payment-icon.stories.ts",
+                "type": "Story<TradelinePaymentIconComponent>",
+                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentIconComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/tradelines/tradeline-payment-icon/tradeline-payment-icon.stories.ts",
-                "type": "Story<TradelinePaymentIconComponent>",
-                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentIconComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/tradelines/tradeline-payment-history/tradeline-payment-history.stories.ts",
+                "type": "Story<TradelinePaymentHistoryComponent>",
+                "defaultValue": "(args: any) => ({\n  component: TradelinePaymentHistoryComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Template",
@@ -40934,6 +40772,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                "type": "Story<OutlinePhoneFormComponent>",
+                "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts",
                 "type": "Story<NotificationDropdownComponent>",
                 "defaultValue": "(args: any) => ({\n  component: NotificationDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
@@ -40950,17 +40796,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                "type": "Story<UserDropdownComponent>",
-                "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
+                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
+                "type": "Story<OutlineOnlytextSelectComponent>",
+                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
-                "type": "Story<OutlineOnlytextSelectComponent>",
-                "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
+                "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                "type": "Story<UserDropdownComponent>",
+                "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
             },
             {
                 "name": "Time",
@@ -41047,7 +40893,7 @@
                 "subtype": "variable",
                 "file": "src/app/views/views.module.ts",
                 "type": "[]",
-                "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n  NewDisputePureComponent,\n  NewDisputeComponent,\n  TradelinesComponent,\n  TradelinesPureComponent,\n  DisputesPersonalView,\n  DisputesPersonalPureView,\n  DisputesPublicPureView,\n  DisputesPublicView,\n  DisputesTradelinePureView,\n  DisputesTradelineView,\n  BaseExceptionPureView,\n  BaseExceptionView,\n  UserDisputesPureView,\n  UserDisputesView\n]"
+                "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n  TradelinesComponent,\n  TradelinesPureComponent,\n  DisputesPersonalView,\n  DisputesPersonalPureView,\n  DisputesPublicPureView,\n  DisputesPublicView,\n  DisputesTradelinePureView,\n  DisputesTradelineView,\n  BaseExceptionPureView,\n  BaseExceptionView,\n  UserDisputesPureView,\n  UserDisputesView,\n]"
             }
         ],
         "functions": [
@@ -42477,7 +42323,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/tradelines/tradelines-pure/tradelines.stories.ts",
                     "type": "ITradelineDetailsConfig",
-                    "defaultValue": "{\n  dateOpened: '2019-01-01',\n  accountDesignator: 'James Credit',\n  termMonths: '48',\n  late90Count: '3',\n  amountPastDue: '950',\n  disputeFlag: 'No',\n}"
+                    "defaultValue": "{\n  accountNumber: 'accountNumber',\n  accountTypeSymbol: 'accountType',\n  creditorName: 'creditorName',\n  originalCreditor: 'originalCreditor',\n  creditType: 'creditType',\n  dateOpened: '1900-01-01',\n  dateClosed: '1900-01-01',\n  dateReported: '1900-01-01',\n  accountDesignator: 'accountDesignator',\n  termMonths: 'termMonths',\n  late30Count: 0,\n  late60Count: 0,\n  late90Count: 0,\n  monthlyPayment: 0,\n  creditLimit: 0,\n  amountPastDue: 0,\n  currentBalance: 0,\n  highestBalance: 0,\n  disputeFlag: 'disputeFlag',\n  status: 'status',\n  openClosed: 'openClosed',\n}"
                 },
                 {
                     "name": "remarks",
@@ -43026,16 +42872,6 @@
                     "defaultValue": "Template.bind({})"
                 }
             ],
-            "src/app/layouts/authentication/authentication.module.ts": [
-                {
-                    "name": "components",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/layouts/authentication/authentication.module.ts",
-                    "type": "[]",
-                    "defaultValue": "[AuthenticationComponent]"
-                }
-            ],
             "src/app/layouts/compliance/compliance.module.ts": [
                 {
                     "name": "components",
@@ -43044,6 +42880,16 @@
                     "file": "src/app/layouts/compliance/compliance.module.ts",
                     "type": "[]",
                     "defaultValue": "[ComplianceComponent]"
+                }
+            ],
+            "src/app/layouts/authentication/authentication.module.ts": [
+                {
+                    "name": "components",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/layouts/authentication/authentication.module.ts",
+                    "type": "[]",
+                    "defaultValue": "[AuthenticationComponent]"
                 }
             ],
             "src/app/layouts/dashboard/dashboard.module.ts": [
@@ -43273,32 +43119,6 @@
                     "file": "src/app/shared/components/cards/reason-card/reason-card.stories.ts",
                     "type": "Story<ReasonCardComponent>",
                     "defaultValue": "(args: any) => ({\n  component: ReasonCardComponent,\n  props: {\n    ...args\n  },\n})"
-                }
-            ],
-            "src/app/views/disputes/new-dispute/new.dispute.stories.ts": [
-                {
-                    "name": "data",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                    "type": "",
-                    "defaultValue": "{\n  creditorName: 'A.R.M. Solutions',\n  lastReported: '29/09/2020',\n  accountTypeDescription: '90-Day Late Payment',\n  accountTypeDescriptionValue: 'Open',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'Bank Of America',\n  disputeFlag: 'Previously Disputed?',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '066611222',\n    typeOfCollection: 'Collections',\n    amountPastDue: 700,\n    dateOpened: '04/12/2018',\n    dateLastPayment: '04/21/2018',\n  },\n} as INegativeAccountCardInputs"
-                },
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                    "type": "Story<NewDisputeComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: NewDisputeComponent,\n  props: {\n    ...args,\n    newDisputeData: data,\n  },\n})"
                 }
             ],
             "src/app/shared/components/cards/negative-account-card/negative-account-card.stories.ts": [
@@ -43635,6 +43455,14 @@
                     "defaultValue": "Template.bind({})"
                 },
                 {
+                    "name": "dispute",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline.stories.ts",
+                    "type": "IDisputeItem",
+                    "defaultValue": "{\n  tradeline: {},\n  creditorName: 'ABC Collectinos',\n  lastReported: '1990-01-01',\n  accountTypeDescription: 'Example Type',\n  accountTypeDescriptionValue: 'Example Type',\n  originalCreditor: 'Original Creditor',\n  originalCreditorValue: 'XYZ comp',\n  disputeFlag: 'Dispute Flag',\n  disputeFlagValue: 'No',\n  accountDetail: {\n    accountNumber: '123XXXX',\n    typeOfCollection: 'Past Dues',\n    amountPastDue: 0,\n    dateOpened: '1990-01-01',\n    dateLastPayment: '1990-03-01',\n    remarks: 'abc',\n  },\n}"
+                },
+                {
                     "name": "Reasons",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -43664,7 +43492,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline.stories.ts",
                     "type": "Story<DisputesTradelinePureView>",
-                    "defaultValue": "(args: any) => ({\n  component: DisputesTradelinePureView,\n  props: {\n    ...args,\n  },\n})"
+                    "defaultValue": "(args: any) => ({\n  component: DisputesTradelinePureView,\n  props: {\n    ...args,\n    dispute,\n  },\n})"
                 }
             ],
             "src/app/views/kyc-address/kyc-address-pure/kyc-address-pure.stories.ts": [
@@ -43801,24 +43629,6 @@
                     "defaultValue": "(args: any) => ({\n  component: KycSsnFullPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
-                    "type": "Story<KycWelcomebackPureComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts": [
                 {
                     "name": "Default",
@@ -43835,6 +43645,24 @@
                     "file": "src/app/views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.stories.ts",
                     "type": "Story<KycWelcomePureComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/views/kyc-welcomeback/kyc-welcomeback-pure/kyc-welcomeback-pure.stories.ts",
+                    "type": "Story<KycWelcomebackPureComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: KycWelcomebackPureComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/views/signin/signin-pure/signin.stories.ts": [
@@ -44193,24 +44021,6 @@
                     "file": "src/app/shared/components/forms/outline-onecolumn-form/outline-onecolumn-form.stories.ts",
                     "type": "Story<OutlineOnecolumnFormComponent>",
                     "defaultValue": "(args: any) => ({\n  component: OutlineOnecolumnFormComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
-            "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
-                    "type": "Story<OutlinePhoneFormComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.stories.ts": [
@@ -44613,24 +44423,6 @@
                     "defaultValue": "(args: any) => ({\n  component: OutlinePrevnextPaginationComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
-                    "type": "Story<any>",
-                    "defaultValue": "(args: any) => ({\n  component: CreditScoreGraphicTabsComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts": [
                 {
                     "name": "Default",
@@ -44647,6 +44439,24 @@
                     "file": "src/app/shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.stories.ts",
                     "type": "Story<any>",
                     "defaultValue": "(args: any) => ({\n  component: FilledOnlytextTabsComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
+            "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.stories.ts",
+                    "type": "Story<any>",
+                    "defaultValue": "(args: any) => ({\n  component: CreditScoreGraphicTabsComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/shared/components/tabs/navigation-tabs/navigation-tabs.stories.ts": [
@@ -44803,6 +44613,24 @@
                     "defaultValue": "Template.bind({})"
                 }
             ],
+            "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/forms/outline-phone-form/outline-phone-form.stories.ts",
+                    "type": "Story<OutlinePhoneFormComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: OutlinePhoneFormComponent,\n  props: {\n    ...args,\n  },\n})"
+                }
+            ],
             "src/app/shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.stories.ts": [
                 {
                     "name": "Default",
@@ -44839,24 +44667,6 @@
                     "defaultValue": "(args: any) => ({\n  component: TableDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
-            "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
-                    "type": "Story<UserDropdownComponent>",
-                    "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
-                }
-            ],
             "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts": [
                 {
                     "name": "Default",
@@ -44881,6 +44691,24 @@
                     "file": "src/app/shared/components/dropdowns/selects/outline-onlytext-select/outline-onlytext-select.stories.ts",
                     "type": "Story<OutlineOnlytextSelectComponent>",
                     "defaultValue": "(args: any) => ({\n  props: {\n    ...args,\n    items,\n  },\n  template: `\n  <brave-outline-onlytext-select [items]=\"items\"></brave-outline-onlytext-select>\n  `,\n})"
+                }
+            ],
+            "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.stories.ts",
+                    "type": "Story<UserDropdownComponent>",
+                    "defaultValue": "(args: any) => ({\n  component: UserDropdownComponent,\n  props: {\n    ...args,\n  },\n})"
                 }
             ],
             "src/app/views/negative-account/negative-account-initial/constants.ts": [
@@ -45336,7 +45164,7 @@
                     "subtype": "variable",
                     "file": "src/app/views/views.module.ts",
                     "type": "[]",
-                    "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n  NewDisputePureComponent,\n  NewDisputeComponent,\n  TradelinesComponent,\n  TradelinesPureComponent,\n  DisputesPersonalView,\n  DisputesPersonalPureView,\n  DisputesPublicPureView,\n  DisputesPublicView,\n  DisputesTradelinePureView,\n  DisputesTradelineView,\n  BaseExceptionPureView,\n  BaseExceptionView,\n  UserDisputesPureView,\n  UserDisputesView\n]"
+                    "defaultValue": "[\n  SignupComponent,\n  SignupPureComponent,\n  SignupErrorComponent,\n  SignupErrorValidationComponent,\n  SignupKnowyouComponent,\n  SignupThankyouComponent,\n  SignupResendComponent,\n  SigninComponent,\n  SigninPureComponent,\n  SigninForgotComponent,\n  SigninRedirectComponent,\n  KycBaseComponent,\n  KycAddressComponent,\n  KycAddressPureComponent,\n  KycCongratulationsComponent,\n  KycCongratulationsPureComponent,\n  KycIdverificationComponent,\n  KycIdverificationPureComponent,\n  KycKbaquestionsComponent,\n  KycKbaquestionsPureComponent,\n  KycPhonenumberComponent,\n  KycPhonenumberPureComponent,\n  KycSsnComponent,\n  KycSsnPureComponent,\n  KycSsnFullComponent,\n  KycSsnFullPureComponent,\n  KycWelcomeComponent,\n  KycWelcomePureComponent,\n  KycWelcomebackComponent,\n  KycWelcomebackPureComponent,\n  KycErrorComponent,\n  CompliancePrivacyComponent,\n  ComplianceTosComponent,\n  DashboardInitComponent,\n  NegativeAccountInitialComponent,\n  NegativeAccountInitialPureComponent,\n  CreditReportPureComponent,\n  CreditReportComponent,\n  TradelinesComponent,\n  TradelinesPureComponent,\n  DisputesPersonalView,\n  DisputesPersonalPureView,\n  DisputesPublicPureView,\n  DisputesPublicView,\n  DisputesTradelinePureView,\n  DisputesTradelineView,\n  BaseExceptionPureView,\n  BaseExceptionView,\n  UserDisputesPureView,\n  UserDisputesView,\n]"
                 }
             ],
             "src/app/shared/pipes/shared-pipes.module.ts": [
@@ -45399,16 +45227,6 @@
                     "defaultValue": "{\n  sm: 'text-xs px-4 py-2 hover:shadow-md',\n  base: 'text-sm px-6 py-3 hover:shadow-lg',\n  lg: 'text-base px-8 py-3 hover:shadow-lg',\n}"
                 }
             ],
-            "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts": [
-                {
-                    "name": "sizeSpecificClass",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts",
-                    "type": "Record<string, any>",
-                    "defaultValue": "{\n  sm: 'text-xs px-3 py-1',\n  base: 'text-sm px-6 py-2',\n  lg: 'text-base px-8 py-3',\n}"
-                }
-            ],
             "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts": [
                 {
                     "name": "sizeSpecificClass",
@@ -45417,6 +45235,16 @@
                     "file": "src/app/shared/components/buttons/outline-onlytext-button/outline-onlytext-button.pipe.ts",
                     "type": "Record<string, any>",
                     "defaultValue": "{\n  sm: 'text-xs px-4 py-2',\n  base: 'text-sm px-6 py-3',\n  lg: 'text-base px-8 py-3',\n}"
+                }
+            ],
+            "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts": [
+                {
+                    "name": "sizeSpecificClass",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/buttons/links-onlytext-button/links-onlytext-button.pipe.ts",
+                    "type": "Record<string, any>",
+                    "defaultValue": "{\n  sm: 'text-xs px-3 py-1',\n  base: 'text-sm px-6 py-2',\n  lg: 'text-base px-8 py-3',\n}"
                 }
             ],
             "src/app/shared/components/inputs/outline-input/outline-input.pipe.ts": [
@@ -52542,6 +52370,16 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
+                "name": "dispute",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
                 "name": "Reasons",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
@@ -52584,54 +52422,6 @@
                 "name": "DisputesTradelineView",
                 "coveragePercent": 0,
                 "coverageCount": "0/8",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/views/disputes/new-dispute-pure/new-dispute-pure.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "NewDisputePureComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/4",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/views/disputes/new-dispute/new-dispute.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "NewDisputeComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/4",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "data",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Default",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/views/disputes/new-dispute/new.dispute.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "Template",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
                 "status": "low"
             },
             {

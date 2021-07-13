@@ -48,8 +48,6 @@ import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
 import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
-import { NewDisputeComponent } from './disputes/new-dispute/new-dispute.component';
-import { NewDisputePureComponent } from './disputes/new-dispute-pure/new-dispute-pure.component';
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { DisputesPersonalView } from './disputes-personal/disputes-personal/disputes-personal.view';
@@ -102,8 +100,6 @@ const views = [
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
   CreditReportComponent,
-  NewDisputePureComponent,
-  NewDisputeComponent,
   TradelinesComponent,
   TradelinesPureComponent,
   DisputesPersonalView,
@@ -115,13 +111,13 @@ const views = [
   BaseExceptionPureView,
   BaseExceptionView,
   UserDisputesPureView,
-  UserDisputesView
+  UserDisputesView,
 ];
 
 const pipes = [KycKbaquestionsPipe];
 
 @NgModule({
-  declarations: [...views, ...pipes ],
+  declarations: [...views, ...pipes],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],
