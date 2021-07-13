@@ -6,7 +6,13 @@ import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 })
 export class TradelineToPagesPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined): any[] {
-    if (!tradeline || !Object.keys(tradeline).length) return [];
+    if (!tradeline || !Object.keys(tradeline).length)
+      return [
+        this.mapToDetailsPageOne({}),
+        this.mapToDetailsPageTwo({}),
+        this.mapToPaymentHistory({}),
+        this.mapToRemarks({}),
+      ];
     console.log('tradeline', tradeline);
     const data = [
       this.mapToDetailsPageOne(tradeline),
