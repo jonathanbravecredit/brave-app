@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ExceptionHelper } from './helpers';
 import { IBaseExceptionCategory } from './interfaces';
 
@@ -8,6 +8,7 @@ import { IBaseExceptionCategory } from './interfaces';
 })
 export class BaseExceptionComponent implements OnInit {
   @Input() code: string = '';
+  @Output() actionButtonClicked: EventEmitter<void> = new EventEmitter();
   exceptionCategory: IBaseExceptionCategory | undefined;
 
   constructor() { }
