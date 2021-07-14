@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { NegativeAccountInitialPureComponent } from '@views/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/negative-account-card.component';
+import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 
 export default {
   title: 'app/views/negative-account/initial',
@@ -13,11 +13,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [
-        SharedComponentsModule,
-        HttpClientModule,
-        RouterModule.forRoot([], { useHash: true }),
-      ],
+      imports: [SharedComponentsModule, HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],
@@ -40,7 +36,7 @@ const cards: INegativeAccountCardInputs[] = [
       dateOpened: '2017-01-01',
       dateLastPayment: '2019-01-01',
     },
-  },
+  } as INegativeAccountCardInputs,
   {
     creditorName: 'XYZ Collections',
     lastReported: '2020-01-01',
@@ -57,7 +53,7 @@ const cards: INegativeAccountCardInputs[] = [
       dateOpened: '2017-01-01',
       dateLastPayment: '2019-01-01',
     },
-  },
+  } as INegativeAccountCardInputs,
 ];
 const Template: Story<NegativeAccountInitialPureComponent> = (args: any) => ({
   component: NegativeAccountInitialPureComponent,

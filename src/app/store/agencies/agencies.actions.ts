@@ -30,3 +30,8 @@ export class EditTransunionDisputes {
   static readonly type = '[Agencies] EditTransunionDisputes';
   constructor(public payload: DisputesInput) {}
 }
+
+export class EditTransunionReports {
+  static readonly type = '[Agencies] EditTransunionReports';
+  constructor(public payload: AgenciesStateModel | Partial<AgenciesStateModel>) {}
+}

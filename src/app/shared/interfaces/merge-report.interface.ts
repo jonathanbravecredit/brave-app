@@ -52,8 +52,10 @@ export interface ITradeline {
   subscriberCode?: string;
   highBalance?: number | string;
   dateVerified?: string;
+  handle?: string;
   dateReported?: string;
   dateOpened?: string;
+  dateClosed?: string;
   accountNumber?: string;
   dateAccountStatus?: string;
   currentBalance?: number | string;

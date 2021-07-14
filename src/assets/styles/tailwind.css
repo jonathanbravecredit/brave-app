@@ -1209,6 +1209,11 @@ select {
   background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
 }
 
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(212, 212, 216, var(--tw-bg-opacity));
+}
+
 .bg-gray-400 {
   --tw-bg-opacity: 1;
   background-color: rgba(161, 161, 170, var(--tw-bg-opacity));
@@ -1232,6 +1237,11 @@ select {
 .bg-blueGray-200 {
   --tw-bg-opacity: 1;
   background-color: rgba(226, 232, 240, var(--tw-bg-opacity));
+}
+
+.bg-blueGray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(203, 213, 225, var(--tw-bg-opacity));
 }
 
 .bg-blueGray-800 {
@@ -1293,12 +1303,25 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(192, 132, 252, 0));
 }
 
+.from-orange-500 {
+  --tw-gradient-from: #f97316;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0));
+}
+
 .via-pink-500 {
   --tw-gradient-stops: var(--tw-gradient-from), #ec4899, var(--tw-gradient-to, rgba(236, 72, 153, 0));
 }
 
+.to-emerald-400 {
+  --tw-gradient-to: #34d399;
+}
+
 .to-red-500 {
   --tw-gradient-to: #ef4444;
+}
+
+.bg-opacity-0 {
+  --tw-bg-opacity: 0;
 }
 
 .bg-opacity-50 {
@@ -1365,6 +1388,10 @@ select {
   border-color: rgba(99, 102, 241, var(--tw-border-opacity));
 }
 
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -1394,6 +1421,11 @@ select {
 .rounded-t {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+}
+
+.rounded-r {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 
 .rounded-b {
@@ -1572,6 +1604,10 @@ select {
   font-family: Biryani, Open Sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.font-light {
+  font-weight: 300;
+}
+
 .font-normal {
   font-weight: 400;
 }
@@ -1628,12 +1664,20 @@ select {
   height: 5rem;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .h-32 {
   height: 8rem;
 }
 
 .h-40 {
   height: 10rem;
+}
+
+.h-60 {
+  height: 15rem;
 }
 
 .h-64 {
@@ -1775,6 +1819,11 @@ select {
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.mx-6 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
 }
 
 .my-8 {
@@ -2169,6 +2218,10 @@ select {
   padding-top: 0px;
 }
 
+.pr-0 {
+  padding-right: 0px;
+}
+
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -2229,8 +2282,16 @@ select {
   padding-bottom: 1.25rem;
 }
 
+.pr-6 {
+  padding-right: 1.5rem;
+}
+
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+
+.pr-7 {
+  padding-right: 1.75rem;
 }
 
 .pl-7 {
@@ -2294,6 +2355,11 @@ select {
   bottom: 0px;
 }
 
+.inset-x-0 {
+  right: 0px;
+  left: 0px;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -2312,6 +2378,10 @@ select {
 
 .bottom-auto {
   bottom: auto;
+}
+
+.resize-none {
+  resize: none;
 }
 
 * {
@@ -2494,14 +2564,34 @@ select {
   color: rgba(16, 185, 129, var(--tw-text-opacity));
 }
 
+.text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: rgba(234, 179, 8, var(--tw-text-opacity));
+}
+
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgba(249, 115, 22, var(--tw-text-opacity));
+}
+
 .text-orange-600 {
   --tw-text-opacity: 1;
   color: rgba(234, 88, 12, var(--tw-text-opacity));
 }
 
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgba(220, 38, 38, var(--tw-text-opacity));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgba(212, 212, 216, var(--tw-text-opacity));
 }
 
 .text-gray-400 {
@@ -2690,12 +2780,20 @@ select {
   vertical-align: middle;
 }
 
+.align-bottom {
+  vertical-align: bottom;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }
 
 .break-words {
   overflow-wrap: break-word;
+}
+
+.w-2 {
+  width: 0.5rem;
 }
 
 .w-3 {
@@ -2730,6 +2828,10 @@ select {
   width: 3rem;
 }
 
+.w-24 {
+  width: 6rem;
+}
+
 .w-32 {
   width: 8rem;
 }
@@ -2752,6 +2854,10 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 .z-0 {
@@ -2807,6 +2913,14 @@ select {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
   transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-90 {
+  --tw-rotate: 90deg;
+}
+
+.-rotate-90 {
+  --tw-rotate: -90deg;
 }
 
 .transition-all {

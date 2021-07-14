@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import {
   IBorrower,
   IMergeReport,
@@ -9,9 +9,11 @@ import {
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import * as parser from 'fast-xml-parser';
-import { TransunionInput } from '@shared/services/aws/api.service';
+import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
+import { StateService } from '@shared/services/state/state.service';
+import { AppDataStateModel } from '@store/app-data';
 
 /**
  * Service to parse and pull information from credit reports
@@ -24,8 +26,6 @@ export class CreditreportService implements OnDestroy {
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
   tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
   tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
-  tuDispute: any;
-  tuDispute$: BehaviorSubject<any> = new BehaviorSubject({});
   tuAgency: TransunionInput = {} as TransunionInput;
   tuAgency$: BehaviorSubject<TransunionInput> = new BehaviorSubject({} as TransunionInput);
   tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
@@ -37,14 +37,13 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$: Subscription;
 
-  constructor() {
+  constructor(private statesvc: StateService) {
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       this.tuAgency$.next(tu);
       this.tuAgency = tu;
       const unparsed = this.getUnparsedCreditReport(agencies);
       const parsedReport = this.parseCreditReport(unparsed['#text']);
-      console.log('parsedReport', parsedReport);
       this.tuReport$.next(parsedReport);
       this.tuReport = parsedReport;
     });
@@ -59,6 +58,12 @@ export class CreditreportService implements OnDestroy {
     if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
   }
 
+  /**
+   * Return the saved state snapshot on the state svc
+   */
+  getStateSnapshot(): { appData: AppDataStateModel } | undefined {
+    return this.statesvc.state;
+  }
   /**
    * Return the TU data from provided agency state model
    * @param {AgenciesStateModel} agencies
@@ -126,13 +131,28 @@ export class CreditreportService implements OnDestroy {
   }
 
   /**
-   * Sets the current dispute item. Can only set one at a time currently
-   * - TODO may need to make more like a storage array
-   * @param dispute
-   * @return {void}
+   * (Asynchronous) Takes the refreshed credit report returned by the agency service and stores them in state
+   * @param {AgenciesStateModel | null | undefined} agencies the string of xml questions returned by Transunion or other agency
+   *
    */
-  setDispute(dispute: any): void {
-    this.tuDispute = dispute;
-    this.tuDispute$.next(dispute);
+  updateReport(agencies: AgenciesStateModel | null | undefined): void {
+    if (!agencies) return;
+    this.statesvc.updateAgencies(agencies);
+  }
+
+  /**
+   * (Promise) Takes the refreshed credit report returned by the agency service and stores them in state
+   * @param {AgenciesStateModel | null | undefined} agencies the string of xml questions returned by Transunion or other agency
+   */
+  async updateReportAsync(
+    agencies: AgenciesStateModel | null | undefined,
+  ): Promise<UpdateAppDataInput | null | undefined> {
+    if (!agencies) throw new Error(`Error in creditreportService:updateReportAsync=Missing agency`);
+    try {
+      return await this.statesvc.updateAgenciesAsync(agencies);
+    } catch (err) {
+      console.log('err', err);
+      throw new Error(`Error in creditreportService:updateReportAsync=${err}`);
+    }
   }
 }

@@ -6,7 +6,6 @@ import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/
 @Component({
   selector: 'brave-dashboard-init',
   templateUrl: './dashboard-init.component.html',
-  styleUrls: ['./dashboard-init.component.css'],
 })
 export class DashboardInitComponent implements OnInit {
   name = 'Emily';

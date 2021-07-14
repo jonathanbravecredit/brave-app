@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-tradelines',
@@ -9,17 +12,21 @@ import { CreditreportService } from '@shared/services/creditreport/creditreport.
 export class TradelinesComponent {
   /**
    * Raw tradline partition directly from Merge Report
-   * @property {ITradeLinePartition} tradeline
+   * @property {Observable<ITradeLinePartition>} tradeline
    */
-  tradeline: ITradeLinePartition;
+  tradeline$: Observable<ITradeLinePartition>;
 
   /**
    * Initializes tradeline property with current tradeline from CreditReportService
    * @constructor
    * @param creditReportServices
    */
-  constructor(private creditReportServices: CreditreportService) {
-    this.tradeline = this.creditReportServices.tuTradeline;
+  constructor(
+    private router: Router,
+    private creditReportServices: CreditreportService,
+    private disputeService: DisputeService,
+  ) {
+    this.tradeline$ = this.creditReportServices.tuTradeline$.asObservable();
   }
 
   /**
@@ -29,6 +36,7 @@ export class TradelinesComponent {
    * @returns {void}
    */
   onDisputeClicked(tradeline: ITradeLinePartition): void {
-    this.creditReportServices.setDispute(tradeline);
+    this.disputeService.setTradelineItem(tradeline);
+    this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
   }
 }
