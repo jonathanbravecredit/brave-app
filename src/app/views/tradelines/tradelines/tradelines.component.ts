@@ -93,10 +93,14 @@ export class TradelinesComponent {
     try {
       const dispute = true;
       const resp = await this.transunion.sendEnrollRequest(state, dispute);
+      console.log('enroll resp', resp);
       const parsed = resp ? JSON.parse(resp) : undefined;
+      console.log('enroll parsed', parsed);
       if (!parsed || !parsed.Enroll) throw new Error('Failed to parse sendEnrollRequest response');
       const enrollResult = returnNestedObject(JSON.parse(parsed.Enroll), 'EnrollResult');
+      console.log('enroll result', enrollResult);
       const enriched = this.transunion.enrichEnrollmentData(state, enrollResult);
+      console.log('enroll enriched', enriched);
       if (!enriched || !enriched.agencies) throw 'Enrichment failed';
       const data = await this.statesvc.updateAgenciesAsync(enriched.agencies);
       if (!data) throw new Error('Failed to update state with refreshed report');

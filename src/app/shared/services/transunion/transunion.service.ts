@@ -500,9 +500,9 @@ export class TransunionService {
     enroll: IEnrollResult,
   ): AppDataStateModel | UpdateAppDataInput | undefined {
     if (!state) return;
-    let enrollReport;
-    let enrollMergeReport;
-    let enrollVantageScore;
+    let enrollReport: IEnrollServiceProductResponse | undefined;
+    let enrollMergeReport: IEnrollServiceProductResponse | undefined;
+    let enrollVantageScore: IEnrollServiceProductResponse | undefined;
     let enrolledOn = new Date().toISOString();
     const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
     const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
@@ -610,7 +610,8 @@ export class TransunionService {
 }
 
 // TODO use a pascal to camel converter
-const mapReportResponse = (res: any): TUReportResponseInput => {
+const mapReportResponse = (res: IEnrollServiceProductResponse | undefined): TUReportResponseInput | null => {
+  if (res === undefined) return null;
   return {
     bureau: res['Bureau'],
     errorResponse: res['ErrorResponse'],
