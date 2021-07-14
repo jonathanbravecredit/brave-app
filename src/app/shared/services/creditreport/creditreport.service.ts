@@ -44,6 +44,7 @@ export class CreditreportService implements OnDestroy {
       this.tuAgency = tu;
       const unparsed = this.getUnparsedCreditReport(agencies);
       const parsedReport = this.parseCreditReport(unparsed['#text']);
+      console.log('parsed report => ', parsedReport);
       this.tuReport$.next(parsedReport);
       this.tuReport = parsedReport;
     });

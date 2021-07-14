@@ -3,4 +3,6 @@ export const PARSER_OPTIONS = {
   ignoreAttributes: false,
   ignoreNameSpace: true,
   parseAttributeValue: true,
+  // attrValueProcessor: (a) => he.encode(a, { isAttributeValue: true }),
+  // tagValueProcessor: (a) => he.encode(a) // TODO
 };

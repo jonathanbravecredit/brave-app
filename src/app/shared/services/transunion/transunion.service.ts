@@ -145,6 +145,8 @@ export class TransunionService {
     disputes: IProcessDisputeTradelineResult[],
   ): Promise<string | undefined> {
     try {
+      console.log('sendDispute: data', data);
+      console.log('sendDispute: dispute', disputes);
       const msg = this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
       console.log(res);

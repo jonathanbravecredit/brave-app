@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { IStartDisputeResult } from '@shared/interfaces/start-dispute.interface';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   selector: 'brave-disputes-tradeline-view',
   templateUrl: './disputes-tradeline.view.html',
 })
-export class DisputesTradelineView {
+export class DisputesTradelineView implements OnDestroy {
   @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
@@ -26,6 +26,10 @@ export class DisputesTradelineView {
         this.disputeProcess?.goBack();
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.disputeService.clearDisputes();
   }
 
   async onProcessResult(event: IProcessDisputeTradelineResult): Promise<void> {

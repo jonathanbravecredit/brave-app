@@ -1,5 +1,9 @@
 import { ISource, ICodeRef, IPartitionElements, IPartitionSet, IRemark } from '@shared/interfaces/common-tu.interface';
 
+/*====================================*/
+/* !!Important!!                      */
+/* - Keep all spelling mistakes as is */
+/*====================================*/
 export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
 }
@@ -9,7 +13,7 @@ export interface ITrueLinkCreditReportType {
   TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
   InquiryPartition?: IInquiryPartition | IInquiryPartition[];
   BankingRecordPartition?: IBankingPartition | IBankingPartition[];
-  PublicRecordPartition?: IPublicPartition | IPublicPartition[];
+  PulblicRecordPartition?: IPublicPartition | IPublicPartition[];
   Subscriber?: ISubscriber | ISubscriber[];
   Message?: IMessage | IMessage[];
   Summary?: ISummary;

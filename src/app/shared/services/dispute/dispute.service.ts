@@ -37,10 +37,13 @@ export class DisputeService implements OnDestroy {
     this.disputeStack = [...this.disputeStack];
     return item;
   }
+  clearDisputes(): void {
+    this.disputeStack = [];
+  }
 
   async sendStartDispute(): Promise<string | undefined> {
     // TODO need to save the dispute state and in DB at some point
-    const state = this.store.snapshot();
+    const state = this.store.snapshot()?.appData;
     try {
       return await this.transunion.sendStartDispute(state, this.disputeStack);
     } catch (err) {

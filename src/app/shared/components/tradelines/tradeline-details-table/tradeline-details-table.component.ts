@@ -42,9 +42,9 @@ export class TradelineDetailsTableComponent implements OnInit {
     monthlyPayment: 'Monthly Payment',
     accountDesignator: 'Responsibility',
     highestBalance: 'Highest Balance',
-    late30Count: 'Times 30/60/90 Days Late:',
-    late60Count: 'Times 30/60/90 Days Late:',
-    late90Count: 'Times 30/60/90 Days Late:',
+    late30Count: 'Times 30/60/90 Days Late',
+    late60Count: 'Times 30/60/90 Days Late',
+    late90Count: 'Times 30/60/90 Days Late',
     disputeFlag: 'Previously Disputed?',
   };
   /**
@@ -61,9 +61,9 @@ export class TradelineDetailsTableComponent implements OnInit {
     monthlyPayment: 'Monthly Payment',
     accountDesignator: 'Responsibility',
     highestBalance: 'Highest Balance',
-    late30Count: 'Times 30/60/90 Days Late:',
-    late60Count: 'Times 30/60/90 Days Late:',
-    late90Count: 'Times 30/60/90 Days Late:',
+    late30Count: 'Times 30/60/90 Days Late',
+    late60Count: 'Times 30/60/90 Days Late',
+    late90Count: 'Times 30/60/90 Days Late',
     disputeFlag: 'Previously Disputed?',
   };
   /**
@@ -73,9 +73,9 @@ export class TradelineDetailsTableComponent implements OnInit {
   private collectionAccountMapping: Record<string, any> = {
     dateOpened: 'Opened:',
     accountDesignator: 'Responsibility:',
-    late30Count: 'Times 30/60/90 Days Late:',
-    late60Count: 'Times 30/60/90 Days Late:',
-    late90Count: 'Times 30/60/90 Days Late:',
+    late30Count: 'Times 30/60/90 Days Late',
+    late60Count: 'Times 30/60/90 Days Late',
+    late90Count: 'Times 30/60/90 Days Late',
     amountPastDue: 'Amount Past Due:',
     disputeFlag: 'Disputed:',
   };
@@ -101,9 +101,9 @@ export class TradelineDetailsTableComponent implements OnInit {
     monthlyPayment: 'Monthly Payment',
     accountDesignator: 'Responsibility',
     highestBalance: 'Highest Balance',
-    late30Count: 'Times 30/60/90 Days Late:',
-    late60Count: 'Times 30/60/90 Days Late:',
-    late90Count: 'Times 30/60/90 Days Late:',
+    late30Count: 'Times 30/60/90 Days Late',
+    late60Count: 'Times 30/60/90 Days Late',
+    late90Count: 'Times 30/60/90 Days Late',
     disputeFlag: 'Previously Disputed?',
   };
 
