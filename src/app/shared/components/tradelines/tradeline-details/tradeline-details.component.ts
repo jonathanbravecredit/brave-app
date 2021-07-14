@@ -3,6 +3,15 @@ import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/o
 import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 
+/**
+ * @property {ITradelineDetailsConfig} config
+ * @property {IPayStatusHistory | undefined} paymentHistory
+ * @property {string} remarks
+ * @property {string} address
+ * @property {boolean} acknowledged
+ * @property {EventEmitter<void>} disputeClick
+ * @property {boolean} showModal
+ */
 @Component({
   selector: 'brave-tradeline-details',
   templateUrl: './tradeline-details.component.html',
@@ -10,28 +19,26 @@ import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 export class TradelineDetailsComponent {
   /**
    * Config parameters with parsed tradeline data
-   * @property {ITradelineDetailsConfig} config
    */
   @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
   /**
    * Payments Status History from Merge Report
-   * @property {IPayStatusHistory | undefined} paymentHistory
    */
   @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
   /**
    * Remarks from Merge Report
-   * @property {string} remarks
    */
   @Input() remarks: string = '';
   /**
    * Address from Merge Report...TODO need better definition
-   * @property {string} address
    */
   @Input() address: string = '';
   /**
+   * Flag to indicate they need to still acknowledge dispute terms
+   */
+  @Input() acknowledged: boolean = false;
+  /**
    * Event emitter when dispute button clicked on tradeline detail
-   * @property {EventEmitter<void>} disputeClick
-   * @default
    */
   @Output() disputeClick: EventEmitter<void> = new EventEmitter();
   /**

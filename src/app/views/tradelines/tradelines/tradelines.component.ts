@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { IFulfillResult, IFulfillServiceProductResponse } from '@shared/interfaces/fulfill.interface';
+import { Router } from '@angular/router';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
@@ -19,9 +17,12 @@ import { Observable } from 'rxjs';
 export class TradelinesComponent {
   /**
    * Raw tradline partition directly from Merge Report
-   * @property {Observable<ITradeLinePartition>} tradeline
    */
   tradeline$: Observable<ITradeLinePartition>;
+  /**
+   * Flag to indicate that dispute terms have been acknowledged
+   */
+  _acknowledged: boolean = false;
 
   /**
    * Initializes tradeline property with current tradeline from CreditReportService
@@ -36,8 +37,16 @@ export class TradelinesComponent {
     private creditReportServices: CreditreportService,
   ) {
     this.tradeline$ = this.creditReportServices.tuTradeline$.asObservable();
+    this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+    console.log('acknowledged', this.acknowledged);
   }
 
+  set acknowledged(value: boolean) {
+    this._acknowledged = value;
+  }
+  get acknowledged(): boolean {
+    return this._acknowledged;
+  }
   /**
    * Sets the current dispute in the service based on the tradeline clicked
    * - TODO...reevaluate when you understand the process better
@@ -85,6 +94,7 @@ export class TradelinesComponent {
       const dispute = true;
       const resp = await this.transunion.sendEnrollRequest(state, dispute);
       const parsed = resp ? JSON.parse(resp) : undefined;
+      if (!parsed || !parsed.Enroll) throw new Error('Failed to parse sendEnrollRequest response');
       const enrollResult = returnNestedObject(JSON.parse(parsed.Enroll), 'EnrollResult');
       const enriched = this.transunion.enrichEnrollmentData(state, enrollResult);
       if (!enriched || !enriched.agencies) throw 'Enrichment failed';
@@ -102,6 +112,7 @@ export class TradelinesComponent {
       const refresh = true;
       const resp = await this.transunion.getCreditReport(state, refresh);
       const parsed = resp ? JSON.parse(resp) : undefined;
+      if (!parsed || !parsed.Fulfill) throw new Error('Failed to parse getCreditReport response');
       const fulfillResult = returnNestedObject(JSON.parse(parsed.Fulfill), 'FulfillResult');
       const enrich = this.transunion.enrichFulfillData(state, fulfillResult);
       if (!enrich?.agencies) throw 'Fulfill failed';
