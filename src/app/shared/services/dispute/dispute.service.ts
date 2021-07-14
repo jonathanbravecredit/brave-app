@@ -41,6 +41,7 @@ export class DisputeService implements OnDestroy {
     this.disputeStack = [];
   }
 
+  async acknowledgeDisputeTerms(): Promise<void> {}
   async sendStartDispute(): Promise<string | undefined> {
     // TODO need to save the dispute state and in DB at some point
     const state = this.store.snapshot()?.appData;

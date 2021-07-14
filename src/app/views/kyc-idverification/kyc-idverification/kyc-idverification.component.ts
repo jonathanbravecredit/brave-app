@@ -80,7 +80,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
         await this.sendEnrollRequest(this.state);
         if (!this.enrollResult) throw 'Enroll request failed';
         // need to add to state and then update the db
-        const enriched = this.enrichEnrollmentData(this.state, this.enrollResult);
+        const enriched = this.kycService.enrichEnrollmentData(this.state, this.enrollResult);
         if (!enriched) throw 'Enrichment failed';
         await this.kycService.updateAgenciesAsync(enriched.agencies);
         this.kycService.completeStep(this.stepID);
@@ -208,81 +208,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
     return this;
   }
 
-  /**
-   * This method parses and enriches the state data
-   * @param {AppDataStateModel | UpdateAppDataInput} state
-   * @param {IEnrollResponse} enroll
-   * @returns
-   */
-  enrichEnrollmentData(
-    state: UpdateAppDataInput | undefined,
-    enroll: IEnrollResult,
-  ): AppDataStateModel | UpdateAppDataInput | undefined {
-    if (!state) return;
-    let enrollReport;
-    let enrollMergeReport;
-    let enrollVantageScore;
-    let enrolledOn = new Date().toISOString();
-    const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
-    const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
-    if (!prodResponse) return;
-    if (prodResponse instanceof Array) {
-      enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
-        return item['ServiceProduct'] === 'TUCReport';
-      });
-      enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
-        return item['ServiceProduct'] === 'MergeCreditReports';
-      });
-      enrollVantageScore = prodResponse.find((item: IEnrollServiceProductResponse) => {
-        return item['ServiceProduct'] === 'TUCVantageScore3';
-      });
-    } else {
-      switch (prodResponse['ServiceProduct']) {
-        case 'TUCReport':
-          enrollReport = prodResponse || null;
-          break;
-        case 'MergeCreditReports':
-          enrollMergeReport = prodResponse || null;
-          break;
-        case 'TUCVantageScore3':
-          enrollVantageScore = prodResponse || null;
-          break;
-        default:
-          break;
-      }
-    }
-    return {
-      ...state,
-      agencies: {
-        ...state.agencies,
-        transunion: {
-          ...state.agencies?.transunion,
-          enrolled: true,
-          enrolledOn: enrolledOn,
-          enrollmentKey: enrollmentKey,
-          enrollReport: mapEnrollResponse(enrollReport),
-          enrollMergeReport: mapEnrollResponse(enrollMergeReport),
-          enrollVantageScore: mapEnrollResponse(enrollVantageScore),
-        },
-      },
-    };
-  }
 }
 
 const codeMap: Record<string, any> = {
   code: true,
-};
-
-// TODO use a pascal to camel converter
-const mapEnrollResponse = (res: any): TUReportResponseInput => {
-  return {
-    bureau: res['Bureau'],
-    errorResponse: res['ErrorResponse'],
-    serviceProduct: res['ServiceProduct'],
-    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
-    serviceProductObject: JSON.stringify(res['ServiceProductObject']),
-    serviceProductTypeId: res['ServiceProductTypeId'],
-    serviceProductValue: res['ServiceProductValue'],
-    status: res['Status'],
-  } as TUReportResponseInput;
 };

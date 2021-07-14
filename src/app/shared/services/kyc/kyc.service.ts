@@ -17,6 +17,7 @@ import {
 import { returnNestedObject } from '@shared/utils/utils';
 import { AgenciesStateModel } from '@store/agencies';
 import { StateService } from '@shared/services/state/state.service';
+import { IEnrollResult } from '@shared/interfaces/enroll.interface';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -455,5 +456,13 @@ export class KycService {
     } catch (err) {
       throw new Error(`Error in kycService:sendEnrollRequest=${err}`);
     }
+  }
+
+  enrichEnrollmentData(
+    state: AppDataStateModel | UpdateAppDataInput | undefined,
+    enroll: IEnrollResult,
+  ): UpdateAppDataInput | AppDataStateModel | undefined {
+    if (!state) throw new Error(`Error in kycService:enrichEnrollmentData=Missing state`);
+    return this.transunion.enrichEnrollmentData(state, enroll);
   }
 }

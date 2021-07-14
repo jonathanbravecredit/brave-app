@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
 import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 
@@ -33,6 +34,18 @@ export class TradelineDetailsComponent {
    * @default
    */
   @Output() disputeClick: EventEmitter<void> = new EventEmitter();
+  /**
+   * Toggle to open dispute disclaimer modal
+   */
+  showModal: boolean = false;
 
   constructor() {}
+
+  actionForDispute(e: IOnboardingEvent) {
+    if (e.isConfirmed) {
+      this.showModal = false;
+      this.disputeClick.emit();
+      console.log('confirmed');
+    }
+  }
 }

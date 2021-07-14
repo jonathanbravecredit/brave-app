@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
+import { IEnrollResult, IEnrollServiceProductResponse } from '@shared/interfaces/enroll.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
+import { IFulfillResult, IFulfillServiceProductResponse } from '@shared/interfaces/fulfill.interface';
 import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
 import { ILineItem, IClaimCode } from '@shared/interfaces/start-dispute.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
 import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
 import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
-import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
+import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
@@ -89,7 +92,7 @@ export class TransunionService {
     dispute: boolean = false,
   ): Promise<string | undefined> {
     try {
-      const msg = this.createEnrollPayload(data);
+      const msg = this.createEnrollPayload(data, dispute);
       const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
       return res ? res : undefined;
     } catch (err) {
@@ -485,4 +488,137 @@ export class TransunionService {
       };
     });
   }
+
+  /**
+   * This method parses and enriches the state data
+   * @param {AppDataStateModel | UpdateAppDataInput} state
+   * @param {IEnrollResponse} enroll
+   * @returns
+   */
+  enrichEnrollmentData(
+    state: UpdateAppDataInput | undefined,
+    enroll: IEnrollResult,
+  ): AppDataStateModel | UpdateAppDataInput | undefined {
+    if (!state) return;
+    let enrollReport;
+    let enrollMergeReport;
+    let enrollVantageScore;
+    let enrolledOn = new Date().toISOString();
+    const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
+    const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
+    if (!prodResponse) return;
+    if (prodResponse instanceof Array) {
+      enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCReport';
+      });
+      enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+        return item['ServiceProduct'] === 'MergeCreditReports';
+      });
+      enrollVantageScore = prodResponse.find((item: IEnrollServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCVantageScore3';
+      });
+    } else {
+      switch (prodResponse['ServiceProduct']) {
+        case 'TUCReport':
+          enrollReport = prodResponse || null;
+          break;
+        case 'MergeCreditReports':
+          enrollMergeReport = prodResponse || null;
+          break;
+        case 'TUCVantageScore3':
+          enrollVantageScore = prodResponse || null;
+          break;
+        default:
+          break;
+      }
+    }
+    return {
+      ...state,
+      agencies: {
+        ...state.agencies,
+        transunion: {
+          ...state.agencies?.transunion,
+          enrolled: true,
+          enrolledOn: enrolledOn,
+          enrollmentKey: enrollmentKey,
+          enrollReport: mapReportResponse(enrollReport),
+          enrollMergeReport: mapReportResponse(enrollMergeReport),
+          enrollVantageScore: mapReportResponse(enrollVantageScore),
+        },
+      },
+    };
+  }
+
+  /**
+   * This method parses and enriches the state data
+   * @param {AppDataStateModel | UpdateAppDataInput} state
+   * @param {IFulfillResult} enroll
+   * @returns {AppDataStateModel | UpdateAppDataInput | undefined }
+   */
+  enrichFulfillData(
+    state: UpdateAppDataInput | undefined,
+    fulfill: IFulfillResult, // IFulfillResult
+  ): AppDataStateModel | UpdateAppDataInput | undefined {
+    if (!state) return;
+    let fulfillReport;
+    let fulfillMergeReport;
+    let fulfillVantageScore;
+    let fulfilledOn = new Date().toISOString();
+    const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
+    if (!prodResponse) return;
+    if (prodResponse instanceof Array) {
+      fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCReport';
+      });
+      fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+        return item['ServiceProduct'] === 'MergeCreditReports';
+      });
+      fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCVantageScore3';
+      });
+    } else {
+      switch (prodResponse['ServiceProduct']) {
+        case 'TUCReport':
+          fulfillReport = prodResponse || null;
+          break;
+        case 'MergeCreditReports':
+          fulfillMergeReport = prodResponse || null;
+          break;
+        case 'TUCVantageScore3':
+          fulfillVantageScore = prodResponse || null;
+          break;
+        default:
+          break;
+      }
+    }
+    const mapped = {
+      ...state,
+      agencies: {
+        ...state.agencies,
+        transunion: {
+          ...state.agencies?.transunion,
+          fulfilledOn: fulfilledOn,
+          fulfillReport: mapReportResponse(fulfillReport),
+          fulfillMergeReport: mapReportResponse(fulfillMergeReport),
+          fulfillVantageScore: mapReportResponse(fulfillVantageScore),
+        },
+      },
+    };
+    console.log('mapped', mapped);
+    return mapped;
+  }
 }
+
+// TODO use a pascal to camel converter
+const mapReportResponse = (res: any): TUReportResponseInput => {
+  return {
+    bureau: res['Bureau'],
+    errorResponse: res['ErrorResponse'],
+    serviceProduct: res['ServiceProduct'],
+    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
+    serviceProductObject: JSON.stringify(res['ServiceProductObject']),
+    serviceProductTypeId: res['ServiceProductTypeId'],
+    serviceProductValue: res['ServiceProductValue'],
+    status: res['Status'],
+  } as TUReportResponseInput;
+};
