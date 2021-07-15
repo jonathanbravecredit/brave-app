@@ -43,6 +43,8 @@ export type Transunion = {
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
+  disputeEnrolled?: boolean | null;
+  disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
   disputes?: Disputes;
 };
@@ -140,6 +142,8 @@ export type TransunionInput = {
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
+  disputeEnrolled?: boolean | null;
+  disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
   disputes?: DisputesInput | null;
 };
@@ -462,6 +466,8 @@ export type PatchTransunionMutation = {
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
+  disputeEnrolled?: boolean | null;
+  disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
   disputes?: {
     __typename: "Disputes";
@@ -605,6 +611,8 @@ export type CreateAppDataMutation = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -771,6 +779,8 @@ export type UpdateAppDataMutation = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -937,6 +947,8 @@ export type DeleteAppDataMutation = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -1117,6 +1129,8 @@ export type GetAppDataQuery = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -1285,6 +1299,8 @@ export type ListAppDatasQuery = {
         fulfilledOn?: string | null;
         acknowledgedDisputeTerms?: boolean | null;
         acknowledgedDisputeTermsOn?: string | null;
+        disputeEnrolled?: boolean | null;
+        disputeEnrolledOn?: string | null;
         disputeStatus?: string | null;
         disputes?: {
           __typename: "Disputes";
@@ -1453,6 +1469,8 @@ export type OnCreateAppDataSubscription = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -1619,6 +1637,8 @@ export type OnUpdateAppDataSubscription = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -1785,6 +1805,8 @@ export type OnDeleteAppDataSubscription = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
       disputes?: {
         __typename: "Disputes";
@@ -1973,6 +1995,8 @@ export class APIService {
           fulfilledOn
           acknowledgedDisputeTerms
           acknowledgedDisputeTermsOn
+          disputeEnrolled
+          disputeEnrolledOn
           disputeStatus
           disputes {
             __typename
@@ -2132,6 +2156,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
@@ -2314,6 +2340,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
@@ -2496,6 +2524,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
@@ -2712,6 +2742,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
@@ -2894,6 +2926,8 @@ export class APIService {
                 fulfilledOn
                 acknowledgedDisputeTerms
                 acknowledgedDisputeTermsOn
+                disputeEnrolled
+                disputeEnrolledOn
                 disputeStatus
                 disputes {
                   __typename
@@ -3081,6 +3115,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
@@ -3260,6 +3296,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
@@ -3439,6 +3477,8 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrolled
+              disputeEnrolledOn
               disputeStatus
               disputes {
                 __typename
