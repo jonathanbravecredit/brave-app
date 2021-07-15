@@ -35,6 +35,7 @@ import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disput
 // !!! TODO !!! a lot of this functionality needs to be pushed to the server
 //  - push the payload structuring to the backend
 //  - better structure the responses
+// update state > graphql > tu > graphql > appsync > app > updatestate
 
 @Injectable({
   providedIn: 'root',
@@ -365,16 +366,16 @@ export class TransunionService {
    */
   createFulfillPayload(
     data: UpdateAppDataInput | AppDataStateModel,
-    refresh: boolean = true,
+    dispute: boolean = true,
   ): IFulfillRequest | undefined {
     const id = data.id?.split(':')?.pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
-    const enrollmentKey = refresh
-      ? data.agencies?.transunion?.disputeEnrollmentKey
-      : data.agencies?.transunion?.enrollmentKey;
-    const bundleCode = refresh ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
-    const version = refresh ? '7.1' : '7.1';
+    const version = dispute ? '7.1' : '7.1';
+    const bundleCode = dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
+    const fulfillmentKey = dispute
+      ? data.agencies?.transunion?.disputeServiceBundleFulfillmentKey
+      : data.agencies?.transunion?.serviceBundleFulfillmentKey;
 
     if (!id || !attrs || !dob) {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -406,7 +407,6 @@ export class TransunionService {
         },
         Ssn: attrs.ssn?.full || '',
       },
-      EnrollmentKey: enrollmentKey,
       ServiceBundleCode: bundleCode,
     } as IFulfillRequest;
   }
@@ -489,7 +489,7 @@ export class TransunionService {
       },
       EnrollmentKey: data.agencies?.transunion?.disputeEnrollmentKey,
       LineItems: this.parseDisputeToLineItem(disputes),
-      ServiceBundleFulfillmentKey: data.agencies?.transunion?.serviceBundleFulfillmentKey,
+      ServiceBundleFulfillmentKey: data.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
       ServiceProductFulfillmentKey: null,
     } as IGetDisputeStatusRequest;
   }
