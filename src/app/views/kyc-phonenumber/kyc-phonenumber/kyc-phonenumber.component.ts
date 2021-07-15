@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
@@ -45,6 +45,10 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
     this.router.navigate(['../identity'], { relativeTo: this.route });
   }
 
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    console.log('form errors', errors);
+  }
+
   /**
    * Method to:
    * - Update the phone number
@@ -64,9 +68,9 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
 
       try {
         await this.getAuthenticationQuestions(attrs);
-        this.otpQuestion ? this.sendOTPResponse() : this.router.navigate(['../kba'], { relativeTo: this.route });
+        this.otpQuestion ? await this.sendOTPResponse() : this.router.navigate(['../kba'], { relativeTo: this.route });
         this.authSuccessful
-          ? this.processCodeResponse()
+          ? await this.processCodeResponse()
           : (() => {
               throw 'Authentication request failed';
             })();

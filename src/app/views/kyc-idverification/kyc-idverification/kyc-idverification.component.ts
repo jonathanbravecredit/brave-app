@@ -57,6 +57,18 @@ export class KycIdverificationComponent extends KycBaseComponent {
     this.router.navigate(['../verify'], { relativeTo: this.route });
   }
 
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    console.log('form errors', errors);
+  }
+
+  /**
+   * Method to:
+   * - Get authentication questions
+   * - send the passcode response
+   * - Enroll the user
+   * - Update the enriched enrollment data to state
+   * @param form
+   */
   async goToNext(form: FormGroup): Promise<void> {
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
@@ -187,18 +199,10 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   getPasscodeAnswer(passcodeQuestion: ITransunionKBAQuestion | undefined, code: string): KycIdverificationComponent {
-    if (!passcodeQuestion) return this;
-    this.passcodeAnswer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
-    return this;
-  }
-
-  /**
-   * Update the authResponse prop with the parsed verifyResp prop
-   * @param {string | undefined} verifyResp
-   * @returns
-   */
-  parseVerifyResponse(verifyResp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
-    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationResponseSuccess);
+    if (!passcodeQuestion) throw 'Error in kycIdverification:getPasscodeAnswer=Missing question';
+    const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
+    if (!answer) throw 'Error in kycIdverification:getPasscodeAnswer=No passcode answer returned';
+    this.passcodeAnswer = answer;
     return this;
   }
 
@@ -214,18 +218,29 @@ export class KycIdverificationComponent extends KycBaseComponent {
     state: UpdateAppDataInput | AppDataStateModel | undefined,
     passcodeAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycIdverificationComponent> {
-    if (!passcodeAnswer || !state) return this;
-    this.verifyResponse = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
+    if (!passcodeAnswer || !state) throw 'Error in kycIdverification:sendVerifyAuthQuestions=Missing answer or state';
+    const response = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
+    if (!response) throw 'Error in kycIdverification:sendVerifyAuthQuestions=No verify authentication response';
+    this.verifyResponse = response;
     return this;
   }
 
+  /**
+   * Update the authResponse prop with the parsed verifyResp prop
+   * @param {string | undefined} verifyResp
+   * @returns
+   */
+  parseVerifyResponse(verifyResp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
+    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationResponseSuccess);
+    return this;
+  }
   /**
    * Update the prop to indicate that verification was successful
    * @param {IVerifyAuthenticationResponseSuccess | undefined} resp
    * @returns
    */
   isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
-    if (!resp) return this;
+    if (!resp) throw 'Error in kycIdverification:isVerificationSuccesful=Missing response message';
     this.authSuccessful = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
     return this;
   }
