@@ -33,31 +33,14 @@ export class NegativeAccountInitialComponent {
    * @param card
    */
   async onConfirmed(card: INegativeAccountCardInputs): Promise<void> {
-    const state = this.creditReportService.getStateSnapshot()?.appData;
-    if (!state) throw new Error(`Error in negativeAccountInitialComponent:onConfirmed=Missing state`);
-    try {
-      const res = await this.transunion.getCreditReport(state, false);
-      if (!res) throw new Error(`Failed to refresh report; response:${res}`);
-      const fulfillRaw = res ? JSON.parse(res) : undefined;
-      const fulfillResult = returnNestedObject(JSON.parse(fulfillRaw.Fulfill), 'FulfillResult');
-      const enrich = this.transunion.enrichFulfillData(state, fulfillResult);
-      if (!enrich?.agencies) throw new Error('Fufill failed');
-      const data = await this.creditReportService.updateReportAsync(enrich.agencies);
-      console.log('updated state', data);
-      if (!data) throw new Error('Failed to update state with refreshed report');
-      const disputeStatus = await this.transunion.getDisputeStatus(data as AppDataStateModel);
-      console.log('status back', disputeStatus);
-      const disputeRaw = disputeStatus ? JSON.parse(disputeStatus) : undefined;
-      const disputeResult = returnNestedObject(JSON.parse(disputeRaw.GetDisputeStatus), 'GetDisputeStatusResult');
-      //if (disputeResult.ResponseType.toLowerCase() !== 'success') throw new Error('GetDisputeStatus filed');
-      // TODO error in request...question out to Evadney for better guidance
-      // assume it comes back successfully for now
-      this.disputeService.setTradelineItem(card);
-      this.router.navigate(['../dispute'], { relativeTo: this.route });
-    } catch (err) {
-      throw new Error(err);
-    }
+    this.disputeService
+      .onUserConfirmed()
+      .then((_) => {
+        this.disputeService.setTradelineItem(card);
+        this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
+      })
+      .catch((err) => {
+        throw new Error(`Error in tradelines:onDisputeClicked=${err}`);
+      });
   }
-
-  acknowledgeDisputeTerms(): void {}
 }
