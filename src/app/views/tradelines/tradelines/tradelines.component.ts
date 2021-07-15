@@ -69,6 +69,7 @@ export class TradelinesComponent {
     const state = this.statesvc.state?.appData;
     if (!state) throw 'Missing state';
     // use the dispute fulfull for refreshes NOT CreditReport fulfill
+    if (this.isEnrollmentRequired(state)) this.disputeService.enrollInDisputes(state);
     if (this.isRefreshRequired(state)) this.disputeService.fulfillInDisputes(state);
     this.disputeService.setTradelineItem(tradeline);
     this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
@@ -102,5 +103,10 @@ export class TradelinesComponent {
     const now = new Date();
     const last = new Date(fulfilledOn);
     return dateDiffInDays(last, now) > 0 ? true : false;
+  }
+
+  isEnrollmentRequired(state: AppDataStateModel): boolean {
+    const enrolled = state.agencies?.transunion?.disputeEnrolled;
+    return !enrolled;
   }
 }

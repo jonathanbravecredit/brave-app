@@ -128,9 +128,10 @@ export class DisputeService implements OnDestroy {
       if (!resp || !resp.Enroll) throw 'Failed to process sendEnrollRequest response';
       const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
       console.log('response in enrollInDispute ===> ', response);
+      const enrollmentKey = returnNestedObject(resp, 'EnrollmentKey');
       const override = !response ? this.overrideEnrollmentResponse(resp) : true;
       override
-        ? await this.updateEnrollment(state)
+        ? await this.updateEnrollment(state, enrollmentKey)
         : (() => {
             throw 'Failed to enroll in disputes';
           })();
@@ -154,7 +155,7 @@ export class DisputeService implements OnDestroy {
    * Update the state acknowledging the user has read and accepted the terms
    * @param state
    */
-  async updateEnrollment(state: AppDataStateModel): Promise<void> {
+  async updateEnrollment(state: AppDataStateModel, enrollmentKey: string): Promise<void> {
     const date = new Date().toISOString();
     const enrolled = {
       ...state.agencies,
@@ -162,6 +163,7 @@ export class DisputeService implements OnDestroy {
         ...state.agencies?.transunion,
         disputeEnrolled: true,
         disputeEnrolledOn: date,
+        disputeEnrollmentKey: enrollmentKey,
       },
     } as AgenciesStateModel;
     await this.statesvc.updateAgenciesAsync(enrolled);
