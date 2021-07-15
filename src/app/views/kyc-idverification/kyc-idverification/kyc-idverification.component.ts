@@ -15,6 +15,7 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { IEnrollResult } from '@shared/interfaces/enroll.interface';
+import { CodeGuruProfiler } from 'aws-sdk';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -64,29 +65,22 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.state = appData;
 
       try {
-        // authQuestions > authChallenge > passcodeQuestion
-        this.getAuthDetails(this.state)
-          .parseAuthDetails(this.authXML)
-          .createChallengeConfig(this.authQuestions)
-          .getPasscodeQuestion(this.authChallenge);
-        if (!this.passcodeQuestion) throw 'No passcode question found';
-        // passcodeAnswer > verifyResponse > authResponse
-        this.getPasscodeAnswer(this.passcodeQuestion, this.code);
-        (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
-          .parseVerifyResponse(this.verifyResponse)
-          .isVerificationSuccesful(this.authResponse);
-        if (!this.authSuccessful) throw 'Authentication request failed';
-        // fetching reports
-        await this.sendEnrollRequest(this.state);
-        if (!this.enrollResult) throw 'Enroll request failed';
-        // need to add to state and then update the db
-        const enriched = this.kycService.enrichEnrollmentData(this.state, this.enrollResult);
-        if (!enriched) throw `Enrichment failed`;
-        await this.kycService.updateAgenciesAsync(enriched.agencies);
-        this.kycService.completeStep(this.stepID);
-        this.router.navigate(['../congratulations'], {
-          relativeTo: this.route,
-        });
+        this.getAuthenticationQuestions();
+        this.passcodeQuestion
+          ? await this.sendPasscodeResponse(this.code)
+          : (() => {
+              throw 'No passcode questionfound';
+            })();
+        this.authSuccessful
+          ? await this.sendEnrollRequest(this.state)
+          : (() => {
+              throw 'Authentication request failed';
+            })();
+        this.enrollResult
+          ? await this.updateEnrichedEnrollment(this.enrollResult)
+          : (() => {
+              throw 'Enroll request failed';
+            })();
       } catch (err) {
         console.log('error ===> ', err); // TODO can better handle errors
         this.router.navigate(['../error'], { relativeTo: this.route });
@@ -94,10 +88,51 @@ export class KycIdverificationComponent extends KycBaseComponent {
     }
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+  /**
+   * Method to:
+   * - Get raw questions for passcode from state
+   * - parse the question
+   * - get the passcode question
+   * // authQuestions > authChallenge > passcodeQuestion
+   * @param attrs
+   */
+  getAuthenticationQuestions(): void {
+    this.getAuthDetails(this.state)
+      .parseAuthDetails(this.authXML)
+      .createChallengeConfig(this.authQuestions)
+      .getPasscodeQuestion(this.authChallenge);
   }
 
+  /**
+   * Method to:
+   * - get the passcode answer
+   * - verify the answer with TU
+   * - confirm authentication
+   * // passcodeAnswer > verifyResponse > authResponse
+   */
+  async sendPasscodeResponse(code: string): Promise<void> {
+    this.getPasscodeAnswer(this.passcodeQuestion, code);
+    (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
+      .parseVerifyResponse(this.verifyResponse)
+      .isVerificationSuccesful(this.authResponse);
+  }
+
+  /**
+   * Method to:
+   * - Enrich the enrollment data
+   * - Update the agency state
+   * - Navigate to end step if successful
+   * @param enrollResult
+   */
+  async updateEnrichedEnrollment(enrollResult: IEnrollResult): Promise<void> {
+    const enriched = this.kycService.enrichEnrollmentData(this.state, enrollResult);
+    if (!enriched) throw `Enrichment failed`;
+    await this.kycService.updateAgenciesAsync(enriched.agencies);
+    this.kycService.completeStep(this.stepID);
+    this.router.navigate(['../congratulations'], {
+      relativeTo: this.route,
+    });
+  }
   /**
    * Updates the authXML prop with the authentication questions back from TU
    * @param {UpdateAppDataInput | AppDataStateModel | undefined} state

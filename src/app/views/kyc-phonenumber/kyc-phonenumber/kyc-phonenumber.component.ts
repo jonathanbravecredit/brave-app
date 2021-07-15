@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
@@ -45,6 +45,14 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
     this.router.navigate(['../identity'], { relativeTo: this.route });
   }
 
+  /**
+   * Method to:
+   * - Update the phone number
+   * - Get the authentication questions
+   * - Choose send to phone
+   * - Confirm response and save to state
+   * @param form
+   */
   async goToNext(form: FormGroup): Promise<void> {
     if (form.valid) {
       const { phone } = this.formatAttributes(form, phoneMap);
@@ -55,38 +63,13 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
       } as UserAttributesInput;
 
       try {
-        await (async () => {
-          await this.updateUserAttributes(attrs);
-          await this.getAuthQuestions(this.state);
-          await this.updateStateWithKBAQuestions(this.authXML);
-          return this;
-        })
-          .bind(this)()
-          .then((_this) => {
-            _this.parseAuthQuestions(this.authXML).getOTPQuestion(this.authQuestions);
-          });
-
-        if (!this.authQuestions) throw 'No authentication questions returned';
-
-        if (this.otpQuestion) {
-          this.state = this.store.snapshot()['appData']; // refresh state for new bundle key
-          this.getOTPAnswer(this.otpQuestion); // automatically select (send text for user)
-          (await this.sendVerifyAuthQuestions(this.state, this.otpAnswer))
-            .parseVerifyResponse(this.verifyResponse)
-            .isVerificationSuccesful(this.authResponse);
-        } else {
-          this.router.navigate(['../kba'], { relativeTo: this.route });
-        }
-
-        if (this.authSuccessful) {
-          this.getCodeQuestion(this.authResponse);
-          await this.updateStateWithCodeQuestions(this.codeQuestion);
-          this.router.navigate(['../code'], {
-            relativeTo: this.route,
-          });
-        } else {
-          throw 'Authentication request failed';
-        }
+        await this.getAuthenticationQuestions(attrs);
+        this.otpQuestion ? this.sendOTPResponse() : this.router.navigate(['../kba'], { relativeTo: this.route });
+        this.authSuccessful
+          ? this.processCodeResponse()
+          : (() => {
+              throw 'Authentication request failed';
+            })();
       } catch (err) {
         console.log('error ===> ', err, this);
         this.router.navigate(['../error'], { relativeTo: this.route });
@@ -94,8 +77,53 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
     }
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+  /**
+   * Method to:
+   * - Update the user attributes with phone number
+   * - Get authentication questions back from TU service
+   * - Update the state with the KBA questions (raw XML)
+   * - Parse the raw questions and return the OTP question
+   * @param attrs
+   */
+  async getAuthenticationQuestions(attrs: UserAttributesInput): Promise<void> {
+    await (async () => {
+      await this.updateUserAttributes(attrs);
+      await this.getAuthQuestions(this.state);
+      await this.updateStateWithKBAQuestions(this.authXML);
+      return this;
+    })
+      .bind(this)()
+      .then((_this) => {
+        _this.parseAuthQuestions(this.authXML).getOTPQuestion(this.authQuestions);
+      });
+  }
+
+  /**
+   * Method to:
+   * - Find the correct OTP answer in the response from TU
+   * - Select the answer for the user to receive a text message
+   * - Confirm answer is received
+   */
+  async sendOTPResponse(): Promise<void> {
+    this.state = this.store.snapshot()['appData']; // refresh state for new bundle key
+    this.getOTPAnswer(this.otpQuestion); // automatically select (send text for user)
+    (await this.sendVerifyAuthQuestions(this.state, this.otpAnswer))
+      .parseVerifyResponse(this.verifyResponse)
+      .isVerificationSuccesful(this.authResponse);
+  }
+
+  /**
+   * Method to:
+   * - Finds the code question in the response from TU
+   * - Update the sate with the code question
+   * - Navigate to code view
+   */
+  async processCodeResponse(): Promise<void> {
+    this.getCodeQuestion(this.authResponse);
+    await this.updateStateWithCodeQuestions(this.codeQuestion);
+    this.router.navigate(['../code'], {
+      relativeTo: this.route,
+    });
   }
 
   /**
