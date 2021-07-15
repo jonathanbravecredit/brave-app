@@ -101,6 +101,7 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     fulfilledOn
     acknowledgedDisputeTerms
     acknowledgedDisputeTermsOn
+    disputeEnrollmentKey
     disputeEnrolled
     disputeEnrolledOn
     disputeStatus
@@ -232,6 +233,7 @@ mutation CreateAppData(
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
@@ -382,6 +384,7 @@ mutation UpdateAppData(
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
@@ -532,6 +535,7 @@ mutation DeleteAppData(
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
