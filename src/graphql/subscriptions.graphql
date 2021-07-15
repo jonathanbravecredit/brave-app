@@ -110,6 +110,8 @@ subscription OnCreateAppData($owner: String) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeEnrolled
+        disputeEnrolledOn
         disputeStatus
         disputes {
           disputePreflightStatus
@@ -255,6 +257,8 @@ subscription OnUpdateAppData($owner: String) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeEnrolled
+        disputeEnrolledOn
         disputeStatus
         disputes {
           disputePreflightStatus
@@ -400,6 +404,8 @@ subscription OnDeleteAppData($owner: String) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeEnrolled
+        disputeEnrolledOn
         disputeStatus
         disputes {
           disputePreflightStatus
