@@ -48,6 +48,13 @@ export class TradelineDetailsComponent {
 
   constructor() {}
 
+  disputeClicked() {
+    // when clicked and do not need acknowledgment
+    if (this.acknowledged) {
+      this.disputeClick.emit();
+    }
+  }
+
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
       this.showModal = false;

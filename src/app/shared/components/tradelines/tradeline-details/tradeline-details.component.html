@@ -12,7 +12,7 @@
       <brave-tradeline-remarks [remarks]="remarks" [address]="address"></brave-tradeline-remarks>
     </div>
     <div class="flex justify-center mb-2">
-      <brave-filled-onlytext-button (click)="showModal = !showModal"
+      <brave-filled-onlytext-button (click)="showModal = !showModal; this.disputeClicked()"
         >Dispute in a few clicks</brave-filled-onlytext-button
       >
       <brave-onboarding-dispute

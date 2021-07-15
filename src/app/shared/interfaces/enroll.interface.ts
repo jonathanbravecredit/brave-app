@@ -1,5 +1,4 @@
-import { IErrorResponse } from '@shared/interfaces/common-tu.interface';
-import { INil } from '@shared/interfaces/errors.interface';
+import { IErrorResponse, INil } from '@shared/interfaces/errors.interface';
 
 export interface IEnroll {
   request: {

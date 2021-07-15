@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { IFulfillResult, IFulfillServiceProductResponse } from '@shared/interfaces/fulfill.interface';
 import { IMergeReport } from '@shared/interfaces/merge-report.interface';
-import { TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { returnNestedObject } from '@shared/utils/utils';
-import { AppDataStateModel } from '@store/app-data';
+import { StateService } from '@shared/services/state/state.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -17,15 +13,27 @@ import { Observable } from 'rxjs';
 })
 export class NegativeAccountInitialComponent {
   creditReport$: Observable<IMergeReport>;
+  /**
+   * Flag to indicate that dispute terms have been acknowledged
+   */
+  _acknowledged: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private transunion: TransunionService,
+    private statesvc: StateService,
     private creditReportService: CreditreportService,
     private disputeService: DisputeService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
+    this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+  }
+
+  set acknowledged(value: boolean) {
+    this._acknowledged = value;
+  }
+  get acknowledged(): boolean {
+    return this._acknowledged;
   }
 
   /**

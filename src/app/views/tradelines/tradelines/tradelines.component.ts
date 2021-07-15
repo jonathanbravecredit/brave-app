@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { returnNestedObject } from '@shared/utils/utils';
-import { AgenciesStateModel } from '@store/agencies';
+import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
 import { Observable } from 'rxjs';
 
@@ -33,7 +30,6 @@ export class TradelinesComponent {
   constructor(
     private router: Router,
     private statesvc: StateService,
-    private transunion: TransunionService,
     private disputeService: DisputeService,
     private creditReportServices: CreditreportService,
   ) {
@@ -54,7 +50,36 @@ export class TradelinesComponent {
    * @param {ITradeLinePartition} tradeline
    * @returns {void}
    */
-  onDisputeClicked(tradeline: ITradeLinePartition): void {
+  async onDisputeClicked(tradeline: ITradeLinePartition): Promise<void> {
+    try {
+      this.acknowledged
+        ? await this.processAcknowledgedUser(tradeline)
+        : await this.processUnacknowledgedUser(tradeline);
+    } catch (err) {
+      throw new Error(`Error in tradelines:onDisputeClicked=${err}`);
+    }
+  }
+
+  /**
+   * If the user is already acknowledged determine if refresh is needed before
+   *   navigating to dispute
+   * @param tradeline
+   */
+  async processAcknowledgedUser(tradeline: ITradeLinePartition): Promise<void> {
+    const state = this.statesvc.state?.appData;
+    if (!state) throw 'Missing state';
+    // use the dispute fulfull for refreshes NOT CreditReport fulfill
+    if (this.isRefreshRequired(state)) this.disputeService.fulfillInDisputes(state);
+    this.disputeService.setTradelineItem(tradeline);
+    this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
+  }
+
+  /**
+   * If the user hs not already acknowledged they need to acknowledge before
+   *  enrolling and refreshing report
+   * @param tradeline
+   */
+  async processUnacknowledgedUser(tradeline: ITradeLinePartition): Promise<void> {
     this.disputeService
       .onUserConfirmed()
       .then((_) => {
@@ -64,5 +89,18 @@ export class TradelinesComponent {
       .catch((err) => {
         throw new Error(`Error in tradelines:onDisputeClicked=${err}`);
       });
+  }
+
+  /**
+   * Determine if the last time the user refreshed was more than 24hrs ago
+   * @param state
+   * @returns
+   */
+  isRefreshRequired(state: AppDataStateModel): boolean {
+    const fulfilledOn = state.agencies?.transunion?.fulfilledOn;
+    if (!fulfilledOn) return true;
+    const now = new Date();
+    const last = new Date(fulfilledOn);
+    return dateDiffInDays(last, now) > 0 ? true : false;
   }
 }

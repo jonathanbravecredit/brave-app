@@ -24,4 +24,3 @@ export interface IPartitionElements extends IPartitionSet {
   dateReported?: string;
   dateUpdated?: string;
 }
-export interface IErrorResponse {}

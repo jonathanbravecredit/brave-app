@@ -1,5 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { IEnrollResponseSuccess } from '@shared/interfaces/enroll.interface';
+import { IErrorResponse } from '@shared/interfaces/errors.interface';
 import { IFulfillResponseSuccess } from '@shared/interfaces/fulfill.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { UpdateAppDataInput } from '@shared/services/aws/api.service';
@@ -9,7 +11,6 @@ import { returnNestedObject } from '@shared/utils/utils';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { resolvePtr } from 'dns';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -127,7 +128,8 @@ export class DisputeService implements OnDestroy {
       if (!resp || !resp.Enroll) throw 'Failed to process sendEnrollRequest response';
       const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
       console.log('response in enrollInDispute ===> ', response);
-      response
+      const override = !response ? this.overrideEnrollmentResponse(resp) : true;
+      override
         ? await this.updateEnrollment(state)
         : (() => {
             throw 'Failed to enroll in disputes';
@@ -135,6 +137,17 @@ export class DisputeService implements OnDestroy {
     } catch (err) {
       throw new Error(`Error in disputeService:enrollInDisputes=${err}`);
     }
+  }
+
+  /**
+   * Checks if the error code indicates the user is already enrolled
+   * @param resp
+   * @returns boolean
+   */
+  overrideEnrollmentResponse(resp: IEnrollResponseSuccess) {
+    const error: IErrorResponse = returnNestedObject(resp, 'ErrorResponse');
+    // code 103045, already enrolled
+    return `${error.Code}` === '103045' ? true : false;
   }
 
   /**
