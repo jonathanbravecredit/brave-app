@@ -7,6 +7,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { returnNestedObject } from '@shared/utils/utils';
+import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { Observable } from 'rxjs';
 
@@ -69,62 +70,100 @@ export class TradelinesComponent {
    * @param card
    */
   async onConfirmed(card: ITradeLinePartition): Promise<void> {
-    const state = this.creditReportServices.getStateSnapshot()?.appData;
-    if (!state) throw new Error(`Error in tradelines:onConfirmed=Missing state`);
+    const state = this.statesvc.state?.appData;
+    if (!state) throw `tradelines:onConfirmed=Missing state`;
     try {
-      // await this.enrollInDisputes(state);
-      const data = await this.refreshCreditReports(state);
+      // acknowledge the user has read and accepted the terms
+      if (!this.acknowledged) await this.updateAcknowledgement(state);
+      if (!state.agencies?.transunion?.disputeEnrolled) await this.enrollInDisputes(state);
+      const data = await this.refreshCreditReports(state); // errors handled in this method
       const disputeStatus = await this.transunion.getDisputeStatus(data as AppDataStateModel);
       console.log('status back', disputeStatus);
-      const disputeRaw = disputeStatus ? JSON.parse(disputeStatus) : undefined;
-      const disputeResult = returnNestedObject(JSON.parse(disputeRaw.GetDisputeStatus), 'GetDisputeStatusResult');
-      //if (disputeResult.ResponseType.toLowerCase() !== 'success') throw new Error('GetDisputeStatus filed');
-      // TODO error in request...question out to Evadney for better guidance
-      // assume it comes back successfully for now
-      // TODO need to set the
-      this.disputeService.setTradelineItem(card);
+      // report refreshed
+      const disputeResponse = returnNestedObject(disputeStatus, 'ResponseType');
+      const isValid = disputeResponse.toLowerCase() === 'success';
+      if (!isValid) throw 'GetDisputeStatus failed';
+      // can dispute go to dispute tradeline
+      return;
     } catch (err) {
       throw new Error(err);
     }
   }
 
+  /**
+   * Enroll user in dispute subscription
+   * @param state
+   */
   async enrollInDisputes(state: AppDataStateModel | UpdateAppDataInput): Promise<void> {
-    if (!state) throw new Error(`Error in tradelines:enrollInDisputes=Missing state`);
+    if (!state) throw `tradelines:enrollInDisputes=Missing state`;
     try {
       const dispute = true;
       const resp = await this.transunion.sendEnrollRequest(state, dispute);
       console.log('enroll resp', resp);
       if (!resp || !resp.Enroll) throw 'Failed to process sendEnrollRequest response';
       const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
-      if (!response) throw 'Failed to enroll in disputes';
-      // this.state.update
-      // !!! I DONT THINK I NEED TO REFRESH THE ENROLL DATA !!!
-      // const enriched = this.transunion.enrichEnrollmentData(state, enrollResult);
-      // console.log('enroll enriched', enriched);
-      // if (!enriched || !enriched.agencies) throw 'Enrichment failed';
-      // const data = await this.statesvc.updateAgenciesAsync(enriched.agencies);
-      // if (!data) throw new Error('Failed to update state with refreshed report');
-      // return data;
+      response
+        ? await this.enrollInDisputes(state)
+        : (() => {
+            throw 'Failed to enroll in disputes';
+          })();
+    } catch (err) {
+      throw new Error(`Error in tradelines:enrollInDisputes=${err}`);
+    }
+  }
+  /**
+   * Call Fulfill request with correct report version and bundle
+   * @param state
+   * @returns
+   */
+  async refreshCreditReports(state: AppDataStateModel | UpdateAppDataInput): Promise<UpdateAppDataInput> {
+    if (!state) throw `tradelines:refreshCrediReports=Missing state`;
+    try {
+      const refresh = true;
+      const resp = await this.transunion.getCreditReport(state, refresh);
+      if (!resp || !resp.Fulfill) throw 'Failed to parse getCreditReport response';
+      const fulfillResult = returnNestedObject(resp, 'FulfillResult');
+      const enrich = this.transunion.enrichFulfillData(state, fulfillResult);
+      if (!enrich?.agencies) throw 'Fulfill failed';
+      const data = await this.creditReportServices.updateReportAsync(enrich.agencies);
+      if (!data) throw 'Failed to update state with refreshed report';
+      return data;
     } catch (err) {
       throw new Error(`Error in tradelines:enrollInDisputes=${err}`);
     }
   }
 
-  async refreshCreditReports(state: AppDataStateModel | UpdateAppDataInput): Promise<UpdateAppDataInput> {
-    if (!state) throw new Error(`Error in tradelines:refreshCrediReports=Missing state`);
-    try {
-      const refresh = true;
-      const resp = await this.transunion.getCreditReport(state, refresh);
-      const parsed = resp ? JSON.parse(resp) : undefined;
-      if (!parsed || !parsed.Fulfill) throw new Error('Failed to parse getCreditReport response');
-      const fulfillResult = returnNestedObject(JSON.parse(parsed.Fulfill), 'FulfillResult');
-      const enrich = this.transunion.enrichFulfillData(state, fulfillResult);
-      if (!enrich?.agencies) throw 'Fulfill failed';
-      const data = await this.creditReportServices.updateReportAsync(enrich.agencies);
-      if (!data) throw new Error('Failed to update state with refreshed report');
-      return data;
-    } catch (err) {
-      throw new Error(`Error in tradelines:enrollInDisputes=${err}`);
-    }
+  /**
+   * Update the state acknowledging the user has read and accepted the terms
+   * @param state
+   */
+  async updateAcknowledgement(state: AppDataStateModel): Promise<void> {
+    const date = new Date().toISOString();
+    const acknowledged = {
+      ...state.agencies,
+      transunion: {
+        ...state.agencies?.transunion,
+        acknowledgedDisputeTerms: true,
+        acknowledgedDisputeTermsOn: date,
+      },
+    } as AgenciesStateModel;
+    await this.statesvc.updateAgenciesAsync(acknowledged);
+  }
+
+  /**
+   * Update the state acknowledging the user has read and accepted the terms
+   * @param state
+   */
+  async updateEnrollment(state: AppDataStateModel): Promise<void> {
+    const date = new Date().toISOString();
+    const enrolled = {
+      ...state.agencies,
+      transunion: {
+        ...state.agencies?.transunion,
+        disputeEnrolled: true,
+        disputeEnrolledOn: date,
+      },
+    } as AgenciesStateModel;
+    await this.statesvc.updateAgenciesAsync(enrolled);
   }
 }

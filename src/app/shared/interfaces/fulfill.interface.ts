@@ -45,6 +45,28 @@ export interface IFulfillMsg {
   TrustSessionId?: string;
 }
 
+export interface IFulfillResponseSuccess {
+  Fulfill: {
+    Envelope: {
+      Body: {
+        FulfillResponse: {
+          FulfillResult: {
+            AccountName: string;
+            ErrorResponse: string;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            EnrollmentKey: string;
+            ServiceBundleFulfillmentKey: string;
+            ServiceProductFulfillments: {
+              ServiceProductResponse: IFulfillServiceProductResponse[] | IFulfillServiceProductResponse;
+            };
+          };
+        };
+      };
+    };
+  };
+}
 export interface IFulfillResponse {
   FulfillResult: IFulfillResult;
 }

@@ -7,8 +7,13 @@ import {
   IEnrollServiceProductResponse,
 } from '@shared/interfaces/enroll.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
-import { IFulfillResult, IFulfillServiceProductResponse } from '@shared/interfaces/fulfill.interface';
+import {
+  IFulfillResponseSuccess,
+  IFulfillResult,
+  IFulfillServiceProductResponse,
+} from '@shared/interfaces/fulfill.interface';
 import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
+import { IGetDisputeStatusResponseSuccess } from '@shared/interfaces/get-dispute-status.interface';
 import { ILineItem, IClaimCode } from '@shared/interfaces/start-dispute.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
@@ -123,11 +128,11 @@ export class TransunionService {
   async getCreditReport(
     data: UpdateAppDataInput | AppDataStateModel,
     refresh: boolean = true,
-  ): Promise<string | undefined> {
+  ): Promise<IFulfillResponseSuccess | undefined> {
     try {
       const msg = this.createFulfillPayload(data, refresh);
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
-      return res ? res : undefined;
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;
@@ -139,12 +144,14 @@ export class TransunionService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async getDisputeStatus(data: UpdateAppDataInput | AppDataStateModel): Promise<string | undefined> {
+  async getDisputeStatus(
+    data: UpdateAppDataInput | AppDataStateModel,
+  ): Promise<IGetDisputeStatusResponseSuccess | undefined> {
     try {
       const msg = this.createGetDisputeStatusPayload(data);
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
-      console.log(res);
-      return res ? res : undefined;
+      console.log('dspute status back', JSON.parse(res || ''));
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;
