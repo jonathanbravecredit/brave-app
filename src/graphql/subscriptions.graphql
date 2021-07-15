@@ -110,6 +110,7 @@ subscription OnCreateAppData($owner: String) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
@@ -258,6 +259,7 @@ subscription OnUpdateAppData($owner: String) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
@@ -406,6 +408,7 @@ subscription OnDeleteAppData($owner: String) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
