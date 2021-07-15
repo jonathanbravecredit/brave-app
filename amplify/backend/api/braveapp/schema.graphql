@@ -97,6 +97,7 @@ type Transunion {
   fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
+  disputeServiceBundleFulfillmentKey: String
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String

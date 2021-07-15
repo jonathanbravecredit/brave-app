@@ -116,6 +116,7 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
+  disputeServiceBundleFulfillmentKey: String
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
@@ -229,6 +230,7 @@ input TransunionInput {
   fulfilledOn: String
   acknowledgedDisputeTerms: Boolean
   acknowledgedDisputeTermsOn: String
+  disputeServiceBundleFulfillmentKey: String
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
