@@ -127,6 +127,7 @@ query GetAppData($id: ID!) {
         fulfilledOn
         acknowledgedDisputeTerms
         acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
@@ -280,6 +281,7 @@ query ListAppDatas(
           fulfilledOn
           acknowledgedDisputeTerms
           acknowledgedDisputeTermsOn
+          disputeServiceBundleFulfillmentKey
           disputeEnrollmentKey
           disputeEnrolled
           disputeEnrolledOn
