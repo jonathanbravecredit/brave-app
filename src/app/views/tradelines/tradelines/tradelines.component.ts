@@ -72,7 +72,7 @@ export class TradelinesComponent {
     const state = this.creditReportServices.getStateSnapshot()?.appData;
     if (!state) throw new Error(`Error in tradelines:onConfirmed=Missing state`);
     try {
-      await this.enrollInDisputes(state);
+      // await this.enrollInDisputes(state);
       const data = await this.refreshCreditReports(state);
       const disputeStatus = await this.transunion.getDisputeStatus(data as AppDataStateModel);
       console.log('status back', disputeStatus);
@@ -97,7 +97,7 @@ export class TradelinesComponent {
       if (!resp || !resp.Enroll) throw 'Failed to process sendEnrollRequest response';
       const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
       if (!response) throw 'Failed to enroll in disputes';
-
+      // this.state.update
       // !!! I DONT THINK I NEED TO REFRESH THE ENROLL DATA !!!
       // const enriched = this.transunion.enrichEnrollmentData(state, enrollResult);
       // console.log('enroll enriched', enriched);

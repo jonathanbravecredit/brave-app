@@ -140,10 +140,6 @@ export class TradelineDetailsTableComponent implements OnInit {
           break;
       }
     }
-    console.log('mapping items: page one', this.isDisputePageOne);
-    console.log('mapping items: page two', this.isDisputePageTwo);
-    console.log('mapping items: mapper', this.mapper);
-    console.log('mapping items: mapper type', this.mapperType);
   }
 
   /**
