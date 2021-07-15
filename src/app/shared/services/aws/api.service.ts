@@ -43,6 +43,7 @@ export type Transunion = {
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
+  disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
@@ -142,6 +143,7 @@ export type TransunionInput = {
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
+  disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
@@ -466,6 +468,7 @@ export type PatchTransunionMutation = {
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
+  disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
@@ -611,6 +614,7 @@ export type CreateAppDataMutation = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -779,6 +783,7 @@ export type UpdateAppDataMutation = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -947,6 +952,7 @@ export type DeleteAppDataMutation = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -1129,6 +1135,7 @@ export type GetAppDataQuery = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -1299,6 +1306,7 @@ export type ListAppDatasQuery = {
         fulfilledOn?: string | null;
         acknowledgedDisputeTerms?: boolean | null;
         acknowledgedDisputeTermsOn?: string | null;
+        disputeEnrollmentKey?: string | null;
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
         disputeStatus?: string | null;
@@ -1469,6 +1477,7 @@ export type OnCreateAppDataSubscription = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -1637,6 +1646,7 @@ export type OnUpdateAppDataSubscription = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -1805,6 +1815,7 @@ export type OnDeleteAppDataSubscription = {
       fulfilledOn?: string | null;
       acknowledgedDisputeTerms?: boolean | null;
       acknowledgedDisputeTermsOn?: string | null;
+      disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
@@ -1995,6 +2006,7 @@ export class APIService {
           fulfilledOn
           acknowledgedDisputeTerms
           acknowledgedDisputeTermsOn
+          disputeEnrollmentKey
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
@@ -2156,6 +2168,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
@@ -2340,6 +2353,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
@@ -2524,6 +2538,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
@@ -2742,6 +2757,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
@@ -2926,6 +2942,7 @@ export class APIService {
                 fulfilledOn
                 acknowledgedDisputeTerms
                 acknowledgedDisputeTermsOn
+                disputeEnrollmentKey
                 disputeEnrolled
                 disputeEnrolledOn
                 disputeStatus
@@ -3115,6 +3132,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
@@ -3296,6 +3314,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
@@ -3477,6 +3496,7 @@ export class APIService {
               fulfilledOn
               acknowledgedDisputeTerms
               acknowledgedDisputeTermsOn
+              disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
