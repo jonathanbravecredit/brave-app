@@ -207,7 +207,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
     try {
       const resp = await this.kycService.sendEnrollRequest(state);
       const enrollResult = returnNestedObject(resp, 'EnrollResult');
-      console.log('enroll enrollResult', enrollResult);
       this.enrollResult = enrollResult ? enrollResult : undefined;
       return this;
     } catch (err) {

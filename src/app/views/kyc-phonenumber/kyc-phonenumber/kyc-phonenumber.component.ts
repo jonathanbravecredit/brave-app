@@ -222,7 +222,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
    * @returns
    */
   isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycPhonenumberComponent {
-    console.log('isVerificationSuccesful', resp);
     if (!resp) return this;
     this.authSuccessful = returnNestedObject(resp, 'ResponseType').toLowerCase() === 'success';
     return this;
