@@ -14,7 +14,7 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
-import { IEnrollResult, IEnrollServiceProductResponse } from '@shared/interfaces/enroll.interface';
+import { IEnrollResult } from '@shared/interfaces/enroll.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -32,7 +32,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   private passcodeQuestion: ITransunionKBAQuestion | undefined;
   private passcodeAnswer: IVerifyAuthenticationAnswer | undefined;
   private authChallenge: ITransunionKBAQuestions | undefined;
-  private verifyResponse: string | undefined;
+  private verifyResponse: IVerifyAuthenticationResponseSuccess | undefined;
   private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
   private authSuccessful: boolean = false;
   private enrollResult: IEnrollResult | undefined;
@@ -81,7 +81,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
         if (!this.enrollResult) throw 'Enroll request failed';
         // need to add to state and then update the db
         const enriched = this.kycService.enrichEnrollmentData(this.state, this.enrollResult);
-        if (!enriched) throw 'Enrichment failed';
+        if (!enriched) throw `Enrichment failed`;
         await this.kycService.updateAgenciesAsync(enriched.agencies);
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
@@ -121,8 +121,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
   }
 
   createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): KycIdverificationComponent {
-    if (!questions) return this;
+    if (!questions) throw 'Error in kycIdverification:createChallengeConfig=Missing questions';
     const config = returnNestedObject(questions, 'ChallengeConfiguration');
+    if (!config) throw 'Error in kycIdverification:createChallengeConfig=ChallengeConfiguration not found';
     this.authChallenge = {
       ChallengeConfigurationType: {
         ...config,
@@ -137,8 +138,10 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   getPasscodeQuestion(questions: ITransunionKBAQuestions | undefined): KycIdverificationComponent {
-    if (!questions) return this;
-    this.passcodeQuestion = this.kycService.getPassCodeQuestion(questions);
+    if (!questions) throw 'Error in kycIdverification:getPasscodeQuestion=Missing questions';
+    const question = this.kycService.getPassCodeQuestion(questions);
+    if (!question) throw 'Error in kycIdverification:getPasscodeQuestion=No passcode question returned';
+    this.passcodeQuestion = question;
     return this;
   }
 
@@ -159,8 +162,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {string | undefined} verifyResp
    * @returns
    */
-  parseVerifyResponse(verifyResp: string | undefined): KycIdverificationComponent {
-    this.authResponse = verifyResp ? JSON.parse(verifyResp) : ({} as IVerifyAuthenticationResponseSuccess);
+  parseVerifyResponse(verifyResp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
+    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationResponseSuccess);
     return this;
   }
 
@@ -188,7 +191,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
     if (!resp) return this;
-    this.authSuccessful = returnNestedObject(resp, 'a:ResponseType')?.toLowerCase() === 'success';
+    this.authSuccessful = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
     return this;
   }
 
@@ -201,13 +204,16 @@ export class KycIdverificationComponent extends KycBaseComponent {
     state: UpdateAppDataInput | AppDataStateModel | undefined,
   ): Promise<KycIdverificationComponent> {
     if (!state) return this;
-    const resp = await this.kycService.sendEnrollRequest(state);
-    const parsed = resp ? JSON.parse(resp) : undefined;
-    const enrollResult = returnNestedObject(JSON.parse(parsed.Enroll), 'EnrollResult');
-    this.enrollResult = enrollResult ? enrollResult : undefined;
-    return this;
+    try {
+      const resp = await this.kycService.sendEnrollRequest(state);
+      const enrollResult = returnNestedObject(resp, 'EnrollResult');
+      console.log('enroll enrollResult', enrollResult);
+      this.enrollResult = enrollResult ? enrollResult : undefined;
+      return this;
+    } catch (err) {
+      throw new Error(`Error in kycIdverification:sendEnrollRequest=${err}`);
+    }
   }
-
 }
 
 const codeMap: Record<string, any> = {

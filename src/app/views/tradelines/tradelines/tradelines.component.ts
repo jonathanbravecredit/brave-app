@@ -88,23 +88,23 @@ export class TradelinesComponent {
     }
   }
 
-  async enrollInDisputes(state: AppDataStateModel | UpdateAppDataInput): Promise<UpdateAppDataInput> {
+  async enrollInDisputes(state: AppDataStateModel | UpdateAppDataInput): Promise<void> {
     if (!state) throw new Error(`Error in tradelines:enrollInDisputes=Missing state`);
     try {
       const dispute = true;
       const resp = await this.transunion.sendEnrollRequest(state, dispute);
       console.log('enroll resp', resp);
-      const parsed = resp ? JSON.parse(resp) : undefined;
-      console.log('enroll parsed', parsed);
-      if (!parsed || !parsed.Enroll) throw new Error('Failed to parse sendEnrollRequest response');
-      const enrollResult = returnNestedObject(JSON.parse(parsed.Enroll), 'EnrollResult');
-      console.log('enroll result', enrollResult);
-      const enriched = this.transunion.enrichEnrollmentData(state, enrollResult);
-      console.log('enroll enriched', enriched);
-      if (!enriched || !enriched.agencies) throw 'Enrichment failed';
-      const data = await this.statesvc.updateAgenciesAsync(enriched.agencies);
-      if (!data) throw new Error('Failed to update state with refreshed report');
-      return data;
+      if (!resp || !resp.Enroll) throw 'Failed to process sendEnrollRequest response';
+      const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
+      if (!response) throw 'Failed to enroll in disputes';
+
+      // !!! I DONT THINK I NEED TO REFRESH THE ENROLL DATA !!!
+      // const enriched = this.transunion.enrichEnrollmentData(state, enrollResult);
+      // console.log('enroll enriched', enriched);
+      // if (!enriched || !enriched.agencies) throw 'Enrichment failed';
+      // const data = await this.statesvc.updateAgenciesAsync(enriched.agencies);
+      // if (!data) throw new Error('Failed to update state with refreshed report');
+      // return data;
     } catch (err) {
       throw new Error(`Error in tradelines:enrollInDisputes=${err}`);
     }

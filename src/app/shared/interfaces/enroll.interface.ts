@@ -1,3 +1,6 @@
+import { IErrorResponse } from '@shared/interfaces/common-tu.interface';
+import { INil } from '@shared/interfaces/errors.interface';
+
 export interface IEnroll {
   request: {
     AccountCode: string;
@@ -86,6 +89,29 @@ export interface IEnrollMsg {
   TrustSessionId?: string;
 }
 
+export interface IEnrollResponseSuccess {
+  Enroll: {
+    Envelope: {
+      Body: {
+        EnrollResponse: {
+          EnrollResult: {
+            AccountName: string;
+            ErrorResponse: IErrorResponse | INil;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            EnrollmentKey: string;
+            ServiceBundleFulfillmentKey: string;
+            ServiceProductFulfillments: {
+              ServiceProductResponse: IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
+            };
+          };
+        };
+      };
+    };
+  };
+}
+
 export interface IEnrollResponse {
   EnrollResult: IEnrollResult;
 }
@@ -99,9 +125,7 @@ export interface IEnrollResult {
   EnrollmentKey: string;
   ServiceBundleFulfillmentKey: string;
   ServiceProductFulfillments: {
-    ServiceProductResponse:
-      | IEnrollServiceProductResponse[]
-      | IEnrollServiceProductResponse;
+    ServiceProductResponse: IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
   };
 }
 

@@ -1,3 +1,6 @@
+import { IErrorResponse } from '@shared/interfaces/common-tu.interface';
+import { INil } from '@shared/interfaces/errors.interface';
+
 export interface IGetAuthenticationQuestionsMsg {
   AdditionalInputs?: {
     Data: {
@@ -40,42 +43,18 @@ export interface IGetAuthenticationQuestionsMsg {
 }
 
 export interface IGetAuthenticationQuestionsResponseSuccess {
-  's:Envelope': {
-    _attributes: {
-      'xmlns:s': string;
-    };
-    's:Body': {
-      GetAuthenticationQuestionsResponse: {
-        _attributes: {
-          xmlns: string;
-        };
-        GetAuthenticationQuestionsResult: {
-          _attributes: {
-            'xmlns:a': string;
-            'xmlns:i': string;
-          };
-          'a:AccountName': {
-            _text: string;
-          };
-          'a:ErrorResponse': {
-            _attributes: {
-              'i:nil': string;
-            };
-          };
-          'a:RequestKey': {
-            _text: string;
-          };
-          'a:ResponseType': {
-            _text: string;
-          };
-          'a:ClientKey': {
-            _text: string;
-          };
-          'a:Questions': {
-            _text: string;
-          };
-          'a:ServiceBundleFulfillmentKey': {
-            _text: string;
+  GetAuthenticationQuestions: {
+    Envelope: {
+      Body: {
+        GetAuthenticationQuestionsResponse: {
+          GetAuthenticationQuestionsResult: {
+            AccountName: string;
+            ErrorResponse: IErrorResponse | INil;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            Questions: string;
+            ServiceBundleFulfillmentKey: string;
           };
         };
       };

@@ -1,3 +1,6 @@
+import { IErrorResponse } from '@shared/interfaces/common-tu.interface';
+import { INil } from '@shared/interfaces/errors.interface';
+
 export interface IIndicativeEnrichmentMsg {
   AdditionalInputs: {
     Data: {
@@ -33,42 +36,18 @@ export interface IIndicativeEnrichmentMsg {
 }
 
 export interface IIndicativeEnrichmentResponseSuccess {
-  's:Envelope': {
-    _attributes: {
-      'xmlns:s': string;
-    };
-    's:Body': {
-      IndicativeEnrichmentResponse: {
-        _attributes: {
-          xmlns: string;
-        };
-        IndicativeEnrichmentResult: {
-          _attributes: {
-            'xmlns:a': string;
-            'xmlns:i': string;
-          };
-          'a:AccountName': {
-            _text: string;
-          };
-          'a:ErrorResponse': {
-            _attributes: {
-              'i:nil': string;
-            };
-          };
-          'a:RequestKey': {
-            _text: string;
-          };
-          'a:ResponseType': {
-            _text: string;
-          };
-          'a:ClientKey': {
-            _text: string;
-          };
-          'a:Customer': {
-            _text: string;
-          };
-          'a:SSN': {
-            _text: string;
+  IndicativeEnrichmentResults: {
+    Envelope: {
+      Body: {
+        IndicativeEnrichmentResponse: {
+          IndicativeEnrichmentResult: {
+            AccountName: string;
+            ErrorResponse: IErrorResponse | INil;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            Customer: string;
+            SSN: number | string;
           };
         };
       };

@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
-import { IEnrollResult, IEnrollServiceProductResponse } from '@shared/interfaces/enroll.interface';
+import {
+  IEnrollResponseSuccess,
+  IEnrollResult,
+  IEnrollServiceProductResponse,
+} from '@shared/interfaces/enroll.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
 import { IFulfillResult, IFulfillServiceProductResponse } from '@shared/interfaces/fulfill.interface';
 import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
 import { ILineItem, IClaimCode } from '@shared/interfaces/start-dispute.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
-import { IGetAuthenticationQuestionsMsg } from '@shared/models/get-authorization-questions';
-import { IIndicativeEnrichmentMsg } from '@shared/models/indicative-enrichment';
+import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
+import {
+  IGetAuthenticationQuestionsMsg,
+  IGetAuthenticationQuestionsResponseSuccess,
+} from '@shared/models/get-authorization-questions';
+import { IIndicativeEnrichmentMsg, IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
 import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+// TODO this is where the JSON transform the interfaces
+//  - add ajv schema validation
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +37,14 @@ export class TransunionService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendIndicativeEnrichment(data: UpdateAppDataInput | AppDataStateModel): Promise<any | undefined> {
+  async sendIndicativeEnrichment(
+    data: UpdateAppDataInput | AppDataStateModel,
+  ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
     if (!data.id || !data.user) throw new Error(`Missing id and user; id:${data.id} and user:${data.user}`);
     try {
       const msg = this.createIndicativeEnrichmentPayload(data);
       const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(msg));
-      return res ? res : undefined;
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;
@@ -48,12 +60,12 @@ export class TransunionService {
   async sendGetAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
     ssn: string = '',
-  ): Promise<any | undefined> {
+  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
     if (!ssn) throw new Error(`Missing ssn; ssn:${ssn}`);
     try {
       const msg = this.createGetAuthenticationQuestionsPayload(data, ssn);
       const res = await this.api.Transunion('GetAuthenticationQuestions', JSON.stringify(msg));
-      return res ? res : undefined;
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;
@@ -69,12 +81,12 @@ export class TransunionService {
   async sendVerifyAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[],
-  ): Promise<string | undefined> {
+  ): Promise<IVerifyAuthenticationResponseSuccess | undefined> {
     if (!answers.length) throw new Error(`No answers submitted; Answers:${answers}`);
     try {
       const msg = this.createVerifyAuthenticationQuestionsPayload(data, answers);
       const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(msg));
-      return res ? res : undefined;
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;
@@ -90,11 +102,12 @@ export class TransunionService {
   async sendEnrollRequest(
     data: UpdateAppDataInput | AppDataStateModel,
     dispute: boolean = false,
-  ): Promise<string | undefined> {
+  ): Promise<IEnrollResponseSuccess | undefined> {
     try {
       const msg = this.createEnrollPayload(data, dispute);
       const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
-      return res ? res : undefined;
+      console.log('enroll transunion response', res);
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;
@@ -181,7 +194,7 @@ export class TransunionService {
       AdditionalInputs: {
         Data: {
           Name: 'CreditReportVersion',
-          Value: '1',
+          Value: '7',
         },
       },
       RequestKey: '',
@@ -232,7 +245,7 @@ export class TransunionService {
       AdditionalInputs: {
         Data: {
           Name: 'CreditReportVersion',
-          Value: '1',
+          Value: '7',
         },
       },
       RequestKey: '',
@@ -298,6 +311,7 @@ export class TransunionService {
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
     const serviceBundleCode = dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
+    const version = dispute ? '7.1' : '7';
 
     if (!id || !attrs || !dob) {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -305,6 +319,12 @@ export class TransunionService {
     }
 
     return {
+      AdditionalInputs: {
+        Data: {
+          Name: 'CreditReportVersion',
+          Value: version,
+        },
+      },
       ClientKey: id,
       Customer: {
         CurrentAddress: {
@@ -339,6 +359,7 @@ export class TransunionService {
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
     const bundleCode = refresh ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
+    const version = refresh ? '7.1' : '7';
 
     if (!id || !attrs || !dob) {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -346,6 +367,12 @@ export class TransunionService {
     }
 
     return {
+      AdditionalInputs: {
+        Data: {
+          Name: 'CreditReportVersion',
+          Value: version,
+        },
+      },
       ClientKey: id,
       Customer: {
         CurrentAddress: {

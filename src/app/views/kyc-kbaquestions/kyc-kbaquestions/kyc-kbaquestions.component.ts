@@ -20,16 +20,10 @@ import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-
   templateUrl: './kyc-kbaquestions.component.html',
 })
 export class KycKbaquestionsComponent implements OnInit {
-  @ViewChild(KycKbaquestionsPureComponent) kba:
-    | KycKbaquestionsPureComponent
-    | undefined;
+  @ViewChild(KycKbaquestionsPureComponent) kba: KycKbaquestionsPureComponent | undefined;
 
   questions: (ITransunionKBAQuestion | ITransunionKBAAnswer | undefined)[] = []; // TODO replace with KBA question interface
-  answeredQuestions: (
-    | ITransunionKBAQuestion
-    | ITransunionKBAAnswer
-    | undefined
-  )[] = [];
+  answeredQuestions: (ITransunionKBAQuestion | ITransunionKBAAnswer | undefined)[] = [];
   numberOfQuestions: number = 0;
   stepID = 3;
 
@@ -40,19 +34,17 @@ export class KycKbaquestionsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private kycService: KycService,
-    private store: Store
+    private store: Store,
   ) {
-    this.agenciesSub$ = this.agencies$
-      .pipe(take(1))
-      .subscribe((agencies: AgenciesStateModel) => {
-        if (!agencies.transunion?.currentRawQuestions) return;
-        const xml: ITransunionKBAQuestions = this.kycService.parseCurrentRawQuestions(
-          agencies.transunion?.currentRawQuestions
-        );
-        const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
-        questions instanceof Array ? (this.questions = questions) : [questions];
-        this.numberOfQuestions = this.questions.length;
-      });
+    this.agenciesSub$ = this.agencies$.pipe(take(1)).subscribe((agencies: AgenciesStateModel) => {
+      if (!agencies.transunion?.currentRawQuestions) return;
+      const xml: ITransunionKBAQuestions = this.kycService.parseCurrentRawQuestions(
+        agencies.transunion?.currentRawQuestions,
+      );
+      const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
+      questions instanceof Array ? (this.questions = questions) : [questions];
+      this.numberOfQuestions = this.questions.length;
+    });
   }
 
   ngOnInit(): void {
@@ -72,9 +64,7 @@ export class KycKbaquestionsComponent implements OnInit {
       const question = this.answeredQuestions.pop();
       this.answeredQuestions = [...this.answeredQuestions];
       this.questions = [question, ...this.questions];
-      const scroll = parseFloat(
-        ((1 / this.numberOfQuestions) * 100).toFixed(2)
-      );
+      const scroll = parseFloat(((1 / this.numberOfQuestions) * 100).toFixed(2));
       const max = scroll - 100;
       this.kba?.kba?.scroll(scroll, 0, max);
     } else {
@@ -108,14 +98,11 @@ export class KycKbaquestionsComponent implements OnInit {
    */
   async handleSubmit(form: FormGroup) {
     const formValues = this.kba?.kba?.parentForm.value;
-    if (Object.keys(formValues).length)
-      this.router.navigate(['../error'], { relativeTo: this.route });
+    if (Object.keys(formValues).length) this.router.navigate(['../error'], { relativeTo: this.route });
 
     const answers: IVerifyAuthenticationAnswer[] = Object.keys(formValues)
       .filter((key) => {
-        return (
-          formValues[key]?.input?.answer && formValues[key]?.input?.question
-        );
+        return formValues[key]?.input?.answer && formValues[key]?.input?.question;
       })
       .map((key) => {
         let answer: ITransunionKBAAnswer = formValues[key]?.input?.answer;
@@ -131,19 +118,13 @@ export class KycKbaquestionsComponent implements OnInit {
       });
     const { appData: state } = this.store.snapshot();
     try {
-      const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(
-        state,
-        answers
-      );
-      const clean = authenticated
-        ? JSON.parse(authenticated)
-        : ({} as IVerifyAuthenticationResponseSuccess);
-      const body =
-        clean['VerifyAuthenticationQuestions']['s:Envelope']['s:Body'];
+      const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(state, answers);
+      const clean = authenticated ? authenticated : ({} as IVerifyAuthenticationResponseSuccess);
+      const body = clean['VerifyAuthenticationQuestions']['Envelope']['Body'];
       const success =
-        body['VerifyAuthenticationQuestionsResponse'][
-          'VerifyAuthenticationQuestionsResult'
-        ]['a:ResponseType'].toLowerCase() === 'success';
+        body['VerifyAuthenticationQuestionsResponse']['VerifyAuthenticationQuestionsResult'][
+          'ResponseType'
+        ].toLowerCase() === 'success';
       if (success) {
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {
