@@ -28,8 +28,13 @@ import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+
+/*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
 //  - add ajv schema validation
+// !!! TODO !!! a lot of this functionality needs to be pushed to the server
+//  - push the payload structuring to the backend
+//  - better structure the responses
 
 @Injectable({
   providedIn: 'root',
@@ -365,8 +370,11 @@ export class TransunionService {
     const id = data.id?.split(':')?.pop();
     const attrs = data.user?.userAttributes;
     const dob = attrs?.dob;
+    const enrollmentKey = refresh
+      ? data.agencies?.transunion?.disputeEnrollmentKey
+      : data.agencies?.transunion?.enrollmentKey;
     const bundleCode = refresh ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
-    const version = refresh ? '7.1' : '7';
+    const version = refresh ? '7.1' : '7.1';
 
     if (!id || !attrs || !dob) {
       console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -398,7 +406,7 @@ export class TransunionService {
         },
         Ssn: attrs.ssn?.full || '',
       },
-      EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
+      EnrollmentKey: enrollmentKey,
       ServiceBundleCode: bundleCode,
     } as IFulfillRequest;
   }
@@ -437,7 +445,7 @@ export class TransunionService {
         },
         Ssn: attrs.ssn?.full || '',
       },
-      EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
+      EnrollmentKey: data.agencies?.transunion?.disputeEnrollmentKey,
     } as IGetDisputeStatusRequest;
   }
 
@@ -479,7 +487,7 @@ export class TransunionService {
         },
         Ssn: attrs.ssn?.full || '',
       },
-      EnrollmentKey: data.agencies?.transunion?.enrollmentKey,
+      EnrollmentKey: data.agencies?.transunion?.disputeEnrollmentKey,
       LineItems: this.parseDisputeToLineItem(disputes),
       ServiceBundleFulfillmentKey: data.agencies?.transunion?.serviceBundleFulfillmentKey,
       ServiceProductFulfillmentKey: null,
@@ -532,6 +540,7 @@ export class TransunionService {
   enrichEnrollmentData(
     state: UpdateAppDataInput | undefined,
     enroll: IEnrollResult,
+    dispute: boolean = false,
   ): AppDataStateModel | UpdateAppDataInput | undefined {
     if (!state) return;
     let enrollReport: IEnrollServiceProductResponse | undefined;
@@ -566,21 +575,34 @@ export class TransunionService {
           break;
       }
     }
-    return {
-      ...state,
-      agencies: {
-        ...state.agencies,
-        transunion: {
-          ...state.agencies?.transunion,
-          enrolled: true,
-          enrolledOn: enrolledOn,
-          enrollmentKey: enrollmentKey,
-          enrollReport: mapReportResponse(enrollReport),
-          enrollMergeReport: mapReportResponse(enrollMergeReport),
-          enrollVantageScore: mapReportResponse(enrollVantageScore),
-        },
-      },
-    };
+    return dispute
+      ? {
+          ...state,
+          agencies: {
+            ...state.agencies,
+            transunion: {
+              ...state.agencies?.transunion,
+              disputeEnrolled: true,
+              disputeEnrolledOn: enrolledOn,
+              disputeEnrollmentKey: enrollmentKey,
+            },
+          },
+        }
+      : {
+          ...state,
+          agencies: {
+            ...state.agencies,
+            transunion: {
+              ...state.agencies?.transunion,
+              enrolled: true,
+              enrolledOn: enrolledOn,
+              enrollmentKey: enrollmentKey,
+              enrollReport: mapReportResponse(enrollReport),
+              enrollMergeReport: mapReportResponse(enrollMergeReport),
+              enrollVantageScore: mapReportResponse(enrollVantageScore),
+            },
+          },
+        };
   }
 
   /**
@@ -592,6 +614,7 @@ export class TransunionService {
   enrichFulfillData(
     state: UpdateAppDataInput | undefined,
     fulfill: IFulfillResult, // IFulfillResult
+    dispute: boolean = false,
   ): AppDataStateModel | UpdateAppDataInput | undefined {
     if (!state) return;
     let fulfillReport;
