@@ -4,6 +4,7 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DisputeFindingsPureView } from './dispute-findings-pure.view';
 import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
+import { MOCK_FINDINGS_PERSONAL_INFO as mockPersonalInfo, MOCK_FINDINGS_PUBLIC_RECORDS as mockPublicRecords } from './constants';
 
 export default {
   title: 'app/views/dashboard/disputes/findings',
@@ -83,6 +84,23 @@ VerifiedAccurate.args = {
 
 export const VerifiedAccurateAndUpdated = Template.bind({});
 VerifiedAccurateAndUpdated.args = {
+  resultCode: 'verified_accurate_updated',
+  tradelineAccountConfig: tradelineMock
+};
+
+export const PersonalInformationFindings = Template.bind({});
+PersonalInformationFindings.args = {
+  type: 'personal-info',
+  personalInfoConfig: mockPersonalInfo,
+  resultCode: 'verified_accurate_updated',
+  tradelineAccountConfig: tradelineMock
+};
+
+
+export const PublicRecordsFindings = Template.bind({});
+PublicRecordsFindings.args = {
+  type: 'public-record',
+  publicRecordConfig: mockPublicRecords,
   resultCode: 'verified_accurate_updated',
   tradelineAccountConfig: tradelineMock
 };

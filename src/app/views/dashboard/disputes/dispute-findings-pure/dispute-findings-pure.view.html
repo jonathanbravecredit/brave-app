@@ -39,6 +39,20 @@
       <brave-tradeline-detail-row label="Estimated month and year that this item will be removed" [value]="publicRecordConfig!.estMonthToBeRemoved"></brave-tradeline-detail-row>
     </div>
   </div>
+  <div *ngIf="type === 'personal-info'">
+    <div class="flex items-center mt-4 mb-3">
+      <span>Personal Information Details</span>
+    </div>
+    <div>
+      <brave-tradeline-detail-row label="Social Security Number" [value]="personalInfoConfig!.ssn"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Name" [value]="personalInfoConfig!.name"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Current Address" [value]="personalInfoConfig!.currentAddress"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Previous Address(es)" [value]="personalInfoConfig!.previousAddress"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Telephone" [value]="personalInfoConfig!.telephone"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Employeer" [value]="personalInfoConfig!.employer"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Previous Employer(s)" [value]="personalInfoConfig!.previousEmployer"></brave-tradeline-detail-row>
+    </div>
+  </div>
 </brave-dispute-findings-results-details>
 <brave-dispute-findings-closing-paragraph></brave-dispute-findings-closing-paragraph>
 <brave-dispute-findings-contact-info [fileIdentificationNumber]="fileIdentificationNumber"></brave-dispute-findings-contact-info>

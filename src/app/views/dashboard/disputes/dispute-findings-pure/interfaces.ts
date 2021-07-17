@@ -10,3 +10,13 @@ export interface IPublicRecord {
   courtType: string;
   estMonthToBeRemoved: string;
 }
+
+export interface IPersonalInfo {
+  ssn: string;
+  name: string;
+  currentAddress: string;
+  previousAddress: string;
+  telephone: string;
+  employer: string;
+  previousEmployer: string;
+}
