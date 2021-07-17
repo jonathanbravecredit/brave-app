@@ -89,7 +89,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
           : (() => {
               throw 'Authentication request failed';
             })();
-        // can remove if enroll is syncing to db
+        // can remove if enroll is syncing to db...but will depend on listener to update state
         this.enrollResult
           ? await this.updateEnrichedEnrollment(this.enrollResult)
           : (() => {

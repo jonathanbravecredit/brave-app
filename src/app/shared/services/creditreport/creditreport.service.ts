@@ -40,13 +40,15 @@ export class CreditreportService implements OnDestroy {
   constructor(private statesvc: StateService) {
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
-      this.tuAgency$.next(tu);
-      this.tuAgency = tu;
-      const unparsed = this.getUnparsedCreditReport(agencies);
-      const parsedReport = this.parseCreditReport(unparsed['#text']);
-      console.log('parsed report => ', parsedReport);
-      this.tuReport$.next(parsedReport);
-      this.tuReport = parsedReport;
+      if (Object.keys(tu).length) {
+        this.tuAgency$.next(tu);
+        this.tuAgency = tu;
+      }
+      const parsedReport = this.getCreditReport(agencies);
+      if (Object.keys(parsedReport).length) {
+        this.tuReport$.next(parsedReport);
+        this.tuReport = parsedReport;
+      }
     });
     this.preferencesSub$ = this.preferences$.pipe().subscribe((pref: PreferencesStateModel) => {
       this.tuPreferences$.next(pref);
@@ -79,29 +81,29 @@ export class CreditreportService implements OnDestroy {
    * Takes the agency state model and returns the unparsed TU credit report
    *   - TUCredit report agency stored as AWS JSON string in DB
    * @param {AgenciesStateModel} agencies
-   * @returns {IUnparsedCreditReport}
+   * @returns {IMergeReport}
    */
-  getUnparsedCreditReport(agencies: AgenciesStateModel): IUnparsedCreditReport {
-    if (!agencies) return JSON.parse('{"#text":""}');
+  getCreditReport(agencies: AgenciesStateModel): IMergeReport {
+    if (!agencies) return JSON.parse('{}');
     const fulfillMergeReport = agencies.transunion?.fulfillMergeReport;
     const enrollMergeReport = agencies.transunion?.enrollMergeReport;
     const serviceProductString = fulfillMergeReport
-      ? fulfillMergeReport?.serviceProductObject || '{"#text":""}'
-      : enrollMergeReport?.serviceProductObject || '{"#text":""}';
-    const serviceProductObject: IUnparsedCreditReport = JSON.parse(serviceProductString);
-    return serviceProductObject ? serviceProductObject : ({} as IUnparsedCreditReport);
+      ? fulfillMergeReport?.serviceProductObject || '{}'
+      : enrollMergeReport?.serviceProductObject || '{}';
+    const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
+    return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
   }
 
-  /**
-   * Parses the xml string into a JSON object of the IMergeReport form
-   * @param {string} xml
-   * @returns {IMergeReport}
-   */
-  parseCreditReport(xml: string): IMergeReport {
-    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-    const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
-    return report;
-  }
+  // /**
+  //  * Parses the xml string into a JSON object of the IMergeReport form
+  //  * @param {string} xml
+  //  * @returns {IMergeReport}
+  //  */
+  // parseCreditReport(xml: string): IMergeReport {
+  //   const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+  //   const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
+  //   return report;
+  // }
 
   /**
    * Returns the tradeline partitions from the current TU report
