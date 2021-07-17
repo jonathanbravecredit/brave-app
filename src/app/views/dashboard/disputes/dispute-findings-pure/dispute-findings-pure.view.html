@@ -10,17 +10,34 @@
 <!-- // IS NOT DELETED = SHOW -->
 <brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
 <brave-dispute-findings-results-details [resultCode]="resultCode" [updatedValues]="updatedValues">
-  <div>
-    <div class="mt-4">
-      <p>BMW Financial Services</p>
-      <p>5550 Britton HWY</p>
-      <p>Hilliard, OH 64578</p>
-    </div>
+  <div class="mt-4">
+    <p>BMW Financial Services</p>
+    <p>5550 Britton HWY</p>
+    <p>Hilliard, OH 64578</p>
+  </div>
+  <div *ngIf="type === 'tradeline'">
     <div class="flex items-center mt-4 mb-3">
       <span>Account Details</span>
     </div>
     <brave-tradeline-details-table *ngIf="tradelineAccountConfig" [config]="tradelineAccountConfig"></brave-tradeline-details-table>
     <brave-tradeline-payment-history></brave-tradeline-payment-history>
+  </div>
+  <div *ngIf="type === 'public-record'">
+    <div class="flex items-center mt-4 mb-3">
+      <span>Public Records Details</span>
+    </div>
+    <div>
+      <brave-tradeline-detail-row label="Docket Number" [value]="publicRecordConfig!.docketNumber"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Name" [value]="publicRecordConfig!.name"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Date Filed" [value]="publicRecordConfig!.dateFiled"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Date Paid" [value]="publicRecordConfig!.datePaid"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Date Updated" [value]="publicRecordConfig!.dateUpdated"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Type" [value]="publicRecordConfig!.type"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Responsability" [value]="publicRecordConfig!.responsability"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Amount" [value]="publicRecordConfig!.amount"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Court Type" [value]="publicRecordConfig!.courtType"></brave-tradeline-detail-row>
+      <brave-tradeline-detail-row label="Estimated month and year that this item will be removed" [value]="publicRecordConfig!.estMonthToBeRemoved"></brave-tradeline-detail-row>
+    </div>
   </div>
 </brave-dispute-findings-results-details>
 <brave-dispute-findings-closing-paragraph></brave-dispute-findings-closing-paragraph>
