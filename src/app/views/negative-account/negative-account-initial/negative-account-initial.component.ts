@@ -48,7 +48,7 @@ export class NegativeAccountInitialComponent {
         this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
       })
       .catch((err) => {
-        throw new Error(`Error in tradelines:onDisputeClicked=${err}`);
+        throw new Error(`tradelines:onDisputeClicked=${err}`);
       });
   }
 }

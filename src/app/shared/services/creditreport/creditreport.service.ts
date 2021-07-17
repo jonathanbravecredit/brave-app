@@ -83,7 +83,11 @@ export class CreditreportService implements OnDestroy {
    */
   getUnparsedCreditReport(agencies: AgenciesStateModel): IUnparsedCreditReport {
     if (!agencies) return JSON.parse('{"#text":""}');
-    const serviceProductString = agencies.transunion?.enrollMergeReport?.serviceProductObject || '{"#text":""}';
+    const fulfillMergeReport = agencies.transunion?.fulfillMergeReport;
+    const enrollMergeReport = agencies.transunion?.enrollMergeReport;
+    const serviceProductString = fulfillMergeReport
+      ? fulfillMergeReport?.serviceProductObject || '{"#text":""}'
+      : enrollMergeReport?.serviceProductObject || '{"#text":""}';
     const serviceProductObject: IUnparsedCreditReport = JSON.parse(serviceProductString);
     return serviceProductObject ? serviceProductObject : ({} as IUnparsedCreditReport);
   }
@@ -138,12 +142,12 @@ export class CreditreportService implements OnDestroy {
   async updateReportAsync(
     agencies: AgenciesStateModel | null | undefined,
   ): Promise<UpdateAppDataInput | null | undefined> {
-    if (!agencies) throw new Error(`Error in creditreportService:updateReportAsync=Missing agency`);
+    if (!agencies) throw new Error(`creditreportService:updateReportAsync=Missing agency`);
     try {
       return await this.statesvc.updateAgenciesAsync(agencies);
     } catch (err) {
       console.log('err', err);
-      throw new Error(`Error in creditreportService:updateReportAsync=${err}`);
+      throw new Error(`creditreportService:updateReportAsync=${err}`);
     }
   }
 }

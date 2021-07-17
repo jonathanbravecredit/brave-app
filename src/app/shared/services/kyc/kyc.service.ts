@@ -111,7 +111,7 @@ export class KycService {
     try {
       return await this.statesvc.updateUserAttributesAsync(attrs);
     } catch (err) {
-      throw new Error(`Error in kycService:updateUserAttributesAsync=${err}`);
+      throw new Error(`kycService:updateUserAttributesAsync=${err}`);
     }
   }
 
@@ -132,7 +132,7 @@ export class KycService {
     try {
       return await this.transunion.sendIndicativeEnrichment(data);
     } catch (err) {
-      throw new Error(`Error in kycService:sendIndicativeEnrichment=${err}`);
+      throw new Error(`kycService:sendIndicativeEnrichment=${err}`);
     }
   }
 
@@ -195,7 +195,7 @@ export class KycService {
     try {
       return await this.transunion.sendGetAuthenticationQuestions(data, ssn);
     } catch (err) {
-      throw new Error(`Error in kycService:sendGetAuthenticationQuestions=${err}`);
+      throw new Error(`kycService:sendGetAuthenticationQuestions=${err}`);
     }
   }
 
@@ -285,7 +285,7 @@ export class KycService {
     try {
       return await this.statesvc.updateTransunionQuestionsAsync(questions);
     } catch (err) {
-      throw new Error(`Error in kycService:updateCurrentRawQuestionsAsync=${err}`);
+      throw new Error(`kycService:updateCurrentRawQuestionsAsync=${err}`);
     }
   }
 
@@ -340,7 +340,7 @@ export class KycService {
     try {
       return this.statesvc.updateTransunionAuthDetailsAsync(questions);
     } catch (err) {
-      throw new Error(`Error in kycService:updateCurrentRawAuthDetailsAsync=${err}`);
+      throw new Error(`kycService:updateCurrentRawAuthDetailsAsync=${err}`);
     }
   }
 
@@ -440,7 +440,7 @@ export class KycService {
     try {
       return await this.transunion.sendVerifyAuthenticationQuestions(data, answers);
     } catch (err) {
-      throw new Error(`Error in kycService:sendVerifyAuthenticationQuestions=${err}`);
+      throw new Error(`kycService:sendVerifyAuthenticationQuestions=${err}`);
     }
   }
 
@@ -453,7 +453,7 @@ export class KycService {
     try {
       return await this.transunion.sendEnrollRequest(data);
     } catch (err) {
-      throw new Error(`Error in kycService:sendEnrollRequest=${err}`);
+      throw new Error(`kycService:sendEnrollRequest=${err}`);
     }
   }
 
@@ -461,7 +461,7 @@ export class KycService {
     state: AppDataStateModel | UpdateAppDataInput | undefined,
     enroll: IEnrollResult,
   ): UpdateAppDataInput | AppDataStateModel | undefined {
-    if (!state) throw new Error(`Error in kycService:enrichEnrollmentData=Missing state`);
+    if (!state) throw new Error(`kycService:enrichEnrollmentData=Missing state`);
     return this.transunion.enrichEnrollmentData(state, enroll);
   }
 }

@@ -1,3 +1,5 @@
+import { IErrorResponse, INil } from '@shared/interfaces/errors.interface';
+
 export interface IGetDisputeStatus {
   request: IGetDisputeStatusMsg;
 }
@@ -44,7 +46,7 @@ export interface IGetDisputeStatusResponseSuccess {
         GetDisputeStatusResponse: {
           GetDisputeStatusResult: {
             AccountName: string;
-            ErrorResponse: any;
+            ErrorResponse: IErrorResponse | INil;
             RequestKey: string;
             ResponseType: string;
             ClientKey: string;

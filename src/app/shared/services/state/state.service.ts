@@ -30,7 +30,7 @@ export class StateService {
     this.store.dispatch(new UserActions.UpdateAttributes(attrs)).subscribe((state: { appData: AppDataStateModel }) => {
       const input = { ...state.appData } as UpdateAppDataInput;
       if (!input.id) {
-        throw new Error(`Error in stateService:updateUserAttributes=No id provided ${input.id}`);
+        throw new Error(`stateService:updateUserAttributes=No id provided ${input.id}`);
       } else {
         this.api.UpdateAppData(input);
       }
@@ -48,7 +48,7 @@ export class StateService {
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
-            throw new Error(`Error in stateService:updateUserAttributesAsync=No id provided ${input.id}`);
+            throw new Error(`stateService:updateUserAttributesAsync=No id provided ${input.id}`);
           } else {
             this.api
               .UpdateAppData(input)
@@ -69,7 +69,7 @@ export class StateService {
     this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
       const input = { ...state.appData } as UpdateAppDataInput;
       if (!input.id) {
-        throw new Error(`Error in stateService:updateAgencies=No id provided ${input.id}`);
+        throw new Error(`stateService:updateAgencies=No id provided ${input.id}`);
       } else {
         this.api.UpdateAppData(input);
       }
@@ -87,7 +87,7 @@ export class StateService {
       this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          throw new Error(`Error in stateService:updateAgenciesAsync=No id provided ${input.id}`);
+          throw new Error(`stateService:updateAgenciesAsync=No id provided ${input.id}`);
         } else {
           this.api
             .UpdateAppData(input)
@@ -175,7 +175,7 @@ export class StateService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          throw new Error(`Error in stateService:updateLastComplete=No id provided ${input.id}`);
+          throw new Error(`stateService:updateLastComplete=No id provided ${input.id}`);
         } else {
           this.api.UpdateAppData(input);
         }
@@ -194,7 +194,7 @@ export class StateService {
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
-            throw new Error(`Error in stateService:updateLastCompleteAsync=No id provided ${input.id}`);
+            throw new Error(`stateService:updateLastCompleteAsync=No id provided ${input.id}`);
           } else {
             this.api
               .UpdateAppData(input)
@@ -216,7 +216,7 @@ export class StateService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          throw new Error(`Error in stateService:updateLastActive=No id provided ${input.id}`);
+          throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
         } else {
           this.api.UpdateAppData(input);
         }
@@ -235,7 +235,7 @@ export class StateService {
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
-            throw new Error(`Error in stateService:updateLastActiveAsync=No id provided ${input.id}`);
+            throw new Error(`stateService:updateLastActiveAsync=No id provided ${input.id}`);
           } else {
             this.api
               .UpdateAppData(input)

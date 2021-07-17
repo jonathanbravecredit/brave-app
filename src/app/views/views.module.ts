@@ -61,6 +61,8 @@ import { BaseExceptionView } from './exceptions/base-exception/base-exception/ba
 import { UserDisputesPureView } from './dashboard/disputes/user-disputes-pure/user-disputes-pure.view';
 import { UserDisputesView } from './dashboard/disputes/user-disputes/user-disputes.view';
 import { ParseRiskScorePipe } from './credit-report/credit-report/parse-risk-score.pipe';
+import { DisputesErrorComponent } from './disputes-error/disputes-error/disputes-error.component';
+import { DisputesErrorPureComponent } from './disputes-error/disputes-error-pure/disputes-error-pure.component';
 
 const views = [
   SignupComponent,
@@ -113,6 +115,8 @@ const views = [
   BaseExceptionView,
   UserDisputesPureView,
   UserDisputesView,
+  DisputesErrorComponent,
+  DisputesErrorPureComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];

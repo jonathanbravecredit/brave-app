@@ -3,6 +3,7 @@ import { Store } from '@ngxs/store';
 import { IEnrollResponseSuccess } from '@shared/interfaces/enroll.interface';
 import { IErrorResponse } from '@shared/interfaces/errors.interface';
 import { IFulfillResponseSuccess } from '@shared/interfaces/fulfill.interface';
+import { IGetDisputeStatusResponseSuccess } from '@shared/interfaces/get-dispute-status.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
@@ -86,7 +87,6 @@ export class DisputeService implements OnDestroy {
       if (!this.state.agencies?.transunion?.disputeEnrolled) await this.enrollInDisputes(this.state);
       await this.fulfillInDisputes(this.state); // errors handled in this method
       const updatedState = this.statesvc.state?.appData;
-      console.log('updated state', JSON.stringify(updatedState));
       const disputeStatus = await this.transunion.getDisputeStatus(updatedState as AppDataStateModel);
       console.log('status back', disputeStatus);
       // report refreshed
@@ -137,7 +137,7 @@ export class DisputeService implements OnDestroy {
             throw 'Failed to enroll in disputes';
           })();
     } catch (err) {
-      throw new Error(`Error in disputeService:enrollInDisputes=${err}`);
+      throw new Error(`disputeService:enrollInDisputes=${err}`);
     }
   }
 
@@ -190,7 +190,7 @@ export class DisputeService implements OnDestroy {
             throw 'Failed to fulfill in disputes';
           })();
     } catch (err) {
-      throw new Error(`Error in disputeService:fulfillInDisputes=${err}`);
+      throw new Error(`disputeService:fulfillInDisputes=${err}`);
     }
   }
 
@@ -199,27 +199,38 @@ export class DisputeService implements OnDestroy {
    * @param state
    * @param resp
    */
-  async updateFulfill(state: AppDataStateModel, resp: IFulfillResponseSuccess) {
+  async updateFulfill(state: AppDataStateModel, resp: IFulfillResponseSuccess): Promise<void> {
     const fulfillResult = returnNestedObject(resp, 'FulfillResult');
     const enriched = this.transunion.enrichFulfillData(state, fulfillResult);
     if (!enriched?.agencies) throw 'Fulfill failed';
     try {
       await this.statesvc.updateAgenciesAsync(enriched.agencies);
     } catch (err) {
-      throw new Error(`Error in disputeService:updateFulfill=${err}`);
+      throw new Error(`disputeService:updateFulfill=${err}`);
     }
   }
 
   /**
-   * Call the start dispute request
-   * @returns
+   * Verify user is eligible to proceed with disputes
+   */
+  async getDisputeStatus(): Promise<IGetDisputeStatusResponseSuccess | undefined> {
+    const state = this.store.snapshot()?.appData;
+    try {
+      return await this.transunion.getDisputeStatus(state);
+    } catch (err) {
+      throw new Error(`disputeService:sendStartDispute=${err}`);
+    }
+  }
+
+  /**
+   * Initiate a new dispute. Cannot have one in progress.
    */
   async sendStartDispute(): Promise<string | undefined> {
     const state = this.store.snapshot()?.appData;
     try {
       return await this.transunion.sendStartDispute(state, this.disputeStack);
     } catch (err) {
-      throw new Error(`Error in disputeService:sendStartDispute=${err}`);
+      throw new Error(`disputeService:sendStartDispute=${err}`);
     }
   }
 }

@@ -45,7 +45,7 @@ export class DisputesTradelineView implements OnDestroy {
         this.isDisputeSent = true;
         this.isDisputeProcessInProgress = false;
       } catch (err) {
-        throw new Error(`Error in disputesTradeline:onProcessResult=${err}`);
+        throw new Error(`disputesTradeline:onProcessResult=${err}`);
       }
     }
   }

@@ -144,7 +144,7 @@ export class SyncService {
         this.routeUser(-1);
       });
     } catch (err) {
-      throw new Error(`Error in syncService:InitAppData=${JSON.stringify(err)}`);
+      throw new Error(`syncService:InitAppData=${JSON.stringify(err)}`);
     }
   }
 

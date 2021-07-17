@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IGetDisputeStatusResponseSuccess } from '@shared/interfaces/get-dispute-status.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -56,7 +57,7 @@ export class TradelinesComponent {
         ? await this.processAcknowledgedUser(tradeline)
         : await this.processUnacknowledgedUser(tradeline);
     } catch (err) {
-      throw new Error(`Error in tradelines:onDisputeClicked=${err}`);
+      throw new Error(`tradelines:onDisputeClicked=${err}`);
     }
   }
 
@@ -71,8 +72,14 @@ export class TradelinesComponent {
     // use the dispute fulfull for refreshes NOT CreditReport fulfill
     if (this.isEnrollmentRequired(state)) this.disputeService.enrollInDisputes(state);
     if (this.isRefreshRequired(state)) this.disputeService.fulfillInDisputes(state);
-    this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
+    this.isUserEligible(state)
+      .then((_) => {
+        this.disputeService.setTradelineItem(tradeline);
+        this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
+      })
+      .catch((err) => {
+        this.router.navigate(['/dashboard/report/detail/dispute/error']);
+      });
   }
 
   /**
@@ -88,14 +95,22 @@ export class TradelinesComponent {
         this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
       })
       .catch((err) => {
-        throw new Error(`Error in tradelines:onDisputeClicked=${err}`);
+        throw new Error(`tradelines:onDisputeClicked=${err}`);
       });
+  }
+
+  /**
+   * Determine if the user has not enrolled in the Dispute subscription
+   * @param state
+   */
+  isEnrollmentRequired(state: AppDataStateModel): boolean {
+    const enrolled = state.agencies?.transunion?.disputeEnrolled;
+    return !enrolled;
   }
 
   /**
    * Determine if the last time the user refreshed was more than 24hrs ago
    * @param state
-   * @returns
    */
   isRefreshRequired(state: AppDataStateModel): boolean {
     const fulfilledOn = state.agencies?.transunion?.fulfilledOn;
@@ -105,8 +120,19 @@ export class TradelinesComponent {
     return dateDiffInDays(last, now) > 0 ? true : false;
   }
 
-  isEnrollmentRequired(state: AppDataStateModel): boolean {
-    const enrolled = state.agencies?.transunion?.disputeEnrolled;
-    return !enrolled;
+  /**
+   * Check the user dispute eligibility
+   * @param state
+   */
+  async isUserEligible(state: AppDataStateModel): Promise<boolean> {
+    try {
+      const resp: IGetDisputeStatusResponseSuccess | undefined = await this.disputeService.getDisputeStatus();
+      return !resp
+        ? false
+        : resp.GetDisputeStatus?.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult?.ResponseType.toLowerCase() ===
+            'success';
+    } catch (err) {
+      throw new Error(`tradelines:isUserEligible=${err}`);
+    }
   }
 }

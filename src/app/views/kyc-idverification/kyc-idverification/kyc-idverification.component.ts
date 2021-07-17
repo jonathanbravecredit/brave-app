@@ -83,11 +83,13 @@ export class KycIdverificationComponent extends KycBaseComponent {
           : (() => {
               throw 'No passcode questionfound';
             })();
+
         this.authSuccessful
           ? await this.sendEnrollRequest(this.state)
           : (() => {
               throw 'Authentication request failed';
             })();
+        // can remove if enroll is syncing to db
         this.enrollResult
           ? await this.updateEnrichedEnrollment(this.enrollResult)
           : (() => {
@@ -168,9 +170,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
   }
 
   createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): KycIdverificationComponent {
-    if (!questions) throw 'Error in kycIdverification:createChallengeConfig=Missing questions';
+    if (!questions) throw 'kycIdverification:createChallengeConfig=Missing questions';
     const config = returnNestedObject(questions, 'ChallengeConfiguration');
-    if (!config) throw 'Error in kycIdverification:createChallengeConfig=ChallengeConfiguration not found';
+    if (!config) throw 'kycIdverification:createChallengeConfig=ChallengeConfiguration not found';
     this.authChallenge = {
       ChallengeConfigurationType: {
         ...config,
@@ -185,9 +187,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   getPasscodeQuestion(questions: ITransunionKBAQuestions | undefined): KycIdverificationComponent {
-    if (!questions) throw 'Error in kycIdverification:getPasscodeQuestion=Missing questions';
+    if (!questions) throw 'kycIdverification:getPasscodeQuestion=Missing questions';
     const question = this.kycService.getPassCodeQuestion(questions);
-    if (!question) throw 'Error in kycIdverification:getPasscodeQuestion=No passcode question returned';
+    if (!question) throw 'kycIdverification:getPasscodeQuestion=No passcode question returned';
     this.passcodeQuestion = question;
     return this;
   }
@@ -199,9 +201,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   getPasscodeAnswer(passcodeQuestion: ITransunionKBAQuestion | undefined, code: string): KycIdverificationComponent {
-    if (!passcodeQuestion) throw 'Error in kycIdverification:getPasscodeAnswer=Missing question';
+    if (!passcodeQuestion) throw 'kycIdverification:getPasscodeAnswer=Missing question';
     const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
-    if (!answer) throw 'Error in kycIdverification:getPasscodeAnswer=No passcode answer returned';
+    if (!answer) throw 'kycIdverification:getPasscodeAnswer=No passcode answer returned';
     this.passcodeAnswer = answer;
     return this;
   }
@@ -218,9 +220,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
     state: UpdateAppDataInput | AppDataStateModel | undefined,
     passcodeAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycIdverificationComponent> {
-    if (!passcodeAnswer || !state) throw 'Error in kycIdverification:sendVerifyAuthQuestions=Missing answer or state';
+    if (!passcodeAnswer || !state) throw 'kycIdverification:sendVerifyAuthQuestions=Missing answer or state';
     const response = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
-    if (!response) throw 'Error in kycIdverification:sendVerifyAuthQuestions=No verify authentication response';
+    if (!response) throw 'kycIdverification:sendVerifyAuthQuestions=No verify authentication response';
     this.verifyResponse = response;
     return this;
   }
@@ -240,7 +242,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
-    if (!resp) throw 'Error in kycIdverification:isVerificationSuccesful=Missing response message';
+    if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
     this.authSuccessful = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
     return this;
   }
@@ -260,7 +262,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.enrollResult = enrollResult ? enrollResult : undefined;
       return this;
     } catch (err) {
-      throw new Error(`Error in kycIdverification:sendEnrollRequest=${err}`);
+      throw new Error(`kycIdverification:sendEnrollRequest=${err}`);
     }
   }
 }
