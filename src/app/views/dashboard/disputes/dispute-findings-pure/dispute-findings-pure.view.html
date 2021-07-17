@@ -1,0 +1,30 @@
+<div class="flex items-center mb-3">
+  <div style="transform: rotate(180deg)"><span>&#10095;</span></div>
+  <span class="ml-4">Back</span>
+</div>
+<brave-dispute-findings-header [reportCreatedAt]="reportCreatedAt" [fileIdentificationNumber]='fileIdentificationNumber'></brave-dispute-findings-header>
+<brave-dispute-findings-results></brave-dispute-findings-results>
+<brave-dispute-findings-how-to-read></brave-dispute-findings-how-to-read>
+<brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
+<brave-dispute-findings-definitions></brave-dispute-findings-definitions> 
+<!-- // IS NOT DELETED = SHOW -->
+<brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
+<brave-dispute-findings-results-details [resultCode]="resultCode" [updatedValues]="updatedValues">
+  <div>
+    <div class="mt-4">
+      <p>BMW Financial Services</p>
+      <p>5550 Britton HWY</p>
+      <p>Hilliard, OH 64578</p>
+    </div>
+    <div class="flex items-center mt-4 mb-3">
+      <span>Account Details</span>
+    </div>
+    <brave-tradeline-details-table *ngIf="tradelineAccountConfig" [config]="tradelineAccountConfig"></brave-tradeline-details-table>
+    <brave-tradeline-payment-history></brave-tradeline-payment-history>
+  </div>
+</brave-dispute-findings-results-details>
+<brave-dispute-findings-closing-paragraph></brave-dispute-findings-closing-paragraph>
+<brave-dispute-findings-contact-info [fileIdentificationNumber]="fileIdentificationNumber"></brave-dispute-findings-contact-info>
+<!-- // itradelinepartition -->
+
+<!-- array acounts results. -->
