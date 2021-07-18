@@ -14,6 +14,7 @@ import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -37,7 +38,7 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$: Subscription;
 
-  constructor(private statesvc: StateService) {
+  constructor(private statesvc: StateService, private transunion: TransunionService) {
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {
@@ -75,6 +76,15 @@ export class CreditreportService implements OnDestroy {
   getTransunion(agencies: AgenciesStateModel): TransunionInput {
     if (!agencies.transunion) return {} as TransunionInput;
     return agencies.transunion;
+  }
+
+  /**
+   * Refresh the credit report if necessary
+   * @param id string
+   */
+  refreshCreditReport(id: string): void {
+    if (!id) throw `Id missing=${id}`;
+    this.transunion.refreshCreditReport(id);
   }
 
   /**

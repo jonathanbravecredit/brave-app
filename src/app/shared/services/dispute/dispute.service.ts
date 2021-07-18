@@ -1,14 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { IEnrollResponseSuccess } from '@shared/interfaces/enroll.interface';
-import { IErrorResponse } from '@shared/interfaces/errors.interface';
-import { IFulfillResponseSuccess } from '@shared/interfaces/fulfill.interface';
-import { IGetDisputeStatusResponseSuccess } from '@shared/interfaces/get-dispute-status.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { returnNestedObject } from '@shared/utils/utils';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
@@ -74,30 +68,18 @@ export class DisputeService implements OnDestroy {
   }
 
   /**
-   * Update the users acknowledge if not already
-   * Enroll the user in dispute subscription if not already
-   * Refresh the report (TODO need to check if updated in the last 24 hours)
+   * Update the users acknowledge and then gets dispute preflight check
    * @returns
    */
-  async onUserConfirmed(): Promise<void> {
+  async onUserConfirmed(): Promise<boolean> {
     if (!this.state) throw `tradelines:onConfirmed=Missing state`;
     try {
       // acknowledge the user has read and accepted the terms
       if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
-      if (!this.state.agencies?.transunion?.disputeEnrolled) await this.enrollInDisputes(this.state);
-      await this.fulfillInDisputes(this.state); // errors handled in this method
-      const updatedState = this.statesvc.state?.appData;
-      const disputeStatus = await this.transunion.getDisputeStatus(updatedState as AppDataStateModel);
-      console.log('status back', disputeStatus);
-      // report refreshed
-      const disputeResponse = returnNestedObject(disputeStatus, 'ResponseType');
-      console.log('status back', disputeResponse);
-      const isValid = disputeResponse.toLowerCase() === 'success';
-      if (!isValid) throw 'GetDisputeStatus failed';
-      // can dispute go to dispute tradeline
-      return;
+      const eligible = await this.sendDisputePreflightCheck(this.state.id);
+      return eligible;
     } catch (err) {
-      throw new Error(err);
+      throw `disputeService:onUserConfirmed=${err}`;
     }
   }
   /**
@@ -117,108 +99,13 @@ export class DisputeService implements OnDestroy {
     await this.statesvc.updateAgenciesAsync(acknowledged);
   }
 
-  /**
-   * Enroll user in dispute subscription
-   * @param state
-   */
-  async enrollInDisputes(state: AppDataStateModel | UpdateAppDataInput): Promise<void> {
+  async sendDisputePreflightCheck(id: string): Promise<boolean> {
     try {
-      const resp = await this.transunion.sendEnrollRequest(state, true);
-      console.log('resp in enrollInDispute ===> ', resp);
-      if (!resp || !resp.Enroll) throw 'Failed to process sendEnrollRequest response';
-      const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
-      console.log('response in enrollInDispute ===> ', response);
-      const enrollmentKey = returnNestedObject(resp, 'EnrollmentKey');
-      const bundleKey = returnNestedObject(resp, 'ServiceBundleFulfillmentKey');
-      const override = !response ? this.overrideEnrollmentResponse(resp) : true;
-      override
-        ? await this.updateEnrollment(state, enrollmentKey, bundleKey)
-        : (() => {
-            throw 'Failed to enroll in disputes';
-          })();
+      const resp = await this.transunion.sendDisputePreflightCheck({ id });
+      const { eligible } = resp.DisputePreflightCheck;
+      return eligible;
     } catch (err) {
-      throw new Error(`disputeService:enrollInDisputes=${err}`);
-    }
-  }
-
-  /**
-   * Checks if the error code indicates the user is already enrolled
-   * @param resp
-   * @returns boolean
-   */
-  overrideEnrollmentResponse(resp: IEnrollResponseSuccess) {
-    const error: IErrorResponse = returnNestedObject(resp, 'ErrorResponse');
-    // code 103045, already enrolled
-    return `${error.Code}` === '103045' ? true : false;
-  }
-
-  /**
-   * Update the state acknowledging the user has read and accepted the terms
-   * @param state
-   */
-  async updateEnrollment(state: AppDataStateModel, enrollmentKey: string, bundleKey: string): Promise<void> {
-    const date = new Date().toISOString();
-    const enrolled = {
-      ...state.agencies,
-      transunion: {
-        ...state.agencies?.transunion,
-        disputeEnrolled: true,
-        disputeEnrolledOn: date,
-        disputeEnrollmentKey: enrollmentKey,
-        disputeServiceBundleFulfillmentKey: bundleKey,
-      },
-    } as AgenciesStateModel;
-    await this.statesvc.updateAgenciesAsync(enrolled);
-  }
-
-  /**
-   * Call Fulfill request with correct report version and bundle
-   * @param state
-   * @returns
-   */
-  async fulfillInDisputes(state: AppDataStateModel | UpdateAppDataInput): Promise<void> {
-    if (!state) throw `disputeService:fulfillInDisputes=Missing state`;
-    try {
-      const resp = await this.transunion.getCreditReport(state, true);
-      console.log('resp in fulfillInDisputes ===> ', resp);
-      if (!resp || !resp.Fulfill) throw 'Failed to parse getCreditReport response';
-      const response = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
-      console.log('response in fulfillInDisputes ===> ', response);
-      response
-        ? await this.updateFulfill(state, resp)
-        : (() => {
-            throw 'Failed to fulfill in disputes';
-          })();
-    } catch (err) {
-      throw new Error(`disputeService:fulfillInDisputes=${err}`);
-    }
-  }
-
-  /**
-   * Refresh the state and db with the updated fulfill reports
-   * @param state
-   * @param resp
-   */
-  async updateFulfill(state: AppDataStateModel, resp: IFulfillResponseSuccess): Promise<void> {
-    const fulfillResult = returnNestedObject(resp, 'FulfillResult');
-    const enriched = this.transunion.enrichFulfillData(state, fulfillResult);
-    if (!enriched?.agencies) throw 'Fulfill failed';
-    try {
-      await this.statesvc.updateAgenciesAsync(enriched.agencies);
-    } catch (err) {
-      throw new Error(`disputeService:updateFulfill=${err}`);
-    }
-  }
-
-  /**
-   * Verify user is eligible to proceed with disputes
-   */
-  async getDisputeStatus(): Promise<IGetDisputeStatusResponseSuccess | undefined> {
-    const state = this.store.snapshot()?.appData;
-    try {
-      return await this.transunion.getDisputeStatus(state);
-    } catch (err) {
-      throw new Error(`disputeService:sendStartDispute=${err}`);
+      throw `disputeService:sendDisputePreflightCheck=${err}`;
     }
   }
 
@@ -230,7 +117,7 @@ export class DisputeService implements OnDestroy {
     try {
       return await this.transunion.sendStartDispute(state, this.disputeStack);
     } catch (err) {
-      throw new Error(`disputeService:sendStartDispute=${err}`);
+      throw `disputeService:sendStartDispute=${err}`;
     }
   }
 }

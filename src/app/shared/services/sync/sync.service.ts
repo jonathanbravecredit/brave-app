@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
@@ -7,20 +7,33 @@ import {
   CreateAppDataInput,
   CreateAppDataMutation,
   GetAppDataQuery,
+  OnUpdateAppDataSubscription,
+  SubscriptionResponse,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject } from 'rxjs';
+import { ZenObservable } from 'zen-observable-ts';
+import * as queries from '@shared/queries';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SyncService {
+export class SyncService implements OnDestroy {
   data$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
+  apiUpdateListener$: ZenObservable.Subscription | undefined;
+  // apiCreateListener$: ZenObservable.Subscription;
+  // apiDeleteListener$: ZenObservable.Subscription;
 
   constructor(private api: APIService, private store: Store, private router: Router) {}
+
+  ngOnDestroy(): void {
+    // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
+    if (this.apiUpdateListener$) this.apiUpdateListener$.unsubscribe();
+    // if (this.apiDeleteListener$) this.apiDeleteListener$.unsubscribe();
+  }
 
   /**
    * Hall monitor. Checks the user and tells them where to go when they come back
@@ -35,6 +48,7 @@ export class SyncService {
     // user signsIn and is new user
     console.log('calling hallmonitor');
     const { identityId: id } = creds;
+    this.subscribeToListeners(id);
     // TODO: BETTER USE OF ROUND TRIP CALLS...USE SUBJECT
     // Handle new users
     // 1. No ID from Amplify to validate against...bail out
@@ -61,6 +75,25 @@ export class SyncService {
     if (isUserOnboarded && !signInEvent) this.stayPut(id);
     if (!isUserOnboarded && signInEvent) this.goToLastOnboarded(id);
     if (!isUserOnboarded && !signInEvent) this.goToLastOnboarded(id);
+  }
+
+  /**
+   * Subscribe to the AWS appsync listeners which sync down db data to client
+   * @param id
+   */
+  async subscribeToListeners(id: string): Promise<void> {
+    const { owner } = await queries.GetOwner(id);
+    if (owner) {
+      this.apiUpdateListener$ = this.api
+        .OnUpdateAppDataListener(owner)
+        .subscribe((data: SubscriptionResponse<OnUpdateAppDataSubscription>) => {
+          if (data.value.errors) throw `API OnUpdateAppDataListener error`;
+          const appData = data.value.data;
+          if (!appData) return;
+          const clean = this.cleanBackendData(appData);
+          this.store.dispatch(new AppDataActions.Edit(clean));
+        });
+    }
   }
 
   /**
@@ -206,7 +239,7 @@ export class SyncService {
    * @param {GetAppDataQuery} data
    * @returns
    */
-  cleanBackendData(data: GetAppDataQuery): AppDataStateModel {
+  cleanBackendData(data: GetAppDataQuery | OnUpdateAppDataSubscription): AppDataStateModel {
     let clean = deleteKeyNestedObject(data, '__typename');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field

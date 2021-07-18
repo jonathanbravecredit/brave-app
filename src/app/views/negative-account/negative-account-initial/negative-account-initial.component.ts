@@ -41,8 +41,10 @@ export class NegativeAccountInitialComponent {
    * @param card
    */
   async onConfirmed(card: INegativeAccountCardInputs): Promise<void> {
+    const id = this.statesvc.state?.appData.id;
+    if (!id) throw `negativeAccountInitial:onConfirmed=Missing id:${id}`;
     this.disputeService
-      .onUserConfirmed()
+      .sendDisputePreflightCheck(id)
       .then((_) => {
         this.disputeService.setTradelineItem(card);
         this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);

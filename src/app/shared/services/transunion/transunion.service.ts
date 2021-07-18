@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import {
   IEnrollResponseSuccess,
@@ -117,7 +118,6 @@ export class TransunionService {
     try {
       const msg = this.createEnrollPayload(data, dispute);
       const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
-      console.log('enroll transunion response', res);
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
@@ -142,6 +142,40 @@ export class TransunionService {
     } catch (err) {
       console.log('err ', err);
       return;
+    }
+  }
+
+  /**
+   * Send id to Transunion to refresh their report
+   * @param id user id
+   * @returns
+   */
+  async refreshCreditReport(id: string): Promise<IFulfillResponseSuccess | undefined> {
+    try {
+      const msg = { id };
+      const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the preflight check which performs the following:
+   *  - Checks if the user is enrolled in disputes, if not, enrolls them
+   *  - Checks when the user last refreshed their report, if < 24hrs, refreshes
+   *  - Checks the dispute status, if eligible, returns true, otherwise false
+   * @param data
+   * @returns
+   */
+  async sendDisputePreflightCheck(data: { id: string }): Promise<IDisputePreflightCheck> {
+    try {
+      const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
+      return res ? JSON.parse(res) : false;
+    } catch (err) {
+      console.log('err', err);
+      return { DisputePreflightCheck: { eligible: false } };
     }
   }
 
