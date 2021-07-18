@@ -6,7 +6,7 @@
 <brave-dispute-findings-results></brave-dispute-findings-results>
 <brave-dispute-findings-how-to-read></brave-dispute-findings-how-to-read>
 <brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
-<brave-dispute-findings-definitions></brave-dispute-findings-definitions> 
+<brave-dispute-findings-definitions *ngIf="type !== 'personal-info'" [type]="type === 'tradeline' ? 'accounts' : 'public-records'"></brave-dispute-findings-definitions> 
 <!-- // IS NOT DELETED = SHOW -->
 <brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
 <brave-dispute-findings-results-details [resultCode]="resultCode" [updatedValues]="updatedValues">

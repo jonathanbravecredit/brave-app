@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DEFAULT_FINDINGS_DEFINITIONS as defaultDefinitions} from './constants';
+import { Component, Input, OnInit } from '@angular/core';
+import { DEFAULT_FINDINGS_DEFINITIONS as defaultDefinitions } from './constants';
+import { IFindingsDefinition } from './interfaces';
 
 @Component({
   selector: 'brave-dispute-findings-definitions',
@@ -7,10 +8,13 @@ import { DEFAULT_FINDINGS_DEFINITIONS as defaultDefinitions} from './constants';
   styleUrls: ['./dispute-findings-definitions.component.css']
 })
 export class DisputeFindingsDefinitionsComponent implements OnInit {
-  definitions: { title: string; description: string }[] = defaultDefinitions;
+  @Input() type: 'public-records' | 'accounts' = 'accounts';
+  definitions: IFindingsDefinition[] = [];
+  
   constructor() { }
 
   ngOnInit(): void {
+    this.definitions = defaultDefinitions[this.type];
   }
 
 }
