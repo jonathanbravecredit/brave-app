@@ -203,14 +203,11 @@ export class TransunionService {
    * @param {IProcessDisputeTradelineResult[]} disputes AppData state
    * @returns
    */
-  async sendStartDispute(
-    data: UpdateAppDataInput | AppDataStateModel,
-    disputes: IProcessDisputeTradelineResult[],
-  ): Promise<string | undefined> {
+  async sendStartDispute(id: string, disputes: IProcessDisputeTradelineResult[]): Promise<string | undefined> {
     try {
-      console.log('sendDispute: data', data);
+      console.log('sendDispute: data', id);
       console.log('sendDispute: dispute', disputes);
-      const msg = this.createStartDisputePayload(data, disputes);
+      const msg = { id, disputes }; //this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
       console.log(res);
       return res ? res : undefined;
@@ -481,88 +478,6 @@ export class TransunionService {
       },
       EnrollmentKey: data.agencies?.transunion?.disputeEnrollmentKey,
     } as IGetDisputeStatusRequest;
-  }
-
-  /**
-   * Genarates the message payload for TU Fulfill request
-   * TODO: need to incorporate Personal and Public items
-   * @param { UpdateAppDataInput | AppDataStateModel} data
-   * @returns {IGetDisputeStatusRequest | undefined }
-   */
-  createStartDisputePayload(
-    data: UpdateAppDataInput | AppDataStateModel,
-    disputes: IProcessDisputeTradelineResult[],
-  ): IGetDisputeStatusRequest | undefined {
-    const id = data.id?.split(':')?.pop();
-    const attrs = data.user?.userAttributes;
-    const dob = attrs?.dob;
-
-    if (!id || !attrs || !dob) {
-      console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
-      return;
-    }
-    console.log('id in StartDispute', id);
-    return {
-      ClientKey: id,
-      Customer: {
-        CurrentAddress: {
-          AddressLine1: attrs.address?.addressOne || '',
-          AddressLine2: attrs.address?.addressTwo || '',
-          City: attrs.address?.city || '',
-          State: attrs.address?.state || '',
-          Zipcode: attrs.address?.zip || '',
-        },
-        DateOfBirth:
-          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
-        FullName: {
-          FirstName: attrs.name?.first || '',
-          LastName: attrs.name?.last || '',
-          MiddleName: attrs.name?.middle || '',
-        },
-        Ssn: attrs.ssn?.full || '',
-      },
-      EnrollmentKey: data.agencies?.transunion?.disputeEnrollmentKey,
-      LineItems: this.parseDisputeToLineItem(disputes),
-      ServiceBundleFulfillmentKey: data.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
-      ServiceProductFulfillmentKey: null,
-    } as IGetDisputeStatusRequest;
-  }
-
-  /**
-   * Helper function to parse the disputes to Line Items
-   * @param {IProcessDisputeTradelineResult[]} disputes
-   * @returns {ILineItem[] | ILineItem}
-   */
-  private parseDisputeToLineItem(disputes: IProcessDisputeTradelineResult[]): ILineItem[] | ILineItem {
-    if (!disputes.length) return {} as ILineItem;
-    return disputes.map((item) => {
-      const reasons = item.result.data.reasons;
-      return reasons !== undefined
-        ? ({
-            LineItem: {
-              ClaimCodes: this.parseReasonsToClaimCodes(reasons),
-              CreditReportItem: item.tradeline?.Tradeline?.handle,
-              LineItemComment: 'Account Tradeline',
-            },
-          } as ILineItem)
-        : ({} as ILineItem);
-    });
-  }
-
-  /**
-   * Helper function to parse the reasons to Claim Codes
-   * @param {[(IDisputeReason | undefined), (IDisputeReason | undefined)]} reasons
-   * @returns {IClaimCode[] | IClaimCode}
-   */
-  private parseReasonsToClaimCodes(reasons: [IDisputeReason?, IDisputeReason?]): IClaimCode[] | IClaimCode {
-    if (!reasons.length) return {} as IClaimCode;
-    return reasons.map((code) => {
-      return {
-        ClaimCode: {
-          Code: code?.claimCode || '',
-        },
-      };
-    });
   }
 
   /**
