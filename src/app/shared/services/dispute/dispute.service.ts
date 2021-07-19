@@ -113,9 +113,9 @@ export class DisputeService implements OnDestroy {
    * Initiate a new dispute. Cannot have one in progress.
    */
   async sendStartDispute(): Promise<string | undefined> {
-    const state = this.store.snapshot()?.appData;
+    const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
-      return await this.transunion.sendStartDispute(state, this.disputeStack);
+      return await this.transunion.sendStartDispute(data.id, this.disputeStack);
     } catch (err) {
       throw `disputeService:sendStartDispute=${err}`;
     }
