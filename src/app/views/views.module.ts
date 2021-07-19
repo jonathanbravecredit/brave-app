@@ -65,6 +65,7 @@ import { DisputesErrorComponent } from './disputes-error/disputes-error/disputes
 import { DisputesErrorPureComponent } from './disputes-error/disputes-error-pure/disputes-error-pure.component';
 import { DisputeFindingsView } from './dashboard/disputes/dispute-findings/dispute-findings.view';
 import { DisputeFindingsPureView } from './dashboard/disputes/dispute-findings-pure/dispute-findings-pure.view';
+import { DisputesOverviewInitialPureView, DisputesOverviewInitialView } from './dashboard/disputes/disputes-overview';
 
 const views = [
   SignupComponent,
@@ -120,7 +121,9 @@ const views = [
   DisputesErrorComponent,
   DisputesErrorPureComponent,
   DisputeFindingsView,
-  DisputeFindingsPureView
+  DisputeFindingsPureView,
+  DisputesOverviewInitialPureView,
+  DisputesOverviewInitialView
 ];
 
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
