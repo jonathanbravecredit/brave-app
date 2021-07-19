@@ -2,9 +2,10 @@
   <ng-container *ngIf="tradeline$ | async as tradeline">
     <brave-tradelines-pure
       [tradeline]="tradeline"
+      [acknowledged]="acknowledged"
       [config]="tradeline | tradelineToDetails"
       [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
-      [remarks]="tradeline.Tradeline?.Remark?.customRemark || ''"
+      [remarks]="(tradeline | tradelineToDispute)?.accountDetail?.remarks || ''"
       (disputeClick)="onDisputeClicked($event)"
     ></brave-tradelines-pure>
   </ng-container>

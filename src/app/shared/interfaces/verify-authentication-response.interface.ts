@@ -1,18 +1,19 @@
 //  TODO replace response types with actual types ("Success" | "Error")
+import { IErrorResponse, INil } from '@shared/interfaces/errors.interface';
 
 export interface IVerifyAuthenticationResponseSuccess {
   VerifyAuthenticationQuestions: {
-    's:Envelope': {
-      's:Body': {
+    Envelope: {
+      Body: {
         VerifyAuthenticationQuestionsResponse: {
           VerifyAuthenticationQuestionsResult: {
-            'a:AccountName': string;
-            'a:ErrorResponse': string;
-            'a:RequestKey': string;
-            'a:ResponseType': string;
-            'a:ClientKey': string;
-            'a:AuthenticationDetails': string;
-            'a:AuthenticationStatus': string;
+            AccountName: string;
+            ErrorResponse: IErrorResponse | INil;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            AuthenticationDetails: string;
+            AuthenticationStatus: string;
           };
         };
       };

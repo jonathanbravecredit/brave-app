@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { IStartDisputeResult } from '@shared/interfaces/start-dispute.interface';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   selector: 'brave-disputes-tradeline-view',
   templateUrl: './disputes-tradeline.view.html',
 })
-export class DisputesTradelineView {
+export class DisputesTradelineView implements OnDestroy {
   @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
@@ -28,6 +28,10 @@ export class DisputesTradelineView {
     }
   }
 
+  ngOnDestroy(): void {
+    this.disputeService.clearDisputes();
+  }
+
   async onProcessResult(event: IProcessDisputeTradelineResult): Promise<void> {
     // result event has a data property where the reason ids can be pull out and find them in the constants of the tradeline component
     const { result, tradeline } = event;
@@ -41,7 +45,7 @@ export class DisputesTradelineView {
         this.isDisputeSent = true;
         this.isDisputeProcessInProgress = false;
       } catch (err) {
-        throw new Error(`Error in disputesTradeline:onProcessResult=${err}`);
+        throw new Error(`disputesTradeline:onProcessResult=${err}`);
       }
     }
   }

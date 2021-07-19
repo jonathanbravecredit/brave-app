@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { IRemark } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Pipe({
@@ -88,9 +89,21 @@ export class TradelineToPagesPipe implements PipeTransform {
   }
 
   private mapToRemarks(tradeline: ITradeLinePartition) {
-    const remarks = tradeline.Tradeline?.Remark?.customRemark || '';
+    const remarks = this.parseRemarks(tradeline.Tradeline?.Remark);
     const showFooter = false;
     if (!remarks || !Object.keys(remarks).length) return { showFooter };
     return { remarks, showFooter };
+  }
+
+  /**
+   * Flatten the remarks into one paragraph
+   * @param remarks
+   * @returns
+   */
+  parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
+    if (remarks === undefined) return '';
+    return remarks instanceof Array
+      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
+      : remarks.customRemark || '';
   }
 }

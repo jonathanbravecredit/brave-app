@@ -43,8 +43,23 @@
     </div>
     <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full">
       <div class="flex justify-center mb-8 px-16" *ngIf="showDisputeButton">
-        <brave-filled-onlytext-button  class="w-100" (click)="showModal = true" [config]="{'buttonSize': 'sm', 'backgroundColor': 'bg-indigo-800', 'color':'text-white', 'activeColor': 'bg-indigo-800', 'full': true}">Dispute</brave-filled-onlytext-button>
-        <brave-onboarding-dispute class="w-device h-device fixed"[showModal]="showModal" (confirmation)="actionForDispute($event)"></brave-onboarding-dispute>
+        <brave-filled-onlytext-button
+          class="w-100"
+          (click)="showModal = true"
+          [config]="{
+            buttonSize: 'sm',
+            backgroundColor: 'bg-indigo-800',
+            color: 'text-white',
+            activeColor: 'bg-indigo-800',
+            full: true
+          }"
+          >Dispute</brave-filled-onlytext-button
+        >
+        <brave-onboarding-dispute
+          class="w-device h-device fixed"
+          [showModal]="showModal && !acknowledged"
+          (confirmation)="actionForDispute($event)"
+        ></brave-onboarding-dispute>
       </div>
       <span>
         <p class="text-lg">Account Details</p>
@@ -78,7 +93,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ "$" + data.accountDetail?.amountPastDue }}
+            {{ '$' + data.accountDetail?.amountPastDue }}
           </p>
         </span>
       </div>

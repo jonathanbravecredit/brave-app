@@ -7,6 +7,7 @@ import { CreditReportComponent } from '@views/credit-report/credit-report/credit
 import { TradelinesComponent } from '@views/tradelines/tradelines/tradelines.component';
 import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init.component';
 import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
+import { DisputesErrorComponent } from '@views/disputes-error/disputes-error/disputes-error.component';
 
 const DashboardRoutes: Routes = [
   {
@@ -37,6 +38,11 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/detail/dispute/tradelines',
         component: DisputesTradelineView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/detail/dispute/error',
+        component: DisputesErrorComponent,
         canActivate: [AuthGuard],
       },
       {
