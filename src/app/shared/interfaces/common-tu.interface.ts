@@ -24,3 +24,17 @@ export interface IPartitionElements extends IPartitionSet {
   dateReported?: string;
   dateUpdated?: string;
 }
+
+export interface ICreditScoreFactor {
+  bureauCode?: number;
+  FactorType?: string;
+  Factor?: ICreditScoreAttributes;
+  FactorText?: string[];
+}
+
+export interface ICreditScoreAttributes {
+  abbreviation?: string;
+  description?: string;
+  symbol?: number | string;
+  rank?: number | string;
+}
