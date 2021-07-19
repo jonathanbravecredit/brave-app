@@ -123,6 +123,8 @@ import { DisputeFindingsRatingKeyComponent } from './disputes/findings/dispute-f
 import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/dispute-findings-results-details/dispute-findings-results-details.component';
 import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
+import { DisputeRegularCardComponent } from './cards/dispute-cards/dispute-regular-card/dispute-regular-card.component';
+import { DisputeCardStatusPipe } from './cards/dispute-cards/dispute-regular-card/dispute-card-status.pipe';
 
 const components = [
   BaseFormComponent,
@@ -224,7 +226,8 @@ const components = [
   DisputeFindingsRatingKeyComponent,
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
-  DisputeFindingsContactInfoComponent
+  DisputeFindingsContactInfoComponent,
+  DisputeRegularCardComponent
 ];
 
 // component specific pipes only
@@ -243,6 +246,7 @@ const pipes = [
   CreditReportGraphicPipe,
   BasePaginationPipe,
   BaseModalPipe,
+  DisputeCardStatusPipe
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -257,7 +261,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     FormsModule,
     RouterModule,
   ],
-  declarations: [...components, ...pipes, ...directives, ],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

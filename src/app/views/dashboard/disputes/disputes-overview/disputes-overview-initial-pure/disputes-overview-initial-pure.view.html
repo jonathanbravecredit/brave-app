@@ -1,0 +1,31 @@
+<div class="mx-4 text-gray-900">
+  <div class="flex items-center py-4">
+    <span class="material-icons">
+      chevron_left
+      </span>        
+    <span class="text-sm ml-2">Back</span>
+  </div>
+  <div class="border-b-2 border-blueGray-800 pb-4">
+    <div class="mb-10">
+      <h1 class="text-xl font-semibold">Your disputes</h1>
+    </div>
+    <p class="text-sm">Check the status of any disputes currently in process and any you've disputed in the past</p>
+  </div>
+  <div class="flex items-center py-4">
+    <span class="material-icons-outlined">
+      view_list
+    </span>
+    <h2 class="ml-2 font-semibold">Current Disputes</h2>
+  </div>
+  <div>
+    <brave-dispute-regular-card *ngFor="let dispute of currentDisputeCollection"
+    [status]="dispute.status"
+    [creditorName]="dispute.creditorName"
+    [dateSubmitted]="dispute.dateSubmitted"
+    [accountType]="dispute.accountType" class="mb-2"></brave-dispute-regular-card>
+  </div>
+  <div class="mt-4 h-24 w-full bg-gray-800"></div>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button>View Dispute History</brave-filled-onlytext-button>
+  </div>
+</div>
