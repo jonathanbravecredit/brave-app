@@ -63,6 +63,8 @@ import { UserDisputesView } from './dashboard/disputes/user-disputes/user-disput
 import { ParseRiskScorePipe } from './credit-report/credit-report/parse-risk-score.pipe';
 import { DisputesErrorComponent } from './disputes-error/disputes-error/disputes-error.component';
 import { DisputesErrorPureComponent } from './disputes-error/disputes-error-pure/disputes-error-pure.component';
+import { DisputeFindingsView } from './dashboard/disputes/dispute-findings/dispute-findings.view';
+import { DisputeFindingsPureView } from './dashboard/disputes/dispute-findings-pure/dispute-findings-pure.view';
 
 const views = [
   SignupComponent,
@@ -117,6 +119,8 @@ const views = [
   UserDisputesView,
   DisputesErrorComponent,
   DisputesErrorPureComponent,
+  DisputeFindingsView,
+  DisputeFindingsPureView
 ];
 
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
