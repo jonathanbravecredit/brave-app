@@ -12,6 +12,10 @@
   </p>
   <p class="text-sm mb-6">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>
   <div *ngFor="let card of cards">
-    <brave-negative-account-card [data]="card" (confirmed)="confirmed.emit(card)"></brave-negative-account-card>
+    <brave-negative-account-card
+      [data]="card"
+      [acknowledged]="acknowledged"
+      (confirmed)="confirmed.emit(card)"
+    ></brave-negative-account-card>
   </div>
 </div>

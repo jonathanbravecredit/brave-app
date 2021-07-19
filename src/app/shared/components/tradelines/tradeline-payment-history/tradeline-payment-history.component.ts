@@ -71,11 +71,19 @@ export class TradelinePaymentHistoryComponent implements OnInit {
             months: MONTH_ABBREVIATIONS,
           },
           years: [0, 1, 2].map((item, i) => {
-            let dte = new Date(history.startDate);
+            let dte = history.startDate === undefined ? new Date() : new Date(history.startDate);
             let year = dte.getFullYear() - i;
+            let monthlyStatus: IMonthyPayStatusItem[];
+            if (history.MonthlyPayStatus === undefined) {
+              monthlyStatus = [{} as IMonthyPayStatusItem];
+            } else if (history.MonthlyPayStatus instanceof Array) {
+              monthlyStatus = history.MonthlyPayStatus;
+            } else {
+              monthlyStatus = [history.MonthlyPayStatus];
+            }
             return {
               year: year.toString(),
-              months: this.parseMonthlyPayments(year, history.MonthlyPayStatus),
+              months: this.parseMonthlyPayments(year, monthlyStatus),
             };
           }),
         };
@@ -94,8 +102,12 @@ export class TradelinePaymentHistoryComponent implements OnInit {
   parseMonthlyPayments(year: number, monthlyPayments: IMonthyPayStatusItem[] | undefined): string[] {
     let months = [...MONTH_DEFAULTS];
     if (monthlyPayments === undefined) return months;
-    let payments = monthlyPayments.filter((pay) => new Date(pay.date).getFullYear() === year);
+    let payments = monthlyPayments.filter((pay) => {
+      if (pay.date === undefined) return false;
+      return new Date(pay.date).getFullYear() === year;
+    });
     payments.forEach((pay) => {
+      if (pay.date === undefined) return;
       const status = `${pay.status}`.length ? `${pay.status}`.toLowerCase() : 'u';
       months[new Date(pay.date).getMonth()] = status;
     });

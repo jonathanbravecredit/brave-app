@@ -1,3 +1,5 @@
+import { IErrorResponse, INil } from '@shared/interfaces/errors.interface';
+
 export interface IGetDisputeStatus {
   request: IGetDisputeStatusMsg;
 }
@@ -37,6 +39,25 @@ export interface IGetDisputeStatusMsg {
   EnrollmentKey: string;
 }
 // TODO updated the response with the actual
+export interface IGetDisputeStatusResponseSuccess {
+  GetDisputeStatus: {
+    Envelope: {
+      Body: {
+        GetDisputeStatusResponse: {
+          GetDisputeStatusResult: {
+            AccountName: string;
+            ErrorResponse: IErrorResponse | INil;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            DisputeStatus: string;
+          };
+        };
+      };
+    };
+  };
+}
+
 export interface IGetDisputeStatusResponse {
   GetDisputeStatusResult: IGetDisputeStatusResult;
 }

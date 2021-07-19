@@ -1,11 +1,4 @@
-export interface ICreditScoreFactor {
-  bureauCode?: number;
-  FactorType?: string;
-  Factor?: ICreditScoreAttributes;
-  FactorText?: string[];
-}
-
-export interface ICreditScoreAttributes {
+export interface ICodeRef {
   abbreviation?: string;
   description?: string;
   symbol?: number | string;
@@ -14,9 +7,20 @@ export interface ICreditScoreAttributes {
 
 export interface ISource {
   BorrowerKey?: string;
-  Bureau?: ICreditScoreAttributes;
+  Bureau?: ICodeRef;
   InquiryDate?: string;
   Reference?: string;
 }
 
-export interface IErrorResponse {}
+export interface IRemark {
+  RemarkCode?: ICodeRef;
+  customRemark?: string;
+}
+
+export interface IPartitionSet {
+  partitionSet?: number | string;
+}
+export interface IPartitionElements extends IPartitionSet {
+  dateReported?: string;
+  dateUpdated?: string;
+}

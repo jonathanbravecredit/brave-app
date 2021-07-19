@@ -15,6 +15,7 @@ export class NegativeAccountCardComponent {
   @ViewChild(OnboardingDisputeComponent)
   disputeTermsModal: OnboardingDisputeComponent | undefined;
   @Output() confirmed: EventEmitter<void> = new EventEmitter();
+  @Input() acknowledged: boolean = false;
   @Input() showDisputeButton = true;
   @Input() data: INegativeAccountCardInputs = {
     tradeline: {} as ITradeLinePartition,
