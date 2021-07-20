@@ -7,7 +7,8 @@ import { CreditReportComponent } from '@views/credit-report/credit-report/credit
 import { TradelinesComponent } from '@views/tradelines/tradelines/tradelines.component';
 import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init.component';
 import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
-import { DisputesErrorComponent } from '@views/disputes-error/disputes-error/disputes-error.component';
+import { BaseExceptionComponent } from '@shared/components/exceptions/base-exception/base-exception.component';
+import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
 
 const DashboardRoutes: Routes = [
   {
@@ -42,7 +43,7 @@ const DashboardRoutes: Routes = [
       },
       {
         path: 'report/detail/dispute/error',
-        component: DisputesErrorComponent,
+        component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
       {

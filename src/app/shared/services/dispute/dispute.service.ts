@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { StateService } from '@shared/services/state/state.service';
@@ -20,7 +21,12 @@ export class DisputeService implements OnDestroy {
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
 
-  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
+  constructor(
+    private store: Store,
+    private statesvc: StateService,
+    private transunion: TransunionService,
+    private router: Router,
+  ) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });
@@ -102,7 +108,10 @@ export class DisputeService implements OnDestroy {
   async sendDisputePreflightCheck(id: string): Promise<boolean> {
     try {
       const resp = await this.transunion.sendDisputePreflightCheck({ id });
-      const { eligible } = resp.DisputePreflightCheck;
+      const { eligible, error } = resp.DisputePreflightCheck;
+      if (error) {
+        this.router.navigate(['/report/detail/dispute/error'], { queryParams: { code: error.Code } });
+      }
       return eligible;
     } catch (err) {
       throw `disputeService:sendDisputePreflightCheck=${err}`;

@@ -1,1 +1,3 @@
-<brave-base-exception-pure-view></brave-base-exception-pure-view>
+<div *ngIf="route.queryParams | async as params">
+  <brave-base-exception-pure-view [code]="params.code"></brave-base-exception-pure-view>
+</div>
