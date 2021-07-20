@@ -1,14 +1,12 @@
-<div class="p-4 border rounded-sm border-blueGray-300 mt-6">
-    <div class="grid grid-cols-2">
-      <p class="text-sm">Latest dispute submited:</p>
-      <p class="text-right">{{ latestDateSubmitted }}</p>
-      <p class="font-semibold">{{ creditorName }}</p>
-    </div>
-    <div class="flex justify-between">
-      <p class="text-sm">Decision</p>
-      <p class="text-xs text-right font-semibold text-yellow-500">{{ decision }}</p>
-    </div>
-    <div class="flex items-center mt-1">
-      <p class="text-xs">View Details</p> <span class="material-icons">expand_more</span>
-    </div>
-  </div>
+<brave-dispute-regular-card>
+  <ng-template data>
+    <span class="font-semibold text-sm flex-grow">Latest Dispute Submitted:</span>
+    <span class="font-semibold text-sm">{{ latestDateSubmitted }}</span>
+    <span></span>
+    <span class="font-semibold text-sm flex-grow">{{ creditorName }}</span>
+  </ng-template>
+  <ng-template details>
+    <p class="text-sm">Decision: </p>
+    <p class="text-sm font-semibold text-yellow-500">{{ decision }}</p>
+  </ng-template>
+</brave-dispute-regular-card>
