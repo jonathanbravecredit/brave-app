@@ -48,21 +48,17 @@ export class SyncService implements OnDestroy {
     // user signsIn and is new user
     console.log('calling hallmonitor');
     const { identityId: id } = creds;
-    this.subscribeToListeners(id);
     // TODO: BETTER USE OF ROUND TRIP CALLS...USE SUBJECT
     // Handle new users
     // 1. No ID from Amplify to validate against...bail out
-    // 2. Brand New User and signn event..initialize DB and go to dashboard
+    // 2. Brand New User and signin event..initialize DB and go to dashboard
     // 3. Brand New User and NOT a signin event....initialize DB and go to dashboard
     const isUserBrandNew = await this.isUserBrandNew(id);
-    if (isUserBrandNew === undefined) {
-      return;
-    }
-    if (isUserBrandNew && signInEvent) {
-      this.initAppData(creds);
-    } // refreshed event
-    if (isUserBrandNew && !signInEvent) this.initAppData(creds); // refreshed event
-
+    if (isUserBrandNew === undefined) return;
+    if (isUserBrandNew && signInEvent) await this.initAppData(creds);
+    if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
+    // Returning user...app initiated already. Add listener
+    await this.subscribeToListeners(id);
     // Handle returning users (implicit) !isUserBrandNew
     // 1. No ID from Amplify to validate against...bail out
     // 2. User has fully onboarded and a signin event...go to dashboard
@@ -171,6 +167,7 @@ export class SyncService implements OnDestroy {
         },
       };
       const data = await this.api.CreateAppData(input);
+      await this.subscribeToListeners(creds.identityId); // if new
       const clean = this.cleanBackendData(data);
       this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
         this.data$.next(clean);
