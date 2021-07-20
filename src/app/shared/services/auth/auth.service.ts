@@ -195,4 +195,67 @@ export class AuthService {
       return null;
     }
   }
+
+  /**
+   * Submit email to cognito for change, if accepted returns true
+   * @param email
+   * @returns
+   */
+  async updateUserEmail(email: string): Promise<boolean> {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.updateUserAttributes(user, { email: email });
+      return true;
+    } catch (err) {
+      throw `authService:updateUserEmail=${err}`;
+    }
+  }
+
+  /**
+   * Submit code sent by cognito for email change, if accepted returns true
+   * @param code
+   * @returns
+   */
+  async verifyUserEmail(code: string): Promise<boolean> {
+    try {
+      await Auth.verifyCurrentUserAttributeSubmit('email', code);
+      return true;
+    } catch (err) {
+      throw `authService:verifyUserEmail=${err}`;
+    }
+  }
+
+  /**
+   * Submit old and new password to change, if accepted returns true
+   * @param oldPassword
+   * @param newPassword
+   * @returns
+   */
+  async resetPassword(oldPassword: string, newPassword: string): Promise<boolean> {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      const resp = await Auth.changePassword(user, oldPassword, newPassword);
+      return resp.toLowerCase() === 'success';
+    } catch (err) {
+      throw `authService:resetPassword=${err}`;
+    }
+  }
+
+  /**
+   * Submit user for deletion, disables in cognito
+   * @returns
+   */
+  async deactivateAccount(): Promise<string> {
+    try {
+      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      return new Promise((resolve, reject) => {
+        user.deleteUser((err, res) => {
+          if (err) reject(err);
+          if (res) resolve(res);
+        });
+      });
+    } catch (err) {
+      throw `authService:deactivateAccount=${err}`;
+    }
+  }
 }
