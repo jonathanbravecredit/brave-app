@@ -31,6 +31,7 @@ export class AuthService {
           if (creds) await this.sync.hallmonitor(creds, true);
           break;
         case 'signOut':
+          this.router.navigate(['/auth/signin']);
           // handle sign out
           break;
         default:
