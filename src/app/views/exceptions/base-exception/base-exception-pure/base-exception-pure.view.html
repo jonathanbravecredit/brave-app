@@ -3,5 +3,5 @@
     <div style="transform: rotate(180deg)"><span>&#10095;</span></div>
     <span class="ml-4">Back</span>
   </div>
-  <brave-base-exception [code]="code" (actionButtonClicked)="actionButtonClicked.emit()"></brave-base-exception>
+  <brave-base-exception [code]="code" (actionButtonClicked)="actionButtonClicked.emit($event)"></brave-base-exception>
 </div>

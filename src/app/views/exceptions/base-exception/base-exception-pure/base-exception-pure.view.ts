@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './base-exception-pure.view.html',
 })
 export class BaseExceptionPureView implements OnInit {
-  @Output() actionButtonClicked: EventEmitter<void> = new EventEmitter();
+  @Output() actionButtonClicked: EventEmitter<string> = new EventEmitter();
   @Input() code: string | undefined;
 
   constructor() {}

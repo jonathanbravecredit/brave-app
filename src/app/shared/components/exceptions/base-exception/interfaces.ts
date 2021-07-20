@@ -26,6 +26,7 @@ export interface IBaseExceptionCategory {
   message: string;
   description: string;
   actionText: string;
+  route: string;
 }
 
 export interface IBaseException {

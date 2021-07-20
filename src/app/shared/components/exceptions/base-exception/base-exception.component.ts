@@ -8,7 +8,7 @@ import { IBaseExceptionCategory } from './interfaces';
 })
 export class BaseExceptionComponent implements OnInit {
   @Input() code: string | undefined = '331';
-  @Output() actionButtonClicked: EventEmitter<void> = new EventEmitter();
+  @Output() actionButtonClicked: EventEmitter<string> = new EventEmitter();
   exceptionCategory: IBaseExceptionCategory | undefined;
 
   constructor() {}
