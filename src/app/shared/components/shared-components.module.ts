@@ -113,6 +113,18 @@ import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { DisputeHistoryCardComponent } from './cards/dispute-cards/dispute-history-card/dispute-history-card.component';
 import { DisputeCurrentCardComponent } from './cards/dispute-cards/dispute-current-card/dispute-current-card.component';
 import { UserDisputesListComponent } from './disputes/user-disputes-list/user-disputes-list.component';
+import { DisputeFindingsHeaderComponent } from './disputes/findings/dispute-findings-header/dispute-findings-header.component';
+import { DisputeFindingsResultsComponent } from './disputes/findings/dispute-findings-results/dispute-findings-results.component';
+import { DisputeFindingsHowToReadComponent } from './disputes/findings/dispute-findings-how-to-read/dispute-findings-how-to-read.component';
+import { DisputeFindingsDefinitionsHeaderComponent } from './disputes/findings/dispute-findings-definitions-header/dispute-findings-definitions-header.component';
+import { DisputeFindingsNoteCreditReportComponent } from './disputes/findings/dispute-findings-note-credit-report/dispute-findings-note-credit-report.component';
+import { DisputeFindingsDefinitionsComponent } from './disputes/findings/dispute-findings-definitions/dispute-findings-definitions.component';
+import { DisputeFindingsRatingKeyComponent } from './disputes/findings/dispute-findings-rating-key/dispute-findings-rating-key.component';
+import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/dispute-findings-results-details/dispute-findings-results-details.component';
+import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
+import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
+import { DisputeRegularCardComponent } from './cards/dispute-cards/dispute-regular-card/dispute-regular-card.component';
+import { DisputeCardStatusPipe } from './cards/dispute-cards/dispute-regular-card/dispute-card-status.pipe';
 
 const components = [
   BaseFormComponent,
@@ -204,7 +216,18 @@ const components = [
   BasicCarouselLoaderComponent,
   DisputeHistoryCardComponent,
   DisputeCurrentCardComponent,
-  UserDisputesListComponent
+  UserDisputesListComponent,
+  DisputeFindingsHeaderComponent,
+  DisputeFindingsResultsComponent,
+  DisputeFindingsHowToReadComponent,
+  DisputeFindingsDefinitionsHeaderComponent,
+  DisputeFindingsNoteCreditReportComponent,
+  DisputeFindingsDefinitionsComponent,
+  DisputeFindingsRatingKeyComponent,
+  DisputeFindingsResultsDetailsComponent,
+  DisputeFindingsClosingParagraphComponent,
+  DisputeFindingsContactInfoComponent,
+  DisputeRegularCardComponent
 ];
 
 // component specific pipes only
@@ -223,6 +246,7 @@ const pipes = [
   CreditReportGraphicPipe,
   BasePaginationPipe,
   BaseModalPipe,
+  DisputeCardStatusPipe
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

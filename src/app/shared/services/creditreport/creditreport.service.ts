@@ -14,6 +14,7 @@ import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -37,15 +38,18 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$: Subscription;
 
-  constructor(private statesvc: StateService) {
+  constructor(private statesvc: StateService, private transunion: TransunionService) {
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
-      this.tuAgency$.next(tu);
-      this.tuAgency = tu;
-      const unparsed = this.getUnparsedCreditReport(agencies);
-      const parsedReport = this.parseCreditReport(unparsed['#text']);
-      this.tuReport$.next(parsedReport);
-      this.tuReport = parsedReport;
+      if (Object.keys(tu).length) {
+        this.tuAgency$.next(tu);
+        this.tuAgency = tu;
+      }
+      const parsedReport = this.getCreditReport(agencies);
+      if (Object.keys(parsedReport).length) {
+        this.tuReport$.next(parsedReport);
+        this.tuReport = parsedReport;
+      }
     });
     this.preferencesSub$ = this.preferences$.pipe().subscribe((pref: PreferencesStateModel) => {
       this.tuPreferences$.next(pref);
@@ -75,28 +79,41 @@ export class CreditreportService implements OnDestroy {
   }
 
   /**
-   * Takes the agency state model and returns the unparsed TU credit report
-   *   - TUCredit report agency stored as AWS JSON string in DB
-   * @param {AgenciesStateModel} agencies
-   * @returns {IUnparsedCreditReport}
+   * Refresh the credit report if necessary
+   * @param id string
    */
-  getUnparsedCreditReport(agencies: AgenciesStateModel): IUnparsedCreditReport {
-    if (!agencies) return JSON.parse('{"#text":""}');
-    const serviceProductString = agencies.transunion?.enrollMergeReport?.serviceProductObject || '{"#text":""}';
-    const serviceProductObject: IUnparsedCreditReport = JSON.parse(serviceProductString);
-    return serviceProductObject ? serviceProductObject : ({} as IUnparsedCreditReport);
+  refreshCreditReport(id: string): void {
+    if (!id) throw `Id missing=${id}`;
+    this.transunion.refreshCreditReport(id);
   }
 
   /**
-   * Parses the xml string into a JSON object of the IMergeReport form
-   * @param {string} xml
+   * Takes the agency state model and returns the unparsed TU credit report
+   *   - TUCredit report agency stored as AWS JSON string in DB
+   * @param {AgenciesStateModel} agencies
    * @returns {IMergeReport}
    */
-  parseCreditReport(xml: string): IMergeReport {
-    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-    const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
-    return report;
+  getCreditReport(agencies: AgenciesStateModel): IMergeReport {
+    if (!agencies) return JSON.parse('{}');
+    const fulfillMergeReport = agencies.transunion?.fulfillMergeReport;
+    const enrollMergeReport = agencies.transunion?.enrollMergeReport;
+    const serviceProductString = fulfillMergeReport
+      ? fulfillMergeReport?.serviceProductObject || '{}'
+      : enrollMergeReport?.serviceProductObject || '{}';
+    const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
+    return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
   }
+
+  // /**
+  //  * Parses the xml string into a JSON object of the IMergeReport form
+  //  * @param {string} xml
+  //  * @returns {IMergeReport}
+  //  */
+  // parseCreditReport(xml: string): IMergeReport {
+  //   const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+  //   const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
+  //   return report;
+  // }
 
   /**
    * Returns the tradeline partitions from the current TU report
@@ -107,16 +124,6 @@ export class CreditreportService implements OnDestroy {
     const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
-  }
-
-  /**
-   * Returns the borrower from the current TU report
-   * @returns {IBorrower}
-   */
-  getBorrower(): IBorrower {
-    if (!this.tuReport) return {} as IBorrower;
-    const borrower = this.tuReport?.TrueLinkCreditReportType?.Borrower;
-    return borrower ? borrower : ({} as IBorrower);
   }
 
   /**
@@ -147,12 +154,12 @@ export class CreditreportService implements OnDestroy {
   async updateReportAsync(
     agencies: AgenciesStateModel | null | undefined,
   ): Promise<UpdateAppDataInput | null | undefined> {
-    if (!agencies) throw new Error(`Error in creditreportService:updateReportAsync=Missing agency`);
+    if (!agencies) throw new Error(`creditreportService:updateReportAsync=Missing agency`);
     try {
       return await this.statesvc.updateAgenciesAsync(agencies);
     } catch (err) {
       console.log('err', err);
-      throw new Error(`Error in creditreportService:updateReportAsync=${err}`);
+      throw new Error(`creditreportService:updateReportAsync=${err}`);
     }
   }
 }

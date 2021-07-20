@@ -7,6 +7,7 @@ import { INegativeAccountCardInputs } from '@shared/components/cards/negative-ac
 })
 export class NegativeAccountInitialPureComponent implements OnInit {
   @Input() cards: INegativeAccountCardInputs[] | undefined;
+  @Input() acknowledged: boolean = false;
   @Output() confirmed: EventEmitter<INegativeAccountCardInputs> = new EventEmitter();
 
   constructor() {}

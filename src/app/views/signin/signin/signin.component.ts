@@ -91,4 +91,11 @@ export class SigninComponent {
   goToTerms(): void {
     this.router.navigate(['/legal/tos']);
   }
+
+  /**
+   * Method to route user to signup
+   */
+  goToSignup(): void {
+    this.router.navigate(['/auth/signup']);
+  }
 }

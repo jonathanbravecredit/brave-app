@@ -22,3 +22,15 @@ export const INIT_DATA = {
     },
   },
 };
+
+// const test = {
+//   message:
+//     'Connection failed: {
+//       "errors": [
+//         {
+//           "errorType":
+//             "Unauthorized",
+//           "message": "Not Authorized to access onUpdateAppData on type Subscription"
+//         }]
+// }',
+// };

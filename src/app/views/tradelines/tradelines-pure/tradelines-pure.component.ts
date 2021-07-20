@@ -8,34 +8,33 @@ import { IPayStatusHistory, ITradeLinePartition } from '@shared/interfaces/merge
 })
 export class TradelinesPureComponent {
   /**
-   * @property {ITradeLinePartition} tradeline
+   * Tradelines are individual credit report accounts
    */
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition;
   /**
    * Config parameters with parsed tradeline data
-   * @property {ITradelineDetailsConfig} config
    */
   @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
   /**
    * Raw pay status history from Merge Report
-   * @property {IPayStatusHistory | undefined} paymentHistory
    */
   @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
   /**
    * Remarks from Merge Report
-   * @property {string} remarks
    */
   @Input() remarks: string = '';
   /**
    * Address from Merge Report...TODO need better definition
-   * @property {string} address
    */
   @Input() address: string = '';
+
+  /**
+   * Flag to indicate they need to still acknowledge dispute terms
+   */
+  @Input() acknowledged: boolean = false;
   /**
    * Event emitter when dispute button clicked on tradeline detail
    * - Pass up the tradlinePartition clicked on from here
-   * @property {EventEmitter<void>} disputeClick
-   * @default
    */
   @Output() disputeClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
 

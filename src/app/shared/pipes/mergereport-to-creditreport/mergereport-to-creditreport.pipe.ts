@@ -13,7 +13,7 @@ export class MergereportToCreditreportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
   transform(report: IMergeReport, prefs: PreferencesStateModel): ICreditReportCardGroup[] {
-    this.tradeLines = report.TrueLinkCreditReportType.TradeLinePartition;
+    this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
 
     if (!this.tradeLines) return [{} as ICreditReportCardGroup];
     return this.tradeLines instanceof Array
