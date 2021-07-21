@@ -38,7 +38,6 @@ subscription OnCreateAppData($owner: String) {
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -47,7 +46,6 @@ subscription OnCreateAppData($owner: String) {
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -58,7 +56,6 @@ subscription OnCreateAppData($owner: String) {
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -69,7 +66,6 @@ subscription OnCreateAppData($owner: String) {
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -82,7 +78,6 @@ subscription OnCreateAppData($owner: String) {
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -93,7 +88,6 @@ subscription OnCreateAppData($owner: String) {
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -104,7 +98,6 @@ subscription OnCreateAppData($owner: String) {
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -200,7 +193,6 @@ subscription OnUpdateAppData($owner: String) {
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -209,7 +201,6 @@ subscription OnUpdateAppData($owner: String) {
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -220,7 +211,6 @@ subscription OnUpdateAppData($owner: String) {
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -231,7 +221,6 @@ subscription OnUpdateAppData($owner: String) {
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -244,7 +233,6 @@ subscription OnUpdateAppData($owner: String) {
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -255,7 +243,6 @@ subscription OnUpdateAppData($owner: String) {
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -266,7 +253,6 @@ subscription OnUpdateAppData($owner: String) {
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -362,7 +348,6 @@ subscription OnDeleteAppData($owner: String) {
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -371,7 +356,6 @@ subscription OnDeleteAppData($owner: String) {
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -382,7 +366,6 @@ subscription OnDeleteAppData($owner: String) {
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -393,7 +376,6 @@ subscription OnDeleteAppData($owner: String) {
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -406,7 +388,6 @@ subscription OnDeleteAppData($owner: String) {
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -417,7 +398,6 @@ subscription OnDeleteAppData($owner: String) {
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -428,7 +408,6 @@ subscription OnDeleteAppData($owner: String) {
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct

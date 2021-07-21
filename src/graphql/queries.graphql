@@ -41,7 +41,6 @@ query GetAppData($id: ID!) {
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -50,7 +49,6 @@ query GetAppData($id: ID!) {
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -61,7 +59,6 @@ query GetAppData($id: ID!) {
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -72,7 +69,6 @@ query GetAppData($id: ID!) {
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -85,7 +81,6 @@ query GetAppData($id: ID!) {
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -96,7 +91,6 @@ query GetAppData($id: ID!) {
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -107,7 +101,6 @@ query GetAppData($id: ID!) {
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -208,7 +201,6 @@ query ListAppDatas(
       }
       agencies {
         transunion {
-          id
           authenticated
           indicativeEnrichmentSuccess
           getAuthenticationQuestionsSuccess
@@ -217,7 +209,6 @@ query ListAppDatas(
           currentRawAuthDetails
           enrollmentKey
           enrollReport {
-            id
             bureau
             errorResponse
             serviceProduct
@@ -228,7 +219,6 @@ query ListAppDatas(
             status
           }
           enrollMergeReport {
-            id
             bureau
             errorResponse
             serviceProduct
@@ -239,7 +229,6 @@ query ListAppDatas(
             status
           }
           enrollVantageScore {
-            id
             bureau
             errorResponse
             serviceProduct
@@ -252,7 +241,6 @@ query ListAppDatas(
           enrolled
           enrolledOn
           fulfillReport {
-            id
             bureau
             errorResponse
             serviceProduct
@@ -263,7 +251,6 @@ query ListAppDatas(
             status
           }
           fulfillMergeReport {
-            id
             bureau
             errorResponse
             serviceProduct
@@ -274,7 +261,6 @@ query ListAppDatas(
             status
           }
           fulfillVantageScore {
-            id
             bureau
             errorResponse
             serviceProduct

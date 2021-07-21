@@ -11,7 +11,6 @@ export interface SubscriptionResponse<T> {
 
 export type Transunion = {
   __typename: "Transunion";
-  id?: string;
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -39,7 +38,6 @@ export type Transunion = {
 
 export type TUReportResponse = {
   __typename: "TUReportResponse";
-  id?: string;
   bureau?: string | null;
   errorResponse?: string | null;
   serviceProduct?: string | null;
@@ -113,7 +111,6 @@ export type AgenciesInput = {
 };
 
 export type TransunionInput = {
-  id: string;
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -140,7 +137,6 @@ export type TransunionInput = {
 };
 
 export type TUReportResponseInput = {
-  id: string;
   bureau?: string | null;
   errorResponse?: string | null;
   serviceProduct?: string | null;
@@ -440,7 +436,6 @@ export type ModelDisputesFilterInput = {
 
 export type PatchTransunionMutation = {
   __typename: "Transunion";
-  id: string;
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -450,7 +445,6 @@ export type PatchTransunionMutation = {
   enrollmentKey?: string | null;
   enrollReport?: {
     __typename: "TUReportResponse";
-    id: string;
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -462,7 +456,6 @@ export type PatchTransunionMutation = {
   } | null;
   enrollMergeReport?: {
     __typename: "TUReportResponse";
-    id: string;
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -474,7 +467,6 @@ export type PatchTransunionMutation = {
   } | null;
   enrollVantageScore?: {
     __typename: "TUReportResponse";
-    id: string;
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -488,7 +480,6 @@ export type PatchTransunionMutation = {
   enrolledOn?: string | null;
   fulfillReport?: {
     __typename: "TUReportResponse";
-    id: string;
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -500,7 +491,6 @@ export type PatchTransunionMutation = {
   } | null;
   fulfillMergeReport?: {
     __typename: "TUReportResponse";
-    id: string;
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -512,7 +502,6 @@ export type PatchTransunionMutation = {
   } | null;
   fulfillVantageScore?: {
     __typename: "TUReportResponse";
-    id: string;
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -581,7 +570,6 @@ export type CreateAppDataMutation = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -591,7 +579,6 @@ export type CreateAppDataMutation = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -603,7 +590,6 @@ export type CreateAppDataMutation = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -615,7 +601,6 @@ export type CreateAppDataMutation = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -629,7 +614,6 @@ export type CreateAppDataMutation = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -641,7 +625,6 @@ export type CreateAppDataMutation = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -653,7 +636,6 @@ export type CreateAppDataMutation = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -765,7 +747,6 @@ export type UpdateAppDataMutation = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -775,7 +756,6 @@ export type UpdateAppDataMutation = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -787,7 +767,6 @@ export type UpdateAppDataMutation = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -799,7 +778,6 @@ export type UpdateAppDataMutation = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -813,7 +791,6 @@ export type UpdateAppDataMutation = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -825,7 +802,6 @@ export type UpdateAppDataMutation = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -837,7 +813,6 @@ export type UpdateAppDataMutation = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -949,7 +924,6 @@ export type DeleteAppDataMutation = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -959,7 +933,6 @@ export type DeleteAppDataMutation = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -971,7 +944,6 @@ export type DeleteAppDataMutation = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -983,7 +955,6 @@ export type DeleteAppDataMutation = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -997,7 +968,6 @@ export type DeleteAppDataMutation = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1009,7 +979,6 @@ export type DeleteAppDataMutation = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1021,7 +990,6 @@ export type DeleteAppDataMutation = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1184,7 +1152,6 @@ export type GetAppDataQuery = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1194,7 +1161,6 @@ export type GetAppDataQuery = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1206,7 +1172,6 @@ export type GetAppDataQuery = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1218,7 +1183,6 @@ export type GetAppDataQuery = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1232,7 +1196,6 @@ export type GetAppDataQuery = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1244,7 +1207,6 @@ export type GetAppDataQuery = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1256,7 +1218,6 @@ export type GetAppDataQuery = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1370,7 +1331,6 @@ export type ListAppDatasQuery = {
       __typename: "Agencies";
       transunion?: {
         __typename: "Transunion";
-        id: string;
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1380,7 +1340,6 @@ export type ListAppDatasQuery = {
         enrollmentKey?: string | null;
         enrollReport?: {
           __typename: "TUReportResponse";
-          id: string;
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1392,7 +1351,6 @@ export type ListAppDatasQuery = {
         } | null;
         enrollMergeReport?: {
           __typename: "TUReportResponse";
-          id: string;
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1404,7 +1362,6 @@ export type ListAppDatasQuery = {
         } | null;
         enrollVantageScore?: {
           __typename: "TUReportResponse";
-          id: string;
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1418,7 +1375,6 @@ export type ListAppDatasQuery = {
         enrolledOn?: string | null;
         fulfillReport?: {
           __typename: "TUReportResponse";
-          id: string;
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1430,7 +1386,6 @@ export type ListAppDatasQuery = {
         } | null;
         fulfillMergeReport?: {
           __typename: "TUReportResponse";
-          id: string;
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1442,7 +1397,6 @@ export type ListAppDatasQuery = {
         } | null;
         fulfillVantageScore?: {
           __typename: "TUReportResponse";
-          id: string;
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1594,7 +1548,6 @@ export type OnCreateAppDataSubscription = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1604,7 +1557,6 @@ export type OnCreateAppDataSubscription = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1616,7 +1568,6 @@ export type OnCreateAppDataSubscription = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1628,7 +1579,6 @@ export type OnCreateAppDataSubscription = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1642,7 +1592,6 @@ export type OnCreateAppDataSubscription = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1654,7 +1603,6 @@ export type OnCreateAppDataSubscription = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1666,7 +1614,6 @@ export type OnCreateAppDataSubscription = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1778,7 +1725,6 @@ export type OnUpdateAppDataSubscription = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1788,7 +1734,6 @@ export type OnUpdateAppDataSubscription = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1800,7 +1745,6 @@ export type OnUpdateAppDataSubscription = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1812,7 +1756,6 @@ export type OnUpdateAppDataSubscription = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1826,7 +1769,6 @@ export type OnUpdateAppDataSubscription = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1838,7 +1780,6 @@ export type OnUpdateAppDataSubscription = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1850,7 +1791,6 @@ export type OnUpdateAppDataSubscription = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1962,7 +1902,6 @@ export type OnDeleteAppDataSubscription = {
     __typename: "Agencies";
     transunion?: {
       __typename: "Transunion";
-      id: string;
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1972,7 +1911,6 @@ export type OnDeleteAppDataSubscription = {
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1984,7 +1922,6 @@ export type OnDeleteAppDataSubscription = {
       } | null;
       enrollMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1996,7 +1933,6 @@ export type OnDeleteAppDataSubscription = {
       } | null;
       enrollVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2010,7 +1946,6 @@ export type OnDeleteAppDataSubscription = {
       enrolledOn?: string | null;
       fulfillReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2022,7 +1957,6 @@ export type OnDeleteAppDataSubscription = {
       } | null;
       fulfillMergeReport?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2034,7 +1968,6 @@ export type OnDeleteAppDataSubscription = {
       } | null;
       fulfillVantageScore?: {
         __typename: "TUReportResponse";
-        id: string;
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2159,7 +2092,6 @@ export class APIService {
     const statement = `mutation PatchTransunion($id: ID!, $msg: String) {
         patchTransunion(id: $id, msg: $msg) {
           __typename
-          id
           authenticated
           indicativeEnrichmentSuccess
           getAuthenticationQuestionsSuccess
@@ -2169,7 +2101,6 @@ export class APIService {
           enrollmentKey
           enrollReport {
             __typename
-            id
             bureau
             errorResponse
             serviceProduct
@@ -2181,7 +2112,6 @@ export class APIService {
           }
           enrollMergeReport {
             __typename
-            id
             bureau
             errorResponse
             serviceProduct
@@ -2193,7 +2123,6 @@ export class APIService {
           }
           enrollVantageScore {
             __typename
-            id
             bureau
             errorResponse
             serviceProduct
@@ -2207,7 +2136,6 @@ export class APIService {
           enrolledOn
           fulfillReport {
             __typename
-            id
             bureau
             errorResponse
             serviceProduct
@@ -2219,7 +2147,6 @@ export class APIService {
           }
           fulfillMergeReport {
             __typename
-            id
             bureau
             errorResponse
             serviceProduct
@@ -2231,7 +2158,6 @@ export class APIService {
           }
           fulfillVantageScore {
             __typename
-            id
             bureau
             errorResponse
             serviceProduct
@@ -2316,7 +2242,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -2326,7 +2251,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2338,7 +2262,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2350,7 +2273,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2364,7 +2286,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2376,7 +2297,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2388,7 +2308,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2516,7 +2435,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -2526,7 +2444,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2538,7 +2455,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2550,7 +2466,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2564,7 +2479,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2576,7 +2490,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2588,7 +2501,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2716,7 +2628,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -2726,7 +2637,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2738,7 +2648,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2750,7 +2659,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2764,7 +2672,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2776,7 +2683,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -2788,7 +2694,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3025,7 +2930,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -3035,7 +2939,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3047,7 +2950,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3059,7 +2961,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3073,7 +2974,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3085,7 +2985,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3097,7 +2996,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3225,7 +3123,6 @@ export class APIService {
               __typename
               transunion {
                 __typename
-                id
                 authenticated
                 indicativeEnrichmentSuccess
                 getAuthenticationQuestionsSuccess
@@ -3235,7 +3132,6 @@ export class APIService {
                 enrollmentKey
                 enrollReport {
                   __typename
-                  id
                   bureau
                   errorResponse
                   serviceProduct
@@ -3247,7 +3143,6 @@ export class APIService {
                 }
                 enrollMergeReport {
                   __typename
-                  id
                   bureau
                   errorResponse
                   serviceProduct
@@ -3259,7 +3154,6 @@ export class APIService {
                 }
                 enrollVantageScore {
                   __typename
-                  id
                   bureau
                   errorResponse
                   serviceProduct
@@ -3273,7 +3167,6 @@ export class APIService {
                 enrolledOn
                 fulfillReport {
                   __typename
-                  id
                   bureau
                   errorResponse
                   serviceProduct
@@ -3285,7 +3178,6 @@ export class APIService {
                 }
                 fulfillMergeReport {
                   __typename
-                  id
                   bureau
                   errorResponse
                   serviceProduct
@@ -3297,7 +3189,6 @@ export class APIService {
                 }
                 fulfillVantageScore {
                   __typename
-                  id
                   bureau
                   errorResponse
                   serviceProduct
@@ -3499,7 +3390,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -3509,7 +3399,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3521,7 +3410,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3533,7 +3421,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3547,7 +3434,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3559,7 +3445,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3571,7 +3456,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3696,7 +3580,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -3706,7 +3589,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3718,7 +3600,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3730,7 +3611,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3744,7 +3624,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3756,7 +3635,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3768,7 +3646,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3893,7 +3770,6 @@ export class APIService {
             __typename
             transunion {
               __typename
-              id
               authenticated
               indicativeEnrichmentSuccess
               getAuthenticationQuestionsSuccess
@@ -3903,7 +3779,6 @@ export class APIService {
               enrollmentKey
               enrollReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3915,7 +3790,6 @@ export class APIService {
               }
               enrollMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3927,7 +3801,6 @@ export class APIService {
               }
               enrollVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3941,7 +3814,6 @@ export class APIService {
               enrolledOn
               fulfillReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3953,7 +3825,6 @@ export class APIService {
               }
               fulfillMergeReport {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
@@ -3965,7 +3836,6 @@ export class APIService {
               }
               fulfillVantageScore {
                 __typename
-                id
                 bureau
                 errorResponse
                 serviceProduct
