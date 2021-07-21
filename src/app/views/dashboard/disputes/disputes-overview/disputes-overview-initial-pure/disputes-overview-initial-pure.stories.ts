@@ -33,4 +33,18 @@ export const Default = Template.bind({});
 Default.args = {
   forceStateTo: 'mock'
 };
-Default.parameters;
+
+export const Empty = Template.bind({});
+Empty.args = {};
+
+export const OnlyHistory = Template.bind({});
+OnlyHistory.args = {
+  forceStateTo: 'mock',
+  emptyCurrentArr: true,
+};
+
+export const OnlyCurrent = Template.bind({});
+OnlyCurrent.args = {
+  forceStateTo: 'mock',
+  emptyHistoricalArr: true,
+};

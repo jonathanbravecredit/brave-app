@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserDisputesListComponent } from './user-disputes-list.component';
+import { DisputesOverviewHistoryView } from './disputes-overview-history.view';
 
-describe('UserDisputesListComponent', () => {
-  let component: UserDisputesListComponent;
-  let fixture: ComponentFixture<UserDisputesListComponent>;
+describe('DisputesOverviewHistoryView', () => {
+  let component: DisputesOverviewHistoryView;
+  let fixture: ComponentFixture<DisputesOverviewHistoryView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserDisputesListComponent ]
+      declarations: [ DisputesOverviewHistoryView ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserDisputesListComponent);
+    fixture = TestBed.createComponent(DisputesOverviewHistoryView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

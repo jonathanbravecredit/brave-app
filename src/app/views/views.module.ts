@@ -58,14 +58,12 @@ import { DisputesTradelinePureView } from './disputes-tradeline/disputes-tradeli
 import { DisputesTradelineView } from './disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
 import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
-import { UserDisputesPureView } from './dashboard/disputes/user-disputes-pure/user-disputes-pure.view';
-import { UserDisputesView } from './dashboard/disputes/user-disputes/user-disputes.view';
 import { ParseRiskScorePipe } from './credit-report/credit-report/parse-risk-score.pipe';
 import { DisputesErrorComponent } from './disputes-error/disputes-error/disputes-error.component';
 import { DisputesErrorPureComponent } from './disputes-error/disputes-error-pure/disputes-error-pure.component';
 import { DisputeFindingsView } from './dashboard/disputes/dispute-findings/dispute-findings.view';
 import { DisputeFindingsPureView } from './dashboard/disputes/dispute-findings-pure/dispute-findings-pure.view';
-import { DisputesOverviewInitialPureView, DisputesOverviewInitialView } from './dashboard/disputes/disputes-overview';
+import { DisputesOverviewHistoryPureView, DisputesOverviewInitialPureView, DisputesOverviewInitialView, DisputesOverviewHistoryView } from './dashboard/disputes/disputes-overview';
 
 const views = [
   SignupComponent,
@@ -116,14 +114,14 @@ const views = [
   DisputesTradelineView,
   BaseExceptionPureView,
   BaseExceptionView,
-  UserDisputesPureView,
-  UserDisputesView,
   DisputesErrorComponent,
   DisputesErrorPureComponent,
   DisputeFindingsView,
   DisputeFindingsPureView,
   DisputesOverviewInitialPureView,
-  DisputesOverviewInitialView
+  DisputesOverviewInitialView,
+  DisputesOverviewHistoryPureView,
+  DisputesOverviewHistoryView
 ];
 
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];

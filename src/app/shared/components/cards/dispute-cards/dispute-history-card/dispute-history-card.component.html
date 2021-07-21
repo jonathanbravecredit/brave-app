@@ -1,14 +1,29 @@
-<div class="p-4 border rounded-sm border-blueGray-300 mt-6">
-    <div class="grid grid-cols-2">
-      <p class="text-sm">Latest dispute submited:</p>
-      <p class="text-right">{{ latestDateSubmitted }}</p>
-      <p class="font-semibold">{{ creditorName }}</p>
-    </div>
-    <div class="flex justify-between">
-      <p class="text-sm">Decision</p>
-      <p class="text-xs text-right font-semibold text-yellow-500">{{ decision }}</p>
-    </div>
-    <div class="flex items-center mt-1">
-      <p class="text-xs">View Details</p> <span class="material-icons">expand_more</span>
+<brave-dispute-regular-card *ngIf="type === 'default'">
+  <ng-template data>
+    <span class="font-semibold text-sm flex-grow">Latest Dispute Submitted:</span>
+    <span class="font-semibold text-sm">{{ latestDateSubmitted }}</span>
+    <span></span>
+    <span class="font-semibold text-sm flex-grow">{{ creditorName }}</span>
+  </ng-template>
+  <ng-template details>
+    <p class="text-sm">Decision: </p>
+    <p class="text-sm font-semibold text-yellow-500">{{ decision }}</p>
+  </ng-template>
+</brave-dispute-regular-card>
+<div class="p-y mx-3 py-10" *ngIf="type === 'short'">
+  <div class="flex">
+    <span class="material-icons mr-3">
+      assignment
+    </span>
+    <div>
+      <p class="text-sm font-semibold">{{ creditorName }}</p>
+      <p class="text-sm font-semibold">Result Received: {{ resultReceived }}</p>
     </div>
   </div>
+  <div class="mt-2 flex items-center">
+    <span class="text-xs">View Details</span>
+    <span class="material-icons text-sm">
+      keyboard_arrow_right
+    </span>
+  </div>
+</div>

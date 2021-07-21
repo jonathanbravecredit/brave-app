@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DEFAULT_DISPUTE_STATUS_DISPLAY_INFO as defaultDisplayInfo } from './constants';
-import { DisputeStatus } from './enums';
-import { TDisputeStatusDisplayInfoArg } from './interfaces';
+import { DEFAULT_DISPUTE_STATUS_DISPLAY_INFO as defaultDisplayInfo } from '../constants';
+import { DisputeStatus } from '../enums';
+import { TDisputeStatusDisplayInfoArg } from '../interfaces';
 
 @Pipe({
   name: 'disputeCardStatus'
