@@ -1,11 +1,8 @@
 type Query {
   transunion(action: String!, message: String!): String
-  getDisputes(id: ID!): Disputes
 }
 
 type Mutation {
-  createDisputes(id: ID!, msg: String): Disputes
-  patchDisputes(id: ID!, msg: String): Disputes
   patchTransunion(id: ID!, msg: String): Transunion
 }
 
@@ -16,6 +13,7 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  disputes: [Disputes] @connection(keyName: "byAppData", fields: ["id"])
 }
 type User {
   id: ID!
@@ -79,6 +77,7 @@ type ShowAccountsPreference {
   mortgages: Boolean
 }
 type Transunion {
+  id: ID!
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
   getAuthenticationQuestionsSuccess: Boolean
@@ -102,7 +101,6 @@ type Transunion {
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
   disputeStatus: String
-  disputes: Disputes
 }
 type Equifax {
   authenticated: Boolean
@@ -111,6 +109,7 @@ type Experian {
   authenticated: Boolean
 }
 type TUReportResponse {
+  id: ID!
   bureau: String
   errorResponse: String
   serviceProduct: String
@@ -120,15 +119,31 @@ type TUReportResponse {
   serviceProductValue: String
   status: String
 }
-type Disputes {
-  disputePreflightStatus: String
-  disputeInflightStatus: String
-  disputeEligibility: String
+type Disputes
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
+  @key(
+    name: "byAppData"
+    fields: [
+      "agencyId"
+      "disputeId"
+      "disputeStatus"
+      "openedOn"
+      "closedOn"
+      "disputeResults"
+      "notificationStatus"
+      "notificationMessage"
+      "notificationSentOn"
+    ]
+  ) {
+  id: ID!
+  agencyId: ID!
+  disputeId: String
+  disputeStatus: String
+  openedOn: String
+  closedOn: String
   disputeResults: AWSJSON
-  disputeHistory: [AWSJSON]
-  modifiedOn: Int
-  createdOn: Int
   notificationStatus: String
   notificationMessage: AWSJSON
-  notificationSentOn: Int
+  notificationSentOn: String
 }
