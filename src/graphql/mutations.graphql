@@ -1,7 +1,6 @@
 # this is an auto generated file. This will be overwritten
 mutation PatchTransunion($id: ID!, $msg: String) {
   patchTransunion(id: $id, msg: $msg) {
-    id
     authenticated
     indicativeEnrichmentSuccess
     getAuthenticationQuestionsSuccess
@@ -10,7 +9,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     currentRawAuthDetails
     enrollmentKey
     enrollReport {
-      id
       bureau
       errorResponse
       serviceProduct
@@ -21,7 +19,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       status
     }
     enrollMergeReport {
-      id
       bureau
       errorResponse
       serviceProduct
@@ -32,7 +29,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       status
     }
     enrollVantageScore {
-      id
       bureau
       errorResponse
       serviceProduct
@@ -45,7 +41,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     enrolled
     enrolledOn
     fulfillReport {
-      id
       bureau
       errorResponse
       serviceProduct
@@ -56,7 +51,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       status
     }
     fulfillMergeReport {
-      id
       bureau
       errorResponse
       serviceProduct
@@ -67,7 +61,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       status
     }
     fulfillVantageScore {
-      id
       bureau
       errorResponse
       serviceProduct
@@ -129,7 +122,6 @@ mutation CreateAppData(
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -138,7 +130,6 @@ mutation CreateAppData(
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -149,7 +140,6 @@ mutation CreateAppData(
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -160,7 +150,6 @@ mutation CreateAppData(
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -173,7 +162,6 @@ mutation CreateAppData(
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -184,7 +172,6 @@ mutation CreateAppData(
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -195,7 +182,6 @@ mutation CreateAppData(
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -294,7 +280,6 @@ mutation UpdateAppData(
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -303,7 +288,6 @@ mutation UpdateAppData(
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -314,7 +298,6 @@ mutation UpdateAppData(
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -325,7 +308,6 @@ mutation UpdateAppData(
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -338,7 +320,6 @@ mutation UpdateAppData(
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -349,7 +330,6 @@ mutation UpdateAppData(
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -360,7 +340,6 @@ mutation UpdateAppData(
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -459,7 +438,6 @@ mutation DeleteAppData(
     }
     agencies {
       transunion {
-        id
         authenticated
         indicativeEnrichmentSuccess
         getAuthenticationQuestionsSuccess
@@ -468,7 +446,6 @@ mutation DeleteAppData(
         currentRawAuthDetails
         enrollmentKey
         enrollReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -479,7 +456,6 @@ mutation DeleteAppData(
           status
         }
         enrollMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -490,7 +466,6 @@ mutation DeleteAppData(
           status
         }
         enrollVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -503,7 +478,6 @@ mutation DeleteAppData(
         enrolled
         enrolledOn
         fulfillReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -514,7 +488,6 @@ mutation DeleteAppData(
           status
         }
         fulfillMergeReport {
-          id
           bureau
           errorResponse
           serviceProduct
@@ -525,7 +498,6 @@ mutation DeleteAppData(
           status
         }
         fulfillVantageScore {
-          id
           bureau
           errorResponse
           serviceProduct

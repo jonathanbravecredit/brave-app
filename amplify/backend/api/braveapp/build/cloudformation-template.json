@@ -138,7 +138,7 @@
                         {
                             "Ref": "APIKeyExpirationEpoch"
                         },
-                        1627437342
+                        1627492942
                     ]
                 }
             },
@@ -528,7 +528,7 @@
                                                     "ApiId"
                                                 ]
                                             },
-                                            "typeName": "Disputes"
+                                            "typeName": "Dispute"
                                         }
                                     ]
                                 },
@@ -543,7 +543,7 @@
                                                 ]
                                             },
                                             "typeName": "Mutation",
-                                            "fieldName": "createDisputes"
+                                            "fieldName": "createDispute"
                                         }
                                     ]
                                 },
@@ -558,7 +558,7 @@
                                                 ]
                                             },
                                             "typeName": "Mutation",
-                                            "fieldName": "updateDisputes"
+                                            "fieldName": "updateDispute"
                                         }
                                     ]
                                 },
@@ -573,7 +573,7 @@
                                                 ]
                                             },
                                             "typeName": "Mutation",
-                                            "fieldName": "deleteDisputes"
+                                            "fieldName": "deleteDispute"
                                         }
                                     ]
                                 },
@@ -588,7 +588,7 @@
                                                 ]
                                             },
                                             "typeName": "Query",
-                                            "fieldName": "getDisputes"
+                                            "fieldName": "getDispute"
                                         }
                                     ]
                                 },
@@ -603,7 +603,7 @@
                                                 ]
                                             },
                                             "typeName": "Query",
-                                            "fieldName": "listDisputess"
+                                            "fieldName": "listDisputes"
                                         }
                                     ]
                                 },
@@ -618,7 +618,7 @@
                                                 ]
                                             },
                                             "typeName": "Subscription",
-                                            "fieldName": "onCreateDisputes"
+                                            "fieldName": "onCreateDispute"
                                         }
                                     ]
                                 },
@@ -633,7 +633,7 @@
                                                 ]
                                             },
                                             "typeName": "Subscription",
-                                            "fieldName": "onUpdateDisputes"
+                                            "fieldName": "onUpdateDispute"
                                         }
                                     ]
                                 },
@@ -648,7 +648,7 @@
                                                 ]
                                             },
                                             "typeName": "Subscription",
-                                            "fieldName": "onDeleteDisputes"
+                                            "fieldName": "onDeleteDispute"
                                         }
                                     ]
                                 }
@@ -760,7 +760,7 @@
                 "NoneDataSource"
             ]
         },
-        "Disputes": {
+        "Dispute": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "Parameters": {
@@ -828,7 +828,7 @@
                                 "Ref": "S3DeploymentRootKey"
                             },
                             "stacks",
-                            "Disputes.json"
+                            "Dispute.json"
                         ]
                     ]
                 }
@@ -914,7 +914,7 @@
             "DependsOn": [
                 "GraphQLSchema",
                 "NoneDataSource",
-                "Disputes"
+                "Dispute"
             ]
         },
         "CustomResourcesjson": {
@@ -961,7 +961,7 @@
                 "GraphQLAPI",
                 "GraphQLSchema",
                 "AppData",
-                "Disputes",
+                "Dispute",
                 "ConnectionStack"
             ]
         }
