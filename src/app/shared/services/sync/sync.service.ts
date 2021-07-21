@@ -153,6 +153,7 @@ export class SyncService implements OnDestroy {
   /**
    * Takes the ID and syncs the state to the DB.
    * - Stays on the same url
+   * - refreshes the report if needed
    * @param {string} id
    */
   async stayPut(id: string): Promise<void> {
