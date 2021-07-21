@@ -2,6 +2,10 @@ type Query {
   transunion(action: String!, message: String!): String
 }
 
+type Mutation {
+  patchTransunion(id: ID!, msg: String): Transunion
+}
+
 type AppData
   @model
   @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }]) {
