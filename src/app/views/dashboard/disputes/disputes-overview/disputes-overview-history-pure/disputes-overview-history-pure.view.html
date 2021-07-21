@@ -1,0 +1,13 @@
+<div class="mx-4 text-gray-900">
+  <div class="flex items-center py-4">
+    <span class="material-icons">chevron_left</span>        
+    <span class="text-sm ml-2">Back</span>
+  </div>
+  <div class="border-b-2 border-blueGray-800 pb-4">
+    <div class="mb-10">
+      <h1 class="text-xl font-semibold">Dispute History</h1>
+    </div>
+    <p class="text-sm">Any disputes that have reached a decision and are over 30 days old can be found here</p>
+  </div>
+  <brave-dispute-history-card *ngFor="let dispute of historicalDisputes" type="short" [creditorName]="dispute.creditorName" [resultReceived]="dispute.resultReceived"></brave-dispute-history-card>
+</div>

@@ -13,7 +13,7 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
-  disputes: [Disputes] @connection(keyName: "byAppData", fields: ["id"])
+  disputes: [Dispute] @connection(keyName: "byAppData", fields: ["id"])
 }
 type User {
   id: ID!
@@ -117,7 +117,7 @@ type TUReportResponse {
   serviceProductValue: String
   status: String
 }
-type Disputes
+type Dispute
   @model
   @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
   @key(
