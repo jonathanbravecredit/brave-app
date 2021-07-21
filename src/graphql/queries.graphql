@@ -319,8 +319,8 @@ query ListAppDatas(
     nextToken
   }
 }
-query GetDisputes($id: ID!) {
-  getDisputes(id: $id) {
+query GetDispute($id: ID!) {
+  getDispute(id: $id) {
     id
     agencyId
     disputeId
@@ -336,12 +336,12 @@ query GetDisputes($id: ID!) {
     owner
   }
 }
-query ListDisputess(
-  $filter: ModelDisputesFilterInput
+query ListDisputes(
+  $filter: ModelDisputeFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listDisputess(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listDisputes(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       agencyId

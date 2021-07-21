@@ -554,11 +554,11 @@ mutation DeleteAppData(
     }
   }
 }
-mutation CreateDisputes(
-  $input: CreateDisputesInput!
-  $condition: ModelDisputesConditionInput
+mutation CreateDispute(
+  $input: CreateDisputeInput!
+  $condition: ModelDisputeConditionInput
 ) {
-  createDisputes(input: $input, condition: $condition) {
+  createDispute(input: $input, condition: $condition) {
     id
     agencyId
     disputeId
@@ -574,11 +574,11 @@ mutation CreateDisputes(
     owner
   }
 }
-mutation UpdateDisputes(
-  $input: UpdateDisputesInput!
-  $condition: ModelDisputesConditionInput
+mutation UpdateDispute(
+  $input: UpdateDisputeInput!
+  $condition: ModelDisputeConditionInput
 ) {
-  updateDisputes(input: $input, condition: $condition) {
+  updateDispute(input: $input, condition: $condition) {
     id
     agencyId
     disputeId
@@ -594,11 +594,11 @@ mutation UpdateDisputes(
     owner
   }
 }
-mutation DeleteDisputes(
-  $input: DeleteDisputesInput!
-  $condition: ModelDisputesConditionInput
+mutation DeleteDispute(
+  $input: DeleteDisputeInput!
+  $condition: ModelDisputeConditionInput
 ) {
-  deleteDisputes(input: $input, condition: $condition) {
+  deleteDispute(input: $input, condition: $condition) {
     id
     agencyId
     disputeId

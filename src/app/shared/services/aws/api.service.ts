@@ -181,7 +181,7 @@ export type AppData = {
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
-  disputes?: ModelDisputesConnection;
+  disputes?: ModelDisputeConnection;
 };
 
 export type User = {
@@ -271,14 +271,14 @@ export type ShowAccountsPreference = {
   mortgages?: boolean | null;
 };
 
-export type ModelDisputesConnection = {
-  __typename: "ModelDisputesConnection";
-  items?: Array<Disputes | null> | null;
+export type ModelDisputeConnection = {
+  __typename: "ModelDisputeConnection";
+  items?: Array<Dispute | null> | null;
   nextToken?: string | null;
 };
 
-export type Disputes = {
-  __typename: "Disputes";
+export type Dispute = {
+  __typename: "Dispute";
   id?: string;
   agencyId?: string;
   disputeId?: string | null;
@@ -305,7 +305,7 @@ export type DeleteAppDataInput = {
   id: string;
 };
 
-export type CreateDisputesInput = {
+export type CreateDisputeInput = {
   id?: string | null;
   agencyId: string;
   disputeId?: string | null;
@@ -318,7 +318,7 @@ export type CreateDisputesInput = {
   notificationSentOn?: string | null;
 };
 
-export type ModelDisputesConditionInput = {
+export type ModelDisputeConditionInput = {
   agencyId?: ModelIDInput | null;
   disputeId?: ModelStringInput | null;
   disputeStatus?: ModelStringInput | null;
@@ -328,9 +328,9 @@ export type ModelDisputesConditionInput = {
   notificationStatus?: ModelStringInput | null;
   notificationMessage?: ModelStringInput | null;
   notificationSentOn?: ModelStringInput | null;
-  and?: Array<ModelDisputesConditionInput | null> | null;
-  or?: Array<ModelDisputesConditionInput | null> | null;
-  not?: ModelDisputesConditionInput | null;
+  and?: Array<ModelDisputeConditionInput | null> | null;
+  or?: Array<ModelDisputeConditionInput | null> | null;
+  not?: ModelDisputeConditionInput | null;
 };
 
 export type ModelIDInput = {
@@ -388,7 +388,7 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null;
 };
 
-export type UpdateDisputesInput = {
+export type UpdateDisputeInput = {
   id: string;
   agencyId?: string | null;
   disputeId?: string | null;
@@ -401,7 +401,7 @@ export type UpdateDisputesInput = {
   notificationSentOn?: string | null;
 };
 
-export type DeleteDisputesInput = {
+export type DeleteDisputeInput = {
   id: string;
 };
 
@@ -418,7 +418,7 @@ export type ModelAppDataConnection = {
   nextToken?: string | null;
 };
 
-export type ModelDisputesFilterInput = {
+export type ModelDisputeFilterInput = {
   id?: ModelIDInput | null;
   agencyId?: ModelIDInput | null;
   disputeId?: ModelStringInput | null;
@@ -429,9 +429,9 @@ export type ModelDisputesFilterInput = {
   notificationStatus?: ModelStringInput | null;
   notificationMessage?: ModelStringInput | null;
   notificationSentOn?: ModelStringInput | null;
-  and?: Array<ModelDisputesFilterInput | null> | null;
-  or?: Array<ModelDisputesFilterInput | null> | null;
-  not?: ModelDisputesFilterInput | null;
+  and?: Array<ModelDisputeFilterInput | null> | null;
+  or?: Array<ModelDisputeFilterInput | null> | null;
+  not?: ModelDisputeFilterInput | null;
 };
 
 export type PatchTransunionMutation = {
@@ -677,9 +677,9 @@ export type CreateAppDataMutation = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -854,9 +854,9 @@ export type UpdateAppDataMutation = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -1031,9 +1031,9 @@ export type DeleteAppDataMutation = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -1052,8 +1052,8 @@ export type DeleteAppDataMutation = {
   } | null;
 };
 
-export type CreateDisputesMutation = {
-  __typename: "Disputes";
+export type CreateDisputeMutation = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -1069,8 +1069,8 @@ export type CreateDisputesMutation = {
   owner?: string | null;
 };
 
-export type UpdateDisputesMutation = {
-  __typename: "Disputes";
+export type UpdateDisputeMutation = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -1086,8 +1086,8 @@ export type UpdateDisputesMutation = {
   owner?: string | null;
 };
 
-export type DeleteDisputesMutation = {
-  __typename: "Disputes";
+export type DeleteDisputeMutation = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -1259,9 +1259,9 @@ export type GetAppDataQuery = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -1438,9 +1438,9 @@ export type ListAppDatasQuery = {
     updatedAt: string;
     owner?: string | null;
     disputes?: {
-      __typename: "ModelDisputesConnection";
+      __typename: "ModelDisputeConnection";
       items?: Array<{
-        __typename: "Disputes";
+        __typename: "Dispute";
         id: string;
         agencyId: string;
         disputeId?: string | null;
@@ -1461,8 +1461,8 @@ export type ListAppDatasQuery = {
   nextToken?: string | null;
 };
 
-export type GetDisputesQuery = {
-  __typename: "Disputes";
+export type GetDisputeQuery = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -1478,10 +1478,10 @@ export type GetDisputesQuery = {
   owner?: string | null;
 };
 
-export type ListDisputessQuery = {
-  __typename: "ModelDisputesConnection";
+export type ListDisputesQuery = {
+  __typename: "ModelDisputeConnection";
   items?: Array<{
-    __typename: "Disputes";
+    __typename: "Dispute";
     id: string;
     agencyId: string;
     disputeId?: string | null;
@@ -1655,9 +1655,9 @@ export type OnCreateAppDataSubscription = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -1832,9 +1832,9 @@ export type OnUpdateAppDataSubscription = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -2009,9 +2009,9 @@ export type OnDeleteAppDataSubscription = {
   updatedAt: string;
   owner?: string | null;
   disputes?: {
-    __typename: "ModelDisputesConnection";
+    __typename: "ModelDisputeConnection";
     items?: Array<{
-      __typename: "Disputes";
+      __typename: "Dispute";
       id: string;
       agencyId: string;
       disputeId?: string | null;
@@ -2030,8 +2030,8 @@ export type OnDeleteAppDataSubscription = {
   } | null;
 };
 
-export type OnCreateDisputesSubscription = {
-  __typename: "Disputes";
+export type OnCreateDisputeSubscription = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -2047,8 +2047,8 @@ export type OnCreateDisputesSubscription = {
   owner?: string | null;
 };
 
-export type OnUpdateDisputesSubscription = {
-  __typename: "Disputes";
+export type OnUpdateDisputeSubscription = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -2064,8 +2064,8 @@ export type OnUpdateDisputesSubscription = {
   owner?: string | null;
 };
 
-export type OnDeleteDisputesSubscription = {
-  __typename: "Disputes";
+export type OnDeleteDisputeSubscription = {
+  __typename: "Dispute";
   id: string;
   agencyId: string;
   disputeId?: string | null;
@@ -2767,12 +2767,12 @@ export class APIService {
     )) as any;
     return <DeleteAppDataMutation>response.data.deleteAppData;
   }
-  async CreateDisputes(
-    input: CreateDisputesInput,
-    condition?: ModelDisputesConditionInput
-  ): Promise<CreateDisputesMutation> {
-    const statement = `mutation CreateDisputes($input: CreateDisputesInput!, $condition: ModelDisputesConditionInput) {
-        createDisputes(input: $input, condition: $condition) {
+  async CreateDispute(
+    input: CreateDisputeInput,
+    condition?: ModelDisputeConditionInput
+  ): Promise<CreateDisputeMutation> {
+    const statement = `mutation CreateDispute($input: CreateDisputeInput!, $condition: ModelDisputeConditionInput) {
+        createDispute(input: $input, condition: $condition) {
           __typename
           id
           agencyId
@@ -2798,14 +2798,14 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <CreateDisputesMutation>response.data.createDisputes;
+    return <CreateDisputeMutation>response.data.createDispute;
   }
-  async UpdateDisputes(
-    input: UpdateDisputesInput,
-    condition?: ModelDisputesConditionInput
-  ): Promise<UpdateDisputesMutation> {
-    const statement = `mutation UpdateDisputes($input: UpdateDisputesInput!, $condition: ModelDisputesConditionInput) {
-        updateDisputes(input: $input, condition: $condition) {
+  async UpdateDispute(
+    input: UpdateDisputeInput,
+    condition?: ModelDisputeConditionInput
+  ): Promise<UpdateDisputeMutation> {
+    const statement = `mutation UpdateDispute($input: UpdateDisputeInput!, $condition: ModelDisputeConditionInput) {
+        updateDispute(input: $input, condition: $condition) {
           __typename
           id
           agencyId
@@ -2831,14 +2831,14 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <UpdateDisputesMutation>response.data.updateDisputes;
+    return <UpdateDisputeMutation>response.data.updateDispute;
   }
-  async DeleteDisputes(
-    input: DeleteDisputesInput,
-    condition?: ModelDisputesConditionInput
-  ): Promise<DeleteDisputesMutation> {
-    const statement = `mutation DeleteDisputes($input: DeleteDisputesInput!, $condition: ModelDisputesConditionInput) {
-        deleteDisputes(input: $input, condition: $condition) {
+  async DeleteDispute(
+    input: DeleteDisputeInput,
+    condition?: ModelDisputeConditionInput
+  ): Promise<DeleteDisputeMutation> {
+    const statement = `mutation DeleteDispute($input: DeleteDisputeInput!, $condition: ModelDisputeConditionInput) {
+        deleteDispute(input: $input, condition: $condition) {
           __typename
           id
           agencyId
@@ -2864,7 +2864,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <DeleteDisputesMutation>response.data.deleteDisputes;
+    return <DeleteDisputeMutation>response.data.deleteDispute;
   }
   async Transunion(action: string, message: string): Promise<string | null> {
     const statement = `query Transunion($action: String!, $message: String!) {
@@ -3268,9 +3268,9 @@ export class APIService {
     )) as any;
     return <ListAppDatasQuery>response.data.listAppDatas;
   }
-  async GetDisputes(id: string): Promise<GetDisputesQuery> {
-    const statement = `query GetDisputes($id: ID!) {
-        getDisputes(id: $id) {
+  async GetDispute(id: string): Promise<GetDisputeQuery> {
+    const statement = `query GetDispute($id: ID!) {
+        getDispute(id: $id) {
           __typename
           id
           agencyId
@@ -3293,15 +3293,15 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetDisputesQuery>response.data.getDisputes;
+    return <GetDisputeQuery>response.data.getDispute;
   }
-  async ListDisputess(
-    filter?: ModelDisputesFilterInput,
+  async ListDisputes(
+    filter?: ModelDisputeFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ListDisputessQuery> {
-    const statement = `query ListDisputess($filter: ModelDisputesFilterInput, $limit: Int, $nextToken: String) {
-        listDisputess(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ListDisputesQuery> {
+    const statement = `query ListDisputes($filter: ModelDisputeFilterInput, $limit: Int, $nextToken: String) {
+        listDisputes(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -3335,7 +3335,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListDisputessQuery>response.data.listDisputess;
+    return <ListDisputesQuery>response.data.listDisputes;
   }
   OnCreateAppDataListener(
     owner?: string
@@ -3907,11 +3907,11 @@ export class APIService {
     ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
   }
 
-  OnCreateDisputesListener(
+  OnCreateDisputeListener(
     owner?: string
-  ): Observable<SubscriptionResponse<OnCreateDisputesSubscription>> {
-    const statement = `subscription OnCreateDisputes($owner: String) {
-        onCreateDisputes(owner: $owner) {
+  ): Observable<SubscriptionResponse<OnCreateDisputeSubscription>> {
+    const statement = `subscription OnCreateDispute($owner: String) {
+        onCreateDispute(owner: $owner) {
           __typename
           id
           agencyId
@@ -3934,14 +3934,14 @@ export class APIService {
     }
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnCreateDisputesSubscription>>;
+    ) as Observable<SubscriptionResponse<OnCreateDisputeSubscription>>;
   }
 
-  OnUpdateDisputesListener(
+  OnUpdateDisputeListener(
     owner?: string
-  ): Observable<SubscriptionResponse<OnUpdateDisputesSubscription>> {
-    const statement = `subscription OnUpdateDisputes($owner: String) {
-        onUpdateDisputes(owner: $owner) {
+  ): Observable<SubscriptionResponse<OnUpdateDisputeSubscription>> {
+    const statement = `subscription OnUpdateDispute($owner: String) {
+        onUpdateDispute(owner: $owner) {
           __typename
           id
           agencyId
@@ -3964,14 +3964,14 @@ export class APIService {
     }
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnUpdateDisputesSubscription>>;
+    ) as Observable<SubscriptionResponse<OnUpdateDisputeSubscription>>;
   }
 
-  OnDeleteDisputesListener(
+  OnDeleteDisputeListener(
     owner?: string
-  ): Observable<SubscriptionResponse<OnDeleteDisputesSubscription>> {
-    const statement = `subscription OnDeleteDisputes($owner: String) {
-        onDeleteDisputes(owner: $owner) {
+  ): Observable<SubscriptionResponse<OnDeleteDisputeSubscription>> {
+    const statement = `subscription OnDeleteDispute($owner: String) {
+        onDeleteDispute(owner: $owner) {
           __typename
           id
           agencyId
@@ -3994,6 +3994,6 @@ export class APIService {
     }
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnDeleteDisputesSubscription>>;
+    ) as Observable<SubscriptionResponse<OnDeleteDisputeSubscription>>;
   }
 }

@@ -464,8 +464,8 @@ subscription OnDeleteAppData($owner: String) {
     }
   }
 }
-subscription OnCreateDisputes($owner: String) {
-  onCreateDisputes(owner: $owner) {
+subscription OnCreateDispute($owner: String) {
+  onCreateDispute(owner: $owner) {
     id
     agencyId
     disputeId
@@ -481,8 +481,8 @@ subscription OnCreateDisputes($owner: String) {
     owner
   }
 }
-subscription OnUpdateDisputes($owner: String) {
-  onUpdateDisputes(owner: $owner) {
+subscription OnUpdateDispute($owner: String) {
+  onUpdateDispute(owner: $owner) {
     id
     agencyId
     disputeId
@@ -498,8 +498,8 @@ subscription OnUpdateDisputes($owner: String) {
     owner
   }
 }
-subscription OnDeleteDisputes($owner: String) {
-  onDeleteDisputes(owner: $owner) {
+subscription OnDeleteDispute($owner: String) {
+  onDeleteDispute(owner: $owner) {
     id
     agencyId
     disputeId
