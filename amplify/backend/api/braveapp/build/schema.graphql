@@ -24,7 +24,7 @@ type AppData @aws_iam @aws_cognito_user_pools {
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
-  disputes(disputeIdDisputeStatusOpenedOnClosedOnDisputeResultsNotificationStatusNotificationMessageNotificationSentOn: ModelDisputeByAppDataCompositeKeyConditionInput, filter: ModelDisputeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDisputeConnection @aws_iam @aws_cognito_user_pools
+  disputes(disputeIdDisputeStatusDisputeLetterCodeDisputeLetterContentOpenDisputesAgencyNameOpenedOnClosedOnDisputeItemsDisputeResultsNotificationStatusNotificationMessageNotificationSentOn: ModelDisputeByAppDataCompositeKeyConditionInput, filter: ModelDisputeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDisputeConnection @aws_iam @aws_cognito_user_pools
 }
 
 type User @aws_iam @aws_cognito_user_pools {
@@ -147,11 +147,16 @@ type TUReportResponse @aws_iam @aws_cognito_user_pools {
 
 type Dispute @aws_iam @aws_cognito_user_pools {
   id: ID!
-  agencyId: ID!
+  appDataId: ID!
   disputeId: String
   disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: String
+  agencyName: String
   openedOn: String
   closedOn: String
+  disputeItems: AWSJSON
   disputeResults: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
@@ -415,11 +420,16 @@ type ModelDisputeConnection @aws_iam @aws_cognito_user_pools {
 
 input ModelDisputeFilterInput {
   id: ModelIDInput
-  agencyId: ModelIDInput
+  appDataId: ModelIDInput
   disputeId: ModelStringInput
   disputeStatus: ModelStringInput
+  disputeLetterCode: ModelStringInput
+  disputeLetterContent: ModelStringInput
+  openDisputes: ModelStringInput
+  agencyName: ModelStringInput
   openedOn: ModelStringInput
   closedOn: ModelStringInput
+  disputeItems: ModelStringInput
   disputeResults: ModelStringInput
   notificationStatus: ModelStringInput
   notificationMessage: ModelStringInput
@@ -431,11 +441,16 @@ input ModelDisputeFilterInput {
 
 input CreateDisputeInput {
   id: ID
-  agencyId: ID!
+  appDataId: ID!
   disputeId: String
   disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: String
+  agencyName: String
   openedOn: String
   closedOn: String
+  disputeItems: AWSJSON
   disputeResults: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
@@ -444,11 +459,16 @@ input CreateDisputeInput {
 
 input UpdateDisputeInput {
   id: ID!
-  agencyId: ID
+  appDataId: ID
   disputeId: String
   disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: String
+  agencyName: String
   openedOn: String
   closedOn: String
+  disputeItems: AWSJSON
   disputeResults: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
@@ -460,11 +480,16 @@ input DeleteDisputeInput {
 }
 
 input ModelDisputeConditionInput {
-  agencyId: ModelIDInput
+  appDataId: ModelIDInput
   disputeId: ModelStringInput
   disputeStatus: ModelStringInput
+  disputeLetterCode: ModelStringInput
+  disputeLetterContent: ModelStringInput
+  openDisputes: ModelStringInput
+  agencyName: ModelStringInput
   openedOn: ModelStringInput
   closedOn: ModelStringInput
+  disputeItems: ModelStringInput
   disputeResults: ModelStringInput
   notificationStatus: ModelStringInput
   notificationMessage: ModelStringInput
@@ -487,8 +512,13 @@ input ModelDisputeByAppDataCompositeKeyConditionInput {
 input ModelDisputeByAppDataCompositeKeyInput {
   disputeId: String
   disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: String
+  agencyName: String
   openedOn: String
   closedOn: String
+  disputeItems: AWSJSON
   disputeResults: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
