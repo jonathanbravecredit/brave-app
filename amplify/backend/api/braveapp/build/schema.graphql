@@ -6,6 +6,16 @@ type Query {
   listDisputess(filter: ModelDisputesFilterInput, limit: Int, nextToken: String): ModelDisputesConnection @aws_iam @aws_cognito_user_pools
 }
 
+type Mutation {
+  patchTransunion(id: ID!, msg: String): Transunion
+  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  createDisputes(input: CreateDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
+  updateDisputes(input: UpdateDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
+  deleteDisputes(input: DeleteDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
+}
+
 type AppData @aws_iam @aws_cognito_user_pools {
   id: ID!
   user: User!
@@ -385,15 +395,6 @@ input UpdateAppDataInput {
 
 input DeleteAppDataInput {
   id: ID
-}
-
-type Mutation {
-  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  createDisputes(input: CreateDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
-  updateDisputes(input: UpdateDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
-  deleteDisputes(input: DeleteDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
 }
 
 input ModelAppDataConditionInput {

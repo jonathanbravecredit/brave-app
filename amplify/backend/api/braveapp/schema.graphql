@@ -15,7 +15,6 @@ type AppData
   preferences: Preferences!
   disputes: [Disputes] @connection(keyName: "byAppData", fields: ["id"])
 }
-}
 type User {
   id: ID!
   userAttributes: UserAttributes
