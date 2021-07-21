@@ -101,7 +101,6 @@ type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
 }
 
 type Transunion @aws_iam @aws_cognito_user_pools {
-  id: ID!
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
   getAuthenticationQuestionsSuccess: Boolean
@@ -136,7 +135,6 @@ type Experian @aws_iam @aws_cognito_user_pools {
 }
 
 type TUReportResponse @aws_iam @aws_cognito_user_pools {
-  id: ID!
   bureau: String
   errorResponse: String
   serviceProduct: String
@@ -219,7 +217,6 @@ input AgenciesInput {
 }
 
 input TransunionInput {
-  id: ID!
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
   getAuthenticationQuestionsSuccess: Boolean
@@ -246,7 +243,6 @@ input TransunionInput {
 }
 
 input TUReportResponseInput {
-  id: ID!
   bureau: String
   errorResponse: String
   serviceProduct: String
