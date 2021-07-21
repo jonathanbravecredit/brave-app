@@ -115,18 +115,6 @@ subscription OnCreateAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -146,6 +134,24 @@ subscription OnCreateAppData($owner: String) {
     createdAt
     updatedAt
     owner
+    disputes {
+      items {
+        id
+        agencyId
+        disputeId
+        disputeStatus
+        openedOn
+        closedOn
+        disputeResults
+        notificationStatus
+        notificationMessage
+        notificationSentOn
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 subscription OnUpdateAppData($owner: String) {
@@ -264,18 +270,6 @@ subscription OnUpdateAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -295,6 +289,24 @@ subscription OnUpdateAppData($owner: String) {
     createdAt
     updatedAt
     owner
+    disputes {
+      items {
+        id
+        agencyId
+        disputeId
+        disputeStatus
+        openedOn
+        closedOn
+        disputeResults
+        notificationStatus
+        notificationMessage
+        notificationSentOn
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 subscription OnDeleteAppData($owner: String) {
@@ -413,18 +425,6 @@ subscription OnDeleteAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -441,6 +441,75 @@ subscription OnDeleteAppData($owner: String) {
         mortgages
       }
     }
+    createdAt
+    updatedAt
+    owner
+    disputes {
+      items {
+        id
+        agencyId
+        disputeId
+        disputeStatus
+        openedOn
+        closedOn
+        disputeResults
+        notificationStatus
+        notificationMessage
+        notificationSentOn
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateDisputes($owner: String) {
+  onCreateDisputes(owner: $owner) {
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateDisputes($owner: String) {
+  onUpdateDisputes(owner: $owner) {
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteDisputes($owner: String) {
+  onDeleteDisputes(owner: $owner) {
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
     createdAt
     updatedAt
     owner

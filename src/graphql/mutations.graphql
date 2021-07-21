@@ -1,32 +1,4 @@
 # this is an auto generated file. This will be overwritten
-mutation CreateDisputes($id: ID!, $msg: String) {
-  createDisputes(id: $id, msg: $msg) {
-    disputePreflightStatus
-    disputeInflightStatus
-    disputeEligibility
-    disputeResults
-    disputeHistory
-    modifiedOn
-    createdOn
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-  }
-}
-mutation PatchDisputes($id: ID!, $msg: String) {
-  patchDisputes(id: $id, msg: $msg) {
-    disputePreflightStatus
-    disputeInflightStatus
-    disputeEligibility
-    disputeResults
-    disputeHistory
-    modifiedOn
-    createdOn
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-  }
-}
 mutation PatchTransunion($id: ID!, $msg: String) {
   patchTransunion(id: $id, msg: $msg) {
     authenticated
@@ -106,18 +78,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     disputeEnrolled
     disputeEnrolledOn
     disputeStatus
-    disputes {
-      disputePreflightStatus
-      disputeInflightStatus
-      disputeEligibility
-      disputeResults
-      disputeHistory
-      modifiedOn
-      createdOn
-      notificationStatus
-      notificationMessage
-      notificationSentOn
-    }
   }
 }
 mutation CreateAppData(
@@ -239,18 +199,6 @@ mutation CreateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -270,6 +218,24 @@ mutation CreateAppData(
     createdAt
     updatedAt
     owner
+    disputes {
+      items {
+        id
+        agencyId
+        disputeId
+        disputeStatus
+        openedOn
+        closedOn
+        disputeResults
+        notificationStatus
+        notificationMessage
+        notificationSentOn
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 mutation UpdateAppData(
@@ -391,18 +357,6 @@ mutation UpdateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -422,6 +376,24 @@ mutation UpdateAppData(
     createdAt
     updatedAt
     owner
+    disputes {
+      items {
+        id
+        agencyId
+        disputeId
+        disputeStatus
+        openedOn
+        closedOn
+        disputeResults
+        notificationStatus
+        notificationMessage
+        notificationSentOn
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 mutation DeleteAppData(
@@ -543,18 +515,6 @@ mutation DeleteAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -571,6 +531,84 @@ mutation DeleteAppData(
         mortgages
       }
     }
+    createdAt
+    updatedAt
+    owner
+    disputes {
+      items {
+        id
+        agencyId
+        disputeId
+        disputeStatus
+        openedOn
+        closedOn
+        disputeResults
+        notificationStatus
+        notificationMessage
+        notificationSentOn
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateDisputes(
+  $input: CreateDisputesInput!
+  $condition: ModelDisputesConditionInput
+) {
+  createDisputes(input: $input, condition: $condition) {
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateDisputes(
+  $input: UpdateDisputesInput!
+  $condition: ModelDisputesConditionInput
+) {
+  updateDisputes(input: $input, condition: $condition) {
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteDisputes(
+  $input: DeleteDisputesInput!
+  $condition: ModelDisputesConditionInput
+) {
+  deleteDisputes(input: $input, condition: $condition) {
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
     createdAt
     updatedAt
     owner
