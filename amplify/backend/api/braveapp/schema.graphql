@@ -13,7 +13,8 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
-  disputes: [Dispute] @connection(keyName: "byAppId", fields: ["id"])
+  disputes: [Dispute]
+  # @connection(keyName: "byAppId", fields: ["id"])
 }
 type User {
   id: ID!
@@ -119,26 +120,7 @@ type TUReportResponse {
 }
 type Dispute
   @model
-  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
-  @key(
-    name: "byAppId"
-    fields: [
-      "appDataId"
-      "disputeId"
-      "disputeStatus"
-      "disputeLetterCode"
-      "disputeLetterContent"
-      "openDisputes"
-      "agencyName"
-      "openedOn"
-      "closedOn"
-      "disputeItems"
-      "disputeResults"
-      "notificationStatus"
-      "notificationMessage"
-      "notificationSentOn"
-    ]
-  ) {
+  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }]) {
   id: ID!
   appDataId: ID!
   disputeId: String
