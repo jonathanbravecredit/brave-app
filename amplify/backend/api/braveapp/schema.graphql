@@ -123,11 +123,13 @@ type Dispute
   @key(
     name: "byAppData"
     fields: [
-      "agencyId"
+      "appDataId"
       "disputeId"
       "disputeStatus"
+      "agencyName"
       "openedOn"
       "closedOn"
+      "disputeItems"
       "disputeResults"
       "notificationStatus"
       "notificationMessage"
@@ -135,11 +137,13 @@ type Dispute
     ]
   ) {
   id: ID!
-  agencyId: ID!
+  appDataId: ID!
   disputeId: String
   disputeStatus: String
+  agencyName: String
   openedOn: String
   closedOn: String
+  disputeItems: AWSJSON
   disputeResults: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
