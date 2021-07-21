@@ -110,9 +110,7 @@ import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-det
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
-import { DisputeHistoryCardComponent } from './cards/dispute-cards/dispute-history-card/dispute-history-card.component';
-import { DisputeCurrentCardComponent } from './cards/dispute-cards/dispute-current-card/dispute-current-card.component';
-import { UserDisputesListComponent } from './disputes/user-disputes-list/user-disputes-list.component';
+import { DisputesListComponent } from './disputes/disputes-list/disputes-list.component';
 import { DisputeFindingsHeaderComponent } from './disputes/findings/dispute-findings-header/dispute-findings-header.component';
 import { DisputeFindingsResultsComponent } from './disputes/findings/dispute-findings-results/dispute-findings-results.component';
 import { DisputeFindingsHowToReadComponent } from './disputes/findings/dispute-findings-how-to-read/dispute-findings-how-to-read.component';
@@ -123,8 +121,7 @@ import { DisputeFindingsRatingKeyComponent } from './disputes/findings/dispute-f
 import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/dispute-findings-results-details/dispute-findings-results-details.component';
 import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
-import { DisputeRegularCardComponent } from './cards/dispute-cards/dispute-regular-card/dispute-regular-card.component';
-import { DisputeCardStatusPipe } from './cards/dispute-cards/dispute-regular-card/dispute-card-status.pipe';
+import { DisputeCardStatusPipe, DisputeCurrentCardComponent, DisputeHistoryCardComponent, DisputeRegularCardComponent } from './cards/dispute-cards';
 
 const components = [
   BaseFormComponent,
@@ -214,9 +211,10 @@ const components = [
   DisputesDetailComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
+  DisputeRegularCardComponent,
   DisputeHistoryCardComponent,
   DisputeCurrentCardComponent,
-  UserDisputesListComponent,
+  DisputesListComponent,
   DisputeFindingsHeaderComponent,
   DisputeFindingsResultsComponent,
   DisputeFindingsHowToReadComponent,
@@ -227,7 +225,6 @@ const components = [
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
-  DisputeRegularCardComponent
 ];
 
 // component specific pipes only

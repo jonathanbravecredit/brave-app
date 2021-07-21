@@ -2,8 +2,8 @@ type Query {
   transunion(action: String!, message: String!): String
   getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
   listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
-  getDisputes(id: ID!): Disputes @aws_iam @aws_cognito_user_pools
-  listDisputess(filter: ModelDisputesFilterInput, limit: Int, nextToken: String): ModelDisputesConnection @aws_iam @aws_cognito_user_pools
+  getDispute(id: ID!): Dispute @aws_iam @aws_cognito_user_pools
+  listDisputes(filter: ModelDisputeFilterInput, limit: Int, nextToken: String): ModelDisputeConnection @aws_iam @aws_cognito_user_pools
 }
 
 type Mutation {
@@ -11,9 +11,9 @@ type Mutation {
   createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  createDisputes(input: CreateDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
-  updateDisputes(input: UpdateDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
-  deleteDisputes(input: DeleteDisputesInput!, condition: ModelDisputesConditionInput): Disputes @aws_iam @aws_cognito_user_pools
+  createDispute(input: CreateDisputeInput!, condition: ModelDisputeConditionInput): Dispute @aws_iam @aws_cognito_user_pools
+  updateDispute(input: UpdateDisputeInput!, condition: ModelDisputeConditionInput): Dispute @aws_iam @aws_cognito_user_pools
+  deleteDispute(input: DeleteDisputeInput!, condition: ModelDisputeConditionInput): Dispute @aws_iam @aws_cognito_user_pools
 }
 
 type AppData @aws_iam @aws_cognito_user_pools {
@@ -24,7 +24,7 @@ type AppData @aws_iam @aws_cognito_user_pools {
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
-  disputes(disputeIdDisputeStatusOpenedOnClosedOnDisputeResultsNotificationStatusNotificationMessageNotificationSentOn: ModelDisputesByAppDataCompositeKeyConditionInput, filter: ModelDisputesFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDisputesConnection @aws_iam @aws_cognito_user_pools
+  disputes(disputeIdDisputeStatusOpenedOnClosedOnDisputeResultsNotificationStatusNotificationMessageNotificationSentOn: ModelDisputeByAppDataCompositeKeyConditionInput, filter: ModelDisputeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDisputeConnection @aws_iam @aws_cognito_user_pools
 }
 
 type User @aws_iam @aws_cognito_user_pools {
@@ -145,7 +145,7 @@ type TUReportResponse @aws_iam @aws_cognito_user_pools {
   status: String
 }
 
-type Disputes @aws_iam @aws_cognito_user_pools {
+type Dispute @aws_iam @aws_cognito_user_pools {
   id: ID!
   agencyId: ID!
   disputeId: String
@@ -403,17 +403,17 @@ type Subscription {
   onCreateAppData(owner: String): AppData @aws_subscribe(mutations: ["createAppData"]) @aws_iam @aws_cognito_user_pools
   onUpdateAppData(owner: String): AppData @aws_subscribe(mutations: ["updateAppData"]) @aws_iam @aws_cognito_user_pools
   onDeleteAppData(owner: String): AppData @aws_subscribe(mutations: ["deleteAppData"]) @aws_iam @aws_cognito_user_pools
-  onCreateDisputes(owner: String): Disputes @aws_subscribe(mutations: ["createDisputes"]) @aws_iam @aws_cognito_user_pools
-  onUpdateDisputes(owner: String): Disputes @aws_subscribe(mutations: ["updateDisputes"]) @aws_iam @aws_cognito_user_pools
-  onDeleteDisputes(owner: String): Disputes @aws_subscribe(mutations: ["deleteDisputes"]) @aws_iam @aws_cognito_user_pools
+  onCreateDispute(owner: String): Dispute @aws_subscribe(mutations: ["createDispute"]) @aws_iam @aws_cognito_user_pools
+  onUpdateDispute(owner: String): Dispute @aws_subscribe(mutations: ["updateDispute"]) @aws_iam @aws_cognito_user_pools
+  onDeleteDispute(owner: String): Dispute @aws_subscribe(mutations: ["deleteDispute"]) @aws_iam @aws_cognito_user_pools
 }
 
-type ModelDisputesConnection @aws_iam @aws_cognito_user_pools {
-  items: [Disputes]
+type ModelDisputeConnection @aws_iam @aws_cognito_user_pools {
+  items: [Dispute]
   nextToken: String
 }
 
-input ModelDisputesFilterInput {
+input ModelDisputeFilterInput {
   id: ModelIDInput
   agencyId: ModelIDInput
   disputeId: ModelStringInput
@@ -424,12 +424,12 @@ input ModelDisputesFilterInput {
   notificationStatus: ModelStringInput
   notificationMessage: ModelStringInput
   notificationSentOn: ModelStringInput
-  and: [ModelDisputesFilterInput]
-  or: [ModelDisputesFilterInput]
-  not: ModelDisputesFilterInput
+  and: [ModelDisputeFilterInput]
+  or: [ModelDisputeFilterInput]
+  not: ModelDisputeFilterInput
 }
 
-input CreateDisputesInput {
+input CreateDisputeInput {
   id: ID
   agencyId: ID!
   disputeId: String
@@ -442,7 +442,7 @@ input CreateDisputesInput {
   notificationSentOn: String
 }
 
-input UpdateDisputesInput {
+input UpdateDisputeInput {
   id: ID!
   agencyId: ID
   disputeId: String
@@ -455,11 +455,11 @@ input UpdateDisputesInput {
   notificationSentOn: String
 }
 
-input DeleteDisputesInput {
+input DeleteDisputeInput {
   id: ID
 }
 
-input ModelDisputesConditionInput {
+input ModelDisputeConditionInput {
   agencyId: ModelIDInput
   disputeId: ModelStringInput
   disputeStatus: ModelStringInput
@@ -469,22 +469,22 @@ input ModelDisputesConditionInput {
   notificationStatus: ModelStringInput
   notificationMessage: ModelStringInput
   notificationSentOn: ModelStringInput
-  and: [ModelDisputesConditionInput]
-  or: [ModelDisputesConditionInput]
-  not: ModelDisputesConditionInput
+  and: [ModelDisputeConditionInput]
+  or: [ModelDisputeConditionInput]
+  not: ModelDisputeConditionInput
 }
 
-input ModelDisputesByAppDataCompositeKeyConditionInput {
-  eq: ModelDisputesByAppDataCompositeKeyInput
-  le: ModelDisputesByAppDataCompositeKeyInput
-  lt: ModelDisputesByAppDataCompositeKeyInput
-  ge: ModelDisputesByAppDataCompositeKeyInput
-  gt: ModelDisputesByAppDataCompositeKeyInput
-  between: [ModelDisputesByAppDataCompositeKeyInput]
-  beginsWith: ModelDisputesByAppDataCompositeKeyInput
+input ModelDisputeByAppDataCompositeKeyConditionInput {
+  eq: ModelDisputeByAppDataCompositeKeyInput
+  le: ModelDisputeByAppDataCompositeKeyInput
+  lt: ModelDisputeByAppDataCompositeKeyInput
+  ge: ModelDisputeByAppDataCompositeKeyInput
+  gt: ModelDisputeByAppDataCompositeKeyInput
+  between: [ModelDisputeByAppDataCompositeKeyInput]
+  beginsWith: ModelDisputeByAppDataCompositeKeyInput
 }
 
-input ModelDisputesByAppDataCompositeKeyInput {
+input ModelDisputeByAppDataCompositeKeyInput {
   disputeId: String
   disputeStatus: String
   openedOn: String

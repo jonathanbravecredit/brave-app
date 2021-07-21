@@ -4,11 +4,11 @@ import { moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { DisputeRegularCardComponent } from './dispute-regular-card.component';
+import { DisputesOverviewHistoryPureView } from './disputes-overview-history-pure.view';
 
 export default {
-  title: 'app/views/dashboard/cards/disputes/current-dispute-card',
-  component: DisputeRegularCardComponent,
+  title: 'app/views/dashboard/disputes/history',
+  component: DisputesOverviewHistoryPureView,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -22,8 +22,8 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<DisputeRegularCardComponent> = (args: any) => ({
-  component: DisputeRegularCardComponent,
+const Template: Story<DisputesOverviewHistoryPureView> = (args: any) => ({
+  component: DisputesOverviewHistoryPureView,
   props: {
     ...args,
   },
@@ -33,4 +33,3 @@ export const Default = Template.bind({});
 Default.args = {
   forceMock: true
 };
-Default.parameters;
