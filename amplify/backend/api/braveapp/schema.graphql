@@ -77,7 +77,6 @@ type ShowAccountsPreference {
   mortgages: Boolean
 }
 type Transunion {
-  id: ID!
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
   getAuthenticationQuestionsSuccess: Boolean
@@ -109,7 +108,6 @@ type Experian {
   authenticated: Boolean
 }
 type TUReportResponse {
-  id: ID!
   bureau: String
   errorResponse: String
   serviceProduct: String
