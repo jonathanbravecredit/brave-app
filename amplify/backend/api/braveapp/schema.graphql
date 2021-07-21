@@ -13,7 +13,7 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
-  disputes: [Dispute] @connection(keyName: "byAppData", fields: ["id"])
+  disputes: [Dispute] @connection(keyName: "byAppId", fields: ["id"])
 }
 type User {
   id: ID!
@@ -121,11 +121,14 @@ type Dispute
   @model
   @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
   @key(
-    name: "byAppData"
+    name: "byAppId"
     fields: [
       "appDataId"
       "disputeId"
       "disputeStatus"
+      "disputeLetterCode"
+      "disputeLetterContent"
+      "openDisputes"
       "agencyName"
       "openedOn"
       "closedOn"
@@ -140,6 +143,9 @@ type Dispute
   appDataId: ID!
   disputeId: String
   disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: String
   agencyName: String
   openedOn: String
   closedOn: String
