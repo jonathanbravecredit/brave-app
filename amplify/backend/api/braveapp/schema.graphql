@@ -126,6 +126,9 @@ type Dispute
       "appDataId"
       "disputeId"
       "disputeStatus"
+      "disputeLetterCode"
+      "disputeLetterContent"
+      "openDisputes"
       "agencyName"
       "openedOn"
       "closedOn"
@@ -140,6 +143,9 @@ type Dispute
   appDataId: ID!
   disputeId: String
   disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: String
   agencyName: String
   openedOn: String
   closedOn: String
