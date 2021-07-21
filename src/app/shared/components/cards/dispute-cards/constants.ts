@@ -27,7 +27,8 @@ export const MOCK_DEFAULT_DISPUTE_CURRENT: IDisputeCurrent = {
 export const MOCK_DEFAULT_DISPUTE_HISTORICAL: IDisputeHistorical = {
   creditorName: 'Bank of States, N.A.',
   latestDateSubmitted: '05/15/2021',
-  decision: 'Does not meet FCRA standards'
+  decision: 'Does not meet FCRA standards',
+  resultReceived: '06/15/2021'
 };
 
 export const MOCK_DEFAULT_DISPUTES_CURRENT: IDisputeCurrent[] = [ MOCK_DEFAULT_DISPUTE_CURRENT ];

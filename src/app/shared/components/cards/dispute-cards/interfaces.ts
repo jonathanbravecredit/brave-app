@@ -21,6 +21,7 @@ export interface IDisputeCurrent extends IDisputeBase {
 export interface IDisputeHistorical extends IDisputeBase {
   latestDateSubmitted: string;
   decision: string;
+  resultReceived?: string;
 };
 
 export type TDisputeEntity = Partial<IDisputeHistorical> & Partial<IDisputeCurrent>;

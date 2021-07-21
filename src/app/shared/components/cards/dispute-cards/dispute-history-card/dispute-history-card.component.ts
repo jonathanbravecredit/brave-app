@@ -9,8 +9,10 @@ import { MOCK_DEFAULT_DISPUTE as mockDispute } from '../constants';
 export class DisputeHistoryCardComponent implements OnInit {
   @Input() creditorName: string | undefined;
   @Input() latestDateSubmitted: string | undefined;
+  @Input() resultReceived: string | undefined;
   @Input() decision: string | undefined;
   @Input() forceMock: boolean = false;
+  @Input() type: 'default' | 'short' = 'default';
 
   constructor() { }
 
