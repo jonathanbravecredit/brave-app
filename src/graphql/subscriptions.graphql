@@ -137,11 +137,13 @@ subscription OnCreateAppData($owner: String) {
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -292,11 +294,13 @@ subscription OnUpdateAppData($owner: String) {
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -447,11 +451,13 @@ subscription OnDeleteAppData($owner: String) {
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -467,11 +473,13 @@ subscription OnDeleteAppData($owner: String) {
 subscription OnCreateDispute($owner: String) {
   onCreateDispute(owner: $owner) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage
@@ -484,11 +492,13 @@ subscription OnCreateDispute($owner: String) {
 subscription OnUpdateDispute($owner: String) {
   onUpdateDispute(owner: $owner) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage
@@ -501,11 +511,13 @@ subscription OnUpdateDispute($owner: String) {
 subscription OnDeleteDispute($owner: String) {
   onDeleteDispute(owner: $owner) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage

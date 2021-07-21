@@ -140,11 +140,13 @@ query GetAppData($id: ID!) {
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -300,11 +302,13 @@ query ListAppDatas(
       disputes {
         items {
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -322,11 +326,13 @@ query ListAppDatas(
 query GetDispute($id: ID!) {
   getDispute(id: $id) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage
@@ -344,11 +350,13 @@ query ListDisputes(
   listDisputes(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      agencyId
+      appDataId
       disputeId
       disputeStatus
+      agencyName
       openedOn
       closedOn
+      disputeItems
       disputeResults
       notificationStatus
       notificationMessage

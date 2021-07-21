@@ -221,11 +221,13 @@ mutation CreateAppData(
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -379,11 +381,13 @@ mutation UpdateAppData(
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -537,11 +541,13 @@ mutation DeleteAppData(
     disputes {
       items {
         id
-        agencyId
+        appDataId
         disputeId
         disputeStatus
+        agencyName
         openedOn
         closedOn
+        disputeItems
         disputeResults
         notificationStatus
         notificationMessage
@@ -560,11 +566,13 @@ mutation CreateDispute(
 ) {
   createDispute(input: $input, condition: $condition) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage
@@ -580,11 +588,13 @@ mutation UpdateDispute(
 ) {
   updateDispute(input: $input, condition: $condition) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage
@@ -600,11 +610,13 @@ mutation DeleteDispute(
 ) {
   deleteDispute(input: $input, condition: $condition) {
     id
-    agencyId
+    appDataId
     disputeId
     disputeStatus
+    agencyName
     openedOn
     closedOn
+    disputeItems
     disputeResults
     notificationStatus
     notificationMessage

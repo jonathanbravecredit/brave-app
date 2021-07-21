@@ -280,11 +280,13 @@ export type ModelDisputeConnection = {
 export type Dispute = {
   __typename: "Dispute";
   id?: string;
-  agencyId?: string;
+  appDataId?: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -307,11 +309,13 @@ export type DeleteAppDataInput = {
 
 export type CreateDisputeInput = {
   id?: string | null;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -319,11 +323,13 @@ export type CreateDisputeInput = {
 };
 
 export type ModelDisputeConditionInput = {
-  agencyId?: ModelIDInput | null;
+  appDataId?: ModelIDInput | null;
   disputeId?: ModelStringInput | null;
   disputeStatus?: ModelStringInput | null;
+  agencyName?: ModelStringInput | null;
   openedOn?: ModelStringInput | null;
   closedOn?: ModelStringInput | null;
+  disputeItems?: ModelStringInput | null;
   disputeResults?: ModelStringInput | null;
   notificationStatus?: ModelStringInput | null;
   notificationMessage?: ModelStringInput | null;
@@ -390,11 +396,13 @@ export type ModelStringInput = {
 
 export type UpdateDisputeInput = {
   id: string;
-  agencyId?: string | null;
+  appDataId?: string | null;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -420,11 +428,13 @@ export type ModelAppDataConnection = {
 
 export type ModelDisputeFilterInput = {
   id?: ModelIDInput | null;
-  agencyId?: ModelIDInput | null;
+  appDataId?: ModelIDInput | null;
   disputeId?: ModelStringInput | null;
   disputeStatus?: ModelStringInput | null;
+  agencyName?: ModelStringInput | null;
   openedOn?: ModelStringInput | null;
   closedOn?: ModelStringInput | null;
+  disputeItems?: ModelStringInput | null;
   disputeResults?: ModelStringInput | null;
   notificationStatus?: ModelStringInput | null;
   notificationMessage?: ModelStringInput | null;
@@ -681,11 +691,13 @@ export type CreateAppDataMutation = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -858,11 +870,13 @@ export type UpdateAppDataMutation = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -1035,11 +1049,13 @@ export type DeleteAppDataMutation = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -1055,11 +1071,13 @@ export type DeleteAppDataMutation = {
 export type CreateDisputeMutation = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -1072,11 +1090,13 @@ export type CreateDisputeMutation = {
 export type UpdateDisputeMutation = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -1089,11 +1109,13 @@ export type UpdateDisputeMutation = {
 export type DeleteDisputeMutation = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -1263,11 +1285,13 @@ export type GetAppDataQuery = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -1442,11 +1466,13 @@ export type ListAppDatasQuery = {
       items?: Array<{
         __typename: "Dispute";
         id: string;
-        agencyId: string;
+        appDataId: string;
         disputeId?: string | null;
         disputeStatus?: string | null;
+        agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
+        disputeItems?: string | null;
         disputeResults?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
@@ -1464,11 +1490,13 @@ export type ListAppDatasQuery = {
 export type GetDisputeQuery = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -1483,11 +1511,13 @@ export type ListDisputesQuery = {
   items?: Array<{
     __typename: "Dispute";
     id: string;
-    agencyId: string;
+    appDataId: string;
     disputeId?: string | null;
     disputeStatus?: string | null;
+    agencyName?: string | null;
     openedOn?: string | null;
     closedOn?: string | null;
+    disputeItems?: string | null;
     disputeResults?: string | null;
     notificationStatus?: string | null;
     notificationMessage?: string | null;
@@ -1659,11 +1689,13 @@ export type OnCreateAppDataSubscription = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -1836,11 +1868,13 @@ export type OnUpdateAppDataSubscription = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -2013,11 +2047,13 @@ export type OnDeleteAppDataSubscription = {
     items?: Array<{
       __typename: "Dispute";
       id: string;
-      agencyId: string;
+      appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
+      disputeItems?: string | null;
       disputeResults?: string | null;
       notificationStatus?: string | null;
       notificationMessage?: string | null;
@@ -2033,11 +2069,13 @@ export type OnDeleteAppDataSubscription = {
 export type OnCreateDisputeSubscription = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -2050,11 +2088,13 @@ export type OnCreateDisputeSubscription = {
 export type OnUpdateDisputeSubscription = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -2067,11 +2107,13 @@ export type OnUpdateDisputeSubscription = {
 export type OnDeleteDisputeSubscription = {
   __typename: "Dispute";
   id: string;
-  agencyId: string;
+  appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
+  disputeItems?: string | null;
   disputeResults?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
@@ -2353,11 +2395,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -2546,11 +2590,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -2739,11 +2785,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -2775,11 +2823,13 @@ export class APIService {
         createDispute(input: $input, condition: $condition) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -2808,11 +2858,13 @@ export class APIService {
         updateDispute(input: $input, condition: $condition) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -2841,11 +2893,13 @@ export class APIService {
         deleteDispute(input: $input, condition: $condition) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -3041,11 +3095,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -3234,11 +3290,13 @@ export class APIService {
               items {
                 __typename
                 id
-                agencyId
+                appDataId
                 disputeId
                 disputeStatus
+                agencyName
                 openedOn
                 closedOn
+                disputeItems
                 disputeResults
                 notificationStatus
                 notificationMessage
@@ -3273,11 +3331,13 @@ export class APIService {
         getDispute(id: $id) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -3306,11 +3366,13 @@ export class APIService {
           items {
             __typename
             id
-            agencyId
+            appDataId
             disputeId
             disputeStatus
+            agencyName
             openedOn
             closedOn
+            disputeItems
             disputeResults
             notificationStatus
             notificationMessage
@@ -3501,11 +3563,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -3691,11 +3755,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -3881,11 +3947,13 @@ export class APIService {
             items {
               __typename
               id
-              agencyId
+              appDataId
               disputeId
               disputeStatus
+              agencyName
               openedOn
               closedOn
+              disputeItems
               disputeResults
               notificationStatus
               notificationMessage
@@ -3914,11 +3982,13 @@ export class APIService {
         onCreateDispute(owner: $owner) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -3944,11 +4014,13 @@ export class APIService {
         onUpdateDispute(owner: $owner) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
@@ -3974,11 +4046,13 @@ export class APIService {
         onDeleteDispute(owner: $owner) {
           __typename
           id
-          agencyId
+          appDataId
           disputeId
           disputeStatus
+          agencyName
           openedOn
           closedOn
+          disputeItems
           disputeResults
           notificationStatus
           notificationMessage
