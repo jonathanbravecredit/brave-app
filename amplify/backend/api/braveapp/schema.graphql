@@ -13,6 +13,7 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  disputes: [Disputes] @connection(keyName: "byAppData", fields: ["id"])
 }
 type User {
   id: ID!
@@ -118,31 +119,31 @@ type TUReportResponse {
   serviceProductValue: String
   status: String
 }
-# type Disputes
-#   @model
-#   @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
-#   @key(
-#     name: "byAppData"
-#     fields: [
-#       "agencyId"
-#       "disputeId"
-#       "disputeStatus"
-#       "openedOn"
-#       "closedOn"
-#       "disputeResults"
-#       "notificationStatus"
-#       "notificationMessage"
-#       "notificationSentOn"
-#     ]
-#   ) {
-#   id: ID!
-#   agencyId: ID!
-#   disputeId: String
-#   disputeStatus: String
-#   openedOn: String
-#   closedOn: String
-#   disputeResults: AWSJSON
-#   notificationStatus: String
-#   notificationMessage: AWSJSON
-#   notificationSentOn: String
-# }
+type Disputes
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
+  @key(
+    name: "byAppData"
+    fields: [
+      "agencyId"
+      "disputeId"
+      "disputeStatus"
+      "openedOn"
+      "closedOn"
+      "disputeResults"
+      "notificationStatus"
+      "notificationMessage"
+      "notificationSentOn"
+    ]
+  ) {
+  id: ID!
+  agencyId: ID!
+  disputeId: String
+  disputeStatus: String
+  openedOn: String
+  closedOn: String
+  disputeResults: AWSJSON
+  notificationStatus: String
+  notificationMessage: AWSJSON
+  notificationSentOn: String
+}
