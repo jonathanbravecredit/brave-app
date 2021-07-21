@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import { TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
@@ -15,7 +15,7 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { IEnrollResult } from '@shared/interfaces/enroll.interface';
-import { CodeGuruProfiler } from 'aws-sdk';
+import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -65,7 +65,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * Method to:
    * - Get authentication questions
    * - send the passcode response
-   * - Enroll the user
+   * - Enroll the user in report & score and disputes
    * - Update the enriched enrollment data to state
    * @param form
    */
@@ -89,6 +89,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
           : (() => {
               throw 'Authentication request failed';
             })();
+
+        await this.sendEnrollDisputeRequest(this.state);
         // can remove if enroll is syncing to db...but will depend on listener to update state
         this.enrollResult
           ? await this.updateEnrichedEnrollment(this.enrollResult)
@@ -263,6 +265,21 @@ export class KycIdverificationComponent extends KycBaseComponent {
       return this;
     } catch (err) {
       throw new Error(`kycIdverification:sendEnrollRequest=${err}`);
+    }
+  }
+
+  /**
+   * Enroll the user in the disputes and refresh report
+   */
+  async sendEnrollDisputeRequest(
+    state: UpdateAppDataInput | AppDataStateModel | undefined,
+  ): Promise<IDisputePreflightCheck> {
+    if (!state) throw `kycIdverification:sendEnrollDisputeRequest=Missing state`;
+    const id = state.id;
+    try {
+      return await this.kycService.sendEnrollDisputeRequest(id);
+    } catch (err) {
+      throw `kycIdverification:sendEnrollDisputeRequest=${err}`;
     }
   }
 }

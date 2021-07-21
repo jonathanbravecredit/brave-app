@@ -19,6 +19,7 @@ import { AgenciesStateModel } from '@store/agencies';
 import { StateService } from '@shared/services/state/state.service';
 import { IEnrollResponseSuccess, IEnrollResult } from '@shared/interfaces/enroll.interface';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
+import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -454,6 +455,18 @@ export class KycService {
       return await this.transunion.sendEnrollRequest(data);
     } catch (err) {
       throw new Error(`kycService:sendEnrollRequest=${err}`);
+    }
+  }
+
+  /**
+   * Invoke the service method to enroll the user in the dispute subscription
+   * @param id
+   */
+  async sendEnrollDisputeRequest(id: string): Promise<IDisputePreflightCheck> {
+    try {
+      return await this.transunion.sendDisputePreflightCheck({ id });
+    } catch (err) {
+      throw `kycService:sendEnrollDisputeRequest=${err}`;
     }
   }
 
