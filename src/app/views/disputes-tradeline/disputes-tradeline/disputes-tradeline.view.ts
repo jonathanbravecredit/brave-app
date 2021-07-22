@@ -41,7 +41,8 @@ export class DisputesTradelineView implements OnDestroy {
     if (result.isFinished) {
       try {
         // TODO need to handle the response appropriately now that we are set up with TU
-        await this.disputeService.sendStartDispute();
+        const res = await this.disputeService.sendStartDispute();
+        const status = res?.StartDispute.success;
         this.isDisputeSent = true;
         this.isDisputeProcessInProgress = false;
       } catch (err) {

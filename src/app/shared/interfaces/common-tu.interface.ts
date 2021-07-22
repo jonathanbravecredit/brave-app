@@ -1,3 +1,5 @@
+import { IErrorResponse } from '@shared/interfaces/errors.interface';
+
 export interface ICodeRef {
   abbreviation?: string;
   description?: string;
@@ -37,4 +39,9 @@ export interface ICreditScoreAttributes {
   description?: string;
   symbol?: number | string;
   rank?: number | string;
+}
+
+export interface ITUServiceResponse {
+  success: boolean;
+  error?: IErrorResponse;
 }

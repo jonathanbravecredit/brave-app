@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
 import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import {
@@ -7,6 +8,7 @@ import {
   IEnrollResult,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces/enroll.interface';
+import { IErrorResponse, IErrorResult } from '@shared/interfaces/errors.interface';
 import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
 import {
   IFulfillResponseSuccess,
@@ -113,7 +115,7 @@ export class TransunionService {
    */
   async sendCompleteOnboarding(
     data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<{ CompleteOnboardingEnrollments: { onboarded: boolean; error?: any } } | undefined> {
+  ): Promise<{ CompleteOnboardingEnrollments: ITUServiceResponse } | undefined> {
     try {
       const msg = { id: data.id };
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));
@@ -121,7 +123,7 @@ export class TransunionService {
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
-      return;
+      return { CompleteOnboardingEnrollments: { success: false, error: err } };
     }
   }
 
@@ -189,14 +191,14 @@ export class TransunionService {
    * @param data
    * @returns
    */
-  async sendDisputePreflightCheck(data: { id: string }): Promise<IDisputePreflightCheck> {
+  async sendDisputePreflightCheck(data: { id: string }): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
       console.log('preflight check res ===> ', res);
       return res ? JSON.parse(res) : false;
     } catch (err) {
       console.log('err', err);
-      return { DisputePreflightCheck: { eligible: false } };
+      return { DisputePreflightCheck: { success: false, error: err } };
     }
   }
 
@@ -224,14 +226,16 @@ export class TransunionService {
    * @param {IProcessDisputeTradelineResult[]} disputes AppData state
    * @returns
    */
-  async sendStartDispute(id: string, disputes: IProcessDisputeTradelineResult[]): Promise<string | undefined> {
+  async sendStartDispute(
+    id: string,
+    disputes: IProcessDisputeTradelineResult[],
+  ): Promise<{ StartDispute: ITUServiceResponse } | undefined> {
     try {
       console.log('sendDispute: data', id);
       console.log('sendDispute: dispute', disputes);
       const msg = { id, disputes }; //this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
-      console.log(res);
-      return res ? res : undefined;
+      return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
       return;

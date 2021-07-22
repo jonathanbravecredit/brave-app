@@ -1,6 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
+import { IErrorResponse } from '@shared/interfaces/errors.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
@@ -77,13 +79,12 @@ export class DisputeService implements OnDestroy {
    * Update the users acknowledge and then gets dispute preflight check
    * @returns
    */
-  async onUserConfirmed(): Promise<boolean> {
+  async onUserConfirmed(): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
     if (!this.state) throw `tradelines:onConfirmed=Missing state`;
     try {
       // acknowledge the user has read and accepted the terms
       if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
-      const eligible = await this.sendDisputePreflightCheck(this.state.id);
-      return eligible;
+      return await this.sendDisputePreflightCheck(this.state.id);
     } catch (err) {
       throw `disputeService:onUserConfirmed=${err}`;
     }
@@ -105,14 +106,9 @@ export class DisputeService implements OnDestroy {
     await this.statesvc.updateAgenciesAsync(acknowledged);
   }
 
-  async sendDisputePreflightCheck(id: string): Promise<boolean> {
+  async sendDisputePreflightCheck(id: string): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
     try {
-      const resp = await this.transunion.sendDisputePreflightCheck({ id });
-      const { eligible, error } = resp.DisputePreflightCheck;
-      if (error) {
-        this.router.navigate(['/report/detail/dispute/error'], { queryParams: { code: error.Code } });
-      }
-      return eligible;
+      return await this.transunion.sendDisputePreflightCheck({ id });
     } catch (err) {
       throw `disputeService:sendDisputePreflightCheck=${err}`;
     }
@@ -121,7 +117,7 @@ export class DisputeService implements OnDestroy {
   /**
    * Initiate a new dispute. Cannot have one in progress.
    */
-  async sendStartDispute(): Promise<string | undefined> {
+  async sendStartDispute(): Promise<{ StartDispute: ITUServiceResponse } | undefined> {
     const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
       return await this.transunion.sendStartDispute(data.id, this.disputeStack);

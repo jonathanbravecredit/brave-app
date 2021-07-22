@@ -20,6 +20,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { IEnrollResponseSuccess, IEnrollResult } from '@shared/interfaces/enroll.interface';
 import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
 import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -453,7 +454,7 @@ export class KycService {
    */
   async sendCompleteOnboarding(
     data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<{ CompleteOnboardingEnrollments: { onboarded: boolean; error?: any } } | undefined> {
+  ): Promise<{ CompleteOnboardingEnrollments: ITUServiceResponse } | undefined> {
     try {
       return await this.transunion.sendCompleteOnboarding(data);
     } catch (err) {
@@ -478,7 +479,7 @@ export class KycService {
    * Invoke the service method to enroll the user in the dispute subscription
    * @param id
    */
-  async sendEnrollDisputeRequest(id: string): Promise<IDisputePreflightCheck> {
+  async sendEnrollDisputeRequest(id: string): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
     try {
       return await this.transunion.sendDisputePreflightCheck({ id });
     } catch (err) {
