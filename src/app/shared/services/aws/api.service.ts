@@ -34,6 +34,7 @@ export type Transunion = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputes?: Array<Dispute | null> | null;
 };
 
 export type TUReportResponse = {
@@ -46,6 +47,25 @@ export type TUReportResponse = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type Dispute = {
+  __typename: "Dispute";
+  id?: string;
+  appDataId?: string;
+  disputeId?: string | null;
+  disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
+  agencyName?: string | null;
+  openedOn?: string | null;
+  closedOn?: string | null;
+  disputeItems?: string | null;
+  disputeResults?: string | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: string | null;
 };
 
 export type CreateAppDataInput = {
@@ -134,6 +154,7 @@ export type TransunionInput = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputes?: Array<DisputeInput | null> | null;
 };
 
 export type TUReportResponseInput = {
@@ -145,6 +166,24 @@ export type TUReportResponseInput = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type DisputeInput = {
+  id: string;
+  appDataId: string;
+  disputeId?: string | null;
+  disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
+  agencyName?: string | null;
+  openedOn?: string | null;
+  closedOn?: string | null;
+  disputeItems?: string | null;
+  disputeResults?: string | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: string | null;
 };
 
 export type EquifaxInput = {
@@ -181,7 +220,6 @@ export type AppData = {
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
-  disputes?: ModelDisputeConnection;
 };
 
 export type User = {
@@ -271,34 +309,6 @@ export type ShowAccountsPreference = {
   mortgages?: boolean | null;
 };
 
-export type ModelDisputeConnection = {
-  __typename: "ModelDisputeConnection";
-  items?: Array<Dispute | null> | null;
-  nextToken?: string | null;
-};
-
-export type Dispute = {
-  __typename: "Dispute";
-  id?: string;
-  appDataId?: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-  owner?: string | null;
-};
-
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
@@ -310,42 +320,11 @@ export type DeleteAppDataInput = {
   id: string;
 };
 
-export type CreateDisputeInput = {
-  id?: string | null;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type ModelDisputeConditionInput = {
-  appDataId?: ModelIDInput | null;
-  disputeId?: ModelStringInput | null;
-  disputeStatus?: ModelStringInput | null;
-  disputeLetterCode?: ModelStringInput | null;
-  disputeLetterContent?: ModelStringInput | null;
-  openDisputes?: ModelStringInput | null;
-  agencyName?: ModelStringInput | null;
-  openedOn?: ModelStringInput | null;
-  closedOn?: ModelStringInput | null;
-  disputeItems?: ModelStringInput | null;
-  disputeResults?: ModelStringInput | null;
-  notificationStatus?: ModelStringInput | null;
-  notificationMessage?: ModelStringInput | null;
-  notificationSentOn?: ModelStringInput | null;
-  and?: Array<ModelDisputeConditionInput | null> | null;
-  or?: Array<ModelDisputeConditionInput | null> | null;
-  not?: ModelDisputeConditionInput | null;
+export type ModelAppDataFilterInput = {
+  id?: ModelIDInput | null;
+  and?: Array<ModelAppDataFilterInput | null> | null;
+  or?: Array<ModelAppDataFilterInput | null> | null;
+  not?: ModelAppDataFilterInput | null;
 };
 
 export type ModelIDInput = {
@@ -387,76 +366,10 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
-export type ModelStringInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
-export type UpdateDisputeInput = {
-  id: string;
-  appDataId?: string | null;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type DeleteDisputeInput = {
-  id: string;
-};
-
-export type ModelAppDataFilterInput = {
-  id?: ModelIDInput | null;
-  and?: Array<ModelAppDataFilterInput | null> | null;
-  or?: Array<ModelAppDataFilterInput | null> | null;
-  not?: ModelAppDataFilterInput | null;
-};
-
 export type ModelAppDataConnection = {
   __typename: "ModelAppDataConnection";
   items?: Array<AppData | null> | null;
   nextToken?: string | null;
-};
-
-export type ModelDisputeFilterInput = {
-  id?: ModelIDInput | null;
-  appDataId?: ModelIDInput | null;
-  disputeId?: ModelStringInput | null;
-  disputeStatus?: ModelStringInput | null;
-  disputeLetterCode?: ModelStringInput | null;
-  disputeLetterContent?: ModelStringInput | null;
-  openDisputes?: ModelStringInput | null;
-  agencyName?: ModelStringInput | null;
-  openedOn?: ModelStringInput | null;
-  closedOn?: ModelStringInput | null;
-  disputeItems?: ModelStringInput | null;
-  disputeResults?: ModelStringInput | null;
-  notificationStatus?: ModelStringInput | null;
-  notificationMessage?: ModelStringInput | null;
-  notificationSentOn?: ModelStringInput | null;
-  and?: Array<ModelDisputeFilterInput | null> | null;
-  or?: Array<ModelDisputeFilterInput | null> | null;
-  not?: ModelDisputeFilterInput | null;
 };
 
 export type PatchTransunionMutation = {
@@ -544,6 +457,24 @@ export type PatchTransunionMutation = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputes?: Array<{
+    __typename: "Dispute";
+    id: string;
+    appDataId: string;
+    disputeId?: string | null;
+    disputeStatus?: string | null;
+    disputeLetterCode?: string | null;
+    disputeLetterContent?: string | null;
+    openDisputes?: string | null;
+    agencyName?: string | null;
+    openedOn?: string | null;
+    closedOn?: string | null;
+    disputeItems?: string | null;
+    disputeResults?: string | null;
+    notificationStatus?: string | null;
+    notificationMessage?: string | null;
+    notificationSentOn?: string | null;
+  } | null> | null;
 };
 
 export type CreateAppDataMutation = {
@@ -678,6 +609,24 @@ export type CreateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -701,31 +650,6 @@ export type CreateAppDataMutation = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type UpdateAppDataMutation = {
@@ -860,6 +784,24 @@ export type UpdateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -883,31 +825,6 @@ export type UpdateAppDataMutation = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type DeleteAppDataMutation = {
@@ -1042,6 +959,24 @@ export type DeleteAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1062,97 +997,6 @@ export type DeleteAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-};
-
-export type CreateDisputeMutation = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type UpdateDisputeMutation = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type DeleteDisputeMutation = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1290,6 +1134,24 @@ export type GetAppDataQuery = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1313,31 +1175,6 @@ export type GetAppDataQuery = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type ListAppDatasQuery = {
@@ -1474,6 +1311,24 @@ export type ListAppDatasQuery = {
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
         disputeStatus?: string | null;
+        disputes?: Array<{
+          __typename: "Dispute";
+          id: string;
+          appDataId: string;
+          disputeId?: string | null;
+          disputeStatus?: string | null;
+          disputeLetterCode?: string | null;
+          disputeLetterContent?: string | null;
+          openDisputes?: string | null;
+          agencyName?: string | null;
+          openedOn?: string | null;
+          closedOn?: string | null;
+          disputeItems?: string | null;
+          disputeResults?: string | null;
+          notificationStatus?: string | null;
+          notificationMessage?: string | null;
+          notificationSentOn?: string | null;
+        } | null> | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -1494,79 +1349,6 @@ export type ListAppDatasQuery = {
         mortgages?: boolean | null;
       } | null;
     };
-    createdAt: string;
-    updatedAt: string;
-    owner?: string | null;
-    disputes?: {
-      __typename: "ModelDisputeConnection";
-      items?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: string | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeResults?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-        createdAt: string;
-        updatedAt: string;
-        owner?: string | null;
-      } | null> | null;
-      nextToken?: string | null;
-    } | null;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type GetDisputeQuery = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type ListDisputesQuery = {
-  __typename: "ModelDisputeConnection";
-  items?: Array<{
-    __typename: "Dispute";
-    id: string;
-    appDataId: string;
-    disputeId?: string | null;
-    disputeStatus?: string | null;
-    disputeLetterCode?: string | null;
-    disputeLetterContent?: string | null;
-    openDisputes?: string | null;
-    agencyName?: string | null;
-    openedOn?: string | null;
-    closedOn?: string | null;
-    disputeItems?: string | null;
-    disputeResults?: string | null;
-    notificationStatus?: string | null;
-    notificationMessage?: string | null;
-    notificationSentOn?: string | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1706,6 +1488,24 @@ export type OnCreateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1729,31 +1529,6 @@ export type OnCreateAppDataSubscription = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type OnUpdateAppDataSubscription = {
@@ -1888,6 +1663,24 @@ export type OnUpdateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1911,31 +1704,6 @@ export type OnUpdateAppDataSubscription = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type OnDeleteAppDataSubscription = {
@@ -2070,6 +1838,24 @@ export type OnDeleteAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -2090,97 +1876,6 @@ export type OnDeleteAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-};
-
-export type OnCreateDisputeSubscription = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type OnUpdateDisputeSubscription = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type OnDeleteDisputeSubscription = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2280,6 +1975,24 @@ export class APIService {
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
+          disputes {
+            __typename
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeResults
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2430,6 +2143,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2453,31 +2184,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2628,6 +2334,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2651,31 +2375,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2826,6 +2525,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -2849,31 +2566,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2886,120 +2578,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteAppDataMutation>response.data.deleteAppData;
-  }
-  async CreateDispute(
-    input: CreateDisputeInput,
-    condition?: ModelDisputeConditionInput
-  ): Promise<CreateDisputeMutation> {
-    const statement = `mutation CreateDispute($input: CreateDisputeInput!, $condition: ModelDisputeConditionInput) {
-        createDispute(input: $input, condition: $condition) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateDisputeMutation>response.data.createDispute;
-  }
-  async UpdateDispute(
-    input: UpdateDisputeInput,
-    condition?: ModelDisputeConditionInput
-  ): Promise<UpdateDisputeMutation> {
-    const statement = `mutation UpdateDispute($input: UpdateDisputeInput!, $condition: ModelDisputeConditionInput) {
-        updateDispute(input: $input, condition: $condition) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateDisputeMutation>response.data.updateDispute;
-  }
-  async DeleteDispute(
-    input: DeleteDisputeInput,
-    condition?: ModelDisputeConditionInput
-  ): Promise<DeleteDisputeMutation> {
-    const statement = `mutation DeleteDispute($input: DeleteDisputeInput!, $condition: ModelDisputeConditionInput) {
-        deleteDispute(input: $input, condition: $condition) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteDisputeMutation>response.data.deleteDispute;
   }
   async Transunion(action: string, message: string): Promise<string | null> {
     const statement = `query Transunion($action: String!, $message: String!) {
@@ -3148,6 +2726,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -3171,31 +2767,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -3346,6 +2917,24 @@ export class APIService {
                 disputeEnrolled
                 disputeEnrolledOn
                 disputeStatus
+                disputes {
+                  __typename
+                  id
+                  appDataId
+                  disputeId
+                  disputeStatus
+                  disputeLetterCode
+                  disputeLetterContent
+                  openDisputes
+                  agencyName
+                  openedOn
+                  closedOn
+                  disputeItems
+                  disputeResults
+                  notificationStatus
+                  notificationMessage
+                  notificationSentOn
+                }
               }
               equifax {
                 __typename
@@ -3369,31 +2958,6 @@ export class APIService {
             createdAt
             updatedAt
             owner
-            disputes {
-              __typename
-              items {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeResults
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-                createdAt
-                updatedAt
-                owner
-              }
-              nextToken
-            }
           }
           nextToken
         }
@@ -3412,85 +2976,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListAppDatasQuery>response.data.listAppDatas;
-  }
-  async GetDispute(id: string): Promise<GetDisputeQuery> {
-    const statement = `query GetDispute($id: ID!) {
-        getDispute(id: $id) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetDisputeQuery>response.data.getDispute;
-  }
-  async ListDisputes(
-    filter?: ModelDisputeFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListDisputesQuery> {
-    const statement = `query ListDisputes($filter: ModelDisputeFilterInput, $limit: Int, $nextToken: String) {
-        listDisputes(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            appDataId
-            disputeId
-            disputeStatus
-            disputeLetterCode
-            disputeLetterContent
-            openDisputes
-            agencyName
-            openedOn
-            closedOn
-            disputeItems
-            disputeResults
-            notificationStatus
-            notificationMessage
-            notificationSentOn
-            createdAt
-            updatedAt
-            owner
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListDisputesQuery>response.data.listDisputes;
   }
   OnCreateAppDataListener(
     owner?: string
@@ -3628,6 +3113,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -3651,31 +3154,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -3823,6 +3301,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -3846,31 +3342,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -4018,6 +3489,24 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputes {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeResults
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
             }
             equifax {
               __typename
@@ -4041,31 +3530,6 @@ export class APIService {
           createdAt
           updatedAt
           owner
-          disputes {
-            __typename
-            items {
-              __typename
-              id
-              appDataId
-              disputeId
-              disputeStatus
-              disputeLetterCode
-              disputeLetterContent
-              openDisputes
-              agencyName
-              openedOn
-              closedOn
-              disputeItems
-              disputeResults
-              notificationStatus
-              notificationMessage
-              notificationSentOn
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {};
@@ -4075,110 +3539,5 @@ export class APIService {
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
-  }
-
-  OnCreateDisputeListener(
-    owner?: string
-  ): Observable<SubscriptionResponse<OnCreateDisputeSubscription>> {
-    const statement = `subscription OnCreateDispute($owner: String) {
-        onCreateDispute(owner: $owner) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (owner) {
-      gqlAPIServiceArguments.owner = owner;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnCreateDisputeSubscription>>;
-  }
-
-  OnUpdateDisputeListener(
-    owner?: string
-  ): Observable<SubscriptionResponse<OnUpdateDisputeSubscription>> {
-    const statement = `subscription OnUpdateDispute($owner: String) {
-        onUpdateDispute(owner: $owner) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (owner) {
-      gqlAPIServiceArguments.owner = owner;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnUpdateDisputeSubscription>>;
-  }
-
-  OnDeleteDisputeListener(
-    owner?: string
-  ): Observable<SubscriptionResponse<OnDeleteDisputeSubscription>> {
-    const statement = `subscription OnDeleteDispute($owner: String) {
-        onDeleteDispute(owner: $owner) {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (owner) {
-      gqlAPIServiceArguments.owner = owner;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnDeleteDisputeSubscription>>;
   }
 }

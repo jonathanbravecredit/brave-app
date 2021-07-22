@@ -115,6 +115,23 @@ subscription OnCreateAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeResults
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -134,29 +151,6 @@ subscription OnCreateAppData($owner: String) {
     createdAt
     updatedAt
     owner
-    disputes {
-      items {
-        id
-        appDataId
-        disputeId
-        disputeStatus
-        disputeLetterCode
-        disputeLetterContent
-        openDisputes
-        agencyName
-        openedOn
-        closedOn
-        disputeItems
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
   }
 }
 subscription OnUpdateAppData($owner: String) {
@@ -275,6 +269,23 @@ subscription OnUpdateAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeResults
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -294,29 +305,6 @@ subscription OnUpdateAppData($owner: String) {
     createdAt
     updatedAt
     owner
-    disputes {
-      items {
-        id
-        appDataId
-        disputeId
-        disputeStatus
-        disputeLetterCode
-        disputeLetterContent
-        openDisputes
-        agencyName
-        openedOn
-        closedOn
-        disputeItems
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
   }
 }
 subscription OnDeleteAppData($owner: String) {
@@ -435,6 +423,23 @@ subscription OnDeleteAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeResults
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -451,95 +456,6 @@ subscription OnDeleteAppData($owner: String) {
         mortgages
       }
     }
-    createdAt
-    updatedAt
-    owner
-    disputes {
-      items {
-        id
-        appDataId
-        disputeId
-        disputeStatus
-        disputeLetterCode
-        disputeLetterContent
-        openDisputes
-        agencyName
-        openedOn
-        closedOn
-        disputeItems
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-}
-subscription OnCreateDispute($owner: String) {
-  onCreateDispute(owner: $owner) {
-    id
-    appDataId
-    disputeId
-    disputeStatus
-    disputeLetterCode
-    disputeLetterContent
-    openDisputes
-    agencyName
-    openedOn
-    closedOn
-    disputeItems
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-    createdAt
-    updatedAt
-    owner
-  }
-}
-subscription OnUpdateDispute($owner: String) {
-  onUpdateDispute(owner: $owner) {
-    id
-    appDataId
-    disputeId
-    disputeStatus
-    disputeLetterCode
-    disputeLetterContent
-    openDisputes
-    agencyName
-    openedOn
-    closedOn
-    disputeItems
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-    createdAt
-    updatedAt
-    owner
-  }
-}
-subscription OnDeleteDispute($owner: String) {
-  onDeleteDispute(owner: $owner) {
-    id
-    appDataId
-    disputeId
-    disputeStatus
-    disputeLetterCode
-    disputeLetterContent
-    openDisputes
-    agencyName
-    openedOn
-    closedOn
-    disputeItems
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
     createdAt
     updatedAt
     owner
