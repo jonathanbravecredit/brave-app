@@ -86,15 +86,14 @@ export class SyncService implements OnDestroy {
   async subscribeToListeners(id: string): Promise<void> {
     const { owner } = await queries.GetOwner(id);
     if (owner) {
-      this.apiUpdateListener$ = this.api
-        .OnUpdateAppDataListener(owner)
-        .subscribe((data: SubscriptionResponse<OnUpdateAppDataSubscription>) => {
-          if (data.value.errors) throw `API OnUpdateAppDataListener error`;
-          const appData = data.value.data;
-          if (!appData) return;
-          const clean = this.cleanBackendData(appData);
-          this.store.dispatch(new AppDataActions.Edit(clean));
-        });
+      this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
+        if (data.value.errors) throw `API OnUpdateAppDataListener error`;
+        const appData = data.value.data['onUpdateAppData'];
+        if (!appData) return;
+        console.log('appDataOnUpdate ===> ', appData);
+        const clean = this.cleanBackendData(appData);
+        this.store.dispatch(new AppDataActions.Edit(clean));
+      });
     }
   }
 

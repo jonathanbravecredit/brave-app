@@ -172,6 +172,7 @@ export class TransunionService {
   async sendDisputePreflightCheck(data: { id: string }): Promise<IDisputePreflightCheck> {
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
+      console.log('preflight check res ===> ', res);
       return res ? JSON.parse(res) : false;
     } catch (err) {
       console.log('err', err);

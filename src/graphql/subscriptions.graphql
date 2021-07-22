@@ -140,6 +140,9 @@ subscription OnCreateAppData($owner: String) {
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -297,6 +300,9 @@ subscription OnUpdateAppData($owner: String) {
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -454,6 +460,9 @@ subscription OnDeleteAppData($owner: String) {
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -476,6 +485,9 @@ subscription OnCreateDispute($owner: String) {
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn
@@ -495,6 +507,9 @@ subscription OnUpdateDispute($owner: String) {
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn
@@ -514,6 +529,9 @@ subscription OnDeleteDispute($owner: String) {
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn

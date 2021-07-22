@@ -143,6 +143,9 @@ query GetAppData($id: ID!) {
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -305,6 +308,9 @@ query ListAppDatas(
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -329,6 +335,9 @@ query GetDispute($id: ID!) {
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn
@@ -353,6 +362,9 @@ query ListDisputes(
       appDataId
       disputeId
       disputeStatus
+      disputeLetterCode
+      disputeLetterContent
+      openDisputes
       agencyName
       openedOn
       closedOn

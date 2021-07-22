@@ -224,6 +224,9 @@ mutation CreateAppData(
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -384,6 +387,9 @@ mutation UpdateAppData(
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -544,6 +550,9 @@ mutation DeleteAppData(
         appDataId
         disputeId
         disputeStatus
+        disputeLetterCode
+        disputeLetterContent
+        openDisputes
         agencyName
         openedOn
         closedOn
@@ -569,6 +578,9 @@ mutation CreateDispute(
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn
@@ -591,6 +603,9 @@ mutation UpdateDispute(
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn
@@ -613,6 +628,9 @@ mutation DeleteDispute(
     appDataId
     disputeId
     disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
     agencyName
     openedOn
     closedOn

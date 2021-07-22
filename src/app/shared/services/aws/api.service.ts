@@ -283,6 +283,9 @@ export type Dispute = {
   appDataId?: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -312,6 +315,9 @@ export type CreateDisputeInput = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -326,6 +332,9 @@ export type ModelDisputeConditionInput = {
   appDataId?: ModelIDInput | null;
   disputeId?: ModelStringInput | null;
   disputeStatus?: ModelStringInput | null;
+  disputeLetterCode?: ModelStringInput | null;
+  disputeLetterContent?: ModelStringInput | null;
+  openDisputes?: ModelStringInput | null;
   agencyName?: ModelStringInput | null;
   openedOn?: ModelStringInput | null;
   closedOn?: ModelStringInput | null;
@@ -399,6 +408,9 @@ export type UpdateDisputeInput = {
   appDataId?: string | null;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -431,6 +443,9 @@ export type ModelDisputeFilterInput = {
   appDataId?: ModelIDInput | null;
   disputeId?: ModelStringInput | null;
   disputeStatus?: ModelStringInput | null;
+  disputeLetterCode?: ModelStringInput | null;
+  disputeLetterContent?: ModelStringInput | null;
+  openDisputes?: ModelStringInput | null;
   agencyName?: ModelStringInput | null;
   openedOn?: ModelStringInput | null;
   closedOn?: ModelStringInput | null;
@@ -694,6 +709,9 @@ export type CreateAppDataMutation = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -873,6 +891,9 @@ export type UpdateAppDataMutation = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -1052,6 +1073,9 @@ export type DeleteAppDataMutation = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -1074,6 +1098,9 @@ export type CreateDisputeMutation = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -1093,6 +1120,9 @@ export type UpdateDisputeMutation = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -1112,6 +1142,9 @@ export type DeleteDisputeMutation = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -1288,6 +1321,9 @@ export type GetAppDataQuery = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -1469,6 +1505,9 @@ export type ListAppDatasQuery = {
         appDataId: string;
         disputeId?: string | null;
         disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1493,6 +1532,9 @@ export type GetDisputeQuery = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -1514,6 +1556,9 @@ export type ListDisputesQuery = {
     appDataId: string;
     disputeId?: string | null;
     disputeStatus?: string | null;
+    disputeLetterCode?: string | null;
+    disputeLetterContent?: string | null;
+    openDisputes?: string | null;
     agencyName?: string | null;
     openedOn?: string | null;
     closedOn?: string | null;
@@ -1692,6 +1737,9 @@ export type OnCreateAppDataSubscription = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -1871,6 +1919,9 @@ export type OnUpdateAppDataSubscription = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -2050,6 +2101,9 @@ export type OnDeleteAppDataSubscription = {
       appDataId: string;
       disputeId?: string | null;
       disputeStatus?: string | null;
+      disputeLetterCode?: string | null;
+      disputeLetterContent?: string | null;
+      openDisputes?: string | null;
       agencyName?: string | null;
       openedOn?: string | null;
       closedOn?: string | null;
@@ -2072,6 +2126,9 @@ export type OnCreateDisputeSubscription = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -2091,6 +2148,9 @@ export type OnUpdateDisputeSubscription = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -2110,6 +2170,9 @@ export type OnDeleteDisputeSubscription = {
   appDataId: string;
   disputeId?: string | null;
   disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -2398,6 +2461,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -2593,6 +2659,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -2788,6 +2857,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -2826,6 +2898,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -2861,6 +2936,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -2896,6 +2974,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -3098,6 +3179,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -3293,6 +3377,9 @@ export class APIService {
                 appDataId
                 disputeId
                 disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes
                 agencyName
                 openedOn
                 closedOn
@@ -3334,6 +3421,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -3369,6 +3459,9 @@ export class APIService {
             appDataId
             disputeId
             disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes
             agencyName
             openedOn
             closedOn
@@ -3566,6 +3659,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -3758,6 +3854,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -3950,6 +4049,9 @@ export class APIService {
               appDataId
               disputeId
               disputeStatus
+              disputeLetterCode
+              disputeLetterContent
+              openDisputes
               agencyName
               openedOn
               closedOn
@@ -3985,6 +4087,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -4017,6 +4122,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
@@ -4049,6 +4157,9 @@ export class APIService {
           appDataId
           disputeId
           disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
           agencyName
           openedOn
           closedOn
