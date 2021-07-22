@@ -13,7 +13,6 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
-  disputes: [Dispute] @connection(keyName: "byAppId", fields: ["id"])
 }
 type User {
   id: ID!
@@ -100,6 +99,7 @@ type Transunion {
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
   disputeStatus: String
+  disputes: [Dispute]
 }
 type Equifax {
   authenticated: Boolean
@@ -117,28 +117,7 @@ type TUReportResponse {
   serviceProductValue: String
   status: String
 }
-type Dispute
-  @model
-  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read, update, create, delete] }])
-  @key(
-    name: "byAppId"
-    fields: [
-      "appDataId"
-      "disputeId"
-      "disputeStatus"
-      "disputeLetterCode"
-      "disputeLetterContent"
-      "openDisputes"
-      "agencyName"
-      "openedOn"
-      "closedOn"
-      "disputeItems"
-      "disputeResults"
-      "notificationStatus"
-      "notificationMessage"
-      "notificationSentOn"
-    ]
-  ) {
+type Dispute {
   id: ID!
   appDataId: ID!
   disputeId: String
