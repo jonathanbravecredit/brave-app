@@ -51,6 +51,11 @@ const DashboardRoutes: Routes = [
         component: NegativeAccountInitialComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'disputes',
+        component: NegativeAccountInitialComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];

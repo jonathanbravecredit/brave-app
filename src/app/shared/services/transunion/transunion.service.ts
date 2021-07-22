@@ -113,7 +113,7 @@ export class TransunionService {
    */
   async sendCompleteOnboarding(
     data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<{ onboarded: boolean; error?: any } | undefined> {
+  ): Promise<{ CompleteOnboardingEnrollments: { onboarded: boolean; error?: any } } | undefined> {
     try {
       const msg = { id: data.id };
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));

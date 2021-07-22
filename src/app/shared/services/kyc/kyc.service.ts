@@ -453,7 +453,7 @@ export class KycService {
    */
   async sendCompleteOnboarding(
     data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<{ onboarded: boolean; error?: any } | undefined> {
+  ): Promise<{ CompleteOnboardingEnrollments: { onboarded: boolean; error?: any } } | undefined> {
     try {
       return await this.transunion.sendCompleteOnboarding(data);
     } catch (err) {
