@@ -85,18 +85,18 @@ export class KycIdverificationComponent extends KycBaseComponent {
             })();
 
         this.authSuccessful
-          ? await this.sendEnrollRequest(this.state)
+          ? await this.sendCompleteOnboarding(this.state)
           : (() => {
               throw 'Authentication request failed';
             })();
 
-        await this.sendEnrollDisputeRequest(this.state);
+        // await this.sendEnrollDisputeRequest(this.state);
         // can remove if enroll is syncing to db...but will depend on listener to update state
-        this.enrollResult
-          ? await this.updateEnrichedEnrollment(this.enrollResult)
-          : (() => {
-              throw 'Enroll request failed';
-            })();
+        // this.enrollResult
+        //   ? await this.updateEnrichedEnrollment(this.enrollResult)
+        //   : (() => {
+        //       throw 'Enroll request failed';
+        //     })();
       } catch (err) {
         console.log('error ===> ', err); // TODO can better handle errors
         this.router.navigate(['../error'], { relativeTo: this.route });
@@ -247,6 +247,28 @@ export class KycIdverificationComponent extends KycBaseComponent {
     if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
     this.authSuccessful = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
     return this;
+  }
+
+  /**
+   * Once the user is verified complete the onboarding step on the server
+   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+   * @returns
+   */
+  async sendCompleteOnboarding(
+    state: UpdateAppDataInput | AppDataStateModel | undefined,
+  ): Promise<KycIdverificationComponent> {
+    if (!state) return this;
+    try {
+      const resp = await this.kycService.sendCompleteOnboarding(state);
+      console.log('in kyc complete onboardin res ===> ', resp);
+      this.kycService.completeStep(this.stepID);
+      this.router.navigate(['../congratulations'], {
+        relativeTo: this.route,
+      });
+      return this;
+    } catch (err) {
+      throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
+    }
   }
 
   /**

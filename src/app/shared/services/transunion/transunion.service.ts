@@ -111,6 +111,26 @@ export class TransunionService {
    * @param {boolean} dispute Flag to enroll the user in the dispute process
    * @returns
    */
+  async sendCompleteOnboarding(
+    data: UpdateAppDataInput | AppDataStateModel,
+  ): Promise<{ onboarded: Boolean; error?: any } | undefined> {
+    try {
+      const msg = { id: data.id };
+      const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));
+      console.log('complete onboarding res ===> ', res);
+      return res ? JSON.parse(res) : undefined;
+    } catch (err) {
+      console.log('err ', err);
+      return;
+    }
+  }
+
+  /**
+   * Send the verified user to transunion to enroll them and receive their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @param {boolean} dispute Flag to enroll the user in the dispute process
+   * @returns
+   */
   async sendEnrollRequest(
     data: UpdateAppDataInput | AppDataStateModel,
     dispute: boolean = false,

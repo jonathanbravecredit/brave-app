@@ -7,10 +7,9 @@ import { DashboardService } from '@shared/services/dashboard/dashboard.service';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-  constructor(
-    private dashboardService: DashboardService,
-    private creditReportService: CreditreportService
-  ) {}
+  constructor(private dashboardService: DashboardService, private creditReportService: CreditreportService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dashboardService.refreshReport();
+  }
 }
