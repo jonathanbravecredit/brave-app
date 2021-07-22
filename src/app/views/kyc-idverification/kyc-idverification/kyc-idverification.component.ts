@@ -259,9 +259,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
   ): Promise<KycIdverificationComponent> {
     if (!state) return this;
     try {
+      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const resp = await this.kycService.sendCompleteOnboarding(state);
-      console.log('in kyc complete onboardin res ===> ', resp);
-      this.kycService.completeStep(this.stepID);
       this.router.navigate(['../congratulations'], {
         relativeTo: this.route,
       });
