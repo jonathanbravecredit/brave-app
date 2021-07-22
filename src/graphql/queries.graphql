@@ -118,6 +118,23 @@ query GetAppData($id: ID!) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeResults
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -137,24 +154,6 @@ query GetAppData($id: ID!) {
     createdAt
     updatedAt
     owner
-    disputes {
-      items {
-        id
-        agencyId
-        disputeId
-        disputeStatus
-        openedOn
-        closedOn
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
   }
 }
 query ListAppDatas(
@@ -278,6 +277,23 @@ query ListAppDatas(
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
+          disputes {
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeResults
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
         }
         equifax {
           authenticated
@@ -294,65 +310,6 @@ query ListAppDatas(
           mortgages
         }
       }
-      createdAt
-      updatedAt
-      owner
-      disputes {
-        items {
-          id
-          agencyId
-          disputeId
-          disputeStatus
-          openedOn
-          closedOn
-          disputeResults
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-    }
-    nextToken
-  }
-}
-query GetDisputes($id: ID!) {
-  getDisputes(id: $id) {
-    id
-    agencyId
-    disputeId
-    disputeStatus
-    openedOn
-    closedOn
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-    createdAt
-    updatedAt
-    owner
-  }
-}
-query ListDisputess(
-  $filter: ModelDisputesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listDisputess(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      agencyId
-      disputeId
-      disputeStatus
-      openedOn
-      closedOn
-      disputeResults
-      notificationStatus
-      notificationMessage
-      notificationSentOn
       createdAt
       updatedAt
       owner
