@@ -41,12 +41,7 @@ export class StateService {
    */
   updateUserAttributes(attrs: UserAttributesInput): void {
     this.store.dispatch(new UserActions.UpdateAttributes(attrs)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = {
-        id: state.appData.id,
-        user: state.appData.user,
-        agencies: state.appData.agencies,
-        preferences: state.appData.preferences,
-      } as UpdateAppDataInput;
+      const input = { ...state.appData } as UpdateAppDataInput;
       if (!input.id) {
         throw new Error(`stateService:updateUserAttributes=No id provided ${input.id}`);
       } else {
@@ -64,11 +59,7 @@ export class StateService {
       this.store
         .dispatch(new UserActions.UpdateAttributes(attrs))
         .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = {
-            id: state.appData.id,
-            user: state.appData.user,
-            agencies: state.appData.agencies,
-          } as UpdateAppDataInput;
+          const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
             throw new Error(`stateService:updateUserAttributesAsync=No id provided ${input.id}`);
           } else {
@@ -89,11 +80,7 @@ export class StateService {
   updateAgencies(agencies: AgenciesStateModel): void {
     if (!agencies) return;
     this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = {
-        id: state.appData.id,
-        user: state.appData.user,
-        agencies: state.appData.agencies,
-      } as UpdateAppDataInput;
+      const input = { ...state.appData } as UpdateAppDataInput;
       if (!input.id) {
         throw new Error(`stateService:updateAgencies=No id provided ${input.id}`);
       } else {
@@ -111,11 +98,7 @@ export class StateService {
     if (!agencies) return;
     return await new Promise((resolve, reject) => {
       this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = {
-          id: state.appData.id,
-          user: state.appData.user,
-          agencies: state.appData.agencies,
-        } as UpdateAppDataInput;
+        const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
           throw new Error(`stateService:updateAgenciesAsync=No id provided ${input.id}`);
         } else {
@@ -155,11 +138,7 @@ export class StateService {
           }),
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = {
-            id: state.appData.id,
-            user: state.appData.user,
-            agencies: state.appData.agencies,
-          } as UpdateAppDataInput;
+          const input = { ...state.appData } as UpdateAppDataInput;
           resolve(input);
         });
     });
@@ -192,11 +171,7 @@ export class StateService {
           }),
         )
         .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = {
-            id: state.appData.id,
-            user: state.appData.user,
-            agencies: state.appData.agencies,
-          } as UpdateAppDataInput;
+          const input = { ...state.appData } as UpdateAppDataInput;
           resolve(input);
         });
     });
@@ -211,11 +186,7 @@ export class StateService {
     this.store
       .dispatch(new OnboardingActions.UpdateLastComplete(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = {
-          id: state.appData.id,
-          user: state.appData.user,
-          agencies: state.appData.agencies,
-        } as UpdateAppDataInput;
+        const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
           throw new Error(`stateService:updateLastComplete=No id provided ${input.id}`);
         } else {
@@ -234,11 +205,7 @@ export class StateService {
       this.store
         .dispatch(new OnboardingActions.UpdateLastComplete(step))
         .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = {
-            id: state.appData.id,
-            user: state.appData.user,
-            agencies: state.appData.agencies,
-          } as UpdateAppDataInput;
+          const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
             throw new Error(`stateService:updateLastCompleteAsync=No id provided ${input.id}`);
           } else {
@@ -260,11 +227,7 @@ export class StateService {
     this.store
       .dispatch(new OnboardingActions.UpdateLastActive(step))
       .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = {
-          id: state.appData.id,
-          user: state.appData.user,
-          agencies: state.appData.agencies,
-        } as UpdateAppDataInput;
+        const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
           throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
         } else {
@@ -283,11 +246,7 @@ export class StateService {
       this.store
         .dispatch(new OnboardingActions.UpdateLastActive(step))
         .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = {
-            id: state.appData.id,
-            user: state.appData.user,
-            agencies: state.appData.agencies,
-          } as UpdateAppDataInput;
+          const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
             throw new Error(`stateService:updateLastActiveAsync=No id provided ${input.id}`);
           } else {
