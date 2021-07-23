@@ -126,24 +126,24 @@ query GetAppData($id: ID!) {
           disputeLetterCode
           disputeLetterContent
           openDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           closedDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           agencyName
           openedOn
@@ -304,24 +304,24 @@ query ListAppDatas(
             disputeLetterCode
             disputeLetterContent
             openDisputes {
-              EstimatedCompletionDate
-              LastUpdatedDate
-              OpenDate
-              RequestedDate
-              TotalClosedDisputedItems
-              TotalDisputedItems
-              TotalOpenDisputedItems
-              TotalPVDisputedItemCount
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
             }
             closedDisputes {
-              EstimatedCompletionDate
-              LastUpdatedDate
-              OpenDate
-              RequestedDate
-              TotalClosedDisputedItems
-              TotalDisputedItems
-              TotalOpenDisputedItems
-              TotalPVDisputedItemCount
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
             }
             agencyName
             openedOn

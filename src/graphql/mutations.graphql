@@ -86,24 +86,24 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       disputeLetterCode
       disputeLetterContent
       openDisputes {
-        EstimatedCompletionDate
-        LastUpdatedDate
-        OpenDate
-        RequestedDate
-        TotalClosedDisputedItems
-        TotalDisputedItems
-        TotalOpenDisputedItems
-        TotalPVDisputedItemCount
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
       }
       closedDisputes {
-        EstimatedCompletionDate
-        LastUpdatedDate
-        OpenDate
-        RequestedDate
-        TotalClosedDisputedItems
-        TotalDisputedItems
-        TotalOpenDisputedItems
-        TotalPVDisputedItemCount
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
       }
       agencyName
       openedOn
@@ -243,24 +243,24 @@ mutation CreateAppData(
           disputeLetterCode
           disputeLetterContent
           openDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           closedDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           agencyName
           openedOn
@@ -419,24 +419,24 @@ mutation UpdateAppData(
           disputeLetterCode
           disputeLetterContent
           openDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           closedDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           agencyName
           openedOn
@@ -595,24 +595,24 @@ mutation DeleteAppData(
           disputeLetterCode
           disputeLetterContent
           openDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           closedDisputes {
-            EstimatedCompletionDate
-            LastUpdatedDate
-            OpenDate
-            RequestedDate
-            TotalClosedDisputedItems
-            TotalDisputedItems
-            TotalOpenDisputedItems
-            TotalPVDisputedItemCount
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
           }
           agencyName
           openedOn
