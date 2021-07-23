@@ -39,25 +39,76 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
     const current = sorted.shift();
     const currentItems = current ? JSON.parse(current.disputeItems || '') : null;
     if (!currentItems) return dummy;
-    if (currentItems instanceof Array) {
-      const currentDisputeArr = currentItems.map((item: IDisputeItem) => {
-        return {
-          creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
-          status: current?.disputeStatus
-            ? TUStatusMapping[`${current?.disputeStatus?.toLowerCase()}`] || '#N/A'
-            : '#N/A',
-          accountType: item.tradeline?.accountTypeDescription || '#N/A',
-          dateSubmitted: current?.openedOn || '#N/A',
-          estCompletionDate: current?.openDisputes?.estimatedCompletionDate,
-        };
-      });
-    } else {
-    }
+    const currentDisputeArr = this.parseCurrentDisputeItems(current, currentItems);
+    const historicalDisputeArr = sorted.length
+      ? sorted.map((dispute) => {
+          const disputeItems = current ? JSON.parse(current.disputeItems || '') : null;
+          return this.parseHistoricalDisputeItems(dispute, disputeItems)[0]; // TODO should only be one account for now
+        })
+      : [];
 
-    const historical = sorted.length ? [...sorted] : [];
     return {
-      currentDisputeArr: current,
-      historicalDisputeArr: historical,
+      currentDisputeArr: currentDisputeArr,
+      historicalDisputeArr: historicalDisputeArr,
     };
+  }
+
+  private parseCurrentDisputeItems(
+    dispute: DisputeInput | undefined | null,
+    disputeItems: IDisputeItem | IDisputeItem[] | undefined | null,
+  ): IDisputeCurrent[] {
+    return disputeItems instanceof Array
+      ? disputeItems.map((item: IDisputeItem) => {
+          return {
+            creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
+            status: dispute?.disputeStatus
+              ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '#N/A'
+              : '#N/A',
+            accountType: item.tradeline?.accountTypeDescription || '#N/A',
+            dateSubmitted: dispute?.openedOn || '#N/A',
+            estCompletionDate:
+              dispute?.openDisputes?.estimatedCompletionDate ||
+              dispute?.closedDisputes?.estimatedCompletionDate ||
+              '#N/A',
+          };
+        })
+      : [
+          {
+            creditorName: disputeItems?.tradeline?.Tradeline?.creditorName || '#N/A',
+            status: dispute?.disputeStatus
+              ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '#N/A'
+              : '#N/A',
+            accountType: disputeItems?.tradeline?.accountTypeDescription || '#N/A',
+            dateSubmitted: dispute?.openedOn || '#N/A',
+            estCompletionDate:
+              dispute?.openDisputes?.estimatedCompletionDate ||
+              dispute?.closedDisputes?.estimatedCompletionDate ||
+              '#N/A',
+          },
+        ];
+  }
+
+  private parseHistoricalDisputeItems(
+    dispute: DisputeInput | undefined | null,
+    disputeItems: IDisputeItem | IDisputeItem[] | undefined | null,
+  ): IDisputeHistorical[] {
+    if (!disputeItems) return [];
+    return disputeItems instanceof Array
+      ? disputeItems.map((item: IDisputeItem) => {
+          return {
+            creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
+            latestDateSubmitted: dispute?.openedOn || '#N/A',
+            decision: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
+            resultReceived: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
+          };
+        })
+      : [
+          {
+            creditorName: disputeItems.tradeline?.Tradeline?.creditorName || '#N/A', // disputeItems.tradeline?.Tradeline?.creditorName || '#N/A',
+            latestDateSubmitted: dispute?.openedOn || '#N/A',
+            decision: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
+            resultReceived: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
+          },
+        ];
   }
 }
