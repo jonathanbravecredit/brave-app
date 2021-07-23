@@ -109,7 +109,8 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       openedOn
       closedOn
       disputeItems
-      disputeResults
+      disputeInvestigationResults
+      disputeCreditBureau
       notificationStatus
       notificationMessage
       notificationSentOn
@@ -266,7 +267,8 @@ mutation CreateAppData(
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
@@ -442,7 +444,8 @@ mutation UpdateAppData(
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
@@ -618,7 +621,8 @@ mutation DeleteAppData(
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn

@@ -10,6 +10,7 @@ import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradel
 import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
 import { DisputesOverviewInitialView } from '@views/dashboard/disputes/disputes-overview';
 import { DisputeFindingsView } from '@views/dashboard/disputes/dispute-findings/dispute-findings.view';
+import { SettingsLayout } from './settings/settings.layout';
 
 const DashboardRoutes: Routes = [
   {
@@ -25,6 +26,11 @@ const DashboardRoutes: Routes = [
       {
         path: 'init',
         component: DashboardInitComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'settings',
+        component: SettingsLayout,
         canActivate: [AuthGuard],
       },
       {

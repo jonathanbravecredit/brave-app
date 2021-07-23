@@ -63,7 +63,8 @@ export type Dispute = {
   openedOn?: string | null;
   closedOn?: string | null;
   disputeItems?: string | null;
-  disputeResults?: string | null;
+  disputeInvestigationResults?: string | null;
+  disputeCreditBureau?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
   notificationSentOn?: string | null;
@@ -194,7 +195,8 @@ export type DisputeInput = {
   openedOn?: string | null;
   closedOn?: string | null;
   disputeItems?: string | null;
-  disputeResults?: string | null;
+  disputeInvestigationResults?: string | null;
+  disputeCreditBureau?: string | null;
   notificationStatus?: string | null;
   notificationMessage?: string | null;
   notificationSentOn?: string | null;
@@ -516,7 +518,8 @@ export type PatchTransunionMutation = {
     openedOn?: string | null;
     closedOn?: string | null;
     disputeItems?: string | null;
-    disputeResults?: string | null;
+    disputeInvestigationResults?: string | null;
+    disputeCreditBureau?: string | null;
     notificationStatus?: string | null;
     notificationMessage?: string | null;
     notificationSentOn?: string | null;
@@ -689,7 +692,8 @@ export type CreateAppDataMutation = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -885,7 +889,8 @@ export type UpdateAppDataMutation = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -1081,7 +1086,8 @@ export type DeleteAppDataMutation = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -1277,7 +1283,8 @@ export type GetAppDataQuery = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -1475,7 +1482,8 @@ export type ListAppDatasQuery = {
           openedOn?: string | null;
           closedOn?: string | null;
           disputeItems?: string | null;
-          disputeResults?: string | null;
+          disputeInvestigationResults?: string | null;
+          disputeCreditBureau?: string | null;
           notificationStatus?: string | null;
           notificationMessage?: string | null;
           notificationSentOn?: string | null;
@@ -1673,7 +1681,8 @@ export type OnCreateAppDataSubscription = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -1869,7 +1878,8 @@ export type OnUpdateAppDataSubscription = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -2065,7 +2075,8 @@ export type OnDeleteAppDataSubscription = {
         openedOn?: string | null;
         closedOn?: string | null;
         disputeItems?: string | null;
-        disputeResults?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
@@ -2223,7 +2234,8 @@ export class APIService {
             openedOn
             closedOn
             disputeItems
-            disputeResults
+            disputeInvestigationResults
+            disputeCreditBureau
             notificationStatus
             notificationMessage
             notificationSentOn
@@ -2412,7 +2424,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
@@ -2624,7 +2637,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
@@ -2836,7 +2850,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
@@ -3058,7 +3073,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
@@ -3270,7 +3286,8 @@ export class APIService {
                   openedOn
                   closedOn
                   disputeItems
-                  disputeResults
+                  disputeInvestigationResults
+                  disputeCreditBureau
                   notificationStatus
                   notificationMessage
                   notificationSentOn
@@ -3487,7 +3504,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
@@ -3696,7 +3714,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
@@ -3905,7 +3924,8 @@ export class APIService {
                 openedOn
                 closedOn
                 disputeItems
-                disputeResults
+                disputeInvestigationResults
+                disputeCreditBureau
                 notificationStatus
                 notificationMessage
                 notificationSentOn
