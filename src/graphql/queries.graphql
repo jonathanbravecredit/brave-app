@@ -125,7 +125,26 @@ query GetAppData($id: ID!) {
           disputeStatus
           disputeLetterCode
           disputeLetterContent
-          openDisputes
+          openDisputes {
+            EstimatedCompletionDate
+            LastUpdatedDate
+            OpenDate
+            RequestedDate
+            TotalClosedDisputedItems
+            TotalDisputedItems
+            TotalOpenDisputedItems
+            TotalPVDisputedItemCount
+          }
+          closedDisputes {
+            EstimatedCompletionDate
+            LastUpdatedDate
+            OpenDate
+            RequestedDate
+            TotalClosedDisputedItems
+            TotalDisputedItems
+            TotalOpenDisputedItems
+            TotalPVDisputedItemCount
+          }
           agencyName
           openedOn
           closedOn
@@ -284,7 +303,26 @@ query ListAppDatas(
             disputeStatus
             disputeLetterCode
             disputeLetterContent
-            openDisputes
+            openDisputes {
+              EstimatedCompletionDate
+              LastUpdatedDate
+              OpenDate
+              RequestedDate
+              TotalClosedDisputedItems
+              TotalDisputedItems
+              TotalOpenDisputedItems
+              TotalPVDisputedItemCount
+            }
+            closedDisputes {
+              EstimatedCompletionDate
+              LastUpdatedDate
+              OpenDate
+              RequestedDate
+              TotalClosedDisputedItems
+              TotalDisputedItems
+              TotalOpenDisputedItems
+              TotalPVDisputedItemCount
+            }
             agencyName
             openedOn
             closedOn
