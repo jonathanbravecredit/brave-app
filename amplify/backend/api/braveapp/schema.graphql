@@ -137,12 +137,12 @@ type Dispute {
 }
 
 type DisputeSummary {
-  EstimatedCompletionDate: String
-  LastUpdatedDate: String
-  OpenDate: String
-  RequestedDate: String
-  TotalClosedDisputedItems: String
-  TotalDisputedItems: String
-  TotalOpenDisputedItems: String
-  TotalPVDisputedItemCount: String
+  estimatedCompletionDate: String
+  lastUpdatedDate: String
+  openDate: String
+  requestedDate: String
+  totalClosedDisputedItems: String
+  totalDisputedItems: String
+  totalOpenDisputedItems: String
+  totalPVDisputedItemCount: String
 }

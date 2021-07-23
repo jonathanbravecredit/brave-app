@@ -122,7 +122,26 @@ subscription OnCreateAppData($owner: String) {
           disputeStatus
           disputeLetterCode
           disputeLetterContent
-          openDisputes
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
           agencyName
           openedOn
           closedOn
@@ -276,7 +295,26 @@ subscription OnUpdateAppData($owner: String) {
           disputeStatus
           disputeLetterCode
           disputeLetterContent
-          openDisputes
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
           agencyName
           openedOn
           closedOn
@@ -430,7 +468,26 @@ subscription OnDeleteAppData($owner: String) {
           disputeStatus
           disputeLetterCode
           disputeLetterContent
-          openDisputes
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
           agencyName
           openedOn
           closedOn
