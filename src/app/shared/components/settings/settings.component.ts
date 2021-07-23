@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { SettingsService } from '@shared/services/settings/settings.service';
+import { OutlineInputComponent } from '../inputs/outline-input/outline-input.component';
 import { SettingsOptionComponent } from './settings-option/settings-option.component';
 
 @Component({
@@ -14,7 +16,7 @@ export class SettingsComponent implements OnInit {
 
   currentPage: string = '';
 
-  constructor() { }
+  constructor(private settings: SettingsService) { }
 
   ngOnInit(): void {
   }
@@ -35,7 +37,38 @@ export class SettingsComponent implements OnInit {
     return this.currentPage !== 'initial' || this.currentPage !== pageName;
   }
 
-  handleEmailChange(data: { newEmail: string, password: string }) {
-    
+  logout() {
+
+  }
+
+  handleChangeInPassword(currentPasswordInput: OutlineInputComponent, newPasswordInput: OutlineInputComponent) {
+    const password = (currentPasswordInput.componentFormGroup.controls['input'] as unknown) as string;
+    const newPassword = (newPasswordInput.componentFormGroup.controls['input'] as unknown) as string;
+    this.settings.resetPassword(password, newPassword).then((result) => {
+      if (result) {
+        this.settingOptionPassword?.setSuccess();
+      }
+    })
+  }
+
+  handleChangeInEmail(currentPasswordInput: OutlineInputComponent, newEmailInput: OutlineInputComponent) {
+    // TODO Find a way to include requirements of current email, due to a lack of use of password value
+    const password = (currentPasswordInput.componentFormGroup.controls['input'] as unknown) as string;
+    const newEmail = (newEmailInput.componentFormGroup.controls['input'] as unknown) as string;
+    this.settings.updateUserEmail(newEmail).then((result) => {
+      if (result) {
+        this.settingOptionEmail?.setSuccess();
+      }
+    })
+  }
+
+  handleDeactivation(currentPasswordInput: OutlineInputComponent) {
+    // TODO Find a way to include requirements of current email
+    const email = (currentPasswordInput.componentFormGroup.controls['input'] as unknown) as string;
+    this.settings.deactivateAccount().then((result) => {
+      if (result) {
+        this.settingOptionDeactivate?.setSuccess();
+      }
+    })
   }
 }

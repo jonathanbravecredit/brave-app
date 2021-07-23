@@ -14,8 +14,10 @@ export class SettingsOptionComponent implements OnInit {
   @Input() disableNavigation: boolean = false;
   @Output() navigated: EventEmitter<string> = new EventEmitter();
   @Output() clicked: EventEmitter<string> = new EventEmitter();
+
   isDetailDescriptionOpened: boolean = false;
   isSettingUpdated: boolean = false;
+  
   constructor() { }
 
   ngOnInit(): void {

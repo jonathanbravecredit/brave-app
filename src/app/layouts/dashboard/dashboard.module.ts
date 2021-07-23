@@ -4,8 +4,9 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { ViewsModule } from '@views/views.module';
 import { DashboardRoutingModule } from '@layouts/dashboard/dashboard.routing';
 import { DashboardComponent } from '@layouts/dashboard/dashboard.component';
+import { SettingsLayout } from './settings/settings.layout';
 
-const components = [DashboardComponent];
+const components = [DashboardComponent, SettingsLayout];
 
 @NgModule({
   declarations: [...components],
