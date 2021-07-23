@@ -21,7 +21,7 @@ export class DisputeService implements OnDestroy {
   _acknowledged: boolean = false;
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
-  disputes$: Subject<(DisputeInput | null | undefined)[]> = new Subject();
+  disputes$: Subject<(DisputeInput | null | undefined)[] | null | undefined> = new Subject();
 
   constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
@@ -29,7 +29,9 @@ export class DisputeService implements OnDestroy {
     });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
-      this.disputes$.next(state.appData.agencies?.transunion?.disputes || []);
+      const disputes = state.appData.agencies?.transunion?.disputes;
+      console.log('disputes ===> ', disputes);
+      this.disputes$.next(state.appData.agencies?.transunion?.disputes);
       this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     });
   }

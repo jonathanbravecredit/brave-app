@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './disputes-overview-initial.view.html',
 })
 export class DisputesOverviewInitialView implements OnInit {
-  disputes$: Observable<(DisputeInput | null | undefined)[]>;
+  disputes$: Observable<(DisputeInput | null | undefined)[] | null | undefined>;
 
   constructor(private disputeService: DisputeService) {
     this.disputes$ = this.disputeService.disputes$.asObservable();

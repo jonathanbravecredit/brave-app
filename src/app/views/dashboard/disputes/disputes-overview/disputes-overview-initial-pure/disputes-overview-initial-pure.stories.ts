@@ -31,25 +31,18 @@ const Template: Story<DisputesOverviewInitialPureView> = (args: any) => ({
   component: DisputesOverviewInitialPureView,
   props: {
     ...args,
+    currentDisputeArr: disputesMock,
   },
 });
 
 export const Default = Template.bind({});
-Default.args = {
-  forceStateTo: 'mock',
-};
+Default.args = {};
 
 export const Empty = Template.bind({});
 Empty.args = {};
 
 export const OnlyHistory = Template.bind({});
-OnlyHistory.args = {
-  forceStateTo: 'mock',
-  emptyCurrentArr: true,
-};
+OnlyHistory.args = {};
 
 export const OnlyCurrent = Template.bind({});
-OnlyCurrent.args = {
-  forceStateTo: 'mock',
-  emptyHistoricalArr: true,
-};
+OnlyCurrent.args = {};

@@ -12,11 +12,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [
-        SharedComponentsModule,
-        HttpClientModule,
-        RouterModule.forRoot([], { useHash: true }),
-      ],
+      imports: [SharedComponentsModule, HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],
@@ -30,6 +26,4 @@ const Template: Story<DisputesOverviewHistoryPureView> = (args: any) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {
-  forceMock: true
-};
+Default.args = {};

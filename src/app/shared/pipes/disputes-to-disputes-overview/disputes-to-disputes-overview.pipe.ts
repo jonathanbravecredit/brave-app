@@ -24,7 +24,7 @@ const TUStatusMapping: Record<string, any> = {
   name: 'disputesToDisputesOverview',
 })
 export class DisputesToDisputesOverviewPipe implements PipeTransform {
-  transform(disputes: (DisputeInput | undefined | null)[] | null, ...args: unknown[]): IDisputesToOverview {
+  transform(disputes: (DisputeInput | undefined | null)[] | null | undefined): IDisputesToOverview {
     const dummy = {
       currentDisputeArr: [],
       historicalDisputeArr: [],
@@ -36,16 +36,17 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
       const openedB = new Date(b?.openedOn || 0);
       return +openedB - +openedA;
     });
-    const current = sorted.shift();
+    const current = sorted[0];
     const currentItems = current ? JSON.parse(current.disputeItems || '') : null;
     if (!currentItems) return dummy;
     const currentDisputeArr = this.parseCurrentDisputeItems(current, currentItems);
-    const historicalDisputeArr = sorted.length
-      ? sorted.map((dispute) => {
-          const disputeItems = current ? JSON.parse(current.disputeItems || '') : null;
-          return this.parseHistoricalDisputeItems(dispute, disputeItems)[0]; // TODO should only be one account for now
-        })
-      : [];
+    const historicalDisputeArr =
+      sorted.length > 1
+        ? sorted.slice(1).map((dispute) => {
+            const disputeItems = current ? JSON.parse(current.disputeItems || '') : null;
+            return this.parseHistoricalDisputeItems(dispute, disputeItems)[0]; // TODO should only be one account for now
+          })
+        : [];
 
     const mapped = {
       currentDisputeArr: currentDisputeArr,

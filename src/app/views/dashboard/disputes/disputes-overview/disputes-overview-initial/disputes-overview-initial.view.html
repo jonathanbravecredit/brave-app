@@ -1,8 +1,10 @@
 <div style="min-width: 20rem" class="container mx-auto max-w-xs h-full px-4">
-  <div *ngIf="disputes$ | async | disputesToDisputesOverview as disputes">
-    <brave-disputes-overview-initial-pure
-      [currentDisputeArr]="disputes.currentDisputeArr"
-      [historicalDisputeArr]="disputes.historicalDisputeArr"
-    ></brave-disputes-overview-initial-pure>
+  <div *ngIf="disputes$ | async as disputes">
+    <div *ngIf="disputes | disputesToDisputesOverview as parsed">
+      <brave-disputes-overview-initial-pure
+        [currentDisputeArr]="parsed.currentDisputeArr"
+        [historicalDisputeArr]="parsed.historicalDisputeArr"
+      ></brave-disputes-overview-initial-pure>
+    </div>
   </div>
 </div>

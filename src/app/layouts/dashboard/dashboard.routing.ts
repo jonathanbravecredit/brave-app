@@ -52,7 +52,7 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'dispute/overview',
+        path: 'disputes/overview',
         component: DisputesOverviewInitialView,
         canActivate: [AuthGuard],
       },
