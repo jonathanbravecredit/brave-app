@@ -146,7 +146,8 @@ subscription OnCreateAppData($owner: String) {
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
@@ -319,7 +320,8 @@ subscription OnUpdateAppData($owner: String) {
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
@@ -492,7 +494,8 @@ subscription OnDeleteAppData($owner: String) {
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
