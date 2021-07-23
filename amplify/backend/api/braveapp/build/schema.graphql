@@ -2,8 +2,6 @@ type Query {
   transunion(action: String!, message: String!): String
   getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
   listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
-  getDispute(id: ID!): Dispute @aws_iam @aws_cognito_user_pools
-  listDisputes(filter: ModelDisputeFilterInput, limit: Int, nextToken: String): ModelDisputeConnection @aws_iam @aws_cognito_user_pools
 }
 
 type Mutation {
@@ -11,9 +9,6 @@ type Mutation {
   createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
-  createDispute(input: CreateDisputeInput!, condition: ModelDisputeConditionInput): Dispute @aws_iam @aws_cognito_user_pools
-  updateDispute(input: UpdateDisputeInput!, condition: ModelDisputeConditionInput): Dispute @aws_iam @aws_cognito_user_pools
-  deleteDispute(input: DeleteDisputeInput!, condition: ModelDisputeConditionInput): Dispute @aws_iam @aws_cognito_user_pools
 }
 
 type AppData @aws_iam @aws_cognito_user_pools {
@@ -24,7 +19,6 @@ type AppData @aws_iam @aws_cognito_user_pools {
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
-  disputes(disputeIdDisputeStatusDisputeLetterCodeDisputeLetterContentOpenDisputesAgencyNameOpenedOnClosedOnDisputeItemsDisputeResultsNotificationStatusNotificationMessageNotificationSentOn: ModelDisputeByAppDataCompositeKeyConditionInput, filter: ModelDisputeFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDisputeConnection @aws_iam @aws_cognito_user_pools
 }
 
 type User @aws_iam @aws_cognito_user_pools {
@@ -124,6 +118,7 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
   disputeStatus: String
+  disputes: [Dispute]
 }
 
 type Equifax @aws_iam @aws_cognito_user_pools {
@@ -152,7 +147,8 @@ type Dispute @aws_iam @aws_cognito_user_pools {
   disputeStatus: String
   disputeLetterCode: String
   disputeLetterContent: String
-  openDisputes: String
+  openDisputes: DisputeSummary
+  closedDisputes: DisputeSummary
   agencyName: String
   openedOn: String
   closedOn: String
@@ -161,9 +157,17 @@ type Dispute @aws_iam @aws_cognito_user_pools {
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-  owner: String
+}
+
+type DisputeSummary @aws_iam @aws_cognito_user_pools {
+  EstimatedCompletionDate: String
+  LastUpdatedDate: String
+  OpenDate: String
+  RequestedDate: String
+  TotalClosedDisputedItems: String
+  TotalDisputedItems: String
+  TotalOpenDisputedItems: String
+  TotalPVDisputedItemCount: String
 }
 
 input UserInput {
@@ -245,6 +249,7 @@ input TransunionInput {
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
   disputeStatus: String
+  disputes: [DisputeInput]
 }
 
 input TUReportResponseInput {
@@ -256,6 +261,36 @@ input TUReportResponseInput {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
+}
+
+input DisputeInput {
+  id: ID!
+  appDataId: ID!
+  disputeId: String
+  disputeStatus: String
+  disputeLetterCode: String
+  disputeLetterContent: String
+  openDisputes: DisputeSummaryInput
+  closedDisputes: DisputeSummaryInput
+  agencyName: String
+  openedOn: String
+  closedOn: String
+  disputeItems: AWSJSON
+  disputeResults: AWSJSON
+  notificationStatus: String
+  notificationMessage: AWSJSON
+  notificationSentOn: String
+}
+
+input DisputeSummaryInput {
+  EstimatedCompletionDate: String
+  LastUpdatedDate: String
+  OpenDate: String
+  RequestedDate: String
+  TotalClosedDisputedItems: String
+  TotalDisputedItems: String
+  TotalOpenDisputedItems: String
+  TotalPVDisputedItemCount: String
 }
 
 input EquifaxInput {
@@ -408,119 +443,4 @@ type Subscription {
   onCreateAppData(owner: String): AppData @aws_subscribe(mutations: ["createAppData"]) @aws_iam @aws_cognito_user_pools
   onUpdateAppData(owner: String): AppData @aws_subscribe(mutations: ["updateAppData"]) @aws_iam @aws_cognito_user_pools
   onDeleteAppData(owner: String): AppData @aws_subscribe(mutations: ["deleteAppData"]) @aws_iam @aws_cognito_user_pools
-  onCreateDispute(owner: String): Dispute @aws_subscribe(mutations: ["createDispute"]) @aws_iam @aws_cognito_user_pools
-  onUpdateDispute(owner: String): Dispute @aws_subscribe(mutations: ["updateDispute"]) @aws_iam @aws_cognito_user_pools
-  onDeleteDispute(owner: String): Dispute @aws_subscribe(mutations: ["deleteDispute"]) @aws_iam @aws_cognito_user_pools
-}
-
-type ModelDisputeConnection @aws_iam @aws_cognito_user_pools {
-  items: [Dispute]
-  nextToken: String
-}
-
-input ModelDisputeFilterInput {
-  id: ModelIDInput
-  appDataId: ModelIDInput
-  disputeId: ModelStringInput
-  disputeStatus: ModelStringInput
-  disputeLetterCode: ModelStringInput
-  disputeLetterContent: ModelStringInput
-  openDisputes: ModelStringInput
-  agencyName: ModelStringInput
-  openedOn: ModelStringInput
-  closedOn: ModelStringInput
-  disputeItems: ModelStringInput
-  disputeResults: ModelStringInput
-  notificationStatus: ModelStringInput
-  notificationMessage: ModelStringInput
-  notificationSentOn: ModelStringInput
-  and: [ModelDisputeFilterInput]
-  or: [ModelDisputeFilterInput]
-  not: ModelDisputeFilterInput
-}
-
-input CreateDisputeInput {
-  id: ID
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: String
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeResults: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-input UpdateDisputeInput {
-  id: ID!
-  appDataId: ID
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: String
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeResults: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-input DeleteDisputeInput {
-  id: ID
-}
-
-input ModelDisputeConditionInput {
-  appDataId: ModelIDInput
-  disputeId: ModelStringInput
-  disputeStatus: ModelStringInput
-  disputeLetterCode: ModelStringInput
-  disputeLetterContent: ModelStringInput
-  openDisputes: ModelStringInput
-  agencyName: ModelStringInput
-  openedOn: ModelStringInput
-  closedOn: ModelStringInput
-  disputeItems: ModelStringInput
-  disputeResults: ModelStringInput
-  notificationStatus: ModelStringInput
-  notificationMessage: ModelStringInput
-  notificationSentOn: ModelStringInput
-  and: [ModelDisputeConditionInput]
-  or: [ModelDisputeConditionInput]
-  not: ModelDisputeConditionInput
-}
-
-input ModelDisputeByAppDataCompositeKeyConditionInput {
-  eq: ModelDisputeByAppDataCompositeKeyInput
-  le: ModelDisputeByAppDataCompositeKeyInput
-  lt: ModelDisputeByAppDataCompositeKeyInput
-  ge: ModelDisputeByAppDataCompositeKeyInput
-  gt: ModelDisputeByAppDataCompositeKeyInput
-  between: [ModelDisputeByAppDataCompositeKeyInput]
-  beginsWith: ModelDisputeByAppDataCompositeKeyInput
-}
-
-input ModelDisputeByAppDataCompositeKeyInput {
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: String
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeResults: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
 }
