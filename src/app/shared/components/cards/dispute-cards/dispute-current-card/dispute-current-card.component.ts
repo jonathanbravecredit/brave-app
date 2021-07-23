@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DisputeStatus } from '../enums';
 
 @Component({
@@ -12,14 +12,11 @@ export class DisputeCurrentCardComponent implements OnInit {
   @Input() dateSubmitted: string | undefined = '#N/A';
   @Input() accountType: string | undefined = '#N/A';
   @Input() estCompletionDate: string | undefined = '#N/A';
+  @Output() viewDetailsClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('current card: creditorname ==> ', this.creditorName);
-    console.log('current card: status ==> ', this.status);
-    console.log('current card: est date ==> ', this.estCompletionDate);
-  }
+  ngOnInit(): void {}
 
   isStatusProcessing(): boolean {
     return this.status === DisputeStatus.Processing;

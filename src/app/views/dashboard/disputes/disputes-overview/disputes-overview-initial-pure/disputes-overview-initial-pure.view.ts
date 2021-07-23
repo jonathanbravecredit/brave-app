@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IDisputeCurrent, IDisputeHistorical } from '@shared/components/cards/dispute-cards';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IDisputeCurrent, IDisputeHistorical, TDisputeEntity } from '@shared/components/cards/dispute-cards';
 
 @Component({
   selector: 'brave-disputes-overview-initial-pure',
@@ -9,6 +9,7 @@ export class DisputesOverviewInitialPureView implements OnInit {
   @Input() currentDisputeArr: IDisputeCurrent[] = [];
   @Input() historicalDisputeArr: IDisputeHistorical[] = [];
   @Input() forceStateTo: 'default' | 'mock' = 'default';
+  @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
 
   constructor() {}
 

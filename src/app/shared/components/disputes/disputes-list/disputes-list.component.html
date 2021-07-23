@@ -6,18 +6,22 @@
   <div *ngIf="disputeList.length > 0">
     <div *ngIf="disputListType === 'historical'">
       <brave-dispute-history-card
-      *ngFor="let dispute of disputeList;"
-      [creditorName]="dispute.creditorName"
-      [latestDateSubmitted]="dispute.latestDateSubmitted"
-      [decision]="dispute.decision"></brave-dispute-history-card>
+        *ngFor="let dispute of disputeList"
+        [creditorName]="dispute.creditorName"
+        [latestDateSubmitted]="dispute.latestDateSubmitted"
+        [decision]="dispute.decision"
+        (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+      ></brave-dispute-history-card>
     </div>
     <div *ngIf="disputListType === 'current'">
       <brave-dispute-current-card
-      *ngFor="let dispute of disputeList; "
-      [status]="dispute.status"
-      [creditorName]="dispute.creditorName"
-      [dateSubmitted]="dispute.dateSubmitted"
-      [accountType]="dispute.accountType"></brave-dispute-current-card>
+        *ngFor="let dispute of disputeList"
+        [status]="dispute.status"
+        [creditorName]="dispute.creditorName"
+        [dateSubmitted]="dispute.dateSubmitted"
+        [accountType]="dispute.accountType"
+        (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+      ></brave-dispute-current-card>
     </div>
   </div>
   <div *ngIf="disputeList.length === 0">

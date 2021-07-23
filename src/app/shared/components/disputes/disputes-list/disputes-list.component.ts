@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TDisputeEntity } from '@shared/components/cards/dispute-cards';
 
 @Component({
@@ -12,15 +12,12 @@ export class DisputesListComponent implements OnInit {
   @Input() listHeader = '';
   @Input() headerIcon = '';
   @Input() isEmptyMessage = '';
+  @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
 
   constructor() {}
 
   ngOnInit(): void {
     console.log('disputeList ==> ', this.disputeList);
-    console.log('test ==> ', this.disputListType === 'current')
-  }
-
-  trackByFn(idx: number, dispute: TDisputeEntity) {
-    return dispute.creditorName;
+    console.log('test ==> ', this.disputListType === 'current');
   }
 }

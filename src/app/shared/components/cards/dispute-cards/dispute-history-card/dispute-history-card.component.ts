@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'brave-dispute-history-card',
@@ -11,6 +11,7 @@ export class DisputeHistoryCardComponent implements OnInit {
   @Input() resultReceived: string | undefined;
   @Input() decision: string | undefined;
   @Input() type: 'default' | 'short' = 'default';
+  @Output() viewDetailsClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 

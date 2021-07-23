@@ -1,4 +1,4 @@
-<brave-dispute-regular-card *ngIf="type === 'default'">
+<brave-dispute-regular-card *ngIf="type === 'default'" (viewDetailsClick)="viewDetailsClick.emit()">
   <ng-template data>
     <span class="font-semibold text-sm flex-grow">Latest Dispute Submitted:</span>
     <span class="font-semibold text-sm">{{ latestDateSubmitted }}</span>

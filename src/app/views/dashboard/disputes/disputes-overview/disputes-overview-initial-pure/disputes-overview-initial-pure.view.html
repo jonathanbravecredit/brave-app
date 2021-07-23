@@ -1,6 +1,6 @@
 <div class="mx-4 text-gray-900">
   <div class="flex items-center py-4">
-    <span class="material-icons">chevron_left</span>        
+    <span class="material-icons">chevron_left</span>
     <span class="text-sm ml-2">Back</span>
   </div>
   <div class="border-b-2 border-blueGray-800 pb-4">
@@ -14,17 +14,21 @@
     listHeader="Current Disputes"
     headerIcon="view_list"
     disputListType="current"
-    isEmptyMessage="You don't have any dispute investigations in progress!">
+    isEmptyMessage="You don't have any dispute investigations in progress!"
+    (viewDetailsClick)="viewDetailsClick.emit($event)"
+  >
   </brave-disputes-list>
   <brave-disputes-list
     [disputeList]="historicalDisputeArr"
     listHeader="Dispute History"
     headerIcon="history"
     disputListType="historical"
-    isEmptyMessage="You don't have any historical items!">
+    isEmptyMessage="You don't have any historical items!"
+    (viewDetailsClick)="viewDetailsClick.emit($event)"
+  >
   </brave-disputes-list>
   <div class="mt-4 h-24 w-full bg-gray-800"></div>
   <div class="flex justify-center" *ngIf="historicalDisputeArr.length > 0">
-    <brave-filled-onlytext-button >View Dispute History</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button>View Dispute History</brave-filled-onlytext-button>
   </div>
 </div>

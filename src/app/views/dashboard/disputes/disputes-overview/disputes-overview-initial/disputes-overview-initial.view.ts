@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TDisputeEntity } from '@shared/components/cards/dispute-cards';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { Observable, Subscription } from 'rxjs';
@@ -15,4 +16,11 @@ export class DisputesOverviewInitialView implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onViewDetailsClick(entity: TDisputeEntity) {
+    if (!entity.dispute) throw `dispute missing`;
+    if (!entity.dispute) return;
+    const dispute: DisputeInput = entity.dispute;
+    this.disputeService.currentDispute$.next(dispute);
+  }
 }

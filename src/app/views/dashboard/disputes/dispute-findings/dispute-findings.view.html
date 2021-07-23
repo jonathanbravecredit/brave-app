@@ -1,1 +1,3 @@
-<brave-dispute-findings-pure></brave-dispute-findings-pure>
+<div *ngIf="dispute$ | async as dispute">
+  <brave-dispute-findings-pure></brave-dispute-findings-pure>
+</div>
