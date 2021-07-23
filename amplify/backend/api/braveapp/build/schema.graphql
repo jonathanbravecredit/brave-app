@@ -153,21 +153,22 @@ type Dispute @aws_iam @aws_cognito_user_pools {
   openedOn: String
   closedOn: String
   disputeItems: AWSJSON
-  disputeResults: AWSJSON
+  disputeInvestigationResults: AWSJSON
+  disputeCreditBureau: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String
 }
 
 type DisputeSummary @aws_iam @aws_cognito_user_pools {
-  EstimatedCompletionDate: String
-  LastUpdatedDate: String
-  OpenDate: String
-  RequestedDate: String
-  TotalClosedDisputedItems: String
-  TotalDisputedItems: String
-  TotalOpenDisputedItems: String
-  TotalPVDisputedItemCount: String
+  estimatedCompletionDate: String
+  lastUpdatedDate: String
+  openDate: String
+  requestedDate: String
+  totalClosedDisputedItems: String
+  totalDisputedItems: String
+  totalOpenDisputedItems: String
+  totalPVDisputedItemCount: String
 }
 
 input UserInput {
@@ -276,21 +277,22 @@ input DisputeInput {
   openedOn: String
   closedOn: String
   disputeItems: AWSJSON
-  disputeResults: AWSJSON
+  disputeInvestigationResults: AWSJSON
+  disputeCreditBureau: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String
 }
 
 input DisputeSummaryInput {
-  EstimatedCompletionDate: String
-  LastUpdatedDate: String
-  OpenDate: String
-  RequestedDate: String
-  TotalClosedDisputedItems: String
-  TotalDisputedItems: String
-  TotalOpenDisputedItems: String
-  TotalPVDisputedItemCount: String
+  estimatedCompletionDate: String
+  lastUpdatedDate: String
+  openDate: String
+  requestedDate: String
+  totalClosedDisputedItems: String
+  totalDisputedItems: String
+  totalOpenDisputedItems: String
+  totalPVDisputedItemCount: String
 }
 
 input EquifaxInput {
