@@ -47,10 +47,12 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
         })
       : [];
 
-    return {
+    const mapped = {
       currentDisputeArr: currentDisputeArr,
       historicalDisputeArr: historicalDisputeArr,
     };
+    console.log('mapped dispute ===> ', mapped);
+    return mapped;
   }
 
   private parseCurrentDisputeItems(
@@ -60,6 +62,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
     return disputeItems instanceof Array
       ? disputeItems.map((item: IDisputeItem) => {
           return {
+            dispute: dispute,
             creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
             status: dispute?.disputeStatus
               ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '#N/A'
@@ -74,6 +77,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
         })
       : [
           {
+            dispute: dispute,
             creditorName: disputeItems?.tradeline?.Tradeline?.creditorName || '#N/A',
             status: dispute?.disputeStatus
               ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '#N/A'
@@ -96,6 +100,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
     return disputeItems instanceof Array
       ? disputeItems.map((item: IDisputeItem) => {
           return {
+            dispute: dispute,
             creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
             latestDateSubmitted: dispute?.openedOn || '#N/A',
             decision: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
@@ -104,6 +109,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
         })
       : [
           {
+            dispute: dispute,
             creditorName: disputeItems.tradeline?.Tradeline?.creditorName || '#N/A', // disputeItems.tradeline?.Tradeline?.creditorName || '#N/A',
             latestDateSubmitted: dispute?.openedOn || '#N/A',
             decision: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
