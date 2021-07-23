@@ -5,6 +5,7 @@ import { TradelineToDisputePipe } from '@shared/pipes/tradeline-to-dispute/trade
 import { MergereportToCreditreportPipe } from '@shared/pipes/mergereport-to-creditreport/mergereport-to-creditreport.pipe';
 import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
 import { TradelineToPagesPipe } from './tradeline-to-pages/tradeline-to-pages.pipe';
+import { DisputesToDisputesOverviewPipe } from './disputes-to-disputes-overview/disputes-to-disputes-overview.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -12,6 +13,7 @@ const pipes = [
   TradelineToPagesPipe,
   MergereportToNegativeTradelinesPipe,
   MergereportToCreditreportPipe,
+  DisputesToDisputesOverviewPipe,
 ];
 
 @NgModule({

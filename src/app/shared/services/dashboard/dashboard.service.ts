@@ -9,7 +9,7 @@ export class DashboardService {
 
   async refreshReport(): Promise<void> {
     const id = this.statesvc.state?.appData?.id;
-    if (!id) throw `dashboardService:refreshReport=Missing ID`;
+    if (!id) return;
     const fulfilledOn = this.statesvc.state?.appData.agencies?.transunion?.fulfilledOn;
     if (!fulfilledOn) {
       await this.transunion.refreshCreditReport(id);

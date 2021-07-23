@@ -1,15 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import { IErrorResponse } from '@shared/interfaces/errors.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { DisputeInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,18 +21,15 @@ export class DisputeService implements OnDestroy {
   _acknowledged: boolean = false;
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
+  disputes$: Subject<(DisputeInput | null | undefined)[]> = new Subject();
 
-  constructor(
-    private store: Store,
-    private statesvc: StateService,
-    private transunion: TransunionService,
-    private router: Router,
-  ) {
+  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
+      this.disputes$.next(state.appData.agencies?.transunion?.disputes || []);
       this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     });
   }

@@ -16,6 +16,7 @@ import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentic
 import { AppDataStateModel } from '@store/app-data';
 import { IEnrollResult } from '@shared/interfaces/enroll.interface';
 import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -262,8 +263,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const resp = await this.kycService.sendCompleteOnboarding(state);
       if (resp) {
-        const { onboarded, error } = resp.CompleteOnboardingEnrollments;
-        onboarded
+        const { success, error } = resp.CompleteOnboardingEnrollments;
+        success
           ? this.router.navigate(['../congratulations'], {
               relativeTo: this.route,
             })
@@ -303,7 +304,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   async sendEnrollDisputeRequest(
     state: UpdateAppDataInput | AppDataStateModel | undefined,
-  ): Promise<IDisputePreflightCheck> {
+  ): Promise<{
+    DisputePreflightCheck: ITUServiceResponse;
+  }> {
     if (!state) throw `kycIdverification:sendEnrollDisputeRequest=Missing state`;
     const id = state.id;
     try {

@@ -1,1 +1,3 @@
-<brave-disputes-overview-initial-pure></brave-disputes-overview-initial-pure>
+<div *ngIf="disputes$ | async as disputes">
+  <brave-disputes-overview-initial-pure [forceStateTo]="'mock'"></brave-disputes-overview-initial-pure>
+</div>

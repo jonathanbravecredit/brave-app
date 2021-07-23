@@ -124,7 +124,8 @@ type Dispute {
   disputeStatus: String
   disputeLetterCode: String
   disputeLetterContent: String
-  openDisputes: String
+  openDisputes: DisputeSummary
+  closedDisputes: DisputeSummary
   agencyName: String
   openedOn: String
   closedOn: String
@@ -133,4 +134,15 @@ type Dispute {
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String
+}
+
+type DisputeSummary {
+  EstimatedCompletionDate: String
+  LastUpdatedDate: String
+  OpenDate: String
+  RequestedDate: String
+  TotalClosedDisputedItems: String
+  TotalDisputedItems: String
+  TotalOpenDisputedItems: String
+  TotalPVDisputedItemCount: String
 }

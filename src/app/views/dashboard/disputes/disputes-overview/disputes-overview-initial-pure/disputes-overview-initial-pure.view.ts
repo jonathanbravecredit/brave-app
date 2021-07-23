@@ -5,7 +5,6 @@ import { MOCK_DEFAULT_DISPUTE_ARR as mockDisputeArrCollection } from '@shared/co
 @Component({
   selector: 'brave-disputes-overview-initial-pure',
   templateUrl: './disputes-overview-initial-pure.view.html',
-  styleUrls: ['./disputes-overview-initial-pure.view.css']
 })
 export class DisputesOverviewInitialPureView implements OnInit {
   @Input() currentDisputeArr: IDisputeCurrent[] = [];
@@ -13,8 +12,8 @@ export class DisputesOverviewInitialPureView implements OnInit {
   @Input() forceStateTo: 'default' | 'mock' = 'default';
   @Input() emptyHistoricalArr: boolean = false;
   @Input() emptyCurrentArr: boolean = false;
-  
-  constructor() { }
+
+  constructor() {}
 
   ngOnInit(): void {
     if (this.forceStateTo === 'mock') {
@@ -27,6 +26,8 @@ export class DisputesOverviewInitialPureView implements OnInit {
   }
 
   private conditionalEmptyArr(booleanFlag: boolean, arr: IDisputeCurrent[] | IDisputeHistorical[]): void {
-    if (booleanFlag) { arr = []; }
+    if (booleanFlag) {
+      arr = [];
+    }
   }
 }
