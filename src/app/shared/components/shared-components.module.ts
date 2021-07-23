@@ -122,6 +122,8 @@ import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/disp
 import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
 import { DisputeCardStatusPipe, DisputeCurrentCardComponent, DisputeHistoryCardComponent, DisputeRegularCardComponent } from './cards/dispute-cards';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 
 const components = [
   BaseFormComponent,
@@ -225,6 +227,8 @@ const components = [
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
+  SettingsOptionComponent,
+  SettingsComponent
 ];
 
 // component specific pipes only
