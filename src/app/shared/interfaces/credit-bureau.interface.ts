@@ -14,7 +14,7 @@ export interface IDisputeCreditBureau {
 export interface ICreditBureau {
   version: number | string;
   transactionControl: ITransactionControl;
-  productArray: IProduct | IProduct[];
+  productArray: IProductArray | IProductArray[];
 }
 
 interface ITransactionControl {
@@ -27,6 +27,10 @@ interface ITracking {
   identifier: IIdentifier;
   responseCode: number;
   responseMessage: string;
+}
+
+interface IProductArray {
+  product: IProduct;
 }
 
 interface IIdentifier {
