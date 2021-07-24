@@ -42,8 +42,8 @@ FormerAddress.args = {
   dateReported: '21/05/2021',
 };
 
-export const EmployeerInfo = Template.bind({});
-EmployeerInfo.args = {
+export const EmployerInfo = Template.bind({});
+EmployerInfo.args = {
   valueDescription: 'Employer Information',
   previousValue: 'Ms Smith',
   dateUpdated: '21/05/2021',
