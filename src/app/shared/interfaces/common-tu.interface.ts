@@ -45,3 +45,7 @@ export interface ITUServiceResponse {
   success: boolean;
   error?: IErrorResponse;
 }
+
+export interface ITUUnparsed {
+  unparsed: string;
+}
