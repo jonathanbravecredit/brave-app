@@ -124,6 +124,7 @@ import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute
 import { DisputeCardStatusPipe, DisputeCurrentCardComponent, DisputeHistoryCardComponent, DisputeRegularCardComponent } from './cards/dispute-cards';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
+import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
 
 const components = [
   BaseFormComponent,
@@ -262,7 +263,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     FormsModule,
     RouterModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, CollectionCreditMixAccountsComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

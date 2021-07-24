@@ -66,6 +66,7 @@ import { DisputeFindingsPureView } from './dashboard/disputes/dispute-findings-p
 import { DisputesOverviewHistoryPureView, DisputesOverviewInitialPureView, DisputesOverviewInitialView, DisputesOverviewHistoryView } from './dashboard/disputes/disputes-overview';
 import { SettingsOverviewPureView } from './dashboard/settings/settings-overview-pure/settings-overview-pure.view';
 import { SettingsOverviewView } from './dashboard/settings/settings-overview/settings-overview.view';
+import { CreditMixPureView } from './dashboard/credit-mix/credit-mix-pure/credit-mix-pure.view';
 
 const views = [
   SignupComponent,
@@ -131,7 +132,7 @@ const views = [
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
 
 @NgModule({
-  declarations: [...views, ...pipes],
+  declarations: [...views, ...pipes, CreditMixPureView],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],

@@ -54,19 +54,19 @@
       <div class="flex flex-row justify-between">
         <!-- min payment  -->
         <span><p class="brave-body1">Minimum Payment:&nbsp;</p></span>
-        <span><p class="brave-body1">$50</p></span>
+        <span><p class="brave-body1">${{ creditCard!.minimumPayment }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
         <!-- date opened TODO swith to pipe  -->
         <span><p class="brave-body1">Date Opened:&nbsp;</p></span>
-        <span><p class="brave-body1">02/01/2020</p></span>
+        <span><p class="brave-body1">{{ creditCard!.dateOpened }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
         <!-- account status  -->
         <span><p class="brave-body1">Account Status:&nbsp;</p></span>
-        <span><p class="brave-body1">In good standing</p></span>
+        <span><p class="brave-body1">{{ getStatusText(creditCard!.accountStatus) }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
