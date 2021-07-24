@@ -49,3 +49,8 @@ export interface ITUServiceResponse {
 export interface ITUUnparsed {
   unparsed: string;
 }
+
+export interface ITUText {
+  type?: number | string;
+  text?: string;
+}
