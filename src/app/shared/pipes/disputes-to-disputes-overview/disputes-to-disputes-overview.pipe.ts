@@ -104,8 +104,8 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
             dispute: dispute,
             creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
             latestDateSubmitted: dispute?.openedOn || '#N/A',
-            decision: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
-            resultReceived: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
+            decision: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
+            resultReceived: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
           };
         })
       : [
@@ -113,8 +113,8 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
             dispute: dispute,
             creditorName: disputeItems.tradeline?.Tradeline?.creditorName || '#N/A', // disputeItems.tradeline?.Tradeline?.creditorName || '#N/A',
             latestDateSubmitted: dispute?.openedOn || '#N/A',
-            decision: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
-            resultReceived: dispute?.disputeResults || '#N/A', // TODO need to get this from the actual results
+            decision: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
+            resultReceived: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
           },
         ];
   }
