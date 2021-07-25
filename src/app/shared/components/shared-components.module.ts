@@ -71,7 +71,6 @@ import { BaseFormComponent } from './forms/base-form/base-form.component';
 import { SelectDobFormComponent } from './forms/select-dob-form/select-dob-form.component';
 import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name-form.component';
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
-import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
 import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
 import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
@@ -177,7 +176,6 @@ const components = [
   OutlineNameFormComponent,
   FinantialMechanismCardComponent,
   ViewdetailButtonComponent,
-  LoanCardComponent,
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
   SnapshotDisplayCardComponent,

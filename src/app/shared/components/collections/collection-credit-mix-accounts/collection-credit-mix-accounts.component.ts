@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditCard, ILoan } from '@shared/components/cards/finantial-mechanism-card/interfaces';
+import { ICreditCard, ILoan, TFinantialMechanismEntity } from '@shared/components/cards/finantial-mechanism-card/interfaces';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+
+type TFinantialMechanismCollectionType = 'credit' | 'loan' | 'closed';
 
 @Component({
   selector: 'brave-collection-credit-mix-accounts',
@@ -10,26 +12,37 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 export class CollectionCreditMixAccountsComponent implements OnInit {
   @Input() creditCards: ICreditCard[] = [];
   @Input() loans: ILoan[] = [];
+  @Input() closedAccounts: TFinantialMechanismEntity[] = [];
   private isCreditCardCollectionOpen = new BehaviorSubject(false);
+  private isClosedAccountsCollectionOpen = new BehaviorSubject(false);
   private isLoanCollectionOpen = new BehaviorSubject(false);
   isCreditCardCollectionOpen$ = this.isCreditCardCollectionOpen.asObservable();
   isLoanCollectionOpen$ = this.isLoanCollectionOpen.asObservable();
+  isClosedAccountsCollectionOpen$ = this.isClosedAccountsCollectionOpen.asObservable();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  switch(collectionType: 'credit' | 'loan'): void {
+  switch(collectionType: TFinantialMechanismCollectionType): void {
     const collection = this.getCollectionByType(collectionType);
     collection.next(!collection.value);
   }
 
-  private getCollectionByType(collectionType: 'credit' | 'loan'): BehaviorSubject<boolean> {
-    return collectionType === 'credit' ? this.isCreditCardCollectionOpen : this.isLoanCollectionOpen;
+  private getCollectionByType(collectionType: TFinantialMechanismCollectionType): BehaviorSubject<boolean> {
+    const collectionMap = {
+      ['credit']: this.isCreditCardCollectionOpen,
+      ['loan']: this.isLoanCollectionOpen,
+      ['closed']: this.isClosedAccountsCollectionOpen
+    }
+
+    return collectionMap[collectionType];
   }
 
-  isCollectionOpen(collectionType: 'credit' | 'loan'): boolean {
+  isCollectionOpen(collectionType: TFinantialMechanismCollectionType): boolean {
     return this.getCollectionByType(collectionType).value;
   }
+
+  
 }
