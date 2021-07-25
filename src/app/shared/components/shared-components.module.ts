@@ -14,7 +14,7 @@ import { OutlineSelectInputPipe } from '@shared/components/inputs/outline-select
 import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
 import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
 import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
-import { AccountStatusPipe } from './cards/creditcard-card/account-status.pipe';
+import { AccountStatusPipe } from './cards/finantial-mechanism-card/account-status.pipe';
 import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
 import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
 import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
@@ -70,7 +70,6 @@ import { OutlineNamedobFormComponent } from './forms/outline-namedob-form/outlin
 import { BaseFormComponent } from './forms/base-form/base-form.component';
 import { SelectDobFormComponent } from './forms/select-dob-form/select-dob-form.component';
 import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name-form.component';
-import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card.component';
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
 import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
@@ -125,6 +124,7 @@ import { DisputeCardStatusPipe, DisputeCurrentCardComponent, DisputeHistoryCardC
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
+import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
 
 const components = [
   BaseFormComponent,
@@ -175,7 +175,7 @@ const components = [
   OutlineNamedobFormComponent,
   SelectDobFormComponent,
   OutlineNameFormComponent,
-  CreditcardCardComponent,
+  FinantialMechanismCardComponent,
   ViewdetailButtonComponent,
   LoanCardComponent,
   SnapshotDisplayCardComponent,
@@ -229,7 +229,8 @@ const components = [
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
   SettingsOptionComponent,
-  SettingsComponent
+  SettingsComponent,
+  CollectionCreditMixAccountsComponent
 ];
 
 // component specific pipes only
@@ -263,7 +264,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     FormsModule,
     RouterModule,
   ],
-  declarations: [...components, ...pipes, ...directives, CollectionCreditMixAccountsComponent],
+  declarations: [...components, ...pipes, ...directives, ],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

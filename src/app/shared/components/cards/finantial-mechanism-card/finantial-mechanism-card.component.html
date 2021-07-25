@@ -11,25 +11,25 @@
     </div>
     <div class="flex flex-col w-full">
       <!--  right column section 2 -->
-      <div class="flex flex-row justify-between p-0 -mt-1 mb-1">
+      <div class="flex justify-between p-0 -mt-1 mb-1">
         <!-- header  -->
-        <span><p class="brave-body1-semibold">CITI</p></span>
-        <span
-          ><p class="brave-body1-semibold"></p>
-          80%</span
-        >
+        <p class="brave-body1-semibold">{{ finantialMechanism!.accountName }}}</p>
+        <p class="brave-body1-semibold" *ngIf="finantialMechanismType === 'credit-utilization'">{{ finantialMechanism!.percetangeUtilization }}%</p>
       </div>
 
       <div class="flex flex-row">
         <!-- credit balance  -->
-        <span><p class="brave-body1">Credit Balance:&nbsp;</p></span>
-        <span><p class="brave-body1">$800</p></span>
+        <span><p class="brave-body1">{{ isTypeCreditCard() ? 'Credit Balance' : 'Card Balance' }}:&nbsp;</p></span>
+        <span><p class="brave-body1">${{ isTypeCreditCard() ? finantialMechanism!.creditBalance : finantialMechanism!.cardBalance }}</p></span>
       </div>
 
       <div class="flex flex-row">
         <!-- credit limit  -->
-        <span><p class="brave-body1">Credit Limit:&nbsp;</p></span>
-        <span><p class="brave-body1">$2000</p></span>
+        <span><p class="brave-body1">{{ isTypeCredit() ? 'Credit Limit' : 'Initial Loan Amount' }}:&nbsp;</p></span>
+        
+        <span>
+          <p class="brave-body1">${{ isTypeCreditCard() ? finantialMechanism!.creditLimit : finantialMechanism!.initialLoanAmount}}</p>
+        </span>
       </div>
 
       <div class="mt-1">
@@ -54,31 +54,31 @@
       <div class="flex flex-row justify-between">
         <!-- min payment  -->
         <span><p class="brave-body1">Minimum Payment:&nbsp;</p></span>
-        <span><p class="brave-body1">${{ creditCard!.minimumPayment }}</p></span>
+        <span><p class="brave-body1">${{ finantialMechanism!.minimumPayment }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
         <!-- date opened TODO swith to pipe  -->
         <span><p class="brave-body1">Date Opened:&nbsp;</p></span>
-        <span><p class="brave-body1">{{ creditCard!.dateOpened }}</p></span>
+        <span><p class="brave-body1">{{ finantialMechanism!.dateOpened }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
         <!-- account status  -->
         <span><p class="brave-body1">Account Status:&nbsp;</p></span>
-        <span><p class="brave-body1">{{ getStatusText(creditCard!.accountStatus) }}</p></span>
+        <span><p class="brave-body1">{{ getStatusText(finantialMechanism!.accountStatus) }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
         <!-- ownership of account  -->
         <span><p class="brave-body1">Ownership of account:&nbsp;</p></span>
-        <span><p class="brave-body1">Self</p></span>
+        <span><p class="brave-body1">{{ getOwnershipText(finantialMechanism!.ownershipOfAccount) }}</p></span>
       </div>
 
       <div class="flex flex-row justify-between">
         <!-- credit limit  -->
         <span><p class="brave-body1">Days 30/60/90 Late:&nbsp;</p></span>
-        <span><p class="brave-body1">1/0/0</p></span>
+        <span><p class="brave-body1">{{ finantialMechanism!.daysLateStr }}</p></span>
       </div>
     </div>
   </div>

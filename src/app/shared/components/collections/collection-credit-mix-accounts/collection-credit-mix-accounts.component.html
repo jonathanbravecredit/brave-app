@@ -1,3 +1,10 @@
 <div class="flex items-center">
-  <h2 class="text-xl">Open Accounts</h2>
+  <h2 class="text-xl">Open Accounts:</h2>
+  <span class="text-xl ml-auto">{{ creditCards.length + loans.length  }}</span>
+</div>
+<div class="flex items-center">
+  <h3>Credit Cards ({{ creditCards.length }})</h3>
+  <div class="ml-2 cursor-pointer" (click)="switch('credit')">
+    <span class="material-icons-outlined">{{ 'expand' + isCollectionOpen('credit') ? 'less' : 'more' }}</span>
+  </div>
 </div>
