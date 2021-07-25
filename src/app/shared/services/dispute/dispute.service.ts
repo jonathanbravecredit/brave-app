@@ -22,7 +22,7 @@ export class DisputeService implements OnDestroy {
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
   disputes$: Subject<(DisputeInput | null | undefined)[] | null | undefined> = new Subject();
-  currentDispute$: Subject<DisputeInput> = new Subject();
+  currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject({} as DisputeInput);
 
   constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {

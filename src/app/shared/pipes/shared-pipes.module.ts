@@ -15,10 +15,11 @@ const pipes = [
   MergereportToNegativeTradelinesPipe,
   MergereportToCreditreportPipe,
   DisputesToDisputesOverviewPipe,
+  DisputeToDisputeFindingPipe,
 ];
 
 @NgModule({
-  declarations: [...pipes, DisputeToDisputeFindingPipe],
+  declarations: [...pipes],
   imports: [CommonModule],
   exports: [...pipes],
 })

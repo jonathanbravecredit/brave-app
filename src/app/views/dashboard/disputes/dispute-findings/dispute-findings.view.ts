@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'brave-dispute-findings',
   templateUrl: './dispute-findings.view.html',
-  styleUrls: ['./dispute-findings.view.css'],
 })
 export class DisputeFindingsView implements OnInit {
   dispute$: Observable<DisputeInput>;
