@@ -10,6 +10,6 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private creditReportService: CreditreportService) {}
 
   ngOnInit(): void {
-    this.dashboardService.refreshReport();
+    // this.dashboardService.refreshReport();
   }
 }

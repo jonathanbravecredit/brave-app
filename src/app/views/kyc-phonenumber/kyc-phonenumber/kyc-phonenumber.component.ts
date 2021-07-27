@@ -4,8 +4,7 @@ import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
-import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import { returnNestedObject } from '@shared/utils/utils';
+import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
 import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
@@ -22,9 +21,9 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
   private authQuestions: ITransunionKBAQuestions | undefined;
   private otpQuestion: ITransunionKBAQuestion | undefined;
   private otpAnswer: IVerifyAuthenticationAnswer | undefined;
-  private verifyResponse: IVerifyAuthenticationResponseSuccess | undefined;
+  private verifyResponse: IVerifyAuthenticationQuestionsResult | undefined;
   private codeQuestion: string | undefined;
-  private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
+  private authResponse: IVerifyAuthenticationQuestionsResult | undefined;
   private authSuccessful: boolean = false;
 
   constructor(
@@ -199,8 +198,11 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
     state: UpdateAppDataInput | AppDataStateModel | undefined,
     otpAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycPhonenumberComponent> {
-    if (!otpAnswer || !state) return this;
-    this.verifyResponse = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
+    console.log('sendVerifyAuthQuestions:phonenumber ===> ', otpAnswer, state);
+    if (!otpAnswer || !state) throw `kycPhonenumber:sendVerifyAuthQuestions=Missing otpAnswer`;
+    const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
+    if (!success) throw `kycPhonenumber:sendVerifyAuthQuestions=${error}`;
+    this.verifyResponse = data;
     return this;
   }
 
@@ -209,20 +211,20 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
    * @param {string | undefined} verifyResp
    * @returns
    */
-  parseVerifyResponse(verifyResp: IVerifyAuthenticationResponseSuccess | undefined): KycPhonenumberComponent {
-    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationResponseSuccess);
+  parseVerifyResponse(verifyResp: IVerifyAuthenticationQuestionsResult | undefined): KycPhonenumberComponent {
+    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationQuestionsResult);
     return this;
   }
 
   /**
    * Update the codeQuestion prop with the nested object from the parsed authRespone
    *   - This is the enter pass code question
-   * @param {IVerifyAuthenticationResponseSuccess | undefined} authResponse
+   * @param {IVerifyAuthenticationQuestionsResult | undefined} authResponse
    * @returns
    */
-  getCodeQuestion(authResponse: IVerifyAuthenticationResponseSuccess | undefined): KycPhonenumberComponent {
+  getCodeQuestion(authResponse: IVerifyAuthenticationQuestionsResult | undefined): KycPhonenumberComponent {
     if (!authResponse) return this;
-    this.codeQuestion = returnNestedObject(authResponse, 'AuthenticationDetails');
+    this.codeQuestion = authResponse.AuthenticationDetails;
     return this;
   }
 
@@ -250,12 +252,12 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
 
   /**
    * Update the prop to indicate that verification was successful
-   * @param {IVerifyAuthenticationResponseSuccess | undefined} resp
+   * @param {IVerifyAuthenticationQuestionsResult | undefined} resp
    * @returns
    */
-  isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycPhonenumberComponent {
+  isVerificationSuccesful(resp: IVerifyAuthenticationQuestionsResult | undefined): KycPhonenumberComponent {
     if (!resp) return this;
-    this.authSuccessful = returnNestedObject(resp, 'ResponseType').toLowerCase() === 'success';
+    this.authSuccessful = resp.ResponseType.toLowerCase() === 'success';
     return this;
   }
 }

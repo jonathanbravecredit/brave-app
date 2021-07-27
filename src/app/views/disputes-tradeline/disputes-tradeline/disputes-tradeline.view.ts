@@ -42,13 +42,12 @@ export class DisputesTradelineView implements OnDestroy {
     if (result.isFinished) {
       try {
         // TODO need to handle the response appropriately now that we are set up with TU
-        const res = await this.disputeService.sendStartDispute();
-        const status = res?.StartDispute;
-        if (status?.success) {
+        const { success, error, data } = await this.disputeService.sendStartDispute();
+        if (success) {
           this.isDisputeSent = true;
           this.isDisputeProcessInProgress = false;
         } else {
-          const errorCode = status?.error?.Code;
+          const errorCode = error?.Code;
           this.router.navigate([`/dashboard/report/detail/dispute/error`], {
             queryParams: {
               code: errorCode,

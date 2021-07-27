@@ -90,7 +90,6 @@ export class SyncService implements OnDestroy {
         if (data.value.errors) throw `API OnUpdateAppDataListener error`;
         const appData = data.value.data['onUpdateAppData'];
         if (!appData) return;
-        console.log('appDataOnUpdate ===> ', appData);
         const clean = this.cleanBackendData(appData);
         this.store.dispatch(new AppDataActions.Edit(clean));
       });
@@ -134,7 +133,6 @@ export class SyncService implements OnDestroy {
    */
   async goToDashboard(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
-    await this.transunion.sendDisputePreflightCheck({ id });
     this.router.navigate(['/dashboard/init']);
   }
 
@@ -157,7 +155,6 @@ export class SyncService implements OnDestroy {
    */
   async stayPut(id: string): Promise<void> {
     await this.syncDBDownToState(id);
-    await this.transunion.sendDisputePreflightCheck({ id });
   }
 
   /**

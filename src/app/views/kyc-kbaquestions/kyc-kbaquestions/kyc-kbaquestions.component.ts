@@ -13,7 +13,6 @@ import {
 import { take } from 'rxjs/operators';
 import { KycKbaquestionsPureComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
-import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -118,13 +117,7 @@ export class KycKbaquestionsComponent implements OnInit {
       });
     const { appData: state } = this.store.snapshot();
     try {
-      const authenticated = await this.kycService.sendVerifyAuthenticationQuestions(state, answers);
-      const clean = authenticated ? authenticated : ({} as IVerifyAuthenticationResponseSuccess);
-      const body = clean['VerifyAuthenticationQuestions']['Envelope']['Body'];
-      const success =
-        body['VerifyAuthenticationQuestionsResponse']['VerifyAuthenticationQuestionsResult'][
-          'ResponseType'
-        ].toLowerCase() === 'success';
+      const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, answers);
       if (success) {
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../congratulations'], {

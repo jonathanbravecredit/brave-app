@@ -78,7 +78,7 @@ export class DisputeService implements OnDestroy {
    * Update the users acknowledge and then gets dispute preflight check
    * @returns
    */
-  async onUserConfirmed(): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
+  async onUserConfirmed(): Promise<ITUServiceResponse<any>> {
     if (!this.state) throw `tradelines:onConfirmed=Missing state`;
     try {
       // acknowledge the user has read and accepted the terms
@@ -105,7 +105,7 @@ export class DisputeService implements OnDestroy {
     await this.statesvc.updateAgenciesAsync(acknowledged);
   }
 
-  async sendDisputePreflightCheck(id: string): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
+  async sendDisputePreflightCheck(id: string): Promise<ITUServiceResponse<any>> {
     try {
       return await this.transunion.sendDisputePreflightCheck({ id });
     } catch (err) {
@@ -116,7 +116,7 @@ export class DisputeService implements OnDestroy {
   /**
    * Initiate a new dispute. Cannot have one in progress.
    */
-  async sendStartDispute(): Promise<{ StartDispute: ITUServiceResponse } | undefined> {
+  async sendStartDispute(): Promise<ITUServiceResponse<any>> {
     const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
       return await this.transunion.sendStartDispute(data.id, this.disputeStack);

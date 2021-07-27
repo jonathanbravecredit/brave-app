@@ -1,31 +1,22 @@
 import { Injectable } from '@angular/core';
-import { IDisputeReason } from '@shared/components/disputes/disputes-tradeline/interfaces';
-import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
-import { IEnrollRequest } from '@shared/interfaces/enroll-rquest.interface';
 import {
-  IEnrollResponseSuccess,
+  ITUServiceResponse,
+  IIndicativeEnrichmentResult,
+  IGetAuthenticationQuestionsResult,
+  IVerifyAuthenticationAnswer,
+  IVerifyAuthenticationQuestionsResult,
   IEnrollResult,
-  IEnrollServiceProductResponse,
-} from '@shared/interfaces/enroll.interface';
-import { IErrorResponse, IErrorResult } from '@shared/interfaces/errors.interface';
-import { IFulfillRequest } from '@shared/interfaces/fulfill-request.interface';
-import {
-  IFulfillResponseSuccess,
   IFulfillResult,
-  IFulfillServiceProductResponse,
-} from '@shared/interfaces/fulfill.interface';
-import { IGetDisputeStatusRequest } from '@shared/interfaces/get-dispute-status-request.interface';
-import { IGetDisputeStatusResponseSuccess } from '@shared/interfaces/get-dispute-status.interface';
-import { ILineItem, IClaimCode } from '@shared/interfaces/start-dispute.interface';
-import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
-import { IVerifyAuthenticationQuestionsMsg } from '@shared/interfaces/verify-authentication-questions.interface';
-import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
-import {
+  IGetDisputeStatusResponseSuccess,
+  IIndicativeEnrichmentMsg,
   IGetAuthenticationQuestionsMsg,
-  IGetAuthenticationQuestionsResponseSuccess,
-} from '@shared/models/get-authorization-questions';
-import { IIndicativeEnrichmentMsg, IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
+  IVerifyAuthenticationQuestionsMsg,
+  IEnrollRequest,
+  IFulfillRequest,
+  IGetDisputeStatusRequest,
+  IEnrollServiceProductResponse,
+  IFulfillServiceProductResponse,
+} from '@shared/interfaces';
 import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
@@ -53,15 +44,14 @@ export class TransunionService {
    */
   async sendIndicativeEnrichment(
     data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IIndicativeEnrichmentResult | undefined>> {
     if (!data.id || !data.user) throw new Error(`Missing id and user; id:${data.id} and user:${data.user}`);
     try {
       const msg = this.createIndicativeEnrichmentPayload(data);
       const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -74,15 +64,14 @@ export class TransunionService {
   async sendGetAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
     ssn: string = '',
-  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
     if (!ssn) throw new Error(`Missing ssn; ssn:${ssn}`);
     try {
       const msg = this.createGetAuthenticationQuestionsPayload(data, ssn);
       const res = await this.api.Transunion('GetAuthenticationQuestions', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -93,17 +82,17 @@ export class TransunionService {
    * @returns
    */
   async sendVerifyAuthenticationQuestions(
-    data: UpdateAppDataInput | AppDataStateModel,
+    appData: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[],
-  ): Promise<IVerifyAuthenticationResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
     if (!answers.length) throw new Error(`No answers submitted; Answers:${answers}`);
     try {
-      const msg = this.createVerifyAuthenticationQuestionsPayload(data, answers);
+      const msg = this.createVerifyAuthenticationQuestionsPayload(appData, answers);
       const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -113,17 +102,14 @@ export class TransunionService {
    * @param {boolean} dispute Flag to enroll the user in the dispute process
    * @returns
    */
-  async sendCompleteOnboarding(
-    data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<{ CompleteOnboardingEnrollments: ITUServiceResponse } | undefined> {
+  async sendCompleteOnboarding(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
     try {
       const msg = { id: data.id };
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));
-      console.log('complete onboarding res ===> ', res);
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
-      return { CompleteOnboardingEnrollments: { success: false, error: err } };
+      return { success: false, error: err };
     }
   }
 
@@ -136,14 +122,13 @@ export class TransunionService {
   async sendEnrollRequest(
     data: UpdateAppDataInput | AppDataStateModel,
     dispute: boolean = false,
-  ): Promise<IEnrollResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
     try {
       const msg = this.createEnrollPayload(data, dispute);
       const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -156,14 +141,13 @@ export class TransunionService {
   async getCreditReport(
     data: UpdateAppDataInput | AppDataStateModel,
     refresh: boolean = true,
-  ): Promise<IFulfillResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
     try {
       const msg = this.createFulfillPayload(data, refresh);
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -172,14 +156,13 @@ export class TransunionService {
    * @param id user id
    * @returns
    */
-  async refreshCreditReport(id: string): Promise<IFulfillResponseSuccess | undefined> {
+  async refreshCreditReport(id: string): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
     try {
       const msg = { id };
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -191,14 +174,14 @@ export class TransunionService {
    * @param data
    * @returns
    */
-  async sendDisputePreflightCheck(data: { id: string }): Promise<{ DisputePreflightCheck: ITUServiceResponse }> {
+  async sendDisputePreflightCheck(data: { id: string }): Promise<ITUServiceResponse<any>> {
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
       console.log('preflight check res ===> ', res);
       return res ? JSON.parse(res) : false;
     } catch (err) {
       console.log('err', err);
-      return { DisputePreflightCheck: { success: false, error: err } };
+      return { success: false, error: err };
     }
   }
 
@@ -209,7 +192,7 @@ export class TransunionService {
    */
   async getDisputeStatus(
     data: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<IGetDisputeStatusResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
     try {
       const msg = this.createGetDisputeStatusPayload(data);
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
@@ -217,7 +200,7 @@ export class TransunionService {
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 
@@ -226,19 +209,16 @@ export class TransunionService {
    * @param {IProcessDisputeTradelineResult[]} disputes AppData state
    * @returns
    */
-  async sendStartDispute(
-    id: string,
-    disputes: IProcessDisputeTradelineResult[],
-  ): Promise<{ StartDispute: ITUServiceResponse } | undefined> {
+  async sendStartDispute(id: string, disputes: IProcessDisputeTradelineResult[]): Promise<ITUServiceResponse<any>> {
     try {
-      console.log('sendDispute: data', id);
+      console.log('sendDispute: id', id);
       console.log('sendDispute: dispute', disputes);
       const msg = { id, disputes }; //this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
-      return;
+      return { success: false, error: err };
     }
   }
 

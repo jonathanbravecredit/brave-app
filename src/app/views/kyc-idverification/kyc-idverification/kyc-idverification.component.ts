@@ -4,7 +4,7 @@ import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
+import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
 import { UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
@@ -15,8 +15,6 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { IEnrollResult } from '@shared/interfaces/enroll.interface';
-import { IDisputePreflightCheck } from '@shared/interfaces/dispute-preflight-check.interface';
-import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -34,10 +32,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
   private passcodeQuestion: ITransunionKBAQuestion | undefined;
   private passcodeAnswer: IVerifyAuthenticationAnswer | undefined;
   private authChallenge: ITransunionKBAQuestions | undefined;
-  private verifyResponse: IVerifyAuthenticationResponseSuccess | undefined;
-  private authResponse: IVerifyAuthenticationResponseSuccess | undefined;
+  private verifyResponse: IVerifyAuthenticationQuestionsResult | undefined;
+  private authResponse: IVerifyAuthenticationQuestionsResult | undefined;
   private authSuccessful: boolean = false;
-  private enrollResult: IEnrollResult | undefined;
 
   constructor(
     private router: Router,
@@ -90,14 +87,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
           : (() => {
               throw 'Authentication request failed';
             })();
-
-        // await this.sendEnrollDisputeRequest(this.state);
-        // can remove if enroll is syncing to db...but will depend on listener to update state
-        // this.enrollResult
-        //   ? await this.updateEnrichedEnrollment(this.enrollResult)
-        //   : (() => {
-        //       throw 'Enroll request failed';
-        //     })();
       } catch (err) {
         console.log('error ===> ', err); // TODO can better handle errors
         this.router.navigate(['../error'], { relativeTo: this.route });
@@ -134,22 +123,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
       .isVerificationSuccesful(this.authResponse);
   }
 
-  /**
-   * Method to:
-   * - Enrich the enrollment data
-   * - Update the agency state
-   * - Navigate to end step if successful
-   * @param enrollResult
-   */
-  async updateEnrichedEnrollment(enrollResult: IEnrollResult): Promise<void> {
-    const enriched = this.kycService.enrichEnrollmentData(this.state, enrollResult);
-    if (!enriched) throw `Enrichment failed`;
-    await this.kycService.updateAgenciesAsync(enriched.agencies);
-    this.kycService.completeStep(this.stepID);
-    this.router.navigate(['../congratulations'], {
-      relativeTo: this.route,
-    });
-  }
   /**
    * Updates the authXML prop with the authentication questions back from TU
    * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
@@ -224,9 +197,10 @@ export class KycIdverificationComponent extends KycBaseComponent {
     passcodeAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycIdverificationComponent> {
     if (!passcodeAnswer || !state) throw 'kycIdverification:sendVerifyAuthQuestions=Missing answer or state';
-    const response = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
-    if (!response) throw 'kycIdverification:sendVerifyAuthQuestions=No verify authentication response';
-    this.verifyResponse = response;
+    const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
+    if (!success) throw `kycIdverification:sendVerifyAuthQuestions=${error}`;
+    this.verifyResponse = data;
+    console.log('verifyResponse ===> ', this.verifyResponse);
     return this;
   }
 
@@ -235,18 +209,20 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {string | undefined} verifyResp
    * @returns
    */
-  parseVerifyResponse(verifyResp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
-    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationResponseSuccess);
+  parseVerifyResponse(verifyResp: IVerifyAuthenticationQuestionsResult | undefined): KycIdverificationComponent {
+    console.log('parseVerifyResponse ===> ', verifyResp);
+    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationQuestionsResult);
     return this;
   }
   /**
    * Update the prop to indicate that verification was successful
-   * @param {IVerifyAuthenticationResponseSuccess | undefined} resp
+   * @param {IVerifyAuthenticationQuestionsResult | undefined} resp
    * @returns
    */
-  isVerificationSuccesful(resp: IVerifyAuthenticationResponseSuccess | undefined): KycIdverificationComponent {
+  isVerificationSuccesful(resp: IVerifyAuthenticationQuestionsResult | undefined): KycIdverificationComponent {
+    console.log('isVerification ===> ', resp);
     if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
-    this.authSuccessful = returnNestedObject(resp, 'ResponseType')?.toLowerCase() === 'success';
+    this.authSuccessful = resp.ResponseType.toLowerCase() === 'success';
     return this;
   }
 
@@ -261,58 +237,17 @@ export class KycIdverificationComponent extends KycBaseComponent {
     if (!state) return this;
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
-      const resp = await this.kycService.sendCompleteOnboarding(state);
-      if (resp) {
-        const { success, error } = resp.CompleteOnboardingEnrollments;
-        success
-          ? this.router.navigate(['../congratulations'], {
-              relativeTo: this.route,
-            })
-          : () => {
-              throw `kycIdverification:sendCompleteOnboarding=${error}`;
-            };
-      } else {
-        throw `kycIdverification:sendCompleteOnboarding=No response`;
-      }
+      const { success, error } = await this.kycService.sendCompleteOnboarding(state);
+      success
+        ? this.router.navigate(['../congratulations'], {
+            relativeTo: this.route,
+          })
+        : (() => {
+            throw `kycIdverification:sendCompleteOnboarding=${error}`;
+          })();
       return this;
     } catch (err) {
       throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
-    }
-  }
-
-  /**
-   * Once the user is verified send the enroll request to return the users credit reports
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
-   * @returns
-   */
-  async sendEnrollRequest(
-    state: UpdateAppDataInput | AppDataStateModel | undefined,
-  ): Promise<KycIdverificationComponent> {
-    if (!state) return this;
-    try {
-      const resp = await this.kycService.sendEnrollRequest(state);
-      const enrollResult = returnNestedObject(resp, 'EnrollResult');
-      this.enrollResult = enrollResult ? enrollResult : undefined;
-      return this;
-    } catch (err) {
-      throw new Error(`kycIdverification:sendEnrollRequest=${err}`);
-    }
-  }
-
-  /**
-   * Enroll the user in the disputes and refresh report
-   */
-  async sendEnrollDisputeRequest(
-    state: UpdateAppDataInput | AppDataStateModel | undefined,
-  ): Promise<{
-    DisputePreflightCheck: ITUServiceResponse;
-  }> {
-    if (!state) throw `kycIdverification:sendEnrollDisputeRequest=Missing state`;
-    const id = state.id;
-    try {
-      return await this.kycService.sendEnrollDisputeRequest(id);
-    } catch (err) {
-      throw `kycIdverification:sendEnrollDisputeRequest=${err}`;
     }
   }
 }

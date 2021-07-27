@@ -72,7 +72,7 @@ const OnboardingRoutes: Routes = [
       },
       {
         path: 'error',
-        component: BaseExceptionView,
+        component: KycErrorComponent,
         canActivate: [AuthGuard],
       },
     ],

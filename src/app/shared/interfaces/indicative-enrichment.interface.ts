@@ -35,21 +35,21 @@ export interface IIndicativeEnrichmentMsg {
 }
 
 export interface IIndicativeEnrichmentResponseSuccess {
-  IndicativeEnrichmentResults: {
-    Envelope: {
-      Body: {
-        IndicativeEnrichmentResponse: {
-          IndicativeEnrichmentResult: {
-            AccountName: string;
-            ErrorResponse: IErrorResponse | INil;
-            RequestKey: string;
-            ResponseType: string;
-            ClientKey: string;
-            Customer: string;
-            SSN: number | string;
-          };
-        };
+  Envelope: {
+    Body: {
+      IndicativeEnrichmentResponse: {
+        IndicativeEnrichmentResult: IIndicativeEnrichmentResult;
       };
     };
   };
+}
+
+export interface IIndicativeEnrichmentResult {
+  AccountName: string;
+  ErrorResponse: IErrorResponse | INil;
+  RequestKey: string;
+  ResponseType: string;
+  ClientKey: string;
+  Customer: string;
+  SSN: number | string;
 }

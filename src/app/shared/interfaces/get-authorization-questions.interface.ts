@@ -42,21 +42,21 @@ export interface IGetAuthenticationQuestionsMsg {
 }
 
 export interface IGetAuthenticationQuestionsResponseSuccess {
-  GetAuthenticationQuestions: {
-    Envelope: {
-      Body: {
-        GetAuthenticationQuestionsResponse: {
-          GetAuthenticationQuestionsResult: {
-            AccountName: string;
-            ErrorResponse: IErrorResponse | INil;
-            RequestKey: string;
-            ResponseType: string;
-            ClientKey: string;
-            Questions: string;
-            ServiceBundleFulfillmentKey: string;
-          };
-        };
+  Envelope: {
+    Body: {
+      GetAuthenticationQuestionsResponse: {
+        GetAuthenticationQuestionsResult: IGetAuthenticationQuestionsResult;
       };
     };
   };
+}
+
+export interface IGetAuthenticationQuestionsResult {
+  AccountName: string;
+  ErrorResponse: IErrorResponse | INil;
+  RequestKey: string;
+  ResponseType: string;
+  ClientKey: string;
+  Questions: string;
+  ServiceBundleFulfillmentKey: string;
 }
