@@ -124,6 +124,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
 import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
+import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
 
 const components = [
   BaseFormComponent,
@@ -228,7 +229,8 @@ const components = [
   DisputeFindingsContactInfoComponent,
   SettingsOptionComponent,
   SettingsComponent,
-  CollectionCreditMixAccountsComponent
+  CollectionCreditMixAccountsComponent,
+  BottomNavbarComponent
 ];
 
 // component specific pipes only
@@ -262,7 +264,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     FormsModule,
     RouterModule,
   ],
-  declarations: [...components, ...pipes, ...directives, ],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
