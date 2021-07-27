@@ -1,25 +1,29 @@
-<div class="mx-6 mt-5">
-  <div class="flex items-center">
-    <span class="material-icons mr-4">{{ headerIcon }}</span>
+<div class="mt-5">
+  <div class="flex items-center mb-2">
+    <span class="material-icons-outlined mr-4">{{ headerIcon }}</span>
     <p>{{ listHeader }}</p>
   </div>
-  <ng-template *ngIf="disputeList.length > 0">
-    <ng-template *ngIf="disputListType === 'historical'">
-      <brave-dispute-history-card 
-      *ngFor="let dispute of disputeList"
-      [creditorName]="dispute.creditorName"
-      [latestDateSubmitted]="dispute.latestDateSubmitted"
-      [decision]="dispute.decision"></brave-dispute-history-card>
-    </ng-template>
-    <ng-template *ngIf="disputListType === 'current'">
-      <brave-dispute-current-card 
-      *ngFor="let dispute of disputeList"
-      [status]="dispute.status"
-      [creditorName]="dispute.creditorName"
-      [dateSubmitted]="dispute.dateSubmitted"
-      [accountType]="dispute.accountType"></brave-dispute-current-card>
-    </ng-template>
-  </ng-template>
+  <div *ngIf="disputeList.length > 0">
+    <div *ngIf="disputListType === 'historical'">
+      <brave-dispute-history-card
+        *ngFor="let dispute of disputeList"
+        [creditorName]="dispute.creditorName"
+        [latestDateSubmitted]="dispute.latestDateSubmitted"
+        [decision]="dispute.decision"
+        (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+      ></brave-dispute-history-card>
+    </div>
+    <div *ngIf="disputListType === 'current'">
+      <brave-dispute-current-card
+        *ngFor="let dispute of disputeList"
+        [status]="dispute.status"
+        [creditorName]="dispute.creditorName"
+        [dateSubmitted]="dispute.dateSubmitted"
+        [accountType]="dispute.accountType"
+        (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+      ></brave-dispute-current-card>
+    </div>
+  </div>
   <div *ngIf="disputeList.length === 0">
     <div class="mx-auto mt-10 h-24 w-24 rounded-full bg-black"></div>
     <p class="mx-auto mt-6 text-center max-w-xs">{{ isEmptyMessage }}</p>

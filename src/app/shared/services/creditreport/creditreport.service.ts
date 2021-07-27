@@ -1,17 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import {
-  IBorrower,
-  IMergeReport,
-  ITradeLinePartition,
-  IUnparsedCreditReport,
-} from '@shared/interfaces/merge-report.interface';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import * as parser from 'fast-xml-parser';
 import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
-import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
@@ -103,17 +96,6 @@ export class CreditreportService implements OnDestroy {
     const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
     return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
   }
-
-  // /**
-  //  * Parses the xml string into a JSON object of the IMergeReport form
-  //  * @param {string} xml
-  //  * @returns {IMergeReport}
-  //  */
-  // parseCreditReport(xml: string): IMergeReport {
-  //   const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-  //   const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
-  //   return report;
-  // }
 
   /**
    * Returns the tradeline partitions from the current TU report

@@ -40,31 +40,18 @@ export interface IGetDisputeStatusMsg {
 }
 // TODO updated the response with the actual
 export interface IGetDisputeStatusResponseSuccess {
-  GetDisputeStatus: {
-    Envelope: {
-      Body: {
-        GetDisputeStatusResponse: {
-          GetDisputeStatusResult: {
-            AccountName: string;
-            ErrorResponse: IErrorResponse | INil;
-            RequestKey: string;
-            ResponseType: string;
-            ClientKey: string;
-            DisputeStatus: string;
-          };
-        };
+  Envelope: {
+    Body: {
+      GetDisputeStatusResponse: {
+        GetDisputeStatusResult: IGetDisputeStatusResult;
       };
     };
   };
 }
 
-export interface IGetDisputeStatusResponse {
-  GetDisputeStatusResult: IGetDisputeStatusResult;
-}
-
 export interface IGetDisputeStatusResult {
   AccountName: string;
-  ErrorResponse: any;
+  ErrorResponse: IErrorResponse;
   RequestKey: string;
   ResponseType: string;
   ClientKey: string;

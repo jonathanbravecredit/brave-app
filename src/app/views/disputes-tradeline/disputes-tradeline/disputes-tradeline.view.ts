@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { IStartDisputeResult } from '@shared/interfaces/start-dispute.interface';
@@ -15,7 +16,7 @@ export class DisputesTradelineView implements OnDestroy {
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
   dispute$: Observable<ITradeLinePartition>;
-  constructor(private disputeService: DisputeService) {
+  constructor(private router: Router, private disputeService: DisputeService) {
     this.dispute$ = this.disputeService.tradeline$.asObservable();
   }
 
@@ -41,9 +42,18 @@ export class DisputesTradelineView implements OnDestroy {
     if (result.isFinished) {
       try {
         // TODO need to handle the response appropriately now that we are set up with TU
-        await this.disputeService.sendStartDispute();
-        this.isDisputeSent = true;
-        this.isDisputeProcessInProgress = false;
+        const { success, error, data } = await this.disputeService.sendStartDispute();
+        if (success) {
+          this.isDisputeSent = true;
+          this.isDisputeProcessInProgress = false;
+        } else {
+          const errorCode = error?.Code;
+          this.router.navigate([`/dashboard/report/detail/dispute/error`], {
+            queryParams: {
+              code: errorCode,
+            },
+          });
+        }
       } catch (err) {
         throw new Error(`disputesTradeline:onProcessResult=${err}`);
       }

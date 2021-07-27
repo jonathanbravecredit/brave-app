@@ -3,6 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DisputeCurrentCardComponent } from './dispute-current-card.component';
+import { MOCK_DEFAULT_DISPUTE_CURRENT } from '@shared/components/cards/dispute-cards/constants';
 
 export default {
   title: 'app/components/cards/disputes/dispute-current-card',
@@ -17,14 +18,19 @@ export default {
   ],
 } as Meta;
 
+const mock = MOCK_DEFAULT_DISPUTE_CURRENT;
 const Template: Story<DisputeCurrentCardComponent> = (args: any) => ({
   component: DisputeCurrentCardComponent,
   props: {
-    ...args
+    ...args,
   },
 });
 
 export const Default = Template.bind({});
 Default.args = {
-  forceMock: true
+  status: mock.status,
+  creditorName: mock.creditorName,
+  dateSubmitted: mock.dateSubmitted,
+  estCompletionDate: mock.estCompletionDate,
+  accountType: mock.accountType,
 };

@@ -1,3 +1,5 @@
+import { IErrorResponse } from '@shared/interfaces/errors.interface';
+
 export interface ICodeRef {
   abbreviation?: string;
   description?: string;
@@ -25,16 +27,17 @@ export interface IPartitionElements extends IPartitionSet {
   dateUpdated?: string;
 }
 
-export interface ICreditScoreFactor {
-  bureauCode?: number;
-  FactorType?: string;
-  Factor?: ICreditScoreAttributes;
-  FactorText?: string[];
+export interface ITUServiceResponse<T> {
+  success: boolean;
+  error?: IErrorResponse;
+  data?: T;
 }
 
-export interface ICreditScoreAttributes {
-  abbreviation?: string;
-  description?: string;
-  symbol?: number | string;
-  rank?: number | string;
+export interface ITUUnparsed {
+  unparsed: string;
+}
+
+export interface ITUText {
+  type?: number | string;
+  text?: string;
 }

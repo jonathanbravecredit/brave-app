@@ -7,11 +7,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class DisputeRegularCardComponent implements OnInit {
   @Input() hideViewDetails: boolean = false;
-  @Output() viewDetails: EventEmitter<void> = new EventEmitter();
+  @Output() viewDetailsClick: EventEmitter<void> = new EventEmitter();
 
-  constructor() { } 
+  constructor() { }
 
   ngOnInit(): void {
-   
+
   }
 }

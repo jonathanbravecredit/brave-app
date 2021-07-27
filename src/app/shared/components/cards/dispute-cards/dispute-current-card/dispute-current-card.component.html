@@ -1,12 +1,16 @@
-<brave-dispute-regular-card [hideViewDetails]="!isStatusProcessing()">
-  <ng-template data>
-    <span class="font-semibold text-sm flex-grow">{{ creditorName }}</span>
-    <span class="font-semibold text-sm">Current Status:</span>
-    <span class="font-semibold text-sm flex-grow">{{ accountType }}: </span>
-    <span class="font-semibold text-sm {{ status! | disputeCardStatus: 'colorClass' }}">{{ status! | disputeCardStatus: 'text' }}</span>
-  </ng-template>
-  <ng-template details>
-    <p class="text-sm">Submitted: {{ dateSubmitted }}</p>
-    <p class="text-sm">Estimated Completion Date: {{ estCompletionDate }}</p>
-  </ng-template>
+<brave-dispute-regular-card (viewDetailsClick)="viewDetailsClick.emit()" [hideViewDetails]="!isStatusProcessing()">
+  <div class="mb-2" data>
+    <div class="flex">
+      <span class="font-semibold text-xs flex-grow">{{ creditorName }}</span>
+      <span class="font-semibold text-xs">Current Status:</span>
+    </div>
+    <div class="flex">
+      <span class="font-semibold text-xs flex-grow">{{ accountType }} </span>
+      <span class="font-semibold text-xs {{ status! | disputeCardStatus: 'colorClass' }}">{{ status! | disputeCardStatus: 'text' }}</span>
+    </div>
+  </div>
+  <div details>
+    <p class="text-xs">Submitted: {{ dateSubmitted === '#N/A' ? dateSubmitted : dateSubmitted | date }}</p>
+    <p class="text-xs">Estimated Completion Date: {{ estCompletionDate === '#N/A' ? estCompletionDate : estCompletionDate | date }}</p>
+  </div>
 </brave-dispute-regular-card>

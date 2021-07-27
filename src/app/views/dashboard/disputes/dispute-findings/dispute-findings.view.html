@@ -1,1 +1,20 @@
-<brave-dispute-findings-pure></brave-dispute-findings-pure>
+<div *ngIf="dispute$ | async as dispute">
+  <div *ngIf="dispute | disputeToDisputeFinding as findings">
+    <div *ngIf="findings; else noFindings">
+      <brave-dispute-findings-pure
+        [reportCreatedAt]="findings.reportCreatedAt"
+        [fileIdentificationNumber]="findings.fileIdentificationNumber"
+        [resultCode]="findings.resultCode"
+        [tradelineAccountConfig]="findings.tradeLinePartition | tradelineToDetails"
+        [publicRecordConfig]=""
+        [personalInfoConfig]=""
+        [updatedValues]="findings.updatedValues"
+        [type]="findings.type"
+      ></brave-dispute-findings-pure>
+    </div>
+  </div>
+</div>
+
+<ng-template #noFindings>
+  <p>We could not find your report</p>
+</ng-template>

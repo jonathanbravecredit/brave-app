@@ -1,4 +1,4 @@
-import { ICreditScoreFactor, ICodeRef, ISource } from '@shared/interfaces/common-tu.interface';
+import { ICodeRef, ISource, ICreditScoreFactor } from '@shared/interfaces';
 
 export interface IVantageScore {
   CreditScoreType: ICreditScoreType;
