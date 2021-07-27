@@ -130,8 +130,8 @@ type Dispute {
   openedOn: String
   closedOn: String
   disputeItems: AWSJSON
-  disputeInvestigationResults: String
-  disputeCreditBureau: String
+  disputeInvestigationResults: AWSJSON
+  disputeCreditBureau: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String

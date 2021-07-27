@@ -21,6 +21,14 @@ export class TradelineDetailRowComponent {
    * value: 'ABC company' or 120.00
    */
   @Input() value: number | string | undefined = '';
+    /**
+   * Enable or disable tradeline detail row separator 
+   * @property {boolean} enableSeparator
+   * @example
+   *
+   * enableSeparator: true
+   */
+  @Input() enableSeparator: boolean = false;
 
   constructor() {}
 }
