@@ -66,6 +66,8 @@ import { DisputeFindingsPureView } from './dashboard/disputes/dispute-findings-p
 import { DisputesOverviewHistoryPureView, DisputesOverviewInitialPureView, DisputesOverviewInitialView, DisputesOverviewHistoryView } from './dashboard/disputes/disputes-overview';
 import { SettingsOverviewPureView } from './dashboard/settings/settings-overview-pure/settings-overview-pure.view';
 import { SettingsOverviewView } from './dashboard/settings/settings-overview/settings-overview.view';
+import { CreditMixPureView } from './dashboard/credit-mix/credit-mix-pure/credit-mix-pure.view';
+import { CreditMixView } from './dashboard/credit-mix/credit-mix/credit-mix.view';
 
 const views = [
   SignupComponent,
@@ -125,7 +127,9 @@ const views = [
   DisputesOverviewHistoryPureView,
   DisputesOverviewHistoryView,
   SettingsOverviewPureView,
-  SettingsOverviewView
+  SettingsOverviewView,
+  CreditMixPureView,
+  CreditMixView
 ];
 
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
