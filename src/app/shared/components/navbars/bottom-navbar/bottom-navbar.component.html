@@ -1,0 +1,11 @@
+<div>
+  <div class="w-full h-16"></div>
+  <nav class="shadow-1 fixed bottom-0 w-full h-16 py-3 flex bg-white">
+    <div class="flex text-gray-700 w-full justify-around max-w-lg mx-auto">
+      <div class="flex flex-col text-center {{ currentActiveItemId === item.id ? 'text-gray-900' : '' }}" *ngFor="let item of navigationItems" (click)="navigate(item.id)">
+        <span class="text-sm material-icons-outlined">{{ item.iconName }}</span>
+        <span class="text-xs">{{ item.name }}</span>
+      </div>
+    </div>
+  </nav>
+</div>
