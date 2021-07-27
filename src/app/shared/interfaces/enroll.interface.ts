@@ -89,23 +89,10 @@ export interface IEnrollMsg {
 }
 
 export interface IEnrollResponseSuccess {
-  Enroll: {
-    Envelope: {
-      Body: {
-        EnrollResponse: {
-          EnrollResult: {
-            AccountName: string;
-            ErrorResponse: IErrorResponse | INil;
-            RequestKey: string;
-            ResponseType: string;
-            ClientKey: string;
-            EnrollmentKey: string;
-            ServiceBundleFulfillmentKey: string;
-            ServiceProductFulfillments: {
-              ServiceProductResponse: IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
-            };
-          };
-        };
+  Envelope: {
+    Body: {
+      EnrollResponse: {
+        EnrollResult: IEnrollResult;
       };
     };
   };

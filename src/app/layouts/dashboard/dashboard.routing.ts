@@ -8,6 +8,8 @@ import { TradelinesComponent } from '@views/tradelines/tradelines/tradelines.com
 import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init.component';
 import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
+import { DisputesOverviewInitialView } from '@views/dashboard/disputes/disputes-overview';
+import { DisputeFindingsView } from '@views/dashboard/disputes/dispute-findings/dispute-findings.view';
 import { SettingsLayout } from './settings/settings.layout';
 
 const DashboardRoutes: Routes = [
@@ -54,6 +56,16 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/accounts/negative',
         component: NegativeAccountInitialComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'disputes/overview',
+        component: DisputesOverviewInitialView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'disputes/findings',
+        component: DisputeFindingsView,
         canActivate: [AuthGuard],
       },
     ],

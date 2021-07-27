@@ -17,6 +17,7 @@ import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,12 @@ export class SyncService implements OnDestroy {
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(private api: APIService, private store: Store, private router: Router) {}
+  constructor(
+    private api: APIService,
+    private store: Store,
+    private router: Router,
+    private transunion: TransunionService,
+  ) {}
 
   ngOnDestroy(): void {
     // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
@@ -80,15 +86,13 @@ export class SyncService implements OnDestroy {
   async subscribeToListeners(id: string): Promise<void> {
     const { owner } = await queries.GetOwner(id);
     if (owner) {
-      this.apiUpdateListener$ = this.api
-        .OnUpdateAppDataListener(owner)
-        .subscribe((data: SubscriptionResponse<OnUpdateAppDataSubscription>) => {
-          if (data.value.errors) throw `API OnUpdateAppDataListener error`;
-          const appData = data.value.data;
-          if (!appData) return;
-          const clean = this.cleanBackendData(appData);
-          this.store.dispatch(new AppDataActions.Edit(clean));
-        });
+      this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
+        if (data.value.errors) throw `API OnUpdateAppDataListener error`;
+        const appData = data.value.data['onUpdateAppData'];
+        if (!appData) return;
+        const clean = this.cleanBackendData(appData);
+        this.store.dispatch(new AppDataActions.Edit(clean));
+      });
     }
   }
 
@@ -146,6 +150,7 @@ export class SyncService implements OnDestroy {
   /**
    * Takes the ID and syncs the state to the DB.
    * - Stays on the same url
+   * - refreshes the report if needed
    * @param {string} id
    */
   async stayPut(id: string): Promise<void> {

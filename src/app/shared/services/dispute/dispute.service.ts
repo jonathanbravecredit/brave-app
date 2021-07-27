@@ -1,13 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { DisputeInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,18 +21,18 @@ export class DisputeService implements OnDestroy {
   _acknowledged: boolean = false;
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
+  disputes$: Subject<(DisputeInput | null | undefined)[] | null | undefined> = new Subject();
+  currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject({} as DisputeInput);
 
-  constructor(
-    private store: Store,
-    private statesvc: StateService,
-    private transunion: TransunionService,
-    private router: Router,
-  ) {
+  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
+      const disputes = state.appData.agencies?.transunion?.disputes;
+      console.log('disputes ===> ', disputes);
+      this.disputes$.next(state.appData.agencies?.transunion?.disputes);
       this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     });
   }
@@ -77,13 +78,12 @@ export class DisputeService implements OnDestroy {
    * Update the users acknowledge and then gets dispute preflight check
    * @returns
    */
-  async onUserConfirmed(): Promise<boolean> {
+  async onUserConfirmed(): Promise<ITUServiceResponse<any>> {
     if (!this.state) throw `tradelines:onConfirmed=Missing state`;
     try {
       // acknowledge the user has read and accepted the terms
       if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
-      const eligible = await this.sendDisputePreflightCheck(this.state.id);
-      return eligible;
+      return await this.sendDisputePreflightCheck(this.state.id);
     } catch (err) {
       throw `disputeService:onUserConfirmed=${err}`;
     }
@@ -105,14 +105,9 @@ export class DisputeService implements OnDestroy {
     await this.statesvc.updateAgenciesAsync(acknowledged);
   }
 
-  async sendDisputePreflightCheck(id: string): Promise<boolean> {
+  async sendDisputePreflightCheck(id: string): Promise<ITUServiceResponse<any>> {
     try {
-      const resp = await this.transunion.sendDisputePreflightCheck({ id });
-      const { eligible, error } = resp.DisputePreflightCheck;
-      if (error) {
-        this.router.navigate(['/report/detail/dispute/error'], { queryParams: { code: error.Code } });
-      }
-      return eligible;
+      return await this.transunion.sendDisputePreflightCheck({ id });
     } catch (err) {
       throw `disputeService:sendDisputePreflightCheck=${err}`;
     }
@@ -121,7 +116,7 @@ export class DisputeService implements OnDestroy {
   /**
    * Initiate a new dispute. Cannot have one in progress.
    */
-  async sendStartDispute(): Promise<string | undefined> {
+  async sendStartDispute(): Promise<ITUServiceResponse<any>> {
     const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
       return await this.transunion.sendStartDispute(data.id, this.disputeStack);
