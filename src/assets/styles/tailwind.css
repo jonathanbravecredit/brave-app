@@ -2857,6 +2857,10 @@ select {
   vertical-align: bottom;
 }
 
+.align-text-top {
+  vertical-align: text-top;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }
