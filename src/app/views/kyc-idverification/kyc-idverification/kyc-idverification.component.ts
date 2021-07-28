@@ -14,7 +14,6 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
-import { IEnrollResult } from '@shared/interfaces/enroll.interface';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error';
 
@@ -73,7 +72,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.code = code;
       const { appData } = this.store.snapshot();
       this.state = appData;
-
       try {
         this.getAuthenticationQuestions();
         this.passcodeQuestion
