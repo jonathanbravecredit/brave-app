@@ -28,15 +28,10 @@
         ></brave-outline-namedob-form>
       </div>
 
-      <!-- form -->
-      <!-- <div class="py-3 pt-0">
-        <brave-dateofbirth-form
-          #form
-          (onChanges)
-          (onSubmit)="formSubmit.emit($event)"
-          (onSubmitError)="formError.emit($event)"
-        ></brave-dateofbirth-form>
-      </div> -->
+      <div class="mt-3 mb-6">
+        <p *ngIf="!hasError" class="text-sm text-transparent">&nbsp;</p>
+        <p *ngIf="hasError" class="text-sm text-red-500">Missing required information</p>
+      </div>
 
       <!-- can place error messages here maybe? -->
 
@@ -44,9 +39,7 @@
         <div class="flex justify-end items-center">
           <brave-filled-onlytext-button (click)="form.submitForm()"
             ><span class="flex items-center"
-              >Continue<span class="material-icons px-1"
-                >arrow_forward</span
-              ></span
+              >Continue<span class="material-icons px-1">arrow_forward</span></span
             ></brave-filled-onlytext-button
           >
         </div>

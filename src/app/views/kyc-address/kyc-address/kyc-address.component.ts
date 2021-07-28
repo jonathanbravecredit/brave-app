@@ -40,7 +40,6 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit {
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
     this.hasError = true;
   }
 }

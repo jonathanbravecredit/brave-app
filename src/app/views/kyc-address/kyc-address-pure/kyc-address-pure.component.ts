@@ -6,7 +6,6 @@ import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
   templateUrl: './kyc-address-pure.component.html',
 })
 export class KycAddressPureComponent extends KycBaseComponent {
-  @Input() hasError: boolean = false;
   constructor() {
     super();
   }
