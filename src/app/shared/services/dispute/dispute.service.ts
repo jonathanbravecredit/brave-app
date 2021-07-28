@@ -3,6 +3,7 @@ import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
@@ -13,7 +14,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class DisputeService implements OnDestroy {
+export class DisputeService extends InterstitialService implements OnDestroy {
   tradeline: ITradeLinePartition | undefined;
   tradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
   tradelineSub$: Subscription;
@@ -25,6 +26,7 @@ export class DisputeService implements OnDestroy {
   currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject({} as DisputeInput);
 
   constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
+    super();
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });

@@ -18,6 +18,7 @@ import {
   IFulfillServiceProductResponse,
 } from '@shared/interfaces';
 import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
@@ -35,7 +36,7 @@ import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disput
   providedIn: 'root',
 })
 export class TransunionService {
-  constructor(private api: APIService) {}
+  constructor(private api: APIService, private interstitial: InterstitialService) {}
 
   /**
    * Send the indicative enrichment message to the Transunion backend and await a response
@@ -103,12 +104,15 @@ export class TransunionService {
    * @returns
    */
   async sendCompleteOnboarding(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
+    this.interstitial.changeMessage('completing your enrollment');
+    this.interstitial.openInterstitial();
     try {
       const msg = { id: data.id };
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));
+      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
+      this.interstitial.closeInterstitial();
       return { success: false, error: err };
     }
   }
@@ -157,11 +161,15 @@ export class TransunionService {
    * @returns
    */
   async refreshCreditReport(id: string): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
+    this.interstitial.changeMessage('refreshing your credit report');
+    this.interstitial.openInterstitial();
     try {
       const msg = { id };
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
+      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
+      this.interstitial.closeInterstitial();
       return { success: false, error: err };
     }
   }
@@ -175,11 +183,15 @@ export class TransunionService {
    * @returns
    */
   async sendDisputePreflightCheck(data: { id: string }): Promise<ITUServiceResponse<any>> {
+    this.interstitial.changeMessage('checking your dispute eligibility');
+    this.interstitial.openInterstitial();
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
       console.log('preflight check res ===> ', res);
+      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : false;
     } catch (err) {
+      this.interstitial.closeInterstitial();
       console.log('err', err);
       return { success: false, error: err };
     }
@@ -193,12 +205,16 @@ export class TransunionService {
   async getDisputeStatus(
     data: UpdateAppDataInput | AppDataStateModel,
   ): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
+    this.interstitial.changeMessage('checking your dispute status');
+    this.interstitial.openInterstitial();
     try {
       const msg = this.createGetDisputeStatusPayload(data);
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
       console.log('dspute status back', JSON.parse(res || ''));
+      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
+      this.interstitial.closeInterstitial();
       console.log('err ', err);
       return { success: false, error: err };
     }
@@ -210,6 +226,8 @@ export class TransunionService {
    * @returns
    */
   async sendStartDispute(id: string, disputes: IProcessDisputeTradelineResult[]): Promise<ITUServiceResponse<any>> {
+    this.interstitial.changeMessage('checking your dispute status');
+    this.interstitial.openInterstitial();
     try {
       console.log('sendDispute: id', id);
       console.log('sendDispute: dispute', disputes);
