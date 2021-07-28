@@ -14,7 +14,6 @@ import {
   ITransunionKBAQuestion,
   IVerifyAuthenticationAnswer,
   ITUServiceResponse,
-  IEnrollResult,
   IGetAuthenticationQuestionsResult,
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,

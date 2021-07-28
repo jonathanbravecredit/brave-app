@@ -8,6 +8,7 @@ import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -15,7 +16,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 @Injectable({
   providedIn: 'root',
 })
-export class CreditreportService implements OnDestroy {
+export class CreditreportService extends InterstitialService implements OnDestroy {
   tuReport: IMergeReport = {} as IMergeReport;
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
   tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
@@ -32,6 +33,7 @@ export class CreditreportService implements OnDestroy {
   preferencesSub$: Subscription;
 
   constructor(private statesvc: StateService, private transunion: TransunionService) {
+    super();
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {
