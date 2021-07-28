@@ -11,11 +11,8 @@ import { UserAttributesInput } from '@shared/services/aws/api.service';
 })
 export class KycAddressComponent extends KycBaseComponent implements OnInit {
   stepID = 1;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService
-  ) {
+  hasError: boolean = false;
+  constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
   }
 
@@ -44,6 +41,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit {
 
   handleError(errors: { [key: string]: AbstractControl }): void {
     console.log('form errors', errors);
+    this.hasError = true;
   }
 }
 

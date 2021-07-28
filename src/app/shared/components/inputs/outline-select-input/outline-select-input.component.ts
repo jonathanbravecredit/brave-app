@@ -86,6 +86,7 @@ export class OutlineSelectInputComponent implements OnInit {
   toggleOpen(e: MouseEvent): void {
     e.stopPropagation();
     this.isOpen = !this.isOpen;
+    this.componentFormGroup.controls.input.markAsTouched();
   }
 
   /**
@@ -93,6 +94,7 @@ export class OutlineSelectInputComponent implements OnInit {
    * @param idx index of the select option clicked on
    */
   updateForm(idx: number): void {
+    this.selected = this.config.options[idx];
     this.componentFormGroup.setValue({ input: this.config.options[idx] });
   }
 }

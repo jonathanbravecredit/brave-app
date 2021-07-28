@@ -77,9 +77,9 @@ export class OutlineInputComponent implements OnInit {
     this.componentFormGroup = this.fb.group({
       input: [this.config.value, validators],
     });
-    this.componentFormGroup.controls.input.valueChanges.subscribe((value) =>
-      this.valueChanged.emit(value)
-    );
+    this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
+      this.valueChanged.emit(value);
+    });
     this.onComponentReady.emit(this.componentFormGroup);
   }
 }

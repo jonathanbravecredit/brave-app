@@ -11,7 +11,7 @@ import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/ou
 export class OutlinePhoneFormComponent extends BaseFormComponent {
   public phoneConfig: IOutlineInputeConfig = {
     size: 'sm',
-    type: 'text',
+    type: 'tel',
     label: 'Phone Number',
     placeholder: 'Phone Number',
     autocomplete: 'phone',
