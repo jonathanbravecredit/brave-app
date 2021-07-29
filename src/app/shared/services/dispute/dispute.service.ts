@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
@@ -18,6 +18,11 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   tradeline: ITradeLinePartition | undefined;
   tradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
   tradelineSub$: Subscription;
+
+  publicItem: IPublicPartition | undefined;
+  publicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
+  publicItemSub$: Subscription;
+
   disputeStack: IProcessDisputeTradelineResult[] = [];
   _acknowledged: boolean = false;
   stateSub$: Subscription;
@@ -29,6 +34,9 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     super();
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
+    });
+    this.publicItemSub$ = this.publicItem$.subscribe((publicItem) => {
+      this.publicItem = publicItem;
     });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
@@ -55,11 +63,16 @@ export class DisputeService extends InterstitialService implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
+    if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
   setTradelineItem(tradeline: ITradeLinePartition): void {
     this.tradeline$.next(tradeline);
+  }
+
+  setPublicItem(publicItem: IPublicPartition): void {
+    this.publicItem$.next(publicItem);
   }
 
   pushDispute(item: IProcessDisputeTradelineResult): void {

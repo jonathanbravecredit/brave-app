@@ -470,23 +470,3 @@ export interface IUnparsedCreditReport {
   '#text': string;
   type: string;
 }
-
-// export interface ISummary {
-//   TradelineSummary?: {
-//     TransUnion?: string;
-//   };
-//   InquirySummary?: {
-//     TransUnion?: string;
-//   };
-//   PublicRecordSummary?: {
-//     TransUnion?: string;
-//   };
-//   Sources?: {
-//     Source?: {
-//       Bureau?: string;
-//       InquiryDate?: string;
-//       OriginalData?: string;
-//     };
-//   };
-//   SafetyCheckPassed?: string;
-// }
