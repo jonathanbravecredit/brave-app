@@ -5,12 +5,12 @@ import { AuthGuard } from '@shared/guards/auth.guard';
 import { NegativeAccountInitialComponent } from '@views/negative-account/negative-account-initial/negative-account-initial.component';
 import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
 import { TradelinesComponent } from '@views/tradelines/tradelines/tradelines.component';
-import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init/dashboard-init.component';
 import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
 import { DisputesOverviewInitialView } from '@views/dashboard/disputes/disputes-overview';
 import { DisputeFindingsView } from '@views/dashboard/disputes/dispute-findings/dispute-findings.view';
 import { SettingsLayout } from './settings/settings.layout';
+import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init/dashboard-init.component';
 
 const DashboardRoutes: Routes = [
   {

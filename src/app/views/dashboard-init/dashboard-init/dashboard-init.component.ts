@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { DashboardService } from '@shared/services/dashboard/dashboard.service';
+import { AppDataStateModel } from '@store/app-data';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'brave-dashboard-init',
   templateUrl: './dashboard-init.component.html',
 })
 export class DashboardInitComponent {
-  isEnrolled: boolean = true;
-  constructor(private router: Router, private route: ActivatedRoute) {}
-
-  goToReport() {
-    this.router.navigate(['../report'], { relativeTo: this.route });
+  initiated: boolean = false;
+  isEnrolled: boolean = false;
+  constructor(private dashboardService: DashboardService) {
+    this.dashboardService.state$
+      .pipe(filter((state) => Object.keys(state).length > 0))
+      .subscribe((state: AppDataStateModel) => {
+        this.isEnrolled = true; //!!state.agencies?.transunion?.enrolled;
+        this.initiated = true;
+      });
   }
 }

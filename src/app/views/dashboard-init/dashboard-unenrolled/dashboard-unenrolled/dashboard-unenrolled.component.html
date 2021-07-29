@@ -1,13 +1,11 @@
-<div class="container mx-auto max-w-xs h-full">
-  <brave-dashboard-unenrolled-pure
-    [userName]="''"
-    [defaultMsg]="''"
-    [initialMsg]="''"
-    [lastUpdated]="''"
-  ></brave-dashboard-unenrolled-pure>
-</div>
+<brave-dashboard-unenrolled-pure
+  [userName]="userName"
+  [defaultMsg]="defaultMsg"
+  [initialMsg]="initialMsg"
+  [lastUpdated]="lastUpdated"
+></brave-dashboard-unenrolled-pure>
 
-<div class="w-full h-full fixed block top-0 left-0 bg-white opacity-90 z-50">
+<div class="w-full h-full fixed block top-0 left-0 bg-white z-50" style="background-color: rgba(245, 245, 245, 0.66)">
   <div class="w-full h-full flex flex-col justify-center items-center align-center">
     <brave-filled-onlytext-button (click)="onClickGetMyReport()">Get My Credit Report</brave-filled-onlytext-button>
   </div>

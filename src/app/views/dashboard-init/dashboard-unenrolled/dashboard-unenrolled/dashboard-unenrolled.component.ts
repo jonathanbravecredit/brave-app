@@ -1,29 +1,41 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/snapshot-display-card.component';
-import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/snapshot-label.pipe';
+import { DashboardService } from '@shared/services/dashboard/dashboard.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-dashboard-unenrolled',
   templateUrl: './dashboard-unenrolled.component.html',
 })
 export class DashboardUnenrolledComponent implements OnInit {
-  @Input() name: string = '';
-  @Input() defaultStrMessage = 'Welcome back!';
-  @Input() initStrMessage: string = 'Welcome back!';
-  @Input() hidden = 'hidden' as LabelOfSnapshot;
-  @Input() update = 'update' as LabelOfSnapshot;
-  @Input() new = 'new' as LabelOfSnapshot;
-  @Input() critical = 'critical ' as SnapshotStatus;
-  @Input() safe = 'safe ' as SnapshotStatus;
-  @Input() danger = 'danger ' as SnapshotStatus;
+  @Input() userName: string = '';
+  @Input() defaultMsg = 'Welcome back!';
+  @Input() initialMsg: string = 'Welcome back!';
   @Input() lastUpdated = 'Today';
 
-  constructor() {}
+  constructor(private dashboardService: DashboardService, private interstitial: InterstitialService) {}
 
   ngOnInit(): void {
-    this.initStrMessage = 'Welcome back, ' + this.name;
+    if (this.userName) this.initialMsg = 'Welcome back, ' + this.userName;
   }
 
-  onClickGetMyReport(): void {}
+  /**
+   * Enroll the user in report in score
+   */
+  onClickGetMyReport(): void {
+    this.interstitial.changeMessage('fetching your credit report');
+    this.interstitial.openInterstitial();
+    this.dashboardService.enrollInReportAndScore().then((success) => {
+      if (success) {
+        this.interstitial.changeMessage('success!');
+        setTimeout(() => {
+          this.interstitial.closeInterstitial();
+        }, 1000);
+      } else {
+        this.interstitial.changeMessage('uh oh! something went wrong');
+        setTimeout(() => {
+          this.interstitial.closeInterstitial();
+        }, 1000);
+      }
+    });
+  }
 }

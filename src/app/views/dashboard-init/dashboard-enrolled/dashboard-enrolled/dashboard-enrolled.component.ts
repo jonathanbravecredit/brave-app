@@ -1,27 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/snapshot-display-card.component';
-import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/snapshot-label.pipe';
+import { IMergeReport } from '@shared/interfaces';
+import { DashboardService } from '@shared/services/dashboard/dashboard.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
   templateUrl: './dashboard-enrolled.component.html',
 })
 export class DashboardEnrolledComponent implements OnInit {
-  name: string = '';
-  defaultStrMessage = 'Welcome back!';
-  initStrMessage: string = 'Welcome back!';
-  hidden = 'hidden' as LabelOfSnapshot;
-  update = 'update' as LabelOfSnapshot;
-  new = 'new' as LabelOfSnapshot;
-  critical = 'critical ' as SnapshotStatus;
-  safe = 'safe ' as SnapshotStatus;
-  danger = 'danger ' as SnapshotStatus;
-  lastUpdated = 'Today';
+  @Input() userName: string = '';
+  @Input() defaultMsg = 'Welcome back!';
+  @Input() initialMsg: string = 'Welcome back!';
+  @Input() lastUpdated = 'Today';
+  tuReport$: Observable<IMergeReport>;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private dashboardService: DashboardService,
+    private interstitial: InterstitialService,
+  ) {
+    this.tuReport$ = this.dashboardService.tuReport$.asObservable();
+  }
 
   ngOnInit(): void {
-    this.initStrMessage = 'Welcome back, ' + this.name;
+    if (this.userName) this.initialMsg = 'Welcome back, ' + this.userName;
+  }
+
+  onNegativeItemsClicked() {
+    this.router.navigate(['../report/accounts/negative'], { relativeTo: this.route });
+  }
+
+  onFullReportClicked() {
+    this.router.navigate(['../report'], { relativeTo: this.route });
   }
 }

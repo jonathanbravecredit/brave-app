@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'brave-credit-report-graphic',
@@ -7,15 +7,18 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CreditReportGraphicComponent implements OnInit {
   @Input() base: number = 300;
   @Input() limit: number = 850;
-  @Input() currentValue: number = 350;
+  @Input() currentValue: number | undefined;
   @Input() ptsChange: number = 0;
   percentage: number = 0;
   percentageStr: string = '0%';
 
+  @ViewChild('bar') bar: ElementRef | undefined;
+  @ViewChild('arrow') arrow: ElementRef | undefined;
+
   constructor() {}
 
   ngOnInit(): void {
-    this.percentage = Math.round(((this.currentValue - 300) / 550) * 100);
+    this.percentage = this.currentValue !== undefined ? Math.round(((this.currentValue - 300) / 550) * 100) : 50;
     this.percentageStr = `${this.percentage}%`;
   }
 }
