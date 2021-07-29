@@ -7,7 +7,7 @@ import { KycIdverificationState } from '@views/kyc-idverification/kyc-idverifica
   templateUrl: './kyc-idverification-pure.component.html',
 })
 export class KycIdverificationPureComponent extends KycBaseComponent {
-  @Input() state: KycIdverificationState = 'init';
+  @Input() viewState: KycIdverificationState = 'init';
   @Output() resendClick: EventEmitter<void> = new EventEmitter();
   constructor() {
     super();

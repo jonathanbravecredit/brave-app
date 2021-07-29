@@ -17,6 +17,7 @@ export interface IOutlineInputeConfig {
 export class OutlineInputComponent implements OnInit {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
+  private _minLength: number | undefined;
 
   /**
    * @param Config Object to pass in component params
@@ -57,6 +58,17 @@ export class OutlineInputComponent implements OnInit {
     this._asteriskOverride = !!value;
   }
 
+  /**
+   * @input Flag to override the display of an asterisk but still make it required
+   */
+  @Input()
+  get minLength() {
+    return this._minLength;
+  }
+  set minLength(value: number | undefined) {
+    this._minLength = value;
+  }
+
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
   @Output()
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -73,6 +85,9 @@ export class OutlineInputComponent implements OnInit {
     const validators = [];
     if (this.required) {
       validators.push(Validators.required);
+    }
+    if (this.minLength) {
+      validators.push(Validators.minLength(this.minLength));
     }
     this.componentFormGroup = this.fb.group({
       input: [this.config.value, validators],

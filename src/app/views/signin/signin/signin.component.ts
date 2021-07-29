@@ -1,13 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { SimpleSigninFormComponent } from '@shared/components/forms/simple-signin-form/simple-signin-form.component';
+
+export type SigninState = 'init' | 'invalid';
 
 @Component({
   selector: 'brave-signin',
   templateUrl: './signin.component.html',
 })
 export class SigninComponent {
+  viewState: SigninState = 'init';
+  message: string = '';
   constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
   ngOnInit(): void {}
@@ -24,35 +29,40 @@ export class SigninComponent {
         const cognitorUser = await this.auth.signIn(user.username, user.password);
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
           console.log('MFA challenge');
-          // this.router.navigate(['/account/submitmfa']);
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
           const { requiredAttributes } = cognitorUser?.challengeParam;
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
           console.log('OTP setup');
-          // this.auth.setupTOTP(user);
-        } // don't do anything...routing handled by HUB
+        }
       } catch (err) {
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
-          // TODO go to dashboard with an unconfirmed state (can't do anything)
+          this.handleSigninError('invalid', 'User is not confirmed');
         } else if (err.code === 'PasswordResetRequiredException') {
-          // TODO handle error
-          this.router.navigate(['../error'], { relativeTo: this.route });
+          this.handleSigninError('invalid', 'Password reset required');
         } else if (err.code === 'NotAuthorizedException') {
-          // TODO handle error
-          this.router.navigate(['../error'], { relativeTo: this.route });
+          this.handleSigninError('invalid', err.message);
         } else if (err.code === 'UserNotFoundException') {
-          // TODO handle error
-          this.router.navigate(['../error'], { relativeTo: this.route });
+          this.handleSigninError('invalid', 'Please use a registered email');
         } else {
-          // TODO handle error
+          this.handleSigninError('invalid', err.message);
         }
-        this.router.navigate(['../error'], { relativeTo: this.route });
       }
     } else {
-      // TODO: need to provide feedback to the user on the invalid email
-      this.router.navigate(['../error'], { relativeTo: this.route });
+      this.handleSigninError(
+        'invalid',
+        `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,
+      );
     }
+  }
+
+  /**
+   *
+   * @param viewState
+   */
+  handleSigninError(viewState: SigninState, message: string): void {
+    this.viewState = viewState;
+    this.message = message;
   }
 
   /**

@@ -3,7 +3,7 @@
     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
       <!-- logo -->
       <div class="flex justify-center">
-        <img class="w-32 h-32" src="assets/img/brave-teal-512x512.jpg" />
+        <img class="w-64 h-64" src="assets/img/login-temporary.png" />
       </div>
 
       <!-- Social sign up buttons -->
@@ -27,6 +27,8 @@
         <brave-simple-signin-form
           (signinClick)="clickLogin.emit($event)"
           (forgotClick)="clickForgot.emit()"
+          [viewState]="viewState"
+          [message]="message"
         ></brave-simple-signin-form>
       </div>
 
