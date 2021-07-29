@@ -52,13 +52,7 @@ const parserOptions = {
 
 @Injectable()
 export class KycService {
-  constructor(
-    private store: Store,
-    private statesvc: StateService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private transunion: TransunionService,
-  ) {}
+  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {}
 
   /**
    * Takes a progress step ID and sets the status to true

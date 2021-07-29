@@ -1725,6 +1725,10 @@ select {
   height: 15rem;
 }
 
+.h-64 {
+  height: 16rem;
+}
+
 .h-auto {
   height: auto;
 }
@@ -2133,6 +2137,10 @@ select {
 
 .opacity-75 {
   opacity: 0.75;
+}
+
+.opacity-90 {
+  opacity: 0.9;
 }
 
 .outline-none {
@@ -2827,10 +2835,6 @@ select {
   color: rgba(30, 41, 59, var(--tw-text-opacity));
 }
 
-.text-opacity-0 {
-  --tw-text-opacity: 0;
-}
-
 .text-opacity-50 {
   --tw-text-opacity: 0.5;
 }
@@ -2924,6 +2928,10 @@ select {
 
 .w-32 {
   width: 8rem;
+}
+
+.w-64 {
+  width: 16rem;
 }
 
 .w-auto {
