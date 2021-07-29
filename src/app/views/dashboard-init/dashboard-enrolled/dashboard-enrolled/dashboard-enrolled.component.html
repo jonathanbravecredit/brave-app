@@ -1,8 +1,13 @@
-<div class="container mx-auto max-w-xs h-full">
-  <brave-dashboard-enrolled-pure
-    [userName]="''"
-    [defaultMsg]="''"
-    [initialMsg]="''"
-    [lastUpdated]="''"
-  ></brave-dashboard-enrolled-pure>
+<div *ngIf="tuReport$ | async as report">
+  <div *ngIf="report | mergereportToDashboard as cards">
+    <brave-dashboard-enrolled-pure
+      [cards]="cards"
+      [userName]="userName"
+      [defaultMsg]="defaultMsg"
+      [initialMsg]="initialMsg"
+      [lastUpdated]="lastUpdated"
+      (negativeItemsClicked)="onNegativeItemsClicked()"
+      (fullReportClicked)="onFullReportClicked()"
+    ></brave-dashboard-enrolled-pure>
+  </div>
 </div>

@@ -14,12 +14,13 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
   transform(report: IMergeReport): INegativeAccountCardInputs[] | undefined {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!this.tradeLines) return [DEFAULT_TRADELINE];
-    return this.tradeLines instanceof Array
-      ? this.filterTradelines(this.tradeLines)
-          .sortByAccountType(this.tradeLines)
-          .sortByDateOpened(this.tradeLines)
-          .mapTradeLineToAccount(this.tradeLines)
-      : this.mapTradeLineToAccount([this.tradeLines]);
+    if (!(this.tradeLines instanceof Array)) {
+      this.tradeLines = [this.tradeLines];
+    }
+    return this.filterTradelines(this.tradeLines)
+      .sortByAccountType(this.tradeLines)
+      .sortByDateOpened(this.tradeLines)
+      .mapTradeLineToAccount(this.tradeLines);
   }
 
   /**

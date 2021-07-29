@@ -1,4 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { IMergeReport } from '@shared/interfaces';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { dateDiffInDays } from '@shared/utils/dates';
@@ -10,8 +12,14 @@ export class DashboardService implements OnDestroy {
   state$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
   stateSub$: Subscription = new Subscription();
   state: AppDataStateModel | undefined;
+  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
 
-  constructor(private statesvc: StateService, private transunion: TransunionService) {
+  constructor(
+    private statesvc: StateService,
+    private reportService: CreditreportService,
+    private transunion: TransunionService,
+  ) {
+    this.tuReport$ = this.reportService.tuReport$;
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state$.next(state.appData);
       this.state = state.appData;
