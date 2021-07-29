@@ -119,12 +119,20 @@ import { DisputeFindingsRatingKeyComponent } from './disputes/findings/dispute-f
 import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/dispute-findings-results-details/dispute-findings-results-details.component';
 import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
-import { DisputeCardStatusPipe, DisputeCurrentCardComponent, DisputeHistoryCardComponent, DisputeRegularCardComponent } from './cards/dispute-cards';
+import {
+  DisputeCardStatusPipe,
+  DisputeCurrentCardComponent,
+  DisputeHistoryCardComponent,
+  DisputeRegularCardComponent,
+} from './cards/dispute-cards';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
 import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
 import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
+import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-input-code.component';
 
 const components = [
   BaseFormComponent,
@@ -230,7 +238,8 @@ const components = [
   SettingsOptionComponent,
   SettingsComponent,
   CollectionCreditMixAccountsComponent,
-  BottomNavbarComponent
+  BottomNavbarComponent,
+  OutlineInputPhoneComponent,
 ];
 
 // component specific pipes only
@@ -249,7 +258,7 @@ const pipes = [
   CreditReportGraphicPipe,
   BasePaginationPipe,
   BaseModalPipe,
-  DisputeCardStatusPipe
+  DisputeCardStatusPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -263,8 +272,9 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, OutlineInputCodeComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

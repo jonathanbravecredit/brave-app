@@ -25,6 +25,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
   private codeQuestion: string | undefined;
   private authResponse: IVerifyAuthenticationQuestionsResult | undefined;
   private authSuccessful: boolean = false;
+  public hasError: boolean = false;
 
   constructor(
     private router: Router,
@@ -45,7 +46,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    this.hasError = true;
   }
 
   /**

@@ -13,7 +13,7 @@ export class OutlinePhoneFormComponent extends BaseFormComponent {
     size: 'sm',
     type: 'tel',
     label: 'Phone Number',
-    placeholder: 'Phone Number',
+    placeholder: '(123) 456-7890',
     autocomplete: 'phone',
   };
 
