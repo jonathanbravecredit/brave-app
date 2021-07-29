@@ -35,7 +35,7 @@
         <div class="text-sm text-blueGray-600">
           <span>Already have an account? Login&nbsp;</span>
           <span>
-            <a (click)="clickLogin.emit()" class="hover:cursor-pointer">here.</a>
+            <a (click)="clickLogin.emit()" class="hover:cursor-pointer font-bold">here.</a>
           </span>
         </div>
       </div>
@@ -45,8 +45,14 @@
         <div class="text-sm text-blueGray-600 text-center">
           <small>
             By joining you are agreeing to our&nbsp;<span
-              ><a (click)="clickPrivacy.emit()" class="underline hover:cursor-pointer">Privacy Policy</a></span
-            >&nbsp;and&nbsp;<span><a (click)="clickTerms.emit()" class="underline hover:cursor-pointer">TOS</a></span>
+              ><a (click)="clickPrivacy.emit()" class="underline hover:cursor-pointer whitespace-nowrap"
+                >Privacy Policy</a
+              ></span
+            >&nbsp;and&nbsp;<span
+              ><a (click)="clickTerms.emit()" class="underline hover:cursor-pointer whitespace-nowrap"
+                >Terms of Service</a
+              ></span
+            >
           </small>
         </div>
       </div>

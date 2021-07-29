@@ -12,7 +12,6 @@ import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/
 import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { KycErrorComponent } from '@views/kyc-error/kyc-error.component';
-import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
 
 const OnboardingRoutes: Routes = [
   {

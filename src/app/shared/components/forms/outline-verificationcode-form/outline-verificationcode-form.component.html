@@ -1,12 +1,13 @@
 <form [formGroup]="parentForm">
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-3">
-      <brave-outline-input
+      <brave-outline-input-code
         [config]="codeConfig"
         (onComponentReady)="addChild('code', $event)"
         [required]="true"
+        [minLength]="5"
       >
-      </brave-outline-input>
+      </brave-outline-input-code>
       <div *ngIf="!hideHint" class="-mt-2">
         <div class="flex justify-start items-start text-xs text-blueGray-600">
           <span class="-mt-1">&#42;</span>&nbsp;Required

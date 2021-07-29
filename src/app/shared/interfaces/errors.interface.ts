@@ -9,8 +9,8 @@ export interface IErrorResult {
 
 export interface IErrorResponse {
   Code: number | string;
-  Name: string;
-  Message: string;
+  Name?: string;
+  Message?: string;
 }
 
 export interface IErrorCodes {

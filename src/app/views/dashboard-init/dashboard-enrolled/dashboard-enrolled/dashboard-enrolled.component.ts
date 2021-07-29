@@ -4,13 +4,13 @@ import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/s
 import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/snapshot-label.pipe';
 
 @Component({
-  selector: 'brave-dashboard-init',
-  templateUrl: './dashboard-init.component.html',
+  selector: 'brave-dashboard-enrolled',
+  templateUrl: './dashboard-enrolled.component.html',
 })
-export class DashboardInitComponent implements OnInit {
-  name = 'Emily';
+export class DashboardEnrolledComponent implements OnInit {
+  name: string = '';
   defaultStrMessage = 'Welcome back!';
-  initStrMessage = 'Welcome back, ' + this.name;
+  initStrMessage: string = 'Welcome back!';
   hidden = 'hidden' as LabelOfSnapshot;
   update = 'update' as LabelOfSnapshot;
   new = 'new' as LabelOfSnapshot;
@@ -21,9 +21,7 @@ export class DashboardInitComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit(): void {}
-
-  goToReport() {
-    this.router.navigate(['../report'], { relativeTo: this.route });
+  ngOnInit(): void {
+    this.initStrMessage = 'Welcome back, ' + this.name;
   }
 }

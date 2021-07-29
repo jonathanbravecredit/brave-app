@@ -7,31 +7,34 @@
       </div>
 
       <!-- subheader -->
-      <div *ngIf="state === 'init'" class="py-3">
+      <div *ngIf="viewState === 'init'" class="py-3">
         <div class="text-base">
           <p class="mb-6 text-blueGray-600">
-            Please enter the 5-digit code you just received to the phone number
-            you provided in the box below.
+            Please enter the 5-digit code you just received to the phone number you provided in the box below.
           </p>
         </div>
       </div>
 
       <!-- subheader -->
-      <div *ngIf="state === 'sent'" class="py-3">
+      <div *ngIf="viewState === 'sent'" class="py-3">
         <div class="text-base">
           <p class="mb-6 text-blueGray-600">
-            We have texted you a new code. Please enter the new code in the box
-            below.
+            We have texted you a new code. Please enter the new code in the box below.
           </p>
         </div>
       </div>
 
       <!-- subheader -->
-      <div *ngIf="state === 'error'" class="py-3">
+      <div *ngIf="viewState === 'error'" class="py-3">
         <div class="text-base">
-          <p class="mb-6 text-blueGray-600">
-            The code you entered was incorrect, please try again.
-          </p>
+          <p class="mb-6 text-red-500">The code you entered was incorrect, please try again.</p>
+        </div>
+      </div>
+
+      <!-- subheader -->
+      <div *ngIf="viewState === 'minimum'" class="py-3">
+        <div class="text-base">
+          <p class="mb-6 text-red-500">Please enter 5 digits.</p>
         </div>
       </div>
 
@@ -56,9 +59,7 @@
           <brave-links-onlytext-button
             (click)="resendClick.emit()"
             [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
-            ><span class="underline"
-              >Resend code</span
-            ></brave-links-onlytext-button
+            ><span class="underline">Resend code</span></brave-links-onlytext-button
           >
         </div>
       </div>
@@ -69,15 +70,11 @@
             (click)="backClick.emit()"
             [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
           >
-            <span class="flex items-center">
-              <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-            </span>
+            <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
           <brave-filled-onlytext-button (click)="form.submitForm()"
             ><span class="flex items-center"
-              >Continue<span class="material-icons px-1"
-                >arrow_forward</span
-              ></span
+              >Continue<span class="material-icons px-1">arrow_forward</span></span
             ></brave-filled-onlytext-button
           >
         </div>

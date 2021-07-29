@@ -15,7 +15,7 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 
-export type KycIdverificationState = 'init' | 'sent' | 'error';
+export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
 @Component({
   selector: 'brave-kyc-idverification',
@@ -24,6 +24,7 @@ export type KycIdverificationState = 'init' | 'sent' | 'error';
 export class KycIdverificationComponent extends KycBaseComponent {
   @Input() viewState: KycIdverificationState = 'init';
   stepID = 3;
+  private attempts = 0;
   private state: UpdateAppDataInput | undefined;
   private code: string | undefined;
   private authXML: string | undefined;
@@ -46,7 +47,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
   resendCode(): void {
     // TODO resubmit code to backend
-    this.viewState = 'sent';
+    this.updateViewState('sent');
   }
 
   goBack(): void {
@@ -55,7 +56,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    this.updateViewState('minimum');
+  }
+
+  updateViewState(viewState: KycIdverificationState) {
+    this.viewState = viewState;
   }
 
   /**
@@ -72,6 +77,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.code = code;
       const { appData } = this.store.snapshot();
       this.state = appData;
+
       try {
         this.getAuthenticationQuestions();
         this.passcodeQuestion
@@ -79,15 +85,18 @@ export class KycIdverificationComponent extends KycBaseComponent {
           : (() => {
               throw 'No passcode questionfound';
             })();
-
         this.authSuccessful
-          ? await this.sendCompleteOnboarding(this.state)
+          ? this.router.navigate(['../congratulations'], {
+              relativeTo: this.route,
+            })
           : (() => {
               throw 'Authentication request failed';
             })();
       } catch (err) {
         console.log('error ===> ', err); // TODO can better handle errors
-        this.router.navigate(['../error'], { relativeTo: this.route });
+        if (this.attempts > 2) {
+          this.router.navigate(['../error'], { relativeTo: this.route });
+        }
       }
     }
   }
@@ -221,33 +230,39 @@ export class KycIdverificationComponent extends KycBaseComponent {
     console.log('isVerification ===> ', resp);
     if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
     this.authSuccessful = resp.ResponseType.toLowerCase() === 'success';
+    if (!this.authSuccessful) {
+      this.attempts++;
+      this.updateViewState('error');
+    }
     return this;
   }
 
-  /**
-   * Once the user is verified complete the onboarding step on the server
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
-   * @returns
-   */
-  async sendCompleteOnboarding(
-    state: UpdateAppDataInput | AppDataStateModel | undefined,
-  ): Promise<KycIdverificationComponent> {
-    if (!state) return this;
-    try {
-      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
-      const { success, error } = await this.kycService.sendCompleteOnboarding(state);
-      success
-        ? this.router.navigate(['../congratulations'], {
-            relativeTo: this.route,
-          })
-        : (() => {
-            throw `kycIdverification:sendCompleteOnboarding=${error}`;
-          })();
-      return this;
-    } catch (err) {
-      throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
-    }
-  }
+  // /**
+  //  * Once the user is verified complete the onboarding step on the server
+  //  * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+  //  * @returns
+  //  */
+  // async sendCompleteOnboarding(
+  //   state: UpdateAppDataInput | AppDataStateModel | undefined,
+  // ): Promise<KycIdverificationComponent> {
+  //   if (!state) return this;
+  //   try {
+  //     this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+  //     const { success, error } = await this.kycService.sendCompleteOnboarding(state);
+  //     success
+  //       ? this.router.navigate(['../congratulations'], {
+  //           relativeTo: this.route,
+  //         })
+  //       : (() => {
+  //           this.attempts = 3;
+  //           throw `kycIdverification:sendCompleteOnboarding=${error}`;
+  //         })();
+  //     return this;
+  //   } catch (err) {
+  //     this.attempts = 3;
+  //     throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
+  //   }
+  // }
 }
 
 const codeMap: Record<string, any> = {

@@ -15,11 +15,8 @@ interface FlatForm {
 })
 export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
   stepID = 0;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService
-  ) {
+  hasError: boolean = false;
+  constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
   }
 
@@ -45,7 +42,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    this.hasError = true;
   }
 }
 

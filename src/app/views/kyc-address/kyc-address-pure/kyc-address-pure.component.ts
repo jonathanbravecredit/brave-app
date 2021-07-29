@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { KycBaseComponent } from '@views/kyc-base/kyc-base.component';
 
 @Component({

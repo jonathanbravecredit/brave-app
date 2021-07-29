@@ -1,16 +1,14 @@
 <form [formGroup]="componentFormGroup">
   <div class="mb-5 pt-0">
-    <label
-      for="select_field"
-      class="block mb-2.5 text-sm text-blueGray-600 whitespace-nowrap"
-      >{{ config?.label
-      }}<span *ngIf="required && !asteriskOverride" class="-mt-1"
-        >&#42;</span
-      ></label
+    <label for="select_field" class="block mb-2.5 text-sm text-blueGray-600 whitespace-nowrap"
+      >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
     <div
-      [ngClass]="config | outlineSelectInput"
-      class="relative bg-white rounded border border-blueGray-300 outline-none w-full"
+      [ngClass]="{
+        'border-red-500': required && componentFormGroup.controls.input.touched && !selected && !isOpen,
+        'border-blueGray-300': !(required && componentFormGroup.controls.input.touched && !selected && !isOpen)
+      }"
+      class="relative text-sm px-1 py-1 bg-white rounded border outline-none w-full"
       (click)="toggleOpen($event)"
     >
       <input
@@ -21,15 +19,13 @@
         style="width: 0px; height: 0px"
         class="absolute"
       />
-      <div
-        class="flex justify-between items-center w-full hover:cursor-pointer"
-      >
+      <div class="flex justify-between items-center w-full hover:cursor-pointer">
         <span
           [ngClass]="{
             'text-blueGray-300': selectInput.value === config.label,
             'text-blueGray-600': selectInput.value !== config.label
           }"
-          >{{ selectInput.value || "Select item" }}</span
+          >{{ selectInput.value || 'Select item' }}</span
         >
         <span class="material-icons text-blueGray-600">expand_more</span>
       </div>

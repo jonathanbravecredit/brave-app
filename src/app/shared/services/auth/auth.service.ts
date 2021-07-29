@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ export interface NewUser {
   providedIn: 'root',
 })
 export class AuthService {
+  public email$: BehaviorSubject<string> = new BehaviorSubject('');
   public static SIGN_IN = 'signIn';
   public static SIGN_OUT = 'signOut';
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
@@ -84,6 +85,7 @@ export class AuthService {
    * @returns
    */
   signUp(user: NewUser): Promise<ISignUpResult> {
+    this.email$.next(user.username);
     return Auth.signUp({
       username: user.username,
       password: user.password,

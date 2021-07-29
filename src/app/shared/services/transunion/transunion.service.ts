@@ -127,9 +127,30 @@ export class TransunionService {
     data: UpdateAppDataInput | AppDataStateModel,
     dispute: boolean = false,
   ): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
+    if (!data.id) throw { Code: '197' };
     try {
-      const msg = this.createEnrollPayload(data, dispute);
+      const msg = { id: data.id };
       const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Send the verified user to transunion to enroll them and receive their report
+   * @param {UpdateAppDataInput} data AppData state
+   * @param {boolean} dispute Flag to enroll the user in the dispute process
+   * @returns
+   */
+  async sendEnrollDisputesRequest(
+    data: UpdateAppDataInput | AppDataStateModel,
+    dispute: boolean = false,
+  ): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
+    if (!data.id) throw { Code: '197' };
+    try {
+      const msg = { id: data.id };
+      const res = await this.api.Transunion('EnrollDisputes', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };

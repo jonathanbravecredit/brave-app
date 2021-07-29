@@ -27,8 +27,7 @@ export class BaseFormComponent {
   }
 
   submitForm(): void {
-    this.parentForm.valid
-      ? this.onSubmit.emit(this.parentForm)
-      : this.onSubmitError.emit(this.parentForm.controls);
+    this.parentForm.markAllAsTouched();
+    this.parentForm.valid ? this.onSubmit.emit(this.parentForm) : this.onSubmitError.emit(this.parentForm.controls);
   }
 }

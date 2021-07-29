@@ -25,7 +25,7 @@
           <div class="text-sm text-blueGray-600">
             <p>
               Didn't receive an email?&nbsp;<span
-                ><a [routerLink]="['../resend']">Click here to resend.</a></span
+                ><a class="font-bold hover:cursor-pointer" (click)="resendClick.emit()">Click here to resend.</a></span
               >
             </p>
           </div>
