@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IStartDisputeResult } from '@shared/interfaces/start-dispute.interface';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { Observable } from 'rxjs';

@@ -86,7 +86,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
               throw 'No passcode questionfound';
             })();
         this.authSuccessful
-          ? await this.sendCompleteOnboarding(this.state)
+          ? this.router.navigate(['../congratulations'], {
+              relativeTo: this.route,
+            })
           : (() => {
               throw 'Authentication request failed';
             })();
@@ -235,32 +237,32 @@ export class KycIdverificationComponent extends KycBaseComponent {
     return this;
   }
 
-  /**
-   * Once the user is verified complete the onboarding step on the server
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
-   * @returns
-   */
-  async sendCompleteOnboarding(
-    state: UpdateAppDataInput | AppDataStateModel | undefined,
-  ): Promise<KycIdverificationComponent> {
-    if (!state) return this;
-    try {
-      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
-      const { success, error } = await this.kycService.sendCompleteOnboarding(state);
-      success
-        ? this.router.navigate(['../congratulations'], {
-            relativeTo: this.route,
-          })
-        : (() => {
-            this.attempts = 3;
-            throw `kycIdverification:sendCompleteOnboarding=${error}`;
-          })();
-      return this;
-    } catch (err) {
-      this.attempts = 3;
-      throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
-    }
-  }
+  // /**
+  //  * Once the user is verified complete the onboarding step on the server
+  //  * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+  //  * @returns
+  //  */
+  // async sendCompleteOnboarding(
+  //   state: UpdateAppDataInput | AppDataStateModel | undefined,
+  // ): Promise<KycIdverificationComponent> {
+  //   if (!state) return this;
+  //   try {
+  //     this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+  //     const { success, error } = await this.kycService.sendCompleteOnboarding(state);
+  //     success
+  //       ? this.router.navigate(['../congratulations'], {
+  //           relativeTo: this.route,
+  //         })
+  //       : (() => {
+  //           this.attempts = 3;
+  //           throw `kycIdverification:sendCompleteOnboarding=${error}`;
+  //         })();
+  //     return this;
+  //   } catch (err) {
+  //     this.attempts = 3;
+  //     throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
+  //   }
+  // }
 }
 
 const codeMap: Record<string, any> = {

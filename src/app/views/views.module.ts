@@ -42,7 +42,7 @@ import { KycWelcomebackPureComponent } from '@views/kyc-welcomeback/kyc-welcomeb
 import { CompliancePrivacyComponent } from './compliance-privacy/compliance-privacy.component';
 import { ComplianceTosComponent } from './compliance-tos/compliance-tos.component';
 import { KycErrorComponent } from './kyc-error/kyc-error.component';
-import { DashboardInitComponent } from './dashboard-init/dashboard-init.component';
+import { DashboardInitComponent } from './dashboard-init/dashboard-init/dashboard-init.component';
 import { SigninRedirectComponent } from './signin-redirect/signin-redirect.component';
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
@@ -74,6 +74,10 @@ import { SettingsOverviewPureView } from './dashboard/settings/settings-overview
 import { SettingsOverviewView } from './dashboard/settings/settings-overview/settings-overview.view';
 import { CreditMixPureView } from './dashboard/credit-mix/credit-mix-pure/credit-mix-pure.view';
 import { CreditMixView } from './dashboard/credit-mix/credit-mix/credit-mix.view';
+import { DashboardUnenrolledComponent } from './dashboard-init/dashboard-unenrolled/dashboard-unenrolled/dashboard-unenrolled.component';
+import { DashboardEnrolledComponent } from './dashboard-init/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
+import { DashboardUnenrolledPureComponent } from './dashboard-init/dashboard-unenrolled/dashboard-unenrolled-pure/dashboard-unenrolled-pure.component';
+import { DashboardEnrolledPureComponent } from '@views/dashboard-init/dashboard-enrolled/dashboard-enrolled-pure/dashboard-enrolled-pure.component';
 
 const views = [
   SignupComponent,
@@ -111,6 +115,10 @@ const views = [
   CompliancePrivacyComponent,
   ComplianceTosComponent,
   DashboardInitComponent,
+  DashboardUnenrolledComponent,
+  DashboardUnenrolledPureComponent,
+  DashboardEnrolledComponent,
+  DashboardEnrolledPureComponent,
   NegativeAccountInitialComponent,
   NegativeAccountInitialPureComponent,
   CreditReportPureComponent,
