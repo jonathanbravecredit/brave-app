@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DashboardService } from '@shared/services/dashboard/dashboard.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-dashboard-unenrolled',
@@ -10,11 +12,30 @@ export class DashboardUnenrolledComponent implements OnInit {
   @Input() initialMsg: string = 'Welcome back!';
   @Input() lastUpdated = 'Today';
 
-  constructor() {}
+  constructor(private dashboardService: DashboardService, private interstitial: InterstitialService) {}
 
   ngOnInit(): void {
     if (this.userName) this.initialMsg = 'Welcome back, ' + this.userName;
   }
 
-  onClickGetMyReport(): void {}
+  /**
+   * Enroll the user in report in score
+   */
+  onClickGetMyReport(): void {
+    this.interstitial.changeMessage('fetching your credit report');
+    this.interstitial.openInterstitial();
+    this.dashboardService.enrollInReportAndScore().then((success) => {
+      if (success) {
+        this.interstitial.changeMessage('success!');
+        setTimeout(() => {
+          this.interstitial.closeInterstitial();
+        }, 1000);
+      } else {
+        this.interstitial.changeMessage('uh oh! something went wrong');
+        setTimeout(() => {
+          this.interstitial.closeInterstitial();
+        }, 1000);
+      }
+    });
+  }
 }
