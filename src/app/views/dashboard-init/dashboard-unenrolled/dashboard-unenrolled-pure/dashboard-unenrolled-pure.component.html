@@ -4,7 +4,7 @@
     <h2 class="text-lg font-semibold">{{ userName === '' ? defaultMsg : initialMsg }}</h2>
 
     <div class="my-2">
-      <brave-credit-report-graphic-with-graph [currentValue]="1"></brave-credit-report-graphic-with-graph>
+      <brave-credit-report-graphic-with-graph></brave-credit-report-graphic-with-graph>
     </div>
 
     <h2 class="mb-1 text-lg font-semibold">Your Credit Snapshot</h2>
@@ -15,7 +15,6 @@
       status="critical"
       title="New Negative Accounts"
       typeOfSnapshot="time"
-      value="5"
     ></brave-snapshot-display-card>
     <brave-snapshot-display-card
       tendency="down"
@@ -23,7 +22,6 @@
       status="safe"
       title="Age of Credit"
       typeOfSnapshot="time"
-      value="3"
       typeOfDate="Years"
     ></brave-snapshot-display-card>
     <brave-snapshot-display-card
@@ -32,16 +30,14 @@
       status="danger"
       title="Credit Mix"
       typeOfSnapshot="tag"
-      value="Not Bad"
       typeOfDate="Years"
     ></brave-snapshot-display-card>
     <brave-snapshot-display-card
       tendency="no-tendency"
       [label]="new"
-      status="safe"
+      status="danger"
       title="Credit Card Utilization"
       typeOfSnapshot="percentage"
-      value="40"
     ></brave-snapshot-display-card>
     <brave-links-onlytext-button class="w-full">View Full Credit Report</brave-links-onlytext-button>
     <h5 class="mb-2 font-semibold text-lg">Take Control</h5>

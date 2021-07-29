@@ -1,5 +1,9 @@
 <router-outlet></router-outlet>
 
-<div *ngIf="spinner$ | async as open" class="w-full h-full fixed block top-0 left-0 bg-white opacity-90 z-50">
+<div
+  *ngIf="spinner$ | async as open"
+  class="w-full h-full fixed block top-0 left-0 bg-white z-50"
+  style="background-color: rgba(245, 245, 245, 0.9)"
+>
   <brave-spinner [message]="message$ | async"></brave-spinner>
 </div>

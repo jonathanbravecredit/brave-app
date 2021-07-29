@@ -13,6 +13,7 @@ import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-cong
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { KycErrorComponent } from '@views/kyc-error/kyc-error.component';
 
+// our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [
   {
     path: '',

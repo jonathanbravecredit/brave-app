@@ -1,6 +1,6 @@
-<div class="h-full flex flex-col items-center rounded-l-md bg-indigo-700 pt-3 pb-5 px-4">
-  <p class="font-bold text-white">Your Score</p>
-  <div class="font-bold text-white flex mt-3">
+<div class="h-full flex flex-col items-center rounded-l-md bg-indigo-700 p-2">
+  <p class="font-bold text-white text-sm">Your Score</p>
+  <div class="font-bold text-white flex flex-nowrap mt-1">
     <div class="mr-2 text-2xl -mt-2">
       <span
         class="material-icons align-bottom transform"
@@ -9,27 +9,27 @@
         play_arrow
       </span>
     </div>
-    <span>{{ ptsChange >= 0 ? '+' : '' }}{{ ptsChange }} points</span>
+    <span class="whitespace-nowrap">{{ ptsChange >= 0 ? '+' : '' }}{{ ptsChange }} points</span>
   </div>
-  <p class="text-white text-xs text-opacity-50 mt-1">since last month</p>
-  <p class="text-5xl text-white font-bold my-4">{{ currentValue }}</p>
-  <p class="text-white font-extrabold">{{ currentValue | creditReportGraphic: 'status' }}</p>
-  <div class="relative mt-2 h-4 w-full bg-gradient-to-r from-orange-500 via-yelow-300 to-emerald-400">
-    <div [ngStyle]="{ left: percentageStr }" class="absolute text-2xl text-white">
-      <span class="material-icons text-white align-bottom transform -rotate-90"> play_arrow </span>
+  <p class="text-white text-opacity-75 whitespace-nowrap" style="font-size: 0.66rem">since last month</p>
+  <p class="text-3xl text-white font-bold mt-1">{{ currentValue || '--' }}</p>
+  <p class="text-white font-extrabold text-xs">{{ currentValue | creditReportGraphic: 'status' }}</p>
+  <div #bar class="relative mt-1 h-2 w-full rounded-sm bg-gradient-to-r from-orange-500 via-yelow-300 to-emerald-400">
+    <div #arrow [ngStyle]="{ left: percentageStr }" class="absolute text-sm text-white" style="margin-left: -0.4375rem">
+      <span class="material-icons text-sm text-white align-bottom transform -rotate-90"> play_arrow </span>
     </div>
   </div>
   <div class="w-full flex justify-between mt-2">
     <div>
-      <p class="text-white text-xs font-bold">{{ base }}</p>
+      <p class="text-white font-bold" style="font-size: 0.66rem">{{ base }}</p>
     </div>
     <div>
-      <p class="text-white text-xs font-bold">{{ limit }}</p>
+      <p class="text-white font-bold" style="font-size: 0.66rem">{{ limit }}</p>
     </div>
   </div>
-  <p class="mt-4 mb-2 text-lg font-bold text-white text-center">
-    VantageScore<span class="inline-block text-xs align-text-top">&#174;</span>&nbsp; by TransUnion<span
-      class="inline-block text-xs align-text-top"
+  <p class="font-bold text-white text-center" style="font-size: 0.5rem; line-height: 0.75rem">
+    VantageScore<span class="inline-block align-text-top">&#174;</span>&nbsp; by TransUnion<span
+      class="inline-block align-text-top"
       >&#174;</span
     >
   </p>

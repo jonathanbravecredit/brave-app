@@ -1,4 +1,4 @@
-<div style="background-color: rgb(211, 242, 246)" class="py-4 px-2 h-full flex flex-col flex-grow rounded-r">
+<div style="background-color: rgb(211, 242, 246)" class="py-2 px-1 h-full flex flex-col flex-grow rounded-r">
   <div class="w-full">
     <p class="font-bold text-black text-center">Score History</p>
   </div>
@@ -7,8 +7,8 @@
       <ul class="flex mb-0 list-none p-1 bg-white rounded">
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
-            class="font-sans text-xs px-4 py-1 rounded block leading-normal"
-            style="white-space: nowrap"
+            class="font-sans px-2 py-1 rounded block leading-normal"
+            style="white-space: nowrap; font-size: 0.66rem"
             (click)="toggleTabs(1)"
             [ngClass]="{
               'bg-white text-coolGray-700': openTab !== 1,
@@ -20,8 +20,8 @@
         </li>
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a
-            class="font-sans text-xs px-4 py-1 rounded block leading-normal"
-            style="white-space: nowrap"
+            class="font-sans px-2 py-1 rounded block leading-normal"
+            style="white-space: nowrap; font-size: 0.66rem"
             (click)="toggleTabs(2)"
             [ngClass]="{
               'bg-white text-coolGray-700': openTab !== 2,
