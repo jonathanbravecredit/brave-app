@@ -14,7 +14,7 @@ export class DashboardInitComponent {
     this.dashboardService.state$
       .pipe(filter((state) => Object.keys(state).length > 0))
       .subscribe((state: AppDataStateModel) => {
-        this.isEnrolled = true; //!!state.agencies?.transunion?.enrolled;
+        this.isEnrolled = !!state.agencies?.transunion?.enrolled;
         this.initiated = true;
       });
   }
