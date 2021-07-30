@@ -47,7 +47,7 @@ export class NegativeAccountInitialComponent {
       .sendDisputePreflightCheck(id)
       .then((_) => {
         this.disputeService.setTradelineItem(card);
-        this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
+        this.router.navigate(['/dashboard/report/tradeline/dispute']);
       })
       .catch((err) => {
         throw new Error(`tradelines:onDisputeClicked=${err}`);

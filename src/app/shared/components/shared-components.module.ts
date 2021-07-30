@@ -133,6 +133,11 @@ import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.com
 import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-input-code.component';
+import { PublicitemsDetailsTableComponent } from './publicitems/publicitems-details-table/publicitems-details-table.component';
+import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/publicitems-details.component';
+import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
+import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
+import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card.component';
 
 const components = [
   BaseFormComponent,
@@ -240,6 +245,12 @@ const components = [
   CollectionCreditMixAccountsComponent,
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
+  OutlineInputCodeComponent,
+  PublicitemsDetailsTableComponent,
+  PublicitemsDetailsComponent,
+  PersonalitemsDetailsComponent,
+  PersonalitemsDetailsTableComponent,
+  PublicitemCardComponent,
 ];
 
 // component specific pipes only
@@ -274,7 +285,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives, OutlineInputCodeComponent],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

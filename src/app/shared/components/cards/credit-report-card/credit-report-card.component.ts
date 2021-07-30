@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface ICreditReportCardInputs {
   type: string;
@@ -12,13 +12,14 @@ export interface ICreditReportCardInputs {
   thirdFieldName: string;
   thirdFieldValue: string | number;
   status: string;
-  tradeline: ITradeLinePartition;
+  tradeline?: ITradeLinePartition;
+  publicItem?: IPublicPartition;
+  personalItem?: IBorrower;
 }
 
 @Component({
   selector: 'brave-credit-report-card',
   templateUrl: './credit-report-card.component.html',
-  styleUrls: ['./credit-report-card.component.css'],
 })
 export class CreditReportCardComponent implements OnInit {
   @Input() creditorName: string = '';

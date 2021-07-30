@@ -1,14 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
 import {
   APIService,
   CreateAppDataInput,
-  CreateAppDataMutation,
   GetAppDataQuery,
   OnUpdateAppDataSubscription,
-  SubscriptionResponse,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
@@ -18,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +31,7 @@ export class SyncService implements OnDestroy {
     private api: APIService,
     private store: Store,
     private router: Router,
-    private transunion: TransunionService,
+    private interstitial: InterstitialService,
   ) {}
 
   ngOnDestroy(): void {
@@ -53,8 +52,9 @@ export class SyncService implements OnDestroy {
     // user refreshes...on any other non-auth guarded route
     // user signsIn and is new user
     console.log('calling hallmonitor');
+    this.interstitial.openInterstitial();
     const { identityId: id } = creds;
-    // TODO: BETTER USE OF ROUND TRIP CALLS...USE SUBJECT
+    // TODO: BETTER USE OF ROUND TRIP CALLS
     // Handle new users
     // 1. No ID from Amplify to validate against...bail out
     // 2. Brand New User and signin event..initialize DB and go to dashboard
@@ -73,10 +73,11 @@ export class SyncService implements OnDestroy {
     // 5. User has NOT fully onboarded and NOT a signin event...go to last complete
     const isUserOnboarded = await this.isUserOnboarded(id);
     if (isUserOnboarded === undefined) return;
-    if (isUserOnboarded && signInEvent) this.goToDashboard(id);
-    if (isUserOnboarded && !signInEvent) this.stayPut(id);
-    if (!isUserOnboarded && signInEvent) this.goToLastOnboarded(id);
-    if (!isUserOnboarded && !signInEvent) this.goToLastOnboarded(id);
+    if (isUserOnboarded && signInEvent) await this.goToDashboard(id);
+    if (isUserOnboarded && !signInEvent) await this.stayPut(id);
+    if (!isUserOnboarded && signInEvent) await this.goToLastOnboarded(id);
+    if (!isUserOnboarded && !signInEvent) await this.goToLastOnboarded(id);
+    this.interstitial.closeInterstitial();
   }
 
   /**

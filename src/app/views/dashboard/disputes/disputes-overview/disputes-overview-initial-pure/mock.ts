@@ -23,5 +23,5 @@ export const DISPUTES_MOCK = {
   status: 'decision',
   accountType: 'Collection Account',
   dateSubmitted: '2021-07-22T18:44:42.622Z',
-  estCompletionDate: '#N/A',
+  estCompletionDate: '--',
 };

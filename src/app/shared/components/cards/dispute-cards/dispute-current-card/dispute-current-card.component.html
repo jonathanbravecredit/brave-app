@@ -6,11 +6,15 @@
     </div>
     <div class="flex">
       <span class="font-semibold text-xs flex-grow">{{ accountType }} </span>
-      <span class="font-semibold text-xs {{ status! | disputeCardStatus: 'colorClass' }}">{{ status! | disputeCardStatus: 'text' }}</span>
+      <span class="font-semibold text-xs {{ status! | disputeCardStatus: 'colorClass' }}">{{
+        status! | disputeCardStatus: 'text'
+      }}</span>
     </div>
   </div>
   <div details>
-    <p class="text-xs">Submitted: {{ dateSubmitted === '#N/A' ? dateSubmitted : dateSubmitted | date }}</p>
-    <p class="text-xs">Estimated Completion Date: {{ estCompletionDate === '#N/A' ? estCompletionDate : estCompletionDate | date }}</p>
+    <p class="text-xs">Submitted: {{ dateSubmitted === '--' ? dateSubmitted : (dateSubmitted | date) }}</p>
+    <p class="text-xs">
+      Estimated Completion Date: {{ estCompletionDate === '--' ? estCompletionDate : (estCompletionDate | date) }}
+    </p>
   </div>
 </brave-dispute-regular-card>

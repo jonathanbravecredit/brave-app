@@ -1,5 +1,6 @@
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface IDisputeNegativeCardItem extends INegativeAccountCardInputs {}
 export interface IDisputeItem {
@@ -20,4 +21,8 @@ export interface IDisputeItem {
     dateLastPayment?: string;
     remarks?: string;
   };
+}
+
+export interface IDisputePublicItem extends IPublicItemsDetailsConfig {
+  publicItem: IPublicPartition;
 }

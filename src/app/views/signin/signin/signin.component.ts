@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { SimpleSigninFormComponent } from '@shared/components/forms/simple-signin-form/simple-signin-form.component';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 export type SigninState = 'init' | 'invalid';
 
@@ -10,12 +10,19 @@ export type SigninState = 'init' | 'invalid';
   selector: 'brave-signin',
   templateUrl: './signin.component.html',
 })
-export class SigninComponent {
+export class SigninComponent implements OnDestroy {
   viewState: SigninState = 'init';
   message: string = '';
-  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private interstitial: InterstitialService,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.interstitial.closeInterstitial();
+  }
 
   /**
    * Method to sign user up
@@ -26,6 +33,8 @@ export class SigninComponent {
     let isValid = true;
     if (isValid) {
       try {
+        this.interstitial.changeMessage(' ');
+        this.interstitial.openInterstitial();
         const cognitorUser = await this.auth.signIn(user.username, user.password);
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
           console.log('MFA challenge');

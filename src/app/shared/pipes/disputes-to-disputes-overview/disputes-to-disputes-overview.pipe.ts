@@ -64,31 +64,27 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
       ? disputeItems.map((item: IDisputeItem) => {
           return {
             dispute: dispute,
-            creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
-            status: dispute?.disputeStatus
-              ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '#N/A'
-              : '#N/A',
-            accountType: item.tradeline?.accountTypeDescription || '#N/A',
-            dateSubmitted: dispute?.openedOn || '#N/A',
+            creditorName: item.tradeline?.Tradeline?.creditorName || '--',
+            status: dispute?.disputeStatus ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '--' : '--',
+            accountType: item.tradeline?.accountTypeDescription || '--',
+            dateSubmitted: dispute?.openedOn || '--',
             estCompletionDate:
               dispute?.openDisputes?.estimatedCompletionDate ||
               dispute?.closedDisputes?.estimatedCompletionDate ||
-              '#N/A',
+              '--',
           };
         })
       : [
           {
             dispute: dispute,
-            creditorName: disputeItems?.tradeline?.Tradeline?.creditorName || '#N/A',
-            status: dispute?.disputeStatus
-              ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '#N/A'
-              : '#N/A',
-            accountType: disputeItems?.tradeline?.accountTypeDescription || '#N/A',
-            dateSubmitted: dispute?.openedOn || '#N/A',
+            creditorName: disputeItems?.tradeline?.Tradeline?.creditorName || '--',
+            status: dispute?.disputeStatus ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '--' : '--',
+            accountType: disputeItems?.tradeline?.accountTypeDescription || '--',
+            dateSubmitted: dispute?.openedOn || '--',
             estCompletionDate:
               dispute?.openDisputes?.estimatedCompletionDate ||
               dispute?.closedDisputes?.estimatedCompletionDate ||
-              '#N/A',
+              '--',
           },
         ];
   }
@@ -102,19 +98,19 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
       ? disputeItems.map((item: IDisputeItem) => {
           return {
             dispute: dispute,
-            creditorName: item.tradeline?.Tradeline?.creditorName || '#N/A',
-            latestDateSubmitted: dispute?.openedOn || '#N/A',
-            decision: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
-            resultReceived: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
+            creditorName: item.tradeline?.Tradeline?.creditorName || '--',
+            latestDateSubmitted: dispute?.openedOn || '--',
+            decision: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
+            resultReceived: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
           };
         })
       : [
           {
             dispute: dispute,
-            creditorName: disputeItems.tradeline?.Tradeline?.creditorName || '#N/A', // disputeItems.tradeline?.Tradeline?.creditorName || '#N/A',
-            latestDateSubmitted: dispute?.openedOn || '#N/A',
-            decision: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
-            resultReceived: dispute?.disputeInvestigationResults || '#N/A', // TODO need to get this from the actual results
+            creditorName: disputeItems.tradeline?.Tradeline?.creditorName || '--', // disputeItems.tradeline?.Tradeline?.creditorName || '--',
+            latestDateSubmitted: dispute?.openedOn || '--',
+            decision: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
+            resultReceived: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
           },
         ];
   }

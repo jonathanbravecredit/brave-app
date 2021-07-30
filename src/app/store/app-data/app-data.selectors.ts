@@ -1,6 +1,6 @@
 import { Selector } from '@ngxs/store';
-import { AppDataState } from '@store/app-data';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
+import { AppDataState } from '@store/app-data/app-data.state';
 
 export class AppDataSelectors {
   @Selector([AppDataState])
