@@ -30,11 +30,11 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     return {
       personalItem: borrower,
       ssn: `${borrower.SocialSecurityNumber}` || '--',
-      borrowerNames: names,
+      borrowerNames: this.flattenItems(names),
       currentAddress: this.addressFormer(currAddress?.CreditAddress) || '--',
-      previousAddress: prevAddress.map((addr) => this.addressFormer(addr?.CreditAddress)) || ['--'],
-      telephone: phones.map((phone) => this.phoneFormer(phone?.PhoneNumber)) || ['--'],
-      employers: employers.map((emp) => this.employerFormer(emp)) || ['--'],
+      previousAddresses: this.flattenItems(prevAddress.map((addr) => this.addressFormer(addr?.CreditAddress))) || '--',
+      telephones: this.flattenItems(phones.map((phone) => this.phoneFormer(phone?.PhoneNumber))) || '--',
+      employers: this.flattenItems(employers.map((emp) => this.employerFormer(emp))) || '--',
     };
   }
 
@@ -84,6 +84,10 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     const digits = `${area}${main}${ext}`;
     if (!digits) return '--';
     return digits;
+  }
+
+  flattenItems(items: string[]): string {
+    return items.reduce((a, b) => `${a}\n${b}`);
   }
 }
 

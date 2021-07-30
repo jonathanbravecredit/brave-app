@@ -8,7 +8,7 @@ import { mockCreditReports as mock } from '../credit-report/constants';
 import {
   CreditReportPureComponent,
   ICreditReportTradelinesCardGroup,
-} from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+} from '@views/report/credit-report-pure/credit-report-pure.component';
 import { PreferencesStateModel } from '@store/preferences';
 import { CreditReportGroups } from '@shared/constants/credit-report';
 import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';

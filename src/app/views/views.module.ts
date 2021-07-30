@@ -47,8 +47,8 @@ import { SigninRedirectComponent } from './signin-redirect/signin-redirect.compo
 import { NegativeAccountInitialComponent } from './negative-account/negative-account-initial/negative-account-initial.component';
 import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
-import { CreditReportPureComponent } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
-import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
+import { CreditReportPureComponent } from '@views/report/credit-report-pure/credit-report-pure.component';
+import { CreditReportComponent } from '@views/report/credit-report/credit-report.component';
 import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
 import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
 import { DisputesPersonalView } from './disputes-personal/disputes-personal/disputes-personal.view';
@@ -59,7 +59,7 @@ import { DisputesTradelinePureView } from './disputes-tradeline/disputes-tradeli
 import { DisputesTradelineView } from './disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
 import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
-import { ParseRiskScorePipe } from './credit-report/credit-report/parse-risk-score.pipe';
+import { ParseRiskScorePipe } from './report/credit-report/parse-risk-score.pipe';
 import { DisputesErrorComponent } from './disputes-error/disputes-error/disputes-error.component';
 import { DisputesErrorPureComponent } from './disputes-error/disputes-error-pure/disputes-error-pure.component';
 import { DisputeFindingsView } from './dashboard/disputes/dispute-findings/dispute-findings.view';
@@ -76,8 +76,8 @@ import { CreditMixPureView } from './dashboard/credit-mix/credit-mix-pure/credit
 import { CreditMixView } from './dashboard/credit-mix/credit-mix/credit-mix.view';
 import { DashboardUnenrolledComponent } from './dashboard-init/dashboard-unenrolled/dashboard-unenrolled/dashboard-unenrolled.component';
 import { DashboardEnrolledComponent } from './dashboard-init/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
-import { DashboardUnenrolledPureComponent } from './dashboard-init/dashboard-unenrolled/dashboard-unenrolled-pure/dashboard-unenrolled-pure.component';
 import { DashboardEnrolledPureComponent } from '@views/dashboard-init/dashboard-enrolled/dashboard-enrolled-pure/dashboard-enrolled-pure.component';
+import { DashboardUnenrolledPureComponent } from '@views/dashboard-init/dashboard-unenrolled/dashboard-unenrolled-pure/dashboard-unenrolled-pure.component';
 
 const views = [
   SignupComponent,

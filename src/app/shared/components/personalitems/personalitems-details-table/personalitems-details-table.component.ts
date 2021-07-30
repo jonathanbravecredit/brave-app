@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPersonalItemsDetailsConfig } from '@shared/components/personalitems/personalitems-details/interfaces';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
 
 @Component({
   selector: 'brave-personalitems-details-table',
@@ -19,18 +18,17 @@ export class PersonalitemsDetailsTableComponent implements OnInit {
    * Revolving account display mapping
    * @property {Record<string, any>} revolvingAccountMapping
    */
-  private publicItemsMapping: Record<string, any> = {
-    docketNumber: 'Docket Number',
-    courtName: 'Name',
-    dateFiled: 'Date Filed',
-    datePaid: 'Date Paid',
-    dateUpdated: 'Date Updated',
-    publicRecordType: 'Type',
-    expirationDate: 'Estimated month and year that this item will be removed',
+  private personalItemsMapping: Record<string, any> = {
+    ssn: 'Social Security Number',
+    borrowerNames: 'Name',
+    currentAddress: 'Current Address',
+    previousAddress: 'Previous Address(es)',
+    telephone: 'Telephone',
+    employers: 'Employer',
   };
 
   constructor() {
-    this.mapper = this.publicItemsMapping;
+    this.mapper = this.personalItemsMapping;
   }
 
   ngOnInit(): void {}

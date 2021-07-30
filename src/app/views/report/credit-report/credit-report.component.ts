@@ -5,7 +5,7 @@ import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-repo
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
-import { ICreditReportTradelinesCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+import { ICreditReportTradelinesCardGroup } from '@views/report/credit-report-pure/credit-report-pure.component';
 import { Observable, Subject } from 'rxjs';
 
 @Component({

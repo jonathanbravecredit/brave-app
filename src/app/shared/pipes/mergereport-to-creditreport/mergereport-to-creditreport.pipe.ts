@@ -4,7 +4,7 @@ import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
 import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
-import { ICreditReportTradelinesCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+import { ICreditReportTradelinesCardGroup } from '@views/report/credit-report-pure/credit-report-pure.component';
 
 @Pipe({
   name: 'mergereportToCreditreport',

@@ -3,9 +3,9 @@ import { IBorrower } from '@shared/interfaces';
 export interface IPersonalItemsDetailsConfig {
   personalItem: IBorrower;
   ssn: string;
-  borrowerNames: string[];
+  borrowerNames: string;
   currentAddress: string;
-  previousAddress: string[];
-  telephone: string[];
-  employers: string[];
+  previousAddresses: string;
+  telephones: string;
+  employers: string;
 }
