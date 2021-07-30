@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
+import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
 import { CreditReportGroups } from '@shared/constants/credit-report';
-import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 
 export interface ICreditReportTradelinesCardGroup {
@@ -16,7 +17,8 @@ export interface ICreditReportTradelinesCardGroup {
 })
 export class CreditReportPureComponent implements OnInit {
   @Input() tradelines: ICreditReportTradelinesCardGroup[] = [];
-  @Input() publicItems: IPublicPartition[] | undefined = [];
+  @Input() publicItems: IPublicItemsDetailsConfig[] | undefined = [];
+  @Input() personalItems: IBorrower[] | undefined = [];
   @Input() creditReportScore: number = 0;
   @Input() preferences: PreferencesStateModel = {} as PreferencesStateModel;
   @Output() hide: EventEmitter<ICreditReportTradelinesCardGroup> = new EventEmitter();

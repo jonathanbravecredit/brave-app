@@ -135,6 +135,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-input-code.component';
 import { PublicitemsDetailsTableComponent } from './publicitems/publicitems-details-table/publicitems-details-table.component';
 import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/publicitems-details.component';
+import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
+import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
 
 const components = [
   BaseFormComponent,
@@ -245,6 +247,8 @@ const components = [
   OutlineInputCodeComponent,
   PublicitemsDetailsTableComponent,
   PublicitemsDetailsComponent,
+  PersonalitemsDetailsComponent,
+  PersonalitemsDetailsTableComponent,
 ];
 
 // component specific pipes only

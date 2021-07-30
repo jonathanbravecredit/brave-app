@@ -34,6 +34,16 @@
       <span>Public Records</span>
     </div>
     <div *ngFor="let record of publicItems">
+      <brave-publicitems-details [config]="record"></brave-publicitems-details>
+    </div>
+  </div>
+
+  <div *ngIf="personalItems?.length" class="p-4">
+    <div class="flex items-center mb-3">
+      <span class="material-icons-outlined"> description </span>
+      <span>Public Records</span>
+    </div>
+    <div *ngFor="let person of personalItems">
       <brave-publicitems-details></brave-publicitems-details>
     </div>
   </div>

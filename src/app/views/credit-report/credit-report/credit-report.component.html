@@ -6,6 +6,7 @@
         (viewDetailClick)="onViewDetailClick($event)"
         [preferences]="preferences"
         [publicItems]="creditReports | mergereportToPublicitems"
+        [personalItems]="creditReports | mergereportToPersonalitems"
         [tradelines]="creditReports | mergereportToCreditreport: preferences"
         [creditReportScore]="creditReports | parseRiskScore"
       ></brave-credit-report-pure>
