@@ -1,13 +1,18 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import {
+  IBorrower,
+  IMergeReport,
+  IPublicPartition,
+  ITradeLinePartition,
+} from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/report/credit-report-pure/credit-report-pure.component';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-credit-report',
@@ -62,6 +67,26 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
   onViewDetailClick(tradeline: ITradeLinePartition): void {
     console.log('updating tradeline', tradeline);
     this.creditReportService.setTradeline(tradeline);
-    this.router.navigate(['../report/detail'], { relativeTo: this.route });
+    this.router.navigate(['../report/tradeline'], { relativeTo: this.route });
+  }
+
+  /**
+   * When the view public item detail button is clicked set the public item to the one clicked
+   * and navigate to the detail view
+   * @param publicItem
+   */
+  onViewPublicItemDetailClick(publicItem: IPublicPartition): void {
+    this.creditReportService.setPublicItem(publicItem);
+    this.router.navigate(['../report/publicitem'], { relativeTo: this.route });
+  }
+
+  /**
+   * When the view personal item detail button is clicked set the personal item to the one clicked
+   * and navigate to the detail view
+   * @param personalItem
+   */
+  onViewPersonalItemDetailClick(personalItem: IBorrower): void {
+    this.creditReportService.setPersonalItem(personalItem);
+    this.router.navigate(['../report/personalitem'], { relativeTo: this.route });
   }
 }

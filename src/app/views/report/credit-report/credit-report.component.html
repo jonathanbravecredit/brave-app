@@ -4,6 +4,8 @@
       <brave-credit-report-pure
         (hide)="onHide($event)"
         (viewDetailClick)="onViewDetailClick($event)"
+        (viewPublicItemDetailClick)="onViewPublicItemDetailClick($event)"
+        (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.personalItem)"
         [preferences]="preferences"
         [publicItems]="creditReports | mergereportToPublicitems"
         [personalItems]="creditReports | mergereportToPersonalitems"

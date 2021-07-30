@@ -11,6 +11,7 @@ import { MergereportToDashboardPipe } from '@shared/pipes/mergereport-to-dashboa
 import { PublicitemToDisputePipe } from './publicitem-to-dispute/publicitem-to-dispute.pipe';
 import { MergereportToPublicitemsPipe } from './mergereport-to-publicitems/mergereport-to-publicitems.pipe';
 import { MergereportToPersonalitemsPipe } from './mergereport-to-personalitems/mergereport-to-personalitems.pipe';
+import { PublicitemToDetailsPipe } from './publicitem-to-details/publicitem-to-details.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -22,6 +23,7 @@ const pipes = [
   DisputeToDisputeFindingPipe,
   MergereportToDashboardPipe,
   PublicitemToDisputePipe,
+  PublicitemToDetailsPipe,
   MergereportToPublicitemsPipe,
   MergereportToPersonalitemsPipe,
 ];

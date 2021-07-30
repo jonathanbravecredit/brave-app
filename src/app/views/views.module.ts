@@ -49,8 +49,8 @@ import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { NegativeAccountInitialPureComponent } from './negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
 import { CreditReportPureComponent } from '@views/report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/report/credit-report/credit-report.component';
-import { TradelinesComponent } from './tradelines/tradelines/tradelines.component';
-import { TradelinesPureComponent } from './tradelines/tradelines-pure/tradelines-pure.component';
+import { TradelinesComponent } from './report/tradelines/tradelines/tradelines.component';
+import { TradelinesPureComponent } from './report/tradelines/tradelines-pure/tradelines-pure.component';
 import { DisputesPersonalView } from './disputes-personal/disputes-personal/disputes-personal.view';
 import { DisputesPersonalPureView } from './disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { DisputesPublicPureView } from './disputes-public/disputes-public-pure/disputes-public-pure.view';
@@ -78,6 +78,8 @@ import { DashboardUnenrolledComponent } from './dashboard-init/dashboard-unenrol
 import { DashboardEnrolledComponent } from './dashboard-init/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 import { DashboardEnrolledPureComponent } from '@views/dashboard-init/dashboard-enrolled/dashboard-enrolled-pure/dashboard-enrolled-pure.component';
 import { DashboardUnenrolledPureComponent } from '@views/dashboard-init/dashboard-unenrolled/dashboard-unenrolled-pure/dashboard-unenrolled-pure.component';
+import { PublicitemsView } from './report/publicitems/publicitems/publicitems.view';
+import { PublicitemsPureView } from './report/publicitems/publicitems-pure/publicitems-pure.view';
 
 const views = [
   SignupComponent,
@@ -150,7 +152,7 @@ const views = [
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
 
 @NgModule({
-  declarations: [...views, ...pipes],
+  declarations: [...views, ...pipes, PublicitemsView, PublicitemsPureView],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],

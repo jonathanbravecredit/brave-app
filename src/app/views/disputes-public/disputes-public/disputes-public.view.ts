@@ -47,7 +47,7 @@ export class DisputesPublicView implements OnDestroy {
           this.isDisputeProcessInProgress = false;
         } else {
           const errorCode = error?.Code;
-          this.router.navigate([`/dashboard/report/detail/dispute/error`], {
+          this.router.navigate([`/dashboard/report/tradeline/dispute/error`], {
             queryParams: {
               code: errorCode,
             },

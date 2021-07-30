@@ -57,14 +57,14 @@ export class TradelinesComponent {
         console.log('preflightCheckReturn ===> ', eligible);
         if (eligible) {
           this.disputeService.setTradelineItem(tradeline);
-          this.router.navigate(['/dashboard/report/detail/dispute/tradelines']);
+          this.router.navigate(['/dashboard/report/tradeline/dispute']);
         } else {
           // TODO replace with better view to tell them they are ineligible
-          this.router.navigate(['/dashboard/report/detail/dispute/error']);
+          this.router.navigate(['/dashboard/report/tradeline/dispute/error']);
         }
       })
       .catch((err) => {
-        this.router.navigate(['/dashboard/report/detail/dispute/error']);
+        this.router.navigate(['/dashboard/report/tradeline/dispute/error']);
       });
   }
 }
