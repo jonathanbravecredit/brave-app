@@ -1,16 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IPersonalItemsDetailsConfig } from '@shared/components/personalitems/personalitems-details/interfaces';
-import {
-  IBorrower,
-  IBorrowerAddress,
-  IBorrowerName,
-  IBorrowerTelephone,
-  ICreditAddress,
-  IEmployer,
-  IMergeReport,
-  IPhoneNumber,
-  IPublicPartition,
-} from '@shared/interfaces';
+import { IBorrower, IBorrowerName, ICreditAddress, IEmployer, IMergeReport, IPhoneNumber } from '@shared/interfaces';
 
 @Pipe({
   name: 'mergereportToPersonalitems',
