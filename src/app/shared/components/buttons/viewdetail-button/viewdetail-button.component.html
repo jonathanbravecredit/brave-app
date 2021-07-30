@@ -1,6 +1,8 @@
 <button
   type="button"
-  class="relative {{ size === 'full' ? 'w-full mx-auto' : '' }} flex bg-transparent font-sans text-sm text-coolGray-700 text-left hover:cursor-pointer focus:outline-none"
+  class="hover:cursor-pointer relative {{
+    size === 'full' ? 'w-full mx-auto' : ''
+  }} flex bg-transparent font-sans text-sm text-coolGray-700 text-left hover:cursor-pointer focus:outline-none"
   (click)="open = !open; open$.next(open)"
 >
   <span class="flex items-center mr-2">

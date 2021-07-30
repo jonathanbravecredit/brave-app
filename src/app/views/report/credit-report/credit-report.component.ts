@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/report/credit-report-pure/credit-report-pure.component';
@@ -12,7 +13,7 @@ import { Observable, Subject } from 'rxjs';
   selector: 'brave-credit-report',
   templateUrl: './credit-report.component.html',
 })
-export class CreditReportComponent implements OnInit {
+export class CreditReportComponent implements OnInit, AfterViewInit {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
 
@@ -21,12 +22,20 @@ export class CreditReportComponent implements OnInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
+    private interstitial: InterstitialService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.interstitial.changeMessage(' ');
+    this.interstitial.openInterstitial();
+  }
+
+  ngAfterViewInit(): void {
+    this.interstitial.closeInterstitial();
+  }
 
   /**
    * Handle hide event emitter from pure...hides positive accounts

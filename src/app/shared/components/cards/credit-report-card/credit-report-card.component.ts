@@ -20,7 +20,6 @@ export interface ICreditReportCardInputs {
 @Component({
   selector: 'brave-credit-report-card',
   templateUrl: './credit-report-card.component.html',
-  styleUrls: ['./credit-report-card.component.css'],
 })
 export class CreditReportCardComponent implements OnInit {
   @Input() creditorName: string = '';
@@ -33,8 +32,6 @@ export class CreditReportCardComponent implements OnInit {
   @Input() thirdFieldValue: string = '';
   @Input() status: string = '';
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
-  @Input() publicItem: IPublicPartition = {} as IPublicPartition; // bring the unmapped public item foreward
-  @Input() personalItem: IBorrower = {} as IBorrower;
   @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}

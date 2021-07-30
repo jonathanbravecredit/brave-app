@@ -54,7 +54,7 @@ export class SyncService implements OnDestroy {
     // user signsIn and is new user
     console.log('calling hallmonitor');
     const { identityId: id } = creds;
-    // TODO: BETTER USE OF ROUND TRIP CALLS...USE SUBJECT
+    // TODO: BETTER USE OF ROUND TRIP CALLS
     // Handle new users
     // 1. No ID from Amplify to validate against...bail out
     // 2. Brand New User and signin event..initialize DB and go to dashboard

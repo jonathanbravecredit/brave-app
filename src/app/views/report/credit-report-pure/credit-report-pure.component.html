@@ -13,28 +13,20 @@
       <input type="checkbox" id="dont-show-hide" (click)="hide.emit(report)" />
       <label for="dont-show-hide" class="ml-2 mr-auto">Only Show me delinquent accounts</label>
     </div>
-    <brave-credit-report-card
-      *ngFor="let card of report.cards"
-      [creditorName]="card.creditorName"
-      [isOpen]="card.isOpen"
-      [firstFieldName]="card.firstFieldName"
-      [firstFieldValue]="card.firstFieldValue.toString()"
-      [secondFieldName]="card.secondFieldName"
-      [secondFieldValue]="card.secondFieldValue.toString()"
-      [thirdFieldName]="card.thirdFieldName"
-      [thirdFieldValue]="card.thirdFieldValue.toString()"
-      [status]="card.status"
-      (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
-    ></brave-credit-report-card>
-  </div>
-
-  <div *ngIf="publicItems?.length" class="p-4">
-    <div class="flex items-center mb-3">
-      <span class="material-icons-outlined"> description </span>
-      <span>Public Records</span>
-    </div>
-    <div *ngFor="let record of publicItems">
-      <brave-publicitems-details [config]="record"></brave-publicitems-details>
+    <div *ngFor="let card of report.cards; last as isLast">
+      <brave-credit-report-card
+        [creditorName]="card.creditorName"
+        [isOpen]="card.isOpen"
+        [firstFieldName]="card.firstFieldName"
+        [firstFieldValue]="card.firstFieldValue.toString()"
+        [secondFieldName]="card.secondFieldName"
+        [secondFieldValue]="card.secondFieldValue.toString()"
+        [thirdFieldName]="card.thirdFieldName"
+        [thirdFieldValue]="card.thirdFieldValue.toString()"
+        [status]="card.status"
+        (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
+      ></brave-credit-report-card>
+      <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
     </div>
   </div>
 
@@ -45,6 +37,27 @@
     </div>
     <div>
       <brave-personalitems-details [config]="personalItems"></brave-personalitems-details>
+      <div class="mt-4">
+        <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems)"
+          >see an error?</brave-viewdetail-button
+        >
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="publicItems?.length" class="p-4">
+    <div class="flex items-center mb-8">
+      <span class="material-icons-outlined"> description </span>
+      <span>Public Records</span>
+    </div>
+    <div *ngFor="let record of publicItems; last as isLast">
+      <brave-publicitem-card
+        [publicItemType]="record.publicItemType || '--'"
+        [firstFieldName]="'Date Filed'"
+        [firstFieldValue]="record.dateFiled || '--'"
+        (viewDetailClick)="viewPublicItemDetailClick.emit(record.publicPartition)"
+      ></brave-publicitem-card>
+      <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
     </div>
   </div>
 </div>

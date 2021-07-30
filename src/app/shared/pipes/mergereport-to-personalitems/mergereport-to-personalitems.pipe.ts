@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IPersonalItemsDetailsConfig } from '@shared/components/personalitems/personalitems-details/interfaces';
-import { IBorrower, IBorrowerName, ICreditAddress, IEmployer, IMergeReport, IPhoneNumber } from '@shared/interfaces';
+import { IBorrower, IMergeReport } from '@shared/interfaces';
+import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 
 @Pipe({
   name: 'mergereportToPersonalitems',
@@ -16,106 +17,32 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
   }
 
   mapping(borrower: IBorrower): IPersonalItemsDetailsConfig {
-    let names =
-      borrower.BorrowerName instanceof Array
-        ? borrower.BorrowerName.map((name) => this.nameFormer(name))
-        : [this.nameFormer(borrower.BorrowerName)];
+    let names = borrower.BorrowerName instanceof Array ? borrower.BorrowerName : [borrower.BorrowerName];
+    let employers = borrower.Employer instanceof Array ? borrower.Employer : [borrower.Employer];
+    let prevAddress = borrower.PreviousAddress instanceof Array ? borrower.PreviousAddress : [borrower.PreviousAddress];
     let currAddress =
       borrower.BorrowerAddress instanceof Array ? borrower.BorrowerAddress[0] : borrower.BorrowerAddress;
-    let prevAddress = borrower.PreviousAddress instanceof Array ? borrower.PreviousAddress : [borrower.PreviousAddress];
-    let employers = borrower.Employer instanceof Array ? borrower.Employer : [borrower.Employer];
     let phones =
       borrower.BorrowerTelephone instanceof Array ? borrower.BorrowerTelephone : [borrower.BorrowerTelephone];
+
+    const unNames = names.map((name) => TU.nameUnparser(name));
+    const unAddress = TU.addressUnparser(currAddress?.CreditAddress);
+    const unPrevAddress = prevAddress.map((addr) => TU.addressUnparser(addr?.CreditAddress));
+    const unPhones = phones.map((phone) => TU.phoneUnparser(phone?.PhoneNumber));
+    const unEmployers = employers.map((emp) => TU.employerUnparser(emp));
 
     return {
       personalItem: borrower,
       ssn: `${borrower.SocialSecurityNumber}` || '--',
-      borrowerNames: this.flattenItems(names),
-      currentAddress: this.addressFormer(currAddress?.CreditAddress) || '--',
-      previousAddresses: this.flattenItems(prevAddress.map((addr) => this.addressFormer(addr?.CreditAddress))) || '--',
-      telephones: this.flattenItems(phones.map((phone) => this.phoneFormer(phone?.PhoneNumber))) || '--',
-      employers: this.flattenItems(employers.map((emp) => this.employerFormer(emp))) || '--',
+      borrowerNames: this.flattenItems(unNames),
+      currentAddress: unAddress || '--',
+      previousAddresses: this.flattenItems(unPrevAddress) || '--',
+      telephones: this.flattenItems(unPhones) || '--',
+      employers: this.flattenItems(unEmployers) || '--',
     };
-  }
-
-  nameFormer(borrowerName: IBorrowerName | undefined): string {
-    if (!borrowerName) return '--';
-    if (!borrowerName.Name) return '--';
-    const name: Record<string, any> = borrowerName.Name;
-    if (!name) return '--';
-    let fullName = '';
-    for (const key in NAME_MAP) {
-      const str = !!name[key] ? `${name[key]} ` : '';
-      fullName = `${fullName}${str}`;
-    }
-    return fullName;
-  }
-
-  addressFormer(address: ICreditAddress | undefined): string {
-    if (!address) return '--';
-    let records: Record<string, any> = address;
-    let creditAddress = '';
-    for (const key in ADDRESS_LINE_1) {
-      const str = !!records[key] ? `${records[key]} ` : '';
-      creditAddress = `${creditAddress}${str}`;
-    }
-    creditAddress = `${creditAddress}\n`;
-    for (const key in ADDRESS_LINE_2) {
-      const str = !!records[key] ? `${records[key]} ` : '';
-      creditAddress = `${creditAddress}${str}`;
-    }
-    return creditAddress;
-  }
-
-  employerFormer(employer: IEmployer | undefined): string {
-    if (!employer) return '--';
-    if (!employer.name) return '--';
-
-    const empAddress = employer.CreditAddress ? `\n${this.addressFormer(employer.CreditAddress)}` : '';
-    let str = `${employer.name}${empAddress}`;
-    return str;
-  }
-
-  phoneFormer(phone: IPhoneNumber | undefined): string {
-    if (!phone) return '--';
-    let area = phone.AreaCode ? `(${phone.AreaCode}) ` : '';
-    let main = phone.Number ? `${phone.Number} ` : '';
-    let ext = phone.Extension ? ` Ext: ${phone.Extension} ` : '';
-    const digits = `${area}${main}${ext}`;
-    if (!digits) return '--';
-    return digits;
   }
 
   flattenItems(items: string[]): string {
     return items.reduce((a, b) => `${a}\n${b}`);
   }
 }
-
-const PHONE_MAP: Record<string, any> = {
-  AreaCode: true,
-  Number: true,
-  Extension: true,
-};
-
-const NAME_MAP: Record<string, any> = {
-  prefix: true,
-  first: true,
-  middle: true,
-  last: true,
-  suffix: true,
-};
-
-const ADDRESS_LINE_1: Record<string, any> = {
-  houseNumber: true,
-  streetNumber: true,
-  streetName: true,
-  streetType: true,
-  direction: true,
-  unit: true,
-};
-
-const ADDRESS_LINE_2: Record<string, any> = {
-  city: true,
-  stateCode: true,
-  postalCode: true,
-};
