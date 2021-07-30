@@ -48,7 +48,7 @@ export interface IBorrower {
   SocialPartition?: ISocialPartition | ISocialPartition[];
   BorrowerBureauIdentifier?: IBorrowerBureauIdentifier | IBorrowerBureauIdentifier[];
   borrowerKey?: string;
-  SocialSecurityNumber?: string;
+  SocialSecurityNumber?: string | number;
 }
 export interface IBorrowerAddress {
   CreditAddress?: ICreditAddress;
@@ -62,13 +62,13 @@ export interface ICreditAddress {
   country?: string;
   county?: string;
   direction?: string;
-  houseNumber?: string;
+  houseNumber?: string | number;
   postDirection?: string;
   stateCode?: string;
   streetName?: string;
-  unit?: string;
+  unit?: string | number;
   unparsedStreet?: string;
-  postalCode?: string;
+  postalCode?: string | number;
 }
 export interface IBorrowerBirth extends IPartitionSet {
   BirthDate?: string;
