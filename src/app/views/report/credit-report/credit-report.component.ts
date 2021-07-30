@@ -31,12 +31,10 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
-  }
-
-  ngOnInit(): void {
-    this.interstitial.changeMessage(' ');
     this.interstitial.openInterstitial();
   }
+
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.interstitial.closeInterstitial();

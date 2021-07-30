@@ -3,13 +3,5 @@
     <div *ngIf="publicItem | publicitemToDetails as config">
       <brave-publicitems-pure [publicItem]="publicItem" [config]="config"> </brave-publicitems-pure>
     </div>
-    <!-- <brave-tradelines-pure
-      [tradeline]="tradeline"
-      [acknowledged]="acknowledged"
-      [config]="tradeline | tradelineToDetails"
-      [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
-      [remarks]="(tradeline | tradelineToDispute)?.accountDetail?.remarks || ''"
-      (disputeClick)="onDisputeClicked($event)"
-    ></brave-tradelines-pure> -->
   </div>
 </div>

@@ -12,6 +12,7 @@ import { PublicitemToDisputePipe } from './publicitem-to-dispute/publicitem-to-d
 import { MergereportToPublicitemsPipe } from './mergereport-to-publicitems/mergereport-to-publicitems.pipe';
 import { MergereportToPersonalitemsPipe } from './mergereport-to-personalitems/mergereport-to-personalitems.pipe';
 import { PublicitemToDetailsPipe } from './publicitem-to-details/publicitem-to-details.pipe';
+import { PersonalitemsToDetailsPipe } from './personalitem-to-details/personalitems-to-details.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -24,6 +25,7 @@ const pipes = [
   MergereportToDashboardPipe,
   PublicitemToDisputePipe,
   PublicitemToDetailsPipe,
+  PersonalitemsToDetailsPipe,
   MergereportToPublicitemsPipe,
   MergereportToPersonalitemsPipe,
 ];

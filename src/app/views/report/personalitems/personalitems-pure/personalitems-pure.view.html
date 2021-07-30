@@ -1,13 +1,13 @@
-<div class="flex items-center">
-  <span class="material-icons-outlined"> assignment </span>
-  <span class="ml-3">{{ config.publicItemType }}</span>
+<div class="flex items-center mb-4">
+  <span class="material-icons-outlined">perm_identity</span>
+  <span>Personal Information</span>
 </div>
 
-<div class="mt-4 mb-6">
-  <brave-publicitems-details
+<div class="mb-6">
+  <brave-personalitems-details
     [config]="config"
-    (disputeClick)="disputeClick.emit(publicItem)"
-  ></brave-publicitems-details>
+    (disputeClick)="disputeClick.emit(personalItem)"
+  ></brave-personalitems-details>
 </div>
 
 <div class="flex justify-center mb-4">

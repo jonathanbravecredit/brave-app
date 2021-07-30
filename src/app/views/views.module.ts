@@ -80,6 +80,8 @@ import { DashboardEnrolledPureComponent } from '@views/dashboard-init/dashboard-
 import { DashboardUnenrolledPureComponent } from '@views/dashboard-init/dashboard-unenrolled/dashboard-unenrolled-pure/dashboard-unenrolled-pure.component';
 import { PublicitemsView } from './report/publicitems/publicitems/publicitems.view';
 import { PublicitemsPureView } from './report/publicitems/publicitems-pure/publicitems-pure.view';
+import { PersonalitemsView } from './report/personalitems/personalitems/personalitems.view';
+import { PersonalitemsPureView } from './report/personalitems/personalitems-pure/personalitems-pure.view';
 
 const views = [
   SignupComponent,
@@ -152,7 +154,7 @@ const views = [
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
 
 @NgModule({
-  declarations: [...views, ...pipes, PublicitemsView, PublicitemsPureView],
+  declarations: [...views, ...pipes, PublicitemsView, PublicitemsPureView, PersonalitemsView, PersonalitemsPureView],
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedComponentsModule, SharedPipesModule, RouterModule],
   exports: [...views, ...pipes],
   providers: [],

@@ -13,6 +13,7 @@ import { SettingsLayout } from './settings/settings.layout';
 import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init/dashboard-init.component';
 import { PublicitemsView } from '@views/report/publicitems/publicitems/publicitems.view';
 import { DisputesPublicView } from '@views/disputes-public/disputes-public/disputes-public.view';
+import { PersonalitemsView } from '@views/report/personalitems/personalitems/personalitems.view';
 
 const DashboardRoutes: Routes = [
   {
@@ -70,6 +71,21 @@ const DashboardRoutes: Routes = [
         component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'report/personalitem',
+        component: PersonalitemsView,
+        canActivate: [AuthGuard],
+      },
+      // {
+      //   path: 'report/publicitem/dispute',
+      //   component: DisputesPublicView,
+      //   canActivate: [AuthGuard],
+      // },
+      // {
+      //   path: 'report/publicitem/dispute/error',
+      //   component: BaseExceptionView,
+      //   canActivate: [AuthGuard],
+      // },
       {
         path: 'report/accounts/negative',
         component: NegativeAccountInitialComponent,
