@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/snapshot-display-card.component';
 import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/snapshot-label.pipe';
-import { IMergeReport } from '@shared/interfaces';
 import { IMergereportToDashboardOutput } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
 
 @Component({
