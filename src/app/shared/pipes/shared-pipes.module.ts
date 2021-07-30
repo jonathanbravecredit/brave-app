@@ -9,6 +9,7 @@ import { DisputesToDisputesOverviewPipe } from './disputes-to-disputes-overview/
 import { DisputeToDisputeFindingPipe } from './dispute-to-dispute-finding/dispute-to-dispute-finding.pipe';
 import { MergereportToDashboardPipe } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
 import { PublicitemToDisputePipe } from './publicitem-to-dispute/publicitem-to-dispute.pipe';
+import { MergereportToPublicitemsPipe } from './mergereport-to-publicitems/mergereport-to-publicitems.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -20,6 +21,7 @@ const pipes = [
   DisputeToDisputeFindingPipe,
   MergereportToDashboardPipe,
   PublicitemToDisputePipe,
+  MergereportToPublicitemsPipe,
 ];
 
 @NgModule({

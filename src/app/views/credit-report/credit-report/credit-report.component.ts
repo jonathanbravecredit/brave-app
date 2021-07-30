@@ -5,7 +5,7 @@ import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-repo
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
-import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+import { ICreditReportTradelinesCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { Observable, Subject } from 'rxjs';
 
 @Component({
@@ -30,9 +30,9 @@ export class CreditReportComponent implements OnInit {
 
   /**
    * Handle hide event emitter from pure...hides positive accounts
-   * @param {ICreditReportCardGroup} report
+   * @param {ICreditReportTradelinesCardGroup} report
    */
-  onHide(report: ICreditReportCardGroup): any {
+  onHide(report: ICreditReportTradelinesCardGroup): any {
     // I need to update the state
     const prefs = this.creditReportService.tuPreferences;
     const updated: PreferencesStateModel = {

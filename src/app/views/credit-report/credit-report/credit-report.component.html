@@ -5,7 +5,8 @@
         (hide)="onHide($event)"
         (viewDetailClick)="onViewDetailClick($event)"
         [preferences]="preferences"
-        [creditReports]="creditReports | mergereportToCreditreport: preferences"
+        [publicItems]="creditReports | mergereportToPublicitems"
+        [tradelines]="creditReports | mergereportToCreditreport: preferences"
         [creditReportScore]="creditReports | parseRiskScore"
       ></brave-credit-report-pure>
     </div>

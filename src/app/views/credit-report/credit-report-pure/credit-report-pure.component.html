@@ -1,10 +1,13 @@
 <div class="container mx-auto max-w-xs h-full">
   <div class="p-4">
     <span class="text-lg">Your TransUnion Credit Report</span>
-    <brave-credit-report-graphic class="w-full mt-4" [currentValue]="creditReportScore"></brave-credit-report-graphic>
+    <brave-credit-report-graphic-with-graph
+      class="w-full mt-4"
+      [currentValue]="creditReportScore"
+    ></brave-credit-report-graphic-with-graph>
     <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
   </div>
-  <div class="p-4" *ngFor="let report of creditReports">
+  <div class="p-4" *ngFor="let report of tradelines">
     <h6 class="text-lg">{{ report.title }}</h6>
     <div *ngIf="preferences.showAllAccounts[report.group]">
       <input type="checkbox" id="dont-show-hide" (click)="hide.emit(report)" />
@@ -23,5 +26,15 @@
       [status]="card.status"
       (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
     ></brave-credit-report-card>
+  </div>
+
+  <div *ngIf="publicItems?.length" class="p-4">
+    <div class="flex items-center mb-3">
+      <span class="material-icons-outlined"> description </span>
+      <span>Public Records</span>
+    </div>
+    <div *ngFor="let record of publicItems">
+      <brave-publicitems-details></brave-publicitems-details>
+    </div>
   </div>
 </div>

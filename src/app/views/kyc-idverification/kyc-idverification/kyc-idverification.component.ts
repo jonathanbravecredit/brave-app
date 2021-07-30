@@ -86,9 +86,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
               throw 'No passcode questionfound';
             })();
         this.authSuccessful
-          ? this.router.navigate(['../congratulations'], {
-              relativeTo: this.route,
-            })
+          ? this.onSuccessfulSignup()
           : (() => {
               throw 'Authentication request failed';
             })();
@@ -235,6 +233,13 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.updateViewState('error');
     }
     return this;
+  }
+
+  onSuccessfulSignup() {
+    this.kycService.completeStep(this.stepID);
+    this.router.navigate(['../congratulations'], {
+      relativeTo: this.route,
+    });
   }
 
   // /**

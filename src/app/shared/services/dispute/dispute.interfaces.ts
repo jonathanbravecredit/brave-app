@@ -1,4 +1,5 @@
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
+import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
 import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface IDisputeNegativeCardItem extends INegativeAccountCardInputs {}
@@ -22,20 +23,6 @@ export interface IDisputeItem {
   };
 }
 
-export interface IDisputePublicItem {
+export interface IDisputePublicItem extends IPublicItemsDetailsConfig {
   publicItem: IPublicPartition;
-  docketNumber?: string;
-  userName?: string;
-  dateFiled?: string;
-  datePaid?: string;
-  dateUpdated?: string;
-  accountTypeDescription?: string;
-  accountTypeDescriptionValue?: string;
-  originalCreditor?: string;
-  originalCreditorValue?: string;
-  accountDesignator?: string;
-  amount?: string | number;
-  courtType?: string;
-  disputeFlag?: string;
-  disputeFlagValue?: string;
 }

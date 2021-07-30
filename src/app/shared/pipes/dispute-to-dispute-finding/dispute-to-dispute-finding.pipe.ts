@@ -26,13 +26,13 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     const disputeItems: IDisputeItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
     if (!creditBureau || !disputeItems) return null;
     let output: IDisputeToDisputeFindingOutput = {
-      reportCreatedAt: dispute.closedOn || '#N/A',
+      reportCreatedAt: dispute.closedOn || '--',
       fileIdentificationNumber: `${creditBureau.creditBureau.transactionControl.tracking.identifier.fin}-${creditBureau.creditBureau.transactionControl.tracking.identifier.activityNumber}`,
       tradeLinePartition: disputeItems.tradeline,
       publiceRecordPartition: undefined,
       personalRecordPartition: undefined,
-      resultCode: '#N/A',
-      updatedValues: ['#N/A'],
+      resultCode: '--',
+      updatedValues: ['--'],
       type: 'tradeline',
     };
     return output;

@@ -7,7 +7,7 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { mockCreditReports as mock } from '../credit-report/constants';
 import {
   CreditReportPureComponent,
-  ICreditReportCardGroup,
+  ICreditReportTradelinesCardGroup,
 } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 import { PreferencesStateModel } from '@store/preferences';
 import { CreditReportGroups } from '@shared/constants/credit-report';
@@ -25,7 +25,7 @@ export default {
   ],
 } as Meta;
 
-const creditReports: ICreditReportCardGroup[] = [
+const creditReports: ICreditReportTradelinesCardGroup[] = [
   {
     title: 'Credit Cards',
     group: CreditReportGroups.CreditCards,

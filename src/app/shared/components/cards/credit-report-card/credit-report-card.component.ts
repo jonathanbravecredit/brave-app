@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface ICreditReportCardInputs {
   type: string;
@@ -12,7 +12,9 @@ export interface ICreditReportCardInputs {
   thirdFieldName: string;
   thirdFieldValue: string | number;
   status: string;
-  tradeline: ITradeLinePartition;
+  tradeline?: ITradeLinePartition;
+  publicItem?: IPublicPartition;
+  personalItem?: IBorrower;
 }
 
 @Component({
@@ -31,6 +33,8 @@ export class CreditReportCardComponent implements OnInit {
   @Input() thirdFieldValue: string = '';
   @Input() status: string = '';
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
+  @Input() publicItem: IPublicPartition = {} as IPublicPartition; // bring the unmapped public item foreward
+  @Input() personalItem: IBorrower = {} as IBorrower;
   @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}

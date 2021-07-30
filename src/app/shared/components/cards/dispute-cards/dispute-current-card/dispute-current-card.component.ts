@@ -7,11 +7,11 @@ import { DisputeStatus } from '../enums';
   styleUrls: ['./dispute-current-card.component.css'],
 })
 export class DisputeCurrentCardComponent implements OnInit {
-  @Input() creditorName: string | undefined = '#N/A';
+  @Input() creditorName: string | undefined = '--';
   @Input() status: DisputeStatus | undefined = DisputeStatus.Processing;
-  @Input() dateSubmitted: string | undefined = '#N/A';
-  @Input() accountType: string | undefined = '#N/A';
-  @Input() estCompletionDate: string | undefined = '#N/A';
+  @Input() dateSubmitted: string | undefined = '--';
+  @Input() accountType: string | undefined = '--';
+  @Input() estCompletionDate: string | undefined = '--';
   @Output() viewDetailsClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}

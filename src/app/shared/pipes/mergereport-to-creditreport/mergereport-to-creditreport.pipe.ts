@@ -4,7 +4,7 @@ import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
 import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
-import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
+import { ICreditReportTradelinesCardGroup } from '@views/credit-report/credit-report-pure/credit-report-pure.component';
 
 @Pipe({
   name: 'mergereportToCreditreport',
@@ -12,10 +12,10 @@ import { ICreditReportCardGroup } from '@views/credit-report/credit-report-pure/
 export class MergereportToCreditreportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
-  transform(report: IMergeReport, prefs: PreferencesStateModel): ICreditReportCardGroup[] {
+  transform(report: IMergeReport, prefs: PreferencesStateModel): ICreditReportTradelinesCardGroup[] {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
 
-    if (!this.tradeLines) return [{} as ICreditReportCardGroup];
+    if (!this.tradeLines) return [{} as ICreditReportTradelinesCardGroup];
     return this.tradeLines instanceof Array
       ? this.filterTradelines(this.tradeLines, prefs)
           .sortByAccountType(this.tradeLines)
@@ -129,8 +129,10 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @param {ICreditReportCardInputs[] | undefined} reports
    * @returns
    */
-  private groupCreditReportAccounts(reports: ICreditReportCardInputs[] | undefined): ICreditReportCardGroup[] {
-    if (!reports) return [{} as ICreditReportCardGroup];
+  private groupCreditReportAccounts(
+    reports: ICreditReportCardInputs[] | undefined,
+  ): ICreditReportTradelinesCardGroup[] {
+    if (!reports) return [{} as ICreditReportTradelinesCardGroup];
     let res: Record<string, any> = {};
     reports.forEach((r) => {
       let index = CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['group'];
@@ -146,8 +148,8 @@ export class MergereportToCreditreportPipe implements PipeTransform {
             cards: [r],
           };
     });
-    let results: ICreditReportCardGroup[] = Object.keys(res).map((k) => {
-      return { ...res[k] } as ICreditReportCardGroup;
+    let results: ICreditReportTradelinesCardGroup[] = Object.keys(res).map((k) => {
+      return { ...res[k] } as ICreditReportTradelinesCardGroup;
     });
     return results;
   }
