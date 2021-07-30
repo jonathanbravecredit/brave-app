@@ -38,13 +38,13 @@
     </div>
   </div>
 
-  <div *ngIf="personalItems?.length" class="p-4">
+  <div *ngIf="personalItems" class="p-4">
     <div class="flex items-center mb-3">
-      <span class="material-icons-outlined"> description </span>
-      <span>Public Records</span>
+      <span class="material-icons-outlined">perm_identity</span>
+      <span>Personal Information</span>
     </div>
-    <div *ngFor="let person of personalItems">
-      <brave-publicitems-details></brave-publicitems-details>
+    <div>
+      <brave-personalitems-details [config]="personalItems"></brave-personalitems-details>
     </div>
   </div>
 </div>
