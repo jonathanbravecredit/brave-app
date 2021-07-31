@@ -44,18 +44,13 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'report/accounts/negative',
+        component: NegativeAccountInitialComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'report/tradeline',
         component: TradelinesComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'report/tradeline/dispute',
-        component: DisputesTradelineView,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'report/tradeline/dispute/error',
-        component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
       {
@@ -66,21 +61,6 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/personalitem',
         component: PersonalitemsView,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'report/publicitem/dispute',
-        component: DisputesPublicView,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'report/publicitem/dispute/error',
-        component: BaseExceptionView,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'report/accounts/negative',
-        component: NegativeAccountInitialComponent,
         canActivate: [AuthGuard],
       },
       {
@@ -119,13 +99,18 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'disputes/overview',
+        path: 'disputes',
         component: DisputesOverviewInitialView,
         canActivate: [AuthGuard],
       },
       {
         path: 'disputes/findings',
         component: DisputeFindingsView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/error',
+        component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
     ],

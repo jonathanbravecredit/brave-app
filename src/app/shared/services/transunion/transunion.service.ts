@@ -254,9 +254,11 @@ export class TransunionService {
       console.log('sendDispute: dispute', disputes);
       const msg = { id, disputes }; //this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
+      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
+      this.interstitial.closeInterstitial();
       return { success: false, error: err };
     }
   }

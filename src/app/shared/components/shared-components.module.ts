@@ -141,6 +141,8 @@ import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card
 import { PublicitemDisputeCardComponent } from './cards/publicitem-dispute-card/publicitem-dispute-card.component';
 import { PersonalitemDisputeCardComponent } from './cards/personalitem-dispute-card/personalitem-dispute-card.component';
 import { TradelineDisputeCardComponent } from './cards/tradeline-dispute-card/tradeline-dispute-card.component';
+import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const components = [
   BaseFormComponent,
@@ -276,6 +278,7 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   DisputeCardStatusPipe,
+  SimpleBackButtonComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -284,6 +287,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
   imports: [
     CommonModule,
     SharedPipesModule,
+    SharedDirectivesModule,
     NgxChartsModule,
     ChartsModule,
     ReactiveFormsModule,

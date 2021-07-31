@@ -6,7 +6,10 @@
 
 <!-- tradeline accounts -->
 <div *ngFor="let tradeline of tradelines">
-  <brave-tradeline-dispute-card [tradeline]="tradeline"></brave-tradeline-dispute-card>
+  <brave-tradeline-dispute-card
+    [tradeline]="tradeline"
+    (disputeClick)="disputeTradelineClick.emit(tradeline.tradeline)"
+  ></brave-tradeline-dispute-card>
 </div>
 
 <!-- personal items -->
@@ -22,26 +25,29 @@
     [fieldName]="'Name(s)'"
     [fieldValues]="personalItems.borrowerNames || '--'"
     [count]="personalItems.borrowerNamesArray?.length || 0"
+    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
   ></brave-personalitem-dispute-card>
 </div>
 
 <div *ngIf="personalItems.previousAddresses">
   <brave-personalitem-dispute-card
-    icon="face"
+    icon="home"
     [titleName]="'Address(es)'"
     [fieldName]="'Address(es)'"
     [fieldValues]="personalItems.previousAddresses || '--'"
     [count]="personalItems.previousAddressesArray?.length || 0"
+    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
   ></brave-personalitem-dispute-card>
 </div>
 
 <div *ngIf="personalItems.employers">
   <brave-personalitem-dispute-card
-    icon="face"
+    icon="badge"
     [titleName]="'Employers(es)'"
     [fieldName]="'Employers(es)'"
     [fieldValues]="personalItems.employers || '--'"
     [count]="personalItems.employersArray?.length || 0"
+    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
   ></brave-personalitem-dispute-card>
 </div>
 
@@ -52,5 +58,8 @@
 </div>
 
 <div *ngFor="let publicItem of publicItems">
-  <brave-publicitem-dispute-card [publicItem]="publicItem"></brave-publicitem-dispute-card>
+  <brave-publicitem-dispute-card
+    [publicItem]="publicItem"
+    (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
+  ></brave-publicitem-dispute-card>
 </div>

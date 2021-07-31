@@ -13,7 +13,7 @@ export interface IProcessDisputeTradelineResult {
   selector: 'brave-disputes-tradeline-pure-view',
   templateUrl: './disputes-tradeline-pure.view.html',
 })
-export class DisputesTradelinePureView {
+export class DisputesTradelinePureView implements OnInit {
   @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
   @Input() isDisputeProcessInProgress = true;
   @Input() isDisputeSent = false;
@@ -23,4 +23,8 @@ export class DisputesTradelinePureView {
   @Output() goBack: EventEmitter<void> = new EventEmitter();
   @Output() processResult: EventEmitter<IProcessDisputeTradelineResult> = new EventEmitter();
   constructor() {}
+
+  ngOnInit(): void {
+    console.log('dispute item', this.dispute);
+  }
 }

@@ -14,12 +14,13 @@ export class MergereportToTradelinesPipe implements PipeTransform {
     let tradelines = !(partition instanceof Array) ? [partition] : partition;
     tradelines = [...TU.sortTradelineByAccountType(tradelines)];
     tradelines = [...TU.sortTradelineByDateOpened(tradelines)];
-    tradelines = tradelines.map((line) => this.mapPartitionsToDetails(line));
-    return tradelines;
+    let config = tradelines.map((line) => this.mapPartitionsToDetails(line));
+    return config;
   }
 
   mapPartitionsToDetails(partition: ITradeLinePartition): ITradelineDetailsConfig {
     return {
+      tradeline: partition,
       accountNumber: partition?.Tradeline?.accountNumber || TU.bcMissing,
       accountTypeSymbol: partition?.accountTypeSymbol || TU.bcMissing,
       accountTypeDescription: TU.lookupTradelineAccountType(partition) || '',

@@ -7,6 +7,9 @@
             [tradelines]="tradelines"
             [publicItems]="publicItems"
             [personalItems]="personalItems"
+            (disputeTradelineClick)="onDisputeTradelineClick($event)"
+            (disputePersonalClick)="onDisputePersonalClick($event)"
+            (disputePublicClick)="onDisputePublicClick($event)"
           >
           </brave-disputes-reconfirm-pure>
         </div>

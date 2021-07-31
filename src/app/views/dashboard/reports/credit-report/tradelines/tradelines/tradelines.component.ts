@@ -54,17 +54,27 @@ export class TradelinesComponent {
     if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
     this.disputeService
       .sendDisputePreflightCheck(id)
-      .then((eligible) => {
-        console.log('preflightCheckReturn ===> ', eligible);
-        if (eligible) {
+      .then((resp) => {
+        const { success, error } = resp;
+        console.log('preflightCheckReturn ===> ', resp);
+        if (success) {
           this.router.navigate(['../dispute'], { relativeTo: this.route });
         } else {
-          // TODO replace with better view to tell them they are ineligible
-          this.router.navigate(['/dashboard/report/dispute/tradeline/error']);
+          this.router.navigate(['../error'], {
+            relativeTo: this.route,
+            queryParams: {
+              code: error?.Code || '197',
+            },
+          });
         }
       })
       .catch((err) => {
-        this.router.navigate(['/dashboard/report/dispute/tradeline/error']);
+        this.router.navigate(['../error'], {
+          relativeTo: this.route,
+          queryParams: {
+            code: '197',
+          },
+        });
       });
   }
 }
