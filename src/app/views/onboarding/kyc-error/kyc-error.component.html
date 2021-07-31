@@ -1,0 +1,37 @@
+<div class="container mx-auto max-w-xs h-full">
+  <div class="flex content-center items-center justify-center h-full">
+    <div class="w-full max-w-xs">
+      <div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
+        <!-- image -->
+        <div class="flex justify-center mb-6">
+          <img class="w-full" src="assets/img/undraw_welcoming_xvuq.svg" />
+        </div>
+
+        <!-- header -->
+        <div class="py-3">
+          <h4 class="brave-h4">Technical Difficulties</h4>
+        </div>
+
+        <!-- message -->
+        <div class="py-3">
+          <div class="text-sm text-blueGray-600">
+            <p class="mb-0">Unfortunately something doesn't appear to be working correctly.</p>
+            <p>
+              You can try again, but if the issue persists please reach out to our technical support at
+              <a href="mailto:support@brave.credit?subject=Onboarding%20Difficulties"
+                ><span class="font-bold underline">support&amp;brave.credit</span></a
+              >
+            </p>
+          </div>
+        </div>
+
+        <!-- action -->
+        <div class="mt-5">
+          <div class="flex justify-center items-center">
+            <brave-filled-onlytext-button [routerLink]="['/onboarding/name']">Try again</brave-filled-onlytext-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

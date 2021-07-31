@@ -9,9 +9,9 @@ interface FormFields {
 }
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'brave-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+  styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
   signUpForm: FormGroup = {} as FormGroup;

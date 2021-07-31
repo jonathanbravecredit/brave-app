@@ -8,7 +8,9 @@
       "@shared/*": ["src/app/shared/*"],
       "@store/*": ["src/app/store/*"],
       "@layouts/*": ["src/app/layouts/*"],
+      "@views/*": ["src/app/views/*"],
       "@stories/*": ["src/stories/*"],
+      "@src/*": ["src/*"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -27,8 +29,10 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
   },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "amplify", "storybook-static", "**/*.spec.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

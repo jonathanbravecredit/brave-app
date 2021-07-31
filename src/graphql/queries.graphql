@@ -1,290 +1,359 @@
 # this is an auto generated file. This will be overwritten
-query SyncBlogs(
-  $filter: ModelBlogFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncBlogs(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      name
-      posts {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
+query Transunion($action: String!, $message: String!) {
+  transunion(action: $action, message: $message)
 }
-query GetBlog($id: ID!) {
-  getBlog(id: $id) {
+query GetAppData($id: ID!) {
+  getAppData(id: $id) {
     id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+    user {
+      id
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
       }
-      nextToken
-      startedAt
+      onboarding {
+        lastActive
+        lastComplete
+        started
+      }
     }
-    _version
-    _deleted
-    _lastChangedAt
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
+        disputeEnrolled
+        disputeEnrolledOn
+        disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
-query ListBlogs(
-  $filter: ModelBlogFilterInput
+query ListAppDatas(
+  $filter: ModelAppDataFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listAppDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      name
-      posts {
-        nextToken
-        startedAt
+      user {
+        id
+        userAttributes {
+          name {
+            first
+            middle
+            last
+          }
+          address {
+            addressOne
+            addressTwo
+            city
+            state
+            zip
+          }
+          phone {
+            primary
+          }
+          dob {
+            year
+            month
+            day
+          }
+          ssn {
+            lastfour
+            full
+          }
+        }
+        onboarding {
+          lastActive
+          lastComplete
+          started
+        }
       }
-      _version
-      _deleted
-      _lastChangedAt
+      agencies {
+        transunion {
+          authenticated
+          indicativeEnrichmentSuccess
+          getAuthenticationQuestionsSuccess
+          serviceBundleFulfillmentKey
+          currentRawQuestions
+          currentRawAuthDetails
+          enrollmentKey
+          enrollReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollMergeReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrollVantageScore {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          enrolled
+          enrolledOn
+          fulfillReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillMergeReport {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfillVantageScore {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+          fulfilledOn
+          acknowledgedDisputeTerms
+          acknowledgedDisputeTermsOn
+          disputeServiceBundleFulfillmentKey
+          disputeEnrollmentKey
+          disputeEnrolled
+          disputeEnrolledOn
+          disputeStatus
+          disputes {
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes {
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            closedDisputes {
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeInvestigationResults
+            disputeCreditBureau
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
+        }
+        equifax {
+          authenticated
+        }
+        experian {
+          authenticated
+        }
+      }
+      preferences {
+        showAllAccounts {
+          creditCards
+          collectionsAccounts
+          installmentLoans
+          mortgages
+        }
+      }
       createdAt
       updatedAt
+      owner
     }
     nextToken
-    startedAt
-  }
-}
-query SyncPosts(
-  $filter: ModelPostFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncPosts(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
-}
-query GetPost($id: ID!) {
-  getPost(id: $id) {
-    id
-    title
-    blogID
-    blog {
-      id
-      name
-      posts {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    comments {
-      items {
-        id
-        postID
-        content
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-query ListPosts(
-  $filter: ModelPostFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
-}
-query SyncComments(
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-  $lastSync: AWSTimestamp
-) {
-  syncComments(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
-    items {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      content
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
-  }
-}
-query GetComment($id: ID!) {
-  getComment(id: $id) {
-    id
-    postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-query ListComments(
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      postID
-      post {
-        id
-        title
-        blogID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      content
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    nextToken
-    startedAt
   }
 }

@@ -1,0 +1,19 @@
+{
+  "VerifyAuthenticationQuestions": {
+    "s:Envelope": {
+      "s:Body": {
+        "VerifyAuthenticationQuestionsResponse": {
+          "VerifyAuthenticationQuestionsResult": {
+            "a:AccountName": "CC2BraveCredit",
+            "a:ErrorResponse": "",
+            "a:RequestKey": "da76b511-1b59-4d72-a105-5df9cdd1e88d",
+            "a:ResponseType": "Success",
+            "a:ClientKey": "3dcb64d1-56f7-44e1-bb8d-d5821a9902c2",
+            "a:AuthenticationDetails": "&lt;?xml version=\"1.0\" encoding=\"utf-8\"?&gt;&#xD;\n&lt;VerifyChallengeAnswersResponseSuccess xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"com/truelink/ds/sch/srv/iv/ccs\"&gt;&#xD;\n  &lt;ApplicantChallengeId&gt;878156226&lt;/ApplicantChallengeId&gt;&#xD;\n  &lt;AnswerVerificationStatus&gt;Correct&lt;/AnswerVerificationStatus&gt;&#xD;\n&lt;/VerifyChallengeAnswersResponseSuccess&gt;",
+            "a:AuthenticationStatus": "Correct"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<form [formGroup]="parentForm">
+  <brave-outline-input
+    [config]="childFieldConfig"
+    (onComponentReady)="addChild('inputGroup', $event)"
+    required="true"
+  >
+  </brave-outline-input>
+  <brave-outline-input
+    [config]="childFieldConfig"
+    (onComponentReady)="addChild('inputGroup', $event)"
+    required="true"
+  >
+  </brave-outline-input>
+  <brave-outline-input
+    [config]="childFieldConfig"
+    (onComponentReady)="addChild('inputGroup', $event)"
+    required="true"
+  >
+  </brave-outline-input>
+  <div>
+    <div class="flex justify-end items-end">
+      <brave-links-onlytext-button>Cancel</brave-links-onlytext-button>
+      <brave-filled-onlytext-button>Continue</brave-filled-onlytext-button>
+    </div>
+  </div>
+</form>

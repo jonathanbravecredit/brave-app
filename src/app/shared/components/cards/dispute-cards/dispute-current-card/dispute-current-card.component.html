@@ -1,0 +1,20 @@
+<brave-dispute-regular-card (viewDetailsClick)="viewDetailsClick.emit()" [hideViewDetails]="!isStatusProcessing()">
+  <div class="mb-2" data>
+    <div class="flex">
+      <span class="font-semibold text-xs flex-grow">{{ creditorName }}</span>
+      <span class="font-semibold text-xs">Current Status:</span>
+    </div>
+    <div class="flex">
+      <span class="font-semibold text-xs flex-grow">{{ accountType }} </span>
+      <span class="font-semibold text-xs {{ status! | disputeCardStatus: 'colorClass' }}">{{
+        status! | disputeCardStatus: 'text'
+      }}</span>
+    </div>
+  </div>
+  <div details>
+    <p class="text-xs">Submitted: {{ dateSubmitted === '--' ? dateSubmitted : (dateSubmitted | date) }}</p>
+    <p class="text-xs">
+      Estimated Completion Date: {{ estCompletionDate === '--' ? estCompletionDate : (estCompletionDate | date) }}
+    </p>
+  </div>
+</brave-dispute-regular-card>
