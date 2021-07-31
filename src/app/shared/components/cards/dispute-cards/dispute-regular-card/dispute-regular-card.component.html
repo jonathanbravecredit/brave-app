@@ -1,6 +1,6 @@
 <div class="p-2 rounded border border-gray-800">
   <!-- Grid of Dispute Card -->
-  <div class="flex flex-wrap items-center items-center">
+  <div class="flex flex-wrap items-center">
     <ng-content [select]="[data]"></ng-content>
   </div>
   <!-- Metadata About The Dispute -->
@@ -8,10 +8,9 @@
     <ng-content [select]="[details]"></ng-content>
   </div>
   <!-- View Detail Button -->
-  <div class="mt-2 flex items-center" (click)="viewDetailsClick.emit()">
-    <span class="text-xs">View Details</span>
-    <span class="material-icons text-sm">
-      keyboard_arrow_right
-    </span>
+  <div class="mt-2 flex items-center">
+    <brave-viewdetail-button size="full" [horizontal]="true" (click)="viewDetailsClick.emit()"
+      >View Detail</brave-viewdetail-button
+    >
   </div>
 </div>

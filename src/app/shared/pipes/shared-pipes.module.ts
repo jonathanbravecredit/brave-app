@@ -13,6 +13,7 @@ import { MergereportToPublicitemsPipe } from './mergereport-to-publicitems/merge
 import { MergereportToPersonalitemsPipe } from './mergereport-to-personalitems/mergereport-to-personalitems.pipe';
 import { PublicitemToDetailsPipe } from './publicitem-to-details/publicitem-to-details.pipe';
 import { PersonalitemsToDetailsPipe } from './personalitem-to-details/personalitems-to-details.pipe';
+import { MergereportToTradelinesPipe } from './mergereport-to-tradelines/mergereport-to-tradelines.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -28,6 +29,7 @@ const pipes = [
   PersonalitemsToDetailsPipe,
   MergereportToPublicitemsPipe,
   MergereportToPersonalitemsPipe,
+  MergereportToTradelinesPipe,
 ];
 
 @NgModule({

@@ -4,18 +4,20 @@ export enum LabelOfSnapshot {
   Update = 'update',
   Hidden = 'hidden',
   New = 'new',
-  NoLabel = 'no-label'
+  NoLabel = 'no-label',
+  Preview = 'preview',
 }
 
 const enumStrNameOfLabel = {
   [LabelOfSnapshot.Update]: { text: 'Updates', colorClass: 'text-brave-magenta' },
   [LabelOfSnapshot.Hidden]: { text: 'Hidden Items', colorClass: 'text-lt-gray' },
   [LabelOfSnapshot.New]: { text: 'New', colorClass: 'text-brave-blurple' },
-  [LabelOfSnapshot.NoLabel]: { text: '', colorClass: '' }
+  [LabelOfSnapshot.Preview]: { text: 'Coming Soon', colorClass: 'text-brave-magenta' },
+  [LabelOfSnapshot.NoLabel]: { text: '', colorClass: '' },
 };
 
 @Pipe({
-  name: 'snapshotLabel'
+  name: 'snapshotLabel',
 })
 export class SnapshotLabelPipe implements PipeTransform {
   transform(value: any, ...args: any[]): string {

@@ -39,6 +39,10 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
       previousAddresses: this.flattenItems(unPrevAddress) || '--',
       telephones: this.flattenItems(unPhones) || '--',
       employers: this.flattenItems(unEmployers) || '--',
+      borrowerNamesArray: unNames || [],
+      previousAddressesArray: unPrevAddress || [],
+      telephonesArray: unPhones || [],
+      employersArray: unEmployers || [],
     };
   }
 

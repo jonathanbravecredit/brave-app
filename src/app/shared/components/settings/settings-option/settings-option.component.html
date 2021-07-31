@@ -1,8 +1,13 @@
-<div class="mx-4 text-gray-900">
-  <div class="flex items-center py-3 ">
+<div class="hover:cursor-pointer mx-4 text-gray-900">
+  <div class="flex items-center py-3">
     <span class="material-icons-outlined">{{ iconName }}</span>
     <span class="ml-2 font-semibold">{{ title }}</span>
-    <span class="ml-auto material-icons-outlined" *ngIf="!isDetailDescriptionOpened || isSettingUpdated" (click)="navigateToDescription()">chevron_right</span>
+    <span
+      class="ml-auto material-icons-outlined"
+      *ngIf="!isDetailDescriptionOpened || isSettingUpdated"
+      (click)="navigateToDescription()"
+      >chevron_right</span
+    >
   </div>
   <div class="mt-4" *ngIf="!disableNavigation">
     <ng-content *ngIf="isDetailDescriptionOpened"></ng-content>

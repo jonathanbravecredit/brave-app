@@ -12,6 +12,7 @@ export class TradelineDetailsTableComponent implements OnInit {
    * @property {ITradelineDetailsConfig} config
    */
   @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
+  @Input() typeOverride: string | undefined;
   @Input() isDisputePageOne: boolean = false;
   @Input() isDisputePageTwo: boolean = false;
   accountTypeMap = ACCOUNT_TYPES;
@@ -117,7 +118,8 @@ export class TradelineDetailsTableComponent implements OnInit {
       this.mapper = this.disputeTwoMapping;
       this.mapperType = 'disputeTwo';
     } else {
-      switch (this.config.accountTypeSymbol?.toLowerCase()) {
+      const symbol = this.typeOverride ? this.typeOverride.toLowerCase() : this.config.accountTypeSymbol?.toLowerCase();
+      switch (symbol) {
         case 'c':
         case 'o':
         case 'r':

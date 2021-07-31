@@ -1,17 +1,17 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { OnboardingComponent } from './onboarding.component';
-import { KycWelcomeComponent } from '@views/kyc-welcome/kyc-welcome/kyc-welcome.component';
-import { KycAddressComponent } from '@views/kyc-address/kyc-address/kyc-address.component';
-import { KycSsnComponent } from '@views/kyc-ssn/kyc-ssn/kyc-ssn.component';
-import { KycSsnFullComponent } from '@views/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component';
-import { KycPhonenumberComponent } from '@views/kyc-phonenumber/kyc-phonenumber/kyc-phonenumber.component';
-import { KycIdverificationComponent } from '@views/kyc-idverification/kyc-idverification/kyc-idverification.component';
-import { KycKbaquestionsComponent } from '@views/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
-import { KycWelcomebackComponent } from '@views/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
-import { KycCongratulationsComponent } from '@views/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
-import { KycErrorComponent } from '@views/kyc-error/kyc-error.component';
+import { KycAddressComponent } from '@views/onboarding/kyc-address/kyc-address/kyc-address.component';
+import { KycCongratulationsComponent } from '@views/onboarding/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
+import { KycErrorComponent } from '@views/onboarding/kyc-error/kyc-error.component';
+import { KycIdverificationComponent } from '@views/onboarding/kyc-idverification/kyc-idverification/kyc-idverification.component';
+import { KycKbaquestionsComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
+import { KycPhonenumberComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber/kyc-phonenumber.component';
+import { KycSsnFullComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full/kyc-ssn-full.component';
+import { KycSsnComponent } from '@views/onboarding/kyc-ssn/kyc-ssn/kyc-ssn.component';
+import { KycWelcomeComponent } from '@views/onboarding/kyc-welcome/kyc-welcome/kyc-welcome.component';
+import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [

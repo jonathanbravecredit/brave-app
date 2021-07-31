@@ -10,6 +10,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
+import { NavigationService } from '@shared/services/navigation/navigation.service';
 
 const services = [
   AuthService,
@@ -22,6 +23,7 @@ const services = [
   TransunionService,
   DisputeService,
   CustomLineChartService,
+  NavigationService,
 ];
 
 @NgModule({

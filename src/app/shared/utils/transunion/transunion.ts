@@ -1,4 +1,12 @@
-import { IBorrowerName, ICreditAddress, IEmployer, IPhoneNumber } from '@shared/interfaces';
+import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import {
+  IBorrowerName,
+  ICreditAddress,
+  IEmployer,
+  IPhoneNumber,
+  IRemark,
+  ITradeLinePartition,
+} from '@shared/interfaces';
 
 // start building this out to handle all the data from TU
 export class TransunionUtil {
@@ -71,6 +79,98 @@ export class TransunionUtil {
     const digits = `${area}${main}${ext}`;
     if (!digits) return this.bcMissing;
     return digits;
+  }
+
+  /**
+   * Sorts the tradeline by the account type
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  static sortTradelineByAccountType(tradeLines: ITradeLinePartition[]): ITradeLinePartition[] {
+    return [
+      ...tradeLines.sort((a, b) => {
+        if (a.accountTypeSymbol?.toLowerCase() === 'y' && b.accountTypeDescription?.toLowerCase() !== 'y') {
+          return 1;
+        }
+        if (a.accountTypeSymbol?.toLowerCase() !== 'y' && b.accountTypeDescription?.toLowerCase() === 'y') {
+          return -1;
+        }
+        return 0;
+      }),
+    ];
+  }
+
+  /**
+   * Sorts the tradeline by the date opened keeping the sort by account type
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  static sortTradelineByDateOpened(tradeLines: ITradeLinePartition[]): ITradeLinePartition[] {
+    return [
+      ...tradeLines.sort((a, b) => {
+        if (a.accountTypeSymbol !== b.accountTypeSymbol) {
+          return 0;
+        }
+        if (a.Tradeline?.dateOpened! < b.Tradeline?.dateOpened!) {
+          return 1;
+        }
+        if (a.Tradeline?.dateOpened! > b.Tradeline?.dateOpened!) {
+          return -1;
+        }
+        return 0;
+      }),
+    ];
+  }
+
+  /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static lookupTradelineAccountType(partition: ITradeLinePartition | undefined): string {
+    if (!partition) return this.bcMissing;
+    const description = partition.accountTypeDescription;
+    const status = BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
+    return partition.accountTypeSymbol?.toLowerCase() === 'y' ? description || this.bcMissing : status;
+  }
+
+  /**
+   * Helper function to securey look up the original creditor
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {
+    if (!partition) return this.bcMissing;
+    const originalCreditor = partition.Tradeline?.CollectionTrade?.originalCreditor;
+    const creditorName = partition.Tradeline?.creditorName || this.bcMissing;
+    if (partition.accountTypeSymbol?.toLowerCase() === 'y') {
+      return originalCreditor ? originalCreditor : creditorName;
+    } else {
+      return creditorName;
+    }
+  }
+
+  /**
+   * Helper function to securely look up the dispute flag
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static lookupDisputeFlag(partition: ITradeLinePartition | undefined): string {
+    if (!partition) return 'No';
+    const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
+    return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
+  }
+
+  /**
+   * Flatten the remarks into one paragraph
+   * @param remarks
+   * @returns
+   */
+  static parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
+    if (remarks === undefined) return '';
+    return remarks instanceof Array
+      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
+      : remarks.customRemark || '';
   }
 }
 
