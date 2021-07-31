@@ -21,12 +21,17 @@
       <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.disputeFlag }}</p>
     </div>
     <div class="flex justify-center my-4">
-      <brave-filled-onlytext-button>&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button>
+      <brave-filled-onlytext-button (click)="disputeClick.emit()"
+        >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
+      >
     </div>
 
     <!-- ======= Payment History and Remarks ======== -->
     <div *ngIf="viewDetail.open$ | async as open" class="mt-4">
       <div class="rounded-lg border border-blueGray-300 p-4">
+        <div class="mb-4">
+          <p class="text-sm font-semibold">Account Details</p>
+        </div>
         <!-- ======= AccountDetails Comp ======== -->
         <brave-tradeline-details-table typeOverride="r" [config]="tradeline"></brave-tradeline-details-table>
       </div>
