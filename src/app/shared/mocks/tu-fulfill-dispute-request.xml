@@ -1,0 +1,73 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:Fulfill>
+      <!--Optional:-->
+      <con:request>
+        <!--Optional:-->
+        <data:AccountCode>4pGebVt5s</data:AccountCode>
+        <!--Optional:-->
+        <data:AccountName>CCSIntegration</data:AccountName>
+        <!--Optional:-->
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>creditreportversion</data:Name>
+            <data:Value>7.1</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>63df84b8-e2d5-4d6f-8ef6-4c6d7d7dfe26</data:RequestKey>
+        <!--Optional:-->
+        <data:ClientKey>SR_2018-03-09_13-33-18_DORA</data:ClientKey>
+        <!--Optional:-->
+        <data:Customer>
+          <!--Optional:-->
+          <data:CurrentAddress>
+            <!--Optional:-->
+            <data:AddressLine1>384 PO BOX 384</data:AddressLine1>
+            <!--Optional:-->
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:City>BRAHAM</data:City>
+            <!--Optional:-->
+            <data:State>MN</data:State>
+            <!--Optional:-->
+            <data:Zipcode>55006</data:Zipcode>
+          </data:CurrentAddress>
+          <!--Optional:-->
+
+          <!--Optional:-->
+          <data:DateOfBirth>1973-11-01</data:DateOfBirth>
+          <data:FullName>
+            <!--Optional:-->
+            <data:FirstName>DORA</data:FirstName>
+            <!--Optional:-->
+            <data:LastName>JULIEN</data:LastName>
+            <!--Optional:-->
+            <data:MiddleName>G</data:MiddleName>
+            <!--Optional:-->
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <!--Optional:-->
+
+          <!--Optional:-->
+          <data:Ssn>471866871</data:Ssn>
+        </data:Customer>
+        <!--Optional:-->
+        <data:EnrollmentKey xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <!--Optional:-->
+        <data:Language xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <!--Optional:-->
+        <data:ServiceBundleCode>CCSIntegrationTUReport</data:ServiceBundleCode>
+      </con:request>
+    </con:Fulfill>
+  </soapenv:Body>
+</soapenv:Envelope>

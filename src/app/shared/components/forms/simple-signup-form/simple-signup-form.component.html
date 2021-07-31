@@ -1,0 +1,27 @@
+<form [formGroup]="parentForm">
+  <brave-outline-input
+    [config]="emailConfig"
+    (onComponentReady)="addChild('email', $event)"
+    [required]="true"
+    [asteriskOverride]="true"
+  >
+  </brave-outline-input>
+  <brave-outline-input
+    [config]="passwordConfig"
+    (onComponentReady)="addChild('password', $event)"
+    [required]="true"
+    [asteriskOverride]="true"
+  >
+  </brave-outline-input>
+  <div class="-mt-2">
+    <div class="flex justify-end items-end">&nbsp;</div>
+  </div>
+
+  <div class="mt-5">
+    <div class="flex justify-center items-center">
+      <brave-filled-onlytext-button [disabled]="!parentForm.valid" (click)="signupClick.emit(signupUser(parentForm))"
+        >Sign Up</brave-filled-onlytext-button
+      >
+    </div>
+  </div>
+</form>

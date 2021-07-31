@@ -1,0 +1,6 @@
+<div *ngIf="route.queryParams | async as params">
+  <brave-base-exception-pure-view
+    [code]="params.code"
+    (actionButtonClicked)="onActionButtonClicked($event)"
+  ></brave-base-exception-pure-view>
+</div>

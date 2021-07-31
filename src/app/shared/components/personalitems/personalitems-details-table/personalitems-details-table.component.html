@@ -1,0 +1,55 @@
+<!-- ============================== -->
+<!--       PUBLIC ACCOUNTS        -->
+<!-- ============================== -->
+<div *ngIf="config" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['ssn'] || 'Social Security Number'"
+      [value]="config.ssn || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Court Name -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['borrowerNames'] || 'Name'"
+      [value]="config.borrowerNames || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Filed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['currentAddress'] || 'Current Address'"
+      [value]="config.currentAddress || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Paid -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['previousAddress'] || 'Previous Address(es)'"
+      [value]="config.previousAddresses || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Updated -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['telephone'] || 'Telephone'"
+      [value]="config.telephones || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['employers'] || 'Employer'"
+      [value]="config.employers || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>

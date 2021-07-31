@@ -1,0 +1,18 @@
+<div
+  *ngIf="showAlert"
+  [ngClass]="config | filledClosingAlert"
+  class="font-sans text-sm text-white px-6 py-4 border-0 rounded relative mb-4"
+>
+  <span class="font-sans text-sm text-white inline-block mr-5 align-middle">
+    {{ config.alertTitle }}
+  </span>
+  <span class="inline-block align-left mr-8">
+    {{ config.alertBody }}
+  </span>
+  <button
+    class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-4 outline-none focus:outline-none"
+    (click)="showAlert = false"
+  >
+    <span class="material-icons text-white">close</span>
+  </button>
+</div>

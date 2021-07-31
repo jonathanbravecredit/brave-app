@@ -1,8 +1,9 @@
-<amplify-authenticator *ngIf="authState !== 'signedin'"></amplify-authenticator>
+<router-outlet></router-outlet>
 
-<div *ngIf="authState === 'signedin' && user" class="App">
-  <amplify-sign-out></amplify-sign-out>
-  <div>Hello, {{ user.username }}</div>
-  <router-outlet></router-outlet>
-  <!-- This is where you application template code goes -->
+<div
+  *ngIf="spinner$ | async as open"
+  class="w-full h-full fixed block top-0 left-0 bg-white z-50"
+  style="background-color: rgba(245, 245, 245, 1)"
+>
+  <brave-spinner [message]="message$ | async"></brave-spinner>
 </div>

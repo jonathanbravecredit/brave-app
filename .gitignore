@@ -55,6 +55,7 @@ amplify/backend/awscloudformation
 amplify/backend/.temp
 build/
 dist/
+storybook-static/
 node_modules/
 aws-exports.js
 awsconfiguration.json
@@ -63,3 +64,11 @@ amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
+
+#storybook
+/storybook-static
+
+#compodoc
+/documentation.json
+
+# *.js
