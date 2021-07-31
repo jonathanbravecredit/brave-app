@@ -44,6 +44,16 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'disputes',
+        component: DisputesOverviewInitialView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'error',
+        component: BaseExceptionView,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'report/accounts/negative',
         component: NegativeAccountInitialComponent,
         canActivate: [AuthGuard],
@@ -96,11 +106,6 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/dispute/publicitem/error',
         component: BaseExceptionView,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'disputes',
-        component: DisputesOverviewInitialView,
         canActivate: [AuthGuard],
       },
       {

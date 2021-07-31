@@ -2125,6 +2125,10 @@ select {
   max-width: 48rem;
 }
 
+.max-w-4xl {
+  max-width: 56rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -2143,6 +2147,10 @@ select {
 
 .opacity-25 {
   opacity: 0.25;
+}
+
+.opacity-40 {
+  opacity: 0.4;
 }
 
 .opacity-50 {
@@ -3159,6 +3167,10 @@ select {
     line-height: 1.25rem;
   }
 
+  .sm\:max-w-screen-sm {
+    max-width: 640px;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -3216,6 +3228,10 @@ select {
 
   .md\:mb-4 {
     margin-bottom: 1rem;
+  }
+
+  .md\:max-w-screen-md {
+    max-width: 768px;
   }
 
   .md\:min-h-full {
@@ -3328,6 +3344,10 @@ select {
 
   .lg\:ml-auto {
     margin-left: auto;
+  }
+
+  .lg\:max-w-screen-lg {
+    max-width: 1024px;
   }
 
   .lg\:py-2 {

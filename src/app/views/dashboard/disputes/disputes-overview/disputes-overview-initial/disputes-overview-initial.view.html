@@ -1,4 +1,4 @@
-<div style="min-width: 20rem" class="container mx-auto max-w-xs h-full px-4">
+<div style="min-width: 20rem" class="container px-4">
   <div *ngIf="disputes$ | async as disputes; else noDisputes">
     <div *ngIf="disputes | disputesToDisputesOverview as parsed">
       <brave-disputes-overview-initial-pure

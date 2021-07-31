@@ -45,12 +45,27 @@ export class NegativeAccountInitialComponent {
     if (!id) throw `negativeAccountInitial:onConfirmed=Missing id:${id}`;
     this.disputeService
       .sendDisputePreflightCheck(id)
-      .then((_) => {
-        this.disputeService.setTradelineItem(card);
-        this.router.navigate(['/dashboard/report/tradeline/dispute']);
+      .then((resp) => {
+        const { success, error } = resp;
+        console.log('preflightCheckReturn ===> ', resp);
+        if (success) {
+          this.router.navigate(['/dashboard/disputes'], { relativeTo: this.route });
+        } else {
+          this.router.navigate(['/dashboard/error'], {
+            relativeTo: this.route,
+            queryParams: {
+              code: error?.Code || '197',
+            },
+          });
+        }
       })
       .catch((err) => {
-        throw new Error(`tradelines:onDisputeClicked=${err}`);
+        this.router.navigate(['/dashboard/error'], {
+          relativeTo: this.route,
+          queryParams: {
+            code: '197',
+          },
+        });
       });
   }
 }

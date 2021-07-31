@@ -1,4 +1,4 @@
-<div style="min-width: 20rem" class="container mx-auto max-w-xs h-full p-4">
+<div style="min-width: 20rem">
   <div *ngIf="publicItem$ | async as publicItem">
     <div *ngIf="publicItem | publicitemToDetails as config">
       <brave-publicitems-pure [publicItem]="publicItem" [config]="config"> </brave-publicitems-pure>

@@ -1,24 +1,24 @@
-import { IBottomNavbarItem } from "./interfaces";
+import { IBottomNavbarItem } from './interfaces';
 
 export const DEFAULT_BOTTOM_NAVIGATION_ITEMS: IBottomNavbarItem[] = [
   {
     name: 'Home',
     iconName: 'home',
-    id: 'home'
+    id: 'init',
   },
   {
     name: 'Credit Report',
     iconName: 'credit_score',
-    id: 'credit-report'
+    id: 'report',
   },
   {
     name: 'Disputes',
     iconName: 'description',
-    id: 'disputes'
+    id: 'disputes',
   },
   {
     name: 'Settings',
     iconName: 'portrait',
-    id: 'settings'
+    id: 'settings',
   },
 ];
