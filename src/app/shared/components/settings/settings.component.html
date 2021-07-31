@@ -1,0 +1,54 @@
+<brave-settings-option 
+  #settingOptionEmail 
+  title="Change Email"
+  iconName="email"
+  [hide]="isOtherPageButThis(settingOptionEmail.id)"
+  id="email"
+  successMessage="You have successfully updated your email."
+  (navigated)="navigated.emit($event)">
+  <p class="mt-2">To change the email associated with your Brave Credit account, please enter your new email address below.</p>
+  <p class="mt-2">An email with a confirmation link will be sent to your existing email to verify the change.</p>
+  <brave-outline-input class="mt-2" #changeEmailNewEmail [config]="{ size: 'base', label: 'New Email Address', type: 'email', placeholder: 'New Email Address', autocomplete: 'off', value: '' }"></brave-outline-input>
+  <brave-outline-input class="mt-2" #changeEmailPassword [config]="{ size: 'base', label: 'Current Password', type: 'password', placeholder: 'Current Password', autocomplete: 'off', value: '' }"></brave-outline-input>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button (click)="handleChangeInEmail(changeEmailPassword, changeEmailNewEmail)">Continue</brave-filled-onlytext-button>
+  </div>
+</brave-settings-option>
+<brave-settings-option 
+  #settingOptionPassword
+  title="Change Password"
+  iconName="lock"
+  [hide]="isOtherPageButThis(settingOptionPassword.id)"
+  id="password"
+  successMessage="You have successfully reset your password."
+  (navigated)="navigated.emit($event)">
+  <p class="mt-2">To reset your password please enter your current password and your new desired password.</p>
+  <brave-outline-input class="mt-2" #changePWCurrentPassword [config]="{ size: 'base', label: 'Current Password', type: 'password', placeholder: 'Current Password', autocomplete: 'off', value: '' }"></brave-outline-input>
+  <brave-outline-input class="mt-2" #changePWNewPassword [config]="{ size: 'base', label: 'New Password', type: 'password', placeholder: 'New Password', autocomplete: 'off', value: '' }"></brave-outline-input>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button (click)="handleChangeInPassword(changePWCurrentPassword, changePWNewPassword)">Continue</brave-filled-onlytext-button>
+  </div>
+</brave-settings-option>
+<brave-settings-option 
+  #settingOptionDeactivate  
+  title="Deactivate Account"
+  iconName="close"
+  [hide]="isOtherPageButThis(settingOptionDeactivate.id)"
+  id="deactivate-account"
+  successMessage="You have successfully deactivated your account."
+  (navigated)="navigated.emit($event)">
+  <p class="mt-2">We’re sorry to see you go! To continue deactivating your account, you will need to enter your password.</p>
+  <brave-outline-input class="mt-2" #deactivateAccountPassword [config]="{ size: 'base', label: 'Password', type: 'password', placeholder: 'Password', autocomplete: 'off', value: '' }"></brave-outline-input>
+  <div class="flex justify-center">
+    <brave-filled-onlytext-button (click)="handleDeactivation(deactivateAccountPassword)">Continue</brave-filled-onlytext-button>
+  </div>
+</brave-settings-option>
+<brave-settings-option 
+  #settingOptionLogout
+  title="Logout"
+  iconName="logout"
+  (clicked)="logout()"
+  [hide]="isOtherPageButThis(settingOptionLogout.id)"
+  id="logout"
+  [disableNavigation]="true">
+</brave-settings-option>

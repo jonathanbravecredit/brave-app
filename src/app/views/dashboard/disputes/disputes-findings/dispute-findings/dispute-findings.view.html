@@ -1,0 +1,30 @@
+<div *ngIf="dispute$ | async as dispute">
+  <div *ngIf="dispute | disputeToDisputeFinding as findings">
+    <div *ngIf="findings.status; else noFindings">
+      <div *ngIf="findings.status === 'closed'; else openDispute">
+        <brave-dispute-findings-pure
+          [reportCreatedAt]="findings.reportCreatedAt"
+          [fileIdentificationNumber]="findings.fileIdentificationNumber"
+          [resultCode]="findings.resultCode"
+          [tradelineAccountConfig]="findings.tradeLinePartition | tradelineToDetails"
+          [publicRecordConfig]=""
+          [personalInfoConfig]=""
+          [updatedValues]="findings.updatedValues"
+          [type]="findings.type"
+        ></brave-dispute-findings-pure>
+      </div>
+    </div>
+
+    <ng-template #noFindings>
+      <p>No dispute...status message will go here</p>
+    </ng-template>
+
+    <ng-template #openDispute>
+      <p>Dispute still open view will go here</p>
+      <p>created at: {{findings.reportCreatedAt}}</p>
+      <p>FIN number: {{findings.fileIdentificationNumber }}</p>
+      <p>Est Compl Date: {{ findings.estimatedCompletionDate}}</p>
+      <p>Tot disp items: {{ findings.totalDisputedItems }}</p>
+    </ng-template>
+  </div>
+</div>

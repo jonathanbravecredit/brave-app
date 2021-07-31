@@ -1,0 +1,63 @@
+<!-- ============================== -->
+<!--       PUBLIC ACCOUNTS        -->
+<!-- ============================== -->
+<div *ngIf="config" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['docketNumber'] || 'Docket Number'"
+      [value]="config.docketNumber || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Court Name -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['courtName'] || 'Name'"
+      [value]="config.courtName || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Filed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateFiled'] || 'Date Filed'"
+      [value]="config.dateFiled || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Paid -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['datePaid'] || 'Date Paid'"
+      [value]="config.datePaid || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Updated -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateUpdated'] || 'Date Updated'"
+      [value]="config.dateUpdated || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['publicRecordType'] || 'Type'"
+      [value]="config.publicItemType || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Expiration Date -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['expirationDate'] || 'Estimated month and year that this item will be removed'"
+      [value]="config.expirationDate || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>

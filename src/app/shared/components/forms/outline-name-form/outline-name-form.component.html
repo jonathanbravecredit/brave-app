@@ -1,0 +1,35 @@
+<form [formGroup]="parentForm">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="col-span-2">
+      <brave-outline-input
+        [config]="firstNameConfig"
+        (onComponentReady)="addChild('first', $event)"
+        [required]="true"
+      >
+      </brave-outline-input>
+    </div>
+    <div>
+      <brave-outline-input
+        [config]="middleNameConfig"
+        (onComponentReady)="addChild('middle', $event)"
+        [required]="false"
+      >
+      </brave-outline-input>
+    </div>
+    <div class="col-span-3">
+      <div>
+        <brave-outline-input
+          [config]="lastNameConfig"
+          (onComponentReady)="addChild('last', $event)"
+          [required]="true"
+        >
+        </brave-outline-input>
+        <div *ngIf="!hideHint" class="-mt-2">
+          <div class="flex justify-start items-start text-xs text-blueGray-600">
+            <span class="-mt-1">&#42;</span>&nbsp;Required
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

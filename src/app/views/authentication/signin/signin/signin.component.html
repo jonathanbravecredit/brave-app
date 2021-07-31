@@ -1,0 +1,13 @@
+<div class="container mx-auto max-w-xs h-full">
+  <brave-signin-pure
+    (clickGoogle)="signInWithGoogle()"
+    (clickFacebook)="signInWithFacebook()"
+    (clickLogin)="signInWithCognito($event)"
+    (clickForgot)="goToForgot()"
+    (clickPrivacy)="goToPrivacy()"
+    (clickTerms)="goToTerms()"
+    (clickGoToSignup)="goToSignup()"
+    [viewState]="viewState"
+    [message]="message"
+  ></brave-signin-pure>
+</div>

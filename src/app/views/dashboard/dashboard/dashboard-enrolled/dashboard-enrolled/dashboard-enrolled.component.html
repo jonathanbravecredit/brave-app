@@ -1,0 +1,13 @@
+<div *ngIf="tuReport$ | async as report">
+  <div *ngIf="report | mergereportToDashboard as cards">
+    <brave-dashboard-enrolled-pure
+      [cards]="cards"
+      [userName]="userName"
+      [defaultMsg]="defaultMsg"
+      [initialMsg]="initialMsg"
+      [lastUpdated]="lastUpdated"
+      (negativeItemsClicked)="onNegativeItemsClicked()"
+      (fullReportClicked)="onFullReportClicked()"
+    ></brave-dashboard-enrolled-pure>
+  </div>
+</div>

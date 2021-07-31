@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "api": {
+      "braveapp": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
