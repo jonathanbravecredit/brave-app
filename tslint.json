@@ -148,13 +148,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "brave",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "brave",
       "kebab-case"
     ]
   }

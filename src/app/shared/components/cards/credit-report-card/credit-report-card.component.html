@@ -1,0 +1,37 @@
+<div class="border-t border-blueGray-300 my-2"></div>
+<div class="flex items-center">
+  <div
+    class="ml-3 h-4 w-4 bg-blue-500 rounded-full border-none"
+    [ngClass]="status | snapshotStatus: 'background'"
+  ></div>
+  <span class="ml-3">{{ creditorName }} ({{ isOpen ? 'Open' : 'Closed' }})</span>
+</div>
+<div class="card pl-10 pr-3 mt-1">
+  <div class="grid grid-cols-2 gap-4 mb-2">
+    <span
+      ><p class="text-sm font-semibold">{{ firstFieldName }}:</p></span
+    >
+    <span
+      ><p class="text-sm font-semibold text-right">
+        {{ firstFieldValue }}
+      </p></span
+    >
+    <span
+      ><p class="text-xs text-dk-gray">{{ secondFieldName }}</p></span
+    >
+    <span
+      ><p class="text-xs text-dk-gray text-opacity-50 text-right">
+        {{ secondFieldValue }}
+      </p></span
+    >
+    <span
+      ><p class="text-xs text-dk-gray">{{ thirdFieldName }}</p></span
+    >
+    <span
+      ><p class="text-xs text-dk-gray text-opacity-50 text-right">
+        {{ thirdFieldValue }}
+      </p></span
+    >
+  </div>
+  <brave-viewdetail-button (click)="viewDetailClick.emit()" [horizontal]="true">View Detail</brave-viewdetail-button>
+</div>

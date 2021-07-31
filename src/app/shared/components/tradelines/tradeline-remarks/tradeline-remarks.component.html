@@ -1,0 +1,27 @@
+<div class="my-8">
+  <div><p class="text-xs text-dk-gray mb-4">Remarks</p></div>
+  <div>
+    <p class="text-xs text-dk-gray text-opacity-50">
+      {{ remarks }}
+    </p>
+  </div>
+</div>
+
+<div class="mb-8">
+  <div><p class="text-xs text-dk-gray mb-4">Contact Address</p></div>
+  <div>
+    <p class="text-xs text-dk-gray text-opacity-50">
+      {{ address }}
+    </p>
+  </div>
+</div>
+
+<div *ngIf="showFooter" class="mb-4">
+  <div><p class="text-s text-dk-gray mb-4">See an error?</p></div>
+  <div>
+    <p class="text-xs text-dk-gray">
+      If you see an error in your account, you can ask for it to be reviewed through a dispute. You can do this through
+      Brave Credit!
+    </p>
+  </div>
+</div>

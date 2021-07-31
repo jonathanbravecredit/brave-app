@@ -10,7 +10,10 @@
       "@environments/*": ["src/environments/*"],
       "@shared/*": ["src/app/shared/*"],
       "@store/*": ["src/app/store/*"],
-      "@layouts/*": ["src/app/layouts/*"]
+      "@layouts/*": ["src/app/layouts/*"],
+      "@views/*": ["src/app/views/*"],
+      "@stories/*": ["src/stories/*"],
+      "@src/*": ["src/*"]
     }
   },
   "files": [

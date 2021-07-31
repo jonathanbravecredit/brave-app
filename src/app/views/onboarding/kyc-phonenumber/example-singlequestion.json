@@ -1,0 +1,115 @@
+{
+  "QuestionType": {
+    "_text": "IDMA"
+  },
+  "SequenceNumber": {
+    "_text": "1"
+  },
+  "LastChanceQuestion": {
+    "_text": "false"
+  },
+  "FakeQuestion": {
+    "_text": "false"
+  },
+  "FullQuestionText": {
+    "_text": "What year was your most recent auto loan or lease established?"
+  },
+  "KeyQuestionText": {
+    "PromptDate": {
+      "_text": "2021-06-06T18:44:11-07:00"
+    }
+  },
+  "AnswerChoice": [
+    {
+      "SequenceNumber": {
+        "_text": "1"
+      },
+      "IsCorrectAnswer": {
+        "_text": "false"
+      },
+      "AnswerChoiceText": {
+        "_text": "1996"
+      },
+      "Key": {
+        "_text": "1996"
+      },
+      "AnswerChoiceId": {
+        "_text": "3076835888"
+      }
+    },
+    {
+      "SequenceNumber": {
+        "_text": "2"
+      },
+      "IsCorrectAnswer": {
+        "_text": "false"
+      },
+      "AnswerChoiceText": {
+        "_text": "1998"
+      },
+      "Key": {
+        "_text": "1998"
+      },
+      "AnswerChoiceId": {
+        "_text": "3076835890"
+      }
+    },
+    {
+      "SequenceNumber": {
+        "_text": "3"
+      },
+      "IsCorrectAnswer": {
+        "_text": "false"
+      },
+      "AnswerChoiceText": {
+        "_text": "2000"
+      },
+      "Key": {
+        "_text": "2000"
+      },
+      "AnswerChoiceId": {
+        "_text": "3076835892"
+      }
+    },
+    {
+      "SequenceNumber": {
+        "_text": "4"
+      },
+      "IsCorrectAnswer": {
+        "_text": "false"
+      },
+      "AnswerChoiceText": {
+        "_text": "2001"
+      },
+      "Key": {
+        "_text": "2001"
+      },
+      "AnswerChoiceId": {
+        "_text": "3076835894"
+      }
+    },
+    {
+      "SequenceNumber": {
+        "_text": "5"
+      },
+      "IsCorrectAnswer": {
+        "_text": "false"
+      },
+      "AnswerChoiceText": {
+        "_text": "None of the Above"
+      },
+      "Key": {
+        "_text": "!(1996^1998^2000^2001)"
+      },
+      "AnswerChoiceId": {
+        "_text": "3076835896"
+      }
+    }
+  ],
+  "Key": {
+    "_text": "AUTO_YR"
+  },
+  "QuestionId": {
+    "_text": "48442366"
+  }
+}

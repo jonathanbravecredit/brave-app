@@ -1,0 +1,13 @@
+::ng-deep .credit-score-history .ngx-charts {
+  background-color: rgb(211, 242, 246);
+}
+::ng-deep .credit-score-history .gridline-path-vertical {
+  display: none;
+}
+::ng-deep .credit-score-history .ngx-charts .gridline-path {
+  stroke: #fff;
+}
+
+::ng-deep .credit-score-history .ngx-charts .y text {
+  font-size: 10px !important;
+}

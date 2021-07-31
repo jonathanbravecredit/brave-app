@@ -1,0 +1,23 @@
+<div class="flex items-center py-4">
+  <span class="material-icons">chevron_left</span>
+  <span class="text-sm ml-2">Back</span>
+</div>
+<div class="border-b-2 border-blueGray-800 pb-4">
+  <div class="mb-10">
+    <h1 class="text-xl font-semibold">Credit Mix</h1>
+    <p class="text-sm">Low Score Impact</p>
+  </div>
+  <div class="mt-2">
+    <p>A healthy credit mix can show lenders that you are responsible.</p>
+  </div>
+  <div class="w-full py-5 text-center rounded-lg border border-indigo-800" *ngIf="(isRecommendationOpen$ | async) === true">
+    <div class="flex items-center">
+      <span class="font-semibold text-indigo-800 mx-auto">RECOMMENDATION</span>
+      <span class="text-sm material-icons-outlined" (click)="switchRecommendation()">close</span>
+    </div>
+    <div class="mt-4 py-2 text-center">
+      <p>Recommendation text here</p>
+    </div>
+  </div>
+  <brave-collection-credit-mix-accounts [creditCards]="creditCards" [loans]="loans" [closedAccounts]="closedAccounts"></brave-collection-credit-mix-accounts>
+</div>

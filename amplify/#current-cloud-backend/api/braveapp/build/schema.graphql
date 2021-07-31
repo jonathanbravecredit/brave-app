@@ -1,35 +1,6 @@
-type Blog {
+type AppData {
   id: ID!
-  name: String!
-  posts(filter: ModelPostFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostConnection
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-}
-
-type Post {
-  id: ID!
-  title: String!
-  blogID: ID!
-  blog: Blog
-  comments(content: ModelStringKeyConditionInput, filter: ModelCommentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCommentConnection
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-}
-
-type Comment {
-  id: ID!
-  postID: ID!
-  post: Post
-  content: String!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
+  version: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -39,10 +10,9 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelBlogConnection {
-  items: [Blog]
+type ModelAppDataConnection {
+  items: [AppData]
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelStringInput {
@@ -118,12 +88,12 @@ input ModelSizeInput {
   between: [Int]
 }
 
-input ModelBlogFilterInput {
+input ModelAppDataFilterInput {
   id: ModelIDInput
-  name: ModelStringInput
-  and: [ModelBlogFilterInput]
-  or: [ModelBlogFilterInput]
-  not: ModelBlogFilterInput
+  version: ModelStringInput
+  and: [ModelAppDataFilterInput]
+  or: [ModelAppDataFilterInput]
+  not: ModelAppDataFilterInput
 }
 
 enum ModelAttributeTypes {
@@ -140,155 +110,39 @@ enum ModelAttributeTypes {
 }
 
 type Query {
-  syncBlogs(filter: ModelBlogFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBlogConnection
-  getBlog(id: ID!): Blog
-  listBlogs(filter: ModelBlogFilterInput, limit: Int, nextToken: String): ModelBlogConnection
-  syncPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPostConnection
-  getPost(id: ID!): Post
-  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection
-  syncComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCommentConnection
-  getComment(id: ID!): Comment
-  listComments(filter: ModelCommentFilterInput, limit: Int, nextToken: String): ModelCommentConnection
+  getAppData(id: ID!): AppData
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
 }
 
-input CreateBlogInput {
+input CreateAppDataInput {
   id: ID
-  name: String!
-  _version: Int
+  version: String!
 }
 
-input UpdateBlogInput {
+input UpdateAppDataInput {
   id: ID!
-  name: String
-  _version: Int
+  version: String
 }
 
-input DeleteBlogInput {
+input DeleteAppDataInput {
   id: ID
-  _version: Int
 }
 
 type Mutation {
-  createBlog(input: CreateBlogInput!, condition: ModelBlogConditionInput): Blog
-  updateBlog(input: UpdateBlogInput!, condition: ModelBlogConditionInput): Blog
-  deleteBlog(input: DeleteBlogInput!, condition: ModelBlogConditionInput): Blog
-  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post
-  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post
-  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post
-  createComment(input: CreateCommentInput!, condition: ModelCommentConditionInput): Comment
-  updateComment(input: UpdateCommentInput!, condition: ModelCommentConditionInput): Comment
-  deleteComment(input: DeleteCommentInput!, condition: ModelCommentConditionInput): Comment
+  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData
+  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData
+  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData
 }
 
-input ModelBlogConditionInput {
-  name: ModelStringInput
-  and: [ModelBlogConditionInput]
-  or: [ModelBlogConditionInput]
-  not: ModelBlogConditionInput
+input ModelAppDataConditionInput {
+  version: ModelStringInput
+  and: [ModelAppDataConditionInput]
+  or: [ModelAppDataConditionInput]
+  not: ModelAppDataConditionInput
 }
 
 type Subscription {
-  onCreateBlog: Blog @aws_subscribe(mutations: ["createBlog"])
-  onUpdateBlog: Blog @aws_subscribe(mutations: ["updateBlog"])
-  onDeleteBlog: Blog @aws_subscribe(mutations: ["deleteBlog"])
-  onCreatePost: Post @aws_subscribe(mutations: ["createPost"])
-  onUpdatePost: Post @aws_subscribe(mutations: ["updatePost"])
-  onDeletePost: Post @aws_subscribe(mutations: ["deletePost"])
-  onCreateComment: Comment @aws_subscribe(mutations: ["createComment"])
-  onUpdateComment: Comment @aws_subscribe(mutations: ["updateComment"])
-  onDeleteComment: Comment @aws_subscribe(mutations: ["deleteComment"])
-}
-
-type ModelPostConnection {
-  items: [Post]
-  nextToken: String
-  startedAt: AWSTimestamp
-}
-
-input ModelPostFilterInput {
-  id: ModelIDInput
-  title: ModelStringInput
-  blogID: ModelIDInput
-  and: [ModelPostFilterInput]
-  or: [ModelPostFilterInput]
-  not: ModelPostFilterInput
-}
-
-input CreatePostInput {
-  id: ID
-  title: String!
-  blogID: ID!
-  _version: Int
-}
-
-input UpdatePostInput {
-  id: ID!
-  title: String
-  blogID: ID
-  _version: Int
-}
-
-input DeletePostInput {
-  id: ID
-  _version: Int
-}
-
-input ModelPostConditionInput {
-  title: ModelStringInput
-  blogID: ModelIDInput
-  and: [ModelPostConditionInput]
-  or: [ModelPostConditionInput]
-  not: ModelPostConditionInput
-}
-
-type ModelCommentConnection {
-  items: [Comment]
-  nextToken: String
-  startedAt: AWSTimestamp
-}
-
-input ModelCommentFilterInput {
-  id: ModelIDInput
-  postID: ModelIDInput
-  content: ModelStringInput
-  and: [ModelCommentFilterInput]
-  or: [ModelCommentFilterInput]
-  not: ModelCommentFilterInput
-}
-
-input CreateCommentInput {
-  id: ID
-  postID: ID!
-  content: String!
-  _version: Int
-}
-
-input UpdateCommentInput {
-  id: ID!
-  postID: ID
-  content: String
-  _version: Int
-}
-
-input DeleteCommentInput {
-  id: ID
-  _version: Int
-}
-
-input ModelCommentConditionInput {
-  postID: ModelIDInput
-  content: ModelStringInput
-  and: [ModelCommentConditionInput]
-  or: [ModelCommentConditionInput]
-  not: ModelCommentConditionInput
-}
-
-input ModelStringKeyConditionInput {
-  eq: String
-  le: String
-  lt: String
-  ge: String
-  gt: String
-  between: [String]
-  beginsWith: String
+  onCreateAppData: AppData @aws_subscribe(mutations: ["createAppData"])
+  onUpdateAppData: AppData @aws_subscribe(mutations: ["updateAppData"])
+  onDeleteAppData: AppData @aws_subscribe(mutations: ["deleteAppData"])
 }

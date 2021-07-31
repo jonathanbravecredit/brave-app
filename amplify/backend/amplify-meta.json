@@ -30,7 +30,8 @@
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
         "logicalId": "authbraveapp0ea8ea07"
-      }
+      },
+      "lastPushDirHash": "hdAKoSTOMvoCKCZ26y2woa90QZ4="
     }
   },
   "api": {
@@ -45,7 +46,11 @@
               "userPoolId": "authbraveapp0ea8ea07"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         },
         "GraphQLAPIIdOutput": "4tpaga7rzjayhk75opsmpeurme",
         "GraphQLAPIEndpointOutput": "https://krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com/graphql"
@@ -77,6 +82,37 @@
         "deploymentBucketName": "amplify-braveapp-prod-115121-deployment",
         "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
       }
+    },
+    "GraphQLResolverFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "braveapp",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ],
+      "lastDevBuildTimeStamp": "2021-06-25T23:14:35.934Z"
+    },
+    "PatchTransunionCustomResolver": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "braveapp",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ]
     }
   },
   "storage": {

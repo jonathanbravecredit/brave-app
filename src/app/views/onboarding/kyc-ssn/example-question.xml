@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ChallengeConfigurationType xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com/truelink/ds/sch/srv/iv/ccs">
+  <RulesApp>IDMA</RulesApp>
+  <CorrectAnswersNeeded>0</CorrectAnswersNeeded>
+  <AnswerAttemptsAllowed>0</AnswerAttemptsAllowed>
+  <MultiChoiceQuestion>
+    <QuestionType>IDMA</QuestionType>
+    <SequenceNumber>1</SequenceNumber>
+    <LastChanceQuestion>false</LastChanceQuestion>
+    <FakeQuestion>false</FakeQuestion>
+    <FullQuestionText>What state was your social security number issued (this could be the state in which you were born or had your first job)?</FullQuestionText>
+    <KeyQuestionText>
+      <PromptDate>2021-06-06T16:59:23-07:00</PromptDate>
+    </KeyQuestionText>
+    <AnswerChoice>
+      <SequenceNumber>1</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>Arkansas</AnswerChoiceText>
+      <Key>Arkansas</Key>
+      <AnswerChoiceId>3076832846</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>2</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>Illinois</AnswerChoiceText>
+      <Key>Illinois</Key>
+      <AnswerChoiceId>3076832848</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>3</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>Kansas</AnswerChoiceText>
+      <Key>Kansas</Key>
+      <AnswerChoiceId>3076832850</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>4</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>New Hampshire</AnswerChoiceText>
+      <Key>New Hampshire</Key>
+      <AnswerChoiceId>3076832852</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>5</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>None of the Above</AnswerChoiceText>
+      <Key>!(Arkansas^Illinois^Kansas^New Hampshire)</Key>
+      <AnswerChoiceId>3076832854</AnswerChoiceId>
+    </AnswerChoice>
+    <Key>SSN_ISSUED</Key>
+    <QuestionId>48441724</QuestionId>
+  </MultiChoiceQuestion>
+  <MultiChoiceQuestion>
+    <QuestionType>IDMA</QuestionType>
+    <SequenceNumber>2</SequenceNumber>
+    <LastChanceQuestion>false</LastChanceQuestion>
+    <FakeQuestion>false</FakeQuestion>
+    <FullQuestionText>What is the balance of your most recent mortgage?</FullQuestionText>
+    <KeyQuestionText>
+      <PromptDate>2021-06-06T16:59:23-07:00</PromptDate>
+    </KeyQuestionText>
+    <AnswerChoice>
+      <SequenceNumber>1</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>$ 110001 - $ 115000</AnswerChoiceText>
+      <Key>$ 110001 - $ 115000</Key>
+      <AnswerChoiceId>3076832856</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>2</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>$ 115001 - $ 120000</AnswerChoiceText>
+      <Key>$ 115001 - $ 120000</Key>
+      <AnswerChoiceId>3076832858</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>3</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>$ 120001 - $ 125000</AnswerChoiceText>
+      <Key>$ 120001 - $ 125000</Key>
+      <AnswerChoiceId>3076832860</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>4</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>$ 130001 - $ 135000</AnswerChoiceText>
+      <Key>$ 130001 - $ 135000</Key>
+      <AnswerChoiceId>3076832862</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>5</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>None of the Above</AnswerChoiceText>
+      <Key>!($ 110001 - $ 115000^$ 115001 - $ 120000^$ 120001 - $ 125000^$ 130001 - $ 135000)</Key>
+      <AnswerChoiceId>3076832864</AnswerChoiceId>
+    </AnswerChoice>
+    <Key>MTG_BAL</Key>
+    <QuestionId>48441726</QuestionId>
+  </MultiChoiceQuestion>
+  <MultiChoiceQuestion>
+    <QuestionType>IDMA</QuestionType>
+    <SequenceNumber>3</SequenceNumber>
+    <LastChanceQuestion>false</LastChanceQuestion>
+    <FakeQuestion>false</FakeQuestion>
+    <FullQuestionText>Which of these street names are you associated with?</FullQuestionText>
+    <KeyQuestionText>
+      <PromptDate>2021-06-06T16:59:23-07:00</PromptDate>
+    </KeyQuestionText>
+    <AnswerChoice>
+      <SequenceNumber>1</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>Bowen</AnswerChoiceText>
+      <Key>Bowen</Key>
+      <AnswerChoiceId>3076832866</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>2</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>Second Street</AnswerChoiceText>
+      <Key>Second Street</Key>
+      <AnswerChoiceId>3076832868</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>3</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>South Lowrie</AnswerChoiceText>
+      <Key>South Lowrie</Key>
+      <AnswerChoiceId>3076832870</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>4</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>Walnut</AnswerChoiceText>
+      <Key>Walnut</Key>
+      <AnswerChoiceId>3076832872</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>5</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>None of the Above</AnswerChoiceText>
+      <Key>!(Bowen^Second Street^South Lowrie^Walnut)</Key>
+      <AnswerChoiceId>3076832874</AnswerChoiceId>
+    </AnswerChoice>
+    <Key>ASSOC_ST_NAME</Key>
+    <QuestionId>48441728</QuestionId>
+  </MultiChoiceQuestion>
+  <MultiChoiceQuestion>
+    <QuestionType>IDMA</QuestionType>
+    <SequenceNumber>4</SequenceNumber>
+    <LastChanceQuestion>false</LastChanceQuestion>
+    <FakeQuestion>false</FakeQuestion>
+    <FullQuestionText>What year was your most recent auto loan or lease established?</FullQuestionText>
+    <KeyQuestionText>
+      <PromptDate>2021-06-06T16:59:23-07:00</PromptDate>
+    </KeyQuestionText>
+    <AnswerChoice>
+      <SequenceNumber>1</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>1996</AnswerChoiceText>
+      <Key>1996</Key>
+      <AnswerChoiceId>3076832876</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>2</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>1997</AnswerChoiceText>
+      <Key>1997</Key>
+      <AnswerChoiceId>3076832878</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>3</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>1999</AnswerChoiceText>
+      <Key>1999</Key>
+      <AnswerChoiceId>3076832880</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>4</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>2000</AnswerChoiceText>
+      <Key>2000</Key>
+      <AnswerChoiceId>3076832882</AnswerChoiceId>
+    </AnswerChoice>
+    <AnswerChoice>
+      <SequenceNumber>5</SequenceNumber>
+      <IsCorrectAnswer>false</IsCorrectAnswer>
+      <AnswerChoiceText>None of the Above</AnswerChoiceText>
+      <Key>!(1996^1997^1999^2000)</Key>
+      <AnswerChoiceId>3076832884</AnswerChoiceId>
+    </AnswerChoice>
+    <Key>AUTO_YR</Key>
+    <QuestionId>48441730</QuestionId>
+  </MultiChoiceQuestion>
+  <ApplicantChallengeId>878151480</ApplicantChallengeId>
+  <ApplicantId>34991338</ApplicantId>
+</ChallengeConfigurationType>

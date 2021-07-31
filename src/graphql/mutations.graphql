@@ -1,325 +1,650 @@
 # this is an auto generated file. This will be overwritten
-mutation CreateBlog(
-  $input: CreateBlogInput!
-  $condition: ModelBlogConditionInput
-) {
-  createBlog(input: $input, condition: $condition) {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
+mutation PatchTransunion($id: ID!, $msg: String) {
+  patchTransunion(id: $id, msg: $msg) {
+    authenticated
+    indicativeEnrichmentSuccess
+    getAuthenticationQuestionsSuccess
+    serviceBundleFulfillmentKey
+    currentRawQuestions
+    currentRawAuthDetails
+    enrollmentKey
+    enrollReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
     }
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation UpdateBlog(
-  $input: UpdateBlogInput!
-  $condition: ModelBlogConditionInput
-) {
-  updateBlog(input: $input, condition: $condition) {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
+    enrollMergeReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
     }
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation DeleteBlog(
-  $input: DeleteBlogInput!
-  $condition: ModelBlogConditionInput
-) {
-  deleteBlog(input: $input, condition: $condition) {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
+    enrollVantageScore {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
     }
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation CreatePost(
-  $input: CreatePostInput!
-  $condition: ModelPostConditionInput
-) {
-  createPost(input: $input, condition: $condition) {
-    id
-    title
-    blogID
-    blog {
+    enrolled
+    enrolledOn
+    fulfillReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfillMergeReport {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfillVantageScore {
+      bureau
+      errorResponse
+      serviceProduct
+      serviceProductFullfillmentKey
+      serviceProductObject
+      serviceProductTypeId
+      serviceProductValue
+      status
+    }
+    fulfilledOn
+    acknowledgedDisputeTerms
+    acknowledgedDisputeTermsOn
+    disputeServiceBundleFulfillmentKey
+    disputeEnrollmentKey
+    disputeEnrolled
+    disputeEnrolledOn
+    disputeStatus
+    disputes {
       id
-      name
-      posts {
-        nextToken
-        startedAt
+      appDataId
+      disputeId
+      disputeStatus
+      disputeLetterCode
+      disputeLetterContent
+      openDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
       }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    comments {
-      items {
-        id
-        postID
-        content
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+      closedDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
       }
-      nextToken
-      startedAt
+      agencyName
+      openedOn
+      closedOn
+      disputeItems
+      disputeInvestigationResults
+      disputeCreditBureau
+      notificationStatus
+      notificationMessage
+      notificationSentOn
     }
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
   }
 }
-mutation UpdatePost(
-  $input: UpdatePostInput!
-  $condition: ModelPostConditionInput
+mutation CreateAppData(
+  $input: CreateAppDataInput!
+  $condition: ModelAppDataConditionInput
 ) {
-  updatePost(input: $input, condition: $condition) {
+  createAppData(input: $input, condition: $condition) {
     id
-    title
-    blogID
-    blog {
+    user {
       id
-      name
-      posts {
-        nextToken
-        startedAt
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
       }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    comments {
-      items {
-        id
-        postID
-        content
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+      onboarding {
+        lastActive
+        lastComplete
+        started
       }
-      nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
+        disputeEnrolled
+        disputeEnrolledOn
+        disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
-mutation DeletePost(
-  $input: DeletePostInput!
-  $condition: ModelPostConditionInput
+mutation UpdateAppData(
+  $input: UpdateAppDataInput!
+  $condition: ModelAppDataConditionInput
 ) {
-  deletePost(input: $input, condition: $condition) {
+  updateAppData(input: $input, condition: $condition) {
     id
-    title
-    blogID
-    blog {
+    user {
       id
-      name
-      posts {
-        nextToken
-        startedAt
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
       }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    comments {
-      items {
-        id
-        postID
-        content
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+      onboarding {
+        lastActive
+        lastComplete
+        started
       }
-      nextToken
-      startedAt
     }
-    _version
-    _deleted
-    _lastChangedAt
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
+        disputeEnrolled
+        disputeEnrolledOn
+        disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
+      }
+    }
     createdAt
     updatedAt
+    owner
   }
 }
-mutation CreateComment(
-  $input: CreateCommentInput!
-  $condition: ModelCommentConditionInput
+mutation DeleteAppData(
+  $input: DeleteAppDataInput!
+  $condition: ModelAppDataConditionInput
 ) {
-  createComment(input: $input, condition: $condition) {
+  deleteAppData(input: $input, condition: $condition) {
     id
-    postID
-    post {
+    user {
       id
-      title
-      blogID
-      blog {
-        id
-        name
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
       }
-      comments {
-        nextToken
-        startedAt
+      onboarding {
+        lastActive
+        lastComplete
+        started
       }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
     }
-    content
-    _version
-    _deleted
-    _lastChangedAt
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
+        disputeEnrolled
+        disputeEnrolledOn
+        disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    preferences {
+      showAllAccounts {
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
+      }
+    }
     createdAt
     updatedAt
-  }
-}
-mutation UpdateComment(
-  $input: UpdateCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  updateComment(input: $input, condition: $condition) {
-    id
-    postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-mutation DeleteComment(
-  $input: DeleteCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  deleteComment(input: $input, condition: $condition) {
-    id
-    postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-        startedAt
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-    content
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
+    owner
   }
 }

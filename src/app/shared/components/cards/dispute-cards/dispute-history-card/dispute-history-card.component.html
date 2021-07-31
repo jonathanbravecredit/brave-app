@@ -1,0 +1,29 @@
+<brave-dispute-regular-card *ngIf="type === 'default'" (viewDetailsClick)="viewDetailsClick.emit()">
+  <ng-template data>
+    <span class="font-semibold text-sm flex-grow">Latest Dispute Submitted:</span>
+    <span class="font-semibold text-sm">{{ latestDateSubmitted }}</span>
+    <span></span>
+    <span class="font-semibold text-sm flex-grow">{{ creditorName }}</span>
+  </ng-template>
+  <ng-template details>
+    <p class="text-sm">Decision: </p>
+    <p class="text-sm font-semibold text-yellow-500">{{ decision }}</p>
+  </ng-template>
+</brave-dispute-regular-card>
+<div class="p-y mx-3 py-10" *ngIf="type === 'short'">
+  <div class="flex">
+    <span class="material-icons mr-3">
+      assignment
+    </span>
+    <div>
+      <p class="text-sm font-semibold">{{ creditorName }}</p>
+      <p class="text-sm font-semibold">Result Received: {{ resultReceived }}</p>
+    </div>
+  </div>
+  <div class="mt-2 flex items-center">
+    <span class="text-xs">View Details</span>
+    <span class="material-icons text-sm">
+      keyboard_arrow_right
+    </span>
+  </div>
+</div>
