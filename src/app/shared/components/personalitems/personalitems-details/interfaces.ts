@@ -9,7 +9,7 @@ export interface IPersonalItemsDetailsConfig {
   telephones?: string;
   employers?: string;
   borrowerNamesArray?: string[];
-  previousAddressesArray: string[];
-  telephonesArray: string[];
-  employersArray: string[];
+  previousAddressesArray?: string[];
+  telephonesArray?: string[];
+  employersArray?: string[];
 }

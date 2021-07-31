@@ -9,11 +9,10 @@
         <p class="text-sm font-semibold">
           {{ titleName }}
         </p>
+        <p class="text-sm font-semibold">&#40;{{ count }}&#41;Found</p>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-1 mb-2">
-      <p class="text-xs text-dk-gray text-opacity-50 text-right">&#40;{{ count }}&#41;Found</p>
-    </div>
+
     <div class="flex justify-center my-4">
       <brave-filled-onlytext-button (click)="disputeClick.emit()"
         >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
@@ -32,8 +31,6 @@
           <div class="py-2 px-1">
             <brave-tradeline-detail-row [label]="fieldName" [value]="fieldValues || '--'"></brave-tradeline-detail-row>
           </div>
-          <!-- spacer for bottom -->
-          <div></div>
         </div>
       </div>
     </div>

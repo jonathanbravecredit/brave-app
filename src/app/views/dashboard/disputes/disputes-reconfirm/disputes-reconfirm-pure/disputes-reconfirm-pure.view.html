@@ -10,7 +10,7 @@
 </div>
 
 <!-- personal items -->
-<div class="flex items-center mb-3">
+<div *ngIf="personalItems.personalItem" class="flex items-center mb-3">
   <span class="material-icons-outlined">perm_identity</span>
   <span>Personal Information</span>
 </div>
@@ -46,7 +46,7 @@
 </div>
 
 <!-- public items -->
-<div class="flex items-center mb-8">
+<div *ngIf="publicItems.length" class="flex items-center mb-8">
   <span class="material-icons-outlined"> description </span>
   <span>Public Records</span>
 </div>
