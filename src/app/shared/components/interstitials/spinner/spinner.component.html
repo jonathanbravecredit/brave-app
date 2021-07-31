@@ -1,0 +1,12 @@
+<div class="w-full h-full flex flex-col justify-center items-center align-center">
+  <svg
+    class="animate-spin stroke-1 h-8 w-8 text-gray-600"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+    <path class="opacity-75" stroke="currentColor" stroke-width="2" fill="none" d="M 22 12 A 10 10 0 0 1 12 22"></path>
+  </svg>
+  <p *ngIf="message" class="mt-4 text-sm text-blueGray-600">{{ message }}</p>
+</div>

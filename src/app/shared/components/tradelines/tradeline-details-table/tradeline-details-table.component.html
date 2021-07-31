@@ -1,0 +1,238 @@
+<!-- ============================== -->
+<!--       REV/INST ACCOUNTS        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'revolving' || mapperType === 'installment'" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountNumber'] || 'Account Number'"
+      [value]="config.accountNumber || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type of account -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol'] || 'Account Type'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Openend -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateOpened'] || 'Date Opened'"
+      [value]="config.dateOpened || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Closed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateClosed'] || 'Date Closed'"
+      [value]="config.dateClosed || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Credit Limit -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['creditLimit'] || 'Credit Limit'"
+      [value]="config.creditLimit || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Term -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['termMonths'] || 'Term'"
+      [value]="config.termMonths || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Monthly payments -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['monthlyPayment'] || 'Monthly Payment'"
+      [value]="config.monthlyPayment || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- account designator -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountDesignator'] || 'ResponResponsibilitysible'"
+      [value]="config.accountDesignator || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- highest balance -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['highestBalance'] || 'Highest Balance'"
+      [value]="config.highestBalance || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- late count -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['late90Count'] || 'Times 30/60/90 Days Late'"
+      [value]="sumLateCount(config) || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- dispute flag -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
+      [value]="config.disputeFlag || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
+
+<!-- ============================== -->
+<!--        COLLECT ACCOUNTS        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'collections'" class="divide-y divide-blueGray-300">
+  <!-- Original Creditor -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['originalCreditor'] || 'Original Creditor'"
+      [value]="config.originalCreditor || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type of account -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol'] || 'Account Type'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Openend -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateOpened'] || 'Date Opened'"
+      [value]="config.dateOpened || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Disputed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
+      [value]="config.disputeFlag || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
+
+<!-- ============================== -->
+<!--        DISPUTE PAGE 1        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'disputeOne'" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountNumber'] || 'Account Number'"
+      [value]="config.accountNumber || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Type of account -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountTypeSymbol'] || 'Account Type'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Openend -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateOpened'] || 'Date Opened'"
+      [value]="config.dateOpened || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Date Closed -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['dateClosed'] || 'Date Closed'"
+      [value]="config.dateClosed || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Credit Limit -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['creditLimit'] || 'Credit Limit'"
+      [value]="config.creditLimit || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- Term -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['termMonths'] || 'Term'"
+      [value]="config.termMonths || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
+
+<!-- ============================== -->
+<!--        DISPUTE PAGE 2        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'disputeTwo'" class="divide-y divide-blueGray-300">
+  <!-- Monthly payments -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['monthlyPayment'] || 'Monthly Payment'"
+      [value]="config.monthlyPayment || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- account designator -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['accountDesignator'] || 'Responsibility'"
+      [value]="config.accountDesignator || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- highest balance -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['highestBalance']"
+      [value]="config.highestBalance || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- late count -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['late90Count'] || 'Times 30/60/90 Days Late'"
+      [value]="sumLateCount(config) || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- dispute flag -->
+  <div class="py-2 px-1">
+    <brave-tradeline-detail-row
+      [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
+      [value]="config.disputeFlag || '--'"
+    ></brave-tradeline-detail-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>

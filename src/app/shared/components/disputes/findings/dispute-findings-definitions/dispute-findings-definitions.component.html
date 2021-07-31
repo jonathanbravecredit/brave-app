@@ -1,0 +1,17 @@
+<div class="mx-3 my-4">
+  <div class="flex items-center">
+    <div class="w-1 h-5 bg-purple-800 mr-4">
+    </div>
+    <p class="font-semibold">Definitions</p>
+  </div>
+  <p class="text-sm mt-4">For your reference, here are some definitions to help you understand Your Investigation Results.</p>
+  <p class="mt-4 font-semibold">For ACCOUNTS</p>
+  <div class="p-3 rounded-xs bg-green-100 mt-4">
+    <div class="mt-4" *ngFor="let definition of definitions; let i = index">
+      <p class="font-semibold text-sm">{{ definition.title }}:</p>
+      <p class="text-xs mt-2">{{ definition.description }}</p>
+      <div class="h-1 border-t mt-4 border-black opacity-50" *ngIf="i !== definitions.length - 1">
+      </div>
+    </div>
+  </div>
+</div>

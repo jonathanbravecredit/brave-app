@@ -1,0 +1,65 @@
+<div class="my-4 space-y-4">
+  <p>Confirm Account to Dispute</p>
+  <p class="text-sm text-dk-gray text-opacity-80">{{ p1 }}</p>
+  <p class="text-sm text-dk-gray">{{ p2 }}</p>
+</div>
+
+<!-- tradeline accounts -->
+<div *ngFor="let tradeline of tradelines">
+  <brave-tradeline-dispute-card
+    [tradeline]="tradeline"
+    (disputeClick)="disputeTradelineClick.emit(tradeline.tradeline)"
+  ></brave-tradeline-dispute-card>
+</div>
+
+<!-- personal items -->
+<div *ngIf="personalItems.personalItem" class="flex items-center mb-3">
+  <span class="material-icons-outlined">perm_identity</span>
+  <span>Personal Information</span>
+</div>
+
+<div *ngIf="personalItems.borrowerNames">
+  <brave-personalitem-dispute-card
+    icon="face"
+    [titleName]="'Name(s)'"
+    [fieldName]="'Name(s)'"
+    [fieldValues]="personalItems.borrowerNames || '--'"
+    [count]="personalItems.borrowerNamesArray?.length || 0"
+    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+  ></brave-personalitem-dispute-card>
+</div>
+
+<div *ngIf="personalItems.previousAddresses">
+  <brave-personalitem-dispute-card
+    icon="home"
+    [titleName]="'Address(es)'"
+    [fieldName]="'Address(es)'"
+    [fieldValues]="personalItems.previousAddresses || '--'"
+    [count]="personalItems.previousAddressesArray?.length || 0"
+    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+  ></brave-personalitem-dispute-card>
+</div>
+
+<div *ngIf="personalItems.employers">
+  <brave-personalitem-dispute-card
+    icon="badge"
+    [titleName]="'Employers(es)'"
+    [fieldName]="'Employers(es)'"
+    [fieldValues]="personalItems.employers || '--'"
+    [count]="personalItems.employersArray?.length || 0"
+    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+  ></brave-personalitem-dispute-card>
+</div>
+
+<!-- public items -->
+<div *ngIf="publicItems.length" class="flex items-center mb-8">
+  <span class="material-icons-outlined"> description </span>
+  <span>Public Records</span>
+</div>
+
+<div *ngFor="let publicItem of publicItems">
+  <brave-publicitem-dispute-card
+    [publicItem]="publicItem"
+    (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
+  ></brave-publicitem-dispute-card>
+</div>
