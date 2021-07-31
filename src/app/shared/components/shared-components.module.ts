@@ -138,6 +138,11 @@ import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/p
 import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
 import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card.component';
+import { PublicitemDisputeCardComponent } from './cards/publicitem-dispute-card/publicitem-dispute-card.component';
+import { PersonalitemDisputeCardComponent } from './cards/personalitem-dispute-card/personalitem-dispute-card.component';
+import { TradelineDisputeCardComponent } from './cards/tradeline-dispute-card/tradeline-dispute-card.component';
+import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const components = [
   BaseFormComponent,
@@ -251,6 +256,9 @@ const components = [
   PersonalitemsDetailsComponent,
   PersonalitemsDetailsTableComponent,
   PublicitemCardComponent,
+  PublicitemDisputeCardComponent,
+  PersonalitemDisputeCardComponent,
+  TradelineDisputeCardComponent,
 ];
 
 // component specific pipes only
@@ -270,6 +278,7 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   DisputeCardStatusPipe,
+  SimpleBackButtonComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -278,6 +287,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
   imports: [
     CommonModule,
     SharedPipesModule,
+    SharedDirectivesModule,
     NgxChartsModule,
     ChartsModule,
     ReactiveFormsModule,

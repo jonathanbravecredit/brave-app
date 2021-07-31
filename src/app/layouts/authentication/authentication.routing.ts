@@ -1,15 +1,15 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthenticationComponent } from './authentication.component';
-import { SignupThankyouComponent } from '@views/signup-thankyou/signup-thankyou/signup-thankyou.component';
-import { SignupKnowyouComponent } from '@views/signup-knowyou/signup-knowyou.component';
-import { SignupErrorComponent } from '@views/signup-error/signup-error.component';
-import { SignupErrorValidationComponent } from '@views/signup-error-validation/signup-error-validation.component';
-import { SignupComponent } from '@views/signup/signup/signup.component';
-import { SigninComponent } from '@views/signin/signin/signin.component';
-import { SignupResendComponent } from '@views/signup-resend/signup-resend.component';
-import { SigninForgotComponent } from '@views/signin-forgot/signin-forgot.component';
-import { SigninRedirectComponent } from '@views/signin-redirect/signin-redirect.component';
+import { SigninForgotComponent } from '@views/authentication/signin-forgot/signin-forgot.component';
+import { SigninRedirectComponent } from '@views/authentication/signin-redirect/signin-redirect.component';
+import { SigninComponent } from '@views/authentication/signin/signin/signin.component';
+import { SignupErrorValidationComponent } from '@views/authentication/signup-error-validation/signup-error-validation.component';
+import { SignupErrorComponent } from '@views/authentication/signup-error/signup-error.component';
+import { SignupKnowyouComponent } from '@views/authentication/signup-knowyou/signup-knowyou.component';
+import { SignupResendComponent } from '@views/authentication/signup-resend/signup-resend.component';
+import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
+import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
 
 const AuthenticationRoutes: Routes = [
   {

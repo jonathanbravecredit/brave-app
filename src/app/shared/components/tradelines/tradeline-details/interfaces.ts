@@ -1,9 +1,12 @@
+import { ITradeLinePartition } from '@shared/interfaces';
+
 /**
  * Configuration for the tradeline details display.
  * Mapped directly from Merge Report
- *
+ * @property {string} tradeline
  * @property {string} accountNumber
  * @property {string} accountTypeSymbol
+ * @property {string} accoutnTypeDescription
  * @property {string} creditorName
  * @property {string} originalCreditor
  * @property {string} creditType
@@ -25,8 +28,10 @@
  * @property {string} openClosed
  */
 export interface ITradelineDetailsConfig {
+  tradeline: ITradeLinePartition;
   accountNumber?: string;
   accountTypeSymbol?: string;
+  accountTypeDescription?: string;
   creditorName?: string;
   originalCreditor?: string;
   creditType?: string;

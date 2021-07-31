@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 import { NewUser } from '@shared/services/auth/auth.service';
-import { SigninState } from '@views/signin/signin/signin.component';
+import { SigninState } from '@views/authentication/signin/signin/signin.component';
 
 @Component({
   selector: 'brave-simple-signin-form',

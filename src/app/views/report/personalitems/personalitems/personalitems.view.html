@@ -1,7 +1,0 @@
-<div style="min-width: 20rem" class="container mx-auto max-w-xs h-full p-4">
-  <div *ngIf="personalItem$ | async as personalItem">
-    <div *ngIf="personalItem | personalitemsToDetails as config">
-      <brave-personalitems-pure [personalItem]="personalItem" [config]="config"> </brave-personalitems-pure>
-    </div>
-  </div>
-</div>

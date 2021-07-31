@@ -4,18 +4,12 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { ViewsModule } from '@views/views.module';
 import { DashboardRoutingModule } from '@layouts/dashboard/dashboard.routing';
 import { DashboardComponent } from '@layouts/dashboard/dashboard.component';
-import { SettingsLayout } from './settings/settings.layout';
 
-const components = [DashboardComponent, SettingsLayout];
+const components = [DashboardComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [
-    CommonModule,
-    SharedComponentsModule,
-    ViewsModule,
-    DashboardRoutingModule,
-  ],
+  imports: [CommonModule, SharedComponentsModule, ViewsModule, DashboardRoutingModule],
   exports: [...components],
 })
 export class DashboardModule {}

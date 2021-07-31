@@ -8,7 +8,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
-import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -34,9 +34,11 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   /*===========================================================================*/
   // These help track the responses
   /*===========================================================================*/
-  currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject({} as DisputeInput);
+  currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject<DisputeInput>({} as DisputeInput);
   disputeStack: IProcessDisputeTradelineResult[] = [];
-  disputes$: Subject<(DisputeInput | null | undefined)[] | null | undefined> = new Subject();
+  disputes$: BehaviorSubject<(DisputeInput | null)[] | null | undefined> = new BehaviorSubject<
+    (DisputeInput | null)[] | null | undefined
+  >([{} as DisputeInput]);
 
   _acknowledged: boolean = false;
   stateSub$: Subscription;
@@ -77,6 +79,7 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   ngOnDestroy(): void {
     if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
     if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
+    if (this.personalItemSub$) this.personalItemSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 

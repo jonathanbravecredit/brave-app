@@ -22,7 +22,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
-import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 /*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
@@ -254,9 +254,11 @@ export class TransunionService {
       console.log('sendDispute: dispute', disputes);
       const msg = { id, disputes }; //this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
+      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       console.log('err ', err);
+      this.interstitial.closeInterstitial();
       return { success: false, error: err };
     }
   }

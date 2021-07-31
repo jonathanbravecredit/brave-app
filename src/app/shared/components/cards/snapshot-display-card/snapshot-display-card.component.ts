@@ -24,6 +24,7 @@ export class SnapshotDisplayCardComponent implements OnInit {
   @Input() value: string | number = '';
   @Input() typeOfDate: TypeOfDate = 'Years';
   @Input() label: LabelOfSnapshot | string = LabelOfSnapshot.NoLabel;
+  @Input() preview: boolean = false;
 
   constructor() {}
 
