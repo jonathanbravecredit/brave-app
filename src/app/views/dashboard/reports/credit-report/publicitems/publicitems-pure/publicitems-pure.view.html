@@ -1,0 +1,39 @@
+<div class="flex items-center">
+  <span class="material-icons-outlined"> assignment </span>
+  <span class="ml-3">{{ config.publicItemType }}</span>
+</div>
+
+<div class="mt-4 mb-6">
+  <brave-publicitems-details
+    [config]="config"
+    (disputeClick)="disputeClick.emit(publicItem)"
+  ></brave-publicitems-details>
+</div>
+
+<div class="flex justify-center mb-4">
+  <div><p class="text-s text-dk-gray mb-4">See an error?</p></div>
+  <div>
+    <p class="text-xs text-dk-gray">
+      If you see an error in your account, you can ask for it to be reviewed through a dispute. You can do this through
+      Brave Credit!
+    </p>
+  </div>
+</div>
+
+<div class="flex justify-center mb-2">
+  <!-- DISABLING PUBLIC ITEM DISPUTES FOR NOW -->
+  <!-- (click)="showModal = !showModal; this.disputeClicked() -->
+  <brave-filled-onlytext-button [disabled]="true">Dispute in a few clicks</brave-filled-onlytext-button>
+</div>
+
+<div style="padding: 2.25rem 0" class="flex justify-center border border-coolGray-300 bg-coolGray-300">
+  <span>
+    <p>Ad text here</p>
+  </span>
+</div>
+
+<brave-onboarding-dispute
+  class="w-device h-device fixed"
+  [showModal]="showModal && !acknowledged"
+  (confirmation)="actionForDispute($event)"
+></brave-onboarding-dispute>

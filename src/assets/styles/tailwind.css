@@ -1569,6 +1569,10 @@ select {
   flex-wrap: wrap;
 }
 
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
 .items-start {
   align-items: flex-start;
 }
@@ -1587,6 +1591,10 @@ select {
 
 .content-center {
   align-content: center;
+}
+
+.content-start {
+  align-content: flex-start;
 }
 
 .justify-start {
@@ -2139,8 +2147,8 @@ select {
   opacity: 0.75;
 }
 
-.opacity-90 {
-  opacity: 0.9;
+.opacity-100 {
+  opacity: 1;
 }
 
 .outline-none {
@@ -2839,6 +2847,14 @@ select {
   --tw-text-opacity: 0.5;
 }
 
+.text-opacity-75 {
+  --tw-text-opacity: 0.75;
+}
+
+.text-opacity-80 {
+  --tw-text-opacity: .8;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2922,6 +2938,10 @@ select {
   width: 3rem;
 }
 
+.w-16 {
+  width: 4rem;
+}
+
 .w-24 {
   width: 6rem;
 }
@@ -2968,6 +2988,10 @@ select {
 
 .z-50 {
   z-index: 50;
+}
+
+.gap-1 {
+  gap: 0.25rem;
 }
 
 .gap-2 {

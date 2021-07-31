@@ -4,6 +4,7 @@
  *
  * @property {string} accountNumber
  * @property {string} accountTypeSymbol
+ * @property {string} accoutnTypeDescription
  * @property {string} creditorName
  * @property {string} originalCreditor
  * @property {string} creditType
@@ -27,6 +28,7 @@
 export interface ITradelineDetailsConfig {
   accountNumber?: string;
   accountTypeSymbol?: string;
+  accountTypeDescription?: string;
   creditorName?: string;
   originalCreditor?: string;
   creditType?: string;

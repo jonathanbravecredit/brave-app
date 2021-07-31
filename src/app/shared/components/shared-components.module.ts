@@ -138,6 +138,7 @@ import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/p
 import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
 import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card.component';
+import { TradelineCardComponent } from './cards/tradeline-card/tradeline-card.component';
 
 const components = [
   BaseFormComponent,
@@ -251,6 +252,7 @@ const components = [
   PersonalitemsDetailsComponent,
   PersonalitemsDetailsTableComponent,
   PublicitemCardComponent,
+  TradelineCardComponent,
 ];
 
 // component specific pipes only

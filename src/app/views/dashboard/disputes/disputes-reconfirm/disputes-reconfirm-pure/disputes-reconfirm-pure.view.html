@@ -1,0 +1,17 @@
+<div>
+  <p class="text-sm text-dk-gray">Confirm Account to Dispute</p>
+</div>
+
+<div>
+  <p class="text-xs text-dk-gray text-opacity-80">
+    We&apos;ve refreshed your credit report! These are the items you can dispute.
+  </p>
+</div>
+
+<div>
+  <p class="text-xs text-dk-gray text-opacity-80">Please confirm which items you want to take action on.</p>
+</div>
+
+<div *ngFor="let tradeline of tradelines">
+  <brave-tradeline-card [tradeline]="tradeline"></brave-tradeline-card>
+</div>

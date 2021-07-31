@@ -1,0 +1,14 @@
+<div *ngIf="creditReport$ | async as report">
+  <div *ngIf="report | mergereportToTradelines as tradelines">
+    <div *ngIf="report | mergereportToPublicitems as publicItems">
+      <div *ngIf="report | mergereportToPersonalitems as personalItems">
+        <brave-disputes-reconfirm-pure
+          [tradelines]="tradelines"
+          [publicItems]="publicItems"
+          [personalItems]="personalItems"
+        >
+        </brave-disputes-reconfirm-pure>
+      </div>
+    </div>
+  </div>
+</div>
