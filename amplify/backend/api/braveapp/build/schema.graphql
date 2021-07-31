@@ -153,8 +153,8 @@ type Dispute @aws_iam @aws_cognito_user_pools {
   openedOn: String
   closedOn: String
   disputeItems: AWSJSON
-  disputeInvestigationResults: String
-  disputeCreditBureau: String
+  disputeInvestigationResults: AWSJSON
+  disputeCreditBureau: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String
@@ -277,8 +277,8 @@ input DisputeInput {
   openedOn: String
   closedOn: String
   disputeItems: AWSJSON
-  disputeInvestigationResults: String
-  disputeCreditBureau: String
+  disputeInvestigationResults: AWSJSON
+  disputeCreditBureau: AWSJSON
   notificationStatus: String
   notificationMessage: AWSJSON
   notificationSentOn: String
