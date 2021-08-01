@@ -134,6 +134,7 @@ export class SyncService implements OnDestroy {
    */
   async goToDashboard(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
+    this.interstitial.closeInterstitial();
     this.router.navigate(['/dashboard/init']);
   }
 
@@ -145,6 +146,7 @@ export class SyncService implements OnDestroy {
   async goToLastOnboarded(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
     const lastComplete = data.user?.onboarding?.lastComplete || -1;
+    this.interstitial.closeInterstitial();
     this.routeUser(lastComplete);
   }
 
@@ -156,6 +158,7 @@ export class SyncService implements OnDestroy {
    */
   async stayPut(id: string): Promise<void> {
     await this.syncDBDownToState(id);
+    this.interstitial.closeInterstitial();
   }
 
   /**
@@ -175,6 +178,7 @@ export class SyncService implements OnDestroy {
       const data = await this.api.CreateAppData(input);
       await this.subscribeToListeners(creds.identityId); // if new
       const clean = this.cleanBackendData(data);
+      this.interstitial.closeInterstitial();
       this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
         this.data$.next(clean);
         this.routeUser(-1);
