@@ -10,7 +10,7 @@ export type SigninState = 'init' | 'invalid';
   selector: 'brave-signin',
   templateUrl: './signin.component.html',
 })
-export class SigninComponent implements OnDestroy {
+export class SigninComponent {
   viewState: SigninState = 'init';
   message: string = '';
   constructor(
@@ -19,10 +19,6 @@ export class SigninComponent implements OnDestroy {
     private auth: AuthService,
     private interstitial: InterstitialService,
   ) {}
-
-  ngOnDestroy(): void {
-    this.interstitial.closeInterstitial();
-  }
 
   /**
    * Method to sign user up
@@ -36,6 +32,7 @@ export class SigninComponent implements OnDestroy {
         this.interstitial.changeMessage(' ');
         this.interstitial.openInterstitial();
         const cognitorUser = await this.auth.signIn(user.username, user.password);
+        this.interstitial.closeInterstitial();
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
           console.log('MFA challenge');
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
@@ -44,6 +41,7 @@ export class SigninComponent implements OnDestroy {
           console.log('OTP setup');
         }
       } catch (err) {
+        this.interstitial.closeInterstitial();
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -58,6 +56,7 @@ export class SigninComponent implements OnDestroy {
         }
       }
     } else {
+      this.interstitial.closeInterstitial();
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,
