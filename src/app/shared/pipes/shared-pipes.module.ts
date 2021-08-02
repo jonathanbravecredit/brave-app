@@ -14,6 +14,7 @@ import { MergereportToPersonalitemsPipe } from './mergereport-to-personalitems/m
 import { PublicitemToDetailsPipe } from './publicitem-to-details/publicitem-to-details.pipe';
 import { PersonalitemsToDetailsPipe } from './personalitem-to-details/personalitems-to-details.pipe';
 import { MergereportToTradelinesPipe } from './mergereport-to-tradelines/mergereport-to-tradelines.pipe';
+import { AccountNumberMaskPipe } from './account-number-mask/account-number-mask.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -30,6 +31,7 @@ const pipes = [
   MergereportToPublicitemsPipe,
   MergereportToPersonalitemsPipe,
   MergereportToTradelinesPipe,
+  AccountNumberMaskPipe,
 ];
 
 @NgModule({

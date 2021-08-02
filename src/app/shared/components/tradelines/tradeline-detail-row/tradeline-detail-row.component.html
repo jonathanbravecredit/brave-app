@@ -1,7 +1,7 @@
 <div *ngIf="label" class="flex justify-between w-full">
   <p class="text-xs text-dk-gray w-6/12">{{ label }}</p>
   <p class="text-xs text-dk-gray text-opacity-50 text-right w-6/12">
-    {{ value }}
+    {{ !enableMask ? value : (value | accountNumberMask) }}
   </p>
 </div>
 <div *ngIf="enableSeparator" class="h-1 border-t mt-2 border-black opacity-50"></div>

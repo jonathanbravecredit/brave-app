@@ -143,6 +143,7 @@ import { PersonalitemDisputeCardComponent } from './cards/personalitem-dispute-c
 import { TradelineDisputeCardComponent } from './cards/tradeline-dispute-card/tradeline-dispute-card.component';
 import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
 
 const components = [
   BaseFormComponent,
@@ -295,7 +296,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, BaseTableRowComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
