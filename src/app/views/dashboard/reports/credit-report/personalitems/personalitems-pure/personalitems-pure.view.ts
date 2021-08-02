@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IPersonalItemsDetailsConfig } from '@shared/components/personalitems/personalitems-details/interfaces';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IBorrower } from '@shared/interfaces';
 
 @Component({

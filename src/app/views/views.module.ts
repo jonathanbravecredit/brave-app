@@ -85,6 +85,22 @@ import { DisputesTradelinePureView } from '@views/dashboard/disputes/disputes-tr
 import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { DisputesReconfirmView } from './dashboard/disputes/disputes-reconfirm/disputes-reconfirm/disputes-reconfirm.view';
 import { DisputesReconfirmPureView } from './dashboard/disputes/disputes-reconfirm/disputes-reconfirm-pure/disputes-reconfirm-pure.view';
+import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details-table/tradeline-details-table.component';
+import { TradelineMetricsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-metrics/tradeline-metrics.component';
+import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/tradeline-payment-history.component';
+import { TradelinePaymentIconComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
+import { TradelinePaymentsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payments/tradeline-payments.component';
+import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-remarks/tradeline-remarks.component';
+import { TradelineSummaryComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-summary/tradeline-summary.component';
+import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/tradeline-details.component';
+import { TradelineDisputeCardComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-dispute-card/tradeline-dispute-card.component';
+import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details-table/personalitems-details-table.component';
+import { PersonalitemsDetailsComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/personalitems-details.component';
+import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details-table/publicitems-details-table.component';
+import { PublicitemsDetailsComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/publicitems-details.component';
+import { PersonalitemDisputeCardComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitem-dispute-card/personalitem-dispute-card.component';
+import { PublicitemCardComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitem-card/publicitem-card.component';
+import { PublicitemDisputeCardComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitem-dispute-card/publicitem-dispute-card.component';
 
 const views = [
   SignupComponent,
@@ -154,10 +170,26 @@ const views = [
   CreditMixView,
   PublicitemsView,
   PublicitemsPureView,
+  PublicitemsDetailsComponent,
+  PublicitemsDetailsTableComponent,
+  PublicitemCardComponent,
+  PublicitemDisputeCardComponent,
   PersonalitemsView,
   PersonalitemsPureView,
+  PersonalitemsDetailsComponent,
+  PersonalitemsDetailsTableComponent,
+  PersonalitemDisputeCardComponent,
   DisputesReconfirmView,
   DisputesReconfirmPureView,
+  TradelineMetricsComponent,
+  TradelineSummaryComponent,
+  TradelineDetailsTableComponent,
+  TradelinePaymentsComponent,
+  TradelinePaymentIconComponent,
+  TradelinePaymentHistoryComponent,
+  TradelineRemarksComponent,
+  TradelineDetailsComponent,
+  TradelineDisputeCardComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe, ParseRiskScorePipe];
