@@ -80,15 +80,6 @@ import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { CreditReportGraphicComponent } from './graphics/credit-report-graphic/credit-report-graphic.component';
-import { TradelineMetricsComponent } from './tradelines/tradeline-metrics/tradeline-metrics.component';
-import { TradelineSummaryComponent } from './tradelines/tradeline-summary/tradeline-summary.component';
-import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradeline-details.component';
-import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
-import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
-import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
-import { TradelineDetailsTableComponent } from './tradelines/tradeline-details-table/tradeline-details-table.component';
-import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
-import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
 import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
 import { BaseModalComponent } from './modals/base-modal/base-modal.component';
@@ -133,14 +124,6 @@ import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.com
 import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-input-code.component';
-import { PublicitemsDetailsTableComponent } from './publicitems/publicitems-details-table/publicitems-details-table.component';
-import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/publicitems-details.component';
-import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
-import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
-import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card.component';
-import { PublicitemDisputeCardComponent } from './cards/publicitem-dispute-card/publicitem-dispute-card.component';
-import { PersonalitemDisputeCardComponent } from './cards/personalitem-dispute-card/personalitem-dispute-card.component';
-import { TradelineDisputeCardComponent } from './cards/tradeline-dispute-card/tradeline-dispute-card.component';
 import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
@@ -205,15 +188,6 @@ const components = [
   SpinnerComponent,
   OnboardingDisputeComponent,
   CreditReportGraphicComponent,
-  TradelineMetricsComponent,
-  TradelineSummaryComponent,
-  TradelineDetailsComponent,
-  TradelineDetailRowComponent,
-  TradelineDetailsTableComponent,
-  TradelinePaymentsComponent,
-  TradelinePaymentIconComponent,
-  TradelinePaymentHistoryComponent,
-  TradelineRemarksComponent,
   CreditScoreGraphicTabsComponent,
   CreditScoreHistoryChartComponent,
   CreditScoreHistoryNgxChartComponent,
@@ -252,14 +226,7 @@ const components = [
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
   OutlineInputCodeComponent,
-  PublicitemsDetailsTableComponent,
-  PublicitemsDetailsComponent,
-  PersonalitemsDetailsComponent,
-  PersonalitemsDetailsTableComponent,
-  PublicitemCardComponent,
-  PublicitemDisputeCardComponent,
-  PersonalitemDisputeCardComponent,
-  TradelineDisputeCardComponent,
+  BaseTableRowComponent,
 ];
 
 // component specific pipes only
@@ -296,7 +263,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives, BaseTableRowComponent],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

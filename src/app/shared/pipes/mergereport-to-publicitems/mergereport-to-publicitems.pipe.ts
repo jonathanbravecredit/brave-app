@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IMergeReport, IPublicPartition } from '@shared/interfaces';
 
 @Pipe({

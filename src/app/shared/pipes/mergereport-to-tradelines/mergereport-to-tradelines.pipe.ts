@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';

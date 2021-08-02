@@ -1,5 +1,5 @@
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface IDisputeNegativeCardItem extends INegativeAccountCardInputs {}

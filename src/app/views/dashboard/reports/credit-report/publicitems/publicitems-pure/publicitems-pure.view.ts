@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IPublicPartition } from '@shared/interfaces';
 
 @Component({

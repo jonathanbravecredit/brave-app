@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { IPersonalItemsDetailsConfig } from '@shared/components/personalitems/personalitems-details/interfaces';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 import { ITradeLinePartition, IBorrower, IPublicPartition } from '@shared/interfaces';
 import {
   PARAGRAPH_1,

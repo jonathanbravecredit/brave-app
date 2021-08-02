@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
-import { IPersonalItemsDetailsConfig } from '@shared/components/personalitems/personalitems-details/interfaces';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { CreditReportGroups } from '@shared/constants/credit-report';
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
