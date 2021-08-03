@@ -1,7 +1,7 @@
 export const REFRESH_TERMS = [
-  `TransUnion Interactive’s contracts require us to obtain ‘written instructions’ from you to give us permission to obtain your TransUnion credit history.`,
-  `You understand by checking on the “I Agree and Confirm” box, you are providing “written instructions” to TransUnion Interactive authorizing TransUnion Interactive to obtain information from your personal credit profile from TransUnion.`,
-  `You authorize TransUnion Interactive to obtain such information solely to confirm your identity and display your credit data to you.`,
+  `TransUnion® Interactive’s contracts require us to obtain ‘written instructions’ from you to give us permission to obtain your TransUnion® credit history.`,
+  `You understand by checking on the “I Agree and Confirm” box, you are providing “written instructions” to TransUnion® Interactive authorizing TransUnion® Interactive to obtain information from your personal credit profile from TransUnion® `,
+  `You authorize TransUnion® Interactive to obtain such information solely to confirm your identity and display your credit data to you.`,
 ];
 
 export const ONLINE_DISPUTE_TERMS = [
