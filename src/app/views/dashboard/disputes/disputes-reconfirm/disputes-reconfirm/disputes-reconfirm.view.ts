@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AccountTypes } from '@shared/constants/account-types';
 import { IBorrower, IMergeReport, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -14,7 +15,7 @@ export class DisputesReconfirmView {
   creditReport$: Observable<IMergeReport>;
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
     private creditReportService: CreditreportService,
@@ -39,6 +40,12 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['./tradeline'], { relativeTo: this.route });
+    this.router.navigate(['./tradeline'], {
+      relativeTo: this.route,
+      queryParams: {
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 }
