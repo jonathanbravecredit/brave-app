@@ -24,6 +24,7 @@ export class DashboardEnrolledComponent implements OnInit {
     private interstitial: InterstitialService,
   ) {
     this.tuReport$ = this.dashboardService.tuReport$.asObservable();
+    this.securityFreeze = this.dashboardService.isCreditFreezeEnabled();
   }
 
   ngOnInit(): void {

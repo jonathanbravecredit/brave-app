@@ -30,6 +30,7 @@ export class DashboardService implements OnDestroy {
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
+
   /**
    * Enroll the user in report and score if not already
    * @returns
@@ -43,6 +44,11 @@ export class DashboardService implements OnDestroy {
     return success;
   }
 
+  isCreditFreezeEnabled(): boolean {
+    const creditreport = this.tuReport$.value.TrueLinkCreditReportType;
+    const isFreezeEnabled = creditreport.SB168Frozen && creditreport.SB168Frozen?.transunion;
+    return isFreezeEnabled ? true : false;
+  }
   /**
    * Refresh the users report if stale
    */
