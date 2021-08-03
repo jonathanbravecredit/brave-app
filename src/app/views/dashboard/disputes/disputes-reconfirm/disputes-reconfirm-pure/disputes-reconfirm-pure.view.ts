@@ -7,6 +7,7 @@ import {
   PARAGRAPH_1,
   PARAGRAPH_2,
 } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm-pure/constants';
+import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 
 @Component({
   selector: 'brave-disputes-reconfirm-pure',
@@ -16,6 +17,7 @@ export class DisputesReconfirmPureView implements OnInit {
   @Input() tradelines: ITradelineDetailsConfig[] = [];
   @Input() publicItems: IPublicItemsDetailsConfig[] = [];
   @Input() personalItems: IPersonalItemsDetailsConfig = {} as IPersonalItemsDetailsConfig;
+  @Input() type: DisputeReconfirmFilter = 'all';
   @Output() disputeTradelineClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Output() disputePersonalClick: EventEmitter<IBorrower> = new EventEmitter();
   @Output() disputePublicClick: EventEmitter<IPublicPartition> = new EventEmitter();

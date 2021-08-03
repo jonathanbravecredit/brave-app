@@ -1,4 +1,5 @@
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import {
   IBorrowerName,
   ICreditAddress,
@@ -123,15 +124,26 @@ export class TransunionUtil {
   }
 
   /**
-   * Helper function to securely lookup the account type
+   * Helper function to securely lookup the account type, falls back to pay status.
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  static lookupTradelineAccountType(partition: ITradeLinePartition | undefined): string {
+  static lookupBraveTradelineDescription(partition: ITradeLinePartition | undefined): string {
     if (!partition) return this.bcMissing;
     const description = partition.accountTypeDescription;
     const status = BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
     return partition.accountTypeSymbol?.toLowerCase() === 'y' ? description || this.bcMissing : status;
+  }
+
+  /**
+   * Helper function to securely lookup the account type, falls back to pay status.
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static lookupTradelineTypeDescription(partition: ITradeLinePartition | undefined): AccountTypes {
+    if (!partition) return AccountTypes.Unknown;
+    const description = ACCOUNT_TYPES[`${partition.accountTypeSymbol?.toLowerCase()}`];
+    return description ? description : AccountTypes.Unknown;
   }
 
   /**

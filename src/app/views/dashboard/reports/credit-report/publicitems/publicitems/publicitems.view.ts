@@ -4,6 +4,7 @@ import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
+import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -52,7 +53,13 @@ export class PublicitemsView {
         const { success, error } = resp;
         console.log('preflightCheckReturn ===> ', resp);
         if (success) {
-          this.router.navigate(['../dispute'], { relativeTo: this.route });
+          const filter: DisputeReconfirmFilter = 'public';
+          this.router.navigate(['../dispute'], {
+            relativeTo: this.route,
+            queryParams: {
+              type: filter,
+            },
+          });
         } else {
           this.router.navigate(['../error'], {
             relativeTo: this.route,

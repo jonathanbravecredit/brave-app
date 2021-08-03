@@ -8,7 +8,7 @@ export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
 }
 export interface ITrueLinkCreditReportType {
-  SB168Frozen?: string;
+  SB168Frozen?: ISB168Frozen;
   Borrower?: IBorrower | IBorrower[];
   TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
   InquiryPartition?: IInquiryPartition | IInquiryPartition[];
