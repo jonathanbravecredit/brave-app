@@ -127,6 +127,7 @@ import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-i
 import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
+import { SecurityFreezeComponent } from './messages/security-freeze/security-freeze.component';
 
 const components = [
   BaseFormComponent,
@@ -227,6 +228,7 @@ const components = [
   OutlineInputPhoneComponent,
   OutlineInputCodeComponent,
   BaseTableRowComponent,
+  SecurityFreezeComponent
 ];
 
 // component specific pipes only

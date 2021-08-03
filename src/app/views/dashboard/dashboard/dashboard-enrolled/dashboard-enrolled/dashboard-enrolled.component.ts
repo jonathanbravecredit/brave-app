@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
   templateUrl: './dashboard-enrolled.component.html',
 })
 export class DashboardEnrolledComponent implements OnInit {
+  @Input() securityFreeze: boolean = false;
   @Input() userName: string = '';
   @Input() defaultMsg = 'Welcome back!';
   @Input() initialMsg: string = 'Welcome back!';
