@@ -42,10 +42,6 @@ export class DisputesTradelineComponent implements OnInit {
     // Set the pages to default;
     this.reasonOptionPages =
       this.disputeType === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
-    console.log('init props:reasonOptionPages  ===> ', this.reasonOptionPages);
-    console.log('init props:disputeType ===> ', this.disputeType);
-    console.log('init props:firstOptionReasonPages ===> ', this.firstOptionReasonPages);
-    console.log('init props:secondOptionReasonPages ===> ', this.secondOptionReasonPages);
     if (this.initialStepId === 'summary') {
       this.switchOption(0, 0);
     }
@@ -179,7 +175,15 @@ export class DisputesTradelineComponent implements OnInit {
   }
 
   sendDispute(): void {
-    console.log('sending dispute ===> ', this.customReason);
+    console.log('sending dispute ===> ', {
+      isFinished: true,
+      data: {
+        hasCustomInput: this.isCustomInputInSelectedArr(),
+        customInput: this.customReason,
+        reasonsId: this.parseSelectedItemsToIdArray(),
+        reasons: this.parseSelectedReasonsToArray(),
+      },
+    });
     this.disputeProcessResult.emit({
       isFinished: true,
       data: {

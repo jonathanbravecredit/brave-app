@@ -17,5 +17,7 @@ export class DisputesPersonalComponent implements OnInit {
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('personal disputes reaspn page', this.defaultReasonPage);
+  }
 }

@@ -12,7 +12,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS_TO_BE_REMOV
     pageIndex: 0,
     items: [
       {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS[7],
+        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS[0],
         allowUserInput: true,
       },
     ],
