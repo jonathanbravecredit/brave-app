@@ -33,13 +33,13 @@ export interface IDisputeItem {
 }
 
 export interface IDisputePublicItem extends IPublicItemsDetailsConfig {}
-export interface IDisputePersonalItem {
-  borrowerPartition?: IBorrower;
-  personalType: PersonalDisputeTypes;
-  namePartition?: IBorrowerName;
-  addressPartition?: IBorrowerAddress;
-  employerPartition?: IEmployer;
-  currentLabel: string;
-  currentValue: string;
-  dateUpdated: string;
+export interface IDisputePersonalItem extends IPersonalItemsDetailsConfig {
+  // borrowerPartition?: IBorrower;
+  // personalType: PersonalDisputeTypes;
+  // namePartition?: IBorrowerName;
+  // addressPartition?: IBorrowerAddress;
+  // employerPartition?: IEmployer;
+  // currentLabel: string;
+  // currentValue: string;
+  // dateUpdated: string;
 }

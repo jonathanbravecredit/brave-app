@@ -8,9 +8,6 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
 })
 export class DisputeHeaderPersonalitemComponent implements OnInit {
   @Input() dispute: IDisputePersonalItem = {} as IDisputePersonalItem;
-  @Input() fieldTitle: string = 'Personal Item';
-  @Input() fieldLabel: string = 'Item';
-  @Input() fieldValue: string = TransunionUtil.bcMissing;
   missing = TransunionUtil.bcMissing;
   constructor() {}
 

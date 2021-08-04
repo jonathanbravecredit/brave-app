@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IBorrowerAddress, IBorrowerName, IEmployer } from '@shared/interfaces';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,13 +13,9 @@ import { Observable } from 'rxjs';
 export class DisputesPersonalView implements OnDestroy {
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
-  personalItemName$: Observable<IBorrowerName>;
-  personalItemAddress$: Observable<IBorrowerAddress>;
-  personalItemEmployer$: Observable<IEmployer>;
+  personalItem$: Observable<IPersonalItemsDetailsConfig>;
   constructor(private router: Router, public route: ActivatedRoute, private disputeService: DisputeService) {
-    this.personalItemName$ = this.disputeService.personalItemName$.asObservable();
-    this.personalItemAddress$ = this.disputeService.personalItemAddress$.asObservable();
-    this.personalItemEmployer$ = this.disputeService.personalItemEmployer$.asObservable();
+    this.personalItem$ = this.disputeService.personalItem$.asObservable();
   }
 
   ngOnDestroy(): void {

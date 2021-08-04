@@ -27,13 +27,10 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
 export class DisputesReconfirmPureView implements OnInit {
   @Input() tradelines: ITradelineDetailsConfig[] | undefined = [];
   @Input() publicItems: IPublicItemsDetailsConfig[] | undefined = [];
-  @Input() personalItems: IPersonalItemsDetailsConfig | undefined = {} as IPersonalItemsDetailsConfig;
+  @Input() personalItems: IPersonalItemsDetailsConfig[] | undefined = [];
   @Input() type: DisputeReconfirmFilter = 'all';
   @Output() disputeTradelineClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
-  @Output() disputePersonalClick: EventEmitter<{
-    personalItem: IBorrowerAddress | IEmployer | IBorrowerName | undefined;
-    personalType: PersonalDisputeTypes;
-  }> = new EventEmitter();
+  @Output() disputePersonalClick: EventEmitter<IPersonalItemsDetailsConfig> = new EventEmitter();
   @Output() disputePublicClick: EventEmitter<IPublicPartition> = new EventEmitter();
   tu = TransunionUtil;
   p1 = PARAGRAPH_1;

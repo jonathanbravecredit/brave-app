@@ -14,6 +14,7 @@ import { CreditreportService } from '@shared/services/creditreport/creditreport.
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
 import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -32,33 +33,14 @@ export class DisputesReconfirmView {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 
-  onDisputePersonalClick(data: {
-    personalItem: IBorrowerAddress | IEmployer | IBorrowerName | undefined;
-    personalType: PersonalDisputeTypes;
-  }): void {
-    const { personalItem, personalType } = data;
+  onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {
     const id = this.statesvc.state?.appData.id;
-    if (!personalItem) throw `reconfirm:onDisputePersonalClick=Missing personal item${personalItem}`;
     if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
-    switch (personalType) {
-      case 'name':
-        this.disputeService.setPersonalItemName(personalItem);
-        break;
-      case 'address':
-        this.disputeService.setPersonalItemAddress(personalItem);
-        break;
-      case 'employer':
-        this.disputeService.setPersonalItemEmployer(personalItem);
-        break;
-      default:
-        throw `reconfirm:onDisputePersonalClick=Unknown personal type`;
-        break;
-    }
+    this.disputeService.setPersonalItem(personalItem);
     this.router.navigate(['./personalitem'], {
       relativeTo: this.route,
       queryParams: {
         type: null,
-        personalType: personalType,
       },
       queryParamsHandling: 'merge',
     });

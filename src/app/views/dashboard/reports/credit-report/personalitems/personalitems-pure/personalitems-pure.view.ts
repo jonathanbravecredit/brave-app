@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import {
+  IPersonalItemsDetailsConfig,
+  IPersonalItemsDetailsTable,
+} from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IBorrower } from '@shared/interfaces';
 
 @Component({
@@ -15,7 +18,7 @@ export class PersonalitemsPureView {
   /**
    * Config parameters with parsed tradeline data
    */
-  @Input() config: IPersonalItemsDetailsConfig = {} as IPersonalItemsDetailsConfig;
+  @Input() config: IPersonalItemsDetailsTable = {} as IPersonalItemsDetailsTable;
   /**
    * Flag to indicate they need to still acknowledge dispute terms
    */

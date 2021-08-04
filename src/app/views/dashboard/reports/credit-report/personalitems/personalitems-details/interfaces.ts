@@ -1,7 +1,8 @@
 import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer } from '@shared/interfaces';
 import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 
-export interface IPersonalItemsDetailsTransformed {
+export interface IPersonalItemsDetailsTable {
+  personalItem: IBorrower;
   ssn?: string;
   borrowerNames?: string;
   currentAddress?: string;
@@ -21,6 +22,8 @@ export interface IPersonalItemsDetailsTransformed {
 export interface IPersonalItemsDetailsConfig {
   key: PersonalDisputeTypes;
   value: IBorrowerName | IBorrowerAddress | IEmployer;
+  parsedValue: string;
+  dateUpdated: string;
   borrower: IBorrower;
   transformed: any;
 }

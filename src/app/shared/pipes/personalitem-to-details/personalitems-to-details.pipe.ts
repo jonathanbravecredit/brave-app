@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IBorrower } from '@shared/interfaces';
 import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 
@@ -7,12 +7,12 @@ import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
   name: 'personalitemsToDetails',
 })
 export class PersonalitemsToDetailsPipe implements PipeTransform {
-  transform(personalItem: IBorrower): IPersonalItemsDetailsConfig | undefined {
+  transform(personalItem: IBorrower): IPersonalItemsDetailsTable | undefined {
     if (personalItem === undefined) return;
     return this.mapping(personalItem);
   }
 
-  mapping(borrower: IBorrower): IPersonalItemsDetailsConfig {
+  mapping(borrower: IBorrower): IPersonalItemsDetailsTable {
     let names = borrower.BorrowerName instanceof Array ? borrower.BorrowerName : [borrower.BorrowerName];
     let employers = borrower.Employer instanceof Array ? borrower.Employer : [borrower.Employer];
     let prevAddress = borrower.PreviousAddress instanceof Array ? borrower.PreviousAddress : [borrower.PreviousAddress];

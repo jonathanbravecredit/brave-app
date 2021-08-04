@@ -17,6 +17,7 @@ import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -35,17 +36,9 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   publicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
   publicItemSub$: Subscription;
 
-  personalItemAddress: IBorrowerAddress | undefined;
-  personalItemAddress$ = new BehaviorSubject<IBorrowerAddress>({} as IBorrowerAddress);
-  personalItemAddressSub$: Subscription;
-
-  personalItemEmployer: IEmployer | undefined;
-  personalItemEmployer$ = new BehaviorSubject<IEmployer>({} as IEmployer);
-  personalItemEmployerSub$: Subscription;
-
-  personalItemName: IBorrowerName | undefined;
-  personalItemName$ = new BehaviorSubject<IBorrowerName>({} as IBorrowerName);
-  personalItemNameSub$: Subscription;
+  personalItem: IPersonalItemsDetailsConfig | undefined;
+  personalItem$ = new BehaviorSubject<IPersonalItemsDetailsConfig>({} as IPersonalItemsDetailsConfig);
+  personalItemSub$: Subscription;
 
   /*===========================================================================*/
   // These help track the responses
@@ -68,16 +61,9 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     this.publicItemSub$ = this.publicItem$.subscribe((publicItem) => {
       this.publicItem = publicItem;
     });
-    this.personalItemAddressSub$ = this.personalItemAddress$.subscribe((address) => {
-      this.personalItemAddress = address;
+    this.personalItemSub$ = this.personalItem$.subscribe((personalItem) => {
+      this.personalItem = personalItem;
     });
-    this.personalItemEmployerSub$ = this.personalItemEmployer$.subscribe((employer) => {
-      this.personalItemEmployer = employer;
-    });
-    this.personalItemNameSub$ = this.personalItemName$.subscribe((name) => {
-      this.personalItemName = name;
-    });
-
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
       this.disputes$.next(state.appData.agencies?.transunion?.disputes);
@@ -102,9 +88,7 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   ngOnDestroy(): void {
     if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
     if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
-    if (this.personalItemAddressSub$) this.personalItemAddressSub$.unsubscribe();
-    if (this.personalItemEmployerSub$) this.personalItemEmployerSub$.unsubscribe();
-    if (this.personalItemNameSub$) this.personalItemNameSub$.unsubscribe();
+    if (this.personalItemSub$) this.personalItemSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
@@ -116,16 +100,9 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     this.publicItem$.next(publicItem);
   }
 
-  setPersonalItemAddress(address: IBorrowerAddress): void {
-    this.personalItemAddress$.next(address);
-  }
-
-  setPersonalItemEmployer(employer: IEmployer): void {
-    this.personalItemEmployer$.next(employer);
-  }
-
-  setPersonalItemName(name: IBorrowerName): void {
-    this.personalItemName$.next(name);
+  // cannot directly use the partition because of data structure.
+  setPersonalItem(name: IPersonalItemsDetailsConfig): void {
+    this.personalItem$.next(name);
   }
 
   pushDispute(item: IProcessDisputeTradelineResult | IProcessDisputePublicResult): void {

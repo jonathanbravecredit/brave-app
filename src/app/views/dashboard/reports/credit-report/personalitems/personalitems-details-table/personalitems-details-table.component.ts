@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import {
+  IPersonalItemsDetailsConfig,
+  IPersonalItemsDetailsTable,
+} from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 @Component({
   selector: 'brave-personalitems-details-table',
@@ -10,7 +13,7 @@ export class PersonalitemsDetailsTableComponent implements OnInit {
    * Config parameters with parsed public item data
    * @property config
    */
-  @Input() config: IPersonalItemsDetailsConfig | undefined;
+  @Input() config: IPersonalItemsDetailsTable | undefined;
   @Input() isDisputePageOne: boolean = false;
   @Input() isDisputePageTwo: boolean = false;
   mapper: Record<string, any>;

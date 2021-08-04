@@ -13,49 +13,20 @@
 </div>
 
 <!-- personal items -->
-<div *ngIf="personalItems.personalItem" class="flex items-center mb-3">
+<div *ngIf="personalItems?.length" class="flex items-center mb-3">
   <span class="material-icons-outlined">perm_identity</span>
   <span>Personal Information</span>
 </div>
 
-<div *ngFor="let name of personalItems.borrowersNamesRaw; index as idx">
+<div *ngFor="let item of personalItems; index as idx">
   <brave-personalitem-dispute-card
-    icon="face"
-    [fieldName]="'Name'"
-    [fieldValues]="tu.nameUnparser(name) || '--'"
-    (disputeClick)="disputePersonalClick.emit({ personalItem: name , personalType: 'name' })"
-  ></brave-personalitem-dispute-card>
-</div>
-
-<div *ngFor="let address of personalItems.previousAddressesRaw">
-  <brave-personalitem-dispute-card
-    icon="home"
-    [fieldName]="'Address'"
-    [fieldValues]="tu.addressUnparser(address.CreditAddress) || '--'"
-    (disputeClick)="disputePersonalClick.emit({ personalItem: address, personalType: 'address' })"
-  ></brave-personalitem-dispute-card>
-</div>
-
-<div *ngIf="personalItems.currentAddressRaw as currAddress">
-  <brave-personalitem-dispute-card
-    icon="home"
-    [fieldName]="'Address'"
-    [fieldValues]="tu.addressUnparser(currAddress.CreditAddress) || '--'"
-    (disputeClick)="disputePersonalClick.emit({ personalItem: currAddress, personalType: 'address' })"
-  ></brave-personalitem-dispute-card>
-</div>
-
-<div *ngFor="let employer of personalItems.employersRaw">
-  <brave-personalitem-dispute-card
-    icon="badge"
-    [fieldName]="'Employer'"
-    [fieldValues]="tu.employerUnparser(employer) || '--'"
-    (disputeClick)="disputePersonalClick.emit({ personalItem: employer, personalType: 'employer' })"
+    [personalItem]="item"
+    (disputeClick)="disputePersonalClick.emit(item)"
   ></brave-personalitem-dispute-card>
 </div>
 
 <!-- public items -->
-<div *ngIf="publicItems.length" class="flex items-center mb-8">
+<div *ngIf="publicItems?.length" class="flex items-center mb-8">
   <span class="material-icons-outlined"> description </span>
   <span>Public Records</span>
 </div>
