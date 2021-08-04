@@ -24,20 +24,20 @@ export class PersonalitemsPureView {
    * Event emitter when dispute button clicked on tradeline detail
    * - Pass up the tradlinePartition clicked on from here
    */
-  @Output() disputeClick: EventEmitter<IBorrower> = new EventEmitter();
+  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
 
   showModal: boolean = false;
 
   constructor() {}
 
-  disputeClicked() {
+  disputeClicked(): void {
     // when clicked and do not need acknowledgment
     if (this.acknowledged) {
       this.disputeClick.emit();
     }
   }
 
-  actionForDispute(e: IOnboardingEvent) {
+  actionForDispute(e: IOnboardingEvent): void {
     if (e.isConfirmed) {
       this.showModal = false;
       this.disputeClick.emit();

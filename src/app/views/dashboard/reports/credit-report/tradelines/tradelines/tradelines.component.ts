@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountTypes } from '@shared/constants/account-types';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -54,6 +57,7 @@ export class TradelinesComponent {
    * @returns {void}
    */
   async onDisputeClicked(tradeline: ITradeLinePartition): Promise<void> {
+    const accountType = TransunionUtil.lookupTradelineTypeDescription(tradeline);
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
     this.disputeService
@@ -62,7 +66,13 @@ export class TradelinesComponent {
         const { success, error } = resp;
         console.log('preflightCheckReturn ===> ', resp);
         if (success) {
-          this.router.navigate(['../dispute'], { relativeTo: this.route });
+          const filter: DisputeReconfirmFilter = accountType;
+          this.router.navigate(['../dispute'], {
+            relativeTo: this.route,
+            queryParams: {
+              type: filter,
+            },
+          });
         } else {
           this.router.navigate(['../error'], {
             relativeTo: this.route,

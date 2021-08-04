@@ -6,7 +6,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['ssn'] || 'Social Security Number'"
-      [value]="config.ssn || '--'"
+      [value]="(config.ssn | ssnMask) || '--'"
     ></brave-base-table-row>
   </div>
 
