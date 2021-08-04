@@ -23,8 +23,14 @@
       <ng-container *ngIf="publicdispute">
         <brave-disputes-detail [pages]="publicitempages" [data]="[{ config: publicdispute }]"></brave-disputes-detail>
       </ng-container>
+      <ng-container *ngIf="personaldispute">
+        <brave-disputes-detail
+          [pages]="personalitempages"
+          [data]="[{ config: personaldispute.transformed }]"
+        ></brave-disputes-detail>
+      </ng-container>
     </div>
-    <div *ngIf="!personaldispute" class="flex justify-center py-3">
+    <div class="flex justify-center py-3">
       <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
     </div>
   </div>

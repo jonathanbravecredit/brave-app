@@ -33,6 +33,7 @@ export class DisputeHeaderComponent implements OnInit {
   //  - Personal items does not have pages...one single items
   /*============================================*/
   publicitempages = [PublicitemsDetailsTableComponent];
+  personalitempages = [PersonalitemsDetailsTableComponent];
   tradelinepages = [
     TradelineDetailsTableComponent,
     TradelineDetailsTableComponent,
