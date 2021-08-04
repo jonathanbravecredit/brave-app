@@ -19,6 +19,10 @@ export class TradelinesComponent {
    * Flag to indicate that dispute terms have been acknowledged
    */
   _acknowledged: boolean = false;
+  /**
+   * Credit statement from Merge Report
+   */
+  customerStatement: string = '';
 
   /**
    * Initializes tradeline property with current tradeline from CreditReportService

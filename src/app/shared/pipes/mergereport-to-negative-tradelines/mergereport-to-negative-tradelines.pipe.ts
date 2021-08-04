@@ -2,8 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import { NEGATIVE_PAY_STATUS_CODES, BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { IRemark } from '@shared/interfaces/common-tu.interface';
-import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
+import { ITradeLinePartition, IMergeReport, ICreditStatement, IBorrower } from '@shared/interfaces/merge-report.interface';
 import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';
+import { MergeReportPipeHelper } from './helper';
 
 @Pipe({
   name: 'mergereportToNegativeTradelines',
@@ -17,10 +18,9 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
     if (!(this.tradeLines instanceof Array)) {
       this.tradeLines = [this.tradeLines];
     }
-    return this.filterTradelines(this.tradeLines)
-      .sortByAccountType(this.tradeLines)
-      .sortByDateOpened(this.tradeLines)
-      .mapTradeLineToAccount(this.tradeLines);
+
+    const filteredTradelines = this.filterTradelines(this.tradeLines).sortByAccountType(this.tradeLines).sortByDateOpened(this.tradeLines).mapTradeLineToAccount(this.tradeLines);
+    return MergeReportPipeHelper.addCustomerStatementToArrOfObj(filteredTradelines, report);
   }
 
   /**
@@ -108,7 +108,6 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
     });
     return negativeAccounts;
   }
-
   /**
    * Helper function to securely lookup the account type
    * @param {ITradeLinePartition | undefined} partition

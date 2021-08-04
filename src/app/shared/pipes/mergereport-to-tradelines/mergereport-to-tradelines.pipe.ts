@@ -3,6 +3,7 @@ import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';
+import { MergeReportPipeHelper } from '../mergereport-to-negative-tradelines/helper';
 
 @Pipe({
   name: 'mergereportToTradelines',
@@ -15,7 +16,7 @@ export class MergereportToTradelinesPipe implements PipeTransform {
     tradelines = [...TU.sortTradelineByAccountType(tradelines)];
     tradelines = [...TU.sortTradelineByDateOpened(tradelines)];
     let config = tradelines.map((line) => this.mapPartitionsToDetails(line));
-    return config;
+    return MergeReportPipeHelper.addCustomerStatementToArrOfObj(config, report) as ITradelineDetailsConfig[];
   }
 
   mapPartitionsToDetails(partition: ITradeLinePartition): ITradelineDetailsConfig {
