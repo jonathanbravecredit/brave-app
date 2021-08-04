@@ -35,9 +35,17 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   publicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
   publicItemSub$: Subscription;
 
-  personalItem: IBorrowerAddress | IEmployer | IBorrowerName | undefined;
-  personalItem$ = new BehaviorSubject<IBorrowerAddress | IEmployer | IBorrowerName | undefined>(undefined);
-  personalItemSub$: Subscription;
+  personalItemAddress: IBorrowerAddress | undefined;
+  personalItemAddress$ = new BehaviorSubject<IBorrowerAddress>({} as IBorrowerAddress);
+  personalItemAddressSub$: Subscription;
+
+  personalItemEmployer: IEmployer | undefined;
+  personalItemEmployer$ = new BehaviorSubject<IEmployer>({} as IEmployer);
+  personalItemEmployerSub$: Subscription;
+
+  personalItemName: IBorrowerName | undefined;
+  personalItemName$ = new BehaviorSubject<IBorrowerName>({} as IBorrowerName);
+  personalItemNameSub$: Subscription;
 
   /*===========================================================================*/
   // These help track the responses
@@ -60,9 +68,16 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     this.publicItemSub$ = this.publicItem$.subscribe((publicItem) => {
       this.publicItem = publicItem;
     });
-    this.personalItemSub$ = this.personalItem$.subscribe((personalItem) => {
-      this.personalItem = personalItem;
+    this.personalItemAddressSub$ = this.personalItemAddress$.subscribe((address) => {
+      this.personalItemAddress = address;
     });
+    this.personalItemEmployerSub$ = this.personalItemEmployer$.subscribe((employer) => {
+      this.personalItemEmployer = employer;
+    });
+    this.personalItemNameSub$ = this.personalItemName$.subscribe((name) => {
+      this.personalItemName = name;
+    });
+
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
       this.disputes$.next(state.appData.agencies?.transunion?.disputes);
@@ -87,7 +102,9 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   ngOnDestroy(): void {
     if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
     if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
-    if (this.personalItemSub$) this.personalItemSub$.unsubscribe();
+    if (this.personalItemAddressSub$) this.personalItemAddressSub$.unsubscribe();
+    if (this.personalItemEmployerSub$) this.personalItemEmployerSub$.unsubscribe();
+    if (this.personalItemNameSub$) this.personalItemNameSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
@@ -99,8 +116,16 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     this.publicItem$.next(publicItem);
   }
 
-  setPersonalItem(personalItem: IBorrowerAddress | IEmployer | IBorrowerName | undefined): void {
-    this.personalItem$.next(personalItem);
+  setPersonalItemAddress(address: IBorrowerAddress): void {
+    this.personalItemAddress$.next(address);
+  }
+
+  setPersonalItemEmployer(employer: IEmployer): void {
+    this.personalItemEmployer$.next(employer);
+  }
+
+  setPersonalItemName(name: IBorrowerName): void {
+    this.personalItemName$.next(name);
   }
 
   pushDispute(item: IProcessDisputeTradelineResult | IProcessDisputePublicResult): void {

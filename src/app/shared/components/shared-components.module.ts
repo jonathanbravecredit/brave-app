@@ -131,6 +131,7 @@ import { DisputeHeaderComponent } from './disputes/dispute-header/dispute-header
 import { DisputeHeaderTradelineComponent } from './disputes/dispute-header-tradeline/dispute-header-tradeline.component';
 import { DisputeHeaderPublicitemComponent } from './disputes/dispute-header-publicitem/dispute-header-publicitem.component';
 import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-personalitem/dispute-header-personalitem.component';
+import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
 
 const components = [
   BaseFormComponent,
@@ -236,6 +237,7 @@ const components = [
   SimpleBackButtonComponent,
   DisputeHeaderPublicitemComponent,
   DisputeHeaderPersonalitemComponent,
+  SimpleBannerComponent,
 ];
 
 // component specific pipes only

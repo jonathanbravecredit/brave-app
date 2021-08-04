@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IBorrowerAddress, IBorrowerName, IEmployer } from '@shared/interfaces';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { Observable } from 'rxjs';
@@ -11,9 +12,13 @@ import { Observable } from 'rxjs';
 export class DisputesPersonalView implements OnDestroy {
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
-  personalItem$: Observable<any>;
+  personalItemName$: Observable<IBorrowerName>;
+  personalItemAddress$: Observable<IBorrowerAddress>;
+  personalItemEmployer$: Observable<IEmployer>;
   constructor(private router: Router, public route: ActivatedRoute, private disputeService: DisputeService) {
-    this.personalItem$ = this.disputeService.personalItem$.asObservable();
+    this.personalItemName$ = this.disputeService.personalItemName$.asObservable();
+    this.personalItemAddress$ = this.disputeService.personalItemAddress$.asObservable();
+    this.personalItemEmployer$ = this.disputeService.personalItemEmployer$.asObservable();
   }
 
   ngOnDestroy(): void {

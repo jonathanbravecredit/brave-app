@@ -1,8 +1,33 @@
-<ng-container *ngIf="personalItem$ | async as dispute">
-  <ng-container *ngIf="route.queryParams | async as params">
-    <brave-disputes-personal-pure-view
-      [dispute]="dispute"
-      [personalType]="params.personalType"
-    ></brave-disputes-personal-pure-view>
+<ng-container *ngIf="route.queryParams | async as params">
+  <ng-container *ngIf="params.personalType === 'name'">
+    <ng-container *ngIf="personalItemName$ | async as dispute">
+      <brave-disputes-personal-pure-view
+        [isDisputeSent]="isDisputeSent"
+        [nameDispute]="dispute"
+        [personalType]="params.personalType"
+      ></brave-disputes-personal-pure-view>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="params.personalType === 'address'">
+    <ng-container *ngIf="personalItemAddress$ | async as dispute">
+      <brave-disputes-personal-pure-view
+        [isDisputeSent]="isDisputeSent"
+        [addressDispute]="dispute"
+        [personalType]="params.personalType"
+      ></brave-disputes-personal-pure-view>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="params.personalType === 'employer'">
+    <ng-container *ngIf="personalItemEmployer$ | async as dispute">
+      <brave-disputes-personal-pure-view
+        [isDisputeSent]="isDisputeSent"
+        [employerDispute]="dispute"
+        [personalType]="params.personalType"
+      ></brave-disputes-personal-pure-view>
+    </ng-container>
   </ng-container>
 </ng-container>
+<!--
+<ng-container *ngIf="personalItem$ | async as dispute">
+  </ng-container>
+</ng-container> -->

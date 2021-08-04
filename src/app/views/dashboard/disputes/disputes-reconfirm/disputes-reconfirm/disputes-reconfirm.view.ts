@@ -38,13 +38,27 @@ export class DisputesReconfirmView {
   }): void {
     const { personalItem, personalType } = data;
     const id = this.statesvc.state?.appData.id;
+    if (!personalItem) throw `reconfirm:onDisputePersonalClick=Missing personal item${personalItem}`;
     if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
-    this.disputeService.setPersonalItem(personalItem);
+    switch (personalType) {
+      case 'name':
+        this.disputeService.setPersonalItemName(personalItem);
+        break;
+      case 'address':
+        this.disputeService.setPersonalItemAddress(personalItem);
+        break;
+      case 'employer':
+        this.disputeService.setPersonalItemEmployer(personalItem);
+        break;
+      default:
+        throw `reconfirm:onDisputePersonalClick=Unknown personal type`;
+        break;
+    }
     this.router.navigate(['./personalitem'], {
       relativeTo: this.route,
       queryParams: {
         type: null,
-        personaltype: personalType,
+        personalType: personalType,
       },
       queryParamsHandling: 'merge',
     });

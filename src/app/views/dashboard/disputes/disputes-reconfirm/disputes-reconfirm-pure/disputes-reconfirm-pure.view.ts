@@ -25,9 +25,9 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
   templateUrl: './disputes-reconfirm-pure.view.html',
 })
 export class DisputesReconfirmPureView implements OnInit {
-  @Input() tradelines: ITradelineDetailsConfig[] = [];
-  @Input() publicItems: IPublicItemsDetailsConfig[] = [];
-  @Input() personalItems: IPersonalItemsDetailsConfig = {} as IPersonalItemsDetailsConfig;
+  @Input() tradelines: ITradelineDetailsConfig[] | undefined = [];
+  @Input() publicItems: IPublicItemsDetailsConfig[] | undefined = [];
+  @Input() personalItems: IPersonalItemsDetailsConfig | undefined = {} as IPersonalItemsDetailsConfig;
   @Input() type: DisputeReconfirmFilter = 'all';
   @Output() disputeTradelineClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Output() disputePersonalClick: EventEmitter<{

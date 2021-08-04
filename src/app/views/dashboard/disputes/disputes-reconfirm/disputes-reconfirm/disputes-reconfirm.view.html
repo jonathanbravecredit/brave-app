@@ -32,21 +32,15 @@
 
     <!-- =========== tradeline items =========== -->
     <div *ngIf="params.type === 'all'">
-      <div *ngIf="report | mergereportToPersonalitems as personalItems">
-        <div *ngIf="report | mergereportToTradelines as tradelines">
-          <div *ngIf="report | mergereportToPublicitems as publicItems">
-            <brave-disputes-reconfirm-pure
-              [publicItems]="publicItems"
-              [personalItems]="personalItems"
-              [tradelines]="tradelines"
-              (disputePublicClick)="onDisputePublicClick($event)"
-              (disputePersonalClick)="onDisputePersonalClick($event)"
-              (disputeTradelineClick)="onDisputeTradelineClick($event)"
-            >
-            </brave-disputes-reconfirm-pure>
-          </div>
-        </div>
-      </div>
+      <brave-disputes-reconfirm-pure
+        [publicItems]="report | mergereportToPublicitems"
+        [personalItems]="report | mergereportToPersonalitems"
+        [tradelines]="report | mergereportToTradelines"
+        (disputePublicClick)="onDisputePublicClick($event)"
+        (disputePersonalClick)="onDisputePersonalClick($event)"
+        (disputeTradelineClick)="onDisputeTradelineClick($event)"
+      >
+      </brave-disputes-reconfirm-pure>
     </div>
   </div>
 </div>

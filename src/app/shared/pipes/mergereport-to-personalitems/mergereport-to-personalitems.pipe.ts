@@ -1,13 +1,23 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
-import { IBorrower, IMergeReport } from '@shared/interfaces';
-import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 
+import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer, IMergeReport } from '@shared/interfaces';
+import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
+import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+import {
+  IPersonalItemsDetailsConfig,
+  IPersonalItemsDetailsTransformed,
+} from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+interface personalItemsTemp {
+  key: PersonalDisputeTypes;
+  value: IBorrowerName | IBorrowerAddress | IEmployer;
+  borrower: IBorrower;
+  transformed: any;
+}
 @Pipe({
   name: 'mergereportToPersonalitems',
 })
 export class MergereportToPersonalitemsPipe implements PipeTransform {
-  transform(report: IMergeReport): IPersonalItemsDetailsConfig | undefined {
+  transform(report: IMergeReport): IPersonalItemsDetailsConfig[] | undefined {
     if (report === undefined) return;
     const borrower = report.TrueLinkCreditReportType?.Borrower;
     if (borrower === undefined) return;
@@ -16,7 +26,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     return;
   }
 
-  mapping(borrower: IBorrower): IPersonalItemsDetailsConfig {
+  mapping(borrower: IBorrower): IPersonalItemsDetailsConfig[] {
     let names =
       borrower.BorrowerName instanceof Array
         ? borrower.BorrowerName
@@ -45,27 +55,61 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     const unPrevAddress = prevAddress.map((addr) => TU.addressUnparser(addr?.CreditAddress));
     const unPhones = phones.map((phone) => TU.phoneUnparser(phone?.PhoneNumber));
     const unEmployers = employers.map((emp) => TU.employerUnparser(emp));
-
-    return {
-      personalItem: borrower,
+    const transformed: IPersonalItemsDetailsTransformed = {
       ssn: `${borrower.SocialSecurityNumber}` || '--',
       borrowerNames: this.flattenItems(unNames),
       currentAddress: unAddress || '--',
       previousAddresses: this.flattenItems(unPrevAddress) || '--',
       telephones: this.flattenItems(unPhones) || '--',
       employers: this.flattenItems(unEmployers) || '--',
-      borrowerNamesArray: unNames || [],
-      previousAddressesArray: unPrevAddress || [],
-      telephonesArray: unPhones || [],
-      employersArray: unEmployers || [],
-      borrowersNamesRaw: names || [],
-      currentAddressRaw: currAddress || {},
-      previousAddressesRaw: prevAddress || [],
-      employersRaw: employers || [],
+      // borrowerNamesArray: unNames || [],
+      // previousAddressesArray: unPrevAddress || [],
+      // telephonesArray: unPhones || [],
+      // employersArray: unEmployers || [],
+      // borrowersNamesRaw: names || [],
+      // currentAddressRaw: currAddress || {},
+      // previousAddressesRaw: prevAddress || [],
+      // employersRaw: employers || [],
     };
+
+    let mapped: IPersonalItemsDetailsConfig[] = [];
+    mapped = [
+      ...mapped,
+      ...names.map((name) => {
+        return this.mapSubitem('name', name, borrower, transformed);
+      }),
+    ];
+    mapped = [
+      ...mapped,
+      ...employers.map((employer) => {
+        return this.mapSubitem('employer', employer, borrower, transformed);
+      }),
+    ];
+    mapped = [
+      ...mapped,
+      ...prevAddress.map((address) => {
+        return this.mapSubitem('address', address, borrower, transformed);
+      }),
+    ];
+    mapped = currAddress ? [...mapped, this.mapSubitem('address', currAddress, borrower, transformed)] : mapped;
+    return mapped;
   }
 
   flattenItems(items: string[]): string {
-    return items.reduce((a, b) => `${a}\n${b}`);
+    return items.reduce((a, b) => `${a}\n${b}`, '');
+  }
+
+  mapSubitem(
+    key: PersonalDisputeTypes,
+    value: IBorrowerName | IBorrowerAddress | IEmployer,
+    borrower: IBorrower,
+    transformed: IPersonalItemsDetailsTransformed,
+  ): personalItemsTemp {
+    return {
+      key,
+      value,
+      borrower,
+      transformed,
+    };
   }
 }

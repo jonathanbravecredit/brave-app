@@ -1,15 +1,4 @@
 <div class="w-full p-4">
-  <!-- <p class="mb-2">{{ previousValue }}:</p>
-  <p class="font-semibold mb-4">{{ valueDescription }}:</p>
-  <div class="grid grid-cols-2 gap-4 mb-2">
-    <p class="text-sm" *ngIf="dateReported">
-      <span class="font-semibold">Date Reported: </span><span>{{ dateReported }}</span>
-    </p>
-    <p class="text-sm" *ngIf="dateUpdated">
-      <span class="font-semibold">Date Updated: </span><span>{{ dateUpdated }}</span>
-    </p>
-    <p class="text-sm"><span class="font-semibold">Action: </span><span>Delete</span></p>
-  </div> -->
   <brave-disputes-tradeline
     initialStepId="summary"
     (disputeProcessResult)="disputeProcessResult.emit($event)"

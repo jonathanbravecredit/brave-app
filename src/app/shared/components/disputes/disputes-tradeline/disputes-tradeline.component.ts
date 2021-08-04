@@ -40,6 +40,12 @@ export class DisputesTradelineComponent implements OnInit {
 
   ngOnInit(): void {
     // Set the pages to default;
+    this.reasonOptionPages =
+      this.disputeType === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
+    console.log('init props:reasonOptionPages  ===> ', this.reasonOptionPages);
+    console.log('init props:disputeType ===> ', this.disputeType);
+    console.log('init props:firstOptionReasonPages ===> ', this.firstOptionReasonPages);
+    console.log('init props:secondOptionReasonPages ===> ', this.secondOptionReasonPages);
     if (this.initialStepId === 'summary') {
       this.switchOption(0, 0);
     }
@@ -48,9 +54,6 @@ export class DisputesTradelineComponent implements OnInit {
       id: this.initialStepId,
       data: undefined,
     });
-
-    this.reasonOptionPages =
-      this.disputeType === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
   }
   /**
    * Changes the "selected" state flag of the target option.

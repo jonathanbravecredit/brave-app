@@ -1,7 +1,15 @@
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
-import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import {
+  IBorrower,
+  IBorrowerAddress,
+  IBorrowerName,
+  IEmployer,
+  IPublicPartition,
+  ITradeLinePartition,
+} from '@shared/interfaces/merge-report.interface';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 
 export interface IDisputeNegativeCardItem extends INegativeAccountCardInputs {}
 export interface IDisputeItem {
@@ -25,7 +33,13 @@ export interface IDisputeItem {
 }
 
 export interface IDisputePublicItem extends IPublicItemsDetailsConfig {}
-export interface IDisputePersonalItem extends IPersonalItemsDetailsConfig {
+export interface IDisputePersonalItem {
+  borrowerPartition?: IBorrower;
+  personalType: PersonalDisputeTypes;
+  namePartition?: IBorrowerName;
+  addressPartition?: IBorrowerAddress;
+  employerPartition?: IEmployer;
   currentLabel: string;
   currentValue: string;
+  dateUpdated: string;
 }
