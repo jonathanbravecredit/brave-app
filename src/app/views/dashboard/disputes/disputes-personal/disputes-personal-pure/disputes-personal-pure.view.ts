@@ -1,6 +1,15 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
-import { IDisputeTradelineProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { IBorrower } from '@shared/interfaces';
+import { IDisputePersonalItem } from '@shared/services/dispute/dispute.interfaces';
+import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+
+export interface IProcessDisputePersonalResult {
+  result: IDisputeProcessResult;
+  personalitem: IBorrower | undefined;
+}
+
 @Component({
   selector: 'brave-disputes-personal-pure-view',
   templateUrl: './disputes-personal-pure.view.html',
@@ -8,12 +17,9 @@ import { IDisputeTradelineProcessResult } from '@shared/components/disputes/disp
 export class DisputesPersonalPureView implements OnInit {
   @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
   isDisputeProcessInProgress = true;
+  @Input() personalType: PersonalDisputeTypes = 'unknown';
   @Input() isDisputeSent = false;
-  @Input() dateReported: string | undefined;
-  @Input() dateUpdated: string | undefined;
-  @Input() nameTypeAbbreviation: string | undefined;
-  @Input() previousValue: string | undefined;
-  @Input() valueDescription: string | undefined;
+  @Input() dispute: IDisputePersonalItem | undefined;
 
   constructor() {}
 
@@ -28,7 +34,7 @@ export class DisputesPersonalPureView implements OnInit {
     }
   }
 
-  onDisputeProcessResult(result: IDisputeTradelineProcessResult): void {
+  onDisputeProcessResult(result: IDisputeProcessResult): void {
     // result event has a data property where the reason ids can be pull out and find them in the constants of the tradeline component
     if (result.isFinished) {
       this.isDisputeSent = true;

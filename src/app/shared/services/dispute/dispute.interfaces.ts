@@ -1,6 +1,7 @@
 import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export interface IDisputeNegativeCardItem extends INegativeAccountCardInputs {}
 export interface IDisputeItem {
@@ -23,6 +24,8 @@ export interface IDisputeItem {
   };
 }
 
-export interface IDisputePublicItem extends IPublicItemsDetailsConfig {
-  publicItem: IPublicPartition;
+export interface IDisputePublicItem extends IPublicItemsDetailsConfig {}
+export interface IDisputePersonalItem extends IPersonalItemsDetailsConfig {
+  currentLabel: string;
+  currentValue: string;
 }

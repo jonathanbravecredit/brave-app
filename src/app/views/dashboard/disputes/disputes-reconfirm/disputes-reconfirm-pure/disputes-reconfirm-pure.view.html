@@ -18,30 +18,39 @@
   <span>Personal Information</span>
 </div>
 
-<div *ngFor="let name of personalItems.borrowerNamesArray">
+<div *ngFor="let name of personalItems.borrowersNamesRaw; index as idx">
   <brave-personalitem-dispute-card
     icon="face"
     [fieldName]="'Name'"
-    [fieldValues]="name || '--'"
-    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+    [fieldValues]="tu.nameUnparser(name) || '--'"
+    (disputeClick)="disputePersonalClick.emit({ personalItem: name , personalType: 'name' })"
   ></brave-personalitem-dispute-card>
 </div>
 
-<div *ngFor="let address of personalItems.previousAddressesArray">
+<div *ngFor="let address of personalItems.previousAddressesRaw">
   <brave-personalitem-dispute-card
     icon="home"
     [fieldName]="'Address'"
-    [fieldValues]="address || '--'"
-    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+    [fieldValues]="tu.addressUnparser(address.CreditAddress) || '--'"
+    (disputeClick)="disputePersonalClick.emit({ personalItem: address, personalType: 'address' })"
   ></brave-personalitem-dispute-card>
 </div>
 
-<div *ngFor="let employer of personalItems.employersArray">
+<div *ngIf="personalItems.currentAddressRaw as currAddress">
+  <brave-personalitem-dispute-card
+    icon="home"
+    [fieldName]="'Address'"
+    [fieldValues]="tu.addressUnparser(currAddress.CreditAddress) || '--'"
+    (disputeClick)="disputePersonalClick.emit({ personalItem: currAddress, personalType: 'address' })"
+  ></brave-personalitem-dispute-card>
+</div>
+
+<div *ngFor="let employer of personalItems.employersRaw">
   <brave-personalitem-dispute-card
     icon="badge"
     [fieldName]="'Employer'"
-    [fieldValues]="employer || '--'"
-    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+    [fieldValues]="tu.employerUnparser(employer) || '--'"
+    (disputeClick)="disputePersonalClick.emit({ personalItem: employer, personalType: 'employer' })"
   ></brave-personalitem-dispute-card>
 </div>
 

@@ -22,6 +22,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
+import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 /*============IMPORTANT==============*/
@@ -246,7 +247,10 @@ export class TransunionService {
    * @param {IProcessDisputeTradelineResult[]} disputes AppData state
    * @returns
    */
-  async sendStartDispute(id: string, disputes: IProcessDisputeTradelineResult[]): Promise<ITUServiceResponse<any>> {
+  async sendStartDispute(
+    id: string,
+    disputes: (IProcessDisputeTradelineResult | IProcessDisputePublicResult)[],
+  ): Promise<ITUServiceResponse<any>> {
     this.interstitial.changeMessage('checking your dispute status');
     this.interstitial.openInterstitial();
     try {

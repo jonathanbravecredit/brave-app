@@ -17,13 +17,28 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
   }
 
   mapping(borrower: IBorrower): IPersonalItemsDetailsConfig {
-    let names = borrower.BorrowerName instanceof Array ? borrower.BorrowerName : [borrower.BorrowerName];
-    let employers = borrower.Employer instanceof Array ? borrower.Employer : [borrower.Employer];
-    let prevAddress = borrower.PreviousAddress instanceof Array ? borrower.PreviousAddress : [borrower.PreviousAddress];
+    let names =
+      borrower.BorrowerName instanceof Array
+        ? borrower.BorrowerName
+        : borrower.BorrowerName
+        ? [borrower.BorrowerName]
+        : [];
+    let employers =
+      borrower.Employer instanceof Array ? borrower.Employer : borrower.Employer ? [borrower.Employer] : [];
+    let prevAddress =
+      borrower.PreviousAddress instanceof Array
+        ? borrower.PreviousAddress
+        : borrower.PreviousAddress
+        ? [borrower.PreviousAddress]
+        : [];
     let currAddress =
       borrower.BorrowerAddress instanceof Array ? borrower.BorrowerAddress[0] : borrower.BorrowerAddress;
     let phones =
-      borrower.BorrowerTelephone instanceof Array ? borrower.BorrowerTelephone : [borrower.BorrowerTelephone];
+      borrower.BorrowerTelephone instanceof Array
+        ? borrower.BorrowerTelephone
+        : borrower.BorrowerTelephone
+        ? [borrower.BorrowerTelephone]
+        : [];
 
     const unNames = names.map((name) => TU.nameUnparser(name));
     const unAddress = TU.addressUnparser(currAddress?.CreditAddress);
@@ -43,6 +58,10 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
       previousAddressesArray: unPrevAddress || [],
       telephonesArray: unPhones || [],
       employersArray: unEmployers || [],
+      borrowersNamesRaw: names || [],
+      currentAddressRaw: currAddress || {},
+      previousAddressesRaw: prevAddress || [],
+      employersRaw: employers || [],
     };
   }
 

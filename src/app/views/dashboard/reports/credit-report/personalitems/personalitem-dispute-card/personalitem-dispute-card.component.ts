@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IBorrowerAddress, IEmployer, IBorrowerName } from '@shared/interfaces';
 
 @Component({
   selector: 'brave-personalitem-dispute-card',
@@ -8,8 +9,9 @@ export class PersonalitemDisputeCardComponent implements OnInit {
   @Input() icon: string = 'perm_identity';
   @Input() fieldName: string = '';
   @Input() fieldValues: string = '--';
+  @Input() personalItem: IBorrowerAddress | IEmployer | IBorrowerName | undefined;
 
-  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
+  @Output() disputeClick: EventEmitter<IBorrowerAddress | IEmployer | IBorrowerName | undefined> = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}

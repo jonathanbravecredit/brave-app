@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import {
-  IDisputeTradelineReasonCardPage,
-  IDisputeTradelineSelectedObj,
-  IDisputeTradelineProcessResult,
-  IDisputeTradelineReasonCardPageItem,
+  IDisputeReasonCardPage,
+  IDisputeSelectedObj,
+  IDisputeProcessResult,
+  IDisputeReasonCardPageItem,
   IDisputeReason,
 } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
@@ -22,8 +22,8 @@ export class DisputesTradelineComponent implements OnInit {
   /**
    * The array of pages and child items inside of them that displays the reason cards.
    */
-  reasonOptionPages: IDisputeTradelineReasonCardPage[] = [];
-  selectedIndexes: IDisputeTradelineSelectedObj[] = [];
+  reasonOptionPages: IDisputeReasonCardPage[] = [];
+  selectedIndexes: IDisputeSelectedObj[] = [];
   private navigationStack: any[] = [];
   isCustomInputSelected = false;
   showCustomInputError = false;
@@ -35,7 +35,7 @@ export class DisputesTradelineComponent implements OnInit {
   @Input() secondOptionDescription = 'This is inaccurate';
   @Input() firstOptionReasonPages = defaultReasons.NOT_MINE;
   @Input() secondOptionReasonPages = defaultReasons.INACCURATE;
-  @Output() disputeProcessResult: EventEmitter<IDisputeTradelineProcessResult> = new EventEmitter();
+  @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {
@@ -104,7 +104,7 @@ export class DisputesTradelineComponent implements OnInit {
     return this.findIndexInSelected(pageIndex, itemIndex) !== -1;
   }
 
-  getTargetSelectedPageItem(indexObj: IDisputeTradelineSelectedObj): IDisputeTradelineReasonCardPageItem {
+  getTargetSelectedPageItem(indexObj: IDisputeSelectedObj): IDisputeReasonCardPageItem {
     return this.reasonOptionPages[indexObj.pageIndex].items[indexObj.itemIndex];
   }
 
@@ -176,6 +176,7 @@ export class DisputesTradelineComponent implements OnInit {
   }
 
   sendDispute(): void {
+    console.log('sending dispute ===> ', this.customReason);
     this.disputeProcessResult.emit({
       isFinished: true,
       data: {

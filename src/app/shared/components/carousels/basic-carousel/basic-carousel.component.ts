@@ -36,9 +36,12 @@ export class BasicCarouselComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
-    this.paginationSub$ = this.pagination.currentActivePage$.subscribe((pageIndex) => {
-      this.handlePageChange(pageIndex);
-    });
+    if (this.pagination) {
+      // pagination is optional (when only 1 page)
+      this.paginationSub$ = this.pagination.currentActivePage$.subscribe((pageIndex) => {
+        this.handlePageChange(pageIndex);
+      });
+    }
   }
 
   ngOnDestroy(): void {

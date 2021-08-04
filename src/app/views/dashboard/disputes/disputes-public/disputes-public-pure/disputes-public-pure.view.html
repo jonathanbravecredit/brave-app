@@ -1,36 +1,14 @@
-<!-- <div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
-  <div class="flex items-center" (click)="goBack.emit()">
-    <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-  </div>
+<div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
-
-  <brave-dispute-header-card
-    class="mt-4"
-    [tradeline]="dispute?.tradeline"
-    [creditorName]="dispute?.creditorName"
-    [lastReported]="dispute?.lastReported"
-    [originalCreditor]="dispute?.originalCreditor"
-    [originalCreditorValue]="dispute?.originalCreditorValue"
-    [accountTypeDescription]="dispute?.accountTypeDescription"
-    [accountTypeDescriptionValue]="dispute?.accountTypeDescriptionValue"
-    [disputeFlag]="dispute?.disputeFlag"
-    [disputeFlagValue]="dispute?.disputeFlagValue"
-    [accountNumber]="dispute?.accountDetail?.accountNumber"
-    [typeOfCollection]="dispute?.accountDetail?.typeOfCollection"
-    [amountPastDue]="dispute?.accountDetail?.amountPastDue"
-    [dateOpened]="dispute?.accountDetail?.dateOpened"
-    [dateLastPayment]="dispute?.accountDetail?.dateLastPayment"
-    [remarks]="dispute?.accountDetail?.remarks"
-    [showDisputeButton]="false"
-  ></brave-dispute-header-card>
+  <brave-dispute-header class="mt-4" [publicdispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
   <brave-disputes-public
     [disputeType]="initialDisputeType"
     [initialStepId]="initialStepId"
-    (disputeProcessResult)="processResult.emit({ result: $event, tradeline: dispute?.tradeline })"
+    (disputeProcessResult)="processResult.emit({ result: $event, publicitem: dispute?.publicPartition })"
   ></brave-disputes-public>
 </div>
 <div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
   <brave-disputes-success></brave-disputes-success>
-</div> -->
-<p>In progress</p>
+</div>
+<!-- <p>In progress</p> -->

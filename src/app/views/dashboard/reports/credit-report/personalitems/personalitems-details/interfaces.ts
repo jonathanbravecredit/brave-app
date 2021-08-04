@@ -1,4 +1,4 @@
-import { IBorrower } from '@shared/interfaces';
+import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer } from '@shared/interfaces';
 
 export interface IPersonalItemsDetailsConfig {
   personalItem: IBorrower;
@@ -12,4 +12,8 @@ export interface IPersonalItemsDetailsConfig {
   previousAddressesArray?: string[];
   telephonesArray?: string[];
   employersArray?: string[];
+  borrowersNamesRaw?: IBorrowerName[],
+  currentAddressRaw?: IBorrowerAddress,
+  previousAddressesRaw?: IBorrowerAddress[],
+  employersRaw?: IEmployer[],
 }

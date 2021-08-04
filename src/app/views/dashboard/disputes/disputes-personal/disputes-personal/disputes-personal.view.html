@@ -1,3 +1,8 @@
-<div class="container mx-auto max-w-xs h-full">
-  <brave-disputes-personal-pure-view></brave-disputes-personal-pure-view>
-</div>
+<ng-container *ngIf="personalItem$ | async as dispute">
+  <ng-container *ngIf="route.queryParams | async as params">
+    <brave-disputes-personal-pure-view
+      [dispute]="dispute"
+      [personalType]="params.personalType"
+    ></brave-disputes-personal-pure-view>
+  </ng-container>
+</ng-container>
