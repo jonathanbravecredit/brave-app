@@ -11,14 +11,13 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   securityFreeze$: Observable<boolean>;
-
   constructor(
     private dashboardService: DashboardService,
     private creditReportService: CreditreportService,
     private interstitial: InterstitialService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
+){
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
   }
 
