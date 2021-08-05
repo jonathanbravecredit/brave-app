@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
   templateUrl: './dashboard-enrolled.component.html',
 })
 export class DashboardEnrolledComponent implements OnInit {
-  @Input() securityFreeze: boolean = false;
   @Input() userName: string = '';
   @Input() defaultMsg = 'Welcome back!';
   @Input() initialMsg: string = 'Welcome back!';
@@ -24,7 +23,7 @@ export class DashboardEnrolledComponent implements OnInit {
     private interstitial: InterstitialService,
   ) {
     this.tuReport$ = this.dashboardService.tuReport$.asObservable();
-    this.securityFreeze = this.dashboardService.isCreditFreezeEnabled();
+
   }
 
   ngOnInit(): void {
