@@ -7,6 +7,7 @@ import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
  * @property {ITradelineDetailsConfig} config
  * @property {IPayStatusHistory | undefined} paymentHistory
  * @property {string} remarks
+ * @property {string} customerStatement
  * @property {string} address
  * @property {boolean} acknowledged
  * @property {EventEmitter<void>} disputeClick
@@ -25,6 +26,10 @@ export class TradelineDetailsComponent {
    * Payments Status History from Merge Report
    */
   @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
+  /**
+   * Credit Statement from Merge Report
+   */
+  @Input() customerStatement: string = '';
   /**
    * Remarks from Merge Report
    */
