@@ -4,7 +4,7 @@
   <brave-disputes-public
     [disputeType]="initialDisputeType"
     [initialStepId]="initialStepId"
-    (disputeProcessResult)="processResult.emit({ result: $event, publicitem: dispute?.publicPartition })"
+    (disputeProcessResult)="processResult.emit({ result: $event, publicItem: dispute?.publicPartition })"
   ></brave-disputes-public>
 </div>
 <div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">

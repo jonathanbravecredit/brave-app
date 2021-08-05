@@ -9,7 +9,10 @@ import {
 } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
 import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
-import { DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS, DEFAULT_TRADELINE_REASONS as defaultReasons } from './constants';
+import {
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS as processReasons,
+  DEFAULT_TRADELINE_REASONS as defaultReasons,
+} from './constants';
 import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';
 
 @Component({
@@ -35,6 +38,7 @@ export class DisputesTradelineComponent implements OnInit {
   @Input() secondOptionDescription = 'This is inaccurate';
   @Input() firstOptionReasonPages = defaultReasons.NOT_MINE;
   @Input() secondOptionReasonPages = defaultReasons.INACCURATE;
+  @Input() processReasons = processReasons;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   constructor() {}
 
@@ -197,19 +201,19 @@ export class DisputesTradelineComponent implements OnInit {
 
   parseSelectedItemsToIdArray(): [string?, string?] {
     let resultArr: [string?, string?] = [];
-
+    console.log('selectedIndexes ===> ', this.selectedIndexes);
     this.selectedIndexes.forEach((item) => {
       const target = this.getTargetSelectedPageItem(item);
       resultArr.push(target.reason.id);
     });
-
+    console.log('resultArr ===> ', resultArr);
     return resultArr;
   }
 
   parseSelectedReasonsToArray(): [IDisputeReason?, IDisputeReason?] {
     let resultsArr: [IDisputeReason?, IDisputeReason?] = [];
     let reasonIds: [string?, string?] = this.parseSelectedItemsToIdArray(); // never more than two...switch to tuple
-    let reasons = [...DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS];
+    let reasons = [...this.processReasons]; // this is filtering out the other items
 
     reasonIds.filter(Boolean).forEach((item) => {
       const reason = reasons.find((r) => r.id === item);

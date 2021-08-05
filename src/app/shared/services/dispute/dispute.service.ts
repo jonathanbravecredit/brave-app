@@ -15,6 +15,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
+import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
@@ -44,7 +45,7 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   // These help track the responses
   /*===========================================================================*/
   currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject<DisputeInput>({} as DisputeInput);
-  disputeStack: (IProcessDisputeTradelineResult | IProcessDisputePublicResult)[] = [];
+  disputeStack: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[] = [];
   disputes$: BehaviorSubject<(DisputeInput | null)[] | null | undefined> = new BehaviorSubject<
     (DisputeInput | null)[] | null | undefined
   >([{} as DisputeInput]);
@@ -105,11 +106,17 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     this.personalItem$.next(name);
   }
 
-  pushDispute(item: IProcessDisputeTradelineResult | IProcessDisputePublicResult): void {
+  pushDispute(
+    item: IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult,
+  ): void {
     this.disputeStack = [...this.disputeStack, item];
   }
 
-  popDispute(): IProcessDisputeTradelineResult | IProcessDisputePublicResult | undefined {
+  popDispute():
+    | IProcessDisputeTradelineResult
+    | IProcessDisputePublicResult
+    | IProcessDisputePersonalResult
+    | undefined {
     const item = this.disputeStack.pop();
     this.disputeStack = [...this.disputeStack];
     return item;

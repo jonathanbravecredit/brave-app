@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
-import { DEFAULT_TRADELINE_DISPUTE_PUBLIC_RECORDS_REASONS as defaultReasons } from './constants';
+import {
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS as processReasons,
+  DEFAULT_TRADELINE_DISPUTE_PUBLIC_RECORDS_REASONS as defaultReasons,
+} from './constants';
 
 @Component({
   selector: 'brave-disputes-personal',
@@ -15,6 +18,7 @@ export class DisputesPersonalComponent implements OnInit {
 
   @Input() defaultReasonPage = defaultReasons.TO_BE_REMOVED;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
+  processReasons = processReasons;
   constructor() {}
 
   ngOnInit(): void {

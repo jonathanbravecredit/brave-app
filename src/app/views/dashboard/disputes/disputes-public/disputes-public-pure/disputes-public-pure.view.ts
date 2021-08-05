@@ -6,7 +6,7 @@ import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces'
 
 export interface IProcessDisputePublicResult {
   result: IDisputeProcessResult;
-  publicitem: IPublicPartition | undefined;
+  publicItem: IPublicPartition | undefined;
 }
 
 @Component({

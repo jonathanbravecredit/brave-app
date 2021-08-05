@@ -2,5 +2,6 @@
   <brave-disputes-personal-pure-view
     [isDisputeSent]="isDisputeSent"
     [personalDispute]="dispute"
+    (processResult)="onProcessResult($event)"
   ></brave-disputes-personal-pure-view>
 </ng-container>
