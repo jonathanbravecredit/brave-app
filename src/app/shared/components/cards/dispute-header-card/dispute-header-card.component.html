@@ -10,7 +10,7 @@
       </span>
       <span>
         <p class="text-xs font-semibold text-right">
-          {{ lastReported }}
+          {{ lastReported | date:'shortDate' }}
         </p>
       </span>
       <span *ngIf="accountTypeDescription">
