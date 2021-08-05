@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -15,7 +15,7 @@ export class DisputesTradelineView implements OnDestroy {
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
   dispute$: Observable<ITradeLinePartition>;
-  constructor(private router: Router, private disputeService: DisputeService) {
+  constructor(private router: Router, private route: ActivatedRoute, private disputeService: DisputeService) {
     this.dispute$ = this.disputeService.tradeline$.asObservable();
   }
 
@@ -47,7 +47,8 @@ export class DisputesTradelineView implements OnDestroy {
           this.isDisputeProcessInProgress = false;
         } else {
           const errorCode = error?.Code;
-          this.router.navigate([`/dashboard/report/tradeline/dispute/error`], {
+          this.router.navigate([`./error`], {
+            relativeTo: this.route,
             queryParams: {
               code: errorCode,
             },

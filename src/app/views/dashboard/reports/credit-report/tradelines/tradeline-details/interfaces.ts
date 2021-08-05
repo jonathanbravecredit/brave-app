@@ -49,6 +49,7 @@ export interface ITradelineDetailsConfig {
   currentBalance?: number | string;
   highestBalance?: number | string;
   disputeFlag?: string;
+  customerStatement?: string;
   status?: string;
   openClosed?: string;
 }

@@ -24,6 +24,10 @@ export class TradelinesPureComponent {
    */
   @Input() remarks: string = '';
   /**
+   * Remarks from Merge Report
+   */
+  @Input() customerStatement: string = '';
+  /**
    * Address from Merge Report...TODO need better definition
    */
   @Input() address: string = '';

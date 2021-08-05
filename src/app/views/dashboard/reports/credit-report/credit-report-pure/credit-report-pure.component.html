@@ -29,15 +29,15 @@
   </div>
 </div>
 
-<div *ngIf="personalItems" class="py-4">
+<div *ngIf="personalItems?.length" class="py-4">
   <div class="flex items-center mb-3">
     <span class="material-icons-outlined">perm_identity</span>
     <span>Personal Information</span>
   </div>
   <div>
-    <brave-personalitems-details [config]="personalItems"></brave-personalitems-details>
+    <brave-personalitems-details [config]="personalItems[0].transformed"></brave-personalitems-details>
     <div class="mt-4">
-      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems)"
+      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
         >see an error?</brave-viewdetail-button
       >
     </div>

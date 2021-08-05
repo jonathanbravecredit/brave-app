@@ -3,19 +3,23 @@ import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';
+import { MergeReportPipeHelper } from '../mergereport-to-negative-tradelines/helper';
+import { AccountTypes } from '@shared/constants/account-types';
 
 @Pipe({
   name: 'mergereportToTradelines',
 })
 export class MergereportToTradelinesPipe implements PipeTransform {
-  transform(report: IMergeReport): ITradelineDetailsConfig[] {
+  transform(report: IMergeReport, ...args: any[]): ITradelineDetailsConfig[] {
+    const accountType = args[0];
     const partition = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partition) return [DEFAULT_TRADELINE];
     let tradelines = !(partition instanceof Array) ? [partition] : partition;
-    tradelines = [...TU.sortTradelineByAccountType(tradelines)];
+    tradelines = [...this.filterByAccountType(tradelines, accountType)];
+    // tradelines = [...TU.sortTradelineByAccountType(tradelines)];
     tradelines = [...TU.sortTradelineByDateOpened(tradelines)];
     let config = tradelines.map((line) => this.mapPartitionsToDetails(line));
-    return config;
+    return MergeReportPipeHelper.addCustomerStatementToArrOfObj(config, report) as ITradelineDetailsConfig[];
   }
 
   mapPartitionsToDetails(partition: ITradeLinePartition): ITradelineDetailsConfig {
@@ -23,7 +27,7 @@ export class MergereportToTradelinesPipe implements PipeTransform {
       tradeline: partition,
       accountNumber: partition?.Tradeline?.accountNumber || TU.bcMissing,
       accountTypeSymbol: partition?.accountTypeSymbol || TU.bcMissing,
-      accountTypeDescription: TU.lookupTradelineAccountType(partition) || '',
+      accountTypeDescription: TU.lookupBraveTradelineDescription(partition) || '',
       creditorName: partition?.Tradeline?.creditorName || TU.bcMissing,
       originalCreditor: partition?.Tradeline?.CollectionTrade?.originalCreditor || TU.bcMissing,
       creditType: partition?.Tradeline?.CollectionTrade?.creditType?.abbreviation || TU.bcMissing,
@@ -44,5 +48,12 @@ export class MergereportToTradelinesPipe implements PipeTransform {
       status: partition?.Tradeline?.PayStatus?.symbol || TU.bcMissing,
       openClosed: partition?.Tradeline?.OpenClosed?.symbol || TU.bcMissing,
     } as ITradelineDetailsConfig;
+  }
+
+  filterByAccountType(tradelines: ITradeLinePartition[], accountType: AccountTypes): ITradeLinePartition[] | [] {
+    return tradelines.filter((item) => {
+      const _accountType = TU.lookupTradelineTypeDescription(item);
+      return _accountType === accountType;
+    });
   }
 }

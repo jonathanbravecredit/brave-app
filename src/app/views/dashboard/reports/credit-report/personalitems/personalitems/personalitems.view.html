@@ -1,7 +1,8 @@
 <div style="min-width: 20rem">
   <div *ngIf="personalItem$ | async as personalItem">
     <div *ngIf="personalItem | personalitemsToDetails as config">
-      <brave-personalitems-pure [personalItem]="personalItem" [config]="config"> </brave-personalitems-pure>
+      <brave-personalitems-pure [personalItem]="personalItem" [config]="config" (disputeClick)="onDisputeClick()">
+      </brave-personalitems-pure>
     </div>
   </div>
 </div>
