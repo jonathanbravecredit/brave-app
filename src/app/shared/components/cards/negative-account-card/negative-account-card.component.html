@@ -10,7 +10,7 @@
       </span>
       <span>
         <p class="text-xs font-semibold text-right">
-          {{ data.lastReported | date:'shortDate' }}
+          {{ data.lastReported | date: 'shortDate' }}
         </p>
       </span>
       <span *ngIf="data.accountTypeDescription">
@@ -90,7 +90,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ data.accountDetail?.amountPastDue | currency }}
+            {{ data.accountDetail?.amountPastDue | currency: 'USD':'symbol':'1.0-0' }}
           </p>
         </span>
       </div>

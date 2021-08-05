@@ -8,30 +8,37 @@
 </div>
 <div class="card pl-10 pr-3 mt-1">
   <div class="grid grid-cols-2 gap-4 mb-2">
-    <span
-      ><p class="text-sm font-semibold">{{ firstFieldName }}:</p></span
-    >
-    <span
-      ><p class="text-sm font-semibold text-right">
-        {{ firstFieldValue | currency }}
-      </p></span
-    >
-    <span
-      ><p class="text-xs text-dk-gray">{{ secondFieldName }}</p></span
-    >
-    <span
-      ><p class="text-xs text-dk-gray text-opacity-50 text-right">
-        {{ secondFieldValue | currency }}
-      </p></span
-    >
-    <span
-      ><p class="text-xs text-dk-gray">{{ thirdFieldName }}</p></span
-    >
-    <span
-      ><p class="text-xs text-dk-gray text-opacity-50 text-right">
-        {{ thirdFieldValue }}
-      </p></span
-    >
+    <!-- first dynamic field -->
+    <p class="text-sm font-semibold">{{ firstFieldName }}:</p>
+    <p *ngIf="firstFieldType === 'date'" class="text-sm font-semibold text-right">
+      {{ firstFieldValue | date: 'shortDate' }}
+    </p>
+    <p *ngIf="firstFieldType === 'string'" class="text-sm font-semibold text-right">{{ firstFieldValue }}</p>
+    <p *ngIf="firstFieldType === 'currency'" class="text-sm font-semibold text-right">
+      {{ firstFieldValue | currency: 'USD':'symbol':'1.0-0' }}
+    </p>
+    <!-- second dynamic field -->
+    <p class="text-xs text-dk-gray">{{ secondFieldName }}</p>
+    <p *ngIf="secondFieldType === 'date'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ secondFieldValue | date: 'shortDate' }}
+    </p>
+    <p *ngIf="secondFieldType === 'string'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ secondFieldValue }}
+    </p>
+    <p *ngIf="secondFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ secondFieldValue | currency: 'USD':'symbol':'1.0-0' }}
+    </p>
+    <!-- third dynamic field -->
+    <p class="text-xs text-dk-gray">{{ thirdFieldName }}</p>
+    <p *ngIf="thirdFieldType === 'date'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ thirdFieldValue | date: 'shortDate' }}
+    </p>
+    <p *ngIf="thirdFieldType === 'string'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ thirdFieldValue }}
+    </p>
+    <p *ngIf="thirdFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ thirdFieldValue | currency: 'USD':'symbol':'1.0-0' }}
+    </p>
   </div>
   <brave-viewdetail-button (click)="viewDetailClick.emit()" [horizontal]="true">View Detail</brave-viewdetail-button>
 </div>

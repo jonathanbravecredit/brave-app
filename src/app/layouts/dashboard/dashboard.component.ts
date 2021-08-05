@@ -17,12 +17,11 @@ export class DashboardComponent implements OnInit {
     private interstitial: InterstitialService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
-
-  ngOnInit(): void {
-    // this.dashboardService.refreshReport();
+){
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
   }
+
+  ngOnInit(): void {}
 
   goToLink(link: string) {
     this.router.navigate([`./${link}`], { relativeTo: this.route });

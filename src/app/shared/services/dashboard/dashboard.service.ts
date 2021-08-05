@@ -31,7 +31,6 @@ export class DashboardService implements OnDestroy {
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
-
   /**
    * Enroll the user in report and score if not already
    * @returns
@@ -45,13 +44,6 @@ export class DashboardService implements OnDestroy {
     return success;
   }
 
-  isCreditFreezeEnabled(): Observable<boolean> {
-    return this.tuReport$.pipe(switchMap(report => {
-      const creditreport = report.TrueLinkCreditReportType;
-      const isFreezeEnabled = creditreport.SB168Frozen && creditreport.SB168Frozen?.transunion;
-      return of(isFreezeEnabled ? true : false);
-    }))  
-  }
   /**
    * Refresh the users report if stale
    */
@@ -70,5 +62,15 @@ export class DashboardService implements OnDestroy {
       await this.transunion.refreshCreditReport(id);
     }
     return;
+  }
+
+  isCreditFreezeEnabled(): Observable<boolean> {
+    return this.tuReport$.pipe(
+      switchMap((report) => {
+        const creditreport = report?.TrueLinkCreditReportType;
+        const isFreezeEnabled = creditreport?.SB168Frozen && creditreport?.SB168Frozen?.transunion;
+        return of(isFreezeEnabled ? true : false);
+      }),
+    );
   }
 }
