@@ -1,6 +1,7 @@
-import { IBorrower } from '@shared/interfaces';
+import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer } from '@shared/interfaces';
+import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 
-export interface IPersonalItemsDetailsConfig {
+export interface IPersonalItemsDetailsTable {
   personalItem: IBorrower;
   ssn?: string;
   borrowerNames?: string;
@@ -12,4 +13,17 @@ export interface IPersonalItemsDetailsConfig {
   previousAddressesArray?: string[];
   telephonesArray?: string[];
   employersArray?: string[];
+  borrowersNamesRaw?: IBorrowerName[];
+  currentAddressRaw?: IBorrowerAddress;
+  previousAddressesRaw?: IBorrowerAddress[];
+  employersRaw?: IEmployer[];
+}
+
+export interface IPersonalItemsDetailsConfig {
+  key: PersonalDisputeTypes;
+  value: IBorrowerName | IBorrowerAddress | IEmployer;
+  parsedValue: string;
+  dateUpdated: string;
+  borrower: IBorrower;
+  transformed: any;
 }

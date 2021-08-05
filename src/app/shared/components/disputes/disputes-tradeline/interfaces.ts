@@ -1,18 +1,18 @@
-import { IDisputeTradelineReasonCard } from '@shared/components/cards/reason-card/interfaces';
+import { IDisputeReasonCard } from '@shared/components/cards/reason-card/interfaces';
 
-export interface IDisputeTradelineReasonCardPage {
+export interface IDisputeReasonCardPage {
   pageIndex: number;
-  items: IDisputeTradelineReasonCardPageItem[];
+  items: IDisputeReasonCardPageItem[];
 }
 
-export type IDisputeTradelineReasonCardPageItem = { reason: IDisputeReason } & Partial<IDisputeTradelineReasonCard>;
+export type IDisputeReasonCardPageItem = { reason: IDisputeReason } & Partial<IDisputeReasonCard>;
 
-export interface IDisputeTradelineSelectedObj {
+export interface IDisputeSelectedObj {
   pageIndex: number;
   itemIndex: number;
 }
 
-export interface IDisputeTradelineProcessResult {
+export interface IDisputeProcessResult {
   isFinished: boolean;
   data: {
     hasCustomInput: boolean;

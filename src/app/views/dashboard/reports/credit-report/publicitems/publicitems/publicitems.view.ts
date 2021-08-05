@@ -44,7 +44,7 @@ export class PublicitemsView {
    * @param publicItem
    * @returns {void}
    */
-  async onDisputeClicked(publicItem: IPublicPartition): Promise<void> {
+  async onDisputeClick(publicItem: IPublicPartition): Promise<void> {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `publicitems:onDisputeClicked=Missing id:${id}`;
     this.disputeService

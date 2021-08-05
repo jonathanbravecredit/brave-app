@@ -10,7 +10,7 @@ interface IDisputesToOverview {
 
 interface IDisputeItem extends IProcessDisputeTradelineResult {}
 // export interface IProcessDisputeTradelineResult {
-//   result: IDisputeTradelineProcessResult;
+//   result: IDisputeProcessResult;
 //   tradeline: ITradeLinePartition | undefined;
 // }
 

@@ -1,7 +1,7 @@
-import { IMergeReport, IBorrower, ICreditStatement } from "@shared/interfaces";
+import { IMergeReport, IBorrower, ICreditStatement } from '@shared/interfaces';
 
 export class MergeReportPipeHelper {
-  constructor() { }
+  constructor() {}
 
   static addCustomerStatementToArrOfObj(objArr: any[], report: IMergeReport): any[] {
     let statement = '';
@@ -22,15 +22,19 @@ export class MergeReportPipeHelper {
   }
 
   static parseBorrowerForCreditStatement(borrower: IBorrower | IBorrower[]) {
-    return borrower instanceof Array ?
-    this.parseCreditStatement(borrower[0].CreditStatement) :
-    this.parseCreditStatement(borrower.CreditStatement)
+    return borrower instanceof Array
+      ? this.parseCreditStatement(borrower[0].CreditStatement)
+      : this.parseCreditStatement(borrower.CreditStatement);
   }
 
-  static parseCreditStatement(creditStatementVariant: ICreditStatement[] | ICreditStatement | undefined): string | undefined {
+  static parseCreditStatement(
+    creditStatementVariant: ICreditStatement[] | ICreditStatement | undefined,
+  ): string | undefined {
     if (creditStatementVariant !== undefined) {
-      return creditStatementVariant instanceof Array ? creditStatementVariant[1]?.statement : creditStatementVariant?.statement;
+      return creditStatementVariant instanceof Array
+        ? creditStatementVariant[1]?.statement
+        : creditStatementVariant?.statement;
     }
+    return;
   }
-
 }

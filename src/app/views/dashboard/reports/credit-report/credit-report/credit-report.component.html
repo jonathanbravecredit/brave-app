@@ -5,10 +5,10 @@
         (hide)="onHide($event)"
         (viewDetailClick)="onViewDetailClick($event)"
         (viewPublicItemDetailClick)="onViewPublicItemDetailClick($event)"
-        (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.personalItem)"
+        (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.borrower)"
         [preferences]="preferences"
-        [publicItems]="creditReports | mergereportToPublicitems"
-        [personalItems]="creditReports | mergereportToPersonalitems"
+        [publicItems]="(creditReports | mergereportToPublicitems) || []"
+        [personalItems]="(creditReports | mergereportToPersonalitems) || []"
         [tradelines]="creditReports | mergereportToCreditreport: preferences"
         [creditReportScore]="creditReports | parseRiskScore"
       ></brave-credit-report-pure>
