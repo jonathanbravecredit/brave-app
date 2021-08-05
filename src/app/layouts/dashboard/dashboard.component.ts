@@ -3,12 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-dashboard',
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
+  securityFreeze$: Observable<boolean>;
   constructor(
     private dashboardService: DashboardService,
     private creditReportService: CreditreportService,
@@ -19,6 +21,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // this.dashboardService.refreshReport();
+    this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
   }
 
   goToLink(link: string) {
