@@ -5,6 +5,7 @@
       [acknowledged]="acknowledged"
       [config]="tradeline | tradelineToDetails"
       [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
+      [customerStatement]="(tradeline | tradelineToDetails).customerStatement || ''"
       [remarks]="(tradeline | tradelineToDispute)?.accountDetail?.remarks || ''"
       (disputeClick)="onDisputeClicked($event)"
     ></brave-tradelines-pure>

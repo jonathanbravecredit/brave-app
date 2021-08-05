@@ -1,7 +1,4 @@
-import {
-  IDisputeReason,
-  IDisputeTradelineReasonCardPage,
-} from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { IDisputeReason, IDisputeReasonCardPage } from '@shared/components/disputes/disputes-tradeline/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS: IDisputeReason[] = [
   {
@@ -10,12 +7,12 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS: IDisputeRe
     text: 'To be removed',
   },
 ];
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS_TO_BE_REMOVED: IDisputeTradelineReasonCardPage[] = [
+export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS_TO_BE_REMOVED: IDisputeReasonCardPage[] = [
   {
     pageIndex: 0,
     items: [
       {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS[7],
+        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS[0],
         allowUserInput: true,
       },
     ],

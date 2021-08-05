@@ -16,6 +16,12 @@ export class TradelineRemarksComponent {
    * @property {string} address
    * @default
    */
+  @Input() consumerStatement: string = '';
+  /**
+   * Raw consumer statement from Merge Report...TODO need better mapping
+   * @property {string} consumerStatement
+   * @default
+   */
   @Input() address: string = '';
   /**
    * @property showFooter - flag to turn off the 'Dispute' message

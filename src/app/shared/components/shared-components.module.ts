@@ -127,6 +127,12 @@ import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-i
 import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
+import { SecurityFreezeComponent } from './messages/security-freeze/security-freeze.component';
+import { DisputeHeaderComponent } from './disputes/dispute-header/dispute-header.component';
+import { DisputeHeaderTradelineComponent } from './disputes/dispute-header-tradeline/dispute-header-tradeline.component';
+import { DisputeHeaderPublicitemComponent } from './disputes/dispute-header-publicitem/dispute-header-publicitem.component';
+import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-personalitem/dispute-header-personalitem.component';
+import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
 
 const components = [
   BaseFormComponent,
@@ -227,6 +233,13 @@ const components = [
   OutlineInputPhoneComponent,
   OutlineInputCodeComponent,
   BaseTableRowComponent,
+  SecurityFreezeComponent,
+  DisputeHeaderComponent,
+  DisputeHeaderTradelineComponent,
+  SimpleBackButtonComponent,
+  DisputeHeaderPublicitemComponent,
+  DisputeHeaderPersonalitemComponent,
+  SimpleBannerComponent,
 ];
 
 // component specific pipes only
@@ -246,7 +259,6 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   DisputeCardStatusPipe,
-  SimpleBackButtonComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

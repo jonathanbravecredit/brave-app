@@ -18,8 +18,8 @@ export interface ICreditReportTradelinesCardGroup {
 })
 export class CreditReportPureComponent implements OnInit {
   @Input() tradelines: ICreditReportTradelinesCardGroup[] = [];
-  @Input() publicItems: IPublicItemsDetailsConfig[] | undefined = [];
-  @Input() personalItems: IPersonalItemsDetailsConfig | undefined;
+  @Input() publicItems: IPublicItemsDetailsConfig[] = [];
+  @Input() personalItems: IPersonalItemsDetailsConfig[] = [];
   @Input() creditReportScore: number = 0;
   @Input() preferences: PreferencesStateModel = {} as PreferencesStateModel;
   @Output() hide: EventEmitter<ICreditReportTradelinesCardGroup> = new EventEmitter();

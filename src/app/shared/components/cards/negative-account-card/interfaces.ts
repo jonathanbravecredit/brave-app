@@ -17,5 +17,6 @@ export interface INegativeAccountCardInputs {
     dateOpened?: string;
     dateLastPayment?: string;
     remarks?: string;
+    consumerStatement?: string;
   };
 }

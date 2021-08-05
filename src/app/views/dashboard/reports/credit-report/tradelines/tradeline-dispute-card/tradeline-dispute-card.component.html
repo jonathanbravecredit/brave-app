@@ -14,7 +14,7 @@
     </div>
     <div class="grid grid-cols-2 gap-1 mb-2">
       <p class="text-xs font-dk-gray">Last Payment to Creditor:</p>
-      <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.dateReported }}</p>
+      <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.dateReported | date:'shortDate' }}</p>
       <p class="text-xs text-dk-gray">Original Creditor:</p>
       <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.originalCreditor }}</p>
       <p class="text-xs text-dk-gray">Previously Disputed:</p>

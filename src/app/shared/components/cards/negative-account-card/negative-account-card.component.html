@@ -10,7 +10,7 @@
       </span>
       <span>
         <p class="text-xs font-semibold text-right">
-          {{ data.lastReported }}
+          {{ data.lastReported | date:'shortDate' }}
         </p>
       </span>
       <span *ngIf="data.accountTypeDescription">
@@ -112,7 +112,7 @@
         </span>
         <span class="text-right">
           <p class="text-xs text-dk-gray text-opacity-50">
-            {{ data.accountDetail?.dateLastPayment | date: 'shortDate'  }}
+            {{ data.accountDetail?.dateLastPayment | date: 'shortDate' }}
           </p>
         </span>
       </div>
@@ -125,6 +125,17 @@
           <p class="text-xs text-dk-gray text-opacity-50">
             <span *ngIf="data.accountDetail?.remarks">{{ data.accountDetail?.remarks }}</span>
             <span *ngIf="!data.accountDetail?.remarks">None</span>
+          </p>
+        </span>
+      </div>
+      <div class="border-t border-blueGray-300"></div>
+      <div class="grid grid-cols-2 gap-4 py-2">
+        <span>
+          <p class="text-xs text-dk-gray">Consumer Statement</p>
+        </span>
+        <span class="text-right">
+          <p class="text-xs text-dk-gray text-opacity-50">
+            {{ data.accountDetail?.consumerStatement }}
           </p>
         </span>
       </div>
