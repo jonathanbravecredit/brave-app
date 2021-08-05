@@ -23,6 +23,7 @@ export class DashboardEnrolledComponent implements OnInit {
     private interstitial: InterstitialService,
   ) {
     this.tuReport$ = this.dashboardService.tuReport$.asObservable();
+
   }
 
   ngOnInit(): void {

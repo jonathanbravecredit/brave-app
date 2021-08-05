@@ -8,6 +8,7 @@ import { IMergereportToDashboardOutput } from '@shared/pipes/mergereport-to-dash
   templateUrl: './dashboard-enrolled-pure.component.html',
 })
 export class DashboardEnrolledPureComponent implements OnInit {
+  @Input() securityFreeze: boolean = false;
   @Input() cards: IMergereportToDashboardOutput | undefined;
   @Input() userName: string = '';
   @Input() defaultMsg: string = 'Welcome back!';

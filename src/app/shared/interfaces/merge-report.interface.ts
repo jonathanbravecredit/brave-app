@@ -7,6 +7,7 @@ import { ISource, ICodeRef, IPartitionElements, IPartitionSet, IRemark } from '@
 export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
 }
+
 export interface ITrueLinkCreditReportType {
   SB168Frozen?: ISB168Frozen;
   Borrower?: IBorrower | IBorrower[];

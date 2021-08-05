@@ -5,7 +5,8 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -30,6 +31,7 @@ export class DashboardService implements OnDestroy {
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
+
   /**
    * Enroll the user in report and score if not already
    * @returns
@@ -43,6 +45,13 @@ export class DashboardService implements OnDestroy {
     return success;
   }
 
+  isCreditFreezeEnabled(): Observable<boolean> {
+    return this.tuReport$.pipe(switchMap(report => {
+      const creditreport = report.TrueLinkCreditReportType;
+      const isFreezeEnabled = creditreport.SB168Frozen && creditreport.SB168Frozen?.transunion;
+      return of(isFreezeEnabled ? true : false);
+    }))  
+  }
   /**
    * Refresh the users report if stale
    */
