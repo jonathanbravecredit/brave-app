@@ -17,7 +17,7 @@ export class MergereportToTradelinesPipe implements PipeTransform {
     let tradelines = !(partition instanceof Array) ? [partition] : partition;
     tradelines = [...this.filterByAccountType(tradelines, accountType)];
     // tradelines = [...TU.sortTradelineByAccountType(tradelines)];
-    tradelines = [...TU.sortTradelineByDateOpened(tradelines)];
+    tradelines = [...TU.sortTradelineByPayStatus(tradelines)];
     let config = tradelines.map((line) => this.mapPartitionsToDetails(line));
     return MergeReportPipeHelper.addCustomerStatementToArrOfObj(config, report) as ITradelineDetailsConfig[];
   }
