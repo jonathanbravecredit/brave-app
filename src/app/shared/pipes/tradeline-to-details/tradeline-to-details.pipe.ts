@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Pipe({

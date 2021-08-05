@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, ViewChild, Output } from '@angular/core';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
-import { IDisputeTradelineProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IProcessDisputeTradelineResult {
-  result: IDisputeTradelineProcessResult;
+  result: IDisputeProcessResult;
   tradeline: ITradeLinePartition | undefined;
 }
 

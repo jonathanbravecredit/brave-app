@@ -1,0 +1,33 @@
+<div class="flex items-center mb-3">
+  <span>Account Details</span>
+</div>
+<div class="card">
+  <!-- ======= AccountDetails Comp ======== -->
+  <brave-tradeline-details-table [config]="config"></brave-tradeline-details-table>
+
+  <!-- ======= Payment History and Remarks ======== -->
+  <div *ngIf="viewDetail.open$ | async as open">
+    <div class="px-1">
+      <brave-tradeline-payments [paymentHistory]="paymentHistory"></brave-tradeline-payments>
+      <brave-tradeline-remarks [remarks]="remarks" [address]="address" [consumerStatement]="customerStatement"></brave-tradeline-remarks>
+    </div>
+    <div class="flex justify-center mb-2">
+      <brave-filled-onlytext-button (click)="showModal = !showModal; this.disputeClicked()"
+        >Dispute in a few clicks</brave-filled-onlytext-button
+      >
+      <brave-onboarding-dispute
+        class="w-device h-device fixed"
+        [showModal]="showModal && !acknowledged"
+        (confirmation)="actionForDispute($event)"
+      ></brave-onboarding-dispute>
+    </div>
+  </div>
+
+  <!-- ======= See payment history button ======== -->
+  <div class="flex justify-center my-6">
+    <brave-viewdetail-button #viewDetail>
+      <p class="text-sm hover:cursor-pointer">See Payment History</p>
+    </brave-viewdetail-button>
+  </div>
+</div>
+<div class="border-t border-blueGray-300 my-2"></div>

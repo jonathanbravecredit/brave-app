@@ -13,46 +13,20 @@
 </div>
 
 <!-- personal items -->
-<div *ngIf="personalItems.personalItem" class="flex items-center mb-3">
+<div *ngIf="personalItems?.length" class="flex items-center mb-3">
   <span class="material-icons-outlined">perm_identity</span>
   <span>Personal Information</span>
 </div>
 
-<div *ngIf="personalItems.borrowerNames">
+<div *ngFor="let item of personalItems; index as idx">
   <brave-personalitem-dispute-card
-    icon="face"
-    [titleName]="'Name(s)'"
-    [fieldName]="'Name(s)'"
-    [fieldValues]="personalItems.borrowerNames || '--'"
-    [count]="personalItems.borrowerNamesArray?.length || 0"
-    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
-  ></brave-personalitem-dispute-card>
-</div>
-
-<div *ngIf="personalItems.previousAddresses">
-  <brave-personalitem-dispute-card
-    icon="home"
-    [titleName]="'Address(es)'"
-    [fieldName]="'Address(es)'"
-    [fieldValues]="personalItems.previousAddresses || '--'"
-    [count]="personalItems.previousAddressesArray?.length || 0"
-    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
-  ></brave-personalitem-dispute-card>
-</div>
-
-<div *ngIf="personalItems.employers">
-  <brave-personalitem-dispute-card
-    icon="badge"
-    [titleName]="'Employers(es)'"
-    [fieldName]="'Employers(es)'"
-    [fieldValues]="personalItems.employers || '--'"
-    [count]="personalItems.employersArray?.length || 0"
-    (disputeClick)="disputePersonalClick.emit(personalItems.personalItem)"
+    [personalItem]="item"
+    (disputeClick)="disputePersonalClick.emit(item)"
   ></brave-personalitem-dispute-card>
 </div>
 
 <!-- public items -->
-<div *ngIf="publicItems.length" class="flex items-center mb-8">
+<div *ngIf="publicItems?.length" class="flex items-center mb-8">
   <span class="material-icons-outlined"> description </span>
   <span>Public Records</span>
 </div>

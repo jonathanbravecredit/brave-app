@@ -1,9 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IBorrower, IMergeReport, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import { AccountTypes } from '@shared/constants/account-types';
+import {
+  IBorrower,
+  IBorrowerAddress,
+  IBorrowerName,
+  IEmployer,
+  IMergeReport,
+  IPublicPartition,
+  ITradeLinePartition,
+} from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
+import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,7 +25,7 @@ export class DisputesReconfirmView {
   creditReport$: Observable<IMergeReport>;
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
     private creditReportService: CreditreportService,
@@ -22,12 +33,30 @@ export class DisputesReconfirmView {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 
-  onDisputePersonalClick(personalItem: IBorrower): void {
-    window.alert('personal disputes are not enabled yet');
+  onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {
+    const id = this.statesvc.state?.appData.id;
+    if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
+    this.disputeService.setPersonalItem(personalItem);
+    this.router.navigate(['./personalitem'], {
+      relativeTo: this.route,
+      queryParams: {
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
   onDisputePublicClick(publicItem: IPublicPartition): void {
-    window.alert('public disputes are not enabled yet');
+    const id = this.statesvc.state?.appData.id;
+    if (!id) throw `reconfirm:onDisputePublicClick=Missing id:${id}`;
+    this.disputeService.setPublicItem(publicItem);
+    this.router.navigate(['./publicitem'], {
+      relativeTo: this.route,
+      queryParams: {
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
   /**
    * Sets the current dispute in the service based on the tradeline clicked
@@ -37,8 +66,14 @@ export class DisputesReconfirmView {
    */
   onDisputeTradelineClick(tradeline: ITradeLinePartition): void {
     const id = this.statesvc.state?.appData.id;
-    if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
+    if (!id) throw `reconfirm:onDisputeTradelineClick=Missing id:${id}`;
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['./tradeline'], { relativeTo: this.route });
+    this.router.navigate(['./tradeline'], {
+      relativeTo: this.route,
+      queryParams: {
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 }

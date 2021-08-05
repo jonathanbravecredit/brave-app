@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 import { IPayStatusHistory, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Component({
@@ -23,6 +23,10 @@ export class TradelinesPureComponent {
    * Remarks from Merge Report
    */
   @Input() remarks: string = '';
+  /**
+   * Remarks from Merge Report
+   */
+  @Input() customerStatement: string = '';
   /**
    * Address from Merge Report...TODO need better definition
    */

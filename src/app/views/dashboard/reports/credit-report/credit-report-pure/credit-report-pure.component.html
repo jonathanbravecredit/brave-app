@@ -6,7 +6,7 @@
   ></brave-credit-report-graphic-with-graph>
   <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
 </div>
-<div class="p-4" *ngFor="let report of tradelines">
+<div class="py-4" *ngFor="let report of tradelines">
   <h6 class="text-lg">{{ report.title }}</h6>
   <div *ngIf="preferences.showAllAccounts[report.group]">
     <input type="checkbox" id="dont-show-hide" (click)="hide.emit(report)" />
@@ -29,22 +29,22 @@
   </div>
 </div>
 
-<div *ngIf="personalItems" class="p-4">
+<div *ngIf="personalItems?.length" class="py-4">
   <div class="flex items-center mb-3">
     <span class="material-icons-outlined">perm_identity</span>
     <span>Personal Information</span>
   </div>
   <div>
-    <brave-personalitems-details [config]="personalItems"></brave-personalitems-details>
+    <brave-personalitems-details [config]="personalItems[0].transformed"></brave-personalitems-details>
     <div class="mt-4">
-      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems)"
+      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
         >see an error?</brave-viewdetail-button
       >
     </div>
   </div>
 </div>
 
-<div *ngIf="publicItems?.length" class="p-4">
+<div *ngIf="publicItems?.length" class="py-4">
   <div class="flex items-center mb-8">
     <span class="material-icons-outlined"> description </span>
     <span>Public Records</span>

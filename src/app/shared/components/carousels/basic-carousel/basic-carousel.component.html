@@ -15,7 +15,7 @@
     </div>
   </div>
 </div>
-<div class="flex justify-center">
+<div *ngIf="pages.length > 1" class="flex justify-center">
   <!-- put the # / 4 here -->
   <div class="p-4">
     <brave-base-pagination #pagination paginationStyle="point" [numberOfPages]="pages.length"></brave-base-pagination>

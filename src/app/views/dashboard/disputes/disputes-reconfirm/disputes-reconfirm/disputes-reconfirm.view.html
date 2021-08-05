@@ -1,19 +1,46 @@
-<div class="container mx-auto max-w-xs h-full">
-  <div *ngIf="creditReport$ | async as report">
-    <div *ngIf="report | mergereportToTradelines as tradelines">
-      <div *ngIf="report | mergereportToPublicitems as publicItems">
-        <div *ngIf="report | mergereportToPersonalitems as personalItems">
-          <brave-disputes-reconfirm-pure
-            [tradelines]="tradelines"
-            [publicItems]="publicItems"
-            [personalItems]="personalItems"
-            (disputeTradelineClick)="onDisputeTradelineClick($event)"
-            (disputePersonalClick)="onDisputePersonalClick($event)"
-            (disputePublicClick)="onDisputePublicClick($event)"
-          >
-          </brave-disputes-reconfirm-pure>
-        </div>
+<div *ngIf="creditReport$ | async as report">
+  <div *ngIf="route.queryParams | async as params">
+    <!-- =========== personal items =========== -->
+    <div *ngIf="params.type === 'personal'">
+      <div *ngIf="report | mergereportToPersonalitems as personalItems">
+        <brave-disputes-reconfirm-pure
+          [personalItems]="personalItems"
+          (disputePersonalClick)="onDisputePersonalClick($event)"
+        >
+        </brave-disputes-reconfirm-pure>
       </div>
+    </div>
+
+    <!-- =========== public items =========== -->
+    <div *ngIf="params.type === 'public'">
+      <div *ngIf="report | mergereportToPublicitems as publicItems">
+        <brave-disputes-reconfirm-pure [publicItems]="publicItems" (disputePublicClick)="onDisputePublicClick($event)">
+        </brave-disputes-reconfirm-pure>
+      </div>
+    </div>
+
+    <!-- =========== tradeline items =========== -->
+    <div *ngIf="(params.type !== 'public' && params.type !== 'personal' && params.type !== 'all')">
+      <div *ngIf="report | mergereportToTradelines: params.type as tradelines">
+        <brave-disputes-reconfirm-pure
+          [tradelines]="tradelines"
+          (disputeTradelineClick)="onDisputeTradelineClick($event)"
+        >
+        </brave-disputes-reconfirm-pure>
+      </div>
+    </div>
+
+    <!-- =========== tradeline items =========== -->
+    <div *ngIf="params.type === 'all'">
+      <brave-disputes-reconfirm-pure
+        [publicItems]="report | mergereportToPublicitems"
+        [personalItems]="report | mergereportToPersonalitems"
+        [tradelines]="report | mergereportToTradelines"
+        (disputePublicClick)="onDisputePublicClick($event)"
+        (disputePersonalClick)="onDisputePersonalClick($event)"
+        (disputeTradelineClick)="onDisputeTradelineClick($event)"
+      >
+      </brave-disputes-reconfirm-pure>
     </div>
   </div>
 </div>

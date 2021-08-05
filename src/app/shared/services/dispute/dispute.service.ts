@@ -1,14 +1,24 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import {
+  IBorrower,
+  IBorrowerAddress,
+  IBorrowerName,
+  IEmployer,
+  IPublicPartition,
+  ITradeLinePartition,
+} from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
+import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
+import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -27,15 +37,15 @@ export class DisputeService extends InterstitialService implements OnDestroy {
   publicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
   publicItemSub$: Subscription;
 
-  personalItem: IBorrower | undefined;
-  personalItem$: BehaviorSubject<IBorrower> = new BehaviorSubject({} as IBorrower);
+  personalItem: IPersonalItemsDetailsConfig | undefined;
+  personalItem$ = new BehaviorSubject<IPersonalItemsDetailsConfig>({} as IPersonalItemsDetailsConfig);
   personalItemSub$: Subscription;
 
   /*===========================================================================*/
   // These help track the responses
   /*===========================================================================*/
   currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject<DisputeInput>({} as DisputeInput);
-  disputeStack: IProcessDisputeTradelineResult[] = [];
+  disputeStack: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[] = [];
   disputes$: BehaviorSubject<(DisputeInput | null)[] | null | undefined> = new BehaviorSubject<
     (DisputeInput | null)[] | null | undefined
   >([{} as DisputeInput]);
@@ -91,15 +101,22 @@ export class DisputeService extends InterstitialService implements OnDestroy {
     this.publicItem$.next(publicItem);
   }
 
-  setPersonalItem(personalItem: IBorrower): void {
-    this.personalItem$.next(personalItem);
+  // cannot directly use the partition because of data structure.
+  setPersonalItem(name: IPersonalItemsDetailsConfig): void {
+    this.personalItem$.next(name);
   }
 
-  pushDispute(item: IProcessDisputeTradelineResult): void {
+  pushDispute(
+    item: IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult,
+  ): void {
     this.disputeStack = [...this.disputeStack, item];
   }
 
-  popDispute(): IProcessDisputeTradelineResult | undefined {
+  popDispute():
+    | IProcessDisputeTradelineResult
+    | IProcessDisputePublicResult
+    | IProcessDisputePersonalResult
+    | undefined {
     const item = this.disputeStack.pop();
     this.disputeStack = [...this.disputeStack];
     return item;

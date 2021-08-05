@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { TradelinesPureComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines-pure/tradelines-pure.component';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 
 export default {
   title: 'app/views/tradelines/tradelines',
@@ -42,7 +42,7 @@ const installment: ITradelineDetailsConfig = {
   disputeFlag: 'disputeFlag',
   status: 'status',
   openClosed: 'openClosed',
-};
+} as ITradelineDetailsConfig;
 
 const remarks = `This account was investigated two weeks ago per the client's request`;
 const address = '123 Main Street, Hollywood, CA';

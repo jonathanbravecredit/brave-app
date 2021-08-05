@@ -1,0 +1,55 @@
+<!-- ============================== -->
+<!--       PUBLIC ACCOUNTS        -->
+<!-- ============================== -->
+<div *ngIf="config" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['ssn'] || 'Social Security Number'"
+      [value]="(config.ssn | ssnMask) || '--'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Court Name -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['borrowerNames'] || 'Name'"
+      [value]="config.borrowerNames || '--'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Date Filed -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['currentAddress'] || 'Current Address'"
+      [value]="config.currentAddress || '--'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Date Paid -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['previousAddress'] || 'Previous Address(es)'"
+      [value]="config.previousAddresses || '--'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Date Updated -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['telephone'] || 'Telephone'"
+      [value]="config.telephones || '--'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Type -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['employers'] || 'Employer'"
+      [value]="config.employers || '--'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
