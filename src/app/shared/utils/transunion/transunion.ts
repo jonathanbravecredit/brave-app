@@ -1,4 +1,4 @@
-import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import { BRAVE_ACCOUNT_TYPE, POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import {
   IBorrowerName,
@@ -119,6 +119,23 @@ export class TransunionUtil {
           return -1;
         }
         return 0;
+      }),
+    ];
+  }
+
+  /**
+   * Sorts the tradeline by the account type (negative first by default)
+   * @param tradeLines
+   * @param positive optional flag to switch the order to positive first
+   * @returns
+   */
+  static sortTradelineByPayStatus(tradeLines: ITradeLinePartition[], positive: boolean = false): ITradeLinePartition[] {
+    const sort = positive ? 1 : -1;
+    return [
+      ...tradeLines.sort((a, b) => {
+        const statusA = POSITIVE_PAY_STATUS_CODES[`${a.Tradeline?.PayStatus?.symbol}`] ? -1 * sort : 1 * sort;
+        const statusB = POSITIVE_PAY_STATUS_CODES[`${b.Tradeline?.PayStatus?.symbol}`] ? -1 * sort : 1 * sort;
+        return statusA - statusB;
       }),
     ];
   }
