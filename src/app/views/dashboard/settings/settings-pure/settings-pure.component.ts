@@ -15,6 +15,8 @@ export class SettingsPureComponent {
 
   @Input() openTab = 1;
   @Input() view: ISettingsViews = 'reset';
-
+  @Input() haveResetError: boolean = false;
+  @Input() resetSuccess: boolean = false;
+  @Input() resetError: string = '';
   constructor() {}
 }

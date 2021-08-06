@@ -1,9 +1,14 @@
-<brave-settings-pure
-  [openTab]="openTab"
-  [view]="view"
-  (goToPageClick)="onGoToPageClick($event)"
-  (goBackToSettingsClick)="onGoBackToSettingsClick()"
-  (changePasswordClick)="onChangePasswordClick($event)"
-  (logoutClick)="onLogoutClick()"
-  (backButtonClick)="onBackButtonClick()"
-></brave-settings-pure>
+<div class="w-full p-2">
+  <brave-settings-pure
+    [openTab]="openTab"
+    [view]="view"
+    [haveResetError]="haveResetError"
+    [resetSuccess]="resetSuccess"
+    [resetError]="resetError"
+    (goToPageClick)="onGoToPageClick($event)"
+    (goBackToSettingsClick)="onGoBackToSettingsClick()"
+    (changePasswordClick)="onChangePasswordClick($event)"
+    (logoutClick)="onLogoutClick()"
+    (backButtonClick)="onBackButtonClick()"
+  ></brave-settings-pure>
+</div>

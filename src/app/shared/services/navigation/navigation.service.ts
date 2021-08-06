@@ -21,7 +21,7 @@ export class NavigationService {
     if (this.history > 0) {
       this.location.back();
     } else {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/dashboard/init');
     }
   }
 }

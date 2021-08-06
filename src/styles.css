@@ -23,15 +23,15 @@
     @apply font-headings font-extrabold text-lg text-coolGray-900;
   }
   .brave-body1 {
-    @apply font-sans text-base text-coolGray-700;
+    @apply font-sans text-base text-coolGray-900;
   }
   .brave-body1-semibold {
-    @apply font-sans font-semibold text-base text-coolGray-700;
+    @apply font-sans font-semibold text-base text-coolGray-900;
   }
   .brave-body2 {
-    @apply font-sans text-sm text-coolGray-700;
+    @apply font-sans text-sm text-coolGray-900;
   }
   .brave-body2-semibold {
-    @apply font-sans font-semibold text-sm text-coolGray-700;
+    @apply font-sans font-semibold text-sm text-coolGray-900;
   }
 }

@@ -234,13 +234,16 @@ export class AuthService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(oldPassword: string, newPassword: string): Promise<boolean> {
+  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     try {
       const user = await Auth.currentAuthenticatedUser();
+      console.log('user in reset password ==> ', user);
+      console.log('old password in reset password ==> ', oldPassword);
+      console.log('new password in reset password ==> ', newPassword);
       const resp = await Auth.changePassword(user, oldPassword, newPassword);
-      return resp.toLowerCase() === 'success';
+      return resp.toLowerCase();
     } catch (err) {
-      throw `authService:resetPassword=${err}`;
+      return err.message;
     }
   }
 

@@ -6,9 +6,7 @@ import { AuthService } from '@shared/services/auth/auth.service';
   providedIn: 'root',
 })
 export class SettingsService {
-  constructor(
-    private router: Router,
-    private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService) {}
 
   /**
    * Submit email to cognito for change, if accepted returns true
@@ -42,11 +40,11 @@ export class SettingsService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(oldPassword: string, newPassword: string): Promise<boolean> {
+  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     try {
       return await this.auth.resetPassword(oldPassword, newPassword);
     } catch (err) {
-      throw `settingService:resetPassword=${err}`;
+      throw `settingService:resetPassword=${err.message}`;
     }
   }
 

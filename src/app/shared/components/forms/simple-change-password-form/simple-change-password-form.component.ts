@@ -12,8 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class SimpleChangePasswordFormComponent extends BaseFormComponent {
   @Output() changePasswordClick: EventEmitter<IConfirmPassword> = new EventEmitter();
-  @Input() viewState: ConfirmPasswordState = 'init';
-  @Input() message: string = '';
+  @Input() haveResetError: boolean = false;
+  @Input() resetError: string = '';
   values$: Observable<any>;
   status$: Observable<any>;
   passwordConfig: IOutlineInputeConfig = {
@@ -46,21 +46,21 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
     this.status$ = this.parentForm.statusChanges;
   }
 
-  /**
-   * toggle on the error message
-   * @param viewState
-   */
-  updateViewState(viewState: SigninState): void {
-    this.viewState = viewState;
-  }
+  // /**
+  //  * toggle on the error message
+  //  * @param viewState
+  //  */
+  // updateViewState(viewState: SigninState): void {
+  //   this.viewState = viewState;
+  // }
 
-  /**
-   * Update the message based on the error response from AWS
-   * @param message
-   */
-  updateInvalidMessage(message: string): void {
-    this.message = message;
-  }
+  // /**
+  //  * Update the message based on the error response from AWS
+  //  * @param error
+  //  */
+  // updateInvalidMessage(error: string): void {
+  //   this.error = error;
+  // }
 
   /**
    * Take the sign up form and transform into NewUser object
