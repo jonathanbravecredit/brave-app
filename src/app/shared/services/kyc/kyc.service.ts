@@ -469,4 +469,18 @@ export class KycService {
       throw new Error(`kycService:sendEnrollRequest=${err}`);
     }
   }
+
+  /**
+   * Invoke the service method to send the verified user to transunion to complete onboarding
+   *  - enrolls them in report and score as well as disputes
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
+    try {
+      return await this.transunion.sendEnrollRequest(data);
+    } catch (err) {
+      throw new Error(`kycService:sendEnrollRequest=${err}`);
+    }
+  }
 }

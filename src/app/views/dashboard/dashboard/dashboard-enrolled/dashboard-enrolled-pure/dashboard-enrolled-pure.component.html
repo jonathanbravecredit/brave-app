@@ -1,7 +1,7 @@
 <h2 class="text-lg font-semibold">{{ userName === '' ? defaultMsg : initialMsg }}</h2>
 
 <div class="my-2">
-  <brave-credit-report-graphic-with-graph></brave-credit-report-graphic-with-graph>
+  <brave-credit-report-graphic-with-graph [currentValue]="score"></brave-credit-report-graphic-with-graph>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">Your Credit Snapshot</h2>

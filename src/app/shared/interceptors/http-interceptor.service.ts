@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpEvent,
-  HttpRequest,
   HttpHandler,
+  HttpRequest,
+  HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse,
   HttpResponse,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { retry, catchError, tap } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class ServerErrorInterceptor implements HttpInterceptor {
+export class HttpInterceptorService implements HttpInterceptor {
   constructor(private interstitial: InterstitialService) {}
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap(
@@ -30,15 +31,6 @@ export class ServerErrorInterceptor implements HttpInterceptor {
           }
         },
       ),
-      retry(1),
-      catchError((error: HttpErrorResponse) => {
-        // if (error.status === 401) {
-        //   // refresh token
-        // } else {
-        //   return throwError(error);
-        // }
-        return throwError(error);
-      }),
     );
   }
 }

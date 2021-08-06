@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 export type SigninState = 'init' | 'invalid';
 
@@ -13,12 +12,7 @@ export type SigninState = 'init' | 'invalid';
 export class SigninComponent {
   viewState: SigninState = 'init';
   message: string = '';
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private auth: AuthService,
-    private interstitial: InterstitialService,
-  ) {}
+  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
   /**
    * Method to sign user up
@@ -29,10 +23,7 @@ export class SigninComponent {
     let isValid = true;
     if (isValid) {
       try {
-        this.interstitial.changeMessage(' ');
-        this.interstitial.openInterstitial();
         const cognitorUser = await this.auth.signIn(user.username, user.password);
-        this.interstitial.closeInterstitial();
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
           console.log('MFA challenge');
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
@@ -41,7 +32,6 @@ export class SigninComponent {
           console.log('OTP setup');
         }
       } catch (err) {
-        this.interstitial.closeInterstitial();
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -56,7 +46,6 @@ export class SigninComponent {
         }
       }
     } else {
-      this.interstitial.closeInterstitial();
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,

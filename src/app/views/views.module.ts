@@ -16,7 +16,6 @@ import { SigninPureComponent } from './authentication/signin/signin-pure/signin-
 import { KycAddressComponent } from '@views/onboarding/kyc-address/kyc-address/kyc-address.component';
 import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
 import { CompliancePrivacyComponent } from './compliance/compliance-privacy/compliance-privacy.component';
-import { DashboardInitComponent } from './dashboard/dashboard/dashboard-init/dashboard-init.component';
 import { NegativeAccountInitialComponent } from './dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
 import { NegativeAccountInitialPureComponent } from './dashboard/snapshots/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
 import { CreditReportPureComponent } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
@@ -40,10 +39,8 @@ import { SettingsOverviewPureView } from './dashboard/settings/settings-overview
 import { SettingsOverviewView } from './dashboard/settings/settings-overview/settings-overview.view';
 import { CreditMixPureView } from './dashboard/snapshots/credit-mix/credit-mix-pure/credit-mix-pure.view';
 import { CreditMixView } from './dashboard/snapshots/credit-mix/credit-mix/credit-mix.view';
-import { DashboardUnenrolledComponent } from './dashboard/dashboard/dashboard-unenrolled/dashboard-unenrolled/dashboard-unenrolled.component';
 import { DashboardEnrolledComponent } from './dashboard/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 import { DashboardEnrolledPureComponent } from '@views/dashboard/dashboard/dashboard-enrolled/dashboard-enrolled-pure/dashboard-enrolled-pure.component';
-import { DashboardUnenrolledPureComponent } from '@views/dashboard/dashboard/dashboard-unenrolled/dashboard-unenrolled-pure/dashboard-unenrolled-pure.component';
 import { PublicitemsView } from './dashboard/reports/credit-report/publicitems/publicitems/publicitems.view';
 import { PublicitemsPureView } from './dashboard/reports/credit-report/publicitems/publicitems-pure/publicitems-pure.view';
 import { PersonalitemsView } from './dashboard/reports/credit-report/personalitems/personalitems/personalitems.view';
@@ -137,9 +134,6 @@ const views = [
   KycErrorComponent,
   CompliancePrivacyComponent,
   ComplianceTosComponent,
-  DashboardInitComponent,
-  DashboardUnenrolledComponent,
-  DashboardUnenrolledPureComponent,
   DashboardEnrolledComponent,
   DashboardEnrolledPureComponent,
   NegativeAccountInitialComponent,

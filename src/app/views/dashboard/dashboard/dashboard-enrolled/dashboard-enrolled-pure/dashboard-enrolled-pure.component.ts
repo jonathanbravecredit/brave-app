@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SnapshotStatus } from '@shared/components/cards/snapshot-display-card/snapshot-display-card.component';
 import { LabelOfSnapshot } from '@shared/components/cards/snapshot-display-card/snapshot-label.pipe';
+import { IMergeReport } from '@shared/interfaces';
 import { IMergereportToDashboardOutput } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
 
 @Component({
@@ -25,4 +26,12 @@ export class DashboardEnrolledPureComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  @Input() report: IMergeReport | undefined;
+  get score(): number | undefined {
+    const riskScore: number = this.report?.TrueLinkCreditReportType?.Borrower?.CreditScore?.riskScore as number;
+    const _score = Math.round(riskScore);
+    if (isNaN(_score)) return;
+    return _score;
+  }
 }

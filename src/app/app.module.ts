@@ -58,6 +58,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerErrorInterceptor } from '@shared/interceptors/server-error.interceptor';
+import { HttpInterceptorService } from '@shared/interceptors/http-interceptor.service';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
 @Injectable()
@@ -101,6 +102,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent],
 })

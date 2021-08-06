@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
+export type BaseTableRowType = 'account' | 'currency' | 'date' | 'string';
 @Component({
   selector: 'brave-base-table-row',
   templateUrl: './base-table-row.component.html',
@@ -20,7 +22,7 @@ export class BaseTableRowComponent {
    *
    * value: 'ABC company' or 120.00
    */
-  @Input() value: number | string | undefined = '';
+  @Input() value: number | string | undefined;
   /**
    * Enable or disable tradeline detail row separator
    * @property {boolean} enableSeparator
@@ -29,7 +31,7 @@ export class BaseTableRowComponent {
    * enableSeparator: true
    */
   @Input() enableSeparator: boolean = false;
-  @Input() enableMask: boolean = false;
-
+  @Input() valueType: BaseTableRowType = 'string';
+  missing = TransunionUtil.bcMissing;
   constructor() {}
 }

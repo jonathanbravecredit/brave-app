@@ -8,7 +8,6 @@ import {
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
@@ -27,18 +26,14 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private interstitial: InterstitialService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
-    this.interstitial.openInterstitial();
   }
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    this.interstitial.closeInterstitial();
-  }
+  ngAfterViewInit(): void {}
 
   /**
    * Handle hide event emitter from pure...hides positive accounts

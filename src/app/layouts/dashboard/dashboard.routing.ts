@@ -8,7 +8,6 @@ import { TradelinesComponent } from '@views/dashboard/reports/credit-report/trad
 import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
 import { DisputesOverviewInitialView } from '@views/dashboard/disputes/disputes-overview';
 import { DisputeFindingsView } from '@views/dashboard/disputes/disputes-findings/dispute-findings/dispute-findings.view';
-import { DashboardInitComponent } from '@views/dashboard/dashboard/dashboard-init/dashboard-init.component';
 import { PublicitemsView } from '@views/dashboard/reports/credit-report/publicitems/publicitems/publicitems.view';
 import { PersonalitemsView } from '@views/dashboard/reports/credit-report/personalitems/personalitems/personalitems.view';
 import { DisputesPublicView } from '@views/dashboard/disputes/disputes-public/disputes-public/disputes-public.view';
@@ -16,6 +15,7 @@ import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradel
 import { SettingsOverviewView } from '@views/dashboard/settings/settings-overview/settings-overview.view';
 import { DisputesReconfirmView } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm/disputes-reconfirm.view';
 import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-personal/disputes-personal/disputes-personal.view';
+import { DashboardEnrolledComponent } from '@views/dashboard/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 
 const DashboardRoutes: Routes = [
   {
@@ -30,7 +30,7 @@ const DashboardRoutes: Routes = [
       },
       {
         path: 'init',
-        component: DashboardInitComponent,
+        component: DashboardEnrolledComponent,
         canActivate: [AuthGuard],
       },
       {

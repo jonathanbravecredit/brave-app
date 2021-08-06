@@ -10,7 +10,7 @@ export interface IMergeReport {
 
 export interface ITrueLinkCreditReportType {
   SB168Frozen?: ISB168Frozen;
-  Borrower?: IBorrower | IBorrower[];
+  Borrower?: IBorrower;
   TradeLinePartition?: ITradeLinePartition | ITradeLinePartition[];
   InquiryPartition?: IInquiryPartition | IInquiryPartition[];
   BankingRecordPartition?: IBankingPartition | IBankingPartition[];
@@ -42,7 +42,7 @@ export interface IBorrower {
   PreviousAddress?: IBorrowerAddress | IBorrowerAddress[];
   Birth?: IBorrowerBirth | IBorrowerBirth[];
   CreditStatement?: ICreditStatement | ICreditStatement[];
-  CreditScore?: ICreditScore | ICreditScore[];
+  CreditScore?: ICreditScore;
   Employer?: IEmployer | IEmployer[];
   BorrowerName?: IBorrowerName | IBorrowerName[];
   BorrowerTelephone?: IBorrowerTelephone | IBorrowerTelephone[];
