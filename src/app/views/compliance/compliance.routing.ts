@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { ComplianceComponent } from '@layouts/compliance/compliance.component';
+import { ComplianceComponent } from '@views/compliance/compliance.component';
 import { ComplianceTosComponent } from '@views/compliance/compliance-tos/compliance-tos.component';
 import { CompliancePrivacyComponent } from '@views/compliance/compliance-privacy/compliance-privacy.component';
 

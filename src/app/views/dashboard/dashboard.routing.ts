@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from '@layouts/dashboard/dashboard.component';
+import { DashboardComponent } from '@views/dashboard/dashboard.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { NegativeAccountInitialComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
 import { CreditReportComponent } from '@views/dashboard/reports/credit-report/credit-report/credit-report.component';
@@ -15,7 +15,7 @@ import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradel
 import { SettingsOverviewView } from '@views/dashboard/settings/settings-overview/settings-overview.view';
 import { DisputesReconfirmView } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm/disputes-reconfirm.view';
 import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-personal/disputes-personal/disputes-personal.view';
-import { DashboardEnrolledComponent } from '@views/dashboard/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
+import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 
 const DashboardRoutes: Routes = [
   {

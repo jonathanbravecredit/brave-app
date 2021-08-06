@@ -50,7 +50,7 @@ import { SharedDirectivesModule } from '@shared/directives/shared-directives.mod
 import { SharedServicesModule } from '@shared/services/shared-services.module';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { ViewsModule } from '@views/views.module';
-import { AuthenticationModule } from './layouts/authentication/authentication.module';
+import { AuthenticationModule } from '@views/authentication/authentication.module';
 import { OnboardingModule } from './layouts/onboarding/onboarding.module';
 import { braveState } from '@store/index';
 import { NgxChartsModule } from '@swimlane/ngx-charts';

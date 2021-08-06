@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 export type SigninState = 'init' | 'invalid';
 
@@ -12,12 +13,18 @@ export type SigninState = 'init' | 'invalid';
 export class SigninComponent {
   viewState: SigninState = 'init';
   message: string = '';
-  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private interstitial: InterstitialService,
+  ) {}
 
   /**
    * Method to sign user up
    */
   async signInWithCognito(user: NewUser): Promise<void> {
+    this.interstitial.startSpinner();
     if (!user) return;
     // add email validation here // const isValid = await this.accountMgmtService.isEmailValid(formData.username);
     let isValid = true;
@@ -31,7 +38,9 @@ export class SigninComponent {
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
           console.log('OTP setup');
         }
+        // this.interstitial.stopSpinner();
       } catch (err) {
+        // this.interstitial.stopSpinner();
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -46,6 +55,7 @@ export class SigninComponent {
         }
       }
     } else {
+      // this.interstitial.stopSpinner();
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,

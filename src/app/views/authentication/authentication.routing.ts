@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AuthenticationComponent } from './authentication.component';
+import { AuthenticationComponent } from '@views/authentication/authentication.component';
 import { SigninForgotComponent } from '@views/authentication/signin-forgot/signin-forgot.component';
 import { SigninRedirectComponent } from '@views/authentication/signin-redirect/signin-redirect.component';
 import { SigninComponent } from '@views/authentication/signin/signin/signin.component';
