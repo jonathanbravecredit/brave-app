@@ -32,6 +32,7 @@ import { OnboardingService } from '@views/onboarding/onboarding.service';
 
 // PIPES
 import { KycKbaquestionsPipe } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 const components = [
   OnboardingComponent,
@@ -63,7 +64,7 @@ const services = [OnboardingService];
 
 @NgModule({
   declarations: [...components, ...pipes],
-  imports: [CommonModule, SharedComponentsModule, OnboardingRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, OnboardingRoutingModule],
   exports: [...components, ...pipes],
   providers: [...services],
 })

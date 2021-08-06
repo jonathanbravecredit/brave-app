@@ -12,10 +12,10 @@ import { PublicitemsView } from '@views/dashboard/reports/credit-report/publicit
 import { PersonalitemsView } from '@views/dashboard/reports/credit-report/personalitems/personalitems/personalitems.view';
 import { DisputesPublicView } from '@views/dashboard/disputes/disputes-public/disputes-public/disputes-public.view';
 import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
-import { SettingsOverviewView } from '@views/dashboard/settings/settings-overview/settings-overview.view';
 import { DisputesReconfirmView } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm/disputes-reconfirm.view';
 import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-personal/disputes-personal/disputes-personal.view';
 import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
+import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
 
 const DashboardRoutes: Routes = [
   {
@@ -35,7 +35,7 @@ const DashboardRoutes: Routes = [
       },
       {
         path: 'settings',
-        component: SettingsOverviewView,
+        component: SettingsComponent,
         canActivate: [AuthGuard],
       },
       {

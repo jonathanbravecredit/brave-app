@@ -13,8 +13,6 @@ import { DisputesErrorComponent } from '@views/dashboard/disputes/disputes-error
 import { DisputesErrorPureComponent } from '@views/dashboard/disputes/disputes-error/disputes-error-pure/disputes-error-pure.component';
 import { DisputeFindingsView } from '@views/dashboard/disputes/disputes-findings/dispute-findings/dispute-findings.view';
 import { DisputeFindingsPureView } from '@views/dashboard/disputes/disputes-findings/dispute-findings-pure/dispute-findings-pure.view';
-import { SettingsOverviewPureView } from '@views/dashboard/settings/settings-overview-pure/settings-overview-pure.view';
-import { SettingsOverviewView } from '@views/dashboard/settings/settings-overview/settings-overview.view';
 import { CreditMixPureView } from '@views/dashboard/snapshots/credit-mix/credit-mix-pure/credit-mix-pure.view';
 import { CreditMixView } from '@views/dashboard/snapshots/credit-mix/credit-mix/credit-mix.view';
 import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
@@ -53,9 +51,15 @@ import { PublicitemsDetailsComponent } from '@views/dashboard/reports/credit-rep
 import { PersonalitemDisputeCardComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitem-dispute-card/personalitem-dispute-card.component';
 import { PublicitemCardComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitem-card/publicitem-card.component';
 import { PublicitemDisputeCardComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitem-dispute-card/publicitem-dispute-card.component';
+import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
+import { OptionDeactivateComponent } from '@views/dashboard/settings/option-deactivate/option-deactivate.component';
+import { OptionPasswordResetComponent } from '@views/dashboard/settings/option-password-reset/option-password-reset.component';
+import { SettingsOptionListComponent } from '@views/dashboard/settings/settings-option-list/settings-option-list.component';
 
 import { ParseRiskScorePipe } from '@views/dashboard/reports/credit-report/credit-report/parse-risk-score.pipe';
-
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
+import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 const components = [
   DashboardComponent,
   DashboardEnrolledComponent,
@@ -80,8 +84,12 @@ const components = [
   DisputesOverviewInitialView,
   DisputesOverviewHistoryPureView,
   DisputesOverviewHistoryView,
-  SettingsOverviewPureView,
-  SettingsOverviewView,
+  SettingsComponent,
+  SettingsPureComponent,
+  SettingsOptionComponent,
+  SettingsOptionListComponent,
+  OptionPasswordResetComponent,
+  OptionDeactivateComponent,
   CreditMixPureView,
   CreditMixView,
   PublicitemsView,
@@ -112,7 +120,7 @@ const pipes = [ParseRiskScorePipe];
 
 @NgModule({
   declarations: [...components, ...pipes],
-  imports: [CommonModule, SharedComponentsModule, DashboardRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, DashboardRoutingModule],
   exports: [...components, ...pipes],
 })
 export class DashboardModule {}

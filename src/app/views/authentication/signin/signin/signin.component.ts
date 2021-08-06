@@ -38,9 +38,9 @@ export class SigninComponent {
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
           console.log('OTP setup');
         }
-        // this.interstitial.stopSpinner();
+        this.interstitial.stopSpinner();
       } catch (err) {
-        // this.interstitial.stopSpinner();
+        this.interstitial.stopSpinner();
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -55,7 +55,7 @@ export class SigninComponent {
         }
       }
     } else {
-      // this.interstitial.stopSpinner();
+      this.interstitial.stopSpinner();
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,

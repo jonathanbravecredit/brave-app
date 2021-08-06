@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsOverviewView } from './settings-overview.view';
+import { SettingsOptionListComponent } from './settings-option-list.component';
 
-describe('SettingsOverviewView', () => {
-  let component: SettingsOverviewView;
-  let fixture: ComponentFixture<SettingsOverviewView>;
+describe('SettingsOptionListComponent', () => {
+  let component: SettingsOptionListComponent;
+  let fixture: ComponentFixture<SettingsOptionListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SettingsOverviewView ]
+      declarations: [ SettingsOptionListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsOverviewView);
+    fixture = TestBed.createComponent(SettingsOptionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

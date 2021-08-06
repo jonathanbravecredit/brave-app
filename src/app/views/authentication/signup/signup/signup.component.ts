@@ -43,6 +43,7 @@ export class SignupComponent implements OnInit {
         this.handleSignupError('invalid', err.message);
       }
     } else {
+      this.interstitial.stopSpinner();
       this.handleSignupError('invalid', 'Invalid sign up credentials');
     }
   }
