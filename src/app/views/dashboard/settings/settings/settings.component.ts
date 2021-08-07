@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
+import { IDeactivateAccount } from '@shared/components/forms/simple-deactive-form/interface';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SettingsService } from '@shared/services/settings/settings.service';
 import { OptionDeactivateComponent } from '@views/dashboard/settings/option-deactivate/option-deactivate.component';
@@ -18,6 +19,9 @@ export class SettingsComponent implements OnInit {
   haveResetError: boolean = false;
   resetSuccess: boolean = false;
   resetError: string = '';
+  haveDeactivateError: boolean = false;
+  deactivateSuccess: boolean = false;
+  deactivateError: string = '';
   view: ISettingsViews = 'reset';
   openTab: number = 1;
 
@@ -44,8 +48,6 @@ export class SettingsComponent implements OnInit {
   onGoToPageClick({ tab, view }: { tab: number; view: ISettingsViews }) {
     this.view = view;
     this.openTab = tab;
-    console.log('open view ===> ', this.view, view);
-    console.log('open tab ===> ', this.openTab, tab);
   }
 
   onGoBackToSettingsClick() {
@@ -68,6 +70,22 @@ export class SettingsComponent implements OnInit {
       .catch((reason) => {
         this.resetError = reason;
         this.haveResetError = true;
+        this.interstitial.stopSpinner();
+      });
+  }
+
+  onDeactivateClick(evt: IDeactivateAccount) {
+    // evt.password -- we actually don't need the password, just there to act as a deterent
+    this.interstitial.startSpinner();
+    this.settings
+      .deactivateAccount()
+      .then((results) => {
+        this.deactivateSuccess = true;
+        this.interstitial.stopSpinner();
+      })
+      .catch((err) => {
+        this.deactivateError = 'Sorry we could not deactive your account at this time.';
+        this.haveDeactivateError = true;
         this.interstitial.stopSpinner();
       });
   }

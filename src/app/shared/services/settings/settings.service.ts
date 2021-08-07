@@ -55,7 +55,6 @@ export class SettingsService {
   async deactivateAccount(): Promise<string> {
     try {
       const resp = this.auth.deactivateAccount();
-      this.auth.signOut();
       return resp;
     } catch (err) {
       throw `settingService:deactivateAccount=${err}`;

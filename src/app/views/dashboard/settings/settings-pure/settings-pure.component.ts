@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
+import { IDeactivateAccount } from '@shared/components/forms/simple-deactive-form/interface';
 import { ISettingsViews } from '@views/dashboard/settings/settings-pure/interface';
 
 @Component({
@@ -9,6 +10,7 @@ import { ISettingsViews } from '@views/dashboard/settings/settings-pure/interfac
 export class SettingsPureComponent {
   @Output() logoutClick: EventEmitter<void> = new EventEmitter();
   @Output() changePasswordClick: EventEmitter<IConfirmPassword> = new EventEmitter();
+  @Output() deactivateClick: EventEmitter<IDeactivateAccount> = new EventEmitter();
   @Output() goToPageClick: EventEmitter<{ tab: number; view: ISettingsViews }> = new EventEmitter();
   @Output() goBackToSettingsClick: EventEmitter<void> = new EventEmitter();
   @Output() backButtonClick: EventEmitter<void> = new EventEmitter();
@@ -18,5 +20,10 @@ export class SettingsPureComponent {
   @Input() haveResetError: boolean = false;
   @Input() resetSuccess: boolean = false;
   @Input() resetError: string = '';
+
+  @Input() haveDeactivateError: boolean = false;
+  @Input() deactivateSuccess: boolean = false;
+  @Input() deactivateError: string = '';
+
   constructor() {}
 }

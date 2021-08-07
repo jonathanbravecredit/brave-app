@@ -238,6 +238,8 @@ const components = [
   DisputeHeaderPublicitemComponent,
   DisputeHeaderPersonalitemComponent,
   SimpleBannerComponent,
+  SimpleDeactiveFormComponent,
+  SimpleChangePasswordFormComponent,
 ];
 
 // component specific pipes only
@@ -257,7 +259,6 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   DisputeCardStatusPipe,
-  SimpleChangePasswordFormComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -274,7 +275,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives, SimpleDeactiveFormComponent],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

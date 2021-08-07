@@ -26,7 +26,13 @@
           ></brave-option-password-reset>
         </ng-container>
         <ng-container *ngIf="view === 'deactivate'" #deactivate>
-          <brave-option-deactivate></brave-option-deactivate>
+          <brave-option-deactivate
+            [haveDeactivateError]="haveDeactivateError"
+            [deactivateSuccess]="deactivateSuccess"
+            [deactivateError]="deactivateError"
+            (deactivateClick)="deactivateClick.emit($event)"
+            (goBackToSettingsClick)="goBackToSettingsClick.emit()"
+          ></brave-option-deactivate>
         </ng-container>
       </div>
     </div>
