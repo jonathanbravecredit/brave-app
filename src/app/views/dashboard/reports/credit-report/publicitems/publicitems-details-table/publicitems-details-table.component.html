@@ -6,23 +6,21 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['docketNumber'] || 'Docket Number'"
-      [value]="config.docketNumber || '--'"
+      [value]="config.docketNumber"
     ></brave-base-table-row>
   </div>
 
   <!-- Court Name -->
   <div class="py-2 px-1">
-    <brave-base-table-row
-      [label]="mapper['courtName'] || 'Name'"
-      [value]="config.courtName || '--'"
-    ></brave-base-table-row>
+    <brave-base-table-row [label]="mapper['courtName'] || 'Name'" [value]="config.courtName"></brave-base-table-row>
   </div>
 
   <!-- Date Filed -->
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateFiled'] || 'Date Filed'"
-      [value]="config.dateFiled || '--'"
+      [value]="config.dateFiled"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -30,7 +28,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['datePaid'] || 'Date Paid'"
-      [value]="config.datePaid || '--'"
+      [value]="config.datePaid"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -38,7 +37,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateUpdated'] || 'Date Updated'"
-      [value]="config.dateUpdated || '--'"
+      [value]="config.dateUpdated"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -46,7 +46,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['publicRecordType'] || 'Type'"
-      [value]="config.publicItemType || '--'"
+      [value]="config.publicItemType"
     ></brave-base-table-row>
   </div>
 
@@ -54,7 +54,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['expirationDate'] || 'Estimated month and year that this item will be removed'"
-      [value]="config.expirationDate || '--'"
+      [value]="config.expirationDate"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 

@@ -1,0 +1,40 @@
+<div class="-ml-2 mt-2 mb-4">
+  <brave-simple-back-button (click)="backButtonClick.emit()">Back</brave-simple-back-button>
+</div>
+<div class="mb-8">
+  <h6 class="brave-h6">Settings</h6>
+</div>
+<div>
+  <div class="relative bg-white w-full">
+    <div class="tab-content tab-space">
+      <div class="mt-8" [ngClass]="{ hidden: openTab !== 1, block: openTab === 1 }">
+        <brave-settings-option-list
+          (resetOptionClick)="goToPageClick.emit({ tab: 2, view: 'reset' })"
+          (deactivateOptionClick)="goToPageClick.emit({ tab: 2, view: 'deactivate' })"
+          (logoutOptionClick)="logoutClick.emit()"
+        ></brave-settings-option-list>
+      </div>
+      <div [ngClass]="{ hidden: openTab !== 2, block: openTab === 2 }">
+        <ng-container *ngIf="view === 'reset'">
+          <brave-option-password-reset
+            #reset
+            [haveResetError]="haveResetError"
+            [resetSuccess]="resetSuccess"
+            [resetError]="resetError"
+            (changePasswordClick)="changePasswordClick.emit($event)"
+            (goBackToSettingsClick)="goBackToSettingsClick.emit()"
+          ></brave-option-password-reset>
+        </ng-container>
+        <ng-container *ngIf="view === 'deactivate'" #deactivate>
+          <brave-option-deactivate
+            [haveDeactivateError]="haveDeactivateError"
+            [deactivateSuccess]="deactivateSuccess"
+            [deactivateError]="deactivateError"
+            (deactivateClick)="deactivateClick.emit($event)"
+            (goBackToSettingsClick)="goBackToSettingsClick.emit()"
+          ></brave-option-deactivate>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

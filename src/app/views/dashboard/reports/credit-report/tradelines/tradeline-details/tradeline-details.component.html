@@ -7,9 +7,13 @@
 
   <!-- ======= Payment History and Remarks ======== -->
   <div *ngIf="viewDetail.open$ | async as open">
-    <div class="px-1">
+    <div class="px-1 max-w-xs">
       <brave-tradeline-payments [paymentHistory]="paymentHistory"></brave-tradeline-payments>
-      <brave-tradeline-remarks [remarks]="remarks" [address]="address" [consumerStatement]="customerStatement"></brave-tradeline-remarks>
+      <brave-tradeline-remarks
+        [remarks]="remarks"
+        [address]="address"
+        [consumerStatement]="customerStatement"
+      ></brave-tradeline-remarks>
     </div>
     <div class="flex justify-center mb-2">
       <brave-filled-onlytext-button (click)="showModal = !showModal; this.disputeClicked()"

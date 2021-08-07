@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewUser } from '@shared/services/auth/auth.service';
+import { SignupState } from '@views/authentication/signup/signup/signup.component';
 
 @Component({
   selector: 'brave-signup-pure',
   templateUrl: './signup-pure.component.html',
 })
 export class SignupPureComponent {
+  @Input() viewState: SignupState = 'init';
+  @Input() message: string = '';
   @Output() clickGoogle: EventEmitter<void> = new EventEmitter();
   @Output() clickFacebook: EventEmitter<void> = new EventEmitter();
   @Output() clickSignup: EventEmitter<NewUser> = new EventEmitter();

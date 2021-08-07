@@ -11,16 +11,37 @@
       href="https://fonts.googleapis.com/css2?family=Biryani:wght@800&family=Open+Sans:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet"
     />
   </head>
   <body>
-    <brave-root></brave-root>
+    <brave-root>
+      <!-- pre-app initializing spinner -->
+      <div
+        class="w-full h-full fixed block top-0 left-0 bg-white z-50"
+        style="background-color: rgba(245, 245, 245, 1)"
+      >
+        <div class="w-full h-full flex flex-col justify-center items-center align-center">
+          <svg
+            class="animate-spin stroke-1 h-8 w-8 text-gray-600"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+            <path
+              class="opacity-75"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              d="M 22 12 A 10 10 0 0 1 12 22"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </brave-root>
   </body>
 </html>

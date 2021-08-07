@@ -13,7 +13,6 @@ import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -21,7 +20,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 @Injectable({
   providedIn: 'root',
 })
-export class CreditreportService extends InterstitialService implements OnDestroy {
+export class CreditreportService implements OnDestroy {
   /*=========================================================================================*/
   // The report, agency, and preference Behavior Subjects are to allow for easy access and parsing
   //   of the correct reports
@@ -58,7 +57,6 @@ export class CreditreportService extends InterstitialService implements OnDestro
   preferencesSub$: Subscription;
 
   constructor(private statesvc: StateService, private transunion: TransunionService) {
-    super();
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {

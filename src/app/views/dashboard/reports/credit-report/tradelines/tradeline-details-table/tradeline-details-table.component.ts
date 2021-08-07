@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 import { ACCOUNT_TYPES } from '@shared/constants/account-types';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Component({
   selector: 'brave-tradeline-details-table',
@@ -33,6 +34,7 @@ export class TradelineDetailsTableComponent implements OnInit {
    * Revolving account display mapping
    * @property {Record<string, any>} revolvingAccountMapping
    */
+  missing = TransunionUtil.bcMissing;
   private revolvingAccountMapping: Record<string, any> = {
     accountNumber: 'Account Number',
     accountTypeSymbol: 'Account Type',
