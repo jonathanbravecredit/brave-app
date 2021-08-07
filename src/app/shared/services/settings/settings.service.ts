@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  constructor(private auth: AuthService) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   /**
    * Submit email to cognito for change, if accepted returns true
@@ -39,11 +40,11 @@ export class SettingsService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(oldPassword: string, newPassword: string): Promise<boolean> {
+  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     try {
       return await this.auth.resetPassword(oldPassword, newPassword);
     } catch (err) {
-      throw `settingService:resetPassword=${err}`;
+      throw `settingService:resetPassword=${err.message}`;
     }
   }
 
@@ -54,7 +55,6 @@ export class SettingsService {
   async deactivateAccount(): Promise<string> {
     try {
       const resp = this.auth.deactivateAccount();
-      this.auth.signOut();
       return resp;
     } catch (err) {
       throw `settingService:deactivateAccount=${err}`;
@@ -67,7 +67,8 @@ export class SettingsService {
    */
   async signOut(): Promise<any> {
     try {
-      return await this.auth.signOut();
+      await this.auth.signOut();
+      this.router.navigate(['/']);
     } catch (err) {
       throw `settingService:signOut=${err}`;
     }

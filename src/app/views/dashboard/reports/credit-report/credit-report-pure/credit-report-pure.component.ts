@@ -10,6 +10,7 @@ export interface ICreditReportTradelinesCardGroup {
   title: string;
   group: CreditReportGroups;
   cards: ICreditReportCardInputs[];
+  hidden: boolean;
 }
 
 @Component({

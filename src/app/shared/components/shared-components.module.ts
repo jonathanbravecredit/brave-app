@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 // pipes
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
@@ -98,7 +99,6 @@ import { BaseExceptionComponent } from './exceptions/base-exception/base-excepti
 import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
-import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { DisputesListComponent } from './disputes/disputes-list/disputes-list.component';
 import { DisputeFindingsHeaderComponent } from './disputes/findings/dispute-findings-header/dispute-findings-header.component';
 import { DisputeFindingsResultsComponent } from './disputes/findings/dispute-findings-results/dispute-findings-results.component';
@@ -116,8 +116,6 @@ import {
   DisputeHistoryCardComponent,
   DisputeRegularCardComponent,
 } from './cards/dispute-cards';
-import { SettingsComponent } from './settings/settings.component';
-import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
 import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
 import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
@@ -127,11 +125,14 @@ import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-i
 import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
+import { SecurityFreezeComponent } from './messages/security-freeze/security-freeze.component';
 import { DisputeHeaderComponent } from './disputes/dispute-header/dispute-header.component';
 import { DisputeHeaderTradelineComponent } from './disputes/dispute-header-tradeline/dispute-header-tradeline.component';
 import { DisputeHeaderPublicitemComponent } from './disputes/dispute-header-publicitem/dispute-header-publicitem.component';
 import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-personalitem/dispute-header-personalitem.component';
 import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
+import { SimpleChangePasswordFormComponent } from './forms/simple-change-password-form/simple-change-password-form.component';
+import { SimpleDeactiveFormComponent } from './forms/simple-deactive-form/simple-deactive-form.component';
 
 const components = [
   BaseFormComponent,
@@ -225,19 +226,20 @@ const components = [
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
-  SettingsOptionComponent,
-  SettingsComponent,
   CollectionCreditMixAccountsComponent,
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
   OutlineInputCodeComponent,
   BaseTableRowComponent,
+  SecurityFreezeComponent,
   DisputeHeaderComponent,
   DisputeHeaderTradelineComponent,
   SimpleBackButtonComponent,
   DisputeHeaderPublicitemComponent,
   DisputeHeaderPersonalitemComponent,
   SimpleBannerComponent,
+  SimpleDeactiveFormComponent,
+  SimpleChangePasswordFormComponent,
 ];
 
 // component specific pipes only

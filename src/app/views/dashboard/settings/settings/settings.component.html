@@ -1,0 +1,18 @@
+<div class="w-full p-2">
+  <brave-settings-pure
+    [openTab]="openTab"
+    [view]="view"
+    [haveResetError]="haveResetError"
+    [resetSuccess]="resetSuccess"
+    [resetError]="resetError"
+    [haveDeactivateError]="haveDeactivateError"
+    [deactivateSuccess]="deactivateSuccess"
+    [deactivateError]="deactivateError"
+    (goToPageClick)="onGoToPageClick($event)"
+    (goBackToSettingsClick)="onGoBackToSettingsClick()"
+    (changePasswordClick)="onChangePasswordClick($event)"
+    (deactivateClick)="onDeactivateClick($event)"
+    (logoutClick)="onLogoutClick()"
+    (backButtonClick)="onBackButtonClick()"
+  ></brave-settings-pure>
+</div>

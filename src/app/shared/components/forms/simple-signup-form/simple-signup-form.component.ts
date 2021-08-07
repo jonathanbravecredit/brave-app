@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 import { NewUser } from '@shared/services/auth/auth.service';
+import { SignupState } from '@views/authentication/signup/signup/signup.component';
 
 @Component({
   selector: 'brave-simple-signup-form',
   templateUrl: './simple-signup-form.component.html',
 })
 export class SimpleSignupFormComponent {
+  @Input() viewState: SignupState = 'init';
+  @Input() message: string = '';
   @Output() forgotClick: EventEmitter<MouseEvent> = new EventEmitter();
   @Output() signupClick: EventEmitter<NewUser> = new EventEmitter();
 

@@ -3,7 +3,7 @@ import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';
-import { MergeReportPipeHelper } from '../mergereport-to-negative-tradelines/helper';
+import { MergeReportPipeHelper as helper } from '../mergereport-to-negative-tradelines/helper';
 import { AccountTypes } from '@shared/constants/account-types';
 
 @Pipe({
@@ -13,16 +13,18 @@ export class MergereportToTradelinesPipe implements PipeTransform {
   transform(report: IMergeReport, ...args: any[]): ITradelineDetailsConfig[] {
     const accountType = args[0];
     const partition = report?.TrueLinkCreditReportType?.TradeLinePartition;
+    const borrower = report?.TrueLinkCreditReportType?.Borrower;
+    const statement = helper.parseBorrowerForCreditStatement(borrower);
     if (!partition) return [DEFAULT_TRADELINE];
     let tradelines = !(partition instanceof Array) ? [partition] : partition;
     tradelines = [...this.filterByAccountType(tradelines, accountType)];
     // tradelines = [...TU.sortTradelineByAccountType(tradelines)];
-    tradelines = [...TU.sortTradelineByDateOpened(tradelines)];
-    let config = tradelines.map((line) => this.mapPartitionsToDetails(line));
-    return MergeReportPipeHelper.addCustomerStatementToArrOfObj(config, report) as ITradelineDetailsConfig[];
+    tradelines = [...TU.sortTradelineByPayStatus(tradelines)];
+    let config = tradelines.map((line) => this.mapPartitionsToDetails(line, statement));
+    return config;
   }
 
-  mapPartitionsToDetails(partition: ITradeLinePartition): ITradelineDetailsConfig {
+  mapPartitionsToDetails(partition: ITradeLinePartition, statement?: string): ITradelineDetailsConfig {
     return {
       tradeline: partition,
       accountNumber: partition?.Tradeline?.accountNumber || TU.bcMissing,
@@ -47,6 +49,7 @@ export class MergereportToTradelinesPipe implements PipeTransform {
       disputeFlag: partition?.Tradeline?.DisputeFlag?.description || TU.bcMissing,
       status: partition?.Tradeline?.PayStatus?.symbol || TU.bcMissing,
       openClosed: partition?.Tradeline?.OpenClosed?.symbol || TU.bcMissing,
+      consumerStatement: statement || TU.bcMissing,
     } as ITradelineDetailsConfig;
   }
 

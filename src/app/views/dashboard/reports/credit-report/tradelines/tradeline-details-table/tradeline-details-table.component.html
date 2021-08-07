@@ -6,8 +6,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountNumber'] || 'Account Number'"
-      [value]="config.accountNumber || '--'"
-      [enableMask]="true"
+      [value]="config.accountNumber"
+      [valueType]="'account'"
     ></brave-base-table-row>
   </div>
 
@@ -15,7 +15,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountTypeSymbol'] || 'Account Type'"
-      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
     ></brave-base-table-row>
   </div>
 
@@ -23,7 +23,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateOpened'] || 'Date Opened'"
-      [value]="config.dateOpened || '--'"
+      [value]="config.dateOpened"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -31,7 +32,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateClosed'] || 'Date Closed'"
-      [value]="config.dateClosed || '--'"
+      [value]="config.dateClosed"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -39,7 +41,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['creditLimit'] || 'Credit Limit'"
-      [value]="config.creditLimit || '--'"
+      [value]="config.creditLimit"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
@@ -47,7 +50,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['termMonths'] || 'Term'"
-      [value]="config.termMonths || '--'"
+      [value]="config.termMonths === undefined ? undefined : config.termMonths + ' mos'"
     ></brave-base-table-row>
   </div>
 
@@ -55,7 +58,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['monthlyPayment'] || 'Monthly Payment'"
-      [value]="config.monthlyPayment || '--'"
+      [value]="config.monthlyPayment"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
@@ -63,7 +67,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountDesignator'] || 'ResponResponsibilitysible'"
-      [value]="config.accountDesignator || '--'"
+      [value]="config.accountDesignator"
     ></brave-base-table-row>
   </div>
 
@@ -71,7 +75,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['highestBalance'] || 'Highest Balance'"
-      [value]="config.highestBalance || '--'"
+      [value]="config.highestBalance"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
@@ -79,7 +84,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['late90Count'] || 'Times 30/60/90 Days Late'"
-      [value]="sumLateCount(config) || '--'"
+      [value]="sumLateCount(config)"
     ></brave-base-table-row>
   </div>
 
@@ -87,7 +92,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
-      [value]="config.disputeFlag || '--'"
+      [value]="config.disputeFlag"
     ></brave-base-table-row>
   </div>
 
@@ -103,7 +108,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['originalCreditor'] || 'Original Creditor'"
-      [value]="config.originalCreditor || '--'"
+      [value]="config.originalCreditor"
     ></brave-base-table-row>
   </div>
 
@@ -111,7 +116,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountTypeSymbol'] || 'Account Type'"
-      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
     ></brave-base-table-row>
   </div>
 
@@ -119,7 +124,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateOpened'] || 'Date Opened'"
-      [value]="config.dateOpened || '--'"
+      [value]="config.dateOpened"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -127,7 +133,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
-      [value]="config.disputeFlag || '--'"
+      [value]="config.disputeFlag"
     ></brave-base-table-row>
   </div>
   <!-- spacer for bottom -->
@@ -142,8 +148,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountNumber'] || 'Account Number'"
-      [value]="config.accountNumber || '--'"
-      [enableMask]="true"
+      [value]="config.accountNumber"
+      [valueType]="'account'"
     ></brave-base-table-row>
   </div>
 
@@ -151,7 +157,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountTypeSymbol'] || 'Account Type'"
-      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
     ></brave-base-table-row>
   </div>
 
@@ -159,7 +165,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateOpened'] || 'Date Opened'"
-      [value]="config.dateOpened || '--'"
+      [value]="config.dateOpened"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -167,7 +174,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['dateClosed'] || 'Date Closed'"
-      [value]="config.dateClosed || '--'"
+      [value]="config.dateClosed"
+      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 
@@ -175,16 +183,13 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['creditLimit'] || 'Credit Limit'"
-      [value]="config.creditLimit || '--'"
+      [value]="config.creditLimit"
     ></brave-base-table-row>
   </div>
 
   <!-- Term -->
   <div class="py-2 px-1">
-    <brave-base-table-row
-      [label]="mapper['termMonths'] || 'Term'"
-      [value]="config.termMonths || '--'"
-    ></brave-base-table-row>
+    <brave-base-table-row [label]="mapper['termMonths'] || 'Term'" [value]="config.termMonths"></brave-base-table-row>
   </div>
 
   <!-- spacer for bottom -->
@@ -199,7 +204,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['monthlyPayment'] || 'Monthly Payment'"
-      [value]="config.monthlyPayment || '--'"
+      [value]="config.monthlyPayment"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
@@ -207,7 +213,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['accountDesignator'] || 'Responsibility'"
-      [value]="config.accountDesignator || '--'"
+      [value]="config.accountDesignator"
     ></brave-base-table-row>
   </div>
 
@@ -215,7 +221,8 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['highestBalance']"
-      [value]="config.highestBalance || '--'"
+      [value]="config.highestBalance"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
@@ -223,7 +230,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['late90Count'] || 'Times 30/60/90 Days Late'"
-      [value]="sumLateCount(config) || '--'"
+      [value]="sumLateCount(config)"
     ></brave-base-table-row>
   </div>
 
@@ -231,7 +238,7 @@
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
-      [value]="config.disputeFlag || '--'"
+      [value]="config.disputeFlag"
     ></brave-base-table-row>
   </div>
 

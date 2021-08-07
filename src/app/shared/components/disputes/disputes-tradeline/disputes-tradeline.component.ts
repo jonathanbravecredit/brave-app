@@ -179,15 +179,6 @@ export class DisputesTradelineComponent implements OnInit {
   }
 
   sendDispute(): void {
-    console.log('sending dispute ===> ', {
-      isFinished: true,
-      data: {
-        hasCustomInput: this.isCustomInputInSelectedArr(),
-        customInput: this.customReason,
-        reasonsId: this.parseSelectedItemsToIdArray(),
-        reasons: this.parseSelectedReasonsToArray(),
-      },
-    });
     this.disputeProcessResult.emit({
       isFinished: true,
       data: {

@@ -1,0 +1,23 @@
+<div class="divide-y divide-blueGray-300">
+  <div class="py-4">
+    <brave-settings-option
+      [icon]="'lock'"
+      [label]="'Reset Password'"
+      (click)="resetOptionClick.emit()"
+    ></brave-settings-option>
+  </div>
+  <div class="py-4">
+    <brave-settings-option
+      [icon]="'close'"
+      [label]="'Deactivate Account'"
+      (click)="deactivateOptionClick.emit()"
+    ></brave-settings-option>
+  </div>
+  <div class="py-4">
+    <brave-settings-option
+      [icon]="'logout'"
+      [label]="'Logout'"
+      (click)="logoutOptionClick.emit()"
+    ></brave-settings-option>
+  </div>
+</div>

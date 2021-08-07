@@ -16,7 +16,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +26,7 @@ export class SyncService implements OnDestroy {
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(
-    private api: APIService,
-    private store: Store,
-    private router: Router,
-    private interstitial: InterstitialService,
-  ) {}
+  constructor(private api: APIService, private store: Store, private router: Router) {}
 
   ngOnDestroy(): void {
     // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
@@ -52,7 +46,6 @@ export class SyncService implements OnDestroy {
     // user refreshes...on any other non-auth guarded route
     // user signsIn and is new user
     console.log('calling hallmonitor');
-    this.interstitial.openInterstitial();
     const { identityId: id } = creds;
     // TODO: BETTER USE OF ROUND TRIP CALLS
     // Handle new users
@@ -77,7 +70,6 @@ export class SyncService implements OnDestroy {
     if (isUserOnboarded && !signInEvent) await this.stayPut(id);
     if (!isUserOnboarded && signInEvent) await this.goToLastOnboarded(id);
     if (!isUserOnboarded && !signInEvent) await this.goToLastOnboarded(id);
-    this.interstitial.closeInterstitial();
   }
 
   /**
@@ -134,7 +126,6 @@ export class SyncService implements OnDestroy {
    */
   async goToDashboard(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
-    this.interstitial.closeInterstitial();
     this.router.navigate(['/dashboard/init']);
   }
 
@@ -146,7 +137,6 @@ export class SyncService implements OnDestroy {
   async goToLastOnboarded(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
     const lastComplete = data.user?.onboarding?.lastComplete || -1;
-    this.interstitial.closeInterstitial();
     this.routeUser(lastComplete);
   }
 
@@ -158,7 +148,6 @@ export class SyncService implements OnDestroy {
    */
   async stayPut(id: string): Promise<void> {
     await this.syncDBDownToState(id);
-    this.interstitial.closeInterstitial();
   }
 
   /**
@@ -178,7 +167,6 @@ export class SyncService implements OnDestroy {
       const data = await this.api.CreateAppData(input);
       await this.subscribeToListeners(creds.identityId); // if new
       const clean = this.cleanBackendData(data);
-      this.interstitial.closeInterstitial();
       this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
         this.data$.next(clean);
         this.routeUser(-1);

@@ -21,20 +21,15 @@ export class MergeReportPipeHelper {
     return modifiedArr;
   }
 
-  static parseBorrowerForCreditStatement(borrower: IBorrower | IBorrower[]) {
+  static parseBorrowerForCreditStatement(borrower: IBorrower | IBorrower[] | undefined): string | undefined {
+    if (!borrower) return;
     return borrower instanceof Array
       ? this.parseCreditStatement(borrower[0].CreditStatement)
       : this.parseCreditStatement(borrower.CreditStatement);
   }
 
-  static parseCreditStatement(
-    creditStatementVariant: ICreditStatement[] | ICreditStatement | undefined,
-  ): string | undefined {
-    if (creditStatementVariant !== undefined) {
-      return creditStatementVariant instanceof Array
-        ? creditStatementVariant[1]?.statement
-        : creditStatementVariant?.statement;
-    }
-    return;
+  static parseCreditStatement(creditStatement: ICreditStatement[] | ICreditStatement | undefined): string | undefined {
+    if (!creditStatement) return;
+    return creditStatement instanceof Array ? creditStatement[0]?.statement : creditStatement?.statement;
   }
 }

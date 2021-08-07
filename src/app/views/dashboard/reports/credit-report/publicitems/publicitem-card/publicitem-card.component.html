@@ -5,7 +5,15 @@
 <div class="card pl-10 pr-3 mt-1">
   <div class="grid grid-cols-2 gap-4 mb-2">
     <p class="text-xs text-dk-gray">{{ firstFieldName }}:</p>
-    <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ firstFieldValue }}</p>
+    <p *ngIf="firstFieldType === 'date'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ firstFieldValue | date: 'shortDate' }}
+    </p>
+    <p *ngIf="firstFieldType === 'string'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ firstFieldValue }}
+    </p>
+    <p *ngIf="firstFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ firstFieldValue | currency }}
+    </p>
   </div>
   <brave-viewdetail-button (click)="viewDetailClick.emit()" [horizontal]="true">View Detail</brave-viewdetail-button>
 </div>
