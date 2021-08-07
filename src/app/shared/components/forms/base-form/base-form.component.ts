@@ -15,6 +15,10 @@ export class BaseFormComponent {
 
   @Input() hideHint: boolean = false;
 
+  get formValues(): any {
+    return this.parentForm.value;
+  }
+
   parentForm: FormGroup;
   constructor(fb: FormBuilder, @Inject('name') private name: string) {
     this.parentForm = fb.group({

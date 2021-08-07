@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { ConfirmPasswordState, IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
+import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
-import { SigninState } from '@views/authentication/signin/signin/signin.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -16,6 +15,7 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
   @Input() resetError: string = '';
   values$: Observable<any>;
   status$: Observable<any>;
+  submitted: boolean = false;
   passwordConfig: IOutlineInputeConfig = {
     size: 'sm',
     label: 'Current Password',
@@ -44,24 +44,16 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
     super(fb, 'simple-change-password-form');
     this.values$ = this.parentForm.valueChanges;
     this.status$ = this.parentForm.statusChanges;
+    this.values$.subscribe((changes) => {
+      this.submitted = false;
+    });
   }
 
-  // /**
-  //  * toggle on the error message
-  //  * @param viewState
-  //  */
-  // updateViewState(viewState: SigninState): void {
-  //   this.viewState = viewState;
-  // }
-
-  // /**
-  //  * Update the message based on the error response from AWS
-  //  * @param error
-  //  */
-  // updateInvalidMessage(error: string): void {
-  //   this.error = error;
-  // }
-
+  get doPasswordsMatch(): boolean {
+    const newPassword = this.formValues?.newPassword?.input as string;
+    const conPassword = this.formValues?.confirmPassword?.input as string;
+    return newPassword == conPassword;
+  }
   /**
    * Take the sign up form and transform into NewUser object
    * @param form
@@ -74,5 +66,14 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
       newPassword: newPassword.input,
       confirmPassword: confirmPassword.input,
     };
+  }
+
+  validatePasswords(form: FormGroup): any {
+    if (!this.doPasswordsMatch) {
+      this.haveResetError = true;
+      this.resetError = 'New password and confirm password do not match';
+    } else {
+      this.changePasswordClick.emit(this.changePassword(form));
+    }
   }
 }

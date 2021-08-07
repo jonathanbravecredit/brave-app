@@ -55,7 +55,6 @@ export class SettingsComponent implements OnInit {
     this.settings
       .resetPassword(evt.password, evt.newPassword)
       .then((results) => {
-        console.log('results');
         if (results.toLowerCase() === 'success') {
           this.resetSuccess = true;
         } else {
@@ -65,7 +64,6 @@ export class SettingsComponent implements OnInit {
         this.interstitial.stopSpinner();
       })
       .catch((reason) => {
-        console.log('password reset rejected', reason);
         this.resetError = reason;
         this.haveResetError = true;
         this.interstitial.stopSpinner();
