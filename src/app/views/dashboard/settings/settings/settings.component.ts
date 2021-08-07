@@ -41,9 +41,11 @@ export class SettingsComponent implements OnInit {
       this.openTab = 1;
     }
   }
-  onGoToPageClick({ tab, view }: { tab: number; view: string }) {
-    this.view === view;
+  onGoToPageClick({ tab, view }: { tab: number; view: ISettingsViews }) {
+    this.view = view;
     this.openTab = tab;
+    console.log('open view ===> ', this.view, view);
+    console.log('open tab ===> ', this.openTab, tab);
   }
 
   onGoBackToSettingsClick() {

@@ -44,9 +44,6 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
     super(fb, 'simple-change-password-form');
     this.values$ = this.parentForm.valueChanges;
     this.status$ = this.parentForm.statusChanges;
-    this.values$.subscribe((changes) => {
-      this.submitted = false;
-    });
   }
 
   get doPasswordsMatch(): boolean {

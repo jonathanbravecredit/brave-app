@@ -9,7 +9,7 @@ import { ISettingsViews } from '@views/dashboard/settings/settings-pure/interfac
 export class SettingsPureComponent {
   @Output() logoutClick: EventEmitter<void> = new EventEmitter();
   @Output() changePasswordClick: EventEmitter<IConfirmPassword> = new EventEmitter();
-  @Output() goToPageClick: EventEmitter<{ tab: number; view: string }> = new EventEmitter();
+  @Output() goToPageClick: EventEmitter<{ tab: number; view: ISettingsViews }> = new EventEmitter();
   @Output() goBackToSettingsClick: EventEmitter<void> = new EventEmitter();
   @Output() backButtonClick: EventEmitter<void> = new EventEmitter();
 
