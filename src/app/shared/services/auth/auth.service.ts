@@ -140,6 +140,12 @@ export class AuthService {
   }
 
   /**
+   * @param email users email address to send password reset code to
+   */
+  forgotPassword(email: string): Promise<any> | undefined {
+    return email ? Auth.forgotPassword(email) : undefined;
+  }
+  /**
    *
    * @param email
    * @param code
@@ -147,7 +153,7 @@ export class AuthService {
    * @returns
    */
   forgotPasswordSubmit(email: string, code: string, pw: string): Promise<void> | undefined {
-    return email ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
+    return email && code && pw ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
   }
 
   /**

@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+
+interface ISubmitError {
+  [key: string]: AbstractControl;
+}
 
 @Component({
   selector: 'brave-base-form',
@@ -8,12 +13,13 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 export class BaseFormComponent {
   @Output() onChanges: EventEmitter<any> = new EventEmitter();
   @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter();
-  @Output()
-  onSubmitError: EventEmitter<{
-    [key: string]: AbstractControl;
-  }> = new EventEmitter();
+  @Output() onSubmitError: EventEmitter<ISubmitError> = new EventEmitter();
 
   @Input() hideHint: boolean = false;
+
+  haveError$ = new BehaviorSubject<boolean>(false);
+  haveError: boolean = false;
+  errorMessage: string = '';
 
   get formValues(): any {
     return this.parentForm.value;
@@ -23,7 +29,10 @@ export class BaseFormComponent {
   constructor(fb: FormBuilder, @Inject('name') private name: string) {
     this.parentForm = fb.group({
       name: [name],
-    }); // simple parent form with name of form
+    });
+    this.parentForm.valueChanges.subscribe((value) => {
+      this.onChanges.emit(value);
+    });
   }
 
   addChild(childName: string, childGroup: FormGroup) {
@@ -33,5 +42,9 @@ export class BaseFormComponent {
   submitForm(): void {
     this.parentForm.markAllAsTouched();
     this.parentForm.valid ? this.onSubmit.emit(this.parentForm) : this.onSubmitError.emit(this.parentForm.controls);
+  }
+
+  formatInputName(idx: number): string {
+    return `input-${idx}`;
   }
 }

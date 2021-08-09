@@ -5,7 +5,6 @@ import { AuthenticationComponent } from '@views/authentication/authentication.co
 import { AuthenticationRoutingModule } from '@views/authentication/authentication.routing';
 import { SigninComponent } from '@views/authentication/signin/signin/signin.component';
 import { SigninPureComponent } from '@views/authentication/signin/signin-pure/signin-pure.component';
-import { SigninForgotComponent } from '@views/authentication/signin-forgot/signin-forgot.component';
 import { SigninRedirectComponent } from '@views/authentication/signin-redirect/signin-redirect.component';
 import { SignupErrorValidationComponent } from '@views/authentication/signup-error-validation/signup-error-validation.component';
 import { SignupErrorComponent } from '@views/authentication/signup-error/signup-error.component';
@@ -15,6 +14,8 @@ import { SignupThankyouPureComponent } from '@views/authentication/signup-thanky
 import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
 import { SignupPureComponent } from '@views/authentication/signup/signup-pure/signup-pure.component';
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
+import { SigninForgotComponent } from '@views/authentication/signin-forgot/signin-forgot/signin-forgot.component';
+import { SigninForgotPureComponent } from './signin-forgot/signin-forgot-pure/signin-forgot-pure.component';
 
 const components = [
   AuthenticationComponent,
@@ -29,6 +30,7 @@ const components = [
   SigninComponent,
   SigninPureComponent,
   SigninForgotComponent,
+  SigninForgotPureComponent,
   SigninRedirectComponent,
 ];
 
