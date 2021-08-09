@@ -4,7 +4,7 @@ export interface IFilledClosingAlertConfig {
   size: string;
   backgroundColor: string;
   color: string;
-  alertTitle: string;
+  alertTitle?: string;
   alertBody: string;
 }
 
