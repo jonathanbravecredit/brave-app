@@ -6,7 +6,7 @@ import { TDisputeEntity } from '@shared/components/cards/dispute-cards';
   templateUrl: './disputes-list.component.html',
   styleUrls: ['./disputes-list.component.css'],
 })
-export class DisputesListComponent implements OnInit {
+export class DisputesListComponent {
   @Input() disputeList: TDisputeEntity[] = [];
   @Input() disputListType: 'current' | 'historical' = 'current';
   @Input() listHeader = '';
@@ -15,9 +15,4 @@ export class DisputesListComponent implements OnInit {
   @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {
-    console.log('disputeList ==> ', this.disputeList);
-    console.log('test ==> ', this.disputListType === 'current');
-  }
 }

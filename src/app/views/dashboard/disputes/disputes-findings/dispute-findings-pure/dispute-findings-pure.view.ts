@@ -5,7 +5,6 @@ import { IPersonalInfo, IPublicRecord } from './interfaces';
 @Component({
   selector: 'brave-dispute-findings-pure',
   templateUrl: './dispute-findings-pure.view.html',
-  styleUrls: ['./dispute-findings-pure.view.css'],
 })
 export class DisputeFindingsPureView implements OnInit {
   @Input() reportCreatedAt: string = '';
