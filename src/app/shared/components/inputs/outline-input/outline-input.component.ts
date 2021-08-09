@@ -4,10 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export interface IOutlineInputeConfig {
   size: string;
   label: string;
+  name?: string;
   type: string;
   placeholder: string;
   autocomplete: string;
   value?: string;
+  required?: boolean;
 }
 
 @Component({

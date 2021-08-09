@@ -1,26 +1,27 @@
 <form [formGroup]="parentForm">
-  <brave-outline-input
-    [config]="childFieldConfig"
-    (onComponentReady)="addChild('inputGroup', $event)"
-    required="true"
-  >
-  </brave-outline-input>
-  <brave-outline-input
-    [config]="childFieldConfig"
-    (onComponentReady)="addChild('inputGroup', $event)"
-    required="true"
-  >
-  </brave-outline-input>
-  <brave-outline-input
-    [config]="childFieldConfig"
-    (onComponentReady)="addChild('inputGroup', $event)"
-    required="true"
-  >
-  </brave-outline-input>
+  <ng-container *ngFor="let config of configs; index as idx">
+    <brave-outline-input
+      [config]="config"
+      [required]="config.required"
+      (onComponentReady)="addChild(config.name || formatInputName(idx), $event)"
+    >
+    </brave-outline-input>
+  </ng-container>
+
+  <!-- subheader -->
+  <div class="-mt-5">
+    <p *ngIf="!haveError" class="text-sm text-transparent">&nbsp;</p>
+    <p *ngIf="haveError" class="text-sm text-red-500">{{ errorMessage }}</p>
+  </div>
+
   <div>
     <div class="flex justify-end items-end">
-      <brave-links-onlytext-button>Cancel</brave-links-onlytext-button>
-      <brave-filled-onlytext-button>Continue</brave-filled-onlytext-button>
+      <brave-links-onlytext-button *ngIf="buttonOneText" (click)="buttonOneClick.emit()">{{
+        buttonOneText
+      }}</brave-links-onlytext-button>
+      <brave-filled-onlytext-button *ngIf="buttonTwoText" (click)="submitForm()">{{
+        buttonTwoText
+      }}</brave-filled-onlytext-button>
     </div>
   </div>
 </form>

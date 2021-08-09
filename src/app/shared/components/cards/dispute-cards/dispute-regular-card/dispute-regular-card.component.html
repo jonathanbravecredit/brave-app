@@ -8,7 +8,7 @@
     <ng-content [select]="[details]"></ng-content>
   </div>
   <!-- View Detail Button -->
-  <div class="mt-2 flex items-center">
+  <div *ngIf="!hideViewDetails" class="mt-2 flex items-center">
     <brave-viewdetail-button size="full" [horizontal]="true" (click)="viewDetailsClick.emit()"
       >View Detail</brave-viewdetail-button
     >

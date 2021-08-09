@@ -8,8 +8,12 @@
       ></brave-disputes-overview-initial-pure>
     </div>
   </div>
-</div>
 
-<ng-template #noDisputes>
-  <p>not working perfectly yet, try refreshing to see disputes....</p>
-</ng-template>
+  <ng-template #noDisputes>
+    <brave-disputes-overview-initial-pure
+      [currentDisputeArr]="[]"
+      [historicalDisputeArr]="[]"
+      (viewDetailsClick)="onViewDetailsClick($event)"
+    ></brave-disputes-overview-initial-pure>
+  </ng-template>
+</div>
