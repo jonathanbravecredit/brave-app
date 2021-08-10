@@ -1,22 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MOCK_DEFAULT_USER_CURRENT_DISPUTE as mockCurrentDisputes } from './constants';
-import { IDisputeBasic } from './interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IDisputeCurrent, IDisputeHistorical, TDisputeEntity } from '@shared/components/cards/dispute-cards';
 
 @Component({
   selector: 'brave-disputes-overview-initial-pure',
   templateUrl: './disputes-overview-initial-pure.view.html',
-  styleUrls: ['./disputes-overview-initial-pure.view.css']
 })
 export class DisputesOverviewInitialPureView implements OnInit {
-  @Input() currentDisputeCollection: IDisputeBasic[] = [];
+  @Input() currentDisputeArr: IDisputeCurrent[] = [];
+  @Input() historicalDisputeArr: IDisputeHistorical[] = [];
   @Input() forceStateTo: 'default' | 'mock' = 'default';
-  
-  constructor() { }
+  @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
 
-  ngOnInit(): void {
-    if (this.forceStateTo === 'mock') {
-      this.currentDisputeCollection = mockCurrentDisputes;
-    }
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }

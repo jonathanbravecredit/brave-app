@@ -78,6 +78,43 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     disputeEnrolled
     disputeEnrolledOn
     disputeStatus
+    disputes {
+      id
+      appDataId
+      disputeId
+      disputeStatus
+      disputeLetterCode
+      disputeLetterContent
+      openDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
+      }
+      closedDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
+      }
+      agencyName
+      openedOn
+      closedOn
+      disputeItems
+      disputeInvestigationResults
+      disputeCreditBureau
+      notificationStatus
+      notificationMessage
+      notificationSentOn
+    }
   }
 }
 mutation CreateAppData(
@@ -199,6 +236,43 @@ mutation CreateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -218,24 +292,6 @@ mutation CreateAppData(
     createdAt
     updatedAt
     owner
-    disputes {
-      items {
-        id
-        agencyId
-        disputeId
-        disputeStatus
-        openedOn
-        closedOn
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
   }
 }
 mutation UpdateAppData(
@@ -357,6 +413,43 @@ mutation UpdateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -376,24 +469,6 @@ mutation UpdateAppData(
     createdAt
     updatedAt
     owner
-    disputes {
-      items {
-        id
-        agencyId
-        disputeId
-        disputeStatus
-        openedOn
-        closedOn
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
   }
 }
 mutation DeleteAppData(
@@ -515,6 +590,43 @@ mutation DeleteAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         authenticated
@@ -531,84 +643,6 @@ mutation DeleteAppData(
         mortgages
       }
     }
-    createdAt
-    updatedAt
-    owner
-    disputes {
-      items {
-        id
-        agencyId
-        disputeId
-        disputeStatus
-        openedOn
-        closedOn
-        disputeResults
-        notificationStatus
-        notificationMessage
-        notificationSentOn
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-}
-mutation CreateDisputes(
-  $input: CreateDisputesInput!
-  $condition: ModelDisputesConditionInput
-) {
-  createDisputes(input: $input, condition: $condition) {
-    id
-    agencyId
-    disputeId
-    disputeStatus
-    openedOn
-    closedOn
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-    createdAt
-    updatedAt
-    owner
-  }
-}
-mutation UpdateDisputes(
-  $input: UpdateDisputesInput!
-  $condition: ModelDisputesConditionInput
-) {
-  updateDisputes(input: $input, condition: $condition) {
-    id
-    agencyId
-    disputeId
-    disputeStatus
-    openedOn
-    closedOn
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-    createdAt
-    updatedAt
-    owner
-  }
-}
-mutation DeleteDisputes(
-  $input: DeleteDisputesInput!
-  $condition: ModelDisputesConditionInput
-) {
-  deleteDisputes(input: $input, condition: $condition) {
-    id
-    agencyId
-    disputeId
-    disputeStatus
-    openedOn
-    closedOn
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
     createdAt
     updatedAt
     owner

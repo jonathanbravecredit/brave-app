@@ -9,8 +9,11 @@ import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
 })
 export class TradelineToDisputePipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | null): IDisputeItem | undefined {
+    console.log('tradeline in tradeline to dispute ===> ', tradeline);
     if (!tradeline) return;
-    return this.mapTradeLineToAccount(tradeline);
+    const dispute = this.mapTradeLineToAccount(tradeline);
+    console.log('mapped dispute in tradeline to dispute ===> ', dispute);
+    return dispute;
   }
 
   /**

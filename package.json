@@ -15,9 +15,6 @@
     "amplifyQA": "amplify env checkout qa",
     "amplifyProd": "amplify env checkout production",
     "amplify:GraphQLResolverFunction": "cd amplify/backend/function/GraphQLResolverFunction/ts && npm install && npm run tsc && cd -",
-    "amplify:GetDisputesCustomResolver": "cd amplify/backend/function/GetDisputesCustomResolver/ts && npm install && npm run tsc && cd -",
-    "amplify:CreateDisputesCustomResolver": "cd amplify/backend/function/CreateDisputesCustomResolver/ts && npm install && npm run tsc && cd -",
-    "amplify:PatchDisputesCustomResolver": "cd amplify/backend/function/PatchDisputesCustomResolver/ts && npm install && npm run tsc && cd -",
     "amplify:PatchTransunionCustomResolver": "cd amplify/backend/function/PatchTransunionCustomResolver/ts && npm install && npm run tsc && cd -",
     "test": "ng test",
     "lint": "ng lint",
@@ -55,6 +52,7 @@
     "hammerjs": "^2.0.8",
     "he": "^1.2.0",
     "ng2-charts": "^2.4.2",
+    "ngx-mask": "^12.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

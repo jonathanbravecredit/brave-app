@@ -3,18 +3,17 @@ import { Select, Store } from '@ngxs/store';
 import {
   IBorrower,
   IMergeReport,
+  IPublicPartition,
   ITradeLinePartition,
-  IUnparsedCreditReport,
 } from '@shared/interfaces/merge-report.interface';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import * as parser from 'fast-xml-parser';
 import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { PreferencesState, PreferencesStateModel } from '@store/preferences';
-import { PARSER_OPTIONS } from '@shared/services/creditreport/constants';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 /**
  * Service to parse and pull information from credit reports
@@ -22,15 +21,35 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 @Injectable({
   providedIn: 'root',
 })
-export class CreditreportService implements OnDestroy {
+export class CreditreportService extends InterstitialService implements OnDestroy {
+  /*=========================================================================================*/
+  // The report, agency, and preference Behavior Subjects are to allow for easy access and parsing
+  //   of the correct reports
+  //   - due to complexity of report....currently held in DB as AWSJSON object
+  /*=========================================================================================*/
+  // easy access to the Transunion merge report
   tuReport: IMergeReport = {} as IMergeReport;
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
-  tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
-  tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
+  // easy access to the Transunion data without going through the full data structure
   tuAgency: TransunionInput = {} as TransunionInput;
   tuAgency$: BehaviorSubject<TransunionInput> = new BehaviorSubject({} as TransunionInput);
+  // users display prefence (only show negative accounts)
   tuPreferences: PreferencesStateModel = {} as PreferencesStateModel;
   tuPreferences$: BehaviorSubject<PreferencesStateModel> = new BehaviorSubject({} as PreferencesStateModel);
+
+  /*=========================================================================================*/
+  // The tradeline, publicitem, and personal items Behavior Subjects are to track the current
+  //   item the user selected to display the correct detail.
+  /*=========================================================================================*/
+  // the currently selected tradeline (financial accounts, etc..)
+  tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
+  tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
+  // the currently selected public item (bankruptcies, etc...)
+  tuPublicItem: IPublicPartition = {} as IPublicPartition;
+  tuPublicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
+  // the currently selected personal item (name, address, etc...)
+  tuPersonalItem: IBorrower = {} as IBorrower;
+  tuPersonalItem$: BehaviorSubject<IBorrower> = new BehaviorSubject({} as IBorrower);
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
@@ -39,6 +58,7 @@ export class CreditreportService implements OnDestroy {
   preferencesSub$: Subscription;
 
   constructor(private statesvc: StateService, private transunion: TransunionService) {
+    super();
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {
@@ -104,17 +124,6 @@ export class CreditreportService implements OnDestroy {
     return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
   }
 
-  // /**
-  //  * Parses the xml string into a JSON object of the IMergeReport form
-  //  * @param {string} xml
-  //  * @returns {IMergeReport}
-  //  */
-  // parseCreditReport(xml: string): IMergeReport {
-  //   const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-  //   const report: IMergeReport = parser.parse(clean, PARSER_OPTIONS);
-  //   return report;
-  // }
-
   /**
    * Returns the tradeline partitions from the current TU report
    * @returns {ITradeLinePartition[]}
@@ -135,6 +144,51 @@ export class CreditreportService implements OnDestroy {
   setTradeline(tradeline: ITradeLinePartition): void {
     this.tuTradeline = tradeline;
     this.tuTradeline$.next(tradeline);
+  }
+
+  /**
+   * Returns the public item partitions from the current TU report
+   * @returns {IPublicPartition[]}
+   */
+  getPublicItems(): IPublicPartition[] {
+    if (!this.tuPublicItem) return [{} as IPublicPartition];
+    const partitions = this.tuReport?.TrueLinkCreditReportType?.PulblicRecordPartition;
+    if (!partitions) return [{} as IPublicPartition];
+    return partitions instanceof Array ? partitions : [partitions];
+  }
+
+  /**
+   * Sets the current public item partition. Can only set one at a time
+   * - Makes the detail available for the public item detail view.
+   * @param publicItem
+   * @returns {void}
+   */
+  setPublicItem(publicItem: IPublicPartition): void {
+    this.tuPublicItem = publicItem;
+    this.tuPublicItem$.next(publicItem);
+  }
+
+  /**
+   * Returns the personal item partition from the current TU report
+   *  -- TU schema defines this as an array but does not appear to be correct
+   * @returns {IBorrower}
+   */
+  getPersonalItem(): IBorrower {
+    if (!this.tuPersonalItem) return {} as IBorrower;
+    const partitions = this.tuReport?.TrueLinkCreditReportType?.Borrower;
+    if (!partitions) return {} as IBorrower;
+    return partitions instanceof Array ? partitions[0] : partitions;
+  }
+
+  /**
+   * Sets the current personal item partition. Can only set one at a time
+   * - Makes the detail available for the personal item detail view.
+   * @param personalItem
+   * @returns {void}
+   */
+  setPersonalItem(personalItem: IBorrower): void {
+    this.tuPersonalItem = personalItem;
+    this.tuPersonalItem$.next(personalItem);
   }
 
   /**

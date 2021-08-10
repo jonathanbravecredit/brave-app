@@ -18,6 +18,8 @@ export class BaseExceptionComponent implements OnInit {
       const exception = ExceptionHelper.getExceptionByCode(this.code);
       if (exception) {
         this.exceptionCategory = ExceptionHelper.getExceptionCategoryByType(exception.categoryType);
+      } else {
+        this.exceptionCategory = ExceptionHelper.getExceptionCategoryByType('try_later_s');
       }
     }
   }

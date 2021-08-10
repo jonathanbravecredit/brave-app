@@ -5,6 +5,15 @@ import { TradelineToDisputePipe } from '@shared/pipes/tradeline-to-dispute/trade
 import { MergereportToCreditreportPipe } from '@shared/pipes/mergereport-to-creditreport/mergereport-to-creditreport.pipe';
 import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
 import { TradelineToPagesPipe } from './tradeline-to-pages/tradeline-to-pages.pipe';
+import { DisputesToDisputesOverviewPipe } from './disputes-to-disputes-overview/disputes-to-disputes-overview.pipe';
+import { DisputeToDisputeFindingPipe } from './dispute-to-dispute-finding/dispute-to-dispute-finding.pipe';
+import { MergereportToDashboardPipe } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
+import { PublicitemToDisputePipe } from './publicitem-to-dispute/publicitem-to-dispute.pipe';
+import { MergereportToPublicitemsPipe } from './mergereport-to-publicitems/mergereport-to-publicitems.pipe';
+import { MergereportToPersonalitemsPipe } from './mergereport-to-personalitems/mergereport-to-personalitems.pipe';
+import { PublicitemToDetailsPipe } from './publicitem-to-details/publicitem-to-details.pipe';
+import { PersonalitemsToDetailsPipe } from './personalitem-to-details/personalitems-to-details.pipe';
+import { MergereportToTradelinesPipe } from './mergereport-to-tradelines/mergereport-to-tradelines.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -12,6 +21,15 @@ const pipes = [
   TradelineToPagesPipe,
   MergereportToNegativeTradelinesPipe,
   MergereportToCreditreportPipe,
+  DisputesToDisputesOverviewPipe,
+  DisputeToDisputeFindingPipe,
+  MergereportToDashboardPipe,
+  PublicitemToDisputePipe,
+  PublicitemToDetailsPipe,
+  PersonalitemsToDetailsPipe,
+  MergereportToPublicitemsPipe,
+  MergereportToPersonalitemsPipe,
+  MergereportToTradelinesPipe,
 ];
 
 @NgModule({

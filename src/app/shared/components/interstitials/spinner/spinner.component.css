@@ -1,4 +1,4 @@
-.loader {
+/* .loader {
   --tw-border-opacity: 1;
   border-top-color: rgba(67, 56, 202, var(--tw-border-opacity));
   -webkit-animation: spinner 1.5s linear infinite;
@@ -21,4 +21,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */

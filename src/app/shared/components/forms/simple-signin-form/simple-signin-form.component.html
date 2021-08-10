@@ -14,12 +14,18 @@
   >
   </brave-outline-input>
   <div class="-mt-2">
-    <div class="flex justify-end items-end">
+    <div class="flex justify-start items-end">
       <a class="text-xs text-blueGray-600 hover:cursor-pointer" (click)="forgotClick.emit($event)">Forgot password?</a>
     </div>
   </div>
 
-  <div class="mt-5">
+  <!-- subheader -->
+  <div class="pt-3">
+    <p *ngIf="viewState !== 'invalid'" class="mb-6 text-sm text-transparent">&nbsp;</p>
+    <p *ngIf="viewState === 'invalid'" class="mb-6 text-sm text-red-500">{{ message }}</p>
+  </div>
+
+  <div class="mt-6">
     <div class="flex justify-center items-center">
       <brave-filled-onlytext-button [disabled]="!parentForm.valid" (click)="signinClick.emit(signinUser(parentForm))"
         >Log In</brave-filled-onlytext-button

@@ -6,7 +6,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountNumber'] || 'Account Number'"
-      [value]="config.accountNumber || '#N/A'"
+      [value]="config.accountNumber || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -14,7 +14,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountTypeSymbol'] || 'Account Type'"
-      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '#N/A'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -22,7 +22,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['dateOpened'] || 'Date Opened'"
-      [value]="config.dateOpened || '#N/A'"
+      [value]="config.dateOpened || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -30,7 +30,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['dateClosed'] || 'Date Closed'"
-      [value]="config.dateClosed || '#N/A'"
+      [value]="config.dateClosed || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -38,7 +38,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['creditLimit'] || 'Credit Limit'"
-      [value]="config.creditLimit || '#N/A'"
+      [value]="config.creditLimit || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -46,7 +46,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['termMonths'] || 'Term'"
-      [value]="config.termMonths || '#N/A'"
+      [value]="config.termMonths || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -54,7 +54,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['monthlyPayment'] || 'Monthly Payment'"
-      [value]="config.monthlyPayment || '#N/A'"
+      [value]="config.monthlyPayment || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -62,7 +62,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountDesignator'] || 'ResponResponsibilitysible'"
-      [value]="config.accountDesignator || '#N/A'"
+      [value]="config.accountDesignator || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -70,7 +70,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['highestBalance'] || 'Highest Balance'"
-      [value]="config.highestBalance || '#N/A'"
+      [value]="config.highestBalance || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -78,7 +78,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['late90Count'] || 'Times 30/60/90 Days Late'"
-      [value]="sumLateCount(config) || '#N/A'"
+      [value]="sumLateCount(config) || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -86,7 +86,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
-      [value]="config.disputeFlag || '#N/A'"
+      [value]="config.disputeFlag || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -102,7 +102,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['originalCreditor'] || 'Original Creditor'"
-      [value]="config.originalCreditor || '#N/A'"
+      [value]="config.originalCreditor || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -110,7 +110,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountTypeSymbol'] || 'Account Type'"
-      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '#N/A'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -118,7 +118,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['dateOpened'] || 'Date Opened'"
-      [value]="config.dateOpened || '#N/A'"
+      [value]="config.dateOpened || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -126,7 +126,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
-      [value]="config.disputeFlag || '#N/A'"
+      [value]="config.disputeFlag || '--'"
     ></brave-tradeline-detail-row>
   </div>
   <!-- spacer for bottom -->
@@ -141,7 +141,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountNumber'] || 'Account Number'"
-      [value]="config.accountNumber || '#N/A'"
+      [value]="config.accountNumber || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -149,7 +149,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountTypeSymbol'] || 'Account Type'"
-      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '#N/A'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || ''] || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -157,7 +157,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['dateOpened'] || 'Date Opened'"
-      [value]="config.dateOpened || '#N/A'"
+      [value]="config.dateOpened || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -165,7 +165,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['dateClosed'] || 'Date Closed'"
-      [value]="config.dateClosed || '#N/A'"
+      [value]="config.dateClosed || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -173,7 +173,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['creditLimit'] || 'Credit Limit'"
-      [value]="config.creditLimit || '#N/A'"
+      [value]="config.creditLimit || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -181,7 +181,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['termMonths'] || 'Term'"
-      [value]="config.termMonths || '#N/A'"
+      [value]="config.termMonths || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -197,7 +197,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['monthlyPayment'] || 'Monthly Payment'"
-      [value]="config.monthlyPayment || '#N/A'"
+      [value]="config.monthlyPayment || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -205,7 +205,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['accountDesignator'] || 'Responsibility'"
-      [value]="config.accountDesignator || '#N/A'"
+      [value]="config.accountDesignator || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -213,7 +213,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['highestBalance']"
-      [value]="config.highestBalance || '#N/A'"
+      [value]="config.highestBalance || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -221,7 +221,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['late90Count'] || 'Times 30/60/90 Days Late'"
-      [value]="sumLateCount(config) || '#N/A'"
+      [value]="sumLateCount(config) || '--'"
     ></brave-tradeline-detail-row>
   </div>
 
@@ -229,7 +229,7 @@
   <div class="py-2 px-1">
     <brave-tradeline-detail-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
-      [value]="config.disputeFlag || '#N/A'"
+      [value]="config.disputeFlag || '--'"
     ></brave-tradeline-detail-row>
   </div>
 

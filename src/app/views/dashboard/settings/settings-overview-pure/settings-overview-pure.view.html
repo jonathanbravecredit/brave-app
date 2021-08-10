@@ -1,0 +1,12 @@
+<div class="flex items-center py-4" (click)="settings.goBack()">
+  <span class="material-icons">chevron_left</span>
+  <span class="text-sm ml-2">Back</span>
+</div>
+<div class="border-b-2 border-blueGray-800 pb-4">
+  <div class="mb-10">
+    <h1 class="text-xl font-semibold">Settings</h1>
+  </div>
+</div>
+<div>
+  <brave-settings #settings></brave-settings>
+</div>

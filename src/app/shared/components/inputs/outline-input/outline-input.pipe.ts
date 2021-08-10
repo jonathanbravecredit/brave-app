@@ -5,14 +5,14 @@ import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/ou
   name: 'outlineInput',
 })
 export class OutlineInputPipe implements PipeTransform {
-  transform(value: IOutlineInputeConfig, ...args: unknown[]): string {
-    let cls = `${sizeSpecificClass[value.size]}`;
+  transform(value: IOutlineInputeConfig, ...args: unknown[]): any {
+    let cls = { ...sizeSpecificClass[value.size] };
     return cls;
   }
 }
 
 const sizeSpecificClass: Record<string, any> = {
-  sm: 'text-sm px-3 py-1',
-  base: 'text-sm px-3 py-3',
-  lg: 'text-base px-3 py-4',
+  sm: { 'text-sm': true, 'px-3': true, 'py-1': true },
+  base: { 'text-sm': true, 'px-3': true, 'py-3': true },
+  lg: { 'text-base': true, 'px-3': true, 'py-4': true },
 };

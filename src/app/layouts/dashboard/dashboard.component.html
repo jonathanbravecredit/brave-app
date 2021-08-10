@@ -1,10 +1,10 @@
 <div>
   <main>
-    <section
-      class="relative flex flex-col justify-center items-center w-full h-full min-h-screen"
-    >
-      <router-outlet></router-outlet>
-      <brave-navigation-tabs></brave-navigation-tabs>
+    <section class="relative flex flex-col justify-start items-center w-full h-full min-h-screen min-w-screen">
+      <div class="container max-w-xs sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg p-4">
+        <router-outlet></router-outlet>
+      </div>
+      <brave-bottom-navbar (navigationTo)="goToLink($event)"></brave-bottom-navbar>
     </section>
   </main>
 </div>

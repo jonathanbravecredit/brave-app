@@ -1,24 +1,24 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
 import * as parser from 'fast-xml-parser';
-import { AgenciesInput, APIService, UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
+const he = require('he');
+import { AgenciesInput, UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { IGetAuthenticationQuestionsResponseSuccess } from '@shared/models/get-authorization-questions';
-import { IIndicativeEnrichmentResponseSuccess } from '@shared/models/indicative-enrichment';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
-import {
-  ITransunionKBAChallengeAnswer,
-  ITransunionKBAQuestion,
-  ITransunionKBAQuestions,
-} from '@shared/interfaces/tu-kba-questions.interface';
-import { returnNestedObject } from '@shared/utils/utils';
 import { AgenciesStateModel } from '@store/agencies';
 import { StateService } from '@shared/services/state/state.service';
-import { IEnrollResponseSuccess, IEnrollResult } from '@shared/interfaces/enroll.interface';
-import { IVerifyAuthenticationResponseSuccess } from '@shared/interfaces/verify-authentication-response.interface';
+import {
+  ITransunionKBAQuestions,
+  ITransunionKBAChallengeAnswer,
+  ITransunionKBAQuestion,
+  IVerifyAuthenticationAnswer,
+  ITUServiceResponse,
+  IGetAuthenticationQuestionsResult,
+  IIndicativeEnrichmentResult,
+  IVerifyAuthenticationQuestionsResult,
+} from '@shared/interfaces';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -40,6 +40,15 @@ export enum PassCodeQuestion {
   FullText = 'Enter the passcode you received',
   PartialOne = 'passcode',
 }
+
+const parserOptions = {
+  attributeNamePrefix: '',
+  ignoreAttributes: false,
+  ignoreNameSpace: true,
+  parseAttributeValue: true,
+  attrValueProcessor: (val: any, attrName: any) => he.encode(val, { isAttributeValue: true }), //default is a=>a
+  tagValueProcessor: (val: any, tagName: any) => he.encode(val), //default is a=>a
+};
 
 @Injectable()
 export class KycService {
@@ -128,9 +137,13 @@ export class KycService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendIndicativeEnrichment(data: UpdateAppDataInput | AppDataStateModel): Promise<any | undefined> {
+  async sendIndicativeEnrichment(
+    appData: UpdateAppDataInput | AppDataStateModel,
+  ): Promise<IIndicativeEnrichmentResult | undefined> {
     try {
-      return await this.transunion.sendIndicativeEnrichment(data);
+      const { success, error, data } = await this.transunion.sendIndicativeEnrichment(appData);
+      console.log('indicative enrichment ===> ', success, error, data);
+      return success ? data : undefined;
     } catch (err) {
       throw new Error(`kycService:sendIndicativeEnrichment=${err}`);
     }
@@ -142,10 +155,9 @@ export class KycService {
    * @returns
    */
   async processIndicativeEnrichmentResponse(
-    enrichment: IIndicativeEnrichmentResponseSuccess,
-  ): Promise<IIndicativeEnrichmentResponseSuccess | undefined> {
-    const responseType = returnNestedObject(enrichment, 'ResponseType');
-    if (responseType === 'Success') {
+    enrichment: IIndicativeEnrichmentResult,
+  ): Promise<IIndicativeEnrichmentResult | undefined> {
+    if (enrichment.ResponseType.toLowerCase() === 'success') {
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           authenticated: false,
@@ -164,17 +176,17 @@ export class KycService {
    * @returns Full ssn or a failure (TODO: handle failures)
    */
   async getIndicativeEnrichmentResults(data: UpdateAppDataInput): Promise<KYCResponse | string> {
-    let enrichmentResponse: IIndicativeEnrichmentResponseSuccess;
-    let enrichment: IIndicativeEnrichmentResponseSuccess | undefined;
+    let enrichmentResponse: IIndicativeEnrichmentResult | undefined;
+    let enrichment: IIndicativeEnrichmentResult | undefined;
 
     try {
       enrichmentResponse = await this.sendIndicativeEnrichment(data);
-      console.log('enrichmentResponse', enrichmentResponse);
+      console.log('enrichmentResponse', enrichmentResponse, data);
       if (!enrichmentResponse) return KYCResponse.Failed;
       enrichment = await this.processIndicativeEnrichmentResponse(enrichmentResponse);
       if (!enrichment) return KYCResponse.Failed;
-      console.log('enrichment', enrichment);
-      const ssn = returnNestedObject(enrichment, 'SSN');
+      console.log('enrichment', enrichment, enrichmentResponse);
+      const ssn = `${enrichment.SSN}`;
       return ssn ? ssn : KYCResponse.Failed;
     } catch {
       return KYCResponse.Failed;
@@ -188,12 +200,13 @@ export class KycService {
    * @returns
    */
   async sendGetAuthenticationQuestions(
-    data: UpdateAppDataInput | AppDataStateModel,
+    appData: UpdateAppDataInput | AppDataStateModel,
     ssn: string = '',
-  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
+  ): Promise<IGetAuthenticationQuestionsResult | undefined> {
     if (!ssn) return;
     try {
-      return await this.transunion.sendGetAuthenticationQuestions(data, ssn);
+      const { success, error, data } = await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
+      return success ? data : undefined;
     } catch (err) {
       throw new Error(`kycService:sendGetAuthenticationQuestions=${err}`);
     }
@@ -205,20 +218,16 @@ export class KycService {
    * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
    */
-  async processGetAutthenticationQuestionsResponse(
-    questions: IGetAuthenticationQuestionsResponseSuccess,
-  ): Promise<IGetAuthenticationQuestionsResponseSuccess | undefined> {
-    const responseType = returnNestedObject(questions, 'ResponseType');
-    if (responseType === 'Success') {
-      const fulfillmentKey = returnNestedObject(questions, 'ServiceBundleFulfillmentKey');
-      console.log('fulfillmentkey', fulfillmentKey);
-      // update indicative enrichment as success
+  async processGetAuthenticationQuestionsResponse(
+    questions: IGetAuthenticationQuestionsResult,
+  ): Promise<IGetAuthenticationQuestionsResult | undefined> {
+    if (questions.ResponseType.toLowerCase() === 'success') {
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           authenticated: false,
           indicativeEnrichmentSuccess: true,
           getAuthenticationQuestionsSuccess: true,
-          serviceBundleFulfillmentKey: fulfillmentKey,
+          serviceBundleFulfillmentKey: questions.ServiceBundleFulfillmentKey,
         },
       });
       // now do the authentication
@@ -235,18 +244,18 @@ export class KycService {
    * @returns
    */
   async getGetAuthenticationQuestionsResults(data: UpdateAppDataInput): Promise<KYCResponse | string> {
-    let questionResponse: IGetAuthenticationQuestionsResponseSuccess | undefined;
-    let questions: IGetAuthenticationQuestionsResponseSuccess | undefined;
+    let questionResponse: IGetAuthenticationQuestionsResult | undefined;
+    let questions: IGetAuthenticationQuestionsResult | undefined;
     const ssn = data.user?.userAttributes?.ssn?.full;
     if (!ssn) return KYCResponse.Failed;
     // GetAuthorizationQuestions response from TU service
     try {
       questionResponse = await this.sendGetAuthenticationQuestions(data, ssn);
       if (!questionResponse) return KYCResponse.Failed;
-      questions = await this.processGetAutthenticationQuestionsResponse(questionResponse);
+      questions = await this.processGetAuthenticationQuestionsResponse(questionResponse);
       if (!questions) return KYCResponse.Failed;
       // Sucess...parse questions and pass to question component
-      const questionXml = returnNestedObject(questions, 'Questions');
+      const questionXml = questions.Questions;
       const xmlText = questionXml ? questionXml : null;
       if (!xmlText) return KYCResponse.Failed;
       await this.updateCurrentRawQuestionsAsync(xmlText || '');
@@ -258,12 +267,14 @@ export class KycService {
 
   /**
    * This parses the xml string and returns it as the TU question format
+   * - TODO move this back to server
    * @param {string} xml xml string in the TU question schema
    * @returns
    */
   parseCurrentRawQuestions(xml: string): ITransunionKBAQuestions {
-    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-    const questions: ITransunionKBAQuestions = parser.parse(clean);
+    // need two decodes, encoded by TU and our default parser settings
+    const clean = he.decode(he.decode(xml));
+    const questions: ITransunionKBAQuestions = parser.parse(clean, parserOptions);
     return questions;
   }
 
@@ -317,8 +328,9 @@ export class KycService {
    * @returns
    */
   parseCurrentRawAuthDetails(xml: string): ITransunionKBAChallengeAnswer {
-    const clean = xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-    const questions: ITransunionKBAChallengeAnswer = parser.parse(clean);
+    // need two decodes, encoded by TU and our default parser settings
+    const clean = he.decode(he.decode(xml));
+    const questions: ITransunionKBAChallengeAnswer = parser.parse(clean, parserOptions);
     return questions;
   }
 
@@ -433,35 +445,28 @@ export class KycService {
    * @returns
    */
   async sendVerifyAuthenticationQuestions(
-    data: UpdateAppDataInput | AppDataStateModel,
+    appData: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[],
-  ): Promise<IVerifyAuthenticationResponseSuccess | undefined> {
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
     if (!answers.length) throw new Error('No answers provided');
     try {
-      return await this.transunion.sendVerifyAuthenticationQuestions(data, answers);
+      return await this.transunion.sendVerifyAuthenticationQuestions(appData, answers);
     } catch (err) {
       throw new Error(`kycService:sendVerifyAuthenticationQuestions=${err}`);
     }
   }
 
   /**
-   * Invoke the service method to send the verified user to transunion to enroll them and receive their report
+   * Invoke the service method to send the verified user to transunion to complete onboarding
+   *  - enrolls them in report and score as well as disputes
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<IEnrollResponseSuccess | undefined> {
+  async sendCompleteOnboarding(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
     try {
-      return await this.transunion.sendEnrollRequest(data);
+      return await this.transunion.sendCompleteOnboarding(data);
     } catch (err) {
       throw new Error(`kycService:sendEnrollRequest=${err}`);
     }
-  }
-
-  enrichEnrollmentData(
-    state: AppDataStateModel | UpdateAppDataInput | undefined,
-    enroll: IEnrollResult,
-  ): UpdateAppDataInput | AppDataStateModel | undefined {
-    if (!state) throw new Error(`kycService:enrichEnrollmentData=Missing state`);
-    return this.transunion.enrichEnrollmentData(state, enroll);
   }
 }

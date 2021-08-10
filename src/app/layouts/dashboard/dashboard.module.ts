@@ -9,12 +9,7 @@ const components = [DashboardComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [
-    CommonModule,
-    SharedComponentsModule,
-    ViewsModule,
-    DashboardRoutingModule,
-  ],
+  imports: [CommonModule, SharedComponentsModule, ViewsModule, DashboardRoutingModule],
   exports: [...components],
 })
 export class DashboardModule {}

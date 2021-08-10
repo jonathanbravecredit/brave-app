@@ -1,0 +1,44 @@
+<div>
+  <div>
+    <div class="border-t border-blueGray-300 py-2"></div>
+    <div class="flex justify-start items-start content-start">
+      <div>
+        <span class="material-icons-outlined"> assignment </span>
+      </div>
+      <div class="ml-2 mb-4">
+        <p class="text-sm font-semibold">
+          {{ tradeline.creditorName }} {{ tradeline.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+        </p>
+        <p class="text-sm font-semibold">{{ tradeline.accountTypeDescription || '' }}</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-1 mb-2">
+      <p class="text-xs font-dk-gray">Last Payment to Creditor:</p>
+      <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.dateReported }}</p>
+      <p class="text-xs text-dk-gray">Original Creditor:</p>
+      <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.originalCreditor }}</p>
+      <p class="text-xs text-dk-gray">Previously Disputed:</p>
+      <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ tradeline.disputeFlag }}</p>
+    </div>
+    <div class="flex justify-center my-4">
+      <brave-filled-onlytext-button (click)="disputeClick.emit()"
+        >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
+      >
+    </div>
+
+    <!-- ======= Payment History and Remarks ======== -->
+    <div *ngIf="viewDetail.open$ | async as open" class="mt-4">
+      <div class="rounded-lg border border-blueGray-300 p-4">
+        <div class="mb-4">
+          <p class="text-sm font-semibold">Account Details</p>
+        </div>
+        <!-- ======= AccountDetails Comp ======== -->
+        <brave-tradeline-details-table typeOverride="r" [config]="tradeline"></brave-tradeline-details-table>
+      </div>
+    </div>
+
+    <div class="flex justify-center my-6">
+      <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
+    </div>
+  </div>
+</div>

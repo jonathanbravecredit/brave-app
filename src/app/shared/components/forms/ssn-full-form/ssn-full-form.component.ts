@@ -31,7 +31,7 @@ export class SsnFullFormComponent extends BaseFormComponent {
     if (comp) {
       setTimeout(() => {
         comp.focusMe();
-      }, 500);
+      }, 100);
     }
   }
 

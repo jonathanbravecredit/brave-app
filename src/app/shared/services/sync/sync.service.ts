@@ -1,14 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
 import {
   APIService,
   CreateAppDataInput,
-  CreateAppDataMutation,
   GetAppDataQuery,
   OnUpdateAppDataSubscription,
-  SubscriptionResponse,
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
@@ -17,6 +15,8 @@ import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,12 @@ export class SyncService implements OnDestroy {
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(private api: APIService, private store: Store, private router: Router) {}
+  constructor(
+    private api: APIService,
+    private store: Store,
+    private router: Router,
+    private interstitial: InterstitialService,
+  ) {}
 
   ngOnDestroy(): void {
     // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
@@ -47,8 +52,9 @@ export class SyncService implements OnDestroy {
     // user refreshes...on any other non-auth guarded route
     // user signsIn and is new user
     console.log('calling hallmonitor');
+    this.interstitial.openInterstitial();
     const { identityId: id } = creds;
-    // TODO: BETTER USE OF ROUND TRIP CALLS...USE SUBJECT
+    // TODO: BETTER USE OF ROUND TRIP CALLS
     // Handle new users
     // 1. No ID from Amplify to validate against...bail out
     // 2. Brand New User and signin event..initialize DB and go to dashboard
@@ -67,10 +73,11 @@ export class SyncService implements OnDestroy {
     // 5. User has NOT fully onboarded and NOT a signin event...go to last complete
     const isUserOnboarded = await this.isUserOnboarded(id);
     if (isUserOnboarded === undefined) return;
-    if (isUserOnboarded && signInEvent) this.goToDashboard(id);
-    if (isUserOnboarded && !signInEvent) this.stayPut(id);
-    if (!isUserOnboarded && signInEvent) this.goToLastOnboarded(id);
-    if (!isUserOnboarded && !signInEvent) this.goToLastOnboarded(id);
+    if (isUserOnboarded && signInEvent) await this.goToDashboard(id);
+    if (isUserOnboarded && !signInEvent) await this.stayPut(id);
+    if (!isUserOnboarded && signInEvent) await this.goToLastOnboarded(id);
+    if (!isUserOnboarded && !signInEvent) await this.goToLastOnboarded(id);
+    this.interstitial.closeInterstitial();
   }
 
   /**
@@ -80,15 +87,13 @@ export class SyncService implements OnDestroy {
   async subscribeToListeners(id: string): Promise<void> {
     const { owner } = await queries.GetOwner(id);
     if (owner) {
-      this.apiUpdateListener$ = this.api
-        .OnUpdateAppDataListener(owner)
-        .subscribe((data: SubscriptionResponse<OnUpdateAppDataSubscription>) => {
-          if (data.value.errors) throw `API OnUpdateAppDataListener error`;
-          const appData = data.value.data;
-          if (!appData) return;
-          const clean = this.cleanBackendData(appData);
-          this.store.dispatch(new AppDataActions.Edit(clean));
-        });
+      this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
+        if (data.value.errors) throw `API OnUpdateAppDataListener error`;
+        const appData = data.value.data['onUpdateAppData'];
+        if (!appData) return;
+        const clean = this.cleanBackendData(appData);
+        this.store.dispatch(new AppDataActions.Edit(clean));
+      });
     }
   }
 
@@ -146,6 +151,7 @@ export class SyncService implements OnDestroy {
   /**
    * Takes the ID and syncs the state to the DB.
    * - Stays on the same url
+   * - refreshes the report if needed
    * @param {string} id
    */
   async stayPut(id: string): Promise<void> {

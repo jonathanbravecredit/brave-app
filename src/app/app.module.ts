@@ -4,6 +4,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '@environments/environment';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,8 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
+
 /* social sign in configuration */
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -23,7 +26,6 @@ const isLocalhost = Boolean(
 
 // for two redirects (local host and production)
 const [localRedirectSignIn, productionRedirectSignIn] = awsconfig.oauth.redirectSignIn.split(',');
-
 const [localRedirectSignOut, productionRedirectSignOut] = awsconfig.oauth.redirectSignOut.split(',');
 
 const updatedAwsConfig = {
@@ -77,6 +79,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     NgxsLoggerPluginModule.forRoot({
       disabled: environment.production,
     }),
+    NgxMaskModule.forRoot(),
     HammerModule,
     AmplifyUIAngularModule,
     NgxChartsModule,

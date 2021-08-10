@@ -2,13 +2,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from '@layouts/dashboard/dashboard.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
-import { NegativeAccountInitialComponent } from '@views/negative-account/negative-account-initial/negative-account-initial.component';
-import { CreditReportComponent } from '@views/credit-report/credit-report/credit-report.component';
-import { TradelinesComponent } from '@views/tradelines/tradelines/tradelines.component';
-import { DashboardInitComponent } from '@views/dashboard-init/dashboard-init.component';
-import { DisputesTradelineView } from '@views/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
-import { BaseExceptionComponent } from '@shared/components/exceptions/base-exception/base-exception.component';
+import { NegativeAccountInitialComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
+import { CreditReportComponent } from '@views/dashboard/reports/credit-report/credit-report/credit-report.component';
+import { TradelinesComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines/tradelines.component';
 import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
+import { DisputesOverviewInitialView } from '@views/dashboard/disputes/disputes-overview';
+import { DisputeFindingsView } from '@views/dashboard/disputes/disputes-findings/dispute-findings/dispute-findings.view';
+import { DashboardInitComponent } from '@views/dashboard/dashboard/dashboard-init/dashboard-init.component';
+import { PublicitemsView } from '@views/dashboard/reports/credit-report/publicitems/publicitems/publicitems.view';
+import { PersonalitemsView } from '@views/dashboard/reports/credit-report/personalitems/personalitems/personalitems.view';
+import { DisputesPublicView } from '@views/dashboard/disputes/disputes-public/disputes-public/disputes-public.view';
+import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
+import { SettingsOverviewView } from '@views/dashboard/settings/settings-overview/settings-overview.view';
+import { DisputesReconfirmView } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm/disputes-reconfirm.view';
+import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-personal/disputes-personal/disputes-personal.view';
 
 const DashboardRoutes: Routes = [
   {
@@ -27,28 +34,88 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'settings',
+        component: SettingsOverviewView,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'report',
         component: CreditReportComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/detail',
-        component: TradelinesComponent,
+        path: 'disputes',
+        component: DisputesOverviewInitialView,
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/detail/dispute/tradelines',
-        component: DisputesTradelineView,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'report/detail/dispute/error',
+        path: 'error',
         component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
       {
         path: 'report/accounts/negative',
         component: NegativeAccountInitialComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/tradeline',
+        component: TradelinesComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/publicitem',
+        component: PublicitemsView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/personalitem',
+        component: PersonalitemsView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute',
+        component: DisputesReconfirmView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute/tradeline',
+        component: DisputesTradelineView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute/personalitem',
+        component: DisputesPersonalView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute/publicitem',
+        component: DisputesPublicView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute/tradeline/error',
+        component: BaseExceptionView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute/personalitem/error',
+        component: BaseExceptionView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/dispute/publicitem/error',
+        component: BaseExceptionView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'disputes/findings',
+        component: DisputeFindingsView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/error',
+        component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
     ],

@@ -14,7 +14,7 @@ import { OutlineSelectInputPipe } from '@shared/components/inputs/outline-select
 import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
 import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
 import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
-import { AccountStatusPipe } from './cards/creditcard-card/account-status.pipe';
+import { AccountStatusPipe } from './cards/finantial-mechanism-card/account-status.pipe';
 import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
 import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
 import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
@@ -70,9 +70,7 @@ import { OutlineNamedobFormComponent } from './forms/outline-namedob-form/outlin
 import { BaseFormComponent } from './forms/base-form/base-form.component';
 import { SelectDobFormComponent } from './forms/select-dob-form/select-dob-form.component';
 import { OutlineNameFormComponent } from './forms/outline-name-form/outline-name-form.component';
-import { CreditcardCardComponent } from './cards/creditcard-card/creditcard-card.component';
 import { ViewdetailButtonComponent } from './buttons/viewdetail-button/viewdetail-button.component';
-import { LoanCardComponent } from './cards/loan-card/loan-card.component';
 import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
 import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
 import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
@@ -110,9 +108,7 @@ import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-det
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
-import { DisputeHistoryCardComponent } from './cards/dispute-cards/dispute-history-card/dispute-history-card.component';
-import { DisputeCurrentCardComponent } from './cards/dispute-cards/dispute-current-card/dispute-current-card.component';
-import { UserDisputesListComponent } from './disputes/user-disputes-list/user-disputes-list.component';
+import { DisputesListComponent } from './disputes/disputes-list/disputes-list.component';
 import { DisputeFindingsHeaderComponent } from './disputes/findings/dispute-findings-header/dispute-findings-header.component';
 import { DisputeFindingsResultsComponent } from './disputes/findings/dispute-findings-results/dispute-findings-results.component';
 import { DisputeFindingsHowToReadComponent } from './disputes/findings/dispute-findings-how-to-read/dispute-findings-how-to-read.component';
@@ -123,8 +119,30 @@ import { DisputeFindingsRatingKeyComponent } from './disputes/findings/dispute-f
 import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/dispute-findings-results-details/dispute-findings-results-details.component';
 import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
-import { DisputeRegularCardComponent } from './cards/dispute-cards/dispute-regular-card/dispute-regular-card.component';
-import { DisputeCardStatusPipe } from './cards/dispute-cards/dispute-regular-card/dispute-card-status.pipe';
+import {
+  DisputeCardStatusPipe,
+  DisputeCurrentCardComponent,
+  DisputeHistoryCardComponent,
+  DisputeRegularCardComponent,
+} from './cards/dispute-cards';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
+import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
+import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
+import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
+import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-input-code.component';
+import { PublicitemsDetailsTableComponent } from './publicitems/publicitems-details-table/publicitems-details-table.component';
+import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/publicitems-details.component';
+import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
+import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
+import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card.component';
+import { PublicitemDisputeCardComponent } from './cards/publicitem-dispute-card/publicitem-dispute-card.component';
+import { PersonalitemDisputeCardComponent } from './cards/personalitem-dispute-card/personalitem-dispute-card.component';
+import { TradelineDisputeCardComponent } from './cards/tradeline-dispute-card/tradeline-dispute-card.component';
+import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const components = [
   BaseFormComponent,
@@ -175,9 +193,8 @@ const components = [
   OutlineNamedobFormComponent,
   SelectDobFormComponent,
   OutlineNameFormComponent,
-  CreditcardCardComponent,
+  FinantialMechanismCardComponent,
   ViewdetailButtonComponent,
-  LoanCardComponent,
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
   SnapshotDisplayCardComponent,
@@ -214,9 +231,10 @@ const components = [
   DisputesDetailComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
+  DisputeRegularCardComponent,
   DisputeHistoryCardComponent,
   DisputeCurrentCardComponent,
-  UserDisputesListComponent,
+  DisputesListComponent,
   DisputeFindingsHeaderComponent,
   DisputeFindingsResultsComponent,
   DisputeFindingsHowToReadComponent,
@@ -227,7 +245,20 @@ const components = [
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
-  DisputeRegularCardComponent
+  SettingsOptionComponent,
+  SettingsComponent,
+  CollectionCreditMixAccountsComponent,
+  BottomNavbarComponent,
+  OutlineInputPhoneComponent,
+  OutlineInputCodeComponent,
+  PublicitemsDetailsTableComponent,
+  PublicitemsDetailsComponent,
+  PersonalitemsDetailsComponent,
+  PersonalitemsDetailsTableComponent,
+  PublicitemCardComponent,
+  PublicitemDisputeCardComponent,
+  PersonalitemDisputeCardComponent,
+  TradelineDisputeCardComponent,
 ];
 
 // component specific pipes only
@@ -246,7 +277,8 @@ const pipes = [
   CreditReportGraphicPipe,
   BasePaginationPipe,
   BaseModalPipe,
-  DisputeCardStatusPipe
+  DisputeCardStatusPipe,
+  SimpleBackButtonComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -255,11 +287,13 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
   imports: [
     CommonModule,
     SharedPipesModule,
+    SharedDirectivesModule,
     NgxChartsModule,
     ChartsModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    NgxMaskModule,
   ],
   declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],

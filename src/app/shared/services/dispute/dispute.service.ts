@@ -1,37 +1,63 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
+import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { DisputeInput } from '@shared/services/aws/api.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
-import { IProcessDisputeTradelineResult } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DisputeService implements OnDestroy {
+export class DisputeService extends InterstitialService implements OnDestroy {
+  /*===========================================================================*/
+  // these behavior subjects help track which are the current items
+  //   being disputed. Can be either account, personal, public
+  /*===========================================================================*/
   tradeline: ITradeLinePartition | undefined;
   tradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
   tradelineSub$: Subscription;
+
+  publicItem: IPublicPartition | undefined;
+  publicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
+  publicItemSub$: Subscription;
+
+  personalItem: IBorrower | undefined;
+  personalItem$: BehaviorSubject<IBorrower> = new BehaviorSubject({} as IBorrower);
+  personalItemSub$: Subscription;
+
+  /*===========================================================================*/
+  // These help track the responses
+  /*===========================================================================*/
+  currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject<DisputeInput>({} as DisputeInput);
   disputeStack: IProcessDisputeTradelineResult[] = [];
+  disputes$: BehaviorSubject<(DisputeInput | null)[] | null | undefined> = new BehaviorSubject<
+    (DisputeInput | null)[] | null | undefined
+  >([{} as DisputeInput]);
+
   _acknowledged: boolean = false;
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
 
-  constructor(
-    private store: Store,
-    private statesvc: StateService,
-    private transunion: TransunionService,
-    private router: Router,
-  ) {
+  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
+    super();
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });
+    this.publicItemSub$ = this.publicItem$.subscribe((publicItem) => {
+      this.publicItem = publicItem;
+    });
+    this.personalItemSub$ = this.personalItem$.subscribe((personalItem) => {
+      this.personalItem = personalItem;
+    });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
+      this.disputes$.next(state.appData.agencies?.transunion?.disputes);
       this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     });
   }
@@ -52,11 +78,21 @@ export class DisputeService implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
+    if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
+    if (this.personalItemSub$) this.personalItemSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
   setTradelineItem(tradeline: ITradeLinePartition): void {
     this.tradeline$.next(tradeline);
+  }
+
+  setPublicItem(publicItem: IPublicPartition): void {
+    this.publicItem$.next(publicItem);
+  }
+
+  setPersonalItem(personalItem: IBorrower): void {
+    this.personalItem$.next(personalItem);
   }
 
   pushDispute(item: IProcessDisputeTradelineResult): void {
@@ -77,13 +113,12 @@ export class DisputeService implements OnDestroy {
    * Update the users acknowledge and then gets dispute preflight check
    * @returns
    */
-  async onUserConfirmed(): Promise<boolean> {
+  async onUserConfirmed(): Promise<ITUServiceResponse<any>> {
     if (!this.state) throw `tradelines:onConfirmed=Missing state`;
     try {
       // acknowledge the user has read and accepted the terms
       if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
-      const eligible = await this.sendDisputePreflightCheck(this.state.id);
-      return eligible;
+      return await this.sendDisputePreflightCheck(this.state.id);
     } catch (err) {
       throw `disputeService:onUserConfirmed=${err}`;
     }
@@ -105,14 +140,9 @@ export class DisputeService implements OnDestroy {
     await this.statesvc.updateAgenciesAsync(acknowledged);
   }
 
-  async sendDisputePreflightCheck(id: string): Promise<boolean> {
+  async sendDisputePreflightCheck(id: string): Promise<ITUServiceResponse<any>> {
     try {
-      const resp = await this.transunion.sendDisputePreflightCheck({ id });
-      const { eligible, error } = resp.DisputePreflightCheck;
-      if (error) {
-        this.router.navigate(['/report/detail/dispute/error'], { queryParams: { code: error.Code } });
-      }
-      return eligible;
+      return await this.transunion.sendDisputePreflightCheck({ id });
     } catch (err) {
       throw `disputeService:sendDisputePreflightCheck=${err}`;
     }
@@ -121,7 +151,7 @@ export class DisputeService implements OnDestroy {
   /**
    * Initiate a new dispute. Cannot have one in progress.
    */
-  async sendStartDispute(): Promise<string | undefined> {
+  async sendStartDispute(): Promise<ITUServiceResponse<any>> {
     const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
       return await this.transunion.sendStartDispute(data.id, this.disputeStack);
