@@ -52,12 +52,12 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     const unEmployers = employers.map((emp) => TU.employerUnparser(emp));
     const transformed: IPersonalItemsDetailsTable = {
       personalItem: borrower,
-      ssn: `${borrower.SocialSecurityNumber}` || '--',
+      ssn: `${borrower.SocialSecurityNumber}`,
       borrowerNames: this.flattenItems(unNames),
-      currentAddress: unAddress || '--',
-      previousAddresses: this.flattenItems(unPrevAddress) || '--',
-      telephones: this.flattenItems(unPhones) || '--',
-      employers: this.flattenItems(unEmployers) || '--',
+      currentAddress: unAddress,
+      previousAddresses: this.flattenItems(unPrevAddress),
+      telephones: this.flattenItems(unPhones),
+      employers: this.flattenItems(unEmployers),
       borrowerNamesArray: unNames || [],
       previousAddressesArray: unPrevAddress || [],
       telephonesArray: unPhones || [],
