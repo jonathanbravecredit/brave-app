@@ -36,37 +36,6 @@ export class SyncService implements OnDestroy {
   }
 
   /**
-   * Hall monitor. Checks the user and tells them where to go when they come back
-   *   to the app for the first and subsequent times.
-   *   Called when:
-   *    1. User signs in
-   *    2. User refreshes (and auth service reinitiates via Auth.currentCredentials())
-   * @returns
-   */
-  // async hallmonitor(creds: ICredentials, signInEvent: boolean = false): Promise<void> {
-  //   // user refreshes...on any other non-auth guarded route
-  //   // user signsIn and is new user
-  //   console.log('calling hallmonitor');
-  //   const { identityId: id } = creds;
-
-  //   // TODO: BETTER USE OF ROUND TRIP CALLS
-  //   // Handle new users
-  //   // 1. No ID from Amplify to validate against...bail out
-  //   // 2. Brand New User and signin event..initialize DB and go to dashboard
-  //   // 3. Brand New User and NOT a signin event....initialize DB and go to dashboard
-
-  //   // Returning user...app initiated already. Add listener
-  //   await this.subscribeToListeners(id);
-
-  //   const isUserOnboarded = await this.isUserOnboarded(id);
-  //   if (isUserOnboarded === undefined) return;
-  //   if (isUserOnboarded && signInEvent) await this.goToDashboard(id);
-  //   if (isUserOnboarded && !signInEvent) await this.stayPut(id);
-  //   if (!isUserOnboarded && signInEvent) await this.goToLastOnboarded(id);
-  //   if (!isUserOnboarded && !signInEvent) await this.goToLastOnboarded(id);
-  // }
-
-  /**
    * const isUserBrandNew = await this.isUserBrandNew(id);
    * if (isUserBrandNew === undefined) return;
    * if (isUserBrandNew && signInEvent) await this.initAppData(creds);
@@ -76,6 +45,7 @@ export class SyncService implements OnDestroy {
   async initUser(creds: ICredentials): Promise<void> {
     const id = creds.identityId;
     const isNew = await this.isUserBrandNew(id);
+    console.log('isNew: ', isNew);
     isNew ? await this.initAppData(creds) : await this.syncDBDownToState(id);
   }
 
@@ -92,7 +62,9 @@ export class SyncService implements OnDestroy {
   async onboardUser(creds: ICredentials, signInEvent: boolean): Promise<void> {
     const id = creds.identityId;
     const isOnboarded = await this.isUserOnboarded(id);
+    console.log('isOnboarded: ', isOnboarded);
     if (isOnboarded) {
+      console.log('signInEvent: ', signInEvent);
       signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
     } else {
       await this.goToLastOnboarded(id);
@@ -109,10 +81,12 @@ export class SyncService implements OnDestroy {
     console.log('owner ===> ', owner);
     if (owner) {
       this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
+        console.log('data has updated ===> ', data);
         if (data.value.errors) throw `API OnUpdateAppDataListener error`;
         const appData = data.value.data['onUpdateAppData'];
         if (!appData) return;
         const clean = this.cleanBackendData(appData);
+        console.log('dispatching ===> ', clean);
         this.store.dispatch(new AppDataActions.Edit(clean));
       });
     }

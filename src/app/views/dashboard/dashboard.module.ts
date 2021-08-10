@@ -60,6 +60,7 @@ import { ParseRiskScorePipe } from '@views/dashboard/reports/credit-report/credi
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
+import { NgxMaskModule } from 'ngx-mask';
 const components = [
   DashboardComponent,
   DashboardEnrolledComponent,
@@ -120,7 +121,7 @@ const pipes = [ParseRiskScorePipe];
 
 @NgModule({
   declarations: [...components, ...pipes],
-  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, DashboardRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, NgxMaskModule, DashboardRoutingModule],
   exports: [...components, ...pipes],
 })
 export class DashboardModule {}

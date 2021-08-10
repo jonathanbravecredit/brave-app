@@ -1,6 +1,7 @@
 import { BRAVE_ACCOUNT_TYPE, POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import {
+  IBorrower,
   IBorrowerName,
   ICreditAddress,
   IEmployer,
@@ -8,6 +9,7 @@ import {
   IRemark,
   ITradeLinePartition,
 } from '@shared/interfaces';
+import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 // start building this out to handle all the data from TU
 export class TransunionUtil {
@@ -45,9 +47,10 @@ export class TransunionUtil {
       const str = !!records[key] ? `${records[key]} ` : '';
       creditAddress = `${creditAddress}${str}`;
     }
-    creditAddress = `${creditAddress}\n`;
+    creditAddress = `${creditAddress.trimEnd()},\n`;
     for (const key in ADDRESS_LINE_2) {
-      const str = !!records[key] ? `${records[key]} ` : '';
+      let comma = key !== 'postalCode' ? ', ' : '';
+      const str = !!records[key] ? `${records[key]}${comma}` : '';
       creditAddress = `${creditAddress}${str}`;
     }
     return creditAddress;
@@ -62,7 +65,8 @@ export class TransunionUtil {
     if (!employer) return this.bcMissing;
     if (!employer.name) return this.bcMissing;
 
-    const empAddress = employer.CreditAddress ? `\n${this.addressUnparser(employer.CreditAddress)}` : '';
+    let empAddress = employer.CreditAddress ? `\n${this.addressUnparser(employer.CreditAddress)}` : '';
+    empAddress = empAddress.trim() === ',' ? '' : empAddress;
     let str = `${employer.name}${empAddress}`;
     return str;
   }
@@ -74,11 +78,10 @@ export class TransunionUtil {
    */
   static phoneUnparser(phone: IPhoneNumber | undefined): string {
     if (!phone) return this.bcMissing;
-    let area = phone.AreaCode ? `(${phone.AreaCode}) ` : '';
-    let main = phone.Number ? `${phone.Number} ` : '';
-    let ext = phone.Extension ? ` Ext: ${phone.Extension} ` : '';
-    const digits = `${area}${main}${ext}`;
-    if (!digits) return this.bcMissing;
+    let area = phone.AreaCode ? `${phone.AreaCode}` : '';
+    let main = phone.Number ? `${phone.Number}` : '';
+    const digits = `${area}${main}`.replace(/[^0-9]/g, '');
+    if (!digits) return '';
     return digits;
   }
 
@@ -200,6 +203,51 @@ export class TransunionUtil {
     return remarks instanceof Array
       ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
       : remarks.customRemark || '';
+  }
+
+  static mapBorrowerToDetails(borrower: IBorrower): IPersonalItemsDetailsTable {
+    let names =
+      borrower.BorrowerName instanceof Array
+        ? borrower.BorrowerName
+        : borrower.BorrowerName
+        ? [borrower.BorrowerName]
+        : [];
+    let employers =
+      borrower.Employer instanceof Array ? borrower.Employer : borrower.Employer ? [borrower.Employer] : [];
+    let prevAddress =
+      borrower.PreviousAddress instanceof Array
+        ? borrower.PreviousAddress
+        : borrower.PreviousAddress
+        ? [borrower.PreviousAddress]
+        : [];
+    let currAddress =
+      borrower.BorrowerAddress instanceof Array ? borrower.BorrowerAddress[0] : borrower.BorrowerAddress;
+    let phones =
+      borrower.BorrowerTelephone instanceof Array
+        ? borrower.BorrowerTelephone
+        : borrower.BorrowerTelephone
+        ? [borrower.BorrowerTelephone]
+        : [];
+
+    const unNames = names.map((name) => this.nameUnparser(name));
+    const unAddress = this.addressUnparser(currAddress?.CreditAddress);
+    const unPrevAddress = prevAddress.map((addr) => this.addressUnparser(addr?.CreditAddress));
+    const unPhones = phones.map((phone) => this.phoneUnparser(phone?.PhoneNumber));
+    const unEmployers = employers.map((emp) => this.employerUnparser(emp));
+    return {
+      personalItem: borrower,
+      ssn: `${borrower.SocialSecurityNumber}`,
+      currentAddress: unAddress,
+      borrowerNamesArray: unNames || [],
+      previousAddressesArray: unPrevAddress || [],
+      telephonesArray: unPhones || [],
+      employersArray: unEmployers || [],
+      borrowersNamesRaw: names || [],
+      currentAddressRaw: currAddress || {},
+      previousAddressesRaw: prevAddress || [],
+      employersRaw: employers || [],
+      telephonesRaw: phones || [],
+    };
   }
 }
 

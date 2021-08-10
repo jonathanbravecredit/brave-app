@@ -22,92 +22,53 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
   }
 
   mapping(borrower: IBorrower): IPersonalItemsDetailsConfig[] {
-    let names =
-      borrower.BorrowerName instanceof Array
-        ? borrower.BorrowerName
-        : borrower.BorrowerName
-        ? [borrower.BorrowerName]
-        : [];
-    let employers =
-      borrower.Employer instanceof Array ? borrower.Employer : borrower.Employer ? [borrower.Employer] : [];
-    let prevAddress =
-      borrower.PreviousAddress instanceof Array
-        ? borrower.PreviousAddress
-        : borrower.PreviousAddress
-        ? [borrower.PreviousAddress]
-        : [];
-    let currAddress =
-      borrower.BorrowerAddress instanceof Array ? borrower.BorrowerAddress[0] : borrower.BorrowerAddress;
-    let phones =
-      borrower.BorrowerTelephone instanceof Array
-        ? borrower.BorrowerTelephone
-        : borrower.BorrowerTelephone
-        ? [borrower.BorrowerTelephone]
-        : [];
-
-    const unNames = names.map((name) => TU.nameUnparser(name));
-    const unAddress = TU.addressUnparser(currAddress?.CreditAddress);
-    const unPrevAddress = prevAddress.map((addr) => TU.addressUnparser(addr?.CreditAddress));
-    const unPhones = phones.map((phone) => TU.phoneUnparser(phone?.PhoneNumber));
-    const unEmployers = employers.map((emp) => TU.employerUnparser(emp));
-    const transformed: IPersonalItemsDetailsTable = {
-      personalItem: borrower,
-      ssn: `${borrower.SocialSecurityNumber}`,
-      borrowerNames: this.flattenItems(unNames),
-      currentAddress: unAddress,
-      previousAddresses: this.flattenItems(unPrevAddress),
-      telephones: this.flattenItems(unPhones),
-      employers: this.flattenItems(unEmployers),
-      borrowerNamesArray: unNames || [],
-      previousAddressesArray: unPrevAddress || [],
-      telephonesArray: unPhones || [],
-      employersArray: unEmployers || [],
-      borrowersNamesRaw: names || [],
-      currentAddressRaw: currAddress || {},
-      previousAddressesRaw: prevAddress || [],
-      employersRaw: employers || [],
-    };
-
+    const transformed = TU.mapBorrowerToDetails(borrower);
     let mapped: IPersonalItemsDetailsConfig[] = [];
-    mapped = [
-      ...mapped,
-      ...names.map((name) => {
-        return this.mapSubitem('name', name, TU.nameUnparser(name), name.dateUpdated || '', borrower, transformed);
-      }),
-    ];
-    mapped = [
-      ...mapped,
-      ...employers.map((employer) => {
-        return this.mapSubitem(
-          'employer',
-          employer,
-          TU.employerUnparser(employer),
-          employer.dateUpdated || '',
-          borrower,
-          transformed,
-        );
-      }),
-    ];
-    mapped = [
-      ...mapped,
-      ...prevAddress.map((address) => {
-        return this.mapSubitem(
-          'address',
-          address,
-          TU.addressUnparser(address?.CreditAddress),
-          '',
-          borrower,
-          transformed,
-        );
-      }),
-    ];
-    mapped = currAddress
+    mapped = transformed.borrowersNamesRaw
+      ? [
+          ...mapped,
+          ...transformed.borrowersNamesRaw.map((name) => {
+            return this.mapSubitem('name', name, TU.nameUnparser(name), name.dateUpdated || '', borrower, transformed);
+          }),
+        ]
+      : mapped;
+    mapped = transformed.employersRaw
+      ? [
+          ...mapped,
+          ...transformed.employersRaw.map((employer) => {
+            return this.mapSubitem(
+              'employer',
+              employer,
+              TU.employerUnparser(employer),
+              employer.dateUpdated || '',
+              borrower,
+              transformed,
+            );
+          }),
+        ]
+      : mapped;
+    mapped = transformed.previousAddressesRaw
+      ? [
+          ...mapped,
+          ...transformed.previousAddressesRaw.map((address) => {
+            return this.mapSubitem(
+              'address',
+              address,
+              TU.addressUnparser(address?.CreditAddress),
+              '',
+              borrower,
+              transformed,
+            );
+          }),
+        ]
+      : mapped;
+    mapped = transformed.currentAddressRaw
       ? [
           ...mapped,
           this.mapSubitem(
             'address',
-            currAddress,
-            TU.addressUnparser(currAddress?.CreditAddress),
+            transformed.currentAddressRaw,
+            TU.addressUnparser(transformed.currentAddressRaw?.CreditAddress),
             '',
             borrower,
             transformed,

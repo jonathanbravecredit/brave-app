@@ -17,3 +17,5 @@ const disptutestatus = {
   },
   EnrollmentKey: 'e62b9e16-dac9-47ff-8fa0-d029b622d59d',
 };
+
+const sample = { id: 'us-east-2:cb86febe-9101-4df8-96ba-a6c38cdfe925', disputeId: '6800' };
