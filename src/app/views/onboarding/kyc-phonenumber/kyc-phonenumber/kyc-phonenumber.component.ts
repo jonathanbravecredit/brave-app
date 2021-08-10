@@ -199,7 +199,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
     state: UpdateAppDataInput | AppDataStateModel | undefined,
     otpAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycPhonenumberComponent> {
-    console.log('sendVerifyAuthQuestions:phonenumber ===> ', otpAnswer, state);
     if (!otpAnswer || !state) throw `kycPhonenumber:sendVerifyAuthQuestions=Missing otpAnswer`;
     const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
     if (!success) throw `kycPhonenumber:sendVerifyAuthQuestions=${error}`;
