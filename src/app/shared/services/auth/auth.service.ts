@@ -21,34 +21,7 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private sync: SyncService, private router: Router) {
-    Hub.listen('auth', async (data) => {
-      const { channel, payload } = data;
-      switch (payload.event) {
-        case 'signIn':
-          console.log('in signin');
-          const creds: ICredentials = await this.getCurrentUserCredentials();
-          console.log('current credentials', creds);
-          if (creds) await this.sync.hallmonitor(creds, true);
-          break;
-        case 'signOut':
-          this.router.navigate(['/auth/signin']);
-          // handle sign out
-          break;
-        default:
-          // do something by default
-          break;
-      }
-    });
-
-    Auth.currentAuthenticatedUser()
-      .then(async (user) => {
-        console.log('authenticated user');
-        const creds: ICredentials = await this.getCurrentUserCredentials();
-        if (creds) await this.sync.hallmonitor(creds);
-      })
-      .catch(() => console.log('Not signed in'));
-  }
+  constructor(private router: Router) {}
 
   /**
    * This method is designed to help reload the user if the ID ever goes null
@@ -61,7 +34,7 @@ export class AuthService {
   async reloadCredentials(): Promise<void> {
     const creds = await this.getCurrentUserCredentials();
     if (creds) {
-      await this.sync.hallmonitor(creds);
+      // await this.sync.hallmonitor(creds);
     } else {
       switch (this.router.url) {
         case '/auth/signin':

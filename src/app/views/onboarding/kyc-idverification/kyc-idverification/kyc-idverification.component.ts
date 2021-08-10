@@ -86,7 +86,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
               throw 'No passcode questionfound';
             })();
         this.authSuccessful
-          ? this.sendCompleteOnboarding(this.state)
+          ? await this.sendCompleteOnboarding(this.state)
           : (() => {
               throw 'Authentication request failed';
             })();
