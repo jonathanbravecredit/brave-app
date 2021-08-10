@@ -153,13 +153,13 @@ export class TradelineDetailsTableComponent implements OnInit {
    *
    * number
    */
-  sumLateCount(config: ITradelineDetailsConfig): number {
-    let late30 = config.late30Count || 0;
-    let late60 = config.late60Count || 0;
-    let late90 = config.late90Count || 0;
-    late30 = typeof late30 === 'string' ? +late30 : late30;
-    late60 = typeof late60 === 'string' ? +late60 : late60;
-    late90 = typeof late90 === 'string' ? +late90 : late90;
-    return late30 + late60 + late90;
+  sumLateCount(config: ITradelineDetailsConfig): string {
+    let late30 = Math.round((config.late30Count as number) || 0);
+    let late60 = Math.round((config.late60Count as number) || 0);
+    let late90 = Math.round((config.late90Count as number) || 0);
+    late30 = isNaN(late30) ? 0 : late30;
+    late60 = isNaN(late60) ? 0 : late60;
+    late90 = isNaN(late90) ? 0 : late90;
+    return `${late30}/${late60}/${late90}`;
   }
 }
