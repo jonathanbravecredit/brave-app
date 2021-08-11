@@ -9,16 +9,10 @@ import { AuthenticationModule } from '@views/authentication/authentication.modul
 import { ComplianceModule } from '@views/compliance/compliance.module';
 import { DashboardModule } from '@views/dashboard/dashboard.module';
 import { OnboardingModule } from '@views/onboarding/onboarding.module';
-
-// COMPONENTS
-import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
-import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
 import { NgxMaskModule } from 'ngx-mask';
 
-const views = [BaseExceptionPureView, BaseExceptionView];
-
 @NgModule({
-  declarations: [...views],
+  declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -32,7 +26,7 @@ const views = [BaseExceptionPureView, BaseExceptionView];
     OnboardingModule,
     RouterModule,
   ],
-  exports: [...views],
+  exports: [],
   providers: [],
 })
 export class ViewsModule {}
