@@ -14,12 +14,12 @@ export class MergereportToTradelinesPipe implements PipeTransform {
     const accountType = args[0];
     const partition = report?.TrueLinkCreditReportType?.TradeLinePartition;
     const borrower = report?.TrueLinkCreditReportType?.Borrower;
-    const statement = helper.parseBorrowerForCreditStatement(borrower);
+    const statement = TU.parser.parseBorrowerForCreditStatement(borrower);
     if (!partition) return [DEFAULT_TRADELINE];
     let tradelines = !(partition instanceof Array) ? [partition] : partition;
     tradelines = [...this.filterByAccountType(tradelines, accountType)];
     // tradelines = [...TU.sortTradelineByAccountType(tradelines)];
-    tradelines = [...TU.sortTradelineByPayStatus(tradelines)];
+    tradelines = [...TU.sorter.sortTradelineByPayStatus(tradelines)];
     let config = tradelines.map((line) => this.mapPartitionsToDetails(line, statement));
     return config;
   }
@@ -29,7 +29,7 @@ export class MergereportToTradelinesPipe implements PipeTransform {
       tradeline: partition,
       accountNumber: partition?.Tradeline?.accountNumber || TU.bcMissing,
       accountTypeSymbol: partition?.accountTypeSymbol || TU.bcMissing,
-      accountTypeDescription: TU.lookupBraveTradelineDescription(partition) || '',
+      accountTypeDescription: TU.query.lookupBraveTradelineDescription(partition) || '',
       creditorName: partition?.Tradeline?.creditorName || TU.bcMissing,
       originalCreditor: partition?.Tradeline?.CollectionTrade?.originalCreditor || TU.bcMissing,
       creditType: partition?.Tradeline?.CollectionTrade?.creditType?.abbreviation || TU.bcMissing,
@@ -55,7 +55,7 @@ export class MergereportToTradelinesPipe implements PipeTransform {
 
   filterByAccountType(tradelines: ITradeLinePartition[], accountType: AccountTypes): ITradeLinePartition[] | [] {
     return tradelines.filter((item) => {
-      const _accountType = TU.lookupTradelineTypeDescription(item);
+      const _accountType = TU.query.lookupTradelineTypeDescription(item);
       return _accountType === accountType;
     });
   }

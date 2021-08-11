@@ -24,19 +24,19 @@ export class PersonalitemDisputeCardComponent implements OnInit {
         this.icon = 'face';
         this.label = 'Name';
         const name = this.personalItem.value as IBorrowerName;
-        this.value = TU.nameUnparser(name) || TU.bcMissing;
+        this.value = TU.parser.nameUnparser(name) || TU.bcMissing;
         break;
       case 'address':
         this.icon = 'home';
         this.label = 'Address';
         const address = this.personalItem.value as IBorrowerAddress;
-        this.value = TU.addressUnparser(address.CreditAddress) || TU.bcMissing;
+        this.value = TU.parser.addressUnparser(address.CreditAddress) || TU.bcMissing;
         break;
       case 'employer':
         this.icon = 'badge';
         this.label = 'Employer';
         const employer = this.personalItem.value as IEmployer;
-        this.value = TU.employerUnparser(employer) || TU.bcMissing;
+        this.value = TU.parser.employerUnparser(employer) || TU.bcMissing;
         break;
       default:
         this.value = TU.bcMissing;

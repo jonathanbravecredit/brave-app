@@ -9,6 +9,6 @@ import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
 export class PersonalitemsToDetailsPipe implements PipeTransform {
   transform(personalItem: IBorrower): IPersonalItemsDetailsTable | undefined {
     if (personalItem === undefined) return;
-    return TU.mapBorrowerToDetails(personalItem);
+    return TU.mapper.mapBorrowerToDetails(personalItem);
   }
 }

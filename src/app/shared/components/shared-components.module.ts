@@ -76,7 +76,6 @@ import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-inp
 import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
 import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
 import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
-import { NegativeAccountCardComponent } from './cards/negative-account-card/negative-account-card.component';
 import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
@@ -188,7 +187,6 @@ const components = [
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
   SnapshotDisplayCardComponent,
-  NegativeAccountCardComponent,
   KbaMultiplechoiceInputComponent,
   CreditReportCardComponent,
   SpinnerComponent,

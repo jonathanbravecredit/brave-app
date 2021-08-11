@@ -2,8 +2,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { NegativeAccountCardComponent } from '@shared/components/cards/negative-account-card/negative-account-card.component';
-import { INegativeAccountCardInputs } from '@shared/components/cards/negative-account-card/interfaces';
+import { NegativeAccountCardComponent } from '@views/dashboard/snapshots/negative-account/negative-account-card/negative-account-card.component';
+import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
 
 export default {
   title: 'app/components/cards/negative-account',

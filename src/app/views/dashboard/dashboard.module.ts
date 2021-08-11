@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from '@views/dashboard/dashboard.routing';
 import { DashboardComponent } from '@views/dashboard/dashboard.component';
 import { NegativeAccountInitialComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
 import { NegativeAccountInitialPureComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
+import { NegativeAccountCardComponent } from '@views/dashboard/snapshots/negative-account/negative-account-card/negative-account-card.component';
 import { CreditReportPureComponent } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/dashboard/reports/credit-report/credit-report/credit-report.component';
 import { TradelinesComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines/tradelines.component';
@@ -61,12 +62,16 @@ import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { NegativeAccountCardDetailComponent } from './snapshots/negative-account/negative-account-card-detail/negative-account-card-detail.component';
+import { NegativeAccountCardDetailTableComponent } from './snapshots/negative-account/negative-account-card-detail-table/negative-account-card-detail-table.component';
+import { NegativeAccountCardHeaderComponent } from './snapshots/negative-account/negative-account-card-header/negative-account-card-header.component';
 const components = [
   DashboardComponent,
   DashboardEnrolledComponent,
   DashboardEnrolledPureComponent,
   NegativeAccountInitialComponent,
   NegativeAccountInitialPureComponent,
+  NegativeAccountCardComponent,
   CreditReportPureComponent,
   CreditReportComponent,
   TradelinesComponent,
@@ -115,6 +120,9 @@ const components = [
   TradelineRemarksComponent,
   TradelineDetailsComponent,
   TradelineDisputeCardComponent,
+  NegativeAccountCardDetailComponent,
+  NegativeAccountCardDetailTableComponent,
+  NegativeAccountCardHeaderComponent,
 ];
 
 const pipes = [ParseRiskScorePipe];
