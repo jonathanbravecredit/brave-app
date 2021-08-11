@@ -11,6 +11,6 @@
   <brave-negative-account-card
     [data]="card"
     [acknowledged]="acknowledged"
-    (confirmed)="confirmed.emit(card)"
+    (confirmed)="confirmed.emit(card.tradeline)"
   ></brave-negative-account-card>
 </div>

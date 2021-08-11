@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer, IMergeReport } from '@shared/interfaces';
-import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import {
   IPersonalItemsDetailsConfig,
@@ -22,7 +22,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
   }
 
   mapping(borrower: IBorrower): IPersonalItemsDetailsConfig[] {
-    const transformed = TU.mapper.mapBorrowerToDetails(borrower);
+    const transformed = tu.mapper.mapBorrowerToDetails(borrower);
     let mapped: IPersonalItemsDetailsConfig[] = [];
     mapped = transformed.borrowersNamesRaw
       ? [
@@ -31,7 +31,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
             return this.mapSubitem(
               'name',
               name,
-              TU.parser.nameUnparser(name),
+              tu.parser.nameUnparser(name),
               name.dateUpdated || '',
               borrower,
               transformed,
@@ -46,7 +46,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
             return this.mapSubitem(
               'employer',
               employer,
-              TU.parser.employerUnparser(employer),
+              tu.parser.employerUnparser(employer),
               employer.dateUpdated || '',
               borrower,
               transformed,
@@ -61,7 +61,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
             return this.mapSubitem(
               'address',
               address,
-              TU.parser.addressUnparser(address?.CreditAddress),
+              tu.parser.addressUnparser(address?.CreditAddress),
               '',
               borrower,
               transformed,
@@ -75,7 +75,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
           this.mapSubitem(
             'address',
             transformed.currentAddressRaw,
-            TU.parser.addressUnparser(transformed.currentAddressRaw?.CreditAddress),
+            tu.parser.addressUnparser(transformed.currentAddressRaw?.CreditAddress),
             '',
             borrower,
             transformed,

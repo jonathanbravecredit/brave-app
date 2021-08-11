@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
-import { IMergeReport } from '@shared/interfaces/merge-report.interface';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { Observable } from 'rxjs';
+import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 
 @Component({
   selector: 'brave-negative-account-initial',
@@ -40,7 +42,8 @@ export class NegativeAccountInitialComponent {
    * Listens for the Dispute confirmation and refreshes the report
    * @param card
    */
-  async onConfirmed(card: INegativeAccountCardInputs): Promise<void> {
+  async onConfirmed(tradeline: ITradeLinePartition): Promise<void> {
+    const accountType = tu.query.lookupTradelineTypeDescription(tradeline);
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `negativeAccountInitial:onConfirmed=Missing id:${id}`;
     this.disputeService
@@ -49,9 +52,15 @@ export class NegativeAccountInitialComponent {
         const { success, error } = resp;
         console.log('preflightCheckReturn ===> ', resp);
         if (success) {
-          this.router.navigate(['/dashboard/disputes'], { relativeTo: this.route });
+          const filter: DisputeReconfirmFilter = accountType;
+          this.router.navigate(['../../dispute'], {
+            relativeTo: this.route,
+            queryParams: {
+              type: filter,
+            },
+          });
         } else {
-          this.router.navigate(['/dashboard/error'], {
+          this.router.navigate(['../../error'], {
             relativeTo: this.route,
             queryParams: {
               code: error?.Code || '197',
@@ -60,7 +69,7 @@ export class NegativeAccountInitialComponent {
         }
       })
       .catch((err) => {
-        this.router.navigate(['/dashboard/error'], {
+        this.router.navigate(['../../error'], {
           relativeTo: this.route,
           queryParams: {
             code: '197',

@@ -49,6 +49,10 @@ export class AppComponent implements OnInit {
       }
     });
 
+    Hub.listen('api', async (data) => {
+      console.log('api hub events ===> ', data);
+    });
+
     Auth.currentAuthenticatedUser()
       .then(async (user) => {
         console.log('authenticated user');
