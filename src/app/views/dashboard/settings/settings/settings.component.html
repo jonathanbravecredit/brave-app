@@ -1,7 +1,6 @@
-<div class="w-full p-2">
+<div class="w-full p-2" *ngIf="route.queryParams | async as params">
   <brave-settings-pure
-    [openTab]="openTab"
-    [view]="view"
+    [option]="params.option || init"
     [haveResetError]="haveResetError"
     [resetSuccess]="resetSuccess"
     [resetError]="resetError"
@@ -9,10 +8,8 @@
     [deactivateSuccess]="deactivateSuccess"
     [deactivateError]="deactivateError"
     (goToPageClick)="onGoToPageClick($event)"
-    (goBackToSettingsClick)="onGoBackToSettingsClick()"
     (changePasswordClick)="onChangePasswordClick($event)"
     (deactivateClick)="onDeactivateClick($event)"
     (logoutClick)="onLogoutClick()"
-    (backButtonClick)="onBackButtonClick()"
   ></brave-settings-pure>
 </div>

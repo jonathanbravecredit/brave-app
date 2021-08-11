@@ -65,6 +65,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NegativeAccountCardDetailComponent } from './snapshots/negative-account/negative-account-card-detail/negative-account-card-detail.component';
 import { NegativeAccountCardDetailTableComponent } from './snapshots/negative-account/negative-account-card-detail-table/negative-account-card-detail-table.component';
 import { NegativeAccountCardHeaderComponent } from './snapshots/negative-account/negative-account-card-header/negative-account-card-header.component';
+import { BaseExceptionPureView } from '@views/dashboard/exceptions/base-exception/base-exception-pure/base-exception-pure.view';
+import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
+
 const components = [
   DashboardComponent,
   DashboardEnrolledComponent,
@@ -123,6 +126,8 @@ const components = [
   NegativeAccountCardDetailComponent,
   NegativeAccountCardDetailTableComponent,
   NegativeAccountCardHeaderComponent,
+  BaseExceptionPureView,
+  BaseExceptionView,
 ];
 
 const pipes = [ParseRiskScorePipe];

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DEFAULT_EXCEPTION } from '@shared/components/exceptions/base-exception/constants';
 
 @Component({
   selector: 'brave-base-exception-pure-view',
@@ -6,9 +7,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class BaseExceptionPureView implements OnInit {
   @Output() actionButtonClicked: EventEmitter<string> = new EventEmitter();
-  @Input() code: string | undefined;
+  @Input() code: string = DEFAULT_EXCEPTION.code;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('pure view code ===> ', this.code);
+  }
 }

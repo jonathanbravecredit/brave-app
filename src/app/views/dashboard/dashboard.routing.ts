@@ -5,7 +5,6 @@ import { AuthGuard } from '@shared/guards/auth.guard';
 import { NegativeAccountInitialComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
 import { CreditReportComponent } from '@views/dashboard/reports/credit-report/credit-report/credit-report.component';
 import { TradelinesComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines/tradelines.component';
-import { BaseExceptionView } from '@views/exceptions/base-exception/base-exception/base-exception.view';
 import { DisputesOverviewInitialView } from '@views/dashboard/disputes/disputes-overview';
 import { DisputeFindingsView } from '@views/dashboard/disputes/disputes-findings/dispute-findings/dispute-findings.view';
 import { PublicitemsView } from '@views/dashboard/reports/credit-report/publicitems/publicitems/publicitems.view';
@@ -16,6 +15,7 @@ import { DisputesReconfirmView } from '@views/dashboard/disputes/disputes-reconf
 import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-personal/disputes-personal/disputes-personal.view';
 import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
+import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
 
 const DashboardRoutes: Routes = [
   {
@@ -35,6 +35,11 @@ const DashboardRoutes: Routes = [
       },
       {
         path: 'settings',
+        component: SettingsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'settings/options',
         component: SettingsComponent,
         canActivate: [AuthGuard],
       },

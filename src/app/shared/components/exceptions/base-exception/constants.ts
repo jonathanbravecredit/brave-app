@@ -1,5 +1,9 @@
 import { IBaseException, IBaseExceptionCategory } from './interfaces';
 
+export const DEFAULT_EXCEPTION = {
+  code: '331',
+};
+
 /**
  * Collection containing all the default visual exception's categories.
  */
