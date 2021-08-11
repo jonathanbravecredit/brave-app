@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { StateService } from '@shared/services/state/state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class SyncService implements OnDestroy {
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(private api: APIService, private store: Store, private router: Router) {}
+  constructor(private api: APIService, private store: Store, private router: Router, private statesvc: StateService) {}
 
   ngOnDestroy(): void {
     // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
@@ -35,41 +36,39 @@ export class SyncService implements OnDestroy {
   }
 
   /**
-   * Hall monitor. Checks the user and tells them where to go when they come back
-   *   to the app for the first and subsequent times.
-   *   Called when:
-   *    1. User signs in
-   *    2. User refreshes (and auth service reinitiates via Auth.currentCredentials())
-   * @returns
+   * const isUserBrandNew = await this.isUserBrandNew(id);
+   * if (isUserBrandNew === undefined) return;
+   * if (isUserBrandNew && signInEvent) await this.initAppData(creds);
+   * if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
+   * @param creds
    */
-  async hallmonitor(creds: ICredentials, signInEvent: boolean = false): Promise<void> {
-    // user refreshes...on any other non-auth guarded route
-    // user signsIn and is new user
-    console.log('calling hallmonitor');
-    const { identityId: id } = creds;
-    // TODO: BETTER USE OF ROUND TRIP CALLS
-    // Handle new users
-    // 1. No ID from Amplify to validate against...bail out
-    // 2. Brand New User and signin event..initialize DB and go to dashboard
-    // 3. Brand New User and NOT a signin event....initialize DB and go to dashboard
-    const isUserBrandNew = await this.isUserBrandNew(id);
-    if (isUserBrandNew === undefined) return;
-    if (isUserBrandNew && signInEvent) await this.initAppData(creds);
-    if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
-    // Returning user...app initiated already. Add listener
-    await this.subscribeToListeners(id);
-    // Handle returning users (implicit) !isUserBrandNew
-    // 1. No ID from Amplify to validate against...bail out
-    // 2. User has fully onboarded and a signin event...go to dashboard
-    // 3. User has fully onboarded and NOT a signin event...stay put
-    // 4. User has NOT fully onboarded and a signin event...go to last complete
-    // 5. User has NOT fully onboarded and NOT a signin event...go to last complete
-    const isUserOnboarded = await this.isUserOnboarded(id);
-    if (isUserOnboarded === undefined) return;
-    if (isUserOnboarded && signInEvent) await this.goToDashboard(id);
-    if (isUserOnboarded && !signInEvent) await this.stayPut(id);
-    if (!isUserOnboarded && signInEvent) await this.goToLastOnboarded(id);
-    if (!isUserOnboarded && !signInEvent) await this.goToLastOnboarded(id);
+  async initUser(creds: ICredentials): Promise<void> {
+    const id = creds.identityId;
+    const isNew = await this.isUserBrandNew(id);
+    console.log('isNew: ', isNew);
+    isNew ? await this.initAppData(creds) : await this.syncDBDownToState(id);
+  }
+
+  /**
+   * Handle returning users (implicit) !isUserBrandNew
+   * 1. No ID from Amplify to validate against...bail out
+   * 2. User has fully onboarded and a signin event...go to dashboard
+   * 3. User has fully onboarded and NOT a signin event...stay put
+   * 4. User has NOT fully onboarded and a signin event...go to last complete
+   * 5. User has NOT fully onboarded and NOT a signin event...go to last complete
+   * @param creds
+   * @param signInEvent
+   */
+  async onboardUser(creds: ICredentials, signInEvent: boolean): Promise<void> {
+    const id = creds.identityId;
+    const isOnboarded = await this.isUserOnboarded(id);
+    console.log('isOnboarded: ', isOnboarded);
+    if (isOnboarded) {
+      console.log('signInEvent: ', signInEvent);
+      signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
+    } else {
+      await this.goToLastOnboarded(id);
+    }
   }
 
   /**
@@ -77,13 +76,17 @@ export class SyncService implements OnDestroy {
    * @param id
    */
   async subscribeToListeners(id: string): Promise<void> {
+    console.log('subscribing to listeners');
     const { owner } = await queries.GetOwner(id);
+    console.log('owner ===> ', owner);
     if (owner) {
       this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
+        console.log('data has updated ===> ', data);
         if (data.value.errors) throw `API OnUpdateAppDataListener error`;
         const appData = data.value.data['onUpdateAppData'];
         if (!appData) return;
         const clean = this.cleanBackendData(appData);
+        console.log('dispatching ===> ', clean);
         this.store.dispatch(new AppDataActions.Edit(clean));
       });
     }
@@ -165,11 +168,14 @@ export class SyncService implements OnDestroy {
         },
       };
       const data = await this.api.CreateAppData(input);
-      await this.subscribeToListeners(creds.identityId); // if new
       const clean = this.cleanBackendData(data);
-      this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
-        this.data$.next(clean);
-        this.routeUser(-1);
+
+      await new Promise((resolve, reject) => {
+        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
+          this.data$.next(clean);
+          this.routeUser(-1);
+          return resolve(true);
+        });
       });
     } catch (err) {
       throw new Error(`syncService:InitAppData=${JSON.stringify(err)}`);

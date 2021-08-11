@@ -657,5 +657,5 @@ const mapReportResponse = (res: IEnrollServiceProductResponse | undefined): TURe
     serviceProductTypeId: res['ServiceProductTypeId'],
     serviceProductValue: res['ServiceProductValue'],
     status: res['Status'],
-  } as TUReportResponseInput;
+  } as tuReportResponseInput;
 };

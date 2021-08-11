@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountTypes } from '@shared/constants/account-types';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
 
@@ -18,6 +18,10 @@ export class TradelinesComponent {
    * Raw tradline partition directly from Merge Report
    */
   tradeline$: Observable<ITradeLinePartition>;
+  /**
+   * Raw report needed for Borrower
+   */
+  tuReport$: Observable<IMergeReport>;
   /**
    * Flag to indicate that dispute terms have been acknowledged
    */
@@ -40,6 +44,7 @@ export class TradelinesComponent {
     private creditReportServices: CreditreportService,
   ) {
     this.tradeline$ = this.creditReportServices.tuTradeline$.asObservable();
+    this.tuReport$ = this.creditReportServices.tuReport$.asObservable();
     this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     console.log('acknowledged', this.acknowledged);
   }
@@ -57,7 +62,7 @@ export class TradelinesComponent {
    * @returns {void}
    */
   async onDisputeClicked(tradeline: ITradeLinePartition): Promise<void> {
-    const accountType = TransunionUtil.lookupTradelineTypeDescription(tradeline);
+    const accountType = tu.query.lookupTradelineTypeDescription(tradeline);
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
     this.disputeService

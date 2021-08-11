@@ -1,32 +1,5 @@
-import { ITradeLinePartition } from '@shared/interfaces';
+import { IPayStatusHistory, ITradeLinePartition } from '@shared/interfaces';
 
-/**
- * Configuration for the tradeline details display.
- * Mapped directly from Merge Report
- * @property {string} tradeline
- * @property {string} accountNumber
- * @property {string} accountTypeSymbol
- * @property {string} accoutnTypeDescription
- * @property {string} creditorName
- * @property {string} originalCreditor
- * @property {string} creditType
- * @property {string} dateOpened
- * @property {string} dateClosed
- * @property {string} dateReported
- * @property {string} accountDesignator
- * @property {number | string} termMonths
- * @property {number | string} late30Count
- * @property {number | string} late60Count
- * @property {number | string} late90Count
- * @property {number | string} monthlyPayment
- * @property {number | string} creditLimit
- * @property {number | string} amountPastDue
- * @property {number | string} currentBalance
- * @property {number | string} highestBalance
- * @property {string} disputeFlag
- * @property {string} status
- * @property {string} openClosed
- */
 export interface ITradelineDetailsConfig {
   tradeline: ITradeLinePartition;
   accountNumber?: string;
@@ -44,6 +17,7 @@ export interface ITradelineDetailsConfig {
   late60Count?: number | string;
   late90Count?: number | string;
   monthlyPayment?: number | string;
+  payStatusHistory?: IPayStatusHistory;
   creditLimit?: number | string;
   amountPastDue?: number | string;
   currentBalance?: number | string;
@@ -52,4 +26,5 @@ export interface ITradelineDetailsConfig {
   customerStatement?: string;
   status?: string;
   openClosed?: string;
+  remarks?: string;
 }

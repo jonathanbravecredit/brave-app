@@ -8,7 +8,7 @@ import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/cred
 import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
-
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 @Pipe({
   name: 'mergereportToCreditreport',
 })
@@ -19,7 +19,7 @@ export class MergereportToCreditreportPipe implements PipeTransform {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!this.tradeLines) return [{} as ICreditReportTradelinesCardGroup];
     return this.tradeLines instanceof Array
-      ? this.sortByAccountType(this.tradeLines)
+      ? this.sortByCreditReportGroups(this.tradeLines)
           .sortByDateOpened(this.tradeLines)
           .mapTradeLineToAccount(this.tradeLines)
           .groupCreditReportAccounts(this.creditReportAccounts)
@@ -31,15 +31,8 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private sortByAccountType(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = [
-      ...tradeLines.sort((a, b) => {
-        const symA = a.accountTypeSymbol?.toLowerCase();
-        const symB = b.accountTypeSymbol?.toLowerCase();
-        if (!symA || !symB) return 0;
-        return CREDIT_REPORT_GROUPS[symA]['order'] - CREDIT_REPORT_GROUPS[symB]['order'];
-      }),
-    ];
+  private sortByCreditReportGroups(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
+    this.tradeLines = tu.sorter.sortByCreditReportGroups(tradeLines);
     return this;
   }
 
@@ -49,20 +42,7 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @returns
    */
   private sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = [
-      ...tradeLines.sort((a, b) => {
-        if (a.accountTypeSymbol !== b.accountTypeSymbol) {
-          return 0;
-        }
-        if (a.Tradeline?.dateOpened! < b.Tradeline?.dateOpened!) {
-          return 1;
-        }
-        if (a.Tradeline?.dateOpened! > b.Tradeline?.dateOpened!) {
-          return -1;
-        }
-        return 0;
-      }),
-    ];
+    this.tradeLines = tu.sorter.sortTradelineByDateOpened(tradeLines);
     return this;
   }
 

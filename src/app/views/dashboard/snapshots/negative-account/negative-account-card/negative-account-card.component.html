@@ -1,0 +1,45 @@
+<div>
+  <div>
+    <div class="border-t border-blueGray-300 py-2"></div>
+    <span>
+      <p class="text-sm font-semibold mb-4">{{ data.creditorName }}</p>
+    </span>
+    <div>
+      <brave-negative-account-card-header [data]="data"></brave-negative-account-card-header>
+    </div>
+    <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
+      <div class="flex justify-center mb-8 px-16" *ngIf="showDisputeButton">
+        <brave-filled-onlytext-button
+          class="w-100"
+          (click)="showModal = true"
+          [config]="{
+            buttonSize: 'sm',
+            backgroundColor: 'bg-indigo-800',
+            color: 'text-white',
+            activeColor: 'bg-indigo-800',
+            full: true
+          }"
+          >&nbsp;&nbsp;&nbsp;&nbsp;Dispute&nbsp;&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
+        >
+        <brave-onboarding-dispute
+          class="w-device h-device fixed"
+          [showModal]="showModal && !acknowledged"
+          (confirmation)="actionForDispute($event)"
+        ></brave-onboarding-dispute>
+      </div>
+      <span>
+        <p class="text-lg">Account Details</p>
+      </span>
+
+      <div>
+        <brave-negative-account-card-detail-table
+          [data]="data.accountDetail"
+        ></brave-negative-account-card-detail-table>
+      </div>
+    </div>
+
+    <div class="flex justify-center py-3">
+      <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
+    </div>
+  </div>
+</div>

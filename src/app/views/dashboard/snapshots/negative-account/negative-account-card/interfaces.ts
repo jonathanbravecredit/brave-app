@@ -10,13 +10,15 @@ export interface INegativeAccountCardInputs {
   originalCreditorValue?: string;
   disputeFlag?: string;
   disputeFlagValue?: string;
-  accountDetail: {
-    accountNumber?: string;
-    typeOfCollection?: string;
-    amountPastDue?: number | string;
-    dateOpened?: string;
-    dateLastPayment?: string;
-    remarks?: string;
-    consumerStatement?: string;
-  };
+  accountDetail: INegativeAccountCardDetails;
+}
+
+export interface INegativeAccountCardDetails {
+  accountNumber?: string;
+  typeOfCollection?: string;
+  amountPastDue?: number | string;
+  dateOpened?: string;
+  dateLastPayment?: string;
+  remarks?: string;
+  consumerStatement?: string;
 }

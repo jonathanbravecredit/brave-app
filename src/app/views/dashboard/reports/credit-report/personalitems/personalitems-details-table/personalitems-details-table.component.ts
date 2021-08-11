@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import {
   IPersonalItemsDetailsConfig,
   IPersonalItemsDetailsTable,
@@ -29,7 +30,7 @@ export class PersonalitemsDetailsTableComponent implements OnInit {
     telephone: 'Telephone',
     employers: 'Employer',
   };
-
+  bcMissing = TransunionUtil.bcMissing;
   constructor() {
     this.mapper = this.personalItemsMapping;
   }

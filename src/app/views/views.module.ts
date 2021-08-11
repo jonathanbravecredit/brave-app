@@ -13,6 +13,7 @@ import { OnboardingModule } from '@views/onboarding/onboarding.module';
 // COMPONENTS
 import { BaseExceptionPureView } from './exceptions/base-exception/base-exception-pure/base-exception-pure.view';
 import { BaseExceptionView } from './exceptions/base-exception/base-exception/base-exception.view';
+import { NgxMaskModule } from 'ngx-mask';
 
 const views = [BaseExceptionPureView, BaseExceptionView];
 
@@ -24,6 +25,7 @@ const views = [BaseExceptionPureView, BaseExceptionView];
     FormsModule,
     SharedComponentsModule,
     SharedPipesModule,
+    NgxMaskModule,
     AuthenticationModule,
     ComplianceModule,
     DashboardModule,

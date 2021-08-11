@@ -1,13 +1,17 @@
 <div style="min-width: 320px">
-  <ng-container *ngIf="tradeline$ | async as tradeline">
-    <brave-tradelines-pure
-      [tradeline]="tradeline"
-      [acknowledged]="acknowledged"
-      [config]="tradeline | tradelineToDetails"
-      [paymentHistory]="tradeline.Tradeline?.GrantedTrade?.PayStatusHistory"
-      [customerStatement]="(tradeline | tradelineToDetails).customerStatement || ''"
-      [remarks]="(tradeline | tradelineToDispute)?.accountDetail?.remarks || ''"
-      (disputeClick)="onDisputeClicked($event)"
-    ></brave-tradelines-pure>
+  <ng-container *ngIf="tuReport$ | async as report">
+    <ng-container *ngIf="tradeline$ | async as tradeline">
+      <ng-container *ngIf="tradeline | tradelineToDetails as config">
+        <brave-tradelines-pure
+          [tradeline]="tradeline"
+          [acknowledged]="acknowledged"
+          [config]="config"
+          [paymentHistory]="config.payStatusHistory"
+          [customerStatement]="(report | mergereportToConsumerStatements) || 'None'"
+          [remarks]="config.remarks || 'None'"
+          (disputeClick)="onDisputeClicked($event)"
+        ></brave-tradelines-pure>
+      </ng-container>
+    </ng-container>
   </ng-container>
 </div>
