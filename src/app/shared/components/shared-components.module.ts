@@ -132,6 +132,7 @@ import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-pe
 import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
 import { SimpleChangePasswordFormComponent } from './forms/simple-change-password-form/simple-change-password-form.component';
 import { SimpleDeactiveFormComponent } from './forms/simple-deactive-form/simple-deactive-form.component';
+import { FilledSpinningButtonComponent } from './buttons/filled-spinning-button/filled-spinning-button.component';
 
 const components = [
   BaseFormComponent,
@@ -273,7 +274,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, FilledSpinningButtonComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

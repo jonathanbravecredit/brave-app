@@ -2,7 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { DisputesPublicPureView } from '@views/disputes-public/disputes-public-pure/disputes-public-pure.view';
+import { DisputesPublicPureView } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 
 export default {
   title: 'app/views/disputes/public-records',
