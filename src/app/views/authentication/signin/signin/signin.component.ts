@@ -24,7 +24,6 @@ export class SigninComponent {
    * Method to sign user up
    */
   async signInWithCognito(user: NewUser): Promise<void> {
-    this.interstitial.startSpinner();
     if (!user) return;
     // add email validation here // const isValid = await this.accountMgmtService.isEmailValid(formData.username);
     let isValid = true;
@@ -39,10 +38,8 @@ export class SigninComponent {
           console.log('OTP setup');
         }
         this.interstitial.fetching$.next(false);
-        this.interstitial.stopSpinner();
       } catch (err) {
         this.interstitial.fetching$.next(false);
-        this.interstitial.stopSpinner();
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -58,7 +55,6 @@ export class SigninComponent {
       }
     } else {
       this.interstitial.fetching$.next(false);
-      this.interstitial.stopSpinner();
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,
