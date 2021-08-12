@@ -25,3 +25,7 @@ const Template: Story<FilledSpinningButtonComponent> = (args: any) => ({
     ...args,
   },
 });
+
+export const Default = Template.bind({});
+Default.args = {};
+Default.parameters;

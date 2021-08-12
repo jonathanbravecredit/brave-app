@@ -1,12 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-filled-spinning-button',
   templateUrl: './filled-spinning-button.component.html',
 })
-export class FilledSpinningButtonComponent implements OnInit {
+export class FilledSpinningButtonComponent {
   @Input() disabled: boolean = false;
-  constructor() {}
-
-  ngOnInit(): void {}
+  spinning: boolean = false;
+  constructor(private interstitial: InterstitialService) {
+    this.interstitial.fetching$.subscribe((fetching) => {
+      this.spinning = fetching;
+    });
+  }
 }

@@ -239,6 +239,7 @@ const components = [
   SimpleBannerComponent,
   SimpleDeactiveFormComponent,
   SimpleChangePasswordFormComponent,
+  FilledSpinningButtonComponent,
 ];
 
 // component specific pipes only
@@ -274,7 +275,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives, FilledSpinningButtonComponent],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}

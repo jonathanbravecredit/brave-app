@@ -38,8 +38,10 @@ export class SigninComponent {
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
           console.log('OTP setup');
         }
+        this.interstitial.fetching$.next(false);
         this.interstitial.stopSpinner();
       } catch (err) {
+        this.interstitial.fetching$.next(false);
         this.interstitial.stopSpinner();
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
@@ -55,6 +57,7 @@ export class SigninComponent {
         }
       }
     } else {
+      this.interstitial.fetching$.next(false);
       this.interstitial.stopSpinner();
       this.handleSigninError(
         'invalid',

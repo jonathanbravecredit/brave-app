@@ -1269,6 +1269,16 @@ select {
   margin-bottom: 2rem;
 }
 
+.-my-1 {
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
+}
+
+.-my-2 {
+  margin-top: -0.5rem;
+  margin-bottom: -0.5rem;
+}
+
 .mt-0 {
   margin-top: 0px;
 }
@@ -1445,10 +1455,6 @@ select {
   margin-left: -0.25rem;
 }
 
-.-ml-2 {
-  margin-left: -0.5rem;
-}
-
 .-ml-3 {
   margin-left: -0.75rem;
 }
@@ -1515,6 +1521,10 @@ select {
 
 .h-5 {
   height: 1.25rem;
+}
+
+.h-7 {
+  height: 1.75rem;
 }
 
 .h-8 {
@@ -2783,6 +2793,11 @@ select {
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgba(220, 38, 38, var(--tw-text-opacity));
+}
+
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgba(185, 28, 28, var(--tw-text-opacity));
 }
 
 .text-red-800 {
