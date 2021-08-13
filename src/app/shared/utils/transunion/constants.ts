@@ -26,3 +26,8 @@ export const ADDRESS_LINE_2: Record<string, any> = {
   stateCode: true,
   postalCode: true,
 };
+
+export enum CreditBureauFindingsType {
+  Trade = 'trade',
+  PublicRecord = 'publicRecord',
+}

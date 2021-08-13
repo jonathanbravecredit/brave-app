@@ -7,12 +7,9 @@
         <brave-dispute-findings-pure
           [reportCreatedAt]="findings.reportCreatedAt"
           [fileIdentificationNumber]="findings.fileIdentificationNumber"
-          [resultCode]="findings.resultCode"
-          [tradelineAccountConfig]="findings.tradeLinePartition | creditbureauToTradelinedetails"
-          [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails"
-          [personalInfoConfig]=""
-          [updatedValues]="findings.updatedValues"
-          [type]="findings.type"
+          [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"
+          [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails : findings.investigationResults"
+          [personalInfoConfig]="{ TrueLinkCreditReportType: findings.investigationResults || {} } | mergereportToPersonalitems"
         ></brave-dispute-findings-pure>
         <!-- </ng-container>
         </ng-container> -->

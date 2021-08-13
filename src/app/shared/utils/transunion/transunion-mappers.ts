@@ -4,16 +4,19 @@ import {
   IProduct,
   IPublicRecord,
   ISubjectRecord,
+  ISummarySection,
   ITrade,
 } from '@shared/interfaces/credit-bureau.interface';
 import { IDisputePublicItem, IInvestigationPublicItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
+import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
 import { ITradelineCreditBureauConfig } from '@views/dashboard/disputes/disputes-findings/dispute-findings-pure/interfaces';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export class TransunionMappers extends TransunionBase {
   static parser = TransunionParsers;
+  static query = TransunionQueries;
   constructor() {
     super();
   }
@@ -77,37 +80,29 @@ export class TransunionMappers extends TransunionBase {
     };
   }
 
-  static mapTradesToTradelineDetails(trades: ITrade[] | []): ITradelineCreditBureauConfig[] | [] {
+  static mapTradesToTradelineDetails(
+    summarySection: ISummarySection,
+    trades: ITrade[] | [],
+  ): ITradelineCreditBureauConfig[] | [] {
     if (!trades.length) return [];
     return trades.map((trade) => {
+      const summaryItem = this.query.lookupLineItemFromSummarySection(summarySection, trade);
       return {
         tradeline: {} as ITradeLinePartition,
+        summaryItemKey: summaryItem?.itemKey,
+        summaryItemType: summaryItem?.itemType,
+        summaryResult: summaryItem?.credit?.result,
+        tradeItemKey: trade.itemKey,
         accountNumber: trade.accountNumber,
         accountType: trade.portfolioTypeDescription,
         dateOpened: trade.dateOpened,
-        // dateClosed
-        // accountTypeSymbol: 'abc',
-        // creditorName: 'abc',
-        // originalCreditor: 'abc',
-        // creditType: 'abc',
-        // dateOpened: 'abc',
-        // dateClosed: 'abc',
-        // dateReported: 'abc',
-        // accountDesignator: 'abc',
-        // termMonths: 'abc',
-        // late30Count: 'abc',
-        // late60Count: 'abc',
-        // late90Count: 'abc',
-        // monthlyPayment: 'abc',
-        // payStatusHistory: 'abc',
-        // creditLimit: 'abc',
-        // amountPastDue: 'abc',
-        // currentBalance: 'abc',
-        // highestBalance: 'abc',
-        // disputeFlag: 'abc',
-        // status: 'abc',
-        // openClosed: 'abc',
-        // remarks: 'abc',
+        dateClosed: trade.dateClosed,
+        creditLimit: trade.creditLimit,
+        creditorName: trade?.subscriber?.name?.unparsed,
+        creditorStreet: trade?.subscriber?.address?.street?.unparsed,
+        creditorLocation: trade?.subscriber?.address?.location?.unparsed,
+        creditorNameArr: this.parser.tradeSubscriberUnparser(trade?.subscriber),
+        termMonths: trade.terms.description,
       } as ITradelineCreditBureauConfig;
     });
   }

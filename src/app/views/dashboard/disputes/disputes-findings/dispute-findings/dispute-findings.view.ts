@@ -4,6 +4,7 @@ import { DisputeStatus } from '@shared/constants/disputes.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 export class DisputeFindingsView implements OnInit {
   disputes$: Observable<(DisputeInput | null)[] | null | undefined>;
   dispute$: Observable<DisputeInput>;
+  tuQuery = TransunionQueries;
 
   constructor(
     public route: ActivatedRoute,

@@ -41,7 +41,7 @@ export interface IIdentifier {
 
 export interface IProduct {
   code: number;
-  subject: ISubject | ISubject[];
+  subject: ISubject;
 }
 
 export interface ISubject {
@@ -182,8 +182,8 @@ export interface ICustom {
 }
 
 export interface ICustomCredit {
-  trade: ITrade;
-  publicRecord: IPublicRecord;
+  trade: ITrade | ITrade[];
+  publicRecord: IPublicRecord | IPublicRecord[];
   histRemarkLegend: unknown;
 }
 

@@ -20,6 +20,7 @@ import { SsnMaskPipe } from './ssn-mask/ssn-mask.pipe';
 import { DisputesToDisputePipe } from './disputes-to-dispute/disputes-to-dispute.pipe';
 import { CreditbureauToTradelinedetailsPipe } from './creditbureau-to-tradelinedetails/creditbureau-to-tradelinedetails.pipe';
 import { CreditbureauToPublicitemdetailsPipe } from './creditbureau-to-publicitemdetails/creditbureau-to-publicitemdetails.pipe';
+import { InvestigationresultsToPersonalitemdetailsPipe } from './investigationresults-to-personalitemdetails/investigationresults-to-personalitemdetails.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -40,6 +41,7 @@ const pipes = [
   MergereportToConsumerStatementsPipe,
   CreditbureauToTradelinedetailsPipe,
   CreditbureauToPublicitemdetailsPipe,
+  InvestigationresultsToPersonalitemdetailsPipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
 ];
