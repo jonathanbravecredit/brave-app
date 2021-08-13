@@ -127,7 +127,7 @@ export class TransunionQueries extends TransunionBase {
 
     return findingsArr.filter((item) => {
       const key = item.itemKey;
-      return creditItems.findIndex((item) => item.itemKey == key) >= 0;
+      return creditItems.findIndex((item: ITrade | IPublicRecord) => item.itemKey == key) >= 0;
     });
   }
 
