@@ -210,7 +210,6 @@ export class CreditreportService implements OnDestroy {
     try {
       return await this.statesvc.updateAgenciesAsync(agencies);
     } catch (err) {
-      console.log('err', err);
       throw new Error(`creditreportService:updateReportAsync=${err}`);
     }
   }

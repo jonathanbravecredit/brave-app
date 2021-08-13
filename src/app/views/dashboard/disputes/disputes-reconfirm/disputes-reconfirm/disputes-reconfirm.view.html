@@ -1,37 +1,37 @@
-<div *ngIf="creditReport$ | async as report">
-  <div *ngIf="route.queryParams | async as params">
+<ng-container *ngIf="creditReport$ | async as report">
+  <ng-container *ngIf="route.queryParams | async as params">
     <!-- =========== personal items =========== -->
-    <div *ngIf="params.type === 'personal'">
-      <div *ngIf="report | mergereportToPersonalitems as personalItems">
+    <ng-container *ngIf="params.type === 'personal'">
+      <ng-container *ngIf="report | mergereportToPersonalitems as personalItems">
         <brave-disputes-reconfirm-pure
           [personalItems]="personalItems"
           (disputePersonalClick)="onDisputePersonalClick($event)"
         >
         </brave-disputes-reconfirm-pure>
-      </div>
-    </div>
+      </ng-container>
+    </ng-container>
 
     <!-- =========== public items =========== -->
-    <div *ngIf="params.type === 'public'">
-      <div *ngIf="report | mergereportToPublicitems as publicItems">
+    <ng-container *ngIf="params.type === 'public'">
+      <ng-container *ngIf="report | mergereportToPublicitems as publicItems">
         <brave-disputes-reconfirm-pure [publicItems]="publicItems" (disputePublicClick)="onDisputePublicClick($event)">
         </brave-disputes-reconfirm-pure>
-      </div>
-    </div>
+      </ng-container>
+    </ng-container>
 
     <!-- =========== tradeline items =========== -->
-    <div *ngIf="(params.type !== 'public' && params.type !== 'personal' && params.type !== 'all')">
-      <div *ngIf="report | mergereportToTradelines: params.type as tradelines">
+    <ng-container *ngIf="(params.type !== 'public' && params.type !== 'personal' && params.type !== 'all')">
+      <ng-container *ngIf="report | mergereportToTradelines: params.type as tradelines">
         <brave-disputes-reconfirm-pure
           [tradelines]="tradelines"
           (disputeTradelineClick)="onDisputeTradelineClick($event)"
         >
         </brave-disputes-reconfirm-pure>
-      </div>
-    </div>
+      </ng-container>
+    </ng-container>
 
     <!-- =========== tradeline items =========== -->
-    <div *ngIf="params.type === 'all'">
+    <ng-container *ngIf="params.type === 'all'">
       <brave-disputes-reconfirm-pure
         [publicItems]="report | mergereportToPublicitems"
         [personalItems]="report | mergereportToPersonalitems"
@@ -41,6 +41,6 @@
         (disputeTradelineClick)="onDisputeTradelineClick($event)"
       >
       </brave-disputes-reconfirm-pure>
-    </div>
-  </div>
-</div>
+    </ng-container>
+  </ng-container>
+</ng-container>

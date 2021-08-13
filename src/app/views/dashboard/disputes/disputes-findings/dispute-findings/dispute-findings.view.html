@@ -1,30 +1,34 @@
-<div *ngIf="dispute$ | async as dispute">
-  <div *ngIf="dispute | disputeToDisputeFinding as findings">
-    <div *ngIf="findings.status; else noFindings">
-      <div *ngIf="findings.status === 'closed'; else openDispute">
+<ng-container *ngIf="route.queryParams | async as params">
+  <ng-container *ngIf="(disputes$ | async) as disputes">
+    <ng-container *ngIf="disputes | disputesToDispute : params.id as dispute">
+      <ng-container *ngIf="dispute | disputeToDisputeFinding as findings">
+        <!-- <ng-container *ngIf="findings?.status; else noFindings">
+          <ng-container *ngIf="findings?.status === 'closed'; else openDispute"> -->
         <brave-dispute-findings-pure
           [reportCreatedAt]="findings.reportCreatedAt"
           [fileIdentificationNumber]="findings.fileIdentificationNumber"
           [resultCode]="findings.resultCode"
-          [tradelineAccountConfig]="findings.tradeLinePartition | tradelineToDetails"
-          [publicRecordConfig]=""
+          [tradelineAccountConfig]="findings.tradeLinePartition | creditbureauToTradelinedetails"
+          [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails"
           [personalInfoConfig]=""
           [updatedValues]="findings.updatedValues"
           [type]="findings.type"
         ></brave-dispute-findings-pure>
-      </div>
-    </div>
+        <!-- </ng-container>
+        </ng-container> -->
 
-    <ng-template #noFindings>
-      <p>No dispute...status message will go here</p>
-    </ng-template>
+        <!-- <ng-template #noFindings>
+          <p>No dispute...status message will go here</p>
+        </ng-template>
 
-    <ng-template #openDispute>
-      <p>Dispute still open view will go here</p>
-      <p>created at: {{findings.reportCreatedAt}}</p>
-      <p>FIN number: {{findings.fileIdentificationNumber }}</p>
-      <p>Est Compl Date: {{ findings.estimatedCompletionDate}}</p>
-      <p>Tot disp items: {{ findings.totalDisputedItems }}</p>
-    </ng-template>
-  </div>
-</div>
+        <ng-template #openDispute>
+          <p>Dispute still open view will go here</p>
+          <p>created at: {{findings.reportCreatedAt}}</p>
+          <p>FIN number: {{findings.fileIdentificationNumber }}</p>
+          <p>Est Compl Date: {{ findings.estimatedCompletionDate}}</p>
+          <p>Tot disp items: {{ findings.totalDisputedItems }}</p>
+        </ng-template> -->
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

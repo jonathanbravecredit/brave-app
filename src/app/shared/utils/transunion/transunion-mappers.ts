@@ -1,6 +1,15 @@
-import { IBorrower } from '@shared/interfaces';
+import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import {
+  ICreditBureau,
+  IProduct,
+  IPublicRecord,
+  ISubjectRecord,
+  ITrade,
+} from '@shared/interfaces/credit-bureau.interface';
+import { IDisputePublicItem, IInvestigationPublicItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
+import { ITradelineCreditBureauConfig } from '@views/dashboard/disputes/disputes-findings/dispute-findings-pure/interfaces';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export class TransunionMappers extends TransunionBase {
@@ -52,5 +61,54 @@ export class TransunionMappers extends TransunionBase {
       employersRaw: employers || [],
       telephonesRaw: phones || [],
     };
+  }
+
+  static mapPublicItemToDispute(item: IPublicPartition): IDisputePublicItem {
+    const publicRecord = item.PublicRecord instanceof Array ? item.PublicRecord[0] : item.PublicRecord; // schema says array but should not be;
+    return {
+      publicPartition: item,
+      docketNumber: publicRecord?.referenceNumber || this.bcMissing,
+      courtName: publicRecord?.courtName || this.bcMissing,
+      courtLocation: publicRecord?.LegalItem?.CourtLocation?.description || this.bcMissing,
+      dateFiled: publicRecord?.dateFiled || this.bcMissing,
+      dateUpdated: publicRecord?.dateUpdated || this.bcMissing,
+      publicItemType: publicRecord?.Type?.description || this.bcMissing,
+      expirationDate: publicRecord?.ExpirationDate || this.bcMissing,
+    };
+  }
+
+  static mapTradesToTradelineDetails(trades: ITrade[] | []): ITradelineCreditBureauConfig[] | [] {
+    if (!trades.length) return [];
+    return trades.map((trade) => {
+      return {
+        tradeline: {} as ITradeLinePartition,
+        accountNumber: trade.accountNumber,
+        accountType: trade.portfolioTypeDescription,
+        dateOpened: trade.dateOpened,
+        // dateClosed
+        // accountTypeSymbol: 'abc',
+        // creditorName: 'abc',
+        // originalCreditor: 'abc',
+        // creditType: 'abc',
+        // dateOpened: 'abc',
+        // dateClosed: 'abc',
+        // dateReported: 'abc',
+        // accountDesignator: 'abc',
+        // termMonths: 'abc',
+        // late30Count: 'abc',
+        // late60Count: 'abc',
+        // late90Count: 'abc',
+        // monthlyPayment: 'abc',
+        // payStatusHistory: 'abc',
+        // creditLimit: 'abc',
+        // amountPastDue: 'abc',
+        // currentBalance: 'abc',
+        // highestBalance: 'abc',
+        // disputeFlag: 'abc',
+        // status: 'abc',
+        // openClosed: 'abc',
+        // remarks: 'abc',
+      } as ITradelineCreditBureauConfig;
+    });
   }
 }

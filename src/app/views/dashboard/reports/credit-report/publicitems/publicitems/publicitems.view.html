@@ -1,8 +1,8 @@
-<div style="min-width: 20rem">
-  <div *ngIf="publicItem$ | async as publicItem">
-    <div *ngIf="publicItem | publicitemToDetails as config">
+<div style="min-width: 20rem" class="p-2">
+  <ng-container *ngIf="publicItem$ | async as publicItem">
+    <ng-container *ngIf="publicItem | publicitemToDetails as config">
       <brave-publicitems-pure [publicItem]="publicItem" [config]="config" (disputeClick)="onDisputeClick($event)">
       </brave-publicitems-pure>
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
 </div>

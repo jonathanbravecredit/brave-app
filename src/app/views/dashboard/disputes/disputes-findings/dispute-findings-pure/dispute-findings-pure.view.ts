@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
-import { IPersonalInfo, IPublicRecord } from './interfaces';
+import { IPersonalInfoCreditBureauConfig, IPublicRecordCreditBureauConfig } from './interfaces';
 
 @Component({
   selector: 'brave-dispute-findings-pure',
@@ -10,9 +11,10 @@ export class DisputeFindingsPureView implements OnInit {
   @Input() reportCreatedAt: string = '';
   @Input() fileIdentificationNumber: string = '';
   @Input() resultCode: string = '';
+  @Input() creditBureau: ICreditBureau | undefined;
   @Input() tradelineAccountConfig: ITradelineDetailsConfig | undefined;
-  @Input() publicRecordConfig: IPublicRecord | undefined;
-  @Input() personalInfoConfig: IPersonalInfo | undefined;
+  @Input() publicRecordConfig: IPublicRecordCreditBureauConfig | undefined;
+  @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
   @Input() updatedValues: string[] = [];
   @Input() type: 'tradeline' | 'public-record' | 'personal-info' = 'tradeline';
   constructor() {}

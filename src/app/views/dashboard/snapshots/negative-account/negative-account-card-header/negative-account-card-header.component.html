@@ -3,28 +3,28 @@
   <p class="text-xs font-semibold text-right">
     {{ data?.lastReported | date: 'shortDate' }}
   </p>
-  <div *ngIf="data?.accountTypeDescription">
+  <ng-container *ngIf="data?.accountTypeDescription">
     <p class="text-xs text-dk-gray">{{ data?.accountTypeDescription }}</p>
-  </div>
-  <div *ngIf="data?.accountTypeDescriptionValue">
+  </ng-container>
+  <ng-container *ngIf="data?.accountTypeDescriptionValue">
     <p class="text-xs text-dk-gray text-opacity-50 text-right">
       {{ data?.accountTypeDescriptionValue }}
     </p>
-  </div>
-  <div *ngIf="data?.disputeFlag">
+  </ng-container>
+  <ng-container *ngIf="data?.disputeFlag">
     <p class="text-xs text-dk-gray">{{ data?.disputeFlag }}</p>
-  </div>
-  <div *ngIf="data?.disputeFlagValue">
+  </ng-container>
+  <ng-container *ngIf="data?.disputeFlagValue">
     <p class="text-xs text-dk-gray text-opacity-50 text-right">
       {{ data?.disputeFlagValue }}
     </p>
-  </div>
-  <div *ngIf="data?.originalCreditor">
+  </ng-container>
+  <ng-container *ngIf="data?.originalCreditor">
     <p class="text-xs text-dk-gray">{{ data?.originalCreditor }}</p>
-  </div>
-  <div *ngIf="data?.originalCreditorValue">
+  </ng-container>
+  <ng-container *ngIf="data?.originalCreditorValue">
     <p class="text-xs text-dk-gray text-opacity-50 text-right">
       {{ data?.originalCreditorValue }}
     </p>
-  </div>
+  </ng-container>
 </div>

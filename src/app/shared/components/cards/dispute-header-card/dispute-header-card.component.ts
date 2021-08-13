@@ -41,7 +41,6 @@ export class DisputeHeaderCardComponent {
     if (e.isConfirmed) {
       this.showModal = false;
       this.confirmed.emit();
-      console.log('confirmed');
     }
   }
 }

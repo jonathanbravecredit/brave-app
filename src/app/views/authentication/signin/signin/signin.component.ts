@@ -31,11 +31,9 @@ export class SigninComponent {
       try {
         const cognitorUser = await this.auth.signIn(user.username, user.password);
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
-          console.log('MFA challenge');
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
           const { requiredAttributes } = cognitorUser?.challengeParam;
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
-          console.log('OTP setup');
         }
         this.interstitial.fetching$.next(false);
       } catch (err) {

@@ -34,4 +34,8 @@
   .brave-body2-semibold {
     @apply font-sans font-semibold text-sm text-coolGray-900;
   }
+
+  .brave-waiting-cursor {
+    cursor: pointer !important;
+  }
 }

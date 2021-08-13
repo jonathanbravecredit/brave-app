@@ -23,7 +23,7 @@
     <p>5550 Britton HWY</p>
     <p>Hilliard, OH 64578</p>
   </div>
-  <div *ngIf="type === 'tradeline'">
+  <ng-container *ngIf="type === 'tradeline'">
     <div class="flex items-center mt-4 mb-3">
       <span>Account Details</span>
     </div>
@@ -32,8 +32,8 @@
       [config]="tradelineAccountConfig"
     ></brave-tradeline-details-table>
     <brave-tradeline-payment-history></brave-tradeline-payment-history>
-  </div>
-  <div *ngIf="type === 'public-record'">
+  </ng-container>
+  <ng-container *ngIf="type === 'public-record'">
     <div class="flex items-center mt-4 mb-3">
       <span>Public Records Details</span>
     </div>
@@ -88,8 +88,8 @@
         [value]="publicRecordConfig!.estMonthToBeRemoved"
       ></brave-base-table-row>
     </div>
-  </div>
-  <div *ngIf="type === 'personal-info'">
+  </ng-container>
+  <ng-container *ngIf="type === 'personal-info'">
     <div class="flex items-center mt-4 mb-3">
       <span>Personal Information Details</span>
     </div>
@@ -129,7 +129,7 @@
         [value]="personalInfoConfig!.previousEmployer"
       ></brave-base-table-row>
     </div>
-  </div>
+  </ng-container>
 </brave-dispute-findings-results-details>
 <div class="h-1 border-t my-3 border-black opacity-50"></div>
 <brave-dispute-findings-closing-paragraph></brave-dispute-findings-closing-paragraph>

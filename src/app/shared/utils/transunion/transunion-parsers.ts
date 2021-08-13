@@ -7,6 +7,14 @@ import {
   IPhoneNumber,
   IRemark,
 } from '@shared/interfaces';
+import {
+  ICreditBureau,
+  IProduct,
+  IPublicRecord,
+  ISubjectRecord,
+  ISubscriber,
+  ITrade,
+} from '@shared/interfaces/credit-bureau.interface';
 import { NAME_MAP, ADDRESS_LINE_1, ADDRESS_LINE_2 } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
@@ -45,6 +53,40 @@ export class TransunionParsers extends TransunionBase {
   ): string | undefined {
     if (!creditStatement) return;
     return creditStatement instanceof Array ? creditStatement[0]?.statement : creditStatement?.statement;
+  }
+
+  /**
+   * Get the subject record from the credit bureau file returned in dispute results
+   * @param credit
+   * @returns
+   */
+  static parseCreditBureauToPublicRecord(credit: ICreditBureau): IPublicRecord | undefined {
+    const prodArr = credit?.productArray;
+    const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
+    const subjectRecord = !(product.subject instanceof Array)
+      ? product?.subject?.subjectRecord
+      : (product?.subject[0]?.subjectRecord as ISubjectRecord);
+    const publicRecord = subjectRecord?.custom?.credit?.publicRecord;
+    if (!publicRecord) return;
+    return publicRecord;
+  }
+
+  /**
+   * Get the trades from the credit bureau file returned in dispute results
+   * @param credit
+   * @returns
+   */
+  static parseCreditBureauToTrades(credit: ICreditBureau | undefined): ITrade[] | [] {
+    if (!credit) return [];
+    const prodArr = credit?.productArray;
+    const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
+    const subjectRecord = !(product.subject instanceof Array)
+      ? product?.subject?.subjectRecord
+      : (product?.subject[0]?.subjectRecord as ISubjectRecord);
+    const trades = !(subjectRecord?.custom?.credit?.trade instanceof Array)
+      ? [subjectRecord?.custom?.credit?.trade]
+      : subjectRecord?.custom?.credit?.trade;
+    return trades;
   }
 
   /**
@@ -114,5 +156,21 @@ export class TransunionParsers extends TransunionBase {
     const digits = `${area}${main}`.replace(/[^0-9]/g, '');
     if (!digits) return '';
     return digits;
+  }
+
+  /**
+   * Reconstitutes the investigation results public record, subscriber name, address, and phone
+   * - this is typically the court house name, location, and phone for bankruptcy
+   * @param phone
+   * @returns
+   */
+  static publicRecordSubscriberUnparser(subscriber: ISubscriber | undefined): [string, string, string] {
+    if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
+    const courtName = subscriber.name.unparsed || this.bcMissing;
+    const address = subscriber.address.street.unparsed
+      ? `${subscriber.address.street.unparsed} ${subscriber.address.location.unparsed}`
+      : subscriber.address.location.unparsed || this.bcMissing;
+    const phone = subscriber.phone.number.unparsed || this.bcMissing;
+    return [courtName, address, phone];
   }
 }

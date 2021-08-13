@@ -67,6 +67,8 @@ import { NegativeAccountCardDetailTableComponent } from './snapshots/negative-ac
 import { NegativeAccountCardHeaderComponent } from './snapshots/negative-account/negative-account-card-header/negative-account-card-header.component';
 import { BaseExceptionPureView } from '@views/dashboard/exceptions/base-exception/base-exception-pure/base-exception-pure.view';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
+import { DisputesSuccessView } from './disputes/disputes-success/disputes-success/disputes-success.view';
+import { DisputesSuccessPureView } from './disputes/disputes-success/disputes-success-pure/disputes-success-pure.view';
 
 const components = [
   DashboardComponent,
@@ -128,6 +130,8 @@ const components = [
   NegativeAccountCardHeaderComponent,
   BaseExceptionPureView,
   BaseExceptionView,
+  DisputesSuccessView,
+  DisputesSuccessPureView,
 ];
 
 const pipes = [ParseRiskScorePipe];

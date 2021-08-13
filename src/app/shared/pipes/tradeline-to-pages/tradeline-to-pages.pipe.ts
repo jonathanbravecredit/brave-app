@@ -14,14 +14,12 @@ export class TradelineToPagesPipe implements PipeTransform {
         this.mapToPaymentHistory({}),
         this.mapToRemarks({}),
       ];
-    console.log('tradeline', tradeline);
     const data = [
       this.mapToDetailsPageOne(tradeline),
       this.mapToDetailsPageTwo(tradeline),
       this.mapToPaymentHistory(tradeline),
       this.mapToRemarks(tradeline),
     ];
-    console.log('data', data);
     return data;
   }
 
