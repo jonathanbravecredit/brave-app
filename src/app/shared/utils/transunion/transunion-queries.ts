@@ -10,10 +10,11 @@ import {
   ISummarySection,
   ITrade,
 } from '@shared/interfaces/credit-bureau.interface';
-import { CreditBureauFindingsType } from '@shared/utils/transunion/constants';
+import { CreditBureauFindingsType, INVESTIGATION_RESULTS_CODE_MAPPING } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionQueries extends TransunionBase {
+  static resultCodeMap = INVESTIGATION_RESULTS_CODE_MAPPING;
   constructor() {
     super();
   }
@@ -237,5 +238,31 @@ export class TransunionQueries extends TransunionBase {
       console.log('memberCode ===> ', memberCode);
       return code === memberCode;
     });
+  }
+
+  static findResultCode(result: string): string {
+    // check one...exact match
+    const exactMatch = this.resultCodeMap.find((item) => {
+      return item.title.toLowerCase() == result.toLowerCase();
+    });
+    if (exactMatch) return exactMatch.type;
+
+    //check two..squishy match
+    const parsedResult = result.split(' ');
+    let match: string = '';
+    let matchCount: number = 0;
+    this.resultCodeMap.forEach((item) => {
+      const parsedTitle = item.title.split(' ');
+      let count: number = 0;
+      parsedResult.forEach((word) => {
+        const found = parsedTitle.find((t) => t.toLowerCase() == word.toLowerCase());
+        if (found) count++;
+      });
+      if (count > matchCount) {
+        match = item.type;
+        matchCount = count;
+      }
+    });
+    return match;
   }
 }

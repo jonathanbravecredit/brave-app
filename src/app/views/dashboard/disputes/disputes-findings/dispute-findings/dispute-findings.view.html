@@ -2,29 +2,13 @@
   <ng-container *ngIf="(disputes$ | async) as disputes">
     <ng-container *ngIf="disputes | disputesToDispute : params.id as dispute">
       <ng-container *ngIf="dispute | disputeToDisputeFinding as findings">
-        <!-- <ng-container *ngIf="findings?.status; else noFindings">
-          <ng-container *ngIf="findings?.status === 'closed'; else openDispute"> -->
         <brave-dispute-findings-pure
           [reportCreatedAt]="findings.reportCreatedAt"
           [fileIdentificationNumber]="findings.fileIdentificationNumber"
           [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"
           [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails : findings.investigationResults"
-          [personalInfoConfig]="{ TrueLinkCreditReportType: findings.investigationResults || {} } | mergereportToPersonalitems"
+          [personalInfoConfig]="(findings.investigationResults?.Borrower || {}) | personalitemsToDetails"
         ></brave-dispute-findings-pure>
-        <!-- </ng-container>
-        </ng-container> -->
-
-        <!-- <ng-template #noFindings>
-          <p>No dispute...status message will go here</p>
-        </ng-template>
-
-        <ng-template #openDispute>
-          <p>Dispute still open view will go here</p>
-          <p>created at: {{findings.reportCreatedAt}}</p>
-          <p>FIN number: {{findings.fileIdentificationNumber }}</p>
-          <p>Est Compl Date: {{ findings.estimatedCompletionDate}}</p>
-          <p>Tot disp items: {{ findings.totalDisputedItems }}</p>
-        </ng-template> -->
       </ng-container>
     </ng-container>
   </ng-container>

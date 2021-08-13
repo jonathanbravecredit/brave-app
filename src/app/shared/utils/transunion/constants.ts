@@ -28,6 +28,42 @@ export const ADDRESS_LINE_2: Record<string, any> = {
 };
 
 export enum CreditBureauFindingsType {
-  Trade = 'trade',
-  PublicRecord = 'publicRecord',
+  Trade = 'tradeline',
+  PublicRecord = 'publicrecord',
+  PersonalInfo = 'personalinfo',
 }
+
+export const INVESTIGATION_RESULTS_CODE_MAPPING: { type: string; title: string }[] = [
+  {
+    type: 'deleted',
+    title: 'DELETED',
+  },
+  {
+    type: 'dispute_info_updated',
+    title: 'DISPUTED INFORMATION UPDATED',
+  },
+  {
+    type: 'info_updated',
+    title: 'INFORMATION UPDATED',
+  },
+  {
+    type: 'dispute_info_other_updated',
+    title: 'DISPUTED INFORMATION UPDATED AND OTHER INFORMATION UPDATED',
+  },
+  {
+    type: 'reinserted',
+    title: 'REINSERTED',
+  },
+  {
+    type: 'verified_updated',
+    title: 'VERIFIED AND UPDATED',
+  },
+  {
+    type: 'verified_accurate',
+    title: 'VERIFIED AS ACCURATE',
+  },
+  {
+    type: 'verified_accurate_updated',
+    title: 'VERIFIED AS ACCURATE AND UPDATED',
+  },
+];

@@ -1,12 +1,13 @@
 import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { IPaymentHistory } from '@shared/interfaces/credit-bureau.interface';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export interface ITradelineCreditBureauConfig {
-  updatedTradeline: ITradeLinePartition;
+  tradeline: ITradeLinePartition;
   summaryItemKey?: string;
   summaryItemType?: number | string;
   summaryResult?: string;
+  summaryResultCode?: string;
   itemKey?: string;
   accountType?: string;
   dateOpened?: string;
@@ -20,10 +21,11 @@ export interface ITradelineCreditBureauConfig {
   name?: [string, string, string];
 }
 export interface IPublicRecordCreditBureauConfig {
-  updatedPublicRecord: IPublicPartition;
+  publicPartition: IPublicPartition;
   summaryItemKey?: string;
   summaryItemType?: number | string;
   summaryResult?: string;
+  summaryResultCode?: string;
   itemKey?: string;
   courtType: string;
   docketNumber: string;
@@ -37,7 +39,7 @@ export interface IPublicRecordCreditBureauConfig {
   amount: string;
 }
 
-export interface IPersonalInfoCreditBureauConfig extends IPersonalItemsDetailsConfig {}
+export interface IPersonalInfoCreditBureauConfig extends IPersonalItemsDetailsTable {}
 // ssn: string;
 // name: string;
 // currentAddress: string;

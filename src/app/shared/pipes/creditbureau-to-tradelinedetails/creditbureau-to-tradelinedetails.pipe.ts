@@ -29,7 +29,9 @@ export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
       return {
         updatedTradeline: tu.query.lookupUpdatedTradelineFromCreditBureauKey(finding.itemKey, tradelineUpdates),
         summaryItemKey: finding.itemKey,
-        summaryItemType: finding.itemType,
+        summaryItemType: CreditBureauFindingsType.Trade,
+        summaryResult: finding.credit.result,
+        summaryResultCode: tu.query.findResultCode(finding.credit.result),
         itemKey: result?.itemKey,
         accountType: result?.portfolioTypeDescription,
         dateOpened: result?.dateOpened,

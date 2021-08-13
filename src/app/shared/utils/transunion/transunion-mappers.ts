@@ -1,17 +1,8 @@
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
-import {
-  ICreditBureau,
-  IProduct,
-  IPublicRecord,
-  ISubjectRecord,
-  ISummarySection,
-  ITrade,
-} from '@shared/interfaces/credit-bureau.interface';
-import { IDisputePublicItem, IInvestigationPublicItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
 import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
-import { ITradelineCreditBureauConfig } from '@views/dashboard/disputes/disputes-findings/dispute-findings-pure/interfaces';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export class TransunionMappers extends TransunionBase {
@@ -78,32 +69,5 @@ export class TransunionMappers extends TransunionBase {
       publicItemType: publicRecord?.Type?.description || this.bcMissing,
       expirationDate: publicRecord?.ExpirationDate || this.bcMissing,
     };
-  }
-
-  static mapTradesToTradelineDetails(
-    summarySection: ISummarySection,
-    trades: ITrade[] | [],
-  ): ITradelineCreditBureauConfig[] | [] {
-    if (!trades.length) return [];
-    return trades.map((trade) => {
-      const summaryItem = this.query.lookupLineItemFromSummarySection(summarySection, trade);
-      return {
-        tradeline: {} as ITradeLinePartition,
-        summaryItemKey: summaryItem?.itemKey,
-        summaryItemType: summaryItem?.itemType,
-        summaryResult: summaryItem?.credit?.result,
-        tradeItemKey: trade.itemKey,
-        accountNumber: trade.accountNumber,
-        accountType: trade.portfolioTypeDescription,
-        dateOpened: trade.dateOpened,
-        dateClosed: trade.dateClosed,
-        creditLimit: trade.creditLimit,
-        creditorName: trade?.subscriber?.name?.unparsed,
-        creditorStreet: trade?.subscriber?.address?.street?.unparsed,
-        creditorLocation: trade?.subscriber?.address?.location?.unparsed,
-        creditorNameArr: this.parser.tradeSubscriberUnparser(trade?.subscriber),
-        termMonths: trade.terms.description,
-      } as ITradelineCreditBureauConfig;
-    });
   }
 }
