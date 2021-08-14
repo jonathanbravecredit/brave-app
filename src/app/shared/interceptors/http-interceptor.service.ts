@@ -20,13 +20,11 @@ export class HttpInterceptorService implements HttpInterceptor {
       tap(
         (evt) => {
           if (evt instanceof HttpResponse) {
-            console.log('intercepting httpresponse 1');
             this.interstitial.closeInterstitial();
           }
         },
         (error) => {
           if (error instanceof HttpErrorResponse) {
-            console.log('intercepting error');
             this.interstitial.closeInterstitial();
           }
         },

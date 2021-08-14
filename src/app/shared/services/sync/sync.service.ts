@@ -23,7 +23,9 @@ import { StateService } from '@shared/services/state/state.service';
 })
 export class SyncService implements OnDestroy {
   data$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
+  fetching$ = new BehaviorSubject<boolean>(false);
   apiUpdateListener$: ZenObservable.Subscription | undefined;
+
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 

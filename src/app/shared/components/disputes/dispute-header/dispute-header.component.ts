@@ -15,7 +15,7 @@ import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-repor
   selector: 'brave-dispute-header',
   templateUrl: './dispute-header.component.html',
 })
-export class DisputeHeaderComponent implements OnInit {
+export class DisputeHeaderComponent {
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
   @ViewChild(OnboardingDisputeComponent)
@@ -44,15 +44,11 @@ export class DisputeHeaderComponent implements OnInit {
   showModal = false;
 
   constructor() {}
-  ngOnInit(): void {
-    console.log('personal dispute in header ===> ', this.personaldispute);
-  }
 
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
       this.showModal = false;
       this.confirmed.emit();
-      console.log('confirmed');
     }
   }
 }

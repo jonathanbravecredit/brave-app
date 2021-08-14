@@ -1,13 +1,12 @@
 <div clas="flex justify-center">
-  <div class="h-10 w-10 rounded-full bg-blueGray-300 m-auto"></div>
+  <!-- logo -->
+  <div class="flex justify-center">
+    <img class="w-64 h-64" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_confidential_letter_w6ux.svg" />
+  </div>
   <h1 class="text-lg font-bold text-center mt-4">Your dispute is on its way!</h1>
   <p class="text-sm font-semibold mt-4">Here’s some important information about the next steps:</p>
   <ul class="list-disc">
     <li class="text-sm mt-4">It can take up to 30 days or more to get the investigation results</li>
-    <li class="text-sm mt-4">
-      You can check the current status of the dispute by clicking on the ‘my disputes’ icon at the bottom of all
-      screens, then click on ‘Current disputes’
-    </li>
     <li class="text-sm mt-4">
       You can check the current status of the dispute by clicking on the ‘my disputes’ icon at the bottom of all
       screens, then click on ‘Current disputes’
@@ -18,6 +17,6 @@
     </li>
   </ul>
   <div class="mt-4 flex justify-center">
-    <brave-filled-onlytext-button>Go back to my dashboard</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button (click)="goBackClick.emit()">Go back to my dashboard</brave-filled-onlytext-button>
   </div>
 </div>

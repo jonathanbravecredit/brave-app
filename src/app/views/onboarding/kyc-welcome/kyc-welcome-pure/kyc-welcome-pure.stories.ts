@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { KycWelcomePureComponent } from '@views/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
+import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
 
 export default {
   title: 'app/views/onboarding/kyc-welcome',
@@ -13,9 +13,7 @@ export default {
       declarations: [],
       imports: [SharedComponentsModule, FormsModule, ReactiveFormsModule],
     }),
-    componentWrapperDecorator(
-      (story) => `<div class="container mx-auto max-w-xs h-full">${story}</div>`
-    ),
+    componentWrapperDecorator((story) => `<div class="container mx-auto max-w-xs h-full">${story}</div>`),
   ],
 } as Meta;
 

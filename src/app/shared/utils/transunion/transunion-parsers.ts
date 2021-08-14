@@ -7,6 +7,14 @@ import {
   IPhoneNumber,
   IRemark,
 } from '@shared/interfaces';
+import {
+  ICreditBureau,
+  IProduct,
+  IPublicRecord,
+  ISubjectRecord,
+  ISubscriber,
+  ITrade,
+} from '@shared/interfaces/credit-bureau.interface';
 import { NAME_MAP, ADDRESS_LINE_1, ADDRESS_LINE_2 } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
@@ -114,5 +122,21 @@ export class TransunionParsers extends TransunionBase {
     const digits = `${area}${main}`.replace(/[^0-9]/g, '');
     if (!digits) return '';
     return digits;
+  }
+
+  /**
+   * Reconstitutes the investigation results public record, subscriber name, address, and phone
+   * - this is typically the court house name, location, and phone for bankruptcy
+   * @param subscriber
+   * @returns
+   */
+  static subscriberUnparser(subscriber: ISubscriber | undefined): [string, string, string] {
+    if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
+    const name = subscriber.name.unparsed || this.bcMissing;
+    const address = subscriber.address.street.unparsed
+      ? `${subscriber.address.street.unparsed} ${subscriber.address.location.unparsed}`
+      : subscriber.address.location.unparsed || this.bcMissing;
+    const phone = subscriber.phone.number.unparsed || this.bcMissing;
+    return [name, address, phone];
   }
 }

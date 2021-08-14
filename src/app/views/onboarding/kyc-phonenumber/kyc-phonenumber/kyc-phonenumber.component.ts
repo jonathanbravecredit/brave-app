@@ -75,7 +75,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
               throw 'Authentication request failed';
             })();
       } catch (err) {
-        console.log('error ===> ', err, this);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }

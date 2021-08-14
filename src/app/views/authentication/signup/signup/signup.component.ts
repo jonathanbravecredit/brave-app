@@ -29,21 +29,20 @@ export class SignupComponent implements OnInit {
    * @returns Promise
    */
   async signUpWithCognito(user: NewUser): Promise<void> {
-    this.interstitial.startSpinner();
     if (!user) return;
     // add email validation here // const isValid = await this.accountMgmtService.isEmailValid(formData.username);
     let isValid = true;
     if (isValid) {
       try {
         await this.auth.signUp(user);
-        this.interstitial.stopSpinner();
+        this.interstitial.fetching$.next(false);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err) {
-        this.interstitial.stopSpinner();
+        this.interstitial.fetching$.next(false);
         this.handleSignupError('invalid', err.message);
       }
     } else {
-      this.interstitial.stopSpinner();
+      this.interstitial.fetching$.next(false);
       this.handleSignupError('invalid', 'Invalid sign up credentials');
     }
   }

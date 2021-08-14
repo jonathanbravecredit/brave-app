@@ -17,11 +17,11 @@ export interface ICreditBureau {
   productArray: IProductArray | IProductArray[];
 }
 
-interface ITransactionControl {
+export interface ITransactionControl {
   tracking: ITracking;
 }
 
-interface ITracking {
+export interface ITracking {
   transactionTimeStamp: string;
   language: string;
   identifier: IIdentifier;
@@ -29,65 +29,65 @@ interface ITracking {
   responseMessage: string;
 }
 
-interface IProductArray {
+export interface IProductArray {
   product: IProduct;
 }
 
-interface IIdentifier {
+export interface IIdentifier {
   fin: string;
   activityNumber: number | string;
   partyId: number | string;
 }
 
-interface IProduct {
+export interface IProduct {
   code: number;
-  subject: ISubject | ISubject[];
+  subject: ISubject;
 }
 
-interface ISubject {
+export interface ISubject {
   fileAccessCode: string;
   enclosures: IEnclosures;
   subjectRecord: ISubjectRecord;
   fullDisclFlag: string;
 }
 
-interface IEnclosures {
+export interface IEnclosures {
   codes: ICodes | ICodes[];
   addresseeContact: IContact;
   returnMailContact: IContact;
 }
 
-interface ICodes {
+export interface ICodes {
   code: string | number;
   type: string | number;
   versionNo: string | number;
 }
 
-interface IContact {
+export interface IContact {
   name: ITUUnparsed;
   address: IAddress;
 }
 
-interface IAddress {
+export interface IAddress {
   street: IStreet;
   location: ILocation;
   dateReported?: string;
   order?: string | number;
 }
 
-interface IStreet extends ITUUnparsed {
+export interface IStreet extends ITUUnparsed {
   number: number | string;
   name: string;
 }
 
-interface ILocation extends ITUUnparsed {
+export interface ILocation extends ITUUnparsed {
   city?: string;
   state?: string;
   zipCode?: number | string;
   zipExt?: number | string;
 }
 
-interface ISubjectRecord {
+export interface ISubjectRecord {
   fileSummary: IFileSummary;
   indicative: IIndicative;
   custom: ICustom;
@@ -99,12 +99,12 @@ interface ISubjectRecord {
   dynamicText: IDynamicText;
 }
 
-interface IFileSummary {
+export interface IFileSummary {
   inFileSinceDate: string;
   disclosureCoverInfo: IDisclosureCoverInfo;
 }
 
-interface IDisclosureCoverInfo {
+export interface IDisclosureCoverInfo {
   coverCode: number | string;
   versionNo: number | string;
   disputeURL: string;
@@ -112,85 +112,89 @@ interface IDisclosureCoverInfo {
   resellterOperatorId: string;
 }
 
-interface ISummarySection {
+export interface ISummarySection {
   lineItem: ILineItem | ILineItem[];
 }
 
-interface ILineItem {
+export interface ILineItem {
   itemKey: string;
   itemType: number | string;
   credit: ICredit;
 }
 
-interface ICredit {
+export interface ICredit {
   item: IItem;
   description: IDescription;
   result: string;
 }
 
-interface IItem {
+export interface IItem {
   itemName?: string;
   subscriber: ISubscriber;
 }
 
-interface ISubscriber {
+export interface ISubscriber {
   industryCode?: string;
   memberCode?: string;
-  name: IName;
+  name: ITUUnparsed;
   address: IAddress;
   phone: IPhone;
 }
 
-interface IPhone extends ITUUnparsed {
+export interface IPhone extends ITUUnparsed {
+  number: IPhoneNumber;
+}
+
+export interface IPhoneNumber extends ITUUnparsed {
   areaCode: number | string;
   exchange: number | string;
   suffix: number | string;
 }
 
-interface IDescription {
+export interface IDescription {
   descriptionText: string;
 }
 
-interface IIndicative {
+export interface IIndicative {
   name: IName;
   address: IAddress;
   socialSecurity: ISocialSecurity;
 }
 
-interface IName {
+export interface IName {
   person: IPerson;
 }
 
-interface IPerson extends ITUUnparsed {
+export interface IPerson extends ITUUnparsed {
   first?: string;
   middle?: string;
   last?: string;
   order?: number | string;
 }
 
-interface ISocialSecurity {
+export interface ISocialSecurity {
   number: string;
   order: number | string;
 }
 
-interface ICustom {
+export interface ICustom {
   credit: ICustomCredit;
 }
 
-interface ICustomCredit {
-  trade: ITrade;
-  publicRecord: IPublicRecord;
+export interface ICustomCredit {
+  trade: ITrade | ITrade[];
+  publicRecord: IPublicRecord | IPublicRecord[];
   histRemarkLegend: unknown;
 }
 
-interface IRecordBase {
+export interface IRecordBase {
   itemKey: string;
   type?: string;
   subscriber: ISubscriber;
   dateEffective: string;
   dateEffectiveLabel: string;
 }
-interface ITrade extends IRecordBase {
+export interface ITrade extends IRecordBase {
   portfolioType: string;
   accountNumber: string;
   dateOpened: string;
@@ -221,45 +225,45 @@ interface ITrade extends IRecordBase {
   isCollection: boolean;
 }
 
-interface ICBRemark {
+export interface ICBRemark {
   code?: string;
   type?: string;
   description?: string;
 }
 
-interface ITerms {
+export interface ITerms {
   description: string;
 }
 
-interface IAccount extends ICBRemark {}
+export interface IAccount extends ICBRemark {}
 
-interface IPaymentHistory {
+export interface IPaymentHistory {
   paymentPattern: IPaymentPattern;
   historicalCounters: IHistoricalCounters;
 }
 
-interface IPaymentPattern {
+export interface IPaymentPattern {
   startDate: string;
   text: string;
 }
 
-interface IHistoricalCounters {
+export interface IHistoricalCounters {
   monthsReviewedCount: number | string;
   late30DaysTotal: number | string;
   late60DaysTotal: number | string;
   late90DaysTotal: number | string;
 }
 
-interface IMostRecentPayments {
+export interface IMostRecentPayments {
   date?: string;
   description: string;
 }
 
-interface IAdditionalTradeAccount {
+export interface IAdditionalTradeAccount {
   original: string;
 }
 
-interface IPublicRecord extends IRecordBase {
+export interface IPublicRecord extends IRecordBase {
   docketNumber: string;
   attorney: string;
   plaintiff: unknown;
@@ -274,16 +278,16 @@ interface IPublicRecord extends IRecordBase {
   order: number | string;
 }
 
-interface IAddOnProduct {
+export interface IAddOnProduct {
   scoreModel: IScoreModel;
   militaryLendingActSearch: IMilitaryLendingActSearch;
 }
 
-interface IScoreModel {
+export interface IScoreModel {
   score: IScore;
 }
 
-interface IScore {
+export interface IScore {
   name: IName;
   productCode: string;
   score: number | string;
@@ -295,11 +299,11 @@ interface IScore {
   summaryDescription: string;
 }
 
-interface IMilitaryLendingActSearch {
+export interface IMilitaryLendingActSearch {
   searchStatus: string;
 }
 
-interface IClosingInfo {
+export interface IClosingInfo {
   mail: ITUUnparsed;
   address: IAddress;
   phone: IPhone;
@@ -307,7 +311,7 @@ interface IClosingInfo {
   disputeURL: string;
 }
 
-interface IDynamicText {
+export interface IDynamicText {
   personalInfoDetail: ITUText;
   publicRecordDetail: ITUText | ITUText[];
   adverseAcctDetail: ITUText | ITUText[];

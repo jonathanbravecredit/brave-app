@@ -4,7 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SignupThankyouPureComponent } from '@views/signup-thankyou/signup-thankyou-pure/signup-thankyou-pure.component';
+import { SignupThankyouPureComponent } from '@views/authentication/signup-thankyou/signup-thankyou-pure/signup-thankyou-pure.component';
 
 export default {
   title: 'app/views/onboarding/signup-thankyou',

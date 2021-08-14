@@ -174,4 +174,17 @@ export class DisputeService implements OnDestroy {
       throw `disputeService:sendStartDispute=${err}`;
     }
   }
+
+  /**
+   * Query the TU service for any investigation results
+   * @returns
+   */
+  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+    const data: AppDataStateModel = this.store.snapshot()?.appData;
+    try {
+      return await this.transunion.getInvestigationResults(data.id, disputeId);
+    } catch (err) {
+      throw `disputeService:getInvestigationResults=${err}`;
+    }
+  }
 }

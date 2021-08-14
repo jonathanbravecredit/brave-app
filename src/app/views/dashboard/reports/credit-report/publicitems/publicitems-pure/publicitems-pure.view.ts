@@ -41,7 +41,6 @@ export class PublicitemsPureView {
     if (e.isConfirmed) {
       this.showModal = false;
       this.disputeClick.emit();
-      console.log('confirmed');
     }
   }
 }

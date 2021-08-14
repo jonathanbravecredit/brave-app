@@ -126,6 +126,7 @@ type Dispute {
   disputeLetterContent: String
   openDisputes: DisputeSummary
   closedDisputes: DisputeSummary
+  pvDisputedItems: PVDisputedItems
   agencyName: String
   openedOn: String
   closedOn: String
@@ -146,4 +147,9 @@ type DisputeSummary {
   totalDisputedItems: String
   totalOpenDisputedItems: String
   totalPVDisputedItemCount: String
+}
+
+type PVDisputedItems {
+  pvTradelines: AWSJSON
+  pvPublicRecords: AWSJSON
 }

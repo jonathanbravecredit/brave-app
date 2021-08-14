@@ -50,7 +50,6 @@ export class NegativeAccountInitialComponent {
       .sendDisputePreflightCheck(id)
       .then((resp) => {
         const { success, error } = resp;
-        console.log('preflightCheckReturn ===> ', resp);
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
           this.router.navigate(['../../dispute'], {
