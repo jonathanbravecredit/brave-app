@@ -35,9 +35,9 @@ export class DisputesOverviewInitialView implements OnInit {
   async onViewDetailsClick(entity: TDisputeEntity): Promise<void> {
     if (!entity.dispute) throw `dispute missing`;
     if (!entity.dispute) return;
-    this.interstitial.openInterstitial();
     const dispute: DisputeInput = entity.dispute;
     if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && !dispute.disputeInvestigationResults) {
+      this.interstitial.openInterstitial();
       this.interstitial.changeMessage('gathering results');
       const res = await this.getInvestigationResults(dispute.disputeId);
       console.log('investigation results response ===> ', res);
@@ -53,6 +53,13 @@ export class DisputesOverviewInitialView implements OnInit {
           },
         });
       }
+    } else {
+      this.router.navigate(['./findings'], {
+        relativeTo: this.route,
+        queryParams: {
+          id: dispute.disputeId,
+        },
+      });
     }
   }
 

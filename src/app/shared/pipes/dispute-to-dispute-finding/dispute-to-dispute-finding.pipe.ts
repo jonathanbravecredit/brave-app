@@ -30,7 +30,6 @@ export interface IDisputeToDisputeFindingOutput {
 export class DisputeToDisputeFindingPipe implements PipeTransform {
   transform(dispute: DisputeInput): IDisputeToDisputeFindingOutput | undefined {
     const status = dispute.disputeStatus;
-    console.log('dispute finding pipe:status ===> ', status);
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
     // get and parse the credit bureau data
@@ -42,13 +41,15 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
       TrueLinkCreditReportType?: any;
       trueLinkCreditReportType?: any;
     } = dispute.disputeInvestigationResults ? JSON.parse(dispute.disputeInvestigationResults) : undefined;
+    console.log('tempReport ===> ', tempReport);
     const investigationResults: ITrueLinkCreditReportType = tempReport?.TrueLinkCreditReportType
       ? tempReport?.TrueLinkCreditReportType
       : tempReport?.trueLinkCreditReportType;
 
     const disputeItems: IDisputeItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
     if (!creditBureau || !disputeItems) return;
-    console.log('dispute finding pipe:disputeItems ===> ', disputeItems);
+    console.log('dispute finding pipe:creditBureau ===> ', creditBureau);
+    console.log('dispute finding pipe:investigationResults ===> ', investigationResults);
     return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
   }
 
@@ -68,10 +69,12 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     creditBureau: IDisputeCreditBureau,
     investigationResults: ITrueLinkCreditReportType,
   ): IDisputeToDisputeFindingOutput {
+    console.log('creditBureau ===> ', creditBureau, JSON.parse(JSON.stringify(creditBureau)));
+    console.log('investigationResults ===> ', investigationResults, JSON.parse(JSON.stringify(investigationResults)));
     return {
       reportCreatedAt: dispute.closedOn || '--',
       status: 'closed',
-      fileIdentificationNumber: `${creditBureau.creditBureau.transactionControl.tracking.identifier.fin}-${creditBureau.creditBureau.transactionControl.tracking.identifier.activityNumber}`,
+      fileIdentificationNumber: `${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
       creditBureau: creditBureau.creditBureau,
       investigationResults: investigationResults,
     };
