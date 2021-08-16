@@ -1,6 +1,7 @@
 import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { IPaymentHistory } from '@shared/interfaces/credit-bureau.interface';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 
 export interface ITradelineCreditBureauConfig {
   tradeline: ITradeLinePartition;
@@ -8,6 +9,7 @@ export interface ITradelineCreditBureauConfig {
   summaryItemType?: number | string;
   summaryResult?: string;
   summaryResultCode?: string;
+  summaryReason?: string;
   itemKey?: string;
   accountType?: string;
   dateOpened?: string;
@@ -20,22 +22,19 @@ export interface ITradelineCreditBureauConfig {
   term?: string;
   name?: [string, string, string];
 }
-export interface IPublicRecordCreditBureauConfig {
+// takes the public items details table config interface and layers on the summary data
+//   necessary for the investigation results view
+//   - adds courtNameArray over string courtName for better formating. TBD when implemented
+
+export interface IPublicRecordCreditBureauConfig extends IPublicItemsDetailsConfig {
   publicPartition: IPublicPartition;
   summaryItemKey?: string;
   summaryItemType?: number | string;
   summaryResult?: string;
   summaryResultCode?: string;
+  summaryReason?: string;
   itemKey?: string;
-  courtType: string;
-  docketNumber: string;
-  responsibility: string;
-  estimatedRemoval: string;
-  dateUpdated: string;
-  dateFiled: string;
-  datePaid: string;
-  type: string;
-  name: [string, string, string];
+  courtNameArray: [string, string, string];
   amount: string;
 }
 

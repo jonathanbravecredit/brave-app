@@ -1,5 +1,6 @@
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 
 @Component({
@@ -15,6 +16,7 @@ export class PublicitemsDetailsTableComponent implements OnInit {
   @Input() isDisputePageOne: boolean = false;
   @Input() isDisputePageTwo: boolean = false;
   mapper: Record<string, any>;
+  bcMissing = tu.bcMissing;
   /**
    * Revolving account display mapping
    * @property {Record<string, any>} revolvingAccountMapping
@@ -26,6 +28,7 @@ export class PublicitemsDetailsTableComponent implements OnInit {
     datePaid: 'Date Paid',
     dateUpdated: 'Date Updated',
     publicRecordType: 'Type',
+    responsibility: 'Responsibility',
     expirationDate: 'Estimated month and year that this item will be removed',
   };
 

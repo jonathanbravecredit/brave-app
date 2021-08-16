@@ -34,9 +34,12 @@ export class AppComponent implements OnInit {
       switch (payload.event) {
         case 'signIn':
           if (creds) {
+            this.interstitial.changeMessage(' ');
+            this.interstitial.openInterstitial();
             await this.sync.initUser(creds);
             await this.sync.subscribeToListeners(creds.identityId);
             await this.sync.onboardUser(creds, true);
+            this.interstitial.closeInterstitial();
           }
           break;
         case 'signOut':
