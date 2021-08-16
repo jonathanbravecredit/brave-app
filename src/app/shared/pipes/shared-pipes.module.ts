@@ -17,6 +17,10 @@ import { MergereportToTradelinesPipe } from './mergereport-to-tradelines/mergere
 import { MergereportToConsumerStatementsPipe } from './mergereport-to-consumer-statements/mergereport-to-consumer-statements.pipe';
 import { AccountNumberMaskPipe } from './account-number-mask/account-number-mask.pipe';
 import { SsnMaskPipe } from './ssn-mask/ssn-mask.pipe';
+import { DisputesToDisputePipe } from './disputes-to-dispute/disputes-to-dispute.pipe';
+import { CreditbureauToTradelinedetailsPipe } from './creditbureau-to-tradelinedetails/creditbureau-to-tradelinedetails.pipe';
+import { CreditbureauToPublicitemdetailsPipe } from './creditbureau-to-publicitemdetails/creditbureau-to-publicitemdetails.pipe';
+import { InvestigationresultsToPersonalitemdetailsPipe } from './investigationresults-to-personalitemdetails/investigationresults-to-personalitemdetails.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -24,6 +28,7 @@ const pipes = [
   TradelineToPagesPipe,
   MergereportToNegativeTradelinesPipe,
   MergereportToCreditreportPipe,
+  DisputesToDisputePipe,
   DisputesToDisputesOverviewPipe,
   DisputeToDisputeFindingPipe,
   MergereportToDashboardPipe,
@@ -34,6 +39,9 @@ const pipes = [
   MergereportToPersonalitemsPipe,
   MergereportToTradelinesPipe,
   MergereportToConsumerStatementsPipe,
+  CreditbureauToTradelinedetailsPipe,
+  CreditbureauToPublicitemdetailsPipe,
+  InvestigationresultsToPersonalitemdetailsPipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
 ];

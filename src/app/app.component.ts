@@ -34,9 +34,12 @@ export class AppComponent implements OnInit {
       switch (payload.event) {
         case 'signIn':
           if (creds) {
+            this.interstitial.changeMessage(' ');
+            this.interstitial.openInterstitial();
             await this.sync.initUser(creds);
             await this.sync.subscribeToListeners(creds.identityId);
             await this.sync.onboardUser(creds, true);
+            this.interstitial.closeInterstitial();
           }
           break;
         case 'signOut':
@@ -55,7 +58,6 @@ export class AppComponent implements OnInit {
 
     Auth.currentAuthenticatedUser()
       .then(async (user) => {
-        console.log('authenticated user');
         const creds: ICredentials = await Auth.currentUserCredentials();
         if (creds) {
           await this.sync.initUser(creds);
@@ -69,9 +71,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.interstitial.openInterstitial();
       } else if (event instanceof NavigationEnd) {
-        this.interstitial.closeInterstitial();
       }
     });
   }

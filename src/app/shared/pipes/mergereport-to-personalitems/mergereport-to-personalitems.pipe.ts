@@ -12,13 +12,13 @@ import {
   name: 'mergereportToPersonalitems',
 })
 export class MergereportToPersonalitemsPipe implements PipeTransform {
-  transform(report: IMergeReport): IPersonalItemsDetailsConfig[] | undefined {
-    if (report === undefined) return;
+  transform(report: IMergeReport): IPersonalItemsDetailsConfig[] | [] {
+    if (report === undefined) return [];
     const borrower = report.TrueLinkCreditReportType?.Borrower;
-    if (borrower === undefined) return;
+    if (borrower === undefined) return [];
     if (borrower instanceof Array) return this.mapping(borrower[0]); // schema says can be array but should not be
     if (!(borrower instanceof Array)) return this.mapping(borrower);
-    return;
+    return [];
   }
 
   mapping(borrower: IBorrower): IPersonalItemsDetailsConfig[] {

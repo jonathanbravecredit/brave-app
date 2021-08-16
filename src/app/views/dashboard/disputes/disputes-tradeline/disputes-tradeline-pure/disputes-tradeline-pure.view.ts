@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, ViewChild, Output } from '@angular/core';
+import { Component, EventEmitter, Input, ViewChild, Output } from '@angular/core';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
@@ -13,7 +13,7 @@ export interface IProcessDisputeTradelineResult {
   selector: 'brave-disputes-tradeline-pure-view',
   templateUrl: './disputes-tradeline-pure.view.html',
 })
-export class DisputesTradelinePureView implements OnInit {
+export class DisputesTradelinePureView {
   @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
   @Input() isDisputeProcessInProgress = true;
   @Input() isDisputeSent = false;
@@ -23,8 +23,4 @@ export class DisputesTradelinePureView implements OnInit {
   @Output() goBack: EventEmitter<void> = new EventEmitter();
   @Output() processResult: EventEmitter<IProcessDisputeTradelineResult> = new EventEmitter();
   constructor() {}
-
-  ngOnInit(): void {
-    console.log('dispute item', this.dispute);
-  }
 }

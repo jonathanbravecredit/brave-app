@@ -64,7 +64,6 @@ export class TradelineDetailsComponent {
     if (e.isConfirmed) {
       this.showModal = false;
       this.disputeClick.emit();
-      console.log('confirmed');
     }
   }
 }

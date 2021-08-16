@@ -25,7 +25,6 @@ export class MergereportToDashboardPipe implements PipeTransform {
       this.tradeLines = [this.tradeLines];
     }
     output = this.filterTradelines(this.tradeLines).addNegativeCard(output, this.tradeLines);
-    console.log('pipe output ====> ', output);
     return output;
   }
 

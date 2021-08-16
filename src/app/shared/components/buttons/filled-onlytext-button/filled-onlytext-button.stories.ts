@@ -6,14 +6,16 @@ import {
   IFilledOnlyTextButtonConfig,
 } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 export default {
   title: 'app/components/buttons/filled-onlytext-button',
   component: FilledOnlytextButtonComponent,
   decorators: [
     moduleMetadata({
-      declarations: [FilledOnlytextButtonPipe],
-      imports: [],
+      declarations: [],
+      imports: [SharedComponentsModule, SharedPipesModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],

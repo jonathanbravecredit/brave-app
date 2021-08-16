@@ -51,7 +51,6 @@ export class PublicitemsView {
       .sendDisputePreflightCheck(id)
       .then((resp) => {
         const { success, error } = resp;
-        console.log('preflightCheckReturn ===> ', resp);
         if (success) {
           const filter: DisputeReconfirmFilter = 'public';
           this.router.navigate(['../dispute'], {

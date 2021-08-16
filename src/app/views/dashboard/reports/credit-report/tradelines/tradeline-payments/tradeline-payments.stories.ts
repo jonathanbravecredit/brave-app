@@ -2,7 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { TradelinePaymentsComponent } from '@shared/components/tradelines/tradeline-payments/tradeline-payments.component';
+import { TradelinePaymentsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payments/tradeline-payments.component';
 
 export default {
   title: 'app/components/tradelines/tradeline-payments',

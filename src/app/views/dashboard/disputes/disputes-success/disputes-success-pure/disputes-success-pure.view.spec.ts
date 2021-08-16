@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DisputesSuccessComponent } from './disputes-success.component';
+import { DisputesSuccessPureView } from './disputes-success-pure.view';
 
-describe('DisputesSuccessComponent', () => {
-  let component: DisputesSuccessComponent;
-  let fixture: ComponentFixture<DisputesSuccessComponent>;
+describe('DisputesSuccessPureView', () => {
+  let component: DisputesSuccessPureView;
+  let fixture: ComponentFixture<DisputesSuccessPureView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputesSuccessComponent ]
+      declarations: [ DisputesSuccessPureView ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DisputesSuccessComponent);
+    fixture = TestBed.createComponent(DisputesSuccessPureView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

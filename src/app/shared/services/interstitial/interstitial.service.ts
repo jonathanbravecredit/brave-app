@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class InterstitialService {
   open$ = new BehaviorSubject(false);
   message$: BehaviorSubject<string> = new BehaviorSubject('...loading');
+  fetching$ = new BehaviorSubject<boolean>(false);
   private renderer: Renderer2;
 
   constructor(rendererFactory: RendererFactory2) {
@@ -18,18 +19,20 @@ export class InterstitialService {
   }
 
   openInterstitial(): void {
+    if (this.open$.value) return; // already open;
     this.open$.next(true);
   }
 
   closeInterstitial(): void {
+    if (!this.open$.value) return; // already closed;
     this.open$.next(false);
   }
 
   startSpinner(): void {
-    this.renderer.addClass(document.body, 'cursor-wait');
+    this.renderer.addClass(document.body, 'brave-waiting-cursor');
   }
 
   stopSpinner(): void {
-    this.renderer.removeClass(document.body, 'cursor-wait');
+    this.renderer.removeClass(document.body, 'brave-waiting-cursor');
   }
 }

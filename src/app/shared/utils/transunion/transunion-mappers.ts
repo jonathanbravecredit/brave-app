@@ -1,10 +1,13 @@
-import { IBorrower } from '@shared/interfaces';
+import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
+import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export class TransunionMappers extends TransunionBase {
   static parser = TransunionParsers;
+  static query = TransunionQueries;
   constructor() {
     super();
   }
@@ -51,6 +54,20 @@ export class TransunionMappers extends TransunionBase {
       previousAddressesRaw: prevAddress || [],
       employersRaw: employers || [],
       telephonesRaw: phones || [],
+    };
+  }
+
+  static mapPublicItemToDispute(item: IPublicPartition): IDisputePublicItem {
+    const publicRecord = item.PublicRecord instanceof Array ? item.PublicRecord[0] : item.PublicRecord; // schema says array but should not be;
+    return {
+      publicPartition: item,
+      docketNumber: publicRecord?.referenceNumber || this.bcMissing,
+      courtName: publicRecord?.courtName || this.bcMissing,
+      courtLocation: publicRecord?.LegalItem?.CourtLocation?.description || this.bcMissing,
+      dateFiled: publicRecord?.dateFiled || this.bcMissing,
+      dateUpdated: publicRecord?.dateUpdated || this.bcMissing,
+      publicItemType: publicRecord?.Type?.description || this.bcMissing,
+      expirationDate: publicRecord?.ExpirationDate || this.bcMissing,
     };
   }
 }

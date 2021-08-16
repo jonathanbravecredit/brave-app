@@ -4,6 +4,7 @@ import { AccountTypes } from '@shared/constants/account-types';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
@@ -41,12 +42,12 @@ export class TradelinesComponent {
     private route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
+    private interstitial: InterstitialService,
     private creditReportServices: CreditreportService,
   ) {
     this.tradeline$ = this.creditReportServices.tuTradeline$.asObservable();
     this.tuReport$ = this.creditReportServices.tuReport$.asObservable();
     this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
-    console.log('acknowledged', this.acknowledged);
   }
 
   set acknowledged(value: boolean) {
@@ -65,11 +66,12 @@ export class TradelinesComponent {
     const accountType = tu.query.lookupTradelineTypeDescription(tradeline);
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
+    this.interstitial.changeMessage('checking eligibility');
+    this.interstitial.openInterstitial();
     this.disputeService
       .sendDisputePreflightCheck(id)
       .then((resp) => {
         const { success, error } = resp;
-        console.log('preflightCheckReturn ===> ', resp);
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
           this.router.navigate(['../dispute'], {
