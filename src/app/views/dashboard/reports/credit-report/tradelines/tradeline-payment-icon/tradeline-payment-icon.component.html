@@ -1,37 +1,56 @@
 <div
-  *ngIf="this.parseCode(code) === tradelineIcons.Late"
+  *ngIf="this.parseCode(code) === tradelineIcons.Late30"
   [ngClass]="[height, width]"
   class="flex justify-center items-center"
 >
-  <i class="material-icons text-xs text-orange-600">close</i>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late30.svg" />
+</div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Late60"
+  [ngClass]="[height, width]"
+  class="flex justify-center items-center"
+>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late60.svg" />
+</div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Late120"
+  [ngClass]="[height, width]"
+  class="flex justify-center items-center"
+>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late120.svg" />
+</div>
+<div
+  *ngIf="this.parseCode(code) === tradelineIcons.Late90"
+  [ngClass]="[height, width]"
+  class="flex justify-center items-center"
+>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late90.svg" />
 </div>
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Collection"
   [ngClass]="[height, width]"
   class="flex justify-center items-center"
 >
-  <span class="text-xs text-coolGray-600">C</span>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-collection.svg" />
 </div>
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Unknown"
   [ngClass]="[height, width]"
   class="flex justify-center items-center"
 >
-  <i style="font-size: 0.5rem" class="material-icons text-coolGray-300"
-    >circle</i
-  >
+  <img class="p-0.5" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-unknown.svg" />
 </div>
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Current"
   [ngClass]="[height, width]"
   class="flex justify-center items-center"
 >
-  <i class="material-icons text-xs text-emerald-500">check</i>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-okay.svg" />
 </div>
 <div
   *ngIf="this.parseCode(code) === tradelineIcons.Other"
   [ngClass]="[height, width]"
   class="flex justify-center items-center"
 >
-  <i class="material-icons text-xs text-coolGray-600">info_outline</i>
+  <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-unknown.svg" />
 </div>

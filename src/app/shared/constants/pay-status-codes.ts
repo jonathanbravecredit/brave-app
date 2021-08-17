@@ -46,12 +46,30 @@ export const LATE_PAY_STATUS_CODES: Record<string, any> = {
   '4': `Late 120 Days`,
 };
 
+export const LATE_30_STATUS_CODE: Record<string, any> = {
+  '1': 'Late 30 Days',
+};
+
+export const LATE_60_STATUS_CODE: Record<string, any> = {
+  '2': 'Late 60 Days',
+};
+
+export const LATE_90_STATUS_CODE: Record<string, any> = {
+  '3': 'Late 90 Days',
+};
+
+export const LATE_120_STATUS_CODE: Record<string, any> = {
+  '4': 'Late 120 Days',
+};
+
 export const COLLECTION_PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff Account`,
 };
 
+export const REPOSSESSION_PAY_STATUS_CODE: Record<string, any> = {
+  '8R': `Repossession Account`,
+};
 export const OTHER_PAY_STATUS_CODES: Record<string, any> = {
-  '8R': `Repossesion Account`,
   '7': `Wage Earner Plan`,
 };
 
@@ -62,5 +80,4 @@ export const ONTIME_PAY_STATUS_CODES: Record<string, any> = {
 export const UNKNOWN_PAY_STATUS_CODES: Record<string, any> = {
   U: `No Data / Unknown`,
   '0': `Too New to Rate`,
-  '7': `Wage Earner Plan`,
 };

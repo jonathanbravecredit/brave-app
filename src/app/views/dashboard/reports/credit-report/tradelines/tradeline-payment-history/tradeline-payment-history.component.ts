@@ -1,16 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 import {
   MONTH_ABBREVIATIONS,
   MONTH_DEFAULTS,
 } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/constants';
 import { ITradelinePaymentHistory } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/interfaces';
+import { TradelinePaymentIconKeyComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
 
 @Component({
   selector: 'brave-tradeline-payment-history',
   templateUrl: './tradeline-payment-history.component.html',
 })
 export class TradelinePaymentHistoryComponent implements OnInit {
+  @ViewChild(TradelinePaymentIconKeyComponent) modal: TradelinePaymentIconKeyComponent | undefined;
   /**
    * Payment status history mapped directly from Merge Report
    * @property {IPayStatusHistory | undefined} paymentHistory

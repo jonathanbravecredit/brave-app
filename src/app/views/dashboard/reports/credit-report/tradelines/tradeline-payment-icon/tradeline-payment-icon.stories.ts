@@ -10,7 +10,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule],
+      imports: [],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
   ],
@@ -23,9 +23,32 @@ const Template: Story<TradelinePaymentIconComponent> = (args: any) => ({
   },
 });
 
-export const Late = Template.bind({});
-Late.args = {
+export const TooNew = Template.bind({});
+TooNew.args = {
+  code: '0',
+};
+
+export const Late30 = Template.bind({});
+Late30.args = {
   code: '1',
+};
+
+export const Late60 = Template.bind({});
+Late60.args = {
+  code: '2',
+};
+export const Late90 = Template.bind({});
+Late90.args = {
+  code: '3',
+};
+export const Late120 = Template.bind({});
+Late120.args = {
+  code: '4',
+};
+
+export const WageEarner = Template.bind({});
+WageEarner.args = {
+  code: '7',
 };
 
 export const Collection = Template.bind({});
@@ -36,6 +59,11 @@ Collection.args = {
 export const Unknown = Template.bind({});
 Unknown.args = {
   code: 'U',
+};
+
+export const Blank = Template.bind({});
+Blank.args = {
+  code: '',
 };
 
 export const Current = Template.bind({});
