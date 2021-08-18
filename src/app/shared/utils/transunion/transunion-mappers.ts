@@ -1,7 +1,7 @@
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
-import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
+import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
 import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 

@@ -1,6 +1,6 @@
 import { TransunionFilters } from '@shared/utils/transunion/transunion-filters';
 import { TransunionMappers } from '@shared/utils/transunion/transunion-mappers';
-import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
+import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
 import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
 import { TransunionSorters } from '@shared/utils/transunion/transunion-sorters';
 
@@ -12,8 +12,5 @@ export class TransunionUtil {
   static mapper = TransunionMappers;
   static query = TransunionQueries;
   static filter = TransunionFilters;
-  constructor() {
-  }
-
-
+  constructor() {}
 }

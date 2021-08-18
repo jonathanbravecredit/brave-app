@@ -1,6 +1,6 @@
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
-import { IPublicPartition, ITradeLinePartition, ITrueLinkCreditReportType } from '@shared/interfaces';
+import { IPublicPartition, ISubscriber, ITradeLinePartition, ITrueLinkCreditReportType } from '@shared/interfaces';
 import {
   ICreditBureau,
   ILineItem,
@@ -274,5 +274,19 @@ export class TransunionQueries extends TransunionBase {
       }
     });
     return match;
+  }
+
+  /*=====================================*/
+  //      MERGE REPORT QUERIES
+  /*=====================================*/
+  static getSubscriberFromTradelineCode(
+    tradeline: ITradeLinePartition | undefined,
+    subs: ISubscriber[] = [],
+  ): ISubscriber | undefined {
+    const code = tradeline?.Tradeline?.subscriberCode;
+    if (!code || !tradeline) return;
+    return subs.find((sub) => {
+      return sub.subscriberCode == code;
+    });
   }
 }

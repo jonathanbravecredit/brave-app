@@ -1,19 +1,24 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IMergeReport, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
   name: 'tradelineToDetails',
 })
 export class TradelineToDetailsPipe implements PipeTransform {
-  transform(tradeline: ITradeLinePartition | undefined): ITradelineDetailsConfig {
+  transform(tradeline: ITradeLinePartition | undefined, report: IMergeReport): ITradelineDetailsConfig {
     const remarks = tu.parser.parseRemarks(tradeline?.Tradeline?.Remark);
+    const subs = (report.TrueLinkCreditReportType.Subscriber instanceof Array)
+      ? report.TrueLinkCreditReportType.Subscriber
+      : [report.TrueLinkCreditReportType.Subscriber || {} as ISubscriber];
+    const subscriber = tu.query.getSubscriberFromTradelineCode(tradeline, subs)
     return {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
       accountTypeSymbol: tradeline?.accountTypeSymbol,
       creditorName: tradeline?.Tradeline?.creditorName,
+      creditorContactDetails: tu.parser.subscriberUnparser(subscriber)
       lastReported: tradeline?.Tradeline?.dateReported,
       accountTypeDescription: tu.query.getAccountType(tradeline),
       accountTypeDescriptionValue: tradeline?.Tradeline?.OpenClosed?.description || '',

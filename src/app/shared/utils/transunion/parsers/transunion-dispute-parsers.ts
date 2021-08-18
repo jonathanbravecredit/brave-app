@@ -139,4 +139,9 @@ export class TransunionParsers extends TransunionBase {
     const phone = subscriber.phone.number.unparsed || this.bcMissing;
     return [name, address, phone];
   }
+
+  /*=====================================*/
+  //      MERGE REPORT PARSERS
+  /*=====================================*/
+  static unparseSubscriberMR(subscriber: ISubscriber);
 }
