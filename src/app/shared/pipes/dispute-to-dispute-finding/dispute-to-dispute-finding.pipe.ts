@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ICreditBureau, IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IDisputeToDisputeFindingOutput {
   reportCreatedAt: string;
@@ -37,7 +37,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
       ? tempReport?.TrueLinkCreditReportType
       : tempReport?.trueLinkCreditReportType;
 
-    const disputeItems: IDisputeItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
+    const disputeItems: IDisputeTradelineItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
     if (!creditBureau || !disputeItems) return;
     return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
   }
@@ -53,7 +53,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
   }
 
   mapClosedDispute(
-    disputeItems: IDisputeItem,
+    disputeItems: IDisputeTradelineItem,
     dispute: DisputeInput,
     creditBureau: IDisputeCreditBureau,
     investigationResults: ITrueLinkCreditReportType,

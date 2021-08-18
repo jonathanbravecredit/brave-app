@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, ViewChild, Output } from '@angular/core
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IProcessDisputeTradelineResult {
   result: IDisputeProcessResult;
@@ -19,7 +19,7 @@ export class DisputesTradelinePureView {
   @Input() isDisputeSent = false;
   @Input() initialStepId = 'select';
   @Input() initialDisputeType: string | undefined = undefined;
-  @Input() dispute: IDisputeItem | undefined;
+  @Input() dispute: IDisputeTradelineItem | undefined;
   @Output() goBack: EventEmitter<void> = new EventEmitter();
   @Output() processResult: EventEmitter<IProcessDisputeTradelineResult> = new EventEmitter();
   constructor() {}

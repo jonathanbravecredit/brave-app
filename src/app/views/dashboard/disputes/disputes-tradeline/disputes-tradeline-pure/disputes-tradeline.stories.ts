@@ -2,7 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 import { DisputesTradelinePureView } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 export default {
@@ -20,7 +20,7 @@ export default {
   ],
 } as Meta;
 
-const dispute: IDisputeItem = {
+const dispute: IDisputeTradelineItem = {
   tradeline: {},
   creditorName: 'ABC Collectinos',
   lastReported: '1990-01-01',

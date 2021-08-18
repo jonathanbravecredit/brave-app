@@ -48,6 +48,8 @@ export class TradelineDetailsTableComponent implements OnInit {
     late30Count: 'Times 30/60/90 Days Late',
     late60Count: 'Times 30/60/90 Days Late',
     late90Count: 'Times 30/60/90 Days Late',
+    payStatus: 'Pay Status',
+    maxDelinquency: 'Max Delinquency',
     disputeFlag: 'Previously Disputed?',
   };
   /**
@@ -67,6 +69,8 @@ export class TradelineDetailsTableComponent implements OnInit {
     late30Count: 'Times 30/60/90 Days Late',
     late60Count: 'Times 30/60/90 Days Late',
     late90Count: 'Times 30/60/90 Days Late',
+    payStatus: 'Pay Status',
+    maxDelinquency: 'Max Delinquency',
     disputeFlag: 'Previously Disputed?',
   };
   /**
@@ -80,6 +84,8 @@ export class TradelineDetailsTableComponent implements OnInit {
     late60Count: 'Times 30/60/90 Days Late',
     late90Count: 'Times 30/60/90 Days Late',
     amountPastDue: 'Amount Past Due:',
+    payStatus: 'Pay Status',
+    maxDelinquency: 'Max Delinquency',
     disputeFlag: 'Disputed:',
   };
 
@@ -107,6 +113,8 @@ export class TradelineDetailsTableComponent implements OnInit {
     late30Count: 'Times 30/60/90 Days Late',
     late60Count: 'Times 30/60/90 Days Late',
     late90Count: 'Times 30/60/90 Days Late',
+    payStatus: 'Pay Status',
+    maxDelinquency: 'Max Delinquency',
     disputeFlag: 'Previously Disputed?',
   };
 

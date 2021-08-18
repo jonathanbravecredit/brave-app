@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Component({
@@ -7,7 +7,7 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
   templateUrl: './dispute-header-tradeline.component.html',
 })
 export class DisputeHeaderTradelineComponent implements OnInit {
-  @Input() dispute: IDisputeItem = {} as IDisputeItem;
+  @Input() dispute: IDisputeTradelineItem = {} as IDisputeTradelineItem;
   missing = TransunionUtil.bcMissing;
 
   constructor() {}

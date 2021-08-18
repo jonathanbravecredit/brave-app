@@ -2,13 +2,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { IRemark } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 @Pipe({
   name: 'tradelineToDispute',
 })
 export class TradelineToDisputePipe implements PipeTransform {
-  transform(tradeline: ITradeLinePartition | null): IDisputeItem | undefined {
+  transform(tradeline: ITradeLinePartition | null): IDisputeTradelineItem | undefined {
     if (!tradeline) return;
     const dispute = this.mapTradeLineToAccount(tradeline);
     return dispute;
@@ -19,7 +19,7 @@ export class TradelineToDisputePipe implements PipeTransform {
    * @param {ITradeLinePartition} tradeLines
    * @returns
    */
-  mapTradeLineToAccount(tradeline: ITradeLinePartition): IDisputeItem {
+  mapTradeLineToAccount(tradeline: ITradeLinePartition): IDisputeTradelineItem {
     const mapped = {
       tradeline: tradeline,
       creditorName: tradeline.Tradeline?.creditorName || '',

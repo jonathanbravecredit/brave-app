@@ -88,13 +88,27 @@
     ></brave-base-table-row>
   </div>
 
-  <!-- dispute flag -->
   <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['payStatus'] || 'Pay Status'"
+      [value]="config.payStatus"
+    ></brave-base-table-row>
+  </div>
+
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['maxDelinquency'] || 'Max Delinquency'"
+      [value]="config.maxDelinquency"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- dispute flag -->
+  <!-- <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
       [value]="config.disputeFlag"
     ></brave-base-table-row>
-  </div>
+  </div> -->
 
   <!-- spacer for bottom -->
   <div></div>
@@ -136,6 +150,21 @@
       [value]="config.disputeFlag"
     ></brave-base-table-row>
   </div>
+
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['payStatus'] || 'Pay Status'"
+      [value]="config.payStatus"
+    ></brave-base-table-row>
+  </div>
+
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['maxDelinquency'] || 'Max Delinquency'"
+      [value]="config.maxDelinquency"
+    ></brave-base-table-row>
+  </div>
+
   <!-- spacer for bottom -->
   <div></div>
 </div>
@@ -234,13 +263,27 @@
     ></brave-base-table-row>
   </div>
 
-  <!-- dispute flag -->
   <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['payStatus'] || 'Pay Status'"
+      [value]="config.payStatus"
+    ></brave-base-table-row>
+  </div>
+
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['maxDelinquency'] || 'Max Delinquency'"
+      [value]="config.maxDelinquency"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- dispute flag -->
+  <!-- <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['disputeFlag'] || 'Previously Disputed?'"
       [value]="config.disputeFlag"
     ></brave-base-table-row>
-  </div>
+  </div> -->
 
   <!-- spacer for bottom -->
   <div></div>

@@ -31,9 +31,7 @@
       </span>
 
       <div>
-        <brave-negative-account-card-detail-table
-          [data]="data.accountDetail"
-        ></brave-negative-account-card-detail-table>
+        <brave-tradeline-details-table [config]="data.tradeline | tradelineToDetails"></brave-tradeline-details-table>
       </div>
     </div>
 

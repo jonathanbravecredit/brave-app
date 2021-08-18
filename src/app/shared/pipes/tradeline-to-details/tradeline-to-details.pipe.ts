@@ -10,9 +10,13 @@ export class TradelineToDetailsPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined): ITradelineDetailsConfig {
     const remarks = tu.parser.parseRemarks(tradeline?.Tradeline?.Remark);
     return {
+      tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
       accountTypeSymbol: tradeline?.accountTypeSymbol,
       creditorName: tradeline?.Tradeline?.creditorName,
+      lastReported: tradeline?.Tradeline?.dateReported,
+      accountTypeDescription: tu.query.getAccountType(tradeline),
+      accountTypeDescriptionValue: tradeline?.Tradeline?.OpenClosed?.description || '',
       originalCreditor: tradeline?.Tradeline?.CollectionTrade?.originalCreditor,
       creditType: tradeline?.Tradeline?.CollectionTrade?.creditType?.abbreviation,
       dateOpened: tradeline?.Tradeline?.dateOpened,
@@ -30,6 +34,8 @@ export class TradelineToDetailsPipe implements PipeTransform {
       currentBalance: tradeline?.Tradeline?.currentBalance,
       highestBalance: tradeline?.Tradeline?.highBalance,
       disputeFlag: tradeline?.Tradeline?.DisputeFlag?.description,
+      payStatus: tradeline?.Tradeline?.PayStatus?.description,
+      maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
       status: tradeline?.Tradeline?.PayStatus?.symbol,
       openClosed: tradeline?.Tradeline?.OpenClosed?.symbol,
       remarks: remarks,

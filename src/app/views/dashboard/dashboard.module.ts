@@ -62,7 +62,6 @@ import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
 import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { NgxMaskModule } from 'ngx-mask';
-import { NegativeAccountCardDetailComponent } from './snapshots/negative-account/negative-account-card-detail/negative-account-card-detail.component';
 import { NegativeAccountCardDetailTableComponent } from './snapshots/negative-account/negative-account-card-detail-table/negative-account-card-detail-table.component';
 import { NegativeAccountCardHeaderComponent } from './snapshots/negative-account/negative-account-card-header/negative-account-card-header.component';
 import { BaseExceptionPureView } from '@views/dashboard/exceptions/base-exception/base-exception-pure/base-exception-pure.view';
@@ -127,7 +126,6 @@ const components = [
   TradelineRemarksComponent,
   TradelineDetailsComponent,
   TradelineDisputeCardComponent,
-  NegativeAccountCardDetailComponent,
   NegativeAccountCardDetailTableComponent,
   NegativeAccountCardHeaderComponent,
   BaseExceptionPureView,

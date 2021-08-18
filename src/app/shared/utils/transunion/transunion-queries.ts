@@ -238,6 +238,18 @@ export class TransunionQueries extends TransunionBase {
     });
   }
 
+  /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static getAccountType(partition: ITradeLinePartition | undefined): string {
+    if (!partition) return 'unknown';
+    const description = partition.accountTypeDescription;
+    const status = BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
+    return partition.accountTypeSymbol?.toLowerCase() === 'y' ? description || 'No Data / Unknown' : status;
+  }
+
   static findResultCode(result: string): string {
     // check one...exact match
     const exactMatch = this.resultCodeMap.find((item) => {
