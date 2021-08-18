@@ -32,15 +32,18 @@
       [updatedValues]="[tradeline.summaryReason || 'Not Specified']"
     >
       <div class="mt-4">
-        <p *ngFor="let value of tradeline.name">{{value}}</p>
+        <p *ngFor="let value of tradeline.contactDetails">{{value}}</p>
       </div>
       <div class="flex items-center mt-4 mb-3">
         <span>Account Details</span>
       </div>
-      <brave-tradeline-details-table [config]="tradeline"></brave-tradeline-details-table>
-      <brave-tradeline-payment-history
-        [paymentHistory]="(tradeline.tradeline | tradelineToDetails).payStatusHistory"
-      ></brave-tradeline-payment-history>
+      <ng-container *ngIf="(tradeline.tradeline | tradelineToDetails) as details">
+        <brave-tradeline-details
+          [config]="details"
+          [tradeline]="tradeline.tradeline"
+          [subscriber]="tradeline.subscriber"
+        ></brave-tradeline-details>
+      </ng-container>
     </brave-dispute-findings-results-details>
   </ng-container>
 

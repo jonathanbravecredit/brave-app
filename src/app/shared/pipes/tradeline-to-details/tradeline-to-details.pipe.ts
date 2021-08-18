@@ -7,20 +7,23 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
   name: 'tradelineToDetails',
 })
 export class TradelineToDetailsPipe implements PipeTransform {
-  transform(tradeline: ITradeLinePartition | undefined, report: IMergeReport): ITradelineDetailsConfig {
-    const remarks = tu.parser.parseRemarks(tradeline?.Tradeline?.Remark);
-    const subs = (report.TrueLinkCreditReportType.Subscriber instanceof Array)
-      ? report.TrueLinkCreditReportType.Subscriber
-      : [report.TrueLinkCreditReportType.Subscriber || {} as ISubscriber];
-    const subscriber = tu.query.getSubscriberFromTradelineCode(tradeline, subs)
+  transform(
+    tradeline: ITradeLinePartition | undefined | null,
+    // subscribers: ISubscriber[] | ISubscriber | undefined,
+  ): ITradelineDetailsConfig | undefined {
+    if (!tradeline) return;
+    const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
+    // const subs = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+    // const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subs);
+
     return {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
       accountTypeSymbol: tradeline?.accountTypeSymbol,
       creditorName: tradeline?.Tradeline?.creditorName,
-      creditorContactDetails: tu.parser.subscriberUnparser(subscriber)
+      creditorContactDetails: [], //tu.parsers.report.unparseSubscriber(subscriber),
       lastReported: tradeline?.Tradeline?.dateReported,
-      accountTypeDescription: tu.query.getAccountType(tradeline),
+      accountTypeDescription: tu.queries.report.getAccountType(tradeline),
       accountTypeDescriptionValue: tradeline?.Tradeline?.OpenClosed?.description || '',
       originalCreditor: tradeline?.Tradeline?.CollectionTrade?.originalCreditor,
       creditType: tradeline?.Tradeline?.CollectionTrade?.creditType?.abbreviation,

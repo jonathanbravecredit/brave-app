@@ -12,17 +12,17 @@ export class TradelineRemarksComponent {
    */
   @Input() remarks: string = '';
   /**
-   * Raw address from Merge Report...TODO need better mapping
-   * @property {string} address
+   * Consumer statement directly from the report
+   * @property consumerStatement
    * @default
    */
   @Input() consumerStatement: string = '';
   /**
-   * Raw consumer statement from Merge Report...TODO need better mapping
-   * @property {string} consumerStatement
+   * The creditors contact information for the tradeline
+   * @property constactDetails
    * @default
    */
-  @Input() address: string = '';
+  @Input() contactDetails: [string?, string?, string?] | undefined = [];
   /**
    * @property showFooter - flag to turn off the 'Dispute' message
    */

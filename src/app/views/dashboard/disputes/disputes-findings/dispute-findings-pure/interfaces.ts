@@ -1,11 +1,12 @@
-import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import { ITradeLinePartition, IPublicPartition, ISubscriber } from '@shared/interfaces/merge-report.interface';
 import { IPaymentHistory } from '@shared/interfaces/credit-bureau.interface';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 
-export interface ITradelineCreditBureauConfig extends ITradelineDetailsConfig {
+export interface ITradelineCreditBureauConfig {
   tradeline: ITradeLinePartition;
+  subscriber: ISubscriber;
   summaryItemKey?: string;
   summaryItemType?: number | string;
   summaryResult?: string;
@@ -13,11 +14,7 @@ export interface ITradelineCreditBureauConfig extends ITradelineDetailsConfig {
   summaryReason?: string;
   itemKey?: string;
   accountType?: string;
-  creditorStreet?: string;
-  creditorLocation?: string;
-  paymentHistory?: IPaymentHistory;
-  term?: string;
-  name?: [string, string, string];
+  contactDetails?: [string, string, string];
 }
 // takes the public items details table config interface and layers on the summary data
 //   necessary for the investigation results view

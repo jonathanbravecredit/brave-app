@@ -22,7 +22,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
   }
 
   mapping(borrower: IBorrower): IPersonalItemsDetailsConfig[] {
-    const transformed = tu.mapper.mapBorrowerToDetails(borrower);
+    const transformed = tu.mappers.mapBorrowerToDetails(borrower);
     let mapped: IPersonalItemsDetailsConfig[] = [];
     mapped = transformed.borrowersNamesRaw
       ? [
@@ -31,7 +31,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
             return this.mapSubitem(
               'name',
               name,
-              tu.parser.nameUnparser(name),
+              tu.parsers.report.unparseName(name),
               name.dateUpdated || '',
               borrower,
               transformed,
@@ -46,7 +46,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
             return this.mapSubitem(
               'employer',
               employer,
-              tu.parser.employerUnparser(employer),
+              tu.parsers.report.unparseEmployer(employer),
               employer.dateUpdated || '',
               borrower,
               transformed,
@@ -61,7 +61,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
             return this.mapSubitem(
               'address',
               address,
-              tu.parser.addressUnparser(address?.CreditAddress),
+              tu.parsers.report.unparseAddress(address?.CreditAddress),
               '',
               borrower,
               transformed,
@@ -75,7 +75,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
           this.mapSubitem(
             'address',
             transformed.currentAddressRaw,
-            tu.parser.addressUnparser(transformed.currentAddressRaw?.CreditAddress),
+            tu.parsers.report.unparseAddress(transformed.currentAddressRaw?.CreditAddress),
             '',
             borrower,
             transformed,

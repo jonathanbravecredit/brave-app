@@ -1,7 +1,8 @@
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export interface INegativeAccountCardInputs {
   tradeline: ITradeLinePartition;
+  subscriber: ISubscriber;
   creditorName?: string;
   lastReported?: string;
   accountTypeDescription?: string;
@@ -10,7 +11,8 @@ export interface INegativeAccountCardInputs {
   originalCreditorValue?: string;
   disputeFlag?: string;
   disputeFlagValue?: string;
-  accountDetail: INegativeAccountCardDetails;
+  consumerStatement?: string;
+  // accountDetail: INegativeAccountCardDetails;
 }
 
 export interface INegativeAccountCardDetails {

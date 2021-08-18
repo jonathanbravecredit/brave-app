@@ -1,14 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import {
-  IBorrower,
-  IBorrowerAddress,
-  IBorrowerName,
-  IEmployer,
-  IPublicPartition,
-  ITradeLinePartition,
-} from '@shared/interfaces/merge-report.interface';
+import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
@@ -18,7 +11,8 @@ import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/dispute
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +33,18 @@ export class DisputeService implements OnDestroy {
   personalItem: IPersonalItemsDetailsConfig | undefined;
   personalItem$ = new BehaviorSubject<IPersonalItemsDetailsConfig>({} as IPersonalItemsDetailsConfig);
   personalItemSub$: Subscription;
+
+  /*=========================================================================================*/
+  // The Subscriber (for tradeline, publicitem) Behavior Subjects are to track the current
+  //   items matching credit subscriber data for the current item selected
+  //   - subscriber is irrelevant for personal
+  /*=========================================================================================*/
+  // the currently selected tradeline's subscriber (financial accounts, etc..)
+  tuTradelineSubscriber: ISubscriber | undefined;
+  tuTradelineSubscriber$: BehaviorSubject<ISubscriber> = new BehaviorSubject({} as ISubscriber);
+  // the currently selected public item (bankruptcies, etc...)
+  tuPublicItemSubscriber: ISubscriber | undefined;
+  tuPublicItemSubscriber$: BehaviorSubject<ISubscriber> = new BehaviorSubject({} as ISubscriber);
 
   /*===========================================================================*/
   // These help track the responses
@@ -93,10 +99,18 @@ export class DisputeService implements OnDestroy {
 
   setTradelineItem(tradeline: ITradeLinePartition): void {
     this.tradeline$.next(tradeline);
+    const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline) || ({} as ISubscriber);
+    if (subscriber === undefined) return;
+    this.tuTradelineSubscriber = subscriber;
+    this.tuTradelineSubscriber$.next(subscriber);
   }
 
   setPublicItem(publicItem: IPublicPartition): void {
     this.publicItem$.next(publicItem);
+    const subscriber = tu.queries.report.getPublicSubscriberByKey(publicItem) || ({} as ISubscriber);
+    if (subscriber === undefined) return;
+    this.tuPublicItemSubscriber = subscriber;
+    this.tuPublicItemSubscriber$.next(subscriber);
   }
 
   // cannot directly use the partition because of data structure.

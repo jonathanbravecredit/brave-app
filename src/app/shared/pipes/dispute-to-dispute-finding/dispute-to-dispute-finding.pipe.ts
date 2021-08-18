@@ -5,15 +5,13 @@ import { DisputeInput } from '@shared/services/aws/api.service';
 import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IDisputeToDisputeFindingOutput {
-  reportCreatedAt: string;
-  fileIdentificationNumber: string;
   status: string;
-  // resultCode: string;
+  reportCreatedAt: string;
+  totalDisputedItems?: string;
+  estimatedCompletionDate?: string;
+  fileIdentificationNumber: string;
   creditBureau?: ICreditBureau;
   investigationResults?: ITrueLinkCreditReportType;
-  // type: 'tradeline' | 'public-record' | 'personal-info';
-  estimatedCompletionDate?: string;
-  totalDisputedItems?: string;
 }
 
 @Pipe({
@@ -44,8 +42,8 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
 
   mapOpenDispute(dispute: DisputeInput): IDisputeToDisputeFindingOutput {
     return {
-      reportCreatedAt: dispute.openDisputes?.openDate || '--',
       status: 'open',
+      reportCreatedAt: dispute.openDisputes?.openDate || '--',
       fileIdentificationNumber: dispute.disputeLetterCode || '--',
       estimatedCompletionDate: dispute.openDisputes?.estimatedCompletionDate || '--',
       totalDisputedItems: `${dispute.openDisputes?.totalDisputedItems || '--'}`,
@@ -59,8 +57,8 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     investigationResults: ITrueLinkCreditReportType,
   ): IDisputeToDisputeFindingOutput {
     return {
-      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
       status: 'closed',
+      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
       fileIdentificationNumber: `${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
       creditBureau: creditBureau.creditBureau,
       investigationResults: investigationResults,

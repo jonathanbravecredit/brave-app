@@ -8,30 +8,14 @@
       <brave-negative-account-card-header [data]="data"></brave-negative-account-card-header>
     </div>
     <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
-      <div class="flex justify-center mb-8 px-16" *ngIf="showDisputeButton">
-        <brave-filled-onlytext-button
-          class="w-100"
-          (click)="showModal = true"
-          [config]="{
-            buttonSize: 'sm',
-            backgroundColor: 'bg-indigo-800',
-            color: 'text-white',
-            activeColor: 'bg-indigo-800',
-            full: true
-          }"
-          >&nbsp;&nbsp;&nbsp;&nbsp;Dispute&nbsp;&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
-        >
-        <brave-onboarding-dispute
-          [showModal]="showModal && !acknowledged"
-          (confirmation)="actionForDispute($event)"
-        ></brave-onboarding-dispute>
-      </div>
-      <span>
-        <p class="text-lg">Account Details</p>
-      </span>
-
-      <div>
-        <brave-tradeline-details-table [config]="data.tradeline | tradelineToDetails"></brave-tradeline-details-table>
+      <div *ngIf="data.tradeline | tradelineToDetails as details" class="flex flex-col w-full my-4">
+        <brave-tradeline-details
+          [config]="details"
+          [tradeline]="data.tradeline"
+          [subscriber]="data.subscriber"
+          [overrideOpen]="true"
+          (disputeClick)="onDisputeClick()"
+        ></brave-tradeline-details>
       </div>
     </div>
 

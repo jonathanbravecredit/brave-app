@@ -6,10 +6,13 @@
 
 <!-- tradeline accounts -->
 <div *ngFor="let tradeline of tradelines">
-  <brave-tradeline-dispute-card
-    [tradeline]="tradeline"
-    (disputeClick)="disputeTradelineClick.emit(tradeline.tradeline)"
-  ></brave-tradeline-dispute-card>
+  <ng-container *ngIf="tradeline | tradelineToDetails as details">
+    <brave-tradeline-dispute-card
+      [config]="details"
+      [subscriber]="tu.queries.report.getTradelineSubscriberByKey(tradeline) || {}"
+      (disputeClick)="disputeTradelineClick.emit(tradeline)"
+    ></brave-tradeline-dispute-card>
+  </ng-container>
 </div>
 
 <!-- personal items -->

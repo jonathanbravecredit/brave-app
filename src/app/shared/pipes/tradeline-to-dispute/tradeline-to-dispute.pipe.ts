@@ -28,8 +28,8 @@ export class TradelineToDisputePipe implements PipeTransform {
       accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
       disputeFlag: 'Previously Disputed?',
       originalCreditor: 'Original Creditor',
-      originalCreditorValue: this.lookupOriginalCreditor(tradeline),
-      disputeFlagValue: this.lookupDisputeFlag(tradeline),
+      originalCreditorValue: this.getOriginalCreditor(tradeline),
+      disputeFlagValue: this.getDisputeFlag(tradeline),
       accountDetail: {
         accountNumber: tradeline.Tradeline?.accountNumber || '',
         typeOfCollection: tradeline.accountTypeAbbreviation || '',
@@ -59,7 +59,7 @@ export class TradelineToDisputePipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {
+  getOriginalCreditor(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'unknown';
     const originalCreditor = partition.Tradeline?.CollectionTrade?.originalCreditor;
     const creditorName = partition.Tradeline?.creditorName || 'unknown';
@@ -75,7 +75,7 @@ export class TradelineToDisputePipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupDisputeFlag(partition: ITradeLinePartition | undefined): string {
+  getDisputeFlag(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'No';
     const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';
