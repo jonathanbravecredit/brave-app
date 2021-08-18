@@ -1,82 +1,59 @@
 <brave-base-modal-small [config]="config" [injected]="true">
-  <div class="grid grid-cols-2 gap-y-2 gap-x-3">
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-okay.svg" />
+  <div class="grid grid-cols-12">
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-okay.svg" />
     </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Okay }}</p>
-    </div>
-
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-unknown.svg" />
-    </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Unknown }}</p>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Okay }}</p>
     </div>
 
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late30.svg" />
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-unknown.svg" />
     </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Late30 }}</p>
-    </div>
-
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late60.svg" />
-    </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Late60 }}</p>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Unknown }}</p>
     </div>
 
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late90.svg" />
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late30.svg" />
     </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Late90 }}</p>
-    </div>
-
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late120.svg" />
-    </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Late120 }}</p>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Late30 }}</p>
     </div>
 
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-collection.svg" />
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late60.svg" />
     </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Collection }}</p>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Late60 }}</p>
     </div>
 
-    <div class="flex justify-end items-center">
-      <img class="h-3" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-repossession.svg" />
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late90.svg" />
     </div>
-    <div>
-      <p class="brave-body3">{{ descriptions.Repossession }}</p>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Late90 }}</p>
+    </div>
+
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late120.svg" />
+    </div>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Late120 }}</p>
+    </div>
+
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-collection.svg" />
+    </div>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Collection }}</p>
+    </div>
+
+    <div class="col-span-2 flex justify-end p-1">
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-repossession.svg" />
+    </div>
+    <div class="col-span-10">
+      <p class="ml-3 brave-body3 whitespace-nowrap">{{ descriptions.Repossession }}</p>
     </div>
   </div>
 </brave-base-modal-small>
-
-<!--
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late30.svg" />
-</div>
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late60.svg" />
-</div>
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late120.svg" />
-</div>
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-late90.svg" />
-</div>
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-collection.svg" />
-</div>
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-unknown.svg" />
-</div>
-<div class="flex justify-center items-center">
-  <img class="w-2 h-2" src="https://d3e1i93f88eoxl.cloudfront.net/paystatus-okay.svg" />
-</div> -->

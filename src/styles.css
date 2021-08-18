@@ -44,4 +44,8 @@
   .brave-waiting-cursor {
     cursor: pointer !important;
   }
+
+  .brave-primary-text-color {
+    @apply text-coolGray-900;
+  }
 }
