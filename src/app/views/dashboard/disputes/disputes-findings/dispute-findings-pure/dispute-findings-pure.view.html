@@ -29,7 +29,7 @@
   <ng-container *ngFor="let tradeline of tradelineAccountConfig">
     <brave-dispute-findings-results-details
       [resultCode]="tradeline.summaryResultCode"
-      [updatedValues]="[tradeline.summaryResult || bcMissing]"
+      [updatedValues]="[tradeline.summaryReason || 'Not Specified']"
     >
       <div class="mt-4">
         <p *ngFor="let value of tradeline.name">{{value}}</p>
@@ -48,7 +48,7 @@
   <ng-container *ngFor="let publicItem of publicRecordConfig">
     <brave-dispute-findings-results-details
       [resultCode]="publicItem.summaryResultCode"
-      [updatedValues]="[publicItem.summaryResult || bcMissing]"
+      [updatedValues]="[publicItem.summaryReason || 'Not Specified']"
     >
       <div class="flex items-center mt-4 mb-3">
         <span>Account Details</span>
@@ -58,11 +58,13 @@
   </ng-container>
 
   <!-- PERSONAL ITEMS -->
-  <ng-container *ngIf="personalInfoConfig">
+  <ng-container *ngIf="!!personalInfoConfig">
     <div class="flex items-center mt-4 mb-3">
       <span>Personal Information Details</span>
     </div>
-    <brave-personalitems-details-table [config]="personalInfoConfig"></brave-personalitems-details-table>
+    <brave-personalitems-details-table
+      [config]="personalInfoConfig.personalItem | personalitemsToDetails"
+    ></brave-personalitems-details-table>
   </ng-container>
 </div>
 

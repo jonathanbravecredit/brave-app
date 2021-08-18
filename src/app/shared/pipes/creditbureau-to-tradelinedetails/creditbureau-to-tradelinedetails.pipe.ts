@@ -26,12 +26,15 @@ export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
     return tradelineFindings.map((finding: ILineItem) => {
       const result = tradelineResult.find((rec) => rec.itemKey == finding.itemKey); //
       const name = tu.parser.subscriberUnparser(finding?.credit?.item?.subscriber);
+      const tradeline = tu.query.lookupUpdatedTradelineFromCreditBureauKey(finding.itemKey, tradelineUpdates);
+
       return {
-        tradeline: tu.query.lookupUpdatedTradelineFromCreditBureauKey(finding.itemKey, tradelineUpdates),
+        tradeline: tradeline,
         summaryItemKey: finding.itemKey,
         summaryItemType: CreditBureauFindingsType.Trade,
         summaryResult: finding.credit.result,
         summaryResultCode: tu.query.findResultCode(finding.credit.result),
+        summaryReason: finding.credit.reason || 'Not Specified',
         itemKey: result?.itemKey,
         accountType: result?.portfolioTypeDescription,
         dateOpened: result?.dateOpened,

@@ -1,10 +1,14 @@
 import { Component, Input } from '@angular/core';
 import {
-  LATE_PAY_STATUS_CODES,
   COLLECTION_PAY_STATUS_CODES,
   UNKNOWN_PAY_STATUS_CODES,
-  OTHER_PAY_STATUS_CODES,
   ONTIME_PAY_STATUS_CODES,
+  LATE_30_STATUS_CODE,
+  LATE_120_STATUS_CODE,
+  LATE_60_STATUS_CODE,
+  LATE_90_STATUS_CODE,
+  REPOSSESSION_PAY_STATUS_CODE,
+  WAGE_EARNER_PAY_STATUS_CODES,
 } from '@shared/constants';
 import { TradelineIcons } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-icon/constants';
 
@@ -45,11 +49,16 @@ export class TradelinePaymentIconComponent {
    * @returns {TradelineIcons}
    */
   parseCode(code: string): TradelineIcons {
-    if (LATE_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Late;
-    if (UNKNOWN_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Unknown;
-    if (COLLECTION_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Collection;
     if (ONTIME_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Current;
-    if (OTHER_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Other;
+    if (UNKNOWN_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Unknown;
+    if (ONTIME_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.TooNew;
+    if (LATE_30_STATUS_CODE[code.toUpperCase()]) return TradelineIcons.Late30;
+    if (LATE_60_STATUS_CODE[code.toUpperCase()]) return TradelineIcons.Late60;
+    if (LATE_90_STATUS_CODE[code.toUpperCase()]) return TradelineIcons.Late90;
+    if (LATE_120_STATUS_CODE[code.toUpperCase()]) return TradelineIcons.Late120;
+    if (COLLECTION_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.Collection;
+    if (WAGE_EARNER_PAY_STATUS_CODES[code.toUpperCase()]) return TradelineIcons.WageEarner;
+    if (REPOSSESSION_PAY_STATUS_CODE[code.toUpperCase()]) return TradelineIcons.Repossession;
     return TradelineIcons.Unknown;
   }
 }

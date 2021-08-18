@@ -168,6 +168,22 @@ export class TransunionQueries extends TransunionBase {
       return trade ? [trade] : [];
     }
   }
+
+  /**
+   * uses the Tri Merge TrueLink report and returns the tradeline partitions array
+   * @param report
+   * @returns
+   */
+  static lookupUpdatedTradelineFromInvestigationResults(report: ITrueLinkCreditReportType): ITradeLinePartition[] | [] {
+    if (!report) return [];
+    const partition = report.TradeLinePartition;
+    if (partition instanceof Array) {
+      return partition;
+    } else {
+      return partition ? [partition] : [];
+    }
+  }
+
   /**
    * uses the item key from the credit bureau findings and looks up the update partition in the merge report
    * @param cbKey
@@ -183,25 +199,10 @@ export class TransunionQueries extends TransunionBase {
     return partition.find((item: ITradeLinePartition) => {
       const code = item.Tradeline?.subscriberCode;
       console.log('lookupInvestigationResultFromCreditBureau  ===> start');
-      console.log('code ===> ', code);
+      console.log('tradeline code ===> ', code);
       console.log('memberCode ===> ', memberCode);
-      return code === memberCode;
+      return code == memberCode;
     });
-  }
-
-  /**
-   * uses the Tri Merge TrueLink report and returns the tradeline partitions array
-   * @param report
-   * @returns
-   */
-  static lookupUpdatedTradelineFromInvestigationResults(report: ITrueLinkCreditReportType): ITradeLinePartition[] | [] {
-    if (!report) return [];
-    const partition = report.TradeLinePartition;
-    if (partition instanceof Array) {
-      return partition;
-    } else {
-      return partition ? [partition] : [];
-    }
   }
 
   /**
@@ -233,10 +234,7 @@ export class TransunionQueries extends TransunionBase {
     if (!partition) return;
     return partition.find((item: IPublicPartition) => {
       const code = item.PublicRecord?.subscriberCode;
-      console.log('lookupUpdatedPublicRecordFromCreditBureauKey  ===> start');
-      console.log('code ===> ', code);
-      console.log('memberCode ===> ', memberCode);
-      return code === memberCode;
+      return code == memberCode;
     });
   }
 

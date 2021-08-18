@@ -26,22 +26,33 @@ export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
     return publicRecordFindings.map((finding: ILineItem) => {
       const result = publicRecordResult.find((rec) => rec.itemKey == finding.itemKey); //
       const name = tu.parser.subscriberUnparser(result?.subscriber);
+      const publicPartition = tu.query.lookupUpdatedPublicRecordFromCreditBureauKey(
+        finding.itemKey,
+        publicRecordUpdates,
+      );
+      console.log('public record findings map:updates===> ', publicRecordUpdates);
+      console.log('public record findings map:result===> ', result);
+      console.log('public record findings map:result===> ', name);
+      console.log('public record findings map:partition===> ', publicPartition);
       return {
-        publicPartition: tu.query.lookupUpdatedPublicRecordFromCreditBureauKey(finding.itemKey, publicRecordUpdates),
+        publicPartition: publicPartition,
         summaryItemKey: finding.itemKey,
         summaryItemType: CreditBureauFindingsType.PublicRecord,
         summaryResult: finding.credit.result,
         summaryResultCode: tu.query.findResultCode(finding.credit.result),
+        summaryReason: finding.credit.reason || 'Not Specified',
         itemKey: result?.itemKey,
-        courtType: result?.source?.description,
+        publicItemType: result?.source?.description,
+        // courtType: result?.source?.description,
+        // courtName: result?.subscriber?.name?.unparsed,
+        courtLocation: result?.subscriber?.address?.location?.unparsed,
         docketNumber: result?.docketNumber,
         responsibility: result?.ECOADescription,
-        estimatedRemoval: result?.estimatedDateOfDeletion,
+        expirationDate: result?.estimatedDateOfDeletion,
         dateUpdated: result?.dateEffective,
         dateFiled: result?.dateFiled,
         datePaid: result?.datePaid,
-        type: result?.publicRecordTypeDescription,
-        name: name,
+        courtNameArray: name,
         amount: '', // TODO follow up on this missing field
       } as IPublicRecordCreditBureauConfig;
     });

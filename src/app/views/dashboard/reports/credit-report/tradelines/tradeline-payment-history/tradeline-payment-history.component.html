@@ -33,25 +33,12 @@
   </div>
 </div>
 <!-- legend -->
-<div class="flex flex-wrap">
+<div class="mt-2 mb-6 flex flex-wrap">
   <div class="flex items-center whitespace-nowrap mr-4">
-    <brave-tradeline-payment-icon code="C"></brave-tradeline-payment-icon>
-    <p style="font-size: 0.5rem" class="ml-1 whitespace-nowrap">= On-Time</p>
-  </div>
-  <div class="flex items-center whitespace-nowrap mr-4">
-    <brave-tradeline-payment-icon code="1"></brave-tradeline-payment-icon>
-    <p style="font-size: 0.5rem" class="ml-1 whitespace-nowrap">= 30-180 Day Late Payment</p>
-  </div>
-  <div class="flex items-center whitespace-nowrap mr-4">
-    <brave-tradeline-payment-icon code="U"></brave-tradeline-payment-icon>
-    <p style="font-size: 0.5rem" class="ml-1 whitespace-nowrap">= Unknown</p>
-  </div>
-  <div class="flex items-center whitespace-nowrap mr-4">
-    <brave-tradeline-payment-icon code="9"></brave-tradeline-payment-icon>
-    <p style="font-size: 0.5rem" class="ml-1 whitespace-nowrap">= Collections/Chargeoff</p>
-  </div>
-  <div class="flex items-center whitespace-nowrap mr-4">
-    <brave-tradeline-payment-icon code="8R"></brave-tradeline-payment-icon>
-    <p style="font-size: 0.5rem" class="ml-1 whitespace-nowrap">= Other Symbols</p>
+    <p class="text-xs whitespace-nowrap">
+      <a class="text-dk-gray underline hover:cursor-pointer" (click)="modal?.toggleShowModal()">Payment/Remarks Key</a>
+    </p>
   </div>
 </div>
+
+<brave-tradeline-payment-icon-key></brave-tradeline-payment-icon-key>

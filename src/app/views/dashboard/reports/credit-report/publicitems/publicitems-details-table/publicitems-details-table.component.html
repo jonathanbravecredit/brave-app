@@ -11,9 +11,30 @@
   </div>
 
   <!-- Court Name -->
-  <div class="py-2 px-1">
+  <div *ngIf="config.courtName" class="py-2 px-1">
     <brave-base-table-row [label]="mapper['courtName'] || 'Name'" [value]="config.courtName"></brave-base-table-row>
   </div>
+
+    <!-- Court Name -->
+    <div *ngIf="!config.courtName && config.courtNameArray" class="py-2 px-1">
+      <brave-base-table-row [label]="mapper['courtName'] || 'Name'" [injected]="true" >
+        <div class="flex flex-col w-6/12">
+          <ng-container *ngIf="config.courtNameArray?.length; else noName">
+            <p
+              *ngFor="let name of config.courtNameArray"
+              class="text-xs text-dk-gray text-opacity-50 text-right mb-1"
+            >
+              {{ name }}
+            </p>
+          </ng-container>
+          <ng-template #noName>
+            <p class="text-xs text-dk-gray text-opacity-50 text-right mb-1">
+              {{ bcMissing }}
+            </p>
+          </ng-template>
+        </div>
+      </brave-base-table-row>
+    </div>
 
   <!-- Date Filed -->
   <div class="py-2 px-1">
@@ -50,12 +71,19 @@
     ></brave-base-table-row>
   </div>
 
+  <!-- Responsibility -->
+  <div *ngIf="config.responsibility" class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['responsibility'] || 'Responsibility'"
+      [value]="config.responsibility"
+    ></brave-base-table-row>
+  </div>
+
   <!-- Expiration Date -->
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['expirationDate'] || 'Estimated month and year that this item will be removed'"
       [value]="config.expirationDate"
-      [valueType]="'date'"
     ></brave-base-table-row>
   </div>
 

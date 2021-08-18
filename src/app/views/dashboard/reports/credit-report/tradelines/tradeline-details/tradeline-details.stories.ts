@@ -2,6 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { DashboardModule } from '@views/dashboard/dashboard.module';
 import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/tradeline-details.component';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
 
@@ -11,7 +12,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule],
+      imports: [SharedComponentsModule, DashboardModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {

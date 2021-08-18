@@ -126,6 +126,7 @@ export interface ICredit {
   item: IItem;
   description: IDescription;
   result: string;
+  reason?: string;
 }
 
 export interface IItem {

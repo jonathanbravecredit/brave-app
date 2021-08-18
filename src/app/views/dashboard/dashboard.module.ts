@@ -69,6 +69,7 @@ import { BaseExceptionPureView } from '@views/dashboard/exceptions/base-exceptio
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
 import { DisputesSuccessView } from './disputes/disputes-success/disputes-success/disputes-success.view';
 import { DisputesSuccessPureView } from './disputes/disputes-success/disputes-success-pure/disputes-success-pure.view';
+import { TradelinePaymentIconKeyComponent } from './reports/credit-report/tradelines/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
 
 const components = [
   DashboardComponent,
@@ -121,6 +122,7 @@ const components = [
   TradelineDetailsTableComponent,
   TradelinePaymentsComponent,
   TradelinePaymentIconComponent,
+  TradelinePaymentIconKeyComponent,
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
   TradelineDetailsComponent,

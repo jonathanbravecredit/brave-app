@@ -34,8 +34,18 @@
   .brave-body2-semibold {
     @apply font-sans font-semibold text-sm text-coolGray-900;
   }
+  .brave-body3 {
+    @apply font-sans text-xs text-coolGray-900;
+  }
+  .brave-body3-semibold {
+    @apply font-sans font-semibold text-xs text-coolGray-900;
+  }
 
   .brave-waiting-cursor {
     cursor: pointer !important;
+  }
+
+  .brave-primary-text-color {
+    @apply text-coolGray-900;
   }
 }
