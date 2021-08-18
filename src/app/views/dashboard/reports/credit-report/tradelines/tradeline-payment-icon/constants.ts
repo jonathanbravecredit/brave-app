@@ -8,13 +8,15 @@
  * @property {string} Other
  */
 export enum TradelineIcons {
+  Current = 'current',
+  Unknown = 'unknown',
+  TooNew = 'toonew',
   Late30 = 'late30',
   Late60 = 'late60',
   Late90 = 'late90',
   Late120 = 'late120',
   Collection = 'collection',
+  WageEarner = 'wageearner',
   Repossession = 'repossession',
-  Unknown = 'unknown',
-  Current = 'current',
   Other = 'other',
 }

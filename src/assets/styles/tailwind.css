@@ -1890,6 +1890,10 @@ select {
   gap: 1rem;
 }
 
+.gap-y-2 {
+  row-gap: 0.5rem;
+}
+
 .space-y-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
@@ -3168,6 +3172,10 @@ select {
     display: none;
   }
 
+  .sm\:max-w-sm {
+    max-width: 24rem;
+  }
+
   .sm\:max-w-screen-sm {
     max-width: 640px;
   }
@@ -3258,6 +3266,10 @@ select {
 
   .md\:min-w-full {
     min-width: 100%;
+  }
+
+  .md\:max-w-md {
+    max-width: 28rem;
   }
 
   .md\:max-w-screen-md {
