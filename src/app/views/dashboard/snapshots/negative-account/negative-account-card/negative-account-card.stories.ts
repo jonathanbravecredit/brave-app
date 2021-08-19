@@ -4,6 +4,10 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { NegativeAccountCardComponent } from '@views/dashboard/snapshots/negative-account/negative-account-card/negative-account-card.component';
 import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
+import {
+  REVOLVING_PARTITION,
+  REVOLVING_SUBSCRIBER,
+} from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/mocks';
 
 export default {
   title: 'app/components/cards/negative-account',
@@ -19,21 +23,17 @@ export default {
 } as Meta;
 
 const data = {
-  creditorName: 'A.R.M. Solutions',
-  lastReported: '29/09/2020',
-  accountTypeDescription: '90-Day Late Payment',
-  accountTypeDescriptionValue: 'Open',
+  tradeline: REVOLVING_PARTITION,
+  subscriber: REVOLVING_SUBSCRIBER,
+  creditorName: 'Negative Nelly',
+  lastReported: '2020-01-01',
+  accountTypeDescription: 'Revolving',
+  accountTypeDescriptionValue: 'Predators R Us',
   originalCreditor: 'Original Creditor',
-  originalCreditorValue: 'Bank Of America',
-  disputeFlag: 'Previously Disputed?',
+  originalCreditorValue: 'Bank of America',
+  disputeFlag: 'Previously Disputed',
   disputeFlagValue: 'No',
-  accountDetail: {
-    accountNumber: '066611222',
-    typeOfCollection: 'Collections',
-    amountPastDue: 700,
-    dateOpened: '04/12/2018',
-    dateLastPayment: '04/21/2018',
-  },
+  consumerStatement: 'None',
 } as INegativeAccountCardInputs;
 
 const Template: Story<NegativeAccountCardComponent> = (args: any) => ({

@@ -27,17 +27,7 @@ const dispute: IDisputeTradelineItem = {
   accountTypeDescription: 'Example Type',
   accountTypeDescriptionValue: 'Example Type',
   originalCreditor: 'Original Creditor',
-  originalCreditorValue: 'XYZ comp',
   disputeFlag: 'Dispute Flag',
-  disputeFlagValue: 'No',
-  accountDetail: {
-    accountNumber: '123XXXX',
-    typeOfCollection: 'Past Dues',
-    amountPastDue: 0,
-    dateOpened: '1990-01-01',
-    dateLastPayment: '1990-03-01',
-    remarks: 'abc',
-  },
 };
 const Template: Story<DisputesTradelinePureView> = (args: any) => ({
   component: DisputesTradelinePureView,
