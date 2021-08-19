@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { forbearanceInfoContent } from '@views/dashboard/snapshots/forbearance/components/forbearance-info/content';
 
 @Component({
   selector: 'brave-forbearance-info',
@@ -6,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class ForbearanceInfoComponent implements OnInit {
   @Output() clickedInfo: EventEmitter<void> = new EventEmitter();
+  content = forbearanceInfoContent;
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,17 +1,13 @@
 <div class="flex items-center content-center brave-body1-semibold">
   <span class="material-icons-outlined">search</span>
-  <p class="ml-4">Tips for accounts in forbearance:</p>
+  <p class="ml-4">{{ content.p1 }}</p>
 </div>
 <div class="flex items-center content-center brave-body1-semibold">
   <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0)">search</span>
   <div class="ml-4">
     <ul class="list-decimal ml-4 brave-body2">
-      <li class="mt-6"><p class="ml-3.5">Federally-backed loans must be shown as “on-time”</p></li>
-      <li class="mt-6">
-        <p class="ml-3.5 mt-6">Private lenders each have their own policies, so check the terms they give you</p>
-      </li>
-      <li class="mt-6">
-        <p class="ml-3.5 mt-6">If you see an error, dispute it with the lenders to resolve the issue</p>
+      <li *ngFor="let item of content.list1" class="mt-6 font-bold">
+        <p class="ml-3.5 font-normal">{{ item }}</p>
       </li>
     </ul>
   </div>
