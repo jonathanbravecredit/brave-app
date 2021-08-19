@@ -1,16 +1,6 @@
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
-import { IPublicPartition, ISubscriber, ITradeLinePartition, ITrueLinkCreditReportType } from '@shared/interfaces';
-import {
-  ICreditBureau,
-  ILineItem,
-  IProduct,
-  IPublicRecord,
-  ISubjectRecord,
-  ISummarySection,
-  ITrade,
-} from '@shared/interfaces/credit-bureau.interface';
-import { CreditBureauFindingsType, INVESTIGATION_RESULTS_CODE_MAPPING } from '@shared/utils/transunion/constants';
+import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionReportQueries extends TransunionBase {
@@ -89,11 +79,11 @@ export class TransunionReportQueries extends TransunionBase {
    * @param subs
    * @returns
    */
-   static getPublicSubscriberByKey(
+  static getPublicSubscriberByKey(
     publicItem: IPublicPartition | undefined,
     subs: ISubscriber[] = [],
   ): ISubscriber | undefined {
-     const code = publicItem?.PublicRecord?.subscriberCode;
+    const code = publicItem?.PublicRecord?.subscriberCode;
     if (!code || !publicItem) return;
     return subs.find((sub) => {
       return sub.subscriberCode == code;

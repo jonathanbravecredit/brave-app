@@ -7,7 +7,6 @@ export interface ITradelineDetailsConfig {
   accountTypeDescription?: string;
   accountTypeDescriptionValue?: string;
   creditorName?: string;
-  creditorContactDetails?: [string?, string?, string?];
   lastReported?: string;
   originalCreditor?: string;
   creditType?: string;

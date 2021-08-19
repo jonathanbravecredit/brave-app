@@ -156,7 +156,9 @@ export class CreditreportService implements OnDestroy {
   setTradeline(tradeline: ITradeLinePartition): void {
     this.tuTradeline = tradeline;
     this.tuTradeline$.next(tradeline);
-    const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline) || ({} as ISubscriber);
+    let subscribers = this.tuReport.TrueLinkCreditReportType.Subscriber;
+    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+    const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subscribers) || ({} as ISubscriber);
     if (subscriber === undefined) return;
     this.tuTradelineSubscriber = subscriber;
     this.tuTradelineSubscriber$.next(subscriber);
@@ -182,7 +184,9 @@ export class CreditreportService implements OnDestroy {
   setPublicItem(publicItem: IPublicPartition): void {
     this.tuPublicItem = publicItem;
     this.tuPublicItem$.next(publicItem);
-    const subscriber = tu.queries.report.getPublicSubscriberByKey(publicItem) || ({} as ISubscriber);
+    let subscribers = this.tuReport.TrueLinkCreditReportType.Subscriber;
+    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+    const subscriber = tu.queries.report.getPublicSubscriberByKey(publicItem, subscribers) || ({} as ISubscriber);
     if (subscriber === undefined) return;
     this.tuPublicItemSubscriber = subscriber;
     this.tuPublicItemSubscriber$.next(subscriber);

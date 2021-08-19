@@ -24,8 +24,8 @@ export class TransunionReportParsers extends TransunionBase {
   static parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
     if (remarks === undefined) return '';
     return remarks instanceof Array
-      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
-      : remarks.customRemark || '';
+      ? remarks.map((r) => r.RemarkCode?.description || '').reduce((a, b) => `${a} \n ${b}`)
+      : remarks.RemarkCode?.description || '';
   }
 
   /**
@@ -100,12 +100,13 @@ export class TransunionReportParsers extends TransunionBase {
    * @param subscriber
    * @returns
    */
-  static unparseSubscriber(subscriber: ISubscriber | undefined): [string, string, string] {
+  static unparseSubscriber(subscriber: ISubscriber | undefined): [string?, string?, string?] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
-    const name = subscriber.name || this.bcMissing;
-    const address = this.unparseAddress(subscriber.CreditAddress) || this.bcMissing;
-    const phone = `${subscriber.telephone}` || this.bcMissing;
-    return [name, address, phone];
+    const name = subscriber.name;
+    const address = this.unparseAddress(subscriber.CreditAddress);
+    const phone = subscriber.telephone;
+    const filtered = [name, address, phone].filter((x) => x && x.length > 0) as [string, string, string];
+    return filtered;
   }
 
   /**
@@ -114,14 +115,14 @@ export class TransunionReportParsers extends TransunionBase {
    * @returns
    */
   static unparseAddress(address: ICreditAddress | undefined): string {
-    if (!address) return this.bcMissing;
+    if (!address) return '';
     let records: Record<string, any> = address;
     let creditAddress = '';
     for (const key in ADDRESS_LINE_1) {
       const str = !!records[key] ? `${records[key]} ` : '';
       creditAddress = `${creditAddress}${str}`;
     }
-    creditAddress = `${creditAddress.trimEnd()},\n`;
+    creditAddress = `${creditAddress.trimEnd()} \n`;
     for (const key in ADDRESS_LINE_2) {
       let comma = key !== 'postalCode' ? ', ' : '';
       const str = !!records[key] ? `${records[key]}${comma}` : '';

@@ -18,13 +18,16 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
       this.tradeLines = [this.tradeLines];
     }
 
+    let subscribers = report.TrueLinkCreditReportType?.Subscriber;
+    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+
     const consumerStatement =
       tu.parsers.report.parseBorrowerForCreditStatement(report.TrueLinkCreditReportType.Borrower) || '';
 
     const filteredTradelines = this.filterTradelines(this.tradeLines)
       .sortByAccountType(this.tradeLines)
       .sortByDateOpened(this.tradeLines)
-      .mapTradeLineToAccount(this.tradeLines, consumerStatement);
+      .mapTradeLineToAccount(this.tradeLines, subscribers, consumerStatement);
     return filteredTradelines;
   }
 
@@ -63,9 +66,13 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  mapTradeLineToAccount(tradeLines: ITradeLinePartition[], consumerStatement: string): INegativeAccountCardInputs[] {
+  mapTradeLineToAccount(
+    tradeLines: ITradeLinePartition[],
+    subscribers: ISubscriber[],
+    consumerStatement: string,
+  ): INegativeAccountCardInputs[] {
     const negativeAccounts = tradeLines.map((tradeline) => {
-      const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline) || ({} as ISubscriber);
+      const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subscribers) || ({} as ISubscriber);
       const accountTypeDescription = tu.queries.report.getBraveTradelineDescription(tradeline);
       const originalCreditorValue = tu.queries.report.getOriginalCreditor(tradeline);
       const disputeFlagValue = tu.queries.report.getDisputeFlag(tradeline);

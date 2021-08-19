@@ -7,21 +7,14 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
   name: 'tradelineToDetails',
 })
 export class TradelineToDetailsPipe implements PipeTransform {
-  transform(
-    tradeline: ITradeLinePartition | undefined | null,
-    // subscribers: ISubscriber[] | ISubscriber | undefined,
-  ): ITradelineDetailsConfig | undefined {
+  transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | undefined {
     if (!tradeline) return;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
-    // const subs = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
-    // const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subs);
-
     return {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
       accountTypeSymbol: tradeline?.accountTypeSymbol,
       creditorName: tradeline?.Tradeline?.creditorName,
-      creditorContactDetails: [], //tu.parsers.report.unparseSubscriber(subscriber),
       lastReported: tradeline?.Tradeline?.dateReported,
       accountTypeDescription: tu.queries.report.getAccountType(tradeline),
       accountTypeDescriptionValue: tradeline?.Tradeline?.OpenClosed?.description || '',

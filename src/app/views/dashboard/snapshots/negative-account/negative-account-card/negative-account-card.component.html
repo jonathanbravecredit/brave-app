@@ -8,9 +8,8 @@
       <brave-negative-account-card-header [data]="data"></brave-negative-account-card-header>
     </div>
     <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
-      <div *ngIf="data.tradeline | tradelineToDetails as details" class="flex flex-col w-full my-4">
+      <div *ngIf="data.tradeline" class="flex flex-col w-full my-4">
         <brave-tradeline-details
-          [config]="details"
           [tradeline]="data.tradeline"
           [subscriber]="data.subscriber"
           [overrideOpen]="true"

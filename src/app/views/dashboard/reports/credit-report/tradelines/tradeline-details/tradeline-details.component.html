@@ -2,7 +2,7 @@
   <span>Account Details</span>
 </div>
 <div class="card">
-  <ng-container *ngIf="config; else noDetail">
+  <ng-container *ngIf="tradeline | tradelineToDetails as config; else noDetail">
     <!-- ======= AccountDetails Comp ======== -->
     <brave-tradeline-details-table [config]="config"></brave-tradeline-details-table>
 
@@ -12,7 +12,7 @@
         <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
         <brave-tradeline-remarks
           [remarks]="config.remarks || 'None'"
-          [contactDetails]="config.creditorContactDetails"
+          [contactDetails]="tu.parsers.report.unparseSubscriber(subscriber || {})"
           [consumerStatement]="config.customerStatement || 'None'"
           [showFooter]="!disableDispute"
         ></brave-tradeline-remarks>
