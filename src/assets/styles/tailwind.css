@@ -1447,6 +1447,10 @@ select {
   margin-left: auto;
 }
 
+.ml-3\.5 {
+  margin-left: 0.875rem;
+}
+
 .-ml-0 {
   margin-left: 0px;
 }
@@ -1804,6 +1808,10 @@ select {
 
 .list-disc {
   list-style-type: disc;
+}
+
+.list-decimal {
+  list-style-type: decimal;
 }
 
 .grid-cols-2 {
