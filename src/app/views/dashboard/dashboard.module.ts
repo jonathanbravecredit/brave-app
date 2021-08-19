@@ -69,6 +69,13 @@ import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/ba
 import { DisputesSuccessView } from './disputes/disputes-success/disputes-success/disputes-success.view';
 import { DisputesSuccessPureView } from './disputes/disputes-success/disputes-success-pure/disputes-success-pure.view';
 import { TradelinePaymentIconKeyComponent } from './reports/credit-report/tradelines/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
+import { ForbearanceView } from './snapshots/forbearance/forbearance/forbearance.view';
+import { ForbearancePureView } from './snapshots/forbearance/forbearance-pure/forbearance-pure.view';
+import { ForbearanceInfoComponent } from './snapshots/forbearance/components/forbearance-info/forbearance-info.component';
+import { ForbearanceHeaderComponent } from './snapshots/forbearance/components/forbearance-header/forbearance-header.component';
+import { ForbearanceTipsComponent } from './snapshots/forbearance/components/forbearance-tips/forbearance-tips.component';
+import { ForbearanceBandComponent } from './snapshots/forbearance/components/forbearance-band/forbearance-band.component';
+import { ForbearanceAccountsComponent } from './snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
 
 const components = [
   DashboardComponent,
@@ -132,6 +139,13 @@ const components = [
   BaseExceptionView,
   DisputesSuccessView,
   DisputesSuccessPureView,
+  ForbearanceView,
+  ForbearancePureView,
+  ForbearanceInfoComponent,
+  ForbearanceHeaderComponent,
+  ForbearanceTipsComponent,
+  ForbearanceBandComponent,
+  ForbearanceAccountsComponent,
 ];
 
 const pipes = [ParseRiskScorePipe];
