@@ -3,12 +3,13 @@ import {
   ICreditReportCardInputs,
   ReportCardFieldTypes,
 } from '@shared/components/cards/credit-report-card/credit-report-card.component';
-import { NEGATIVE_PAY_STATUS_CODES, POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
+import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
 import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+
 @Pipe({
   name: 'mergereportToCreditreport',
 })
@@ -32,7 +33,7 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @returns
    */
   private sortByCreditReportGroups(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = tu.sorter.sortByCreditReportGroups(tradeLines);
+    this.tradeLines = tu.sorters.report.sortByCreditReportGroups(tradeLines);
     return this;
   }
 
@@ -42,7 +43,7 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @returns
    */
   private sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = tu.sorter.sortTradelineByDateOpened(tradeLines);
+    this.tradeLines = tu.sorters.report.sortTradelineByDateOpened(tradeLines);
     return this;
   }
 

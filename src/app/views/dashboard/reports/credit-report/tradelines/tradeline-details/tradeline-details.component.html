@@ -2,35 +2,42 @@
   <span>Account Details</span>
 </div>
 <div class="card">
-  <!-- ======= AccountDetails Comp ======== -->
-  <brave-tradeline-details-table [config]="config"></brave-tradeline-details-table>
+  <ng-container *ngIf="tradeline | tradelineToDetails as config; else noDetail">
+    <!-- ======= AccountDetails Comp ======== -->
+    <brave-tradeline-details-table [config]="config"></brave-tradeline-details-table>
 
-  <!-- ======= Payment History and Remarks ======== -->
-  <div *ngIf="viewDetail.open$ | async as open">
-    <div class="px-1 max-w-xs">
-      <brave-tradeline-payments [paymentHistory]="paymentHistory"></brave-tradeline-payments>
-      <brave-tradeline-remarks
-        [remarks]="remarks"
-        [address]="address"
-        [consumerStatement]="customerStatement"
-      ></brave-tradeline-remarks>
-    </div>
-    <div class="flex justify-center mb-2">
-      <brave-filled-onlytext-button (click)="showModal = !showModal; this.disputeClicked()"
-        >Dispute in a few clicks</brave-filled-onlytext-button
-      >
-      <brave-onboarding-dispute
-        [showModal]="showModal && !acknowledged"
-        (confirmation)="actionForDispute($event)"
-      ></brave-onboarding-dispute>
-    </div>
-  </div>
+    <!-- ======= Payment History and Remarks ======== -->
+    <ng-container *ngIf="overrideOpen || (viewDetail.open$ | async) as open">
+      <div class="px-1 max-w-xs">
+        <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
+        <brave-tradeline-remarks
+          [remarks]="config.remarks || 'None'"
+          [contactDetails]="tu.parsers.report.unparseSubscriber(subscriber || {})"
+          [consumerStatement]="config.customerStatement || 'None'"
+          [showFooter]="!disableDispute"
+        ></brave-tradeline-remarks>
+      </div>
+      <div *ngIf="!disableDispute" class="flex justify-center mb-2">
+        <brave-filled-onlytext-button (click)="showModal = !showModal; this.disputeClicked()"
+          >Dispute in a few clicks</brave-filled-onlytext-button
+        >
+        <brave-onboarding-dispute
+          [showModal]="showModal && !acknowledged"
+          (confirmation)="actionForDispute($event)"
+        ></brave-onboarding-dispute>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noDetail>
+    <div class="flex flex-col justify-center align-center"><p class="brave-body3">Missing account detail</p></div>
+  </ng-template>
 
   <!-- ======= See payment history button ======== -->
-  <div class="flex justify-center my-6">
+  <div [ngClass]="{ hidden: overrideOpen }" class="flex justify-center my-6">
     <brave-viewdetail-button #viewDetail>
       <p class="text-sm hover:cursor-pointer">See Payment History</p>
     </brave-viewdetail-button>
   </div>
 </div>
-<div class="border-t border-blueGray-300 my-2"></div>
+<div *ngIf="!overrideOpen" class="border-t border-blueGray-300 my-2"></div>

@@ -15,35 +15,28 @@ export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
   ): ITradelineCreditBureauConfig[] | [] {
     if (!creditBureau || !mergeReport) return [];
     const type = CreditBureauFindingsType.Trade;
-    const tradelineFindings: ILineItem[] = tu.query.lookupCreditBureauFindingsByType(creditBureau, type);
-    const tradelineResult: ITrade[] = tu.query.lookupCreditBureauTrades(creditBureau);
-    const tradelineUpdates = tu.query.lookupUpdatedTradelineFromInvestigationResults(mergeReport);
+    const tradelineFindings: ILineItem[] = tu.queries.dispute.listFindingsByType(creditBureau, type);
+    const tradelineResult: ITrade[] = tu.queries.dispute.listTrades(creditBureau);
+    const tradelineUpdates = tu.queries.dispute.listUpdatedTradelines(mergeReport);
     if (!tradelineFindings.length) return [];
-    // go through each filtered finding from CB
-    // find the matching public record result (alson in CB)
-    // match on item key;
-    // map to interface and return
     return tradelineFindings.map((finding: ILineItem) => {
       const result = tradelineResult.find((rec) => rec.itemKey == finding.itemKey); //
-      const name = tu.parser.subscriberUnparser(finding?.credit?.item?.subscriber);
-      const tradeline = tu.query.lookupUpdatedTradelineFromCreditBureauKey(finding.itemKey, tradelineUpdates);
+      const name = tu.parsers.dispute.unparseSubscriber(finding?.credit?.item?.subscriber);
+      // use the updated True link report to grab the subscribe and tradeline data
+      const tradeline = tu.queries.dispute.getUpdatedTradelineByKey(finding.itemKey, tradelineUpdates);
+      const reportSubscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline);
 
       return {
         tradeline: tradeline,
+        subscriber: reportSubscriber,
         summaryItemKey: finding.itemKey,
         summaryItemType: CreditBureauFindingsType.Trade,
         summaryResult: finding.credit.result,
-        summaryResultCode: tu.query.findResultCode(finding.credit.result),
+        summaryResultCode: tu.queries.dispute.getResultCode(finding.credit.result),
         summaryReason: finding.credit.reason || 'Not Specified',
         itemKey: result?.itemKey,
         accountType: result?.portfolioTypeDescription,
-        dateOpened: result?.dateOpened,
-        dateClosed: result?.dateClosed,
-        creditLimit: result?.creditLimit,
-        creditorStreet: result?.subscriber?.address?.street,
-        creditorLocation: result?.subscriber?.address?.location,
-        term: result?.terms,
-        name: name,
+        contactDetails: name,
       } as ITradelineCreditBureauConfig;
     });
   }

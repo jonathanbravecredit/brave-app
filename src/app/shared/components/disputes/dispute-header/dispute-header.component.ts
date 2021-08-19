@@ -4,7 +4,11 @@ import {
   OnboardingDisputeComponent,
   IOnboardingEvent,
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IDisputeItem, IDisputePersonalItem, IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import {
+  IDisputeTradelineItem,
+  IDisputePersonalItem,
+  IDisputePublicItem,
+} from '@shared/services/dispute/dispute.interfaces';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details-table/publicitems-details-table.component';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details-table/tradeline-details-table.component';
@@ -24,7 +28,7 @@ export class DisputeHeaderComponent {
   @Input() showDisputeButton = false;
   @Input() publicdispute: IDisputePublicItem | undefined;
   @Input() personaldispute: IDisputePersonalItem | undefined;
-  @Input() tradelinedispute: IDisputeItem | undefined;
+  @Input() tradelinedispute: IDisputeTradelineItem | undefined;
 
   /*============================================*/
   // pass the components to form the carousel

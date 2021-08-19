@@ -8,7 +8,8 @@
 <div *ngFor="let tradeline of tradelines">
   <brave-tradeline-dispute-card
     [tradeline]="tradeline"
-    (disputeClick)="disputeTradelineClick.emit(tradeline.tradeline)"
+    [subscriber]="tu.queries.report.getTradelineSubscriberByKey(tradeline) || {}"
+    (disputeClick)="disputeTradelineClick.emit(tradeline)"
   ></brave-tradeline-dispute-card>
 </div>
 

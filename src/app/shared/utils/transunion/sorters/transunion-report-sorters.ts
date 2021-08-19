@@ -3,11 +3,14 @@ import { CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
 import { ITradeLinePartition } from '@shared/interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
-export class TransunionSorters extends TransunionBase {
+export class TransunionReportSorters extends TransunionBase {
   constructor() {
     super();
   }
 
+  /*=====================================*/
+  //            ACCOUNT TYPE
+  /*=====================================*/
   /**
    * Sorts the tradeline by the account type
    * @param {ITradeLinePartition[]} tradeLines
@@ -27,20 +30,26 @@ export class TransunionSorters extends TransunionBase {
     ];
   }
 
-    /**
+  /*=====================================*/
+  //         CREDIT REPORT GROUPS
+  /*=====================================*/
+  /**
    * Sorts the tradeline by the account type
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
   static sortByCreditReportGroups(tradeLines: ITradeLinePartition[]): ITradeLinePartition[] {
-      return tradeLines.sort((a, b) => {
-          const symA = a.accountTypeSymbol?.toLowerCase();
-          const symB = b.accountTypeSymbol?.toLowerCase();
-          if (!symA || !symB) return 0;
-          return CREDIT_REPORT_GROUPS[symA]['order'] - CREDIT_REPORT_GROUPS[symB]['order'];
-        })
-    }
+    return tradeLines.sort((a, b) => {
+      const symA = a.accountTypeSymbol?.toLowerCase();
+      const symB = b.accountTypeSymbol?.toLowerCase();
+      if (!symA || !symB) return 0;
+      return CREDIT_REPORT_GROUPS[symA]['order'] - CREDIT_REPORT_GROUPS[symB]['order'];
+    });
+  }
 
+  /*=====================================*/
+  //            DATE OPENED
+  /*=====================================*/
   /**
    * Sorts the tradeline by the date opened keeping the sort by account type
    * @param {ITradeLinePartition[]} tradeLines
@@ -63,6 +72,9 @@ export class TransunionSorters extends TransunionBase {
     ];
   }
 
+  /*=====================================*/
+  //            PAY STATUS
+  /*=====================================*/
   /**
    * Sorts the tradeline by the account type (negative first by default)
    * @param tradeLines

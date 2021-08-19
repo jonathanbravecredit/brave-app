@@ -1,37 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
-import { IPayStatusHistory, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IPayStatusHistory, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Component({
   selector: 'brave-tradelines-pure',
   templateUrl: './tradelines-pure.component.html',
 })
-export class TradelinesPureComponent {
-  /**
-   * Tradelines are individual credit report accounts
-   */
-  @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition;
+export class TradelinesPureComponent implements OnInit {
   /**
    * Config parameters with parsed tradeline data
    */
-  @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
+  @Input() config: ITradelineDetailsConfig | undefined | null = {} as ITradelineDetailsConfig;
   /**
-   * Raw pay status history from Merge Report
+   * Original tradelines are individual credit report accounts
    */
-  @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
+  @Input() tradeline: ITradeLinePartition | undefined | null = {} as ITradeLinePartition;
   /**
-   * Remarks from Merge Report
+   * The matching subscriber (creditor data) to the tradeline detail
    */
-  @Input() remarks: string = '';
-  /**
-   * Remarks from Merge Report
-   */
-  @Input() customerStatement: string = '';
-  /**
-   * Address from Merge Report...TODO need better definition
-   */
-  @Input() address: string = '';
-
+  @Input() subscriber: ISubscriber | undefined | null = {} as ISubscriber;
   /**
    * Flag to indicate they need to still acknowledge dispute terms
    */
@@ -40,7 +27,11 @@ export class TradelinesPureComponent {
    * Event emitter when dispute button clicked on tradeline detail
    * - Pass up the tradlinePartition clicked on from here
    */
-  @Output() disputeClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
+  @Output() disputeClick: EventEmitter<ITradeLinePartition | undefined | null> = new EventEmitter();
 
   constructor() {}
+
+  ngOnInit(): void {
+    console.log('current subscriber ==> ', this.subscriber);
+  }
 }

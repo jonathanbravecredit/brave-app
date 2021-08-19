@@ -1,8 +1,8 @@
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
-import { TransunionParsers } from '@shared/utils/transunion/transunion-parsers';
-import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
+import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
+import { TransunionQueries } from '@shared/utils/transunion/queries/transunion-queries';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 export class TransunionMappers extends TransunionBase {
@@ -36,11 +36,11 @@ export class TransunionMappers extends TransunionBase {
         ? [borrower.BorrowerTelephone]
         : [];
 
-    const unNames = names.map((name) => this.parser.nameUnparser(name));
-    const unAddress = this.parser.addressUnparser(currAddress?.CreditAddress);
-    const unPrevAddress = prevAddress.map((addr) => this.parser.addressUnparser(addr?.CreditAddress));
-    const unPhones = phones.map((phone) => this.parser.phoneUnparser(phone?.PhoneNumber));
-    const unEmployers = employers.map((emp) => this.parser.employerUnparser(emp));
+    const unNames = names.map((name) => this.parser.report.unparseName(name));
+    const unAddress = this.parser.report.unparseAddress(currAddress?.CreditAddress);
+    const unPrevAddress = prevAddress.map((addr) => this.parser.report.unparseAddress(addr?.CreditAddress));
+    const unPhones = phones.map((phone) => this.parser.report.unparsePhone(phone?.PhoneNumber));
+    const unEmployers = employers.map((emp) => this.parser.report.unparseEmployer(emp));
     return {
       personalItem: borrower,
       ssn: `${borrower.SocialSecurityNumber}`,

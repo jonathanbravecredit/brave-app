@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
-import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
+import { IPayStatusHistory, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 /**
  * @property {ITradelineDetailsConfig} config
@@ -19,37 +20,34 @@ import { IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
 })
 export class TradelineDetailsComponent {
   /**
-   * Config parameters with parsed tradeline data
+   * Original tradelines are individual credit report accounts
    */
-  @Input() config: ITradelineDetailsConfig = {} as ITradelineDetailsConfig;
+  @Input() tradeline: ITradeLinePartition | undefined | null = {} as ITradeLinePartition;
   /**
-   * Payments Status History from Merge Report
+   * The matching subscriber (creditor data) to the tradeline detail
    */
-  @Input() paymentHistory: IPayStatusHistory | undefined = {} as IPayStatusHistory;
-  /**
-   * Credit Statement from Merge Report
-   */
-  @Input() customerStatement: string = '';
-  /**
-   * Remarks from Merge Report
-   */
-  @Input() remarks: string = '';
-  /**
-   * Address from Merge Report...TODO need better definition
-   */
-  @Input() address: string = '';
+  @Input() subscriber: ISubscriber | undefined | null = {} as ISubscriber;
   /**
    * Flag to indicate they need to still acknowledge dispute terms
    */
-  @Input() acknowledged: boolean = false;
+  @Input() acknowledged: boolean = false; // TODO replace with a config value
   /**
    * Event emitter when dispute button clicked on tradeline detail
    */
   @Output() disputeClick: EventEmitter<void> = new EventEmitter();
   /**
+   * Flag to disable the dispute capabilities of component
+   */
+  @Input() disableDispute: boolean = false;
+  /**
+   * Flag to start with the payment history open and not show the show payment button
+   */
+  @Input() overrideOpen: boolean = false;
+  /**
    * Toggle to open dispute disclaimer modal
    */
   showModal: boolean = false;
+  public tu = TransunionUtil;
 
   constructor() {}
 

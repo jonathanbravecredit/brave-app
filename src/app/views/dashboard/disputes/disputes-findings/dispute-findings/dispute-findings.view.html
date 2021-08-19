@@ -3,6 +3,7 @@
     <ng-container *ngIf="disputes | disputesToDispute : params.id as dispute">
       <ng-container *ngIf="dispute | disputeToDisputeFinding as findings">
         <brave-dispute-findings-pure
+          [findings]="findings"
           [reportCreatedAt]="findings.reportCreatedAt"
           [fileIdentificationNumber]="findings.fileIdentificationNumber"
           [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"

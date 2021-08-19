@@ -5,7 +5,9 @@ export interface ITradelineDetailsConfig {
   accountNumber?: string;
   accountTypeSymbol?: string;
   accountTypeDescription?: string;
+  accountTypeDescriptionValue?: string;
   creditorName?: string;
+  lastReported?: string;
   originalCreditor?: string;
   creditType?: string;
   dateOpened?: string;
@@ -24,6 +26,8 @@ export interface ITradelineDetailsConfig {
   highestBalance?: number | string;
   disputeFlag?: string;
   customerStatement?: string;
+  payStatus?: string;
+  maxDelinquency?: string;
   status?: string;
   openClosed?: string;
   remarks?: string;

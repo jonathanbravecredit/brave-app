@@ -1,3 +1,4 @@
+import { IRemark } from '@shared/interfaces/common-tu.interface';
 import {
   IBorrower,
   IBorrowerName,
@@ -5,20 +6,12 @@ import {
   ICreditStatement,
   IEmployer,
   IPhoneNumber,
-  IRemark,
-} from '@shared/interfaces';
-import {
-  ICreditBureau,
-  IProduct,
-  IPublicRecord,
-  ISubjectRecord,
   ISubscriber,
-  ITrade,
-} from '@shared/interfaces/credit-bureau.interface';
-import { NAME_MAP, ADDRESS_LINE_1, ADDRESS_LINE_2 } from '@shared/utils/transunion/constants';
+} from '@shared/interfaces/merge-report.interface';
+import { ADDRESS_LINE_1, ADDRESS_LINE_2, NAME_MAP } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
-export class TransunionParsers extends TransunionBase {
+export class TransunionReportParsers extends TransunionBase {
   constructor() {
     super();
   }
@@ -31,8 +24,8 @@ export class TransunionParsers extends TransunionBase {
   static parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
     if (remarks === undefined) return '';
     return remarks instanceof Array
-      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
-      : remarks.customRemark || '';
+      ? remarks.map((r) => r.RemarkCode?.description || '').reduce((a, b) => `${a} \n ${b}`)
+      : remarks.RemarkCode?.description || '';
   }
 
   /**
@@ -60,7 +53,7 @@ export class TransunionParsers extends TransunionBase {
    * @param borrowerName
    * @returns
    */
-  static nameUnparser(borrowerName: IBorrowerName | undefined): string {
+  static unparseName(borrowerName: IBorrowerName | undefined): string {
     if (!borrowerName) return this.bcMissing;
     if (!borrowerName.Name) return this.bcMissing;
     const name: Record<string, any> = borrowerName.Name;
@@ -74,37 +67,15 @@ export class TransunionParsers extends TransunionBase {
   }
 
   /**
-   * Reconstitutes the borrower address into one string with line break
-   * @param address
-   * @returns
-   */
-  static addressUnparser(address: ICreditAddress | undefined): string {
-    if (!address) return this.bcMissing;
-    let records: Record<string, any> = address;
-    let creditAddress = '';
-    for (const key in ADDRESS_LINE_1) {
-      const str = !!records[key] ? `${records[key]} ` : '';
-      creditAddress = `${creditAddress}${str}`;
-    }
-    creditAddress = `${creditAddress.trimEnd()},\n`;
-    for (const key in ADDRESS_LINE_2) {
-      let comma = key !== 'postalCode' ? ', ' : '';
-      const str = !!records[key] ? `${records[key]}${comma}` : '';
-      creditAddress = `${creditAddress}${str}`;
-    }
-    return creditAddress;
-  }
-
-  /**
    * Reconstitutes the borrower employers with address into one string with line break
    * @param employer
    * @returns
    */
-  static employerUnparser(employer: IEmployer | undefined): string {
+  static unparseEmployer(employer: IEmployer | undefined): string {
     if (!employer) return this.bcMissing;
     if (!employer.name) return this.bcMissing;
 
-    let empAddress = employer.CreditAddress ? `\n${this.addressUnparser(employer.CreditAddress)}` : '';
+    let empAddress = employer.CreditAddress ? `\n${this.unparseAddress(employer.CreditAddress)}` : '';
     empAddress = empAddress.trim() === ',' ? '' : empAddress;
     let str = `${employer.name}${empAddress}`;
     return str;
@@ -115,7 +86,7 @@ export class TransunionParsers extends TransunionBase {
    * @param phone
    * @returns
    */
-  static phoneUnparser(phone: IPhoneNumber | undefined): string {
+  static unparsePhone(phone: IPhoneNumber | undefined): string {
     if (!phone) return this.bcMissing;
     let area = phone.AreaCode ? `${phone.AreaCode}` : '';
     let main = phone.Number ? `${phone.Number}` : '';
@@ -125,18 +96,38 @@ export class TransunionParsers extends TransunionBase {
   }
 
   /**
-   * Reconstitutes the investigation results public record, subscriber name, address, and phone
-   * - this is typically the court house name, location, and phone for bankruptcy
+   * Reconstitutes the merge report subscriber name, address, and phone
    * @param subscriber
    * @returns
    */
-  static subscriberUnparser(subscriber: ISubscriber | undefined): [string, string, string] {
+  static unparseSubscriber(subscriber: ISubscriber | undefined): [string?, string?, string?] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
-    const name = subscriber.name.unparsed || this.bcMissing;
-    const address = subscriber.address.street.unparsed
-      ? `${subscriber.address.street.unparsed} ${subscriber.address.location.unparsed}`
-      : subscriber.address.location.unparsed || this.bcMissing;
-    const phone = subscriber.phone.number.unparsed || this.bcMissing;
-    return [name, address, phone];
+    const name = subscriber.name;
+    const address = this.unparseAddress(subscriber.CreditAddress);
+    const phone = subscriber.telephone;
+    const filtered = [name, address, phone].filter((x) => x && x.length > 0) as [string, string, string];
+    return filtered;
+  }
+
+  /**
+   * Reconstitutes the borrower address into one string with line break
+   * @param address
+   * @returns
+   */
+  static unparseAddress(address: ICreditAddress | undefined): string {
+    if (!address) return '';
+    let records: Record<string, any> = address;
+    let creditAddress = '';
+    for (const key in ADDRESS_LINE_1) {
+      const str = !!records[key] ? `${records[key]} ` : '';
+      creditAddress = `${creditAddress}${str}`;
+    }
+    creditAddress = `${creditAddress.trimEnd()} \n`;
+    for (const key in ADDRESS_LINE_2) {
+      let comma = key !== 'postalCode' ? ', ' : '';
+      const str = !!records[key] ? `${records[key]}${comma}` : '';
+      creditAddress = `${creditAddress}${str}`;
+    }
+    return creditAddress;
   }
 }

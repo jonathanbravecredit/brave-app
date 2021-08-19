@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
 import { NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
-import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
+import { ITradeLinePartition, IMergeReport, ISubscriber } from '@shared/interfaces/merge-report.interface';
 import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
@@ -18,12 +18,16 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
       this.tradeLines = [this.tradeLines];
     }
 
-    const consumerStatement = tu.parser.parseBorrowerForCreditStatement(report.TrueLinkCreditReportType.Borrower) || '';
+    let subscribers = report.TrueLinkCreditReportType?.Subscriber;
+    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+
+    const consumerStatement =
+      tu.parsers.report.parseBorrowerForCreditStatement(report.TrueLinkCreditReportType.Borrower) || '';
 
     const filteredTradelines = this.filterTradelines(this.tradeLines)
       .sortByAccountType(this.tradeLines)
       .sortByDateOpened(this.tradeLines)
-      .mapTradeLineToAccount(this.tradeLines, consumerStatement);
+      .mapTradeLineToAccount(this.tradeLines, subscribers, consumerStatement);
     return filteredTradelines;
   }
 
@@ -33,7 +37,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
    * @returns
    */
   filterTradelines(tradeLines: ITradeLinePartition[]): MergereportToNegativeTradelinesPipe {
-    this.tradeLines = tu.filter.filterTradelinesByStatusCodes(tradeLines, NEGATIVE_PAY_STATUS_CODES);
+    this.tradeLines = tu.filters.filterTradelinesByStatusCodes(tradeLines, NEGATIVE_PAY_STATUS_CODES);
     return this;
   }
 
@@ -43,7 +47,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
    * @returns
    */
   sortByAccountType(tradeLines: ITradeLinePartition[]): MergereportToNegativeTradelinesPipe {
-    this.tradeLines = tu.sorter.sortTradelineByAccountType(tradeLines);
+    this.tradeLines = tu.sorters.report.sortTradelineByAccountType(tradeLines);
     return this;
   }
 
@@ -53,7 +57,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
    * @returns
    */
   sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToNegativeTradelinesPipe {
-    this.tradeLines = tu.sorter.sortTradelineByDateOpened(tradeLines);
+    this.tradeLines = tu.sorters.report.sortTradelineByDateOpened(tradeLines);
     return this;
   }
 
@@ -62,27 +66,28 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  mapTradeLineToAccount(tradeLines: ITradeLinePartition[], consumerStatement: string): INegativeAccountCardInputs[] {
-    const negativeAccounts = tradeLines.map((item) => {
+  mapTradeLineToAccount(
+    tradeLines: ITradeLinePartition[],
+    subscribers: ISubscriber[],
+    consumerStatement: string,
+  ): INegativeAccountCardInputs[] {
+    const negativeAccounts = tradeLines.map((tradeline) => {
+      const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subscribers) || ({} as ISubscriber);
+      const accountTypeDescription = tu.queries.report.getBraveTradelineDescription(tradeline);
+      const originalCreditorValue = tu.queries.report.getOriginalCreditor(tradeline);
+      const disputeFlagValue = tu.queries.report.getDisputeFlag(tradeline);
       return {
-        tradeline: item,
-        creditorName: item.Tradeline?.creditorName || '',
-        lastReported: item.Tradeline?.dateReported || '',
-        accountTypeDescription: tu.query.lookupBraveTradelineDescription(item),
-        accountTypeDescriptionValue: item.Tradeline?.OpenClosed?.description || '',
+        tradeline: tradeline,
+        subscriber: subscriber,
+        creditorName: tradeline.Tradeline?.creditorName || '',
+        lastReported: tradeline.Tradeline?.dateReported || '',
+        accountTypeDescription: accountTypeDescription,
+        accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
         disputeFlag: 'Previously Disputed?',
         originalCreditor: 'Original Creditor',
-        originalCreditorValue: tu.query.lookupOriginalCreditor(item),
-        disputeFlagValue: tu.query.lookupDisputeFlag(item),
-        accountDetail: {
-          accountNumber: item.Tradeline?.accountNumber || '',
-          typeOfCollection: item.accountTypeAbbreviation || '',
-          amountPastDue: item.Tradeline?.currentBalance || 0,
-          dateOpened: item.Tradeline?.dateOpened || '',
-          dateLastPayment: item.Tradeline?.GrantedTrade?.dateLastPayment || '',
-          remarks: tu.parser.parseRemarks(item.Tradeline?.Remark),
-          consumerStatement: consumerStatement,
-        },
+        originalCreditorValue: originalCreditorValue,
+        disputeFlagValue: disputeFlagValue,
+        consumerStatement: consumerStatement,
       };
     });
     return negativeAccounts;

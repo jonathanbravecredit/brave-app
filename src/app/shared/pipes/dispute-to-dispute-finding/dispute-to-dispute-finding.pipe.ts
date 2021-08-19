@@ -2,18 +2,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ICreditBureau, IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IDisputeToDisputeFindingOutput {
-  reportCreatedAt: string;
-  fileIdentificationNumber: string;
   status: string;
-  // resultCode: string;
+  reportCreatedAt: string;
+  totalDisputedItems?: string;
+  estimatedCompletionDate?: string;
+  fileIdentificationNumber: string;
   creditBureau?: ICreditBureau;
   investigationResults?: ITrueLinkCreditReportType;
-  // type: 'tradeline' | 'public-record' | 'personal-info';
-  estimatedCompletionDate?: string;
-  totalDisputedItems?: string;
 }
 
 @Pipe({
@@ -37,15 +35,15 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
       ? tempReport?.TrueLinkCreditReportType
       : tempReport?.trueLinkCreditReportType;
 
-    const disputeItems: IDisputeItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
+    const disputeItems: IDisputeTradelineItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
     if (!creditBureau || !disputeItems) return;
     return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
   }
 
   mapOpenDispute(dispute: DisputeInput): IDisputeToDisputeFindingOutput {
     return {
-      reportCreatedAt: dispute.openDisputes?.openDate || '--',
       status: 'open',
+      reportCreatedAt: dispute.openDisputes?.openDate || '--',
       fileIdentificationNumber: dispute.disputeLetterCode || '--',
       estimatedCompletionDate: dispute.openDisputes?.estimatedCompletionDate || '--',
       totalDisputedItems: `${dispute.openDisputes?.totalDisputedItems || '--'}`,
@@ -53,14 +51,14 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
   }
 
   mapClosedDispute(
-    disputeItems: IDisputeItem,
+    disputeItems: IDisputeTradelineItem,
     dispute: DisputeInput,
     creditBureau: IDisputeCreditBureau,
     investigationResults: ITrueLinkCreditReportType,
   ): IDisputeToDisputeFindingOutput {
     return {
-      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
       status: 'closed',
+      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
       fileIdentificationNumber: `${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
       creditBureau: creditBureau.creditBureau,
       investigationResults: investigationResults,

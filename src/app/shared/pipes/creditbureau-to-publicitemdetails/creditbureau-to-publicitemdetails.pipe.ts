@@ -15,31 +15,20 @@ export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
   ): IPublicRecordCreditBureauConfig[] | [] {
     if (!creditBureau || !mergeReport) return [];
     const type = CreditBureauFindingsType.PublicRecord;
-    const publicRecordFindings: ILineItem[] = tu.query.lookupCreditBureauFindingsByType(creditBureau, type);
-    const publicRecordResult: IPublicRecord[] = tu.query.lookupCreditBureauPublicRecords(creditBureau);
-    const publicRecordUpdates = tu.query.lookupUpdatedPublicRecordFromInvestigationResults(mergeReport);
+    const publicRecordFindings: ILineItem[] = tu.queries.dispute.listFindingsByType(creditBureau, type);
+    const publicRecordResult: IPublicRecord[] = tu.queries.dispute.listPublicRecords(creditBureau);
+    const publicRecordUpdates = tu.queries.dispute.listUpdatedPublicRecords(mergeReport);
     if (!publicRecordFindings.length) return [];
-    // go through each filtered finding from CB
-    // find the matching public record result (alson in CB)
-    // match on item key;
-    // map to interface and return
     return publicRecordFindings.map((finding: ILineItem) => {
       const result = publicRecordResult.find((rec) => rec.itemKey == finding.itemKey); //
-      const name = tu.parser.subscriberUnparser(result?.subscriber);
-      const publicPartition = tu.query.lookupUpdatedPublicRecordFromCreditBureauKey(
-        finding.itemKey,
-        publicRecordUpdates,
-      );
-      console.log('public record findings map:updates===> ', publicRecordUpdates);
-      console.log('public record findings map:result===> ', result);
-      console.log('public record findings map:result===> ', name);
-      console.log('public record findings map:partition===> ', publicPartition);
+      const name = tu.parsers.dispute.unparseSubscriber(result?.subscriber);
+      const publicPartition = tu.queries.dispute.getUpdatedPublicRecordByKey(finding.itemKey, publicRecordUpdates);
       return {
         publicPartition: publicPartition,
         summaryItemKey: finding.itemKey,
         summaryItemType: CreditBureauFindingsType.PublicRecord,
         summaryResult: finding.credit.result,
-        summaryResultCode: tu.query.findResultCode(finding.credit.result),
+        summaryResultCode: tu.queries.dispute.getResultCode(finding.credit.result),
         summaryReason: finding.credit.reason || 'Not Specified',
         itemKey: result?.itemKey,
         publicItemType: result?.source?.description,

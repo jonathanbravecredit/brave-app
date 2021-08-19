@@ -7,7 +7,8 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 })
 export class MergereportToConsumerStatementsPipe implements PipeTransform {
   transform(report: IMergeReport): string {
-    const consumerStatement = tu.parser.parseBorrowerForCreditStatement(report.TrueLinkCreditReportType.Borrower) || '';
+    const consumerStatement =
+      tu.parsers.report.parseBorrowerForCreditStatement(report.TrueLinkCreditReportType.Borrower) || '';
     return consumerStatement;
   }
 }

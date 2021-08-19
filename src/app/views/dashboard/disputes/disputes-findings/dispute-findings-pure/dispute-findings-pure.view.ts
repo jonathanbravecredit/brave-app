@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { IDisputeToDisputeFindingOutput } from '@shared/pipes/dispute-to-dispute-finding/dispute-to-dispute-finding.pipe';
 import { CreditBureauFindingsType } from '@shared/utils/transunion/constants';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import {
@@ -14,14 +14,16 @@ import {
 })
 export class DisputeFindingsPureView implements OnInit {
   // TODO these configs and results will have to allow for arrays
+  @Input() findings: IDisputeToDisputeFindingOutput | undefined;
   @Input() reportCreatedAt: string = '';
   @Input() fileIdentificationNumber: string = '';
-  @Input() creditBureau: ICreditBureau | undefined;
   @Input() tradelineAccountConfig: ITradelineCreditBureauConfig[] = [];
   @Input() publicRecordConfig: IPublicRecordCreditBureauConfig[] = [];
   @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
+
   findingTypes = CreditBureauFindingsType;
   bcMissing = TransunionUtil.bcMissing;
+
   constructor() {}
 
   ngOnInit(): void {}

@@ -4,7 +4,7 @@ import { DisputeStatus } from '@shared/constants/disputes.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { TransunionQueries } from '@shared/utils/transunion/transunion-queries';
+import { TransunionQueries } from '@shared/utils/transunion/queries/transunion-queries';
 import { Observable } from 'rxjs';
 
 @Component({

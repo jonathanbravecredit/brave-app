@@ -43,7 +43,7 @@ export class NegativeAccountInitialComponent {
    * @param card
    */
   async onConfirmed(tradeline: ITradeLinePartition): Promise<void> {
-    const accountType = tu.query.lookupTradelineTypeDescription(tradeline);
+    const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `negativeAccountInitial:onConfirmed=Missing id:${id}`;
     this.disputeService
