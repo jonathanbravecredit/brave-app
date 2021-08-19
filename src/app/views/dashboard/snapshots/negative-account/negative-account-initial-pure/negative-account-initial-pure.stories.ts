@@ -6,6 +6,10 @@ import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { NegativeAccountInitialPureComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
 import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
+import {
+  REVOLVING_PARTITION,
+  REVOLVING_SUBSCRIBER,
+} from '@views/dashboard/snapshots/negative-account/negative-account-initial-pure/mocks';
 
 export default {
   title: 'app/views/negative-account/initial',
@@ -21,40 +25,30 @@ export default {
 
 const cards: INegativeAccountCardInputs[] = [
   {
-    creditorName: 'ABC Collections',
+    tradeline: REVOLVING_PARTITION,
+    subscriber: REVOLVING_SUBSCRIBER,
+    creditorName: 'Negative Nelly',
     lastReported: '2020-01-01',
-    accountTypeDescription: 'Collections Account',
-    accountTypeDescriptionValue: 'Open',
+    accountTypeDescription: 'Revolving',
+    accountTypeDescriptionValue: 'Predators R Us',
     originalCreditor: 'Original Creditor',
-    originalCreditorValue: 'Loans R Us',
+    originalCreditorValue: 'Bank of America',
     disputeFlag: 'Previously Disputed',
     disputeFlagValue: 'No',
-    accountDetail: {
-      accountNumber: '12345678',
-      typeOfCollection: 'Collections',
-      amountPastDue: '700',
-      dateOpened: '2017-01-01',
-      consumerStatement: '',
-      dateLastPayment: '2019-01-01',
-    },
+    consumerStatement: 'None',
   } as INegativeAccountCardInputs,
   {
-    creditorName: 'XYZ Collections',
+    tradeline: REVOLVING_PARTITION,
+    subscriber: REVOLVING_SUBSCRIBER,
+    creditorName: 'Negative Nelly Two',
     lastReported: '2020-01-01',
-    accountTypeDescription: 'Collections Account',
-    accountTypeDescriptionValue: 'Open',
+    accountTypeDescription: 'Revolving',
+    accountTypeDescriptionValue: 'Loans R Us',
     originalCreditor: 'Original Creditor',
-    originalCreditorValue: 'Loans R Us',
+    originalCreditorValue: 'Bank of America',
     disputeFlag: 'Previously Disputed',
     disputeFlagValue: 'No',
-    accountDetail: {
-      accountNumber: '12345678',
-      typeOfCollection: 'Collections',
-      amountPastDue: '700',
-      dateOpened: '2017-01-01',
-      consumerStatement: '',
-      dateLastPayment: '2019-01-01',
-    },
+    consumerStatement: 'None',
   } as INegativeAccountCardInputs,
 ];
 const Template: Story<NegativeAccountInitialPureComponent> = (args: any) => ({

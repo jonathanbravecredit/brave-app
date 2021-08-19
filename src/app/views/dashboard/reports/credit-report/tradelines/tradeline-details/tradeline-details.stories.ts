@@ -5,6 +5,15 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { DashboardModule } from '@views/dashboard/dashboard.module';
 import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/tradeline-details.component';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
+import {
+  COLLECTION_PARTITION,
+  COLLECTION_SUBSCRIBER,
+  INSTALLMENT_PARTITION,
+  INSTALLMENT_SUBSCRIBER,
+  REVOLVING_PARTITION,
+  REVOLVING_SUBSCRIBER,
+} from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/mocks';
+import { ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 
 export default {
   title: 'app/components/tradelines/tradeline-details',
@@ -21,52 +30,34 @@ export default {
   ],
 } as Meta;
 
-const revolving: ITradelineDetailsConfig = {
-  dateOpened: '2020-01-10',
-  accountDesignator: 'James Credit',
-  late60Count: '10',
-  amountPastDue: 1200,
-  disputeFlag: 'No',
-} as ITradelineDetailsConfig;
-const installment: ITradelineDetailsConfig = {
-  dateOpened: '2019-01-01',
-  accountDesignator: 'James Credit',
-  termMonths: '48',
-  late90Count: '3',
-  amountPastDue: '950',
-  disputeFlag: 'No',
-} as ITradelineDetailsConfig;
-
-const collections: ITradelineDetailsConfig = {
-  originalCreditor: 'ABC Financing',
-  creditType: 'Collection',
-  dateOpened: '2018-01-01',
-  disputeFlag: 'No',
-} as ITradelineDetailsConfig;
-
-const remarks = `This account was investigated two weeks ago per the client's request`;
-const address = '123 Main Street, Hollywood, CA';
+const revolvingPartition = REVOLVING_PARTITION as ITradeLinePartition;
+const revolvingSubscriber = REVOLVING_SUBSCRIBER as ISubscriber;
+const installmentPartition = INSTALLMENT_PARTITION as ITradeLinePartition;
+const installmentSubscriber = INSTALLMENT_SUBSCRIBER as ISubscriber;
+const collectionPartition = COLLECTION_PARTITION as ITradeLinePartition;
+const collectionSubscriber = COLLECTION_SUBSCRIBER as ISubscriber;
 
 const Template: Story<TradelineDetailsComponent> = (args: any) => ({
   component: TradelineDetailsComponent,
   props: {
     ...args,
-    remarks: remarks,
-    address: address,
   },
 });
 
 export const Revolving = Template.bind({});
 Revolving.args = {
-  config: revolving,
+  tradeline: revolvingPartition,
+  subscriber: revolvingSubscriber,
 };
 
 export const Installment = Template.bind({});
 Installment.args = {
-  config: installment,
+  tradeline: installmentPartition,
+  subscriber: installmentSubscriber,
 };
 
 export const Collections = Template.bind({});
 Collections.args = {
-  config: collections,
+  tradeline: collectionPartition,
+  subscriber: collectionSubscriber,
 };
