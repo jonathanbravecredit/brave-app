@@ -2,7 +2,7 @@ import { ITradeLinePartition, IPublicPartition, ISubscriber } from '@shared/inte
 import { IPaymentHistory } from '@shared/interfaces/credit-bureau.interface';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 
 export interface ITradelineCreditBureauConfig {
   tradeline: ITradeLinePartition;

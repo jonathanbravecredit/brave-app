@@ -2,7 +2,7 @@ import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 
 export interface IDisputeNegativeCardItem extends INegativeAccountCardInputs {}
 export interface IDisputeTradelineItem extends ITradelineDetailsConfig {}

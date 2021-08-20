@@ -7,7 +7,7 @@ import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-
 import {
   REVOLVING_PARTITION,
   REVOLVING_SUBSCRIBER,
-} from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/mocks';
+} from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/mocks';
 
 export default {
   title: 'app/components/cards/negative-account',

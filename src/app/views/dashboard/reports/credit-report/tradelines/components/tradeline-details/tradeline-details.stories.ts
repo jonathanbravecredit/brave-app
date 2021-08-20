@@ -3,8 +3,8 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DashboardModule } from '@views/dashboard/dashboard.module';
-import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/tradeline-details.component';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
+import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/tradeline-details.component';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import {
   COLLECTION_PARTITION,
   COLLECTION_SUBSCRIBER,
@@ -12,7 +12,7 @@ import {
   INSTALLMENT_SUBSCRIBER,
   REVOLVING_PARTITION,
   REVOLVING_SUBSCRIBER,
-} from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/mocks';
+} from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/mocks';
 import { ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 
 export default {
