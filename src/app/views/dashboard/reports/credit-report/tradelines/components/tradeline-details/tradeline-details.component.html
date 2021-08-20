@@ -8,7 +8,7 @@
 
     <!-- ======= Payment History and Remarks ======== -->
     <ng-container *ngIf="overrideOpen || (viewDetail.open$ | async) as open">
-      <div class="px-1 max-w-xs">
+      <div class="px-1">
         <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
         <brave-tradeline-remarks
           [remarks]="config.remarks || 'None'"
