@@ -10,7 +10,7 @@ import {
   REPOSSESSION_PAY_STATUS_CODE,
   WAGE_EARNER_PAY_STATUS_CODES,
 } from '@shared/constants';
-import { TradelineIcons } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-icon/constants';
+import { TradelineIcons } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon/constants';
 
 @Component({
   selector: 'brave-tradeline-payment-icon',

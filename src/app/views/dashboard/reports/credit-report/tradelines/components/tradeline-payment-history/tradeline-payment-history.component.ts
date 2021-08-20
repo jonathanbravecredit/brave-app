@@ -3,9 +3,9 @@ import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merg
 import {
   MONTH_ABBREVIATIONS,
   MONTH_DEFAULTS,
-} from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/constants';
-import { ITradelinePaymentHistory } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/interfaces';
-import { TradelinePaymentIconKeyComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
+} from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/constants';
+import { ITradelinePaymentHistory } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/interfaces';
+import { TradelinePaymentIconKeyComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
 
 @Component({
   selector: 'brave-tradeline-payment-history',

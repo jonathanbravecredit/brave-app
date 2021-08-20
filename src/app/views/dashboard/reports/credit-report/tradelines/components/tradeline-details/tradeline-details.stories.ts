@@ -4,7 +4,6 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DashboardModule } from '@views/dashboard/dashboard.module';
 import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/tradeline-details.component';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import {
   COLLECTION_PARTITION,
   COLLECTION_SUBSCRIBER,

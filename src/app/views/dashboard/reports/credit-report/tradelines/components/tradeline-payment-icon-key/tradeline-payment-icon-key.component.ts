@@ -3,7 +3,7 @@ import {
   BaseModalSmallComponent,
   IBaseModalSmallConfig,
 } from '@shared/components/modals/base-modal-small/base-modal-small.component';
-import { ICON_KEY_DESCRIPTIONS } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-icon-key/constants';
+import { ICON_KEY_DESCRIPTIONS } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon-key/constants';
 
 @Component({
   selector: 'brave-tradeline-payment-icon-key',
