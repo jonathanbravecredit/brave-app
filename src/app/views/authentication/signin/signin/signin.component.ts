@@ -24,7 +24,6 @@ export class SigninComponent {
    * Method to sign user up
    */
   async signInWithCognito(user: NewUser): Promise<void> {
-    this.interstitial.startSpinner();
     if (!user) return;
     // add email validation here // const isValid = await this.accountMgmtService.isEmailValid(formData.username);
     let isValid = true;
@@ -32,15 +31,13 @@ export class SigninComponent {
       try {
         const cognitorUser = await this.auth.signIn(user.username, user.password);
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
-          console.log('MFA challenge');
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
           const { requiredAttributes } = cognitorUser?.challengeParam;
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
-          console.log('OTP setup');
         }
-        this.interstitial.stopSpinner();
+        this.interstitial.fetching$.next(false);
       } catch (err) {
-        this.interstitial.stopSpinner();
+        this.interstitial.fetching$.next(false);
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -55,7 +52,7 @@ export class SigninComponent {
         }
       }
     } else {
-      this.interstitial.stopSpinner();
+      this.interstitial.fetching$.next(false);
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,

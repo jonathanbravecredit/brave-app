@@ -8,11 +8,11 @@ export const DEFAULT_DISPUTE_STATUS_DISPLAY_INFO = {
     colorClass: 'text-indigo-800',
   },
   [DisputeStatus.Cancelled]: {
-    text: 'Processing',
+    text: 'Cancelled',
     colorClass: 'text-red-800',
   },
   [DisputeStatus.Decision]: {
-    text: 'Processing',
+    text: 'Complete',
     colorClass: 'text-green-800',
   },
 };

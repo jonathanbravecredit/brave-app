@@ -1,11 +1,13 @@
 <div>
-  <ng-container *ngIf="dispute$ | async | tradelineToDispute as dispute">
-    <brave-disputes-tradeline-pure-view
-      [dispute]="dispute"
-      [isDisputeSent]="isDisputeSent"
-      [isDisputeProcessInProgress]="isDisputeProcessInProgress"
-      (goBack)="onGoBack()"
-      (processResult)="onProcessResult($event)"
-    ></brave-disputes-tradeline-pure-view>
+  <ng-container *ngIf="dispute$ | async as dispute">
+    <ng-container *ngIf="dispute | tradelineToDetails as detail">
+      <brave-disputes-tradeline-pure-view
+        [dispute]="detail"
+        [isDisputeSent]="isDisputeSent"
+        [isDisputeProcessInProgress]="isDisputeProcessInProgress"
+        (goBack)="onGoBack()"
+        (processResult)="onProcessResult($event)"
+      ></brave-disputes-tradeline-pure-view>
+    </ng-container>
   </ng-container>
 </div>

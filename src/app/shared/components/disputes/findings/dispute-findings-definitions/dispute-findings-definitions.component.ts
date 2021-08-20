@@ -5,16 +5,14 @@ import { IFindingsDefinition } from './interfaces';
 @Component({
   selector: 'brave-dispute-findings-definitions',
   templateUrl: './dispute-findings-definitions.component.html',
-  styleUrls: ['./dispute-findings-definitions.component.css']
 })
 export class DisputeFindingsDefinitionsComponent implements OnInit {
   @Input() type: 'public-records' | 'accounts' = 'accounts';
   definitions: IFindingsDefinition[] = [];
-  
-  constructor() { }
+
+  constructor() {}
 
   ngOnInit(): void {
     this.definitions = defaultDefinitions[this.type];
   }
-
 }

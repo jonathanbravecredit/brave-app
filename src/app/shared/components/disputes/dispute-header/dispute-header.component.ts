@@ -4,18 +4,22 @@ import {
   OnboardingDisputeComponent,
   IOnboardingEvent,
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IDisputeItem, IDisputePersonalItem, IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import {
+  IDisputeTradelineItem,
+  IDisputePersonalItem,
+  IDisputePublicItem,
+} from '@shared/services/dispute/dispute.interfaces';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details-table/publicitems-details-table.component';
-import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details-table/tradeline-details-table.component';
-import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/tradeline-payment-history.component';
-import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-remarks/tradeline-remarks.component';
+import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
+import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';
+import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
 @Component({
   selector: 'brave-dispute-header',
   templateUrl: './dispute-header.component.html',
 })
-export class DisputeHeaderComponent implements OnInit {
+export class DisputeHeaderComponent {
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
   @ViewChild(OnboardingDisputeComponent)
@@ -24,7 +28,7 @@ export class DisputeHeaderComponent implements OnInit {
   @Input() showDisputeButton = false;
   @Input() publicdispute: IDisputePublicItem | undefined;
   @Input() personaldispute: IDisputePersonalItem | undefined;
-  @Input() tradelinedispute: IDisputeItem | undefined;
+  @Input() tradelinedispute: IDisputeTradelineItem | undefined;
 
   /*============================================*/
   // pass the components to form the carousel
@@ -44,15 +48,11 @@ export class DisputeHeaderComponent implements OnInit {
   showModal = false;
 
   constructor() {}
-  ngOnInit(): void {
-    console.log('personal dispute in header ===> ', this.personaldispute);
-  }
 
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
       this.showModal = false;
       this.confirmed.emit();
-      console.log('confirmed');
     }
   }
 }

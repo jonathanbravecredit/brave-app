@@ -2,8 +2,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { DisputesTradelinePureView } from '@views/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
+import { DisputesTradelinePureView } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 export default {
   title: 'app/views/disputes/tradeline',
@@ -20,24 +20,14 @@ export default {
   ],
 } as Meta;
 
-const dispute: IDisputeItem = {
+const dispute: IDisputeTradelineItem = {
   tradeline: {},
   creditorName: 'ABC Collectinos',
   lastReported: '1990-01-01',
   accountTypeDescription: 'Example Type',
   accountTypeDescriptionValue: 'Example Type',
   originalCreditor: 'Original Creditor',
-  originalCreditorValue: 'XYZ comp',
   disputeFlag: 'Dispute Flag',
-  disputeFlagValue: 'No',
-  accountDetail: {
-    accountNumber: '123XXXX',
-    typeOfCollection: 'Past Dues',
-    amountPastDue: 0,
-    dateOpened: '1990-01-01',
-    dateLastPayment: '1990-03-01',
-    remarks: 'abc',
-  },
 };
 const Template: Story<DisputesTradelinePureView> = (args: any) => ({
   component: DisputesTradelinePureView,

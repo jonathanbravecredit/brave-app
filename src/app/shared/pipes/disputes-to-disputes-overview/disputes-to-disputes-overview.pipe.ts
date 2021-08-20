@@ -52,7 +52,6 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
       currentDisputeArr: currentDisputeArr,
       historicalDisputeArr: historicalDisputeArr,
     };
-    console.log('mapped dispute ===> ', mapped);
     return mapped;
   }
 

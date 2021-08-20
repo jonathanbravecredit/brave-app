@@ -76,7 +76,6 @@ import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-inp
 import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
 import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
 import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
-import { NegativeAccountCardComponent } from './cards/negative-account-card/negative-account-card.component';
 import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
@@ -94,7 +93,6 @@ import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-
 import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes-personal.component';
 import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
 import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
-import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
 import { BaseExceptionComponent } from './exceptions/base-exception/base-exception.component';
 import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
@@ -133,6 +131,7 @@ import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-pe
 import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
 import { SimpleChangePasswordFormComponent } from './forms/simple-change-password-form/simple-change-password-form.component';
 import { SimpleDeactiveFormComponent } from './forms/simple-deactive-form/simple-deactive-form.component';
+import { FilledSpinningButtonComponent } from './buttons/filled-spinning-button/filled-spinning-button.component';
 
 const components = [
   BaseFormComponent,
@@ -188,7 +187,6 @@ const components = [
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
   SnapshotDisplayCardComponent,
-  NegativeAccountCardComponent,
   KbaMultiplechoiceInputComponent,
   CreditReportCardComponent,
   SpinnerComponent,
@@ -207,7 +205,6 @@ const components = [
   DisputesPersonalComponent,
   DisputesTradelineComponent,
   DisputesPublicComponent,
-  DisputesSuccessComponent,
   BaseExceptionComponent,
   DisputesDetailComponent,
   BasicCarouselComponent,
@@ -240,6 +237,7 @@ const components = [
   SimpleBannerComponent,
   SimpleDeactiveFormComponent,
   SimpleChangePasswordFormComponent,
+  FilledSpinningButtonComponent,
 ];
 
 // component specific pipes only

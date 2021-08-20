@@ -192,12 +192,10 @@ export class DisputesTradelineComponent implements OnInit {
 
   parseSelectedItemsToIdArray(): [string?, string?] {
     let resultArr: [string?, string?] = [];
-    console.log('selectedIndexes ===> ', this.selectedIndexes);
     this.selectedIndexes.forEach((item) => {
       const target = this.getTargetSelectedPageItem(item);
       resultArr.push(target.reason.id);
     });
-    console.log('resultArr ===> ', resultArr);
     return resultArr;
   }
 

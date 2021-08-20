@@ -17,7 +17,6 @@ export class StateService {
   state$: BehaviorSubject<{ appData: AppDataStateModel }> = new BehaviorSubject({} as { appData: AppDataStateModel });
   constructor(private api: APIService, private store: Store) {
     this.store.subscribe((state: { appData: AppDataStateModel }) => {
-      console.log('state in state service', state);
       this.state = state;
       this.state$.next(state);
     });

@@ -29,6 +29,7 @@ const creditReports: ICreditReportTradelinesCardGroup[] = [
   {
     title: 'Credit Cards',
     group: CreditReportGroups.CreditCards,
+    hidden: false,
     cards: [
       {
         type: 'c',
@@ -59,6 +60,7 @@ const creditReports: ICreditReportTradelinesCardGroup[] = [
   {
     title: 'Collection Accounts',
     group: CreditReportGroups.CollectionsAccounts,
+    hidden: false,
     cards: [
       {
         type: 'c',

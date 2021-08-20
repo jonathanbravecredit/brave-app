@@ -1,23 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details/interfaces';
-import {
-  ITradeLinePartition,
-  IBorrower,
-  IPublicPartition,
-  IBorrowerAddress,
-  IBorrowerName,
-  IEmployer,
-} from '@shared/interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
+import { ITradeLinePartition, IPublicPartition, IMergeReport } from '@shared/interfaces';
 import {
   PARAGRAPH_1,
   PARAGRAPH_2,
 } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm-pure/constants';
-import {
-  DisputeReconfirmFilter,
-  PersonalDisputeTypes,
-} from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Component({
@@ -25,7 +15,8 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
   templateUrl: './disputes-reconfirm-pure.view.html',
 })
 export class DisputesReconfirmPureView implements OnInit {
-  @Input() tradelines: ITradelineDetailsConfig[] | undefined = [];
+  @Input() report: IMergeReport = {} as IMergeReport;
+  @Input() tradelines: ITradeLinePartition[] | undefined = [];
   @Input() publicItems: IPublicItemsDetailsConfig[] | undefined = [];
   @Input() personalItems: IPersonalItemsDetailsConfig[] | undefined = [];
   @Input() type: DisputeReconfirmFilter = 'all';

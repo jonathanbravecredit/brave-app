@@ -14,6 +14,7 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -41,6 +42,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
     private route: ActivatedRoute,
     private store: Store,
     private kycService: KycService,
+    private interstitial: InterstitialService,
   ) {
     super();
   }
@@ -56,6 +58,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
+    this.interstitial.fetching$.next(false);
     this.updateViewState('minimum');
   }
 
@@ -86,12 +89,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
               throw 'No passcode questionfound';
             })();
         this.authSuccessful
-          ? this.sendCompleteOnboarding(this.state)
+          ? await this.sendCompleteOnboarding(this.state)
           : (() => {
               throw 'Authentication request failed';
             })();
       } catch (err) {
-        console.log('error ===> ', err); // TODO can better handle errors
+        this.interstitial.fetching$.next(false);
         if (this.attempts > 2) {
           this.router.navigate(['../error'], { relativeTo: this.route });
         }
@@ -205,7 +208,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
     const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
     if (!success) throw `kycIdverification:sendVerifyAuthQuestions=${error}`;
     this.verifyResponse = data;
-    console.log('verifyResponse ===> ', this.verifyResponse);
     return this;
   }
 
@@ -215,7 +217,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   parseVerifyResponse(verifyResp: IVerifyAuthenticationQuestionsResult | undefined): KycIdverificationComponent {
-    console.log('parseVerifyResponse ===> ', verifyResp);
     this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationQuestionsResult);
     return this;
   }
@@ -225,7 +226,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @returns
    */
   isVerificationSuccesful(resp: IVerifyAuthenticationQuestionsResult | undefined): KycIdverificationComponent {
-    console.log('isVerification ===> ', resp);
     if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
     this.authSuccessful = resp.ResponseType.toLowerCase() === 'success';
     if (!this.authSuccessful) {
@@ -265,6 +265,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
       return this;
     } catch (err) {
       this.attempts = 3;
+      this.interstitial.fetching$.next(false);
       throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
     }
   }

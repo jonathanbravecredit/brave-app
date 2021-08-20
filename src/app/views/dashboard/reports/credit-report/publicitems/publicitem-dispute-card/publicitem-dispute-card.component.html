@@ -21,13 +21,13 @@
       >
     </div>
 
-    <!-- ======= Payment History and Remarks ======== -->
+    <!-- ======= Public Details ======== -->
     <div *ngIf="viewDetail.open$ | async as open" class="mt-4">
       <div class="rounded-lg border border-blueGray-300 p-4">
         <div class="mb-4">
           <p class="text-sm font-semibold">Account Details</p>
         </div>
-        <!-- ======= AccountDetails Comp ======== -->
+        <!-- ======= Public Details Comp ======== -->
         <brave-publicitems-details [config]="publicItem"></brave-publicitems-details>
       </div>
     </div>

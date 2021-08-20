@@ -1,0 +1,64 @@
+<!-- ============================== -->
+<!--       NEGATIVE ACCOUNTS        -->
+<!-- ============================== -->
+<div *ngIf="data" class="divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="'Account Number'"
+      [value]="data?.accountNumber | accountNumberMask"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Type of collection -->
+  <div class="py-2 px-1">
+    <brave-base-table-row [label]="'Type'" [value]="data?.typeOfCollection"></brave-base-table-row>
+  </div>
+
+  <!-- Type of collection -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="'Amount Past Due'"
+      [value]="data?.amountPastDue"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Date Opened -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="'Date Openeed'"
+      [value]="data?.dateOpened"
+      [valueType]="'date'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Date Opened -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="'Date of Last Payment'"
+      [value]="data?.dateLastPayment"
+      [valueType]="'date'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Remarks -->
+  <div class="py-2 px-1">
+    <brave-base-table-row [label]="'Remarks'" [injected]="true">
+      <p class="text-xs text-dk-gray text-opacity-50">
+        <span *ngIf="data?.remarks">{{ data?.remarks }}</span>
+        <span *ngIf="!data?.remarks">None</span>
+      </p>
+    </brave-base-table-row>
+  </div>
+
+  <!-- Date Opened -->
+  <div class="py-2 px-1">
+    <brave-base-table-row [label]="'Consumer Statement'" [injected]="true">
+      <p class="text-xs text-dk-gray text-opacity-50">
+        <span *ngIf="data?.consumerStatement">{{ data?.consumerStatement }}</span>
+        <span *ngIf="!data?.consumerStatement">None</span>
+      </p>
+    </brave-base-table-row>
+  </div>
+</div>

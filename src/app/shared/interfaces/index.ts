@@ -1,5 +1,4 @@
 export * from './common-tu.interface';
-export * from './credit-bureau.interface';
 export * from './dispute-preflight-check.interface';
 export * from './enroll-request.interface';
 export * from './enroll.interface';

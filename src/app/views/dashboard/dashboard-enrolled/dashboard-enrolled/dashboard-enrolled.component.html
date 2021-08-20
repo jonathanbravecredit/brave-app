@@ -1,6 +1,6 @@
 <div class="w-full p-2">
-  <div *ngIf="tuReport$ | async as report">
-    <div *ngIf="report | mergereportToDashboard as cards">
+  <ng-container *ngIf="tuReport$ | async as report">
+    <ng-container *ngIf="report | mergereportToDashboard as cards">
       <brave-dashboard-enrolled-pure
         [report]="report"
         [cards]="cards"
@@ -11,6 +11,6 @@
         (negativeItemsClicked)="onNegativeItemsClicked()"
         (fullReportClicked)="onFullReportClicked()"
       ></brave-dashboard-enrolled-pure>
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
 </div>
