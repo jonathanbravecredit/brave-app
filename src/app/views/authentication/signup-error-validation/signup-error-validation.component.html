@@ -19,7 +19,9 @@
               Unfortunately there we were unable to verify your identity with the answers provided.
             </p>
             <p class="mb-6 text-blueGray-600">Please try again in 30 days.</p>
-            <p class="mb-6 text-fuchsia-500">Why was my ID unable to be verified?</p>
+            <p class="mb-6 text-fuchsia-500 hover:cursor-pointer" (click)="toggleShowModal()">
+              Why was my ID unable to be verified?
+            </p>
           </div>
         </div>
 
@@ -33,3 +35,14 @@
     </div>
   </div>
 </div>
+
+<brave-base-modal-small [config]="config" [injected]="true">
+  <p class="brave-body3">{{ p1 }}</p>
+  <br />
+  <p class="brave-body3">{{ p2 }}</p>
+  <br />
+  <p class="brave-body3">
+    {{ p3 }}&nbsp;<a [href]="link"><span class="underline">Transunion</span></a
+    >.
+  </p>
+</brave-base-modal-small>
