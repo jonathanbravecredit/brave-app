@@ -11,9 +11,9 @@ import {
 } from '@shared/services/dispute/dispute.interfaces';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details-table/publicitems-details-table.component';
-import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-details-table/tradeline-details-table.component';
-import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-payment-history/tradeline-payment-history.component';
-import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/tradeline-remarks/tradeline-remarks.component';
+import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
+import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';
+import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
 @Component({
   selector: 'brave-dispute-header',
