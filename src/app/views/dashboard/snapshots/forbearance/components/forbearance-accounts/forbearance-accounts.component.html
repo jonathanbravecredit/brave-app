@@ -1,21 +1,21 @@
-<!-- STUDENT LOANS -->
-<div class="mb-4">
-  <div class="mb-4 flex items-center content-center">
-    <span class="material-icons" style="color: #9b51e0">label</span>
-    <h6 class="brave-h6 ml-2">{{ content.h1 }}</h6>
-  </div>
-  <div class="border-t mb-4" style="border-color: #9b51e0"></div>
+<div class="my-8">
+  <ng-content></ng-content>
   <!-- cards go here -->
-  <div class="border-t border-blueGray-300 my-4"></div>
-</div>
-
-<!-- MORTGAGES -->
-<div class="mb-4">
-  <div class="mb-4 flex items-center content-center">
-    <span class="material-icons" style="color: #56ccf2">label</span>
-    <h6 class="brave-h6 ml-2">{{ content.h2 }}</h6>
-  </div>
-  <div class="border-t mb-4" style="border-color: #56ccf2"></div>
-  <!-- cards go here -->
+  <ng-container *ngFor="let card of tu.mappers.mapTradelineToSummaryCard(accounts)">
+    <brave-credit-report-card
+      [creditorName]="card.creditorName"
+      [isOpen]="card.isOpen"
+      [firstFieldName]="card.firstFieldName"
+      [firstFieldValue]="card.firstFieldValue.toString()"
+      [firstFieldType]="card.firstFieldType"
+      [secondFieldName]="card.secondFieldName"
+      [secondFieldValue]="card.secondFieldValue.toString()"
+      [secondFieldType]="card.secondFieldType"
+      [thirdFieldName]="card.thirdFieldName"
+      [thirdFieldValue]="card.thirdFieldValue.toString()"
+      [status]="card.status"
+      (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
+    ></brave-credit-report-card>
+  </ng-container>
   <div class="border-t border-blueGray-300 my-4"></div>
 </div>

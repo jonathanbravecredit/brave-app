@@ -1,6 +1,8 @@
 <div class="p-2">
-  <ng-container *ngIf="(creditReport$ | async) as creditReport; else noReport">
-    <brave-forbearance-pure></brave-forbearance-pure>
+  <ng-container *ngIf="(creditReport$ | async ) as creditReport; else noReport">
+    <brave-forbearance-pure
+      [tradelines]="creditReport | mergereportToTradelines: accountTypes.Mortgage : accountTypes.Installment"
+    ></brave-forbearance-pure>
   </ng-container>
 </div>
 

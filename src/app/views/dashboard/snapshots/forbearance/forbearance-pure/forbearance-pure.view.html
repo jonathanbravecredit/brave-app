@@ -1,15 +1,36 @@
-<div class="my-2">
+<div class="mb-8">
   <brave-forbearance-header></brave-forbearance-header>
 </div>
-<div class="my-2">
+<div class="my-7">
   <brave-forbearance-info></brave-forbearance-info>
 </div>
-<div class="my-2">
+<div class="my-8">
   <brave-forbearance-tips></brave-forbearance-tips>
 </div>
-<div class="my-2">
+<div class="my-8">
   <brave-forbearance-band></brave-forbearance-band>
 </div>
-<div class="my-2">
-  <brave-forbearance-accounts></brave-forbearance-accounts>
+<div class="my-8">
+  <!-- Student Loan Accounts -->
+  <brave-forbearance-accounts
+    [accounts]="tu.filters.filterTradelinesByCreditReportGroups(tradelines, [groups.InstallmentLoans])"
+  >
+    <div class="mb-4 flex items-center content-center">
+      <span class="material-icons" style="color: #9b51e0">label</span>
+      <h6 class="brave-h6 ml-2">{{ content.h1 }}</h6>
+    </div>
+    <div class="border-t mb-4" style="border-color: #9b51e0"></div>
+  </brave-forbearance-accounts>
+</div>
+<div class="my-8">
+  <!-- Student Loan Accounts -->
+  <brave-forbearance-accounts
+    [accounts]="tu.filters.filterTradelinesByCreditReportGroups(tradelines, [groups.Mortgages])"
+  >
+    <div class="mb-4 flex items-center content-center">
+      <span class="material-icons" style="color: #56ccf2">label</span>
+      <h6 class="brave-h6 ml-2">{{ content.h2 }}</h6>
+    </div>
+    <div class="border-t mb-4" style="border-color: #56ccf2"></div>
+  </brave-forbearance-accounts>
 </div>
