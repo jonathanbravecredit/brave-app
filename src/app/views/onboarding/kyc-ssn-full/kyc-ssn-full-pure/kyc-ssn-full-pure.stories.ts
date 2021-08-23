@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { KycSsnFullPureComponent } from '@views/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
+import { KycSsnFullPureComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
 
 export default {
   title: 'app/views/onboarding/kyc-ssn-full',
@@ -11,9 +11,7 @@ export default {
       declarations: [],
       imports: [SharedComponentsModule],
     }),
-    componentWrapperDecorator(
-      (story) => `<div class="container mx-auto max-w-xs h-full">${story}</div>`
-    ),
+    componentWrapperDecorator((story) => `<div class="container mx-auto max-w-xs h-full">${story}</div>`),
   ],
 } as Meta;
 

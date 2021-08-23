@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { Observable } from 'rxjs';
 
@@ -15,7 +16,12 @@ export class DisputesTradelineView implements OnDestroy {
   isDisputeProcessInProgress = true;
   isDisputeSent = false;
   dispute$: Observable<ITradeLinePartition>;
-  constructor(private router: Router, private route: ActivatedRoute, private disputeService: DisputeService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private interstitial: InterstitialService,
+    private disputeService: DisputeService,
+  ) {
     this.dispute$ = this.disputeService.tradeline$.asObservable();
   }
 
@@ -45,6 +51,7 @@ export class DisputesTradelineView implements OnDestroy {
         if (success) {
           this.isDisputeSent = true;
           this.isDisputeProcessInProgress = false;
+          this.interstitial.fetching$.next(false);
         } else {
           const errorCode = error?.Code;
           this.router.navigate([`./error`], {
@@ -55,6 +62,7 @@ export class DisputesTradelineView implements OnDestroy {
           });
         }
       } catch (err) {
+        this.interstitial.fetching$.next(false);
         throw new Error(`disputesTradeline:onProcessResult=${err}`);
       }
     }

@@ -6,7 +6,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { SettingsService } from '@shared/services/settings/settings.service';
 import { OptionDeactivateComponent } from '@views/dashboard/settings/option-deactivate/option-deactivate.component';
 import { OptionPasswordResetComponent } from '@views/dashboard/settings/option-password-reset/option-password-reset.component';
-import { ISettingsViews } from '@views/dashboard/settings/settings-pure/interface';
+import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/settings-pure/interface';
 
 @Component({
   selector: 'brave-settings',
@@ -22,36 +22,24 @@ export class SettingsComponent implements OnInit {
   haveDeactivateError: boolean = false;
   deactivateSuccess: boolean = false;
   deactivateError: string = '';
-  view: ISettingsViews = 'reset';
-  openTab: number = 1;
+  init: ISettingsViews = SettingsOptions.Init;
 
   constructor(
+    public route: ActivatedRoute,
     private router: Router,
-    private route: ActivatedRoute,
     private settings: SettingsService,
     private interstitial: InterstitialService,
   ) {}
 
   ngOnInit(): void {}
 
-  toggleTabs($tabNumber: number) {
-    this.openTab = $tabNumber;
-  }
-
-  onBackButtonClick() {
-    if (this.openTab === 1) {
-      this.router.navigate(['../init'], { relativeTo: this.route });
-    } else {
-      this.openTab = 1;
-    }
-  }
   onGoToPageClick({ tab, view }: { tab: number; view: ISettingsViews }) {
-    this.view = view;
-    this.openTab = tab;
-  }
-
-  onGoBackToSettingsClick() {
-    this.openTab = 1;
+    this.router.navigate([`./options`], {
+      relativeTo: this.route,
+      queryParams: {
+        option: view,
+      },
+    });
   }
 
   onChangePasswordClick(evt: IConfirmPassword) {

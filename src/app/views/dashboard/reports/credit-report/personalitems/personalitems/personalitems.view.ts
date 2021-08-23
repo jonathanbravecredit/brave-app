@@ -45,14 +45,12 @@ export class PersonalitemsView {
    * @returns {void}
    */
   async onDisputeClick(): Promise<void> {
-    console.log('dispute clicked');
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `personalItem:onDisputeClicked=Missing id:${id}`;
     this.disputeService
       .sendDisputePreflightCheck(id)
       .then((resp) => {
         const { success, error } = resp;
-        console.log('preflightCheckReturn ===> ', resp);
         if (success) {
           const filter: DisputeReconfirmFilter = 'personal';
           this.router.navigate(['../dispute'], {

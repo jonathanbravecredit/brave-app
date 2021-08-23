@@ -75,7 +75,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
               throw 'Authentication request failed';
             })();
       } catch (err) {
-        console.log('error ===> ', err, this);
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }
@@ -199,7 +198,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
     state: UpdateAppDataInput | AppDataStateModel | undefined,
     otpAnswer: IVerifyAuthenticationAnswer | undefined,
   ): Promise<KycPhonenumberComponent> {
-    console.log('sendVerifyAuthQuestions:phonenumber ===> ', otpAnswer, state);
     if (!otpAnswer || !state) throw `kycPhonenumber:sendVerifyAuthQuestions=Missing otpAnswer`;
     const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
     if (!success) throw `kycPhonenumber:sendVerifyAuthQuestions=${error}`;

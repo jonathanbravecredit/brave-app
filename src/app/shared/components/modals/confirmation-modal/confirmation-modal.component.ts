@@ -4,7 +4,6 @@ import { BaseModalComponent } from '../base-modal/base-modal.component';
 @Component({
   selector: 'brave-confirmation-modal',
   templateUrl: './confirmation-modal.component.html',
-  styleUrls: ['./confirmation-modal.component.css']
 })
 export class ConfirmationModalComponent extends BaseModalComponent implements OnInit {
   @Output() confirmed: EventEmitter<boolean> = new EventEmitter();
@@ -12,10 +11,11 @@ export class ConfirmationModalComponent extends BaseModalComponent implements On
   @Input() btnTextCancel: string = 'Cancel';
   @ViewChild(BaseModalComponent) baseModal: BaseModalComponent | undefined;
 
-  constructor() { super(); }
-
-  ngOnInit(): void {
+  constructor() {
+    super();
   }
+
+  ngOnInit(): void {}
 
   confirm(val: boolean): void {
     this.confirmed.emit(val);

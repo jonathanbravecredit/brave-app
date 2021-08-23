@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBorrowerAddress, IEmployer, IBorrowerName } from '@shared/interfaces';
-import { TransunionUtil as TU } from '@shared/utils/transunion/transunion';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 
 @Component({
@@ -10,36 +10,36 @@ import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-rep
 export class PersonalitemDisputeCardComponent implements OnInit {
   @Input() personalItem: IPersonalItemsDetailsConfig | undefined;
   @Output() disputeClick: EventEmitter<void> = new EventEmitter();
-  value: string = TU.bcMissing;
+  value: string = tu.bcMissing;
   icon: string = 'perm_identity';
   label: string = 'Item';
   constructor() {}
 
   ngOnInit(): void {
     if (!this.personalItem) {
-      this.value = TU.bcMissing;
+      this.value = tu.bcMissing;
     }
     switch (this.personalItem?.key) {
       case 'name':
         this.icon = 'face';
         this.label = 'Name';
         const name = this.personalItem.value as IBorrowerName;
-        this.value = TU.nameUnparser(name) || TU.bcMissing;
+        this.value = tu.parsers.report.unparseName(name) || tu.bcMissing;
         break;
       case 'address':
         this.icon = 'home';
         this.label = 'Address';
         const address = this.personalItem.value as IBorrowerAddress;
-        this.value = TU.addressUnparser(address.CreditAddress) || TU.bcMissing;
+        this.value = tu.parsers.report.unparseAddress(address.CreditAddress) || tu.bcMissing;
         break;
       case 'employer':
         this.icon = 'badge';
         this.label = 'Employer';
         const employer = this.personalItem.value as IEmployer;
-        this.value = TU.employerUnparser(employer) || TU.bcMissing;
+        this.value = tu.parsers.report.unparseEmployer(employer) || tu.bcMissing;
         break;
       default:
-        this.value = TU.bcMissing;
+        this.value = tu.bcMissing;
         break;
     }
   }

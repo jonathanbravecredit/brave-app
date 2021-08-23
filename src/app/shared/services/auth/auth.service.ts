@@ -5,6 +5,7 @@ import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Router } from '@angular/router';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 export interface NewUser {
   username: string;
@@ -21,34 +22,7 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private sync: SyncService, private router: Router) {
-    Hub.listen('auth', async (data) => {
-      const { channel, payload } = data;
-      switch (payload.event) {
-        case 'signIn':
-          console.log('in signin');
-          const creds: ICredentials = await this.getCurrentUserCredentials();
-          console.log('current credentials', creds);
-          if (creds) await this.sync.hallmonitor(creds, true);
-          break;
-        case 'signOut':
-          this.router.navigate(['/auth/signin']);
-          // handle sign out
-          break;
-        default:
-          // do something by default
-          break;
-      }
-    });
-
-    Auth.currentAuthenticatedUser()
-      .then(async (user) => {
-        console.log('authenticated user');
-        const creds: ICredentials = await this.getCurrentUserCredentials();
-        if (creds) await this.sync.hallmonitor(creds);
-      })
-      .catch(() => console.log('Not signed in'));
-  }
+  constructor(private router: Router, private interstitial: InterstitialService) {}
 
   /**
    * This method is designed to help reload the user if the ID ever goes null
@@ -61,7 +35,7 @@ export class AuthService {
   async reloadCredentials(): Promise<void> {
     const creds = await this.getCurrentUserCredentials();
     if (creds) {
-      await this.sync.hallmonitor(creds);
+      // await this.sync.hallmonitor(creds);
     } else {
       switch (this.router.url) {
         case '/auth/signin':
@@ -81,11 +55,13 @@ export class AuthService {
 
   /**
    * Cognito sign up method
+   * - triggers but does not resolve fetching
    * @param {NewUser} user
    * @returns
    */
   signUp(user: NewUser): Promise<ISignUpResult> {
     this.email$.next(user.username);
+    this.interstitial.fetching$.next(true);
     return Auth.signUp({
       username: user.username,
       password: user.password,
@@ -97,11 +73,13 @@ export class AuthService {
 
   /**
    * Cognito sign in method
+   * - triggers but does not resolve fetching
    * @param {string} username
    * @param {string} password
    * @returns
    */
   signIn(username: string, password: string): Promise<CognitoUser | any> {
+    this.interstitial.fetching$.next(true);
     return new Promise((resolve, reject) => {
       Auth.signIn(username, password)
         .then((user: CognitoUser | any) => {
@@ -113,9 +91,11 @@ export class AuthService {
 
   /**
    * Simple sign out method
+   * - triggers but does not resolve fetching
    * @returns
    */
   signOut(): Promise<any> {
+    this.interstitial.fetching$.next(true);
     return Auth.signOut();
   }
 
@@ -207,63 +187,79 @@ export class AuthService {
 
   /**
    * Submit email to cognito for change, if accepted returns true
+   * - triggers and resolves fetching
    * @param email
    * @returns
    */
   async updateUserEmail(email: string): Promise<boolean> {
+    this.interstitial.fetching$.next(true);
     try {
       const user = await Auth.currentAuthenticatedUser();
       await Auth.updateUserAttributes(user, { email: email });
+      this.interstitial.fetching$.next(false);
       return true;
     } catch (err) {
+      this.interstitial.fetching$.next(false);
       throw `authService:updateUserEmail=${err}`;
     }
   }
 
   /**
    * Submit code sent by cognito for email change, if accepted returns true
+   * - triggers and resolves fetching
    * @param code
    * @returns
    */
   async verifyUserEmail(code: string): Promise<boolean> {
+    this.interstitial.fetching$.next(true);
     try {
       await Auth.verifyCurrentUserAttributeSubmit('email', code);
+      this.interstitial.fetching$.next(false);
       return true;
     } catch (err) {
+      this.interstitial.fetching$.next(false);
       throw `authService:verifyUserEmail=${err}`;
     }
   }
 
   /**
    * Submit old and new password to change, if accepted returns true
+   * - triggers and resolves fetching
    * @param oldPassword
    * @param newPassword
    * @returns
    */
   async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
+    this.interstitial.fetching$.next(true);
     try {
       const user = await Auth.currentAuthenticatedUser();
       const resp = await Auth.changePassword(user, oldPassword, newPassword);
+      this.interstitial.fetching$.next(false);
       return resp.toLowerCase();
     } catch (err) {
+      this.interstitial.fetching$.next(false);
       return err.message;
     }
   }
 
   /**
    * Submit user for deletion, disables in cognito
+   * - triggers and resolves fetching
    * @returns
    */
   async deactivateAccount(): Promise<string> {
+    this.interstitial.fetching$.next(true);
     try {
       const user: CognitoUser = await Auth.currentAuthenticatedUser();
       return new Promise((resolve, reject) => {
+        this.interstitial.fetching$.next(false);
         user.deleteUser((err, res) => {
           if (err) reject(err);
           if (res) resolve(res);
         });
       });
     } catch (err) {
+      this.interstitial.fetching$.next(false);
       throw `authService:deactivateAccount=${err}`;
     }
   }

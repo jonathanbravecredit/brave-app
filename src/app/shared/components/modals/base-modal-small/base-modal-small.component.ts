@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 export interface IBaseModalSmallConfig {
-  openButtonText: string;
   title: string;
-  body: string;
-  actionButtonOneText: string;
-  actionButtonTwoText: string;
+  body?: string;
+  enableButtonOne?: boolean;
+  enableButtonTwo?: boolean;
+  actionButtonOneText?: string;
+  actionButtonTwoText?: string;
 }
 
 @Component({
@@ -13,10 +14,12 @@ export interface IBaseModalSmallConfig {
   templateUrl: './base-modal-small.component.html',
 })
 export class BaseModalSmallComponent implements OnInit {
+  @Input() injected: boolean = false;
   @Input() config: IBaseModalSmallConfig = {
-    openButtonText: 'Open',
     title: 'Message Title',
     body: 'Message Text',
+    enableButtonOne: true,
+    enableButtonTwo: true,
     actionButtonOneText: 'Cancel',
     actionButtonTwoText: 'Continue',
   };

@@ -1,7 +1,8 @@
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export const DEFAULT_TRADELINE = {
   tradeline: {} as ITradeLinePartition,
+  subscriber: {} as ISubscriber,
   creditorName: '',
   lastReported: '',
   accountTypeDescription: '',
@@ -10,12 +11,13 @@ export const DEFAULT_TRADELINE = {
   originalCreditor: 'Original Creditor',
   originalCreditorValue: '',
   disputeFlagValue: '',
-  accountDetail: {
-    accountNumber: '',
-    typeOfCollection: '',
-    amountPastDue: -1,
-    dateOpened: '',
-    dateLastPayment: '',
-    remarks: '',
-  },
+  consumerStatement: 'None',
+  // accountDetail: {
+  //   accountNumber: '',
+  //   typeOfCollection: '',
+  //   amountPastDue: -1,
+  //   dateOpened: '',
+  //   dateLastPayment: '',
+  //   remarks: '',
+  // },
 };

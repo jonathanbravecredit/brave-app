@@ -12,10 +12,23 @@
 
   <!-- Court Name -->
   <div class="py-2 px-1">
-    <brave-base-table-row
-      [label]="mapper['borrowerNames'] || 'Name'"
-      [value]="config.borrowerNames"
-    ></brave-base-table-row>
+    <brave-base-table-row [label]="mapper['borrowerNames'] || 'Name'" [injected]="true">
+      <div class="flex flex-col w-6/12">
+        <ng-container *ngIf="config.borrowerNamesArray?.length; else noName">
+          <p
+            *ngFor="let name of config.borrowerNamesArray"
+            class="text-xs text-dk-gray text-opacity-50 text-right mb-1"
+          >
+            {{ name }}
+          </p>
+        </ng-container>
+        <ng-template #noName>
+          <p class="text-xs text-dk-gray text-opacity-50 text-right mb-1">
+            {{ bcMissing }}
+          </p>
+        </ng-template>
+      </div>
+    </brave-base-table-row>
   </div>
 
   <!-- Date Filed -->
@@ -28,23 +41,65 @@
 
   <!-- Date Paid -->
   <div class="py-2 px-1">
-    <brave-base-table-row
-      [label]="mapper['previousAddress'] || 'Previous Address(es)'"
-      [value]="config.previousAddresses"
-    ></brave-base-table-row>
+    <brave-base-table-row [label]="mapper['previousAddress'] || 'Previous Address(es)'" [injected]="true">
+      <div class="flex flex-col w-6/12">
+        <ng-container *ngIf="config.previousAddressesArray?.length; else noAddress">
+          <p
+            *ngFor="let address of config.previousAddressesArray"
+            class="text-xs text-dk-gray text-opacity-50 text-right mb-1"
+          >
+            {{ address }}
+          </p>
+        </ng-container>
+        <ng-template #noAddress>
+          <p class="text-xs text-dk-gray text-opacity-50 text-right mb-1">
+            {{ bcMissing }}
+          </p>
+        </ng-template>
+      </div>
+    </brave-base-table-row>
   </div>
 
-  <!-- Date Updated -->
+  <!-- Telephone list -->
   <div class="py-2 px-1">
-    <brave-base-table-row
-      [label]="mapper['telephone'] || 'Telephone'"
-      [value]="config.telephones"
-    ></brave-base-table-row>
+    <brave-base-table-row [label]="mapper['telephone'] || 'Telephone'" [injected]="true">
+      <div class="flex flex-col w-6/12">
+        <ng-container *ngIf="config.telephonesArray?.length; else noPhone">
+          <p
+            *ngFor="let phone of config.telephonesArray; else"
+            class="text-xs text-dk-gray text-opacity-50 text-right mb-1"
+          >
+            {{ phone ? (phone | mask: '(000) 000-0000') : bcMissing }}
+          </p>
+        </ng-container>
+        <ng-template #noPhone>
+          <p class="text-xs text-dk-gray text-opacity-50 text-right mb-1">
+            {{ bcMissing }}
+          </p>
+        </ng-template>
+      </div>
+    </brave-base-table-row>
   </div>
 
-  <!-- Type -->
+  <!-- Employers -->
   <div class="py-2 px-1">
-    <brave-base-table-row [label]="mapper['employers'] || 'Employer'" [value]="config.employers"></brave-base-table-row>
+    <brave-base-table-row [label]="mapper['employers'] || 'Employer'" [injected]="true">
+      <div class="flex flex-col w-6/12">
+        <ng-container *ngIf="config.employersArray?.length; else noEmployer">
+          <p
+            *ngFor="let employer of config.employersArray; else"
+            class="text-xs text-dk-gray text-opacity-50 text-right mb-1"
+          >
+            {{ employer }}
+          </p>
+        </ng-container>
+        <ng-template #noEmployer>
+          <p class="text-xs text-dk-gray text-opacity-50 text-right mb-1">
+            {{ bcMissing }}
+          </p>
+        </ng-template>
+      </div>
+    </brave-base-table-row>
   </div>
 
   <!-- spacer for bottom -->

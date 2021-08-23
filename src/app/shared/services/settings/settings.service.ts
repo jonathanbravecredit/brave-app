@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router, private auth: AuthService, private interstitial: InterstitialService) {}
 
   /**
    * Submit email to cognito for change, if accepted returns true
@@ -68,8 +69,10 @@ export class SettingsService {
   async signOut(): Promise<any> {
     try {
       await this.auth.signOut();
+      this.interstitial.fetching$.next(false);
       this.router.navigate(['/']);
     } catch (err) {
+      this.interstitial.fetching$.next(false);
       throw `settingService:signOut=${err}`;
     }
   }

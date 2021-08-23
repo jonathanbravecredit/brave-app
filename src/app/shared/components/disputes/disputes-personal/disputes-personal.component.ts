@@ -9,7 +9,7 @@ import {
   selector: 'brave-disputes-personal',
   templateUrl: './disputes-personal.component.html',
 })
-export class DisputesPersonalComponent implements OnInit {
+export class DisputesPersonalComponent {
   @Input() dateReported: string | undefined;
   @Input() dateUpdated: string | undefined;
   @Input() nameTypeAbbreviation: string | undefined;
@@ -20,8 +20,4 @@ export class DisputesPersonalComponent implements OnInit {
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   processReasons = processReasons;
   constructor() {}
-
-  ngOnInit(): void {
-    console.log('personal disputes reaspn page', this.defaultReasonPage);
-  }
 }

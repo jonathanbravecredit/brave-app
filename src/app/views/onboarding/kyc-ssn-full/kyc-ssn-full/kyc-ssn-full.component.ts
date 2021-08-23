@@ -4,7 +4,6 @@ import { KycService } from '@shared/services/kyc/kyc.service';
 import { FlatForm, KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
-import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-kyc-ssn-full',
@@ -12,12 +11,7 @@ import { SyncService } from '@shared/services/sync/sync.service';
 })
 export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
   stepID = 2;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService,
-    private syncService: SyncService,
-  ) {
+  constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
   }
 

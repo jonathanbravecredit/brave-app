@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
 import { IDeactivateAccount } from '@shared/components/forms/simple-deactive-form/interface';
-import { ISettingsViews } from '@views/dashboard/settings/settings-pure/interface';
+import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/settings-pure/interface';
 
 @Component({
   selector: 'brave-settings-pure',
@@ -15,8 +15,7 @@ export class SettingsPureComponent {
   @Output() goBackToSettingsClick: EventEmitter<void> = new EventEmitter();
   @Output() backButtonClick: EventEmitter<void> = new EventEmitter();
 
-  @Input() openTab = 1;
-  @Input() view: ISettingsViews = 'reset';
+  @Input() option: SettingsOptions = SettingsOptions.Init;
   @Input() haveResetError: boolean = false;
   @Input() resetSuccess: boolean = false;
   @Input() resetError: string = '';
@@ -24,6 +23,8 @@ export class SettingsPureComponent {
   @Input() haveDeactivateError: boolean = false;
   @Input() deactivateSuccess: boolean = false;
   @Input() deactivateError: string = '';
+
+  settingsOptions = SettingsOptions;
 
   constructor() {}
 }

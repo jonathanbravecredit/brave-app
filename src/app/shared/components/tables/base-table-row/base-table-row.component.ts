@@ -31,7 +31,19 @@ export class BaseTableRowComponent {
    * enableSeparator: true
    */
   @Input() enableSeparator: boolean = false;
+  /**
+   * For greater control can choose to inject the html
+   */
+  @Input() injected: boolean = false;
+  /**
+   * The type which will determine the pipe to implement
+   * - account | currency | date | unknown
+   */
   @Input() valueType: BaseTableRowType = 'string';
+  /**
+   * The global missing value placeholder
+   */
   missing = TransunionUtil.bcMissing;
+
   constructor() {}
 }

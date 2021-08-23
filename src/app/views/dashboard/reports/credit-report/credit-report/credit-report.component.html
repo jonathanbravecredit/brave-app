@@ -1,4 +1,4 @@
-<div class="w-full p-2">
+<div class="p-2">
   <div *ngIf="creditReport$ | async as creditReports">
     <div *ngIf="preferences$ | async as preferences">
       <div *ngIf="creditReports | mergereportToCreditreport: preferences as parsed">

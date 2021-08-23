@@ -1,4 +1,4 @@
-import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer } from '@shared/interfaces';
+import { IBorrower, IBorrowerAddress, IBorrowerName, IBorrowerTelephone, IEmployer } from '@shared/interfaces';
 import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 
 export interface IPersonalItemsDetailsTable {
@@ -17,6 +17,7 @@ export interface IPersonalItemsDetailsTable {
   currentAddressRaw?: IBorrowerAddress;
   previousAddressesRaw?: IBorrowerAddress[];
   employersRaw?: IEmployer[];
+  telephonesRaw?: IBorrowerTelephone[];
 }
 
 export interface IPersonalItemsDetailsConfig {

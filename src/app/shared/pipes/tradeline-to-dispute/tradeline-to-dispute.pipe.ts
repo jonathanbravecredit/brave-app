@@ -2,17 +2,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
 import { IRemark } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 @Pipe({
   name: 'tradelineToDispute',
 })
 export class TradelineToDisputePipe implements PipeTransform {
-  transform(tradeline: ITradeLinePartition | null): IDisputeItem | undefined {
-    console.log('tradeline in tradeline to dispute ===> ', tradeline);
+  transform(tradeline: ITradeLinePartition | null): IDisputeTradelineItem | undefined {
     if (!tradeline) return;
     const dispute = this.mapTradeLineToAccount(tradeline);
-    console.log('mapped dispute in tradeline to dispute ===> ', dispute);
     return dispute;
   }
 
@@ -21,7 +19,7 @@ export class TradelineToDisputePipe implements PipeTransform {
    * @param {ITradeLinePartition} tradeLines
    * @returns
    */
-  mapTradeLineToAccount(tradeline: ITradeLinePartition): IDisputeItem {
+  mapTradeLineToAccount(tradeline: ITradeLinePartition): IDisputeTradelineItem {
     const mapped = {
       tradeline: tradeline,
       creditorName: tradeline.Tradeline?.creditorName || '',
@@ -30,8 +28,8 @@ export class TradelineToDisputePipe implements PipeTransform {
       accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
       disputeFlag: 'Previously Disputed?',
       originalCreditor: 'Original Creditor',
-      originalCreditorValue: this.lookupOriginalCreditor(tradeline),
-      disputeFlagValue: this.lookupDisputeFlag(tradeline),
+      originalCreditorValue: this.getOriginalCreditor(tradeline),
+      disputeFlagValue: this.getDisputeFlag(tradeline),
       accountDetail: {
         accountNumber: tradeline.Tradeline?.accountNumber || '',
         typeOfCollection: tradeline.accountTypeAbbreviation || '',
@@ -61,7 +59,7 @@ export class TradelineToDisputePipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupOriginalCreditor(partition: ITradeLinePartition | undefined): string {
+  getOriginalCreditor(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'unknown';
     const originalCreditor = partition.Tradeline?.CollectionTrade?.originalCreditor;
     const creditorName = partition.Tradeline?.creditorName || 'unknown';
@@ -77,7 +75,7 @@ export class TradelineToDisputePipe implements PipeTransform {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  lookupDisputeFlag(partition: ITradeLinePartition | undefined): string {
+  getDisputeFlag(partition: ITradeLinePartition | undefined): string {
     if (!partition) return 'No';
     const symbol = partition.Tradeline?.DisputeFlag?.description || 'not';
     return symbol.indexOf('not') === -1 ? 'Yes' : 'No';

@@ -142,7 +142,6 @@ export class KycService {
   ): Promise<IIndicativeEnrichmentResult | undefined> {
     try {
       const { success, error, data } = await this.transunion.sendIndicativeEnrichment(appData);
-      console.log('indicative enrichment ===> ', success, error, data);
       return success ? data : undefined;
     } catch (err) {
       throw new Error(`kycService:sendIndicativeEnrichment=${err}`);
@@ -181,11 +180,9 @@ export class KycService {
 
     try {
       enrichmentResponse = await this.sendIndicativeEnrichment(data);
-      console.log('enrichmentResponse', enrichmentResponse, data);
       if (!enrichmentResponse) return KYCResponse.Failed;
       enrichment = await this.processIndicativeEnrichmentResponse(enrichmentResponse);
       if (!enrichment) return KYCResponse.Failed;
-      console.log('enrichment', enrichment, enrichmentResponse);
       const ssn = `${enrichment.SSN}`;
       return ssn ? ssn : KYCResponse.Failed;
     } catch {
@@ -402,7 +399,6 @@ export class KycService {
    * @returns
    */
   getPassCodeQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
-    console.log('getPassCodeQuestion', questions);
     const series: ITransunionKBAQuestion[] =
       questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
         ? questions.ChallengeConfigurationType.MultiChoiceQuestion
