@@ -129,7 +129,14 @@ export class TransunionReportQueries extends TransunionBase {
     if (!partition) return false;
     const symbol = partition.accountTypeSymbol?.toLowerCase();
     if (!symbol) return false;
-    return !!FORBEARANCE_TYPE[symbol];
+    const accountType = FORBEARANCE_TYPE[symbol];
+    if (!accountType) return false;
+    if (symbol.toLowerCase() === 'm') return true; // simple mortgage
+    const industry = partition.Tradeline?.IndustryCode?.description;
+    if (industry?.toLowerCase().includes('student')) {
+      return true;
+    }
+    return false;
   }
 
   /**

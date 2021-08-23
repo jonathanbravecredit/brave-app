@@ -22,6 +22,7 @@ import { CreditbureauToTradelinedetailsPipe } from './creditbureau-to-tradelined
 import { CreditbureauToPublicitemdetailsPipe } from './creditbureau-to-publicitemdetails/creditbureau-to-publicitemdetails.pipe';
 import { InvestigationresultsToPersonalitemdetailsPipe } from './investigationresults-to-personalitemdetails/investigationresults-to-personalitemdetails.pipe';
 import { TradelineToAccountgroupPipe } from './tradeline-to-accountgroup/tradeline-to-accountgroup.pipe';
+import { TradelineToForbearancePipe } from './tradeline-to-forbearance/tradeline-to-forbearance.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -44,6 +45,7 @@ const pipes = [
   CreditbureauToPublicitemdetailsPipe,
   InvestigationresultsToPersonalitemdetailsPipe,
   TradelineToAccountgroupPipe,
+  TradelineToForbearancePipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
 ];

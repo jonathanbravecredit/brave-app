@@ -58,7 +58,7 @@ export class MergereportToDashboardPipe implements PipeTransform {
   }
 
   private haveForbearanceAccounts(tradelines: ITradeLinePartition[]): boolean {
-    return !!tradelines.find((item) => this.tu.queries.report.isNegativeAccount(item));
+    return !!tradelines.find((item) => this.tu.queries.report.isForbearanceAccount(item));
   }
 
   /**
