@@ -16,6 +16,8 @@ import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-persona
 import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
+import { ForbearanceAccountsComponent } from '@views/dashboard/snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
+import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbearance/forbearance.view';
 
 const DashboardRoutes: Routes = [
   {
@@ -59,8 +61,13 @@ const DashboardRoutes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'report/accounts/negative',
+        path: 'report/snapshot/negative',
         component: NegativeAccountInitialComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/snapshot/forbearance',
+        component: ForbearanceView,
         canActivate: [AuthGuard],
       },
       {

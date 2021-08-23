@@ -16,7 +16,7 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 export class MergereportToCreditreportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
-  transform(report: IMergeReport, prefs: PreferencesStateModel): ICreditReportTradelinesCardGroup[] {
+  transform(report: IMergeReport, prefs?: PreferencesStateModel): ICreditReportTradelinesCardGroup[] {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!this.tradeLines) return [{} as ICreditReportTradelinesCardGroup];
     return this.tradeLines instanceof Array

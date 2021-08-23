@@ -4,11 +4,10 @@
       <brave-dashboard-enrolled-pure
         [report]="report"
         [cards]="cards"
-        [userName]="userName"
-        [defaultMsg]="defaultMsg"
-        [initialMsg]="initialMsg"
+        [welcomeMsg]="welcomeMsg"
         [lastUpdated]="lastUpdated"
         (negativeItemsClicked)="onNegativeItemsClicked()"
+        (forbearanceItemsClicked)="onForbearanceItemsClicked()"
         (fullReportClicked)="onFullReportClicked()"
       ></brave-dashboard-enrolled-pure>
     </ng-container>
