@@ -22,7 +22,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.forbearanceAccountsTitle"
-      [status]="cards.negativecard.status"
+      [status]="cards.forbearancecard?.status || 'safe'"
       (click)="forbearanceItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
