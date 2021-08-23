@@ -1,6 +1,7 @@
-import { BRAVE_ACCOUNT_TYPE } from '@shared/constants';
+import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
+import { FORBEARANCE_TYPE } from '@shared/utils/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionReportQueries extends TransunionBase {
@@ -117,5 +118,29 @@ export class TransunionReportQueries extends TransunionBase {
     const description = partition.accountTypeDescription;
     const status = BRAVE_ACCOUNT_TYPE[`${partition.Tradeline?.PayStatus?.symbol}`];
     return partition.accountTypeSymbol?.toLowerCase() === 'y' ? description || 'No Data / Unknown' : status;
+  }
+
+  /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static isForbearanceAccount(partition: ITradeLinePartition | undefined): boolean {
+    if (!partition) return false;
+    const symbol = partition.accountTypeSymbol?.toLowerCase();
+    if (!symbol) return false;
+    return !!FORBEARANCE_TYPE[symbol];
+  }
+
+  /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static isNegativeAccount(partition: ITradeLinePartition | undefined): boolean {
+    if (!partition) return false;
+    const symbol = partition.Tradeline?.PayStatus?.symbol;
+    if (!symbol) return false;
+    return !!NEGATIVE_PAY_STATUS_CODES[symbol];
   }
 }

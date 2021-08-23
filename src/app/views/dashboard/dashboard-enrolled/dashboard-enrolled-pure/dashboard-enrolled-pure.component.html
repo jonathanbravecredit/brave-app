@@ -1,17 +1,17 @@
-<h2 class="text-lg font-semibold">{{ userName === '' ? defaultMsg : initialMsg }}</h2>
+<h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
 <div class="my-2">
   <brave-credit-report-graphic-with-graph [currentValue]="score"></brave-credit-report-graphic-with-graph>
 </div>
 
-<h2 class="mb-1 text-lg font-semibold">Your Credit Snapshot</h2>
-<p *ngIf="lastUpdated !== undefined" class="text-xs mb-1">Last Updated {{ lastUpdated }}</p>
+<h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
+<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }} {{ lastUpdated }}</p>
 <div *ngIf="cards" class="mb-4">
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
       tendency="up"
       label="update"
-      title="Negative Accounts"
+      [title]="content.negativeAccountsTitle"
       typeOfSnapshot="time"
       [value]="cards.negativecard.count"
       [status]="cards.negativecard.status"
@@ -20,13 +20,10 @@
   </div>
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
-      tendency="down"
-      label="preview"
-      status="safe"
-      title="Age of Credit"
-      typeOfSnapshot="time"
-      typeOfDate="Years"
-      [preview]="true"
+      tendency="no-tendency"
+      [title]="content.forbearanceAccountsTitle"
+      [status]="cards.negativecard.status"
+      (click)="forbearanceItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
   <div class="mt-6 hover:cursor-pointer">
@@ -52,11 +49,11 @@
   </div>
 </div>
 
-<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()"
-  >View Full Credit Report</brave-links-onlytext-button
->
-<h5 class="mb-2 font-semibold text-lg">Take Control</h5>
-<h6 class="mb-4 text-sm">Trusted, affordable products no matter your credit situation</h6>
+<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
+  content.b1
+}}</brave-links-onlytext-button>
+<h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
+<h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
 <div class="mt-2 max-w-md">
   <brave-credit-builder-card></brave-credit-builder-card>
 </div>

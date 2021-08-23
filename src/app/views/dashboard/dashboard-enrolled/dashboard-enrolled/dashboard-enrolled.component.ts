@@ -9,22 +9,27 @@ import { Observable } from 'rxjs';
   templateUrl: './dashboard-enrolled.component.html',
 })
 export class DashboardEnrolledComponent implements OnInit {
-  @Input() userName: string = '';
-  @Input() defaultMsg = 'Welcome back!';
-  @Input() initialMsg: string = 'Welcome back!';
-  @Input() lastUpdated = 'Today';
+  userName: string | undefined;
+  welcomeMsg: string | undefined;
+  lastUpdated: string | undefined | null;
   tuReport$: Observable<IMergeReport>;
 
   constructor(private router: Router, private route: ActivatedRoute, private dashboardService: DashboardService) {
     this.tuReport$ = this.dashboardService.tuReport$.asObservable();
+    this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
+    this.lastUpdated = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
   }
 
   ngOnInit(): void {
-    if (this.userName) this.initialMsg = 'Welcome back, ' + this.userName;
+    if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
   }
 
   onNegativeItemsClicked() {
-    this.router.navigate(['../report/accounts/negative'], { relativeTo: this.route });
+    this.router.navigate(['../report/snapshot/negative'], { relativeTo: this.route });
+  }
+
+  onForbearanceItemsClicked() {
+    this.router.navigate(['../report/snapshot/forbearance'], { relativeTo: this.route });
   }
 
   onFullReportClicked() {
