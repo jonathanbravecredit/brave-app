@@ -7,6 +7,8 @@ import {
   INSTALLMENT_PARTITIONS,
   MORTGAGE_PARTITIONS,
 } from '@views/dashboard/snapshots/forbearance/forbearance-pure/mock';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 export default {
   title: 'app/views/snapshots/forbearance/view',
@@ -14,7 +16,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule],
+      imports: [SharedComponentsModule, SharedPipesModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
@@ -36,6 +38,7 @@ export default {
 
 const installments = INSTALLMENT_PARTITIONS;
 const mortgages = MORTGAGE_PARTITIONS;
+const accounts = [...installments, ...mortgages] as ITradeLinePartition[];
 const Template: Story<ForbearancePureView> = (args: any) => ({
   component: ForbearancePureView,
   props: {
@@ -44,5 +47,7 @@ const Template: Story<ForbearancePureView> = (args: any) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  tradelines: accounts,
+};
 Default.parameters;

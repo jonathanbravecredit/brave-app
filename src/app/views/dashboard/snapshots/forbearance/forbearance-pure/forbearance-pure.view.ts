@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CreditReportGroups } from '@shared/constants/credit-report';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
@@ -10,6 +10,8 @@ import { forbearanceAccountsContent } from '@views/dashboard/snapshots/forbearan
 })
 export class ForbearancePureView implements OnInit {
   @Input() tradelines: ITradeLinePartition[] = [];
+  @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
+
   content = forbearanceAccountsContent;
   groups = CreditReportGroups;
   tu = TransunionUtil;

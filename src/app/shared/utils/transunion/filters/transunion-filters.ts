@@ -37,11 +37,12 @@ export class TransunionFilters extends TransunionBase {
   ): ITradeLinePartition[] {
     const _filters: Record<any, boolean> = {};
     filters.forEach((item) => (_filters[`${item}`] = true));
-    return tradeLines.filter((item) => {
+    const results = tradeLines.filter((item) => {
       const symbol = item.accountTypeSymbol?.toLowerCase();
       const group = CREDIT_REPORT_GROUPS[symbol || ''];
       if (!symbol || !group) return 0;
-      return _filters[group];
+      return _filters[group.group];
     });
+    return results;
   }
 }

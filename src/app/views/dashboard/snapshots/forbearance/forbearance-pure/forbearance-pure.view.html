@@ -13,7 +13,8 @@
 <div class="my-8">
   <!-- Student Loan Accounts -->
   <brave-forbearance-accounts
-    [accounts]="tu.filters.filterTradelinesByCreditReportGroups(tradelines, [groups.InstallmentLoans])"
+    [accounts]="tradelines | tradelineToAccountgroup: groups.InstallmentLoans"
+    (viewDetailClick)="viewDetailClick.emit($event)"
   >
     <div class="mb-4 flex items-center content-center">
       <span class="material-icons" style="color: #9b51e0">label</span>
@@ -25,7 +26,8 @@
 <div class="my-8">
   <!-- Student Loan Accounts -->
   <brave-forbearance-accounts
-    [accounts]="tu.filters.filterTradelinesByCreditReportGroups(tradelines, [groups.Mortgages])"
+    [accounts]="tradelines | tradelineToAccountgroup: groups.Mortgages"
+    (viewDetailClick)="viewDetailClick.emit($event)"
   >
     <div class="mb-4 flex items-center content-center">
       <span class="material-icons" style="color: #56ccf2">label</span>

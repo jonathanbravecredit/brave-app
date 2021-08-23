@@ -2,6 +2,7 @@
   <ng-container *ngIf="(creditReport$ | async ) as creditReport; else noReport">
     <brave-forbearance-pure
       [tradelines]="creditReport | mergereportToTradelines: accountTypes.Mortgage : accountTypes.Installment"
+      (viewDetailClick)="onViewDetailClick($event)"
     ></brave-forbearance-pure>
   </ng-container>
 </div>
