@@ -36,6 +36,13 @@ const updatedAwsConfig = {
     redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
   },
 };
+
+declare global {
+  interface Window {
+    LOG_LEVEL: any;
+  }
+}
+window.LOG_LEVEL = 'debug';
 /* Configure Amplify resources */
 Amplify.configure(updatedAwsConfig);
 
@@ -50,14 +57,15 @@ import { SharedDirectivesModule } from '@shared/directives/shared-directives.mod
 import { SharedServicesModule } from '@shared/services/shared-services.module';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { ViewsModule } from '@views/views.module';
-import { AuthenticationModule } from './layouts/authentication/authentication.module';
-import { OnboardingModule } from './layouts/onboarding/onboarding.module';
+import { AuthenticationModule } from '@views/authentication/authentication.module';
+import { OnboardingModule } from '@views/onboarding/onboarding.module';
 import { braveState } from '@store/index';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerErrorInterceptor } from '@shared/interceptors/server-error.interceptor';
+import { HttpInterceptorService } from '@shared/interceptors/http-interceptor.service';
 // import { LayoutsModule } from '@layouts/layouts.module';
 
 @Injectable()
@@ -101,6 +109,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent],
 })

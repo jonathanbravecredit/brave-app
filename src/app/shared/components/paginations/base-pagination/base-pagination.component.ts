@@ -97,7 +97,6 @@ export class BasePaginationComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     if (this.customConfiguration !== undefined) {
       this.baseConfiguration = { ...this.customConfiguration };
-      console.log(this.baseConfiguration);
     }
   }
 

@@ -18,10 +18,11 @@ import {
   IFulfillServiceProductResponse,
 } from '@shared/interfaces';
 import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { MONTH_MAP } from '@shared/services/transunion/constants';
 import { returnNestedObject } from '@shared/utils/utils';
 import { AppDataStateModel } from '@store/app-data';
+import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
+import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 /*============IMPORTANT==============*/
@@ -36,7 +37,7 @@ import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disput
   providedIn: 'root',
 })
 export class TransunionService {
-  constructor(private api: APIService, private interstitial: InterstitialService) {}
+  constructor(private api: APIService) {}
 
   /**
    * Send the indicative enrichment message to the Transunion backend and await a response
@@ -92,7 +93,6 @@ export class TransunionService {
       const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
       return { success: false, error: err };
     }
   }
@@ -104,15 +104,11 @@ export class TransunionService {
    * @returns
    */
   async sendCompleteOnboarding(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
-    this.interstitial.changeMessage('completing your enrollment');
-    this.interstitial.openInterstitial();
     try {
       const msg = { id: data.id };
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));
-      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      this.interstitial.closeInterstitial();
       return { success: false, error: err };
     }
   }
@@ -182,15 +178,11 @@ export class TransunionService {
    * @returns
    */
   async refreshCreditReport(id: string): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
-    this.interstitial.changeMessage('refreshing your credit report');
-    this.interstitial.openInterstitial();
     try {
       const msg = { id };
       const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
-      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      this.interstitial.closeInterstitial();
       return { success: false, error: err };
     }
   }
@@ -204,16 +196,10 @@ export class TransunionService {
    * @returns
    */
   async sendDisputePreflightCheck(data: { id: string }): Promise<ITUServiceResponse<any>> {
-    this.interstitial.changeMessage('checking your dispute eligibility');
-    this.interstitial.openInterstitial();
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
-      console.log('preflight check res ===> ', res);
-      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : false;
     } catch (err) {
-      this.interstitial.closeInterstitial();
-      console.log('err', err);
       return { success: false, error: err };
     }
   }
@@ -226,17 +212,11 @@ export class TransunionService {
   async getDisputeStatus(
     data: UpdateAppDataInput | AppDataStateModel,
   ): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
-    this.interstitial.changeMessage('checking your dispute status');
-    this.interstitial.openInterstitial();
     try {
       const msg = this.createGetDisputeStatusPayload(data);
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
-      console.log('dspute status back', JSON.parse(res || ''));
-      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      this.interstitial.closeInterstitial();
-      console.log('err ', err);
       return { success: false, error: err };
     }
   }
@@ -246,19 +226,32 @@ export class TransunionService {
    * @param {IProcessDisputeTradelineResult[]} disputes AppData state
    * @returns
    */
-  async sendStartDispute(id: string, disputes: IProcessDisputeTradelineResult[]): Promise<ITUServiceResponse<any>> {
-    this.interstitial.changeMessage('checking your dispute status');
-    this.interstitial.openInterstitial();
+  async sendStartDispute(
+    id: string,
+    disputes: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[],
+  ): Promise<ITUServiceResponse<any>> {
     try {
-      console.log('sendDispute: id', id);
-      console.log('sendDispute: dispute', disputes);
       const msg = { id, disputes }; //this.createStartDisputePayload(data, disputes);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(msg));
-      this.interstitial.closeInterstitial();
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
-      console.log('err ', err);
-      this.interstitial.closeInterstitial();
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Call the backend to query TU for investigation results
+   * - occurs if a dispute is closed, but the results not returned
+   * - this happens when results are auto closed
+   * @param id
+   * @returns
+   */
+  async getInvestigationResults(id: string, disputeId: string): Promise<ITUServiceResponse<any>> {
+    try {
+      const msg = { id, disputeId };
+      const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err) {
       return { success: false, error: err };
     }
   }
@@ -276,7 +269,6 @@ export class TransunionService {
     const dob = attrs?.dob;
 
     if (!attrs || !id || !dob) {
-      console.log(`no attrs, id, or dob: attrs=${attrs}; id=${id}; dob=${dob}`);
       return;
     }
 
@@ -327,7 +319,6 @@ export class TransunionService {
     const dob = attrs?.dob;
 
     if (!attrs || !id || !dob) {
-      console.log(`no attrs, id, or dob: attrs=${attrs}; id=${id}; dob=${dob}`);
       return;
     }
 
@@ -376,7 +367,6 @@ export class TransunionService {
     const id = data.id?.split(':')?.pop();
 
     if (!id || !answers.length) {
-      console.log(`no id or answers provided: id=${id}; answers=${answers.length}`);
       return;
     }
 
@@ -404,7 +394,6 @@ export class TransunionService {
     const version = dispute ? '7.1' : '7';
 
     if (!id || !attrs || !dob) {
-      console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
       return;
     }
 
@@ -455,7 +444,6 @@ export class TransunionService {
       : data.agencies?.transunion?.serviceBundleFulfillmentKey;
 
     if (!id || !attrs || !dob) {
-      console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
       return;
     }
 
@@ -499,10 +487,8 @@ export class TransunionService {
     const dob = attrs?.dob;
 
     if (!id || !attrs || !dob) {
-      console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
       return;
     }
-    console.log('id in getDisputeStatus', id);
     return {
       ClientKey: id,
       Customer: {
@@ -656,7 +642,6 @@ export class TransunionService {
         },
       },
     };
-    console.log('mapped', mapped);
     return mapped;
   }
 }

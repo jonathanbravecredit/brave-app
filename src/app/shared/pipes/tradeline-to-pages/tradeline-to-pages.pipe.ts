@@ -14,14 +14,12 @@ export class TradelineToPagesPipe implements PipeTransform {
         this.mapToPaymentHistory({}),
         this.mapToRemarks({}),
       ];
-    console.log('tradeline', tradeline);
     const data = [
       this.mapToDetailsPageOne(tradeline),
       this.mapToDetailsPageTwo(tradeline),
       this.mapToPaymentHistory(tradeline),
       this.mapToRemarks(tradeline),
     ];
-    console.log('data', data);
     return data;
   }
 
@@ -48,6 +46,8 @@ export class TradelineToPagesPipe implements PipeTransform {
         currentBalance: tradeline.Tradeline?.currentBalance || '',
         highestBalance: tradeline.Tradeline?.highBalance || '',
         disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',
+        payStatus: tradeline?.Tradeline?.PayStatus?.description,
+        maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
         status: tradeline.Tradeline?.PayStatus?.symbol || '',
         openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',
       },
@@ -76,6 +76,8 @@ export class TradelineToPagesPipe implements PipeTransform {
         currentBalance: tradeline.Tradeline?.currentBalance || '',
         highestBalance: tradeline.Tradeline?.highBalance || '',
         disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',
+        payStatus: tradeline?.Tradeline?.PayStatus?.description,
+        maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
         status: tradeline.Tradeline?.PayStatus?.symbol || '',
         openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',
       },

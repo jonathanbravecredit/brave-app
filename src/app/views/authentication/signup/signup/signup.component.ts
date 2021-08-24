@@ -2,13 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+
+export type SignupState = 'init' | 'invalid';
 
 @Component({
   selector: 'brave-signup',
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
+  viewState: SignupState = 'init';
+  message: string = '';
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private interstitial: InterstitialService,
+  ) {}
 
   ngOnInit(): void {}
 
@@ -24,15 +35,25 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         await this.auth.signUp(user);
+        this.interstitial.fetching$.next(false);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err) {
-        console.log('sign up email error', err);
-        this.router.navigate(['../error'], { relativeTo: this.route });
+        this.interstitial.fetching$.next(false);
+        this.handleSignupError('invalid', err.message);
       }
     } else {
-      // TODO: need to provide feedback to the user on the invalid email
-      this.router.navigate(['../error'], { relativeTo: this.route });
+      this.interstitial.fetching$.next(false);
+      this.handleSignupError('invalid', 'Invalid sign up credentials');
     }
+  }
+
+  /**
+   *
+   * @param message
+   */
+  handleSignupError(viewState: SignupState, message: string): void {
+    this.viewState = viewState;
+    this.message = message;
   }
 
   /**

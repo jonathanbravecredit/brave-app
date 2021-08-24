@@ -1,3 +1,7 @@
-<div class="container mx-auto max-w-xs h-full">
-  <brave-disputes-personal-pure-view></brave-disputes-personal-pure-view>
-</div>
+<ng-container *ngIf="personalItem$ | async as dispute">
+  <brave-disputes-personal-pure-view
+    [isDisputeSent]="isDisputeSent"
+    [personalDispute]="dispute"
+    (processResult)="onProcessResult($event)"
+  ></brave-disputes-personal-pure-view>
+</ng-container>

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class SignupThankyouComponent implements OnDestroy {
   private emailSub$: Subscription;
   private email: string | undefined;
-  constructor(private router: Router, private auth: AuthService, private interstitial: InterstitialService) {
+  constructor(private router: Router, private auth: AuthService) {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }
 
@@ -24,13 +23,9 @@ export class SignupThankyouComponent implements OnDestroy {
    */
   onResendClick() {
     if (this.email) {
-      this.interstitial.changeMessage('resending code');
-      this.interstitial.openInterstitial();
       this.auth.resendSignUp(this.email)?.then(() => {
-        this.interstitial.changeMessage('code resent. redirecting you back to login');
         setTimeout(async () => {
           await this.auth.signOut();
-          this.interstitial.closeInterstitial();
           this.router.navigate(['/auth/signin']);
         }, 2000);
       });

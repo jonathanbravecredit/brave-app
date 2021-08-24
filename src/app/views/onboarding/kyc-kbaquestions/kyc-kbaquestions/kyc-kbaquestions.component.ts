@@ -127,7 +127,6 @@ export class KycKbaquestionsComponent implements OnInit {
         this.router.navigate(['../error'], { relativeTo: this.route });
       }
     } catch (err) {
-      console.log('err ===> ', err);
       this.router.navigate(['../error'], { relativeTo: this.route });
     }
   }

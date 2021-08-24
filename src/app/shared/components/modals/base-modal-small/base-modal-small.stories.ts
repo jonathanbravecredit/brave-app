@@ -28,7 +28,6 @@ export default {
 } as Meta;
 
 const config: IBaseModalSmallConfig = {
-  openButtonText: 'Open',
   title: 'Message Title',
   body:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices est in dolor feugiat, et consequat urna imperdiet. Nam a purus elit. In eu dui fermentum, tincidunt nisi a, pulvinar nulla. Morbi justo lectus, pellentesque ut dignissim at, varius at erat. Nullam porta libero justo, non facilisis urna elementum quis. Sed cursus lacinia faucibus. Nulla at elit erat. Ut at pharetra est. In dictum fringilla odio sed fringilla.',
@@ -41,7 +40,12 @@ const Template: Story<BaseModalSmallComponent> = (args: any) => ({
     ...args,
     config,
   },
-  template: `<brave-base-modal-small [config]="config"></brave-base-modal-small>`,
+  template: `
+  <brave-filled-onlytext-button (click)="toggleModal()">
+    Open
+  </brave-filled-onlytext-button>
+  <brave-base-modal-small [config]="config">
+  </brave-base-modal-small>`,
 });
 
 export const Default = Template.bind({});

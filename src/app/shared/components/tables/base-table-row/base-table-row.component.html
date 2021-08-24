@@ -1,0 +1,21 @@
+<div *ngIf="label" class="flex justify-between w-full">
+  <p class="text-xs text-dk-gray w-6/12">{{ label }}</p>
+  <ng-container *ngIf="!injected">
+    <p *ngIf="valueType === 'account'" class="text-xs text-dk-gray text-opacity-50 text-right w-6/12">
+      {{ value === undefined ? missing : value === '--' ? value : (value | accountNumberMask) }}
+    </p>
+    <p *ngIf="valueType === 'currency'" class="text-xs text-dk-gray text-opacity-50 text-right w-6/12">
+      {{ value === undefined ? missing : value === '--' ? value : (value | currency: 'USD':'symbol':'1.0-0') }}
+    </p>
+    <p *ngIf="valueType === 'date'" class="text-xs text-dk-gray text-opacity-50 text-right w-6/12">
+      {{ value === undefined ? missing : value === '--' ? value : (value | date: 'shortDate') }}
+    </p>
+    <p *ngIf="valueType === 'string'" class="text-xs text-dk-gray text-opacity-50 text-right w-6/12">
+      {{ value === undefined ? missing : value === '--' ? value : value }}
+    </p>
+  </ng-container>
+  <ng-container *ngIf="injected">
+    <ng-content></ng-content>
+  </ng-container>
+</div>
+<div *ngIf="enableSeparator" class="h-1 border-t mt-2 border-black opacity-50"></div>

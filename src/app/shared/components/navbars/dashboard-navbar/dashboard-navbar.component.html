@@ -1,14 +1,28 @@
-<nav class="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow">
+<nav
+  class="top-0 fixed z-40 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow"
+>
   <div *ngIf="isBackButton === false" class="container px-4 mx-auto flex flex-wrap items-center justify-between">
     <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-      <a [routerLink]="['/']" class="font-sans text-sm text-coolGray-700 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase" href="#">
+      <a
+        [routerLink]="['/']"
+        class="font-sans text-sm text-coolGray-700 leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+        href="#"
+      >
         Logo
       </a>
-      <button class="cursor-pointer text-xl leading-none px-3 py-1 border-none rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button" (click)="setNavbarOpen()">
+      <button
+        class="cursor-pointer text-xl leading-none px-3 py-1 border-none rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+        type="button"
+        (click)="setNavbarOpen()"
+      >
         <span class="material-icons">menu</span>
       </button>
     </div>
-    <div class="lg:flex flex-grow items-center" [ngClass]="{ hidden: !navbarOpen, block: navbarOpen }" id="example-navbar-warning">
+    <div
+      class="lg:flex flex-grow items-center"
+      [ngClass]="{ hidden: !navbarOpen, block: navbarOpen }"
+      id="example-navbar-warning"
+    >
       <!-- left portion menu items -->
       <ul class="flex flex-col lg:flex-row list-none mr-auto">
         <li class="flex items-center">

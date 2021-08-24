@@ -3,7 +3,6 @@ import { Component, EventEmitter, OnInit, Input, Output, OnChanges } from '@angu
 @Component({
   selector: 'brave-base-modal',
   templateUrl: './base-modal.component.html',
-  styleUrls: ['./base-modal.component.css']
 })
 export class BaseModalComponent implements OnInit {
   @Output() buttonClicked: EventEmitter<string> = new EventEmitter();
@@ -11,9 +10,9 @@ export class BaseModalComponent implements OnInit {
   @Input() hideCloseButton: boolean = false;
   @Input() isModalActive: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   close(): void {
     this.closed.emit();

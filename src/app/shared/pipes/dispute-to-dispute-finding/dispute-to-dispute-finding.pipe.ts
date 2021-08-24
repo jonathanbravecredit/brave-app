@@ -1,21 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ICreditBureau, IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
 import { DisputeInput } from '@shared/services/aws/api.service';
-import { IDisputeItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IDisputeToDisputeFindingOutput {
-  reportCreatedAt: string;
-  fileIdentificationNumber: string;
   status: string;
-  resultCode: string;
-  tradeLinePartition?: ITradeLinePartition;
-  publiceRecordPartition?: unknown;
-  personalRecordPartition?: unknown;
-  updatedValues: string[];
-  type: 'tradeline' | 'public-record' | 'personal-info';
-  estimatedCompletionDate?: string;
+  reportCreatedAt: string;
   totalDisputedItems?: string;
+  estimatedCompletionDate?: string;
+  fileIdentificationNumber: string;
+  creditBureau?: ICreditBureau;
+  investigationResults?: ITrueLinkCreditReportType;
 }
 
 @Pipe({
@@ -26,41 +22,46 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
+    // get and parse the credit bureau data
     const creditBureau: IDisputeCreditBureau = dispute.disputeCreditBureau
       ? JSON.parse(dispute.disputeCreditBureau)
       : undefined;
-    const disputeItems: IDisputeItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
+    // get and parse the investigation results data
+    const tempReport: {
+      TrueLinkCreditReportType?: any;
+      trueLinkCreditReportType?: any;
+    } = dispute.disputeInvestigationResults ? JSON.parse(dispute.disputeInvestigationResults) : undefined;
+    const investigationResults: ITrueLinkCreditReportType = tempReport?.TrueLinkCreditReportType
+      ? tempReport?.TrueLinkCreditReportType
+      : tempReport?.trueLinkCreditReportType;
+
+    const disputeItems: IDisputeTradelineItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
     if (!creditBureau || !disputeItems) return;
-    return this.mapClosedDispute(disputeItems, dispute, creditBureau);
+    return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
   }
 
   mapOpenDispute(dispute: DisputeInput): IDisputeToDisputeFindingOutput {
     return {
-      reportCreatedAt: dispute.openDisputes?.openDate || '--',
       status: 'open',
+      reportCreatedAt: dispute.openDisputes?.openDate || '--',
       fileIdentificationNumber: dispute.disputeLetterCode || '--',
       estimatedCompletionDate: dispute.openDisputes?.estimatedCompletionDate || '--',
       totalDisputedItems: `${dispute.openDisputes?.totalDisputedItems || '--'}`,
-      resultCode: '--',
-      type: 'tradeline',
     } as IDisputeToDisputeFindingOutput;
   }
 
   mapClosedDispute(
-    disputeItems: IDisputeItem,
+    disputeItems: IDisputeTradelineItem,
     dispute: DisputeInput,
     creditBureau: IDisputeCreditBureau,
+    investigationResults: ITrueLinkCreditReportType,
   ): IDisputeToDisputeFindingOutput {
     return {
-      reportCreatedAt: dispute.closedOn || '--',
       status: 'closed',
-      fileIdentificationNumber: `${creditBureau.creditBureau.transactionControl.tracking.identifier.fin}-${creditBureau.creditBureau.transactionControl.tracking.identifier.activityNumber}`,
-      tradeLinePartition: disputeItems.tradeline,
-      publiceRecordPartition: undefined,
-      personalRecordPartition: undefined,
-      resultCode: '--',
-      updatedValues: ['--'],
-      type: 'tradeline',
+      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
+      fileIdentificationNumber: `${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
+      creditBureau: creditBureau.creditBureau,
+      investigationResults: investigationResults,
     };
   }
 }

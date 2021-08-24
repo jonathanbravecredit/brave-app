@@ -1,4 +1,4 @@
-import { IDisputeReason, IDisputeTradelineReasonCardPage } from './interfaces';
+import { IDisputeReason, IDisputeReasonCardPage } from './interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
@@ -160,7 +160,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   },
 ];
 
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeTradelineReasonCardPage[] = [
+export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeReasonCardPage[] = [
   {
     pageIndex: 0,
     items: [
@@ -205,7 +205,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeTrade
   },
 ];
 
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_NOT_MINE: IDisputeTradelineReasonCardPage[] = [
+export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_NOT_MINE: IDisputeReasonCardPage[] = [
   {
     pageIndex: 0,
     items: [

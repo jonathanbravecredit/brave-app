@@ -1,0 +1,112 @@
+[
+  {
+    "result": {
+      "data": {
+        "reasonsId": [
+          "6"
+        ],
+        "reasons": [
+          {
+            "claimCode": "A5",
+            "id": "6",
+            "text": "I have no knowledge of this collection account"
+          }
+        ],
+        "hasCustomInput": false,
+        "customInput": ""
+      },
+      "isFinished": true
+    },
+    "tradeline": {
+      "accountTypeAbbreviation": "Collection",
+      "accountTypeDescription": "Collection Account",
+      "accountTypeSymbol": "Y",
+      "Tradeline": {
+        "PayStatus": {
+          "symbol": 9,
+          "description": "Collection/Chargeoff",
+          "rank": 2,
+          "abbreviation": "Coll/Chargeoff"
+        },
+        "creditorName": "MERCH CR ADJ",
+        "IndustryCode": {
+          "symbol": "Y",
+          "description": "Collection Services",
+          "rank": 199,
+          "abbreviation": "Collection Services"
+        },
+        "currentBalance": 364,
+        "subscriberCode": "029K8001",
+        "handle": "TR01_-295694572_883902893_89",
+        "CollectionTrade": {
+          "actualPaymentAmount": 0,
+          "originalCreditor": "ALEGENT MERCY HOSPITAL",
+          "creditType": {
+            "symbol": "Y",
+            "description": "Collection Account",
+            "rank": 5,
+            "abbreviation": "Collection"
+          }
+        },
+        "dateAccountStatus": "2021-06-08",
+        "accountNumber": "2X8X9X9",
+        "DisputeFlag": {
+          "symbol": "F",
+          "description": "Account not disputed",
+          "rank": 199,
+          "abbreviation": "Account not disputed"
+        },
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "265ffe96-3b66-41a8-bc2",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "OpenClosed": {
+          "symbol": "O",
+          "description": "Open",
+          "rank": 199,
+          "abbreviation": "Open"
+        },
+        "Remark": {
+          "RemarkCode": {
+            "symbol": "T00CLA",
+            "description": "Placed for collection",
+            "rank": 199,
+            "abbreviation": "Placed for collection"
+          },
+          "customRemark": ""
+        },
+        "highBalance": 364,
+        "dateOpened": "2020-12-21",
+        "dateReported": "2021-06-08",
+        "VerificationIndicator": {
+          "symbol": "F",
+          "description": "Account not disputed",
+          "rank": 199,
+          "abbreviation": "Account not disputed"
+        },
+        "position": 0,
+        "dateVerified": "2021-06-08",
+        "bureau": "TransUnion",
+        "AccountDesignator": {
+          "symbol": "I",
+          "description": "Individual",
+          "rank": 199,
+          "abbreviation": "Individual"
+        },
+        "AccountCondition": {
+          "symbol": "F",
+          "description": "Derogatory",
+          "rank": 20,
+          "abbreviation": "Derog"
+        }
+      }
+    }
+  }
+]

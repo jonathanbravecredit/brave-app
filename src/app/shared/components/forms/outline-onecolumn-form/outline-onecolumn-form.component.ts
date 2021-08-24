@@ -1,30 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 
 @Component({
   selector: 'brave-outline-onecolumn-form',
   templateUrl: './outline-onecolumn-form.component.html',
 })
-export class OutlineOnecolumnFormComponent implements OnInit {
-  parentForm: FormGroup;
-  childFieldConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Input Label',
-    type: 'text',
-    placeholder: 'Input text',
-    autocomplete: 'off',
-  };
+export class OutlineOnecolumnFormComponent extends BaseFormComponent {
+  @Input() buttonOneText: string = '';
+  @Input() buttonTwoText: string = '';
+  @Input() configs: IOutlineInputeConfig[] = [];
+  @Output() buttonOneClick: EventEmitter<void> = new EventEmitter();
+  @Output() buttonTwoClick: EventEmitter<void> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {
-    this.parentForm = fb.group({
-      name: ['outline-onecolumn-form'],
-    }); // simple parent form with name of form
+  constructor(fb: FormBuilder) {
+    super(fb, 'outline-onecolumn-form');
   }
 
-  ngOnInit(): void {}
-
-  addChild(childName: string, childGroup: FormGroup) {
-    this.parentForm.addControl(childName, childGroup);
+  updateErrorMessage(message: string): void {
+    this.haveError$.next(true);
+    this.haveError = true;
+    this.errorMessage = message;
   }
 }

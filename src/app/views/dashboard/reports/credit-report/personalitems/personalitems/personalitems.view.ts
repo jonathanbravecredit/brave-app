@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IBorrower, IPublicPartition } from '@shared/interfaces';
+import { IBorrower } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
+import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -43,16 +44,21 @@ export class PersonalitemsView {
    * @param personalItem
    * @returns {void}
    */
-  async onDisputeClicked(personalItem: IBorrower): Promise<void> {
+  async onDisputeClick(): Promise<void> {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `personalItem:onDisputeClicked=Missing id:${id}`;
     this.disputeService
       .sendDisputePreflightCheck(id)
       .then((resp) => {
         const { success, error } = resp;
-        console.log('preflightCheckReturn ===> ', resp);
         if (success) {
-          this.router.navigate(['../dispute'], { relativeTo: this.route });
+          const filter: DisputeReconfirmFilter = 'personal';
+          this.router.navigate(['../dispute'], {
+            relativeTo: this.route,
+            queryParams: {
+              type: filter,
+            },
+          }); // add query param to filter for only personal items
         } else {
           this.router.navigate(['../error'], {
             relativeTo: this.route,

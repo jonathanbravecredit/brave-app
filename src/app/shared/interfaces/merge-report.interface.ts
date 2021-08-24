@@ -7,10 +7,11 @@ import { ISource, ICodeRef, IPartitionElements, IPartitionSet, IRemark } from '@
 export interface IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
 }
+
 export interface ITrueLinkCreditReportType {
-  SB168Frozen?: string;
-  Borrower?: IBorrower | IBorrower[];
-  TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
+  SB168Frozen?: ISB168Frozen;
+  Borrower?: IBorrower;
+  TradeLinePartition?: ITradeLinePartition | ITradeLinePartition[];
   InquiryPartition?: IInquiryPartition | IInquiryPartition[];
   BankingRecordPartition?: IBankingPartition | IBankingPartition[];
   PulblicRecordPartition?: IPublicPartition | IPublicPartition[];
@@ -41,7 +42,7 @@ export interface IBorrower {
   PreviousAddress?: IBorrowerAddress | IBorrowerAddress[];
   Birth?: IBorrowerBirth | IBorrowerBirth[];
   CreditStatement?: ICreditStatement | ICreditStatement[];
-  CreditScore?: ICreditScore | ICreditScore[];
+  CreditScore?: ICreditScore;
   Employer?: IEmployer | IEmployer[];
   BorrowerName?: IBorrowerName | IBorrowerName[];
   BorrowerTelephone?: IBorrowerTelephone | IBorrowerTelephone[];
@@ -272,7 +273,7 @@ export interface IBankingRecord {
 /*    Public Elements    */
 /*=======================*/
 export interface IPublicPartition {
-  PublicRecord?: IPublicRecord | IPublicRecord[];
+  PublicRecord?: IPublicRecord;
 }
 export interface IPublicRecord {
   AccountDesignator?: ICodeRef;
