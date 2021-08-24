@@ -1,8 +1,8 @@
-type Query {
+type Query @aws_cognito_user_pools {
   transunion(action: String!, message: String!): String
 }
 
-type Mutation {
+type Mutation @aws_cognito_user_pools {
   patchTransunion(id: ID!, msg: String): Transunion
 }
 
