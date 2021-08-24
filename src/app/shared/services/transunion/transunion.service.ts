@@ -1,3 +1,4 @@
+import { NullTemplateVisitor } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import {
   ITUServiceResponse,
@@ -47,7 +48,7 @@ export class TransunionService {
   async sendIndicativeEnrichment(
     data: UpdateAppDataInput | AppDataStateModel,
   ): Promise<ITUServiceResponse<IIndicativeEnrichmentResult | undefined>> {
-    if (!data.id || !data.user) throw new Error(`Missing id and user; id:${data.id} and user:${data.user}`);
+    if (!data.user) throw new Error(`Missing user:${data.user}`);
     try {
       const msg = this.createIndicativeEnrichmentPayload(data);
       const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(msg));
@@ -105,8 +106,7 @@ export class TransunionService {
    */
   async sendCompleteOnboarding(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
     try {
-      const msg = { id: data.id };
-      const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify(msg));
+      const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };
@@ -123,10 +123,8 @@ export class TransunionService {
     data: UpdateAppDataInput | AppDataStateModel,
     dispute: boolean = false,
   ): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
-    if (!data.id) throw { Code: '197' };
     try {
-      const msg = { id: data.id };
-      const res = await this.api.Transunion('Enroll', JSON.stringify(msg));
+      const res = await this.api.Transunion('Enroll', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };
@@ -143,10 +141,8 @@ export class TransunionService {
     data: UpdateAppDataInput | AppDataStateModel,
     dispute: boolean = false,
   ): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
-    if (!data.id) throw { Code: '197' };
     try {
-      const msg = { id: data.id };
-      const res = await this.api.Transunion('EnrollDisputes', JSON.stringify(msg));
+      const res = await this.api.Transunion('EnrollDisputes', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };
@@ -164,8 +160,7 @@ export class TransunionService {
     refresh: boolean = true,
   ): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
     try {
-      const msg = this.createFulfillPayload(data, refresh);
-      const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
+      const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };
@@ -179,8 +174,7 @@ export class TransunionService {
    */
   async refreshCreditReport(id: string): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
     try {
-      const msg = { id };
-      const res = await this.api.Transunion('Fulfill', JSON.stringify(msg));
+      const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };
@@ -197,7 +191,7 @@ export class TransunionService {
    */
   async sendDisputePreflightCheck(data: { id: string }): Promise<ITUServiceResponse<any>> {
     try {
-      const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify(data));
+      const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify({}));
       return res ? JSON.parse(res) : false;
     } catch (err) {
       return { success: false, error: err };
@@ -206,6 +200,7 @@ export class TransunionService {
 
   /**
    * Send fulfillment key to Transunion to refresh their report
+   *  - TODO allow for direct input of dispute ID
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
@@ -213,8 +208,7 @@ export class TransunionService {
     data: UpdateAppDataInput | AppDataStateModel,
   ): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
     try {
-      const msg = this.createGetDisputeStatusPayload(data);
-      const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify(msg));
+      const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err) {
       return { success: false, error: err };
@@ -264,43 +258,23 @@ export class TransunionService {
   createIndicativeEnrichmentPayload(
     data: UpdateAppDataInput | AppDataStateModel,
   ): IIndicativeEnrichmentMsg | undefined {
-    const id = data.id?.split(':').pop();
+    // const id = data.id?.split(':').pop();
     const attrs = data.user?.userAttributes;
-    const dob = attrs?.dob;
-
-    if (!attrs || !id || !dob) {
+    if (!attrs) {
       return;
     }
-
+    const dob = attrs?.dob;
+    const ssn = attrs?.ssn;
+    const name = attrs.name;
+    const address = attrs.address;
+    if (!dob || !ssn || !name || !address) {
+      return;
+    }
     return {
-      AdditionalInputs: {
-        Data: {
-          Name: 'CreditReportVersion',
-          Value: '7',
-        },
-      },
-      RequestKey: '',
-      ClientKey: id,
-      Customer: {
-        CurrentAddress: {
-          AddressLine1: attrs.address?.addressOne || '',
-          AddressLine2: attrs.address?.addressTwo || '',
-          City: attrs.address?.city || '',
-          State: attrs.address?.state || '',
-          Zipcode: attrs.address?.zip || '',
-        },
-        PreviousAddress: {},
-        DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob.month.toLowerCase()]}-${`0${dob.day}`.slice(-2)}` || '',
-        FullName: {
-          FirstName: attrs.name?.first || '',
-          LastName: attrs.name?.last || '',
-          MiddleName: attrs.name?.middle || '',
-          Prefix: null,
-          Suffix: null,
-        },
-        Ssn: `000000000${attrs.ssn?.lastfour}`.slice(-9) || '',
-      },
-      ServiceBundleCode: 'CC2BraveCreditIndicativeEnrichment',
+      dob,
+      ssn,
+      name,
+      address,
     } as IIndicativeEnrichmentMsg;
   }
 
@@ -314,43 +288,27 @@ export class TransunionService {
     data: UpdateAppDataInput | AppDataStateModel,
     ssn: string = '',
   ): IGetAuthenticationQuestionsMsg | undefined {
-    const id = data.id?.split(':')?.pop();
+    // const id = data.id?.split(':').pop();
     const attrs = data.user?.userAttributes;
-    const dob = attrs?.dob;
-
-    if (!attrs || !id || !dob) {
+    if (!attrs) {
       return;
     }
-
+    const dob = attrs?.dob;
+    const name = attrs.name;
+    const address = attrs.address;
+    const phone = attrs.phone;
+    if (!dob || !ssn || !name || !address || !phone) {
+      return;
+    }
     return {
-      AdditionalInputs: {
-        Data: {
-          Name: 'CreditReportVersion',
-          Value: '7',
-        },
+      name,
+      address,
+      dob,
+      phone,
+      ssn: {
+        lastfour: ssn.slice(-4),
+        full: ssn,
       },
-      RequestKey: '',
-      ClientKey: id,
-      Customer: {
-        CurrentAddress: {
-          AddressLine1: attrs.address?.addressOne || '',
-          AddressLine2: attrs.address?.addressTwo || '',
-          City: attrs.address?.city || '',
-          State: attrs.address?.state || '',
-          Zipcode: attrs.address?.zip || '',
-        },
-        PreviousAddress: {},
-        DateOfBirth:
-          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
-        FullName: {
-          FirstName: attrs.name?.first || '',
-          LastName: attrs.name?.last || '',
-          MiddleName: attrs.name?.middle || '',
-        },
-        PhoneNumber: attrs.phone?.primary || '',
-        Ssn: ssn || '',
-      },
-      ServiceBundleCode: 'CC2BraveCreditAuthentication',
     } as IGetAuthenticationQuestionsMsg;
   }
 
@@ -364,18 +322,11 @@ export class TransunionService {
     data: UpdateAppDataInput | AppDataStateModel,
     answers: IVerifyAuthenticationAnswer[],
   ): IVerifyAuthenticationQuestionsMsg | undefined {
-    const id = data.id?.split(':')?.pop();
-
-    if (!id || !answers.length) {
-      return;
-    }
-
+    if (!answers.length) return;
     return {
-      RequestKey: '',
-      ClientKey: id,
-      Answers: answers,
-      ServiceBundleFulfillmentKey: data.agencies?.transunion?.serviceBundleFulfillmentKey || '',
-    } as IVerifyAuthenticationQuestionsMsg;
+      answers: answers,
+      key: data.agencies?.transunion?.serviceBundleFulfillmentKey || '',
+    };
   }
 
   /**
@@ -424,225 +375,6 @@ export class TransunionService {
       },
       ServiceBundleCode: serviceBundleCode,
     } as IEnrollRequest;
-  }
-  /**
-   * Genarates the message payload for TU Fulfill request
-   * @param { UpdateAppDataInput | AppDataStateModel} data
-   * @returns {IFulfillRequest | undefined }
-   */
-  createFulfillPayload(
-    data: UpdateAppDataInput | AppDataStateModel,
-    dispute: boolean = true,
-  ): IFulfillRequest | undefined {
-    const id = data.id?.split(':')?.pop();
-    const attrs = data.user?.userAttributes;
-    const dob = attrs?.dob;
-    const version = dispute ? '7.1' : '7.1';
-    const bundleCode = dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
-    const fulfillmentKey = dispute
-      ? data.agencies?.transunion?.disputeServiceBundleFulfillmentKey
-      : data.agencies?.transunion?.serviceBundleFulfillmentKey;
-
-    if (!id || !attrs || !dob) {
-      return;
-    }
-
-    return {
-      AdditionalInputs: {
-        Data: {
-          Name: 'CreditReportVersion',
-          Value: version,
-        },
-      },
-      ClientKey: id,
-      Customer: {
-        CurrentAddress: {
-          AddressLine1: attrs.address?.addressOne || '',
-          AddressLine2: attrs.address?.addressTwo || '',
-          City: attrs.address?.city || '',
-          State: attrs.address?.state || '',
-          Zipcode: attrs.address?.zip || '',
-        },
-        DateOfBirth:
-          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
-        FullName: {
-          FirstName: attrs.name?.first || '',
-          LastName: attrs.name?.last || '',
-          MiddleName: attrs.name?.middle || '',
-        },
-        Ssn: attrs.ssn?.full || '',
-      },
-      ServiceBundleCode: bundleCode,
-    } as IFulfillRequest;
-  }
-
-  /**
-   * Genarates the message payload for TU Fulfill request
-   * @param { UpdateAppDataInput | AppDataStateModel} data
-   * @returns {IGetDisputeStatusRequest | undefined }
-   */
-  createGetDisputeStatusPayload(data: UpdateAppDataInput | AppDataStateModel): IGetDisputeStatusRequest | undefined {
-    const id = data.id?.split(':')?.pop();
-    const attrs = data.user?.userAttributes;
-    const dob = attrs?.dob;
-
-    if (!id || !attrs || !dob) {
-      return;
-    }
-    return {
-      ClientKey: id,
-      Customer: {
-        CurrentAddress: {
-          AddressLine1: attrs.address?.addressOne || '',
-          AddressLine2: attrs.address?.addressTwo || '',
-          City: attrs.address?.city || '',
-          State: attrs.address?.state || '',
-          Zipcode: attrs.address?.zip || '',
-        },
-        DateOfBirth:
-          `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
-        FullName: {
-          FirstName: attrs.name?.first || '',
-          LastName: attrs.name?.last || '',
-          MiddleName: attrs.name?.middle || '',
-        },
-        Ssn: attrs.ssn?.full || '',
-      },
-      EnrollmentKey: data.agencies?.transunion?.disputeEnrollmentKey,
-    } as IGetDisputeStatusRequest;
-  }
-
-  /**
-   * This method parses and enriches the state data
-   * @param {AppDataStateModel | UpdateAppDataInput} state
-   * @param {IEnrollResponse} enroll
-   * @returns
-   */
-  enrichEnrollmentData(
-    state: UpdateAppDataInput | undefined,
-    enroll: IEnrollResult,
-    dispute: boolean = false,
-  ): AppDataStateModel | UpdateAppDataInput | undefined {
-    if (!state) return;
-    let enrollReport: IEnrollServiceProductResponse | undefined;
-    let enrollMergeReport: IEnrollServiceProductResponse | undefined;
-    let enrollVantageScore: IEnrollServiceProductResponse | undefined;
-    let enrolledOn = new Date().toISOString();
-    const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
-    const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
-    if (!prodResponse) return;
-    if (prodResponse instanceof Array) {
-      enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
-        return item['ServiceProduct'] === 'TUCReport';
-      });
-      enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
-        return item['ServiceProduct'] === 'MergeCreditReports';
-      });
-      enrollVantageScore = prodResponse.find((item: IEnrollServiceProductResponse) => {
-        return item['ServiceProduct'] === 'TUCVantageScore3';
-      });
-    } else {
-      switch (prodResponse['ServiceProduct']) {
-        case 'TUCReport':
-          enrollReport = prodResponse || null;
-          break;
-        case 'MergeCreditReports':
-          enrollMergeReport = prodResponse || null;
-          break;
-        case 'TUCVantageScore3':
-          enrollVantageScore = prodResponse || null;
-          break;
-        default:
-          break;
-      }
-    }
-    return dispute
-      ? {
-          ...state,
-          agencies: {
-            ...state.agencies,
-            transunion: {
-              ...state.agencies?.transunion,
-              disputeEnrolled: true,
-              disputeEnrolledOn: enrolledOn,
-              disputeEnrollmentKey: enrollmentKey,
-            },
-          },
-        }
-      : {
-          ...state,
-          agencies: {
-            ...state.agencies,
-            transunion: {
-              ...state.agencies?.transunion,
-              enrolled: true,
-              enrolledOn: enrolledOn,
-              enrollmentKey: enrollmentKey,
-              enrollReport: mapReportResponse(enrollReport),
-              enrollMergeReport: mapReportResponse(enrollMergeReport),
-              enrollVantageScore: mapReportResponse(enrollVantageScore),
-            },
-          },
-        };
-  }
-
-  /**
-   * This method parses and enriches the state data
-   * @param {AppDataStateModel | UpdateAppDataInput} state
-   * @param {IFulfillResult} enroll
-   * @returns {AppDataStateModel | UpdateAppDataInput | undefined }
-   */
-  enrichFulfillData(
-    state: UpdateAppDataInput | undefined,
-    fulfill: IFulfillResult, // IFulfillResult
-    dispute: boolean = false,
-  ): AppDataStateModel | UpdateAppDataInput | undefined {
-    if (!state) return;
-    let fulfillReport;
-    let fulfillMergeReport;
-    let fulfillVantageScore;
-    let fulfilledOn = new Date().toISOString();
-    const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
-    if (!prodResponse) return;
-    if (prodResponse instanceof Array) {
-      fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
-        return item['ServiceProduct'] === 'TUCReport';
-      });
-      fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
-        return item['ServiceProduct'] === 'MergeCreditReports';
-      });
-      fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
-        return item['ServiceProduct'] === 'TUCVantageScore3';
-      });
-    } else {
-      switch (prodResponse['ServiceProduct']) {
-        case 'TUCReport':
-          fulfillReport = prodResponse || null;
-          break;
-        case 'MergeCreditReports':
-          fulfillMergeReport = prodResponse || null;
-          break;
-        case 'TUCVantageScore3':
-          fulfillVantageScore = prodResponse || null;
-          break;
-        default:
-          break;
-      }
-    }
-    const mapped = {
-      ...state,
-      agencies: {
-        ...state.agencies,
-        transunion: {
-          ...state.agencies?.transunion,
-          fulfilledOn: fulfilledOn,
-          fulfillReport: mapReportResponse(fulfillReport),
-          fulfillMergeReport: mapReportResponse(fulfillMergeReport),
-          fulfillVantageScore: mapReportResponse(fulfillVantageScore),
-        },
-      },
-    };
-    return mapped;
   }
 }
 

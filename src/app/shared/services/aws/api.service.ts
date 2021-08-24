@@ -59,6 +59,7 @@ export type Dispute = {
   disputeLetterContent?: string | null;
   openDisputes?: DisputeSummary;
   closedDisputes?: DisputeSummary;
+  pvDisputedItems?: PVDisputedItems;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -80,6 +81,12 @@ export type DisputeSummary = {
   totalDisputedItems?: string | null;
   totalOpenDisputedItems?: string | null;
   totalPVDisputedItemCount?: string | null;
+};
+
+export type PVDisputedItems = {
+  __typename: "PVDisputedItems";
+  pvTradelines?: string | null;
+  pvPublicRecords?: string | null;
 };
 
 export type CreateAppDataInput = {
@@ -191,6 +198,7 @@ export type DisputeInput = {
   disputeLetterContent?: string | null;
   openDisputes?: DisputeSummaryInput | null;
   closedDisputes?: DisputeSummaryInput | null;
+  pvDisputedItems?: PVDisputedItemsInput | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -211,6 +219,11 @@ export type DisputeSummaryInput = {
   totalDisputedItems?: string | null;
   totalOpenDisputedItems?: string | null;
   totalPVDisputedItemCount?: string | null;
+};
+
+export type PVDisputedItemsInput = {
+  pvTradelines?: string | null;
+  pvPublicRecords?: string | null;
 };
 
 export type EquifaxInput = {
@@ -514,6 +527,11 @@ export type PatchTransunionMutation = {
       totalOpenDisputedItems?: string | null;
       totalPVDisputedItemCount?: string | null;
     } | null;
+    pvDisputedItems?: {
+      __typename: "PVDisputedItems";
+      pvTradelines?: string | null;
+      pvPublicRecords?: string | null;
+    } | null;
     agencyName?: string | null;
     openedOn?: string | null;
     closedOn?: string | null;
@@ -687,6 +705,11 @@ export type CreateAppDataMutation = {
           totalDisputedItems?: string | null;
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
         } | null;
         agencyName?: string | null;
         openedOn?: string | null;
@@ -885,6 +908,11 @@ export type UpdateAppDataMutation = {
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
         } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1082,6 +1110,11 @@ export type DeleteAppDataMutation = {
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
         } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1278,6 +1311,11 @@ export type GetAppDataQuery = {
           totalDisputedItems?: string | null;
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
         } | null;
         agencyName?: string | null;
         openedOn?: string | null;
@@ -1478,6 +1516,11 @@ export type ListAppDatasQuery = {
             totalOpenDisputedItems?: string | null;
             totalPVDisputedItemCount?: string | null;
           } | null;
+          pvDisputedItems?: {
+            __typename: "PVDisputedItems";
+            pvTradelines?: string | null;
+            pvPublicRecords?: string | null;
+          } | null;
           agencyName?: string | null;
           openedOn?: string | null;
           closedOn?: string | null;
@@ -1677,6 +1720,11 @@ export type OnCreateAppDataSubscription = {
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
         } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1873,6 +1921,11 @@ export type OnUpdateAppDataSubscription = {
           totalDisputedItems?: string | null;
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
         } | null;
         agencyName?: string | null;
         openedOn?: string | null;
@@ -2071,6 +2124,11 @@ export type OnDeleteAppDataSubscription = {
           totalOpenDisputedItems?: string | null;
           totalPVDisputedItemCount?: string | null;
         } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -2229,6 +2287,11 @@ export class APIService {
               totalDisputedItems
               totalOpenDisputedItems
               totalPVDisputedItemCount
+            }
+            pvDisputedItems {
+              __typename
+              pvTradelines
+              pvPublicRecords
             }
             agencyName
             openedOn
@@ -2419,6 +2482,11 @@ export class APIService {
                   totalDisputedItems
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
                 }
                 agencyName
                 openedOn
@@ -2633,6 +2701,11 @@ export class APIService {
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
                 }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
                 agencyName
                 openedOn
                 closedOn
@@ -2845,6 +2918,11 @@ export class APIService {
                   totalDisputedItems
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
                 }
                 agencyName
                 openedOn
@@ -3069,6 +3147,11 @@ export class APIService {
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
                 }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
                 agencyName
                 openedOn
                 closedOn
@@ -3281,6 +3364,11 @@ export class APIService {
                     totalDisputedItems
                     totalOpenDisputedItems
                     totalPVDisputedItemCount
+                  }
+                  pvDisputedItems {
+                    __typename
+                    pvTradelines
+                    pvPublicRecords
                   }
                   agencyName
                   openedOn
@@ -3500,6 +3588,11 @@ export class APIService {
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
                 }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
                 agencyName
                 openedOn
                 closedOn
@@ -3710,6 +3803,11 @@ export class APIService {
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
                 }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
                 agencyName
                 openedOn
                 closedOn
@@ -3919,6 +4017,11 @@ export class APIService {
                   totalDisputedItems
                   totalOpenDisputedItems
                   totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
                 }
                 agencyName
                 openedOn

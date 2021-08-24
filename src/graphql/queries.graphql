@@ -145,6 +145,10 @@ query GetAppData($id: ID!) {
             totalOpenDisputedItems
             totalPVDisputedItemCount
           }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
           agencyName
           openedOn
           closedOn
@@ -323,6 +327,10 @@ query ListAppDatas(
               totalDisputedItems
               totalOpenDisputedItems
               totalPVDisputedItemCount
+            }
+            pvDisputedItems {
+              pvTradelines
+              pvPublicRecords
             }
             agencyName
             openedOn

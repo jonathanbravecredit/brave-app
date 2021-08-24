@@ -105,6 +105,10 @@ mutation PatchTransunion($id: ID!, $msg: String) {
         totalOpenDisputedItems
         totalPVDisputedItemCount
       }
+      pvDisputedItems {
+        pvTradelines
+        pvPublicRecords
+      }
       agencyName
       openedOn
       closedOn
@@ -262,6 +266,10 @@ mutation CreateAppData(
             totalDisputedItems
             totalOpenDisputedItems
             totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
           }
           agencyName
           openedOn
@@ -440,6 +448,10 @@ mutation UpdateAppData(
             totalOpenDisputedItems
             totalPVDisputedItemCount
           }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
           agencyName
           openedOn
           closedOn
@@ -616,6 +628,10 @@ mutation DeleteAppData(
             totalDisputedItems
             totalOpenDisputedItems
             totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
           }
           agencyName
           openedOn
