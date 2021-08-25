@@ -32,8 +32,12 @@ export class MergereportToDashboardPipe implements PipeTransform {
     this.filterTradelines(this.tradeLines);
     if (this.haveNegativeAccounts(this.tradeLines)) {
       output = this.addNegativeCard(output, this.tradeLines);
+    } else {
+      output = this.addNegativeCard(output, []);
     }
     if (this.haveForbearanceAccounts(this.tradeLines)) {
+      output = this.addForbearanceCard(output);
+    } else {
       output = this.addForbearanceCard(output);
     }
     return output;
@@ -54,11 +58,11 @@ export class MergereportToDashboardPipe implements PipeTransform {
   }
 
   private haveNegativeAccounts(tradelines: ITradeLinePartition[]): boolean {
-    return !!tradelines.find((item) => this.tu.queries.report.isNegativeAccount(item));
+    return tradelines.filter((item) => this.tu.queries.report.isNegativeAccount(item)).length > 0;
   }
 
   private haveForbearanceAccounts(tradelines: ITradeLinePartition[]): boolean {
-    return !!tradelines.find((item) => this.tu.queries.report.isForbearanceAccount(item));
+    return tradelines.filter((item) => this.tu.queries.report.isForbearanceAccount(item)).length > 0;
   }
 
   /**

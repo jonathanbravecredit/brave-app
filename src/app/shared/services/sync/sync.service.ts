@@ -1,7 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICredentials } from '@aws-amplify/core';
-import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { Store } from '@ngxs/store';
 import {
   APIService,
@@ -16,7 +14,6 @@ import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { StateService } from '@shared/services/state/state.service';
 
 @Injectable({
@@ -47,7 +44,6 @@ export class SyncService implements OnDestroy {
    */
   async initUser(id: string): Promise<void> {
     const isNew = await this.isUserBrandNew(id);
-    console.log('isNew: ', isNew);
     isNew ? await this.initAppData(id) : await this.syncDBDownToState(id);
   }
 
@@ -63,9 +59,7 @@ export class SyncService implements OnDestroy {
    */
   async onboardUser(id: string, signInEvent: boolean): Promise<void> {
     const isOnboarded = await this.isUserOnboarded(id);
-    console.log('isOnboarded: ', isOnboarded);
     if (isOnboarded) {
-      console.log('signInEvent: ', signInEvent);
       signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
     } else {
       await this.goToLastOnboarded(id);
@@ -77,17 +71,13 @@ export class SyncService implements OnDestroy {
    * @param id
    */
   async subscribeToListeners(id: string): Promise<void> {
-    console.log('subscribing to listeners');
     const { owner } = await queries.GetOwner(id);
-    console.log('owner ===> ', owner);
     if (owner) {
       this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
-        console.log('data has updated ===> ', data);
         if (data.value.errors) throw `API OnUpdateAppDataListener error`;
         const appData = data.value.data['onUpdateAppData'];
         if (!appData) return;
         const clean = this.cleanBackendData(appData);
-        console.log('dispatching ===> ', clean);
         this.store.dispatch(new AppDataActions.Edit(clean));
       });
     }
