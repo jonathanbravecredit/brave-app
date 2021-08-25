@@ -1,4 +1,3 @@
 export const forbearanceAccountsContent = {
-  h1: `Student Loans`,
-  h2: `Mortgages`,
+  p1: `We don’t see any accounts on your credit report!`,
 };

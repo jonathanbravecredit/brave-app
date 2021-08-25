@@ -1,10 +1,10 @@
-type Query {
+type Query @aws_cognito_user_pools {
   transunion(action: String!, message: String!): String
   getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
   listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
 }
 
-type Mutation {
+type Mutation @aws_cognito_user_pools {
   patchTransunion(id: ID!, msg: String): Transunion
   createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
   updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
@@ -149,6 +149,7 @@ type Dispute @aws_iam @aws_cognito_user_pools {
   disputeLetterContent: String
   openDisputes: DisputeSummary
   closedDisputes: DisputeSummary
+  pvDisputedItems: PVDisputedItems
   agencyName: String
   openedOn: String
   closedOn: String
@@ -169,6 +170,11 @@ type DisputeSummary @aws_iam @aws_cognito_user_pools {
   totalDisputedItems: String
   totalOpenDisputedItems: String
   totalPVDisputedItemCount: String
+}
+
+type PVDisputedItems @aws_iam @aws_cognito_user_pools {
+  pvTradelines: AWSJSON
+  pvPublicRecords: AWSJSON
 }
 
 input UserInput {
@@ -273,6 +279,7 @@ input DisputeInput {
   disputeLetterContent: String
   openDisputes: DisputeSummaryInput
   closedDisputes: DisputeSummaryInput
+  pvDisputedItems: PVDisputedItemsInput
   agencyName: String
   openedOn: String
   closedOn: String
@@ -293,6 +300,11 @@ input DisputeSummaryInput {
   totalDisputedItems: String
   totalOpenDisputedItems: String
   totalPVDisputedItemCount: String
+}
+
+input PVDisputedItemsInput {
+  pvTradelines: AWSJSON
+  pvPublicRecords: AWSJSON
 }
 
 input EquifaxInput {

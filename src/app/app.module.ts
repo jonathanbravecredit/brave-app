@@ -39,6 +39,13 @@ const updatedAwsConfig = {
     redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
   },
 };
+
+declare global {
+  interface Window {
+    LOG_LEVEL: any;
+  }
+}
+window.LOG_LEVEL = 'debug';
 /* Configure Amplify resources */
 Amplify.configure(updatedAwsConfig);
 

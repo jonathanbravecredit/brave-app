@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
+import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { APIService } from '@shared/services/aws/api.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -29,16 +30,17 @@ export class AppComponent implements OnInit {
     this.message$ = this.interstitial.message$.asObservable();
 
     Hub.listen('auth', async (data) => {
-      const creds: ICredentials = await Auth.currentUserCredentials();
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
+          const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+          const id = creds.getUsername();
           if (creds) {
             this.interstitial.changeMessage(' ');
             this.interstitial.openInterstitial();
-            await this.sync.initUser(creds);
-            await this.sync.subscribeToListeners(creds.identityId);
-            await this.sync.onboardUser(creds, true);
+            await this.sync.initUser(id);
+            await this.sync.subscribeToListeners(id);
+            await this.sync.onboardUser(id, true);
             this.interstitial.closeInterstitial();
           }
           break;
@@ -58,11 +60,13 @@ export class AppComponent implements OnInit {
 
     Auth.currentAuthenticatedUser()
       .then(async (user) => {
-        const creds: ICredentials = await Auth.currentUserCredentials();
+        // const creds: ICredentials = await Auth.currentUserCredentials();
+        const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+        const id = creds.getUsername();
         if (creds) {
-          await this.sync.initUser(creds);
-          await this.sync.subscribeToListeners(creds.identityId);
-          await this.sync.onboardUser(creds, true);
+          await this.sync.initUser(id);
+          await this.sync.subscribeToListeners(id);
+          await this.sync.onboardUser(id, true);
         }
       })
       .catch(() => console.log('Not signed in'));
