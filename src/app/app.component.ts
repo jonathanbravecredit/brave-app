@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
         case 'signIn':
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
           const attrs = await Auth.userAttributes(creds);
-          const id = attrs.filter((a) => a.Name === 'sub')[0].Value;
+          const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
           if (id) {
             this.interstitial.changeMessage(' ');
             this.interstitial.openInterstitial();
@@ -59,17 +59,31 @@ export class AppComponent implements OnInit {
       console.log('api hub events ===> ', data);
     });
 
-    Auth.currentAuthenticatedUser()
-      .then(async (user) => {
-        const attrs = await Auth.userAttributes(user);
-        const id = attrs.filter((a) => a.Name === 'sub')[0].Value;
+    (async () => {
+      try {
+        const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+        const attrs = await Auth.userAttributes(creds);
+        const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
         if (id) {
           await this.sync.initUser(id);
           await this.sync.subscribeToListeners(id);
           await this.sync.onboardUser(id, true);
         }
-      })
-      .catch(() => console.log('Not signed in'));
+      } catch (err) {
+        console.log('Not signed in');
+      }
+    })();
+
+    // .then(async (user) => {
+    //   const attrs = await Auth.userAttributes(user);
+    //   const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    //   if (id) {
+    //     await this.sync.initUser(id);
+    //     await this.sync.subscribeToListeners(id);
+    //     await this.sync.onboardUser(id, true);
+    //   }
+    // })
+    // .catch(() => console.log('Not signed in'));
   }
 
   ngOnInit(): void {
