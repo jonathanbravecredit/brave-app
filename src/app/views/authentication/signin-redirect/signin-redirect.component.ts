@@ -4,6 +4,8 @@ import { SyncService } from '@shared/services/sync/sync.service';
 import { ICredentials } from '@aws-amplify/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Router } from '@angular/router';
+import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 
 @Component({
   selector: 'brave-signin-redirect',
@@ -19,8 +21,10 @@ export class SigninRedirectComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const creds: ICredentials = await this.auth.getCurrentUserCredentials();
-      await this.sync.onboardUser(creds, false);
+      // const creds: ICredentials = await Auth.currentUserCredentials();
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const id = creds.getUsername();
+      await this.sync.onboardUser(id, false);
       this.interstitial.closeInterstitial();
     } catch (err) {
       this.router.navigate(['/auth/invalid']);

@@ -1,3 +1,4 @@
+import { TransunionScrubbers } from '@shared/utils/transunion/scrubbers';
 import { TransunionFilters } from '@shared/utils/transunion/filters/transunion-filters';
 import { TransunionMappers } from '@shared/utils/transunion/mappers/transunion-mappers';
 import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
@@ -12,5 +13,6 @@ export class TransunionUtil {
   static mappers = TransunionMappers;
   static queries = TransunionQueries;
   static filters = TransunionFilters;
+  static scrubbers = TransunionScrubbers;
   constructor() {}
 }

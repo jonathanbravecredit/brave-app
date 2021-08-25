@@ -112,11 +112,9 @@ export class CreditreportService implements OnDestroy {
 
   /**
    * Refresh the credit report if necessary
-   * @param id string
    */
-  refreshCreditReport(id: string): void {
-    if (!id) throw `Id missing=${id}`;
-    this.transunion.refreshCreditReport(id);
+  refreshCreditReport(): void {
+    this.transunion.refreshCreditReport();
   }
 
   /**
