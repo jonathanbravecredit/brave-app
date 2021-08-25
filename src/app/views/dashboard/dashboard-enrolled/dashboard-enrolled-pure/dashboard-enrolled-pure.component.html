@@ -13,8 +13,8 @@
       label="update"
       [title]="content.negativeAccountsTitle"
       typeOfSnapshot="time"
-      [value]="cards.negativecard.count"
-      [status]="cards.negativecard.status"
+      [value]="cards.negativecard?.count || 0"
+      [status]="cards.negativecard?.status || 'safe'"
       (click)="negativeItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>

@@ -41,14 +41,11 @@ export class PublicitemsView {
   /**
    * Sets the current dispute in the service based on the public item clicked
    * - TODO...refactor to be DRY
-   * @param publicItem
    * @returns {void}
    */
-  async onDisputeClick(publicItem: IPublicPartition): Promise<void> {
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `publicitems:onDisputeClicked=Missing id:${id}`;
+  async onDisputeClick(): Promise<void> {
     this.disputeService
-      .sendDisputePreflightCheck(id)
+      .sendDisputePreflightCheck()
       .then((resp) => {
         const { success, error } = resp;
         if (success) {

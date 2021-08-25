@@ -147,7 +147,7 @@ export class DisputeService implements OnDestroy {
     try {
       // acknowledge the user has read and accepted the terms
       if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
-      return await this.sendDisputePreflightCheck(this.state.id);
+      return await this.sendDisputePreflightCheck();
     } catch (err) {
       throw `disputeService:onUserConfirmed=${err}`;
     }
@@ -169,9 +169,9 @@ export class DisputeService implements OnDestroy {
     await this.statesvc.updateAgenciesAsync(acknowledged);
   }
 
-  async sendDisputePreflightCheck(id: string): Promise<ITUServiceResponse<any>> {
+  async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
     try {
-      return await this.transunion.sendDisputePreflightCheck({ id });
+      return await this.transunion.sendDisputePreflightCheck();
     } catch (err) {
       throw `disputeService:sendDisputePreflightCheck=${err}`;
     }
@@ -181,9 +181,8 @@ export class DisputeService implements OnDestroy {
    * Initiate a new dispute. Cannot have one in progress.
    */
   async sendStartDispute(): Promise<ITUServiceResponse<any>> {
-    const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
-      return await this.transunion.sendStartDispute(data.id, this.disputeStack);
+      return await this.transunion.sendStartDispute(this.disputeStack);
     } catch (err) {
       throw `disputeService:sendStartDispute=${err}`;
     }
@@ -196,7 +195,7 @@ export class DisputeService implements OnDestroy {
   async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
     const data: AppDataStateModel = this.store.snapshot()?.appData;
     try {
-      return await this.transunion.getInvestigationResults(data.id, disputeId);
+      return await this.transunion.getInvestigationResults(disputeId);
     } catch (err) {
       throw `disputeService:getInvestigationResults=${err}`;
     }

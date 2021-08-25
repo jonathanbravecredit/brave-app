@@ -142,6 +142,10 @@ subscription OnCreateAppData($owner: String) {
             totalOpenDisputedItems
             totalPVDisputedItemCount
           }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
           agencyName
           openedOn
           closedOn
@@ -316,6 +320,10 @@ subscription OnUpdateAppData($owner: String) {
             totalOpenDisputedItems
             totalPVDisputedItemCount
           }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
           agencyName
           openedOn
           closedOn
@@ -489,6 +497,10 @@ subscription OnDeleteAppData($owner: String) {
             totalDisputedItems
             totalOpenDisputedItems
             totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
           }
           agencyName
           openedOn

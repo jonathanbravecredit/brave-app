@@ -48,7 +48,7 @@ export class TransunionMappers extends TransunionBase {
     const unPrevAddress = prevAddress.map((addr) => this.parser.report.unparseAddress(addr?.CreditAddress));
     const unPhones = phones.map((phone) => this.parser.report.unparsePhone(phone?.PhoneNumber));
     const unEmployers = employers.map((emp) => this.parser.report.unparseEmployer(emp));
-    return {
+    const results = {
       personalItem: borrower,
       ssn: `${borrower.SocialSecurityNumber}`,
       currentAddress: unAddress,
@@ -62,6 +62,7 @@ export class TransunionMappers extends TransunionBase {
       employersRaw: employers || [],
       telephonesRaw: phones || [],
     };
+    return results;
   }
 
   static mapPublicItemToDispute(item: IPublicPartition): IDisputePublicItem {

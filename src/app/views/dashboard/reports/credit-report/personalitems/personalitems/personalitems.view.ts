@@ -41,14 +41,11 @@ export class PersonalitemsView {
   /**
    * Sets the current dispute in the service based on the personal item clicked
    * - TODO...refactor to be DRY
-   * @param personalItem
    * @returns {void}
    */
   async onDisputeClick(): Promise<void> {
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `personalItem:onDisputeClicked=Missing id:${id}`;
     this.disputeService
-      .sendDisputePreflightCheck(id)
+      .sendDisputePreflightCheck()
       .then((resp) => {
         const { success, error } = resp;
         if (success) {

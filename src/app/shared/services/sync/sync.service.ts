@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
 import {
   APIService,
@@ -15,7 +14,6 @@ import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { StateService } from '@shared/services/state/state.service';
 
 @Injectable({
@@ -44,11 +42,9 @@ export class SyncService implements OnDestroy {
    * if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
    * @param creds
    */
-  async initUser(creds: ICredentials): Promise<void> {
-    const id = creds.identityId;
+  async initUser(id: string): Promise<void> {
     const isNew = await this.isUserBrandNew(id);
-    console.log('isNew: ', isNew);
-    isNew ? await this.initAppData(creds) : await this.syncDBDownToState(id);
+    isNew ? await this.initAppData(id) : await this.syncDBDownToState(id);
   }
 
   /**
@@ -61,12 +57,9 @@ export class SyncService implements OnDestroy {
    * @param creds
    * @param signInEvent
    */
-  async onboardUser(creds: ICredentials, signInEvent: boolean): Promise<void> {
-    const id = creds.identityId;
+  async onboardUser(id: string, signInEvent: boolean): Promise<void> {
     const isOnboarded = await this.isUserOnboarded(id);
-    console.log('isOnboarded: ', isOnboarded);
     if (isOnboarded) {
-      console.log('signInEvent: ', signInEvent);
       signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
     } else {
       await this.goToLastOnboarded(id);
@@ -78,17 +71,13 @@ export class SyncService implements OnDestroy {
    * @param id
    */
   async subscribeToListeners(id: string): Promise<void> {
-    console.log('subscribing to listeners');
     const { owner } = await queries.GetOwner(id);
-    console.log('owner ===> ', owner);
     if (owner) {
       this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
-        console.log('data has updated ===> ', data);
         if (data.value.errors) throw `API OnUpdateAppDataListener error`;
         const appData = data.value.data['onUpdateAppData'];
         if (!appData) return;
         const clean = this.cleanBackendData(appData);
-        console.log('dispatching ===> ', clean);
         this.store.dispatch(new AppDataActions.Edit(clean));
       });
     }
@@ -159,14 +148,14 @@ export class SyncService implements OnDestroy {
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(creds: ICredentials): Promise<void> {
+  async initAppData(id: string): Promise<void> {
     try {
       const input: CreateAppDataInput = {
         ...INIT_DATA,
-        id: creds.identityId,
+        id: id,
         user: {
           ...INIT_DATA.user,
-          id: creds.identityId,
+          id: id,
         },
       };
       const data = await this.api.CreateAppData(input);
