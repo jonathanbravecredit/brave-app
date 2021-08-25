@@ -10,8 +10,8 @@
       <div class="py-3">
         <div class="text-base">
           <p class="mb-6 text-blueGray-600">
-            We weren’t able to verify your identiy with the last 4 digits of
-            your SSN. We will need to verify your full SSN.
+            We weren’t able to verify your identiy with the last 4 digits of your SSN. We will need to verify your full
+            SSN.
           </p>
         </div>
       </div>
@@ -19,24 +19,15 @@
       <!-- items -->
       <div class="py-3 pt-0">
         <div class="flex mb-6">
-          <span class="material-icons justify-end ml-6 mr-2 text-blueGray-600"
-            >lock_outline</span
-          >
+          <span class="material-icons justify-end ml-6 mr-2 text-blueGray-600">lock_outline</span>
           <span class="text-base">
-            <p class="text-blueGray-600">
-              This will not impact your credit score
-            </p>
+            <p class="text-blueGray-600">This will not impact your credit score</p>
           </span>
         </div>
         <div class="flex mb-6">
-          <span class="material-icons justify-end ml-6 mr-2 text-blueGray-600"
-            >lock_outline</span
-          >
+          <span class="material-icons justify-end ml-6 mr-2 text-blueGray-600">lock_outline</span>
           <span class="text-base">
-            <p class="text-blueGray-600">
-              Your SSN will be encrypted and transmitted to us via a secure
-              connection
-            </p>
+            <p class="text-blueGray-600">Your SSN will be encrypted and transmitted to us via a secure connection</p>
           </span>
         </div>
       </div>
@@ -56,17 +47,11 @@
             (click)="backClick.emit()"
             [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
           >
-            <span class="flex items-center">
-              <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-            </span>
+            <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
-          <brave-filled-onlytext-button (click)="form.submitForm()"
-            ><span class="flex items-center"
-              >Continue<span class="material-icons px-1"
-                >arrow_forward</span
-              ></span
-            ></brave-filled-onlytext-button
-          >
+          <brave-filled-spinning-button (click)="form.submitForm()">
+            <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
+          </brave-filled-spinning-button>
         </div>
       </div>
     </div>
