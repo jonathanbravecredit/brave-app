@@ -34,8 +34,9 @@ export class AppComponent implements OnInit {
       switch (payload.event) {
         case 'signIn':
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
-          const id = creds.getUsername();
-          if (creds) {
+          const attrs = await Auth.userAttributes(creds);
+          const id = attrs.filter((a) => a.Name === 'sub')[0].Value;
+          if (id) {
             this.interstitial.changeMessage(' ');
             this.interstitial.openInterstitial();
             await this.sync.initUser(id);
@@ -60,10 +61,9 @@ export class AppComponent implements OnInit {
 
     Auth.currentAuthenticatedUser()
       .then(async (user) => {
-        // const creds: ICredentials = await Auth.currentUserCredentials();
-        const creds: CognitoUser = await Auth.currentAuthenticatedUser();
-        const id = creds.getUsername();
-        if (creds) {
+        const attrs = await Auth.userAttributes(user);
+        const id = attrs.filter((a) => a.Name === 'sub')[0].Value;
+        if (id) {
           await this.sync.initUser(id);
           await this.sync.subscribeToListeners(id);
           await this.sync.onboardUser(id, true);
