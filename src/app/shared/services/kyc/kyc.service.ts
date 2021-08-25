@@ -458,9 +458,9 @@ export class KycService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendCompleteOnboarding(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
+  async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
     try {
-      return await this.transunion.sendCompleteOnboarding(data);
+      return await this.transunion.sendCompleteOnboarding();
     } catch (err) {
       throw new Error(`kycService:sendEnrollRequest=${err}`);
     }
@@ -472,9 +472,9 @@ export class KycService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async sendEnrollRequest(data: UpdateAppDataInput | AppDataStateModel): Promise<ITUServiceResponse<any>> {
+  async sendEnrollRequest(): Promise<ITUServiceResponse<any>> {
     try {
-      return await this.transunion.sendEnrollRequest(data);
+      return await this.transunion.sendEnrollRequest();
     } catch (err) {
       throw new Error(`kycService:sendEnrollRequest=${err}`);
     }

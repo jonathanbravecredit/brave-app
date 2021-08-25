@@ -1,10 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 export interface IMergereportToDashboardOutput {
   negativecard: {
     count: number;
+    status: string;
+  };
+  forbearancecard: {
     status: string;
   };
 }
@@ -13,6 +17,7 @@ export interface IMergereportToDashboardOutput {
   name: 'mergereportToDashboard',
 })
 export class MergereportToDashboardPipe implements PipeTransform {
+  tu = TransunionUtil;
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
 
   transform(report: IMergeReport): IMergereportToDashboardOutput {
@@ -24,21 +29,40 @@ export class MergereportToDashboardPipe implements PipeTransform {
     if (!(this.tradeLines instanceof Array)) {
       this.tradeLines = [this.tradeLines];
     }
-    output = this.filterTradelines(this.tradeLines).addNegativeCard(output, this.tradeLines);
+    this.filterTradelines(this.tradeLines);
+    if (this.haveNegativeAccounts(this.tradeLines)) {
+      output = this.addNegativeCard(output, this.tradeLines);
+    } else {
+      output = this.addNegativeCard(output, []);
+    }
+    if (this.haveForbearanceAccounts(this.tradeLines)) {
+      output = this.addForbearanceCard(output);
+    } else {
+      output = this.addForbearanceCard(output);
+    }
     return output;
   }
 
   /**
-   * Filters the tradeline by the negative status code
+   * Filters the tradeline by the negative status code and forbearance accounts
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
   private filterTradelines(tradeLines: ITradeLinePartition[]): MergereportToDashboardPipe {
     this.tradeLines = tradeLines.filter((item) => {
-      const status = NEGATIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`];
-      return !!status;
+      const isNegative = this.tu.queries.report.isNegativeAccount(item);
+      const isForbearance = this.tu.queries.report.isForbearanceAccount(item);
+      return isNegative || isForbearance;
     });
     return this;
+  }
+
+  private haveNegativeAccounts(tradelines: ITradeLinePartition[]): boolean {
+    return tradelines.filter((item) => this.tu.queries.report.isNegativeAccount(item)).length > 0;
+  }
+
+  private haveForbearanceAccounts(tradelines: ITradeLinePartition[]): boolean {
+    return tradelines.filter((item) => this.tu.queries.report.isForbearanceAccount(item)).length > 0;
   }
 
   /**
@@ -57,6 +81,20 @@ export class MergereportToDashboardPipe implements PipeTransform {
       negativecard: {
         count: accounts.length,
         status: status,
+      },
+    };
+  }
+
+  /**
+   * Layers in the negative account data
+   * @param output
+   * @returns
+   */
+  private addForbearanceCard(output: IMergereportToDashboardOutput): IMergereportToDashboardOutput {
+    return {
+      ...output,
+      forbearancecard: {
+        status: 'danger',
       },
     };
   }

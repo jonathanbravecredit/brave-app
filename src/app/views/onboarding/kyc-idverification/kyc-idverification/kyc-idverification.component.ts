@@ -89,7 +89,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
               throw 'No passcode questionfound';
             })();
         this.authSuccessful
-          ? await this.sendCompleteOnboarding(this.state)
+          ? await this.sendCompleteOnboarding()
           : (() => {
               throw 'Authentication request failed';
             })();
@@ -247,13 +247,10 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
    * @returns
    */
-  async sendCompleteOnboarding(
-    state: UpdateAppDataInput | AppDataStateModel | undefined,
-  ): Promise<KycIdverificationComponent> {
-    if (!state) return this;
+  async sendCompleteOnboarding(): Promise<KycIdverificationComponent> {
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
-      const { success, error } = await this.kycService.sendEnrollRequest(state);
+      const { success, error } = await this.kycService.sendEnrollRequest();
       success
         ? this.router.navigate(['../congratulations'], {
             relativeTo: this.route,
