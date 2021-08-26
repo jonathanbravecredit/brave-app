@@ -22,8 +22,10 @@ export class SigninRedirectComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       // const creds: ICredentials = await Auth.currentUserCredentials();
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
-      const id = creds.getUsername();
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      console.log('creds ===> ', creds);
+      const attrs = await Auth.userAttributes(creds);
+      const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       await this.sync.onboardUser(id, false);
       this.interstitial.closeInterstitial();
     } catch (err) {
@@ -32,5 +34,3 @@ export class SigninRedirectComponent implements OnInit {
     }
   }
 }
-
-const navs: Record<string, any> = {};
