@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
           console.log('signIn called');
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
           const attrs = await Auth.userAttributes(creds);
-          const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+          const id = attrs.filter((a) => a.Name === "sub")[0]?.Value;
           if (id) {
             this.interstitial.changeMessage(' ');
             this.interstitial.openInterstitial();
