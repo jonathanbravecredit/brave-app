@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     this.message$ = this.interstitial.message$.asObservable();
 
     Hub.listen('auth', async (data) => {
-      console.log('auth hub events ===? ', data);
+      console.log("auth hub events ===? ", data);
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
