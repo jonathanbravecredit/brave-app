@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   constructor(
     private api: APIService,
     private router: Router,
+    private route: ActivatedRoute,
     private sync: SyncService,
     private interstitial: InterstitialService,
   ) {
@@ -30,14 +31,14 @@ export class AppComponent implements OnInit {
     this.message$ = this.interstitial.message$.asObservable();
 
     Hub.listen('auth', async (data) => {
-      console.log("auth hub events ===? ", data);
+      console.log('auth hub events ===? ', data);
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
           console.log('signIn called');
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
           const attrs = await Auth.userAttributes(creds);
-          const id = attrs.filter((a) => a.Name === "sub")[0]?.Value;
+          const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
           if (id) {
             this.interstitial.changeMessage(' ');
             this.interstitial.openInterstitial();
