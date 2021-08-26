@@ -105,6 +105,7 @@ export class AuthService {
    * @returns
    */
   socialSignIn(provider: CognitoHostedUIIdentityProvider): Promise<ICredentials> {
+    window.sessionStorage.setItem('braveOAuthProvider', provider); // save for redirect back...Angular does not persist params on bootstrap
     return Auth.federatedSignIn({
       provider: provider,
     });
