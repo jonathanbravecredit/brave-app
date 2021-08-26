@@ -149,6 +149,7 @@ export class SyncService implements OnDestroy {
    * @param {ICredentials} creds
    */
   async initAppData(id: string): Promise<void> {
+    if (!id) return;
     try {
       const input: CreateAppDataInput = {
         ...INIT_DATA,
