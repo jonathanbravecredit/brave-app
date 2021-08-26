@@ -30,9 +30,11 @@ export class AppComponent implements OnInit {
     this.message$ = this.interstitial.message$.asObservable();
 
     Hub.listen('auth', async (data) => {
+      console.log('auth hub events ===? ', data);
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
+          console.log('signIn called');
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
           const attrs = await Auth.userAttributes(creds);
           const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
@@ -73,17 +75,6 @@ export class AppComponent implements OnInit {
         console.log('Not signed in');
       }
     })();
-
-    // .then(async (user) => {
-    //   const attrs = await Auth.userAttributes(user);
-    //   const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
-    //   if (id) {
-    //     await this.sync.initUser(id);
-    //     await this.sync.subscribeToListeners(id);
-    //     await this.sync.onboardUser(id, true);
-    //   }
-    // })
-    // .catch(() => console.log('Not signed in'));
   }
 
   ngOnInit(): void {
