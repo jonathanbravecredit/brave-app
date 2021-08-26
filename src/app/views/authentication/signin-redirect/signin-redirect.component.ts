@@ -24,7 +24,7 @@ export class SigninRedirectComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       await this.sync.initUser(id);
