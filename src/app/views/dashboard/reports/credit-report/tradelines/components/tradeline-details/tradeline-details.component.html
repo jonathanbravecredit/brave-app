@@ -12,7 +12,9 @@
         <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
         <brave-tradeline-remarks
           [remarks]="config.remarks || 'None'"
-          [contactDetails]="tu.parsers.report.unparseSubscriber(subscriber || {})"
+          [contactDetails]="
+            tu.parsers.report.unparseSubscriber(subscriber || {}, tu.queries.report.getCreditor(tradeline))
+          "
           [consumerStatement]="config.customerStatement || 'None'"
           [showFooter]="!disableDispute"
         ></brave-tradeline-remarks>
