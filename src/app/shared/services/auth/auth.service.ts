@@ -132,7 +132,7 @@ export class AuthService {
    * @param pw
    * @returns
    */
-  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<void> | undefined {
+  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<any> | undefined {
     return email && code && pw ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
   }
 
