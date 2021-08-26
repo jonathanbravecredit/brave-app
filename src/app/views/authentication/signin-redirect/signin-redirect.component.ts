@@ -14,11 +14,13 @@ export class SigninRedirectComponent implements OnInit {
   provider = CognitoHostedUIIdentityProvider;
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private sync: SyncService,
     private auth: AuthService,
     private interstitial: InterstitialService,
-  ) {}
+  ) {
+    this.interstitial.changeMessage(' ');
+    this.interstitial.openInterstitial();
+  }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -32,7 +34,7 @@ export class SigninRedirectComponent implements OnInit {
     } catch (err) {
       const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
       if (provider) {
-        this.auth.socialSignIn(provider);
+        await this.auth.socialSignIn(provider);
       } else {
         this.interstitial.closeInterstitial();
         this.router.navigate(['/auth/invalid']);

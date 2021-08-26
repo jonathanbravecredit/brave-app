@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
   constructor(
     private api: APIService,
     private router: Router,
-    private route: ActivatedRoute,
     private sync: SyncService,
     private interstitial: InterstitialService,
   ) {
