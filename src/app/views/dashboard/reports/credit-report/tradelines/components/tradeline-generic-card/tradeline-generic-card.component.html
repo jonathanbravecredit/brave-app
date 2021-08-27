@@ -1,0 +1,37 @@
+<ng-container *ngIf="tradeline | tradelineToDetails as details">
+  <div class="flex justify-start items-start content-start">
+    <div class="mb-4">
+      <p class="text-sm font-semibold">
+        {{ details.creditorName }} {{ details.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+      </p>
+      <p class="text-sm font-semibold">{{ details.accountTypeDescription || '' }}</p>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-y-2 mb-2">
+    <p class="text-xs font-dk-gray">{{ content.p1 }}</p>
+    <p class="text-xs font-semibold text-right">{{ details.lastReported || missing }}</p>
+    <p class="text-xs text-dk-gray">{{ content.p2 }}</p>
+    <p class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ (details.amountPastDue | currency: 'USD':'symbol':'1.0-0') || missing }}
+    </p>
+    <p class="text-xs text-dk-gray">{{ content.p3 }}</p>
+    <p class="text-xs text-dk-gray text-opacity-50 text-right">
+      {{ (details.currentBalance | currency: 'USD':'symbol':'1.0-0') || missing }}
+    </p>
+    <p class="text-xs text-dk-gray">{{ content.p4 }}</p>
+    <p class="text-xs text-dk-gray text-opacity-50 text-right">{{ details.disputeFlag || missing }}</p>
+  </div>
+  <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
+    <div *ngIf="tradeline" class="flex flex-col w-full my-4">
+      <brave-tradeline-details
+        [tradeline]="tradeline"
+        [subscriber]="subscriber"
+        [overrideOpen]="true"
+      ></brave-tradeline-details>
+    </div>
+  </div>
+
+  <div class="flex justify-center py-3">
+    <brave-viewdetail-button #viewDetail size="full">{{ content.b1 }}</brave-viewdetail-button>
+  </div>
+</ng-container>

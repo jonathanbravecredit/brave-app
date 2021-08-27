@@ -76,6 +76,7 @@ import { ForbearanceHeaderComponent } from './snapshots/forbearance/components/f
 import { ForbearanceTipsComponent } from './snapshots/forbearance/components/forbearance-tips/forbearance-tips.component';
 import { ForbearanceBandComponent } from './snapshots/forbearance/components/forbearance-band/forbearance-band.component';
 import { ForbearanceAccountsComponent } from './snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
+import { TradelineGenericCardComponent } from './reports/credit-report/tradelines/components/tradeline-generic-card/tradeline-generic-card.component';
 
 const components = [
   DashboardComponent,
@@ -123,6 +124,7 @@ const components = [
   PersonalitemDisputeCardComponent,
   DisputesReconfirmView,
   DisputesReconfirmPureView,
+  TradelineGenericCardComponent,
   TradelineMetricsComponent,
   TradelineSummaryComponent,
   TradelineDetailsTableComponent,

@@ -1,6 +1,6 @@
 import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
-import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
+import { IMergeReport, IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 import { FORBEARANCE_TYPE } from '@shared/utils/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
@@ -45,7 +45,6 @@ export class TransunionReportQueries extends TransunionBase {
     const count30 = partition.Tradeline?.GrantedTrade?.late30Count || 0;
     const count60 = partition.Tradeline?.GrantedTrade?.late60Count || 0;
     const count90 = partition.Tradeline?.GrantedTrade?.late90Count || 0;
-    console.log('query -===> ', +count30 + +count60 + +count90);
     return +count30 + +count60 + +count90;
   }
 
@@ -113,6 +112,22 @@ export class TransunionReportQueries extends TransunionBase {
     return subs.find((sub) => {
       return sub.subscriberCode == code;
     });
+  }
+
+  /*=====================================*/
+  //            SUBSCRIBER
+  /*=====================================*/
+  /**
+   * Get the subscriber from the merge report by tradeline subscriber key
+   * @param tradeline
+   * @param subs
+   * @returns
+   */
+  static listSubscribers(report: IMergeReport): ISubscriber[] | [] {
+    const subscribers = report.TrueLinkCreditReportType?.Subscriber;
+    if (subscribers instanceof Array) return subscribers;
+    if (subscribers === undefined) return [];
+    return [subscribers];
   }
 
   /*=====================================*/

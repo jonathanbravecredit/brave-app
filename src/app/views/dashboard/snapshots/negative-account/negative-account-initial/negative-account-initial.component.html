@@ -1,7 +1,8 @@
 <div class="w-full p-2">
   <div *ngIf="creditReport$ | async as report">
     <brave-negative-account-initial-pure
-      [cards]="report | mergereportToNegativeTradelines"
+      [tradelines]="report | mergereportToNegativeTradelines"
+      [subscribers]="report | mergereportToSubscribers"
       [acknowledged]="acknowledged"
       (confirmed)="onConfirmed($event)"
     ></brave-negative-account-initial-pure>
