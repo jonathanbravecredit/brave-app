@@ -1,9 +1,11 @@
 <brave-simple-banner></brave-simple-banner>
 <brave-security-freeze *ngIf="securityFreeze$ | async as securityFreeze"></brave-security-freeze>
-<brave-simple-back-button>Back</brave-simple-back-button>
+<div class="mt-2">
+  <brave-simple-back-button>Back</brave-simple-back-button>
+</div>
 <main>
   <section class="relative flex flex-col justify-start items-center w-full h-full min-h-screen min-w-screen">
-    <div class="container max-w-xs sm:max-w-sm md:max-w-md" style="min-width: 320px">
+    <div class="container max-w-screen sm:max-w-screen md:max-w-md" style="min-width: 320px">
       <router-outlet></router-outlet>
     </div>
   </section>
