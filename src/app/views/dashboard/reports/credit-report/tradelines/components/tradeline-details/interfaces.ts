@@ -27,7 +27,7 @@ export interface ITradelineDetailsConfig {
   disputeFlag?: string;
   customerStatement?: string;
   payStatus?: string;
-  maxDelinquency?: string;
+  maxDelinquency?: number | string;
   status?: string;
   openClosed?: string;
   remarks?: string;

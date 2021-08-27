@@ -100,9 +100,9 @@ export class TransunionReportParsers extends TransunionBase {
    * @param subscriber
    * @returns
    */
-  static unparseSubscriber(subscriber: ISubscriber | undefined): [string?, string?, string?] {
+  static unparseSubscriber(subscriber: ISubscriber | undefined, nameOverride?: string): [string?, string?, string?] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
-    const name = subscriber.name;
+    const name = nameOverride ? nameOverride : subscriber.name;
     const address = this.unparseAddress(subscriber.CreditAddress);
     const phone = subscriber.telephone;
     const filtered = [name, address, phone].filter((x) => x && x.length > 0) as [string, string, string];
