@@ -1248,6 +1248,11 @@ select {
   margin-right: auto;
 }
 
+.-mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -1900,10 +1905,6 @@ select {
 
 .gap-4 {
   gap: 1rem;
-}
-
-.gap-x-2 {
-  column-gap: 0.5rem;
 }
 
 .gap-y-1 {

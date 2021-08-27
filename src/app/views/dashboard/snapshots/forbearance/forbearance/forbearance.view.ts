@@ -25,7 +25,9 @@ export class ForbearanceView implements OnInit {
    * @param tradeline
    */
   onViewDetailClick(tradeline: ITradeLinePartition): void {
+    console.log('forbearance detail clicked ===> ', tradeline);
+    //localhost:4200/dashboard/report/snapshot/forbearance
     this.creditReportService.setTradeline(tradeline);
-    this.router.navigate(['../report/tradeline'], { relativeTo: this.route });
+    this.router.navigate(['../../../report/tradeline'], { relativeTo: this.route });
   }
 }

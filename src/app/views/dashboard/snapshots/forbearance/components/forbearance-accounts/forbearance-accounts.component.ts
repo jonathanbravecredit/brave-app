@@ -15,4 +15,8 @@ export class ForbearanceAccountsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  test() {
+    console.log('i am clicked');
+  }
 }
