@@ -7,29 +7,25 @@
   <brave-personalitems-details [config]="config"></brave-personalitems-details>
 </div>
 
-<div class="mb-4">
-  <div><p class="text-s text-dk-gray mb-4">See an error?</p></div>
-  <div>
-    <p class="text-xs text-dk-gray">
-      If you see an error in your account, you can ask for it to be reviewed through a dispute. You can do this through
-      Brave Credit!
-    </p>
+<ng-container *ngIf="featureFlags.disputes$ | async">
+  <div class="mb-4">
+    <div><p class="text-s text-dk-gray mb-4">See an error?</p></div>
+    <div>
+      <p class="text-xs text-dk-gray">
+        If you see an error in your account, you can ask for it to be reviewed through a dispute. You can do this
+        through Brave Credit!
+      </p>
+    </div>
   </div>
-</div>
 
-<div class="flex justify-center mb-2">
-  <brave-filled-onlytext-button (click)="showModal = !showModal; disputeClicked()"
-    >Dispute in a few clicks</brave-filled-onlytext-button
-  >
-</div>
+  <div class="flex justify-center mb-2">
+    <brave-filled-onlytext-button (click)="showModal = !showModal; disputeClicked()"
+      >Dispute in a few clicks</brave-filled-onlytext-button
+    >
+  </div>
 
-<div style="padding: 2.25rem 0" class="flex justify-center border border-coolGray-300 bg-coolGray-300">
-  <span>
-    <p>Ad text here</p>
-  </span>
-</div>
-
-<brave-onboarding-dispute
-  [showModal]="showModal && !acknowledged"
-  (confirmation)="actionForDispute($event)"
-></brave-onboarding-dispute>
+  <brave-onboarding-dispute
+    [showModal]="showModal && !acknowledged"
+    (confirmation)="actionForDispute($event)"
+  ></brave-onboarding-dispute>
+</ng-container>

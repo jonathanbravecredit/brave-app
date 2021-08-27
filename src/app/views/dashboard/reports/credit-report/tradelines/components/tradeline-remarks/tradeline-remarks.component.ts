@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 
 @Component({
   selector: 'brave-tradeline-remarks',
@@ -28,5 +29,5 @@ export class TradelineRemarksComponent {
    */
   @Input() showFooter: boolean = true;
 
-  constructor() {}
+  constructor(public featureFlags: FeatureFlagsService) {}
 }

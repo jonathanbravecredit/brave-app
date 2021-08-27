@@ -11,11 +11,11 @@ export const DEFAULT_BOTTOM_NAVIGATION_ITEMS: IBottomNavbarItem[] = [
     iconName: 'credit_score',
     id: 'report',
   },
-  {
-    name: 'Disputes',
-    iconName: 'description',
-    id: 'disputes',
-  },
+  // {
+  //   name: 'Disputes',
+  //   iconName: 'description',
+  //   id: 'disputes',
+  // },
   {
     name: 'Settings',
     iconName: 'portrait',
