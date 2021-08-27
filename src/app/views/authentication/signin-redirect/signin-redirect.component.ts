@@ -27,7 +27,7 @@ export class SigninRedirectComponent implements OnInit {
       const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
-      const isNew = await this.sync.isUserBrandNew(id);
+      const isNew = true; //await this.sync.isUserBrandNew(id);
       if (isNew) {
         this.interstitial.closeInterstitial();
         this.router.navigate(['/auth/created']);

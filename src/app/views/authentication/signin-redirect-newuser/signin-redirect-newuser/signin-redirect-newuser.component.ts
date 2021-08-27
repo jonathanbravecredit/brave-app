@@ -1,5 +1,5 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Auth } from 'aws-amplify';
@@ -9,13 +9,18 @@ import { CognitoUser } from 'amazon-cognito-identity-js';
   selector: 'brave-signin-redirect-newuser',
   templateUrl: './signin-redirect-newuser.component.html',
 })
-export class SigninRedirectNewuserComponent implements AfterViewInit {
+export class SigninRedirectNewuserComponent implements OnInit {
   constructor(private router: Router, private sync: SyncService, private interstitial: InterstitialService) {}
 
-  async ngAfterViewInit(): Promise<void> {
-    setTimeout(async () => {
-      await this.onboardUser();
-    }, 9000);
+  async ngOnInit(): Promise<void> {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+      } else if (event instanceof NavigationEnd) {
+        setTimeout(async () => {
+          await this.onboardUser();
+        }, 9000);
+      }
+    });
   }
 
   async onManualRedirectClick(): Promise<void> {
