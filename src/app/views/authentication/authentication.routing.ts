@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AuthenticationComponent } from '@views/authentication/authentication.component';
 import { SigninForgotComponent } from '@views/authentication/signin-forgot/signin-forgot/signin-forgot.component';
 import { SigninRedirectComponent } from '@views/authentication/signin-redirect/signin-redirect.component';
+import { SigninRedirectNewuserComponent } from '@views/authentication/signin-redirect-newuser/signin-redirect-newuser/signin-redirect-newuser.component';
 import { SigninComponent } from '@views/authentication/signin/signin/signin.component';
 import { SignupErrorValidationComponent } from '@views/authentication/signup-error-validation/signup-error-validation.component';
 import { SignupErrorComponent } from '@views/authentication/signup-error/signup-error.component';
@@ -10,7 +11,6 @@ import { SignupKnowyouComponent } from '@views/authentication/signup-knowyou/sig
 import { SignupResendComponent } from '@views/authentication/signup-resend/signup-resend.component';
 import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
-import { RedirectGuard } from '@shared/guards/redirect.guard';
 import { RedirectResolver } from '@shared/resolvers/redirect.resolver';
 
 const AuthenticationRoutes: Routes = [
@@ -26,7 +26,8 @@ const AuthenticationRoutes: Routes = [
       { path: 'signup', component: SignupComponent },
       { path: 'signin', component: SigninComponent },
       { path: 'forgot', component: SigninForgotComponent },
-      { path: 'redirect', component: SigninRedirectComponent, resolve: RedirectResolver },
+      { path: 'redirect', component: SigninRedirectComponent },
+      { path: 'created', component: SigninRedirectNewuserComponent },
       { path: 'thankyou', component: SignupThankyouComponent },
       { path: 'name', component: SignupKnowyouComponent },
       { path: 'error', component: SignupErrorComponent },

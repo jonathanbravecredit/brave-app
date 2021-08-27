@@ -16,6 +16,8 @@ import { SignupPureComponent } from '@views/authentication/signup/signup-pure/si
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
 import { SigninForgotComponent } from '@views/authentication/signin-forgot/signin-forgot/signin-forgot.component';
 import { SigninForgotPureComponent } from './signin-forgot/signin-forgot-pure/signin-forgot-pure.component';
+import { SigninRedirectNewuserComponent } from './signin-redirect-newuser/signin-redirect-newuser/signin-redirect-newuser.component';
+import { SigninRedirectNewuserPureComponent } from './signin-redirect-newuser/signin-redirect-newuser-pure/signin-redirect-newuser-pure.component';
 
 const components = [
   AuthenticationComponent,
@@ -32,6 +34,8 @@ const components = [
   SigninForgotComponent,
   SigninForgotPureComponent,
   SigninRedirectComponent,
+  SigninRedirectNewuserComponent,
+  SigninRedirectNewuserPureComponent,
 ];
 
 @NgModule({
