@@ -7,10 +7,7 @@
   payments.
 </p>
 <p class="text-sm mb-6">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>
-<div *ngFor="let card of cards">
-  <brave-negative-account-card
-    [data]="card"
-    [acknowledged]="acknowledged"
-    (confirmed)="confirmed.emit(card.tradeline)"
-  ></brave-negative-account-card>
+<div *ngFor="let tradeline of tradelines">
+  <div class="border-t border-blueGray-300 py-2"></div>
+  <brave-tradeline-generic-card [tradeline]="tradeline" [subscribers]="subscribers"></brave-tradeline-generic-card>
 </div>

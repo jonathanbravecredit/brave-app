@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ITradeLinePartition } from '@shared/interfaces';
+import { IMergeReport, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
 
 @Component({
@@ -7,7 +7,8 @@ import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-
   templateUrl: './negative-account-initial-pure.component.html',
 })
 export class NegativeAccountInitialPureComponent implements OnInit {
-  @Input() cards: INegativeAccountCardInputs[] | undefined;
+  @Input() tradelines: ITradeLinePartition[] = [];
+  @Input() subscribers: ISubscriber[] = [];
   @Input() acknowledged: boolean = false;
   @Output() confirmed: EventEmitter<ITradeLinePartition> = new EventEmitter();
 

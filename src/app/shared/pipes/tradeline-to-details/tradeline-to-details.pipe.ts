@@ -11,7 +11,6 @@ export class TradelineToDetailsPipe implements PipeTransform {
     if (!tradeline) return;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
     const maxDelinquency = tu.queries.report.getMaxDelinquency(tradeline);
-    console.log('max delinquency ===> ', maxDelinquency);
     return {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
