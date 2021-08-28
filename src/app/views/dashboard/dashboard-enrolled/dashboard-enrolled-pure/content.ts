@@ -7,5 +7,5 @@ export const dashboardEnrolledContent = {
   defaultMsg: 'Welcome back!',
   initialMsg: 'Welcome back!',
   negativeAccountsTitle: 'Negative Accounts',
-  forbearanceAccountsTitle: 'Student Loan & Mortgage Relief',
+  forbearanceAccountsTitle: 'COVID-19 Loan Relief',
 };

@@ -3,7 +3,6 @@ import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
-import { AuthService } from '@shared/services/auth/auth.service';
 import { APIService } from '@shared/services/aws/api.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SyncService } from '@shared/services/sync/sync.service';

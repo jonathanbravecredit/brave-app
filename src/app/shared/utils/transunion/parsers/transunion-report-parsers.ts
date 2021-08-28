@@ -88,7 +88,7 @@ export class TransunionReportParsers extends TransunionBase {
    */
   static unparsePhone(phone: IPhoneNumber | undefined): string {
     if (!phone) return this.bcMissing;
-    let area = phone.AreaCode ? `${phone.AreaCode}` : '';
+    let area = phone.AreaCode ? `${phone.AreaCode}` : '000';
     let main = phone.Number ? `${phone.Number}` : '';
     const digits = `${area}${main}`.replace(/[^0-9]/g, '');
     if (!digits) return '';

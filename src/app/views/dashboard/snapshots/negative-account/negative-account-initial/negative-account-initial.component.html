@@ -5,6 +5,8 @@
       [subscribers]="report | mergereportToSubscribers"
       [acknowledged]="acknowledged"
       (confirmed)="onConfirmed($event)"
+      (goToDashboardClick)="onGoToDashboardClick()"
+      (goToReportClick)="onGoToReportClick()"
     ></brave-negative-account-initial-pure>
   </div>
 </div>

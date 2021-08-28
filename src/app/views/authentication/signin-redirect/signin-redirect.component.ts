@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 
@@ -27,17 +27,23 @@ export class SigninRedirectComponent implements OnInit {
       const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
-      await this.sync.initUser(id);
-      await this.sync.subscribeToListeners(id);
-      await this.sync.onboardUser(id, true);
-      this.interstitial.closeInterstitial();
+      const isNew = true; //await this.sync.isUserBrandNew(id);
+      if (isNew) {
+        this.interstitial.closeInterstitial();
+        this.router.navigate(['/auth/created']);
+      } else {
+        await this.sync.initUser(id);
+        await this.sync.subscribeToListeners(id);
+        await this.sync.onboardUser(id, true);
+        this.interstitial.closeInterstitial();
+      }
     } catch (err) {
       const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
       if (provider) {
         await this.auth.socialSignIn(provider);
       } else {
-        this.interstitial.closeInterstitial();
         this.router.navigate(['/auth/invalid']);
+        this.interstitial.closeInterstitial();
       }
     }
   }
