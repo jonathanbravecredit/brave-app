@@ -42,11 +42,13 @@
   </div>
   <div>
     <brave-personalitems-details [config]="personalItems[0].transformed"></brave-personalitems-details>
-    <div class="mt-4">
-      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
-        ><span class="text-red-700">See an error?</span></brave-viewdetail-button
-      >
-    </div>
+    <ng-container *ngIf="featureFlags.disputes$ | async">
+      <div class="mt-4">
+        <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
+          ><span class="text-red-700">See an error?</span></brave-viewdetail-button
+        >
+      </div>
+    </ng-container>
   </div>
 </div>
 

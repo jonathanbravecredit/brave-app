@@ -15,7 +15,7 @@
         [thirdFieldName]="card.thirdFieldName"
         [thirdFieldValue]="card.thirdFieldValue.toString()"
         [status]="card.status"
-        (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
+        (viewDetailClick)="viewDetailClick.emit(card.tradeline); test()"
       ></brave-credit-report-card>
     </ng-container>
   </ng-container>

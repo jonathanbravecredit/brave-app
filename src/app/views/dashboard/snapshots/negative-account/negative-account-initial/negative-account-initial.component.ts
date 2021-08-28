@@ -74,4 +74,12 @@ export class NegativeAccountInitialComponent {
         });
       });
   }
+
+  onGoToDashboardClick(): void {
+    this.router.navigate(['/dashboard/init']);
+  }
+
+  onGoToReportClick(): void {
+    this.router.navigate(['/dashboard/report']);
+  }
 }

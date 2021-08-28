@@ -40,5 +40,7 @@
       {{ thirdFieldValue | currency: 'USD':'symbol':'1.0-0' }}
     </p>
   </div>
-  <brave-viewdetail-button (click)="viewDetailClick.emit()" [horizontal]="true">View Detail</brave-viewdetail-button>
+  <brave-viewdetail-button (viewDetailClick)="viewDetailClick.emit()" [horizontal]="true"
+    >View Detail</brave-viewdetail-button
+  >
 </div>

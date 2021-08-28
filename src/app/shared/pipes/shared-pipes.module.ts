@@ -23,6 +23,7 @@ import { CreditbureauToPublicitemdetailsPipe } from './creditbureau-to-publicite
 import { InvestigationresultsToPersonalitemdetailsPipe } from './investigationresults-to-personalitemdetails/investigationresults-to-personalitemdetails.pipe';
 import { TradelineToAccountgroupPipe } from './tradeline-to-accountgroup/tradeline-to-accountgroup.pipe';
 import { TradelineToForbearancePipe } from './tradeline-to-forbearance/tradeline-to-forbearance.pipe';
+import { MergereportToSubscribersPipe } from './mergereport-to-subscribers/mergereport-to-subscribers.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -40,6 +41,7 @@ const pipes = [
   MergereportToPublicitemsPipe,
   MergereportToPersonalitemsPipe,
   MergereportToTradelinesPipe,
+  MergereportToSubscribersPipe,
   MergereportToConsumerStatementsPipe,
   CreditbureauToTradelinedetailsPipe,
   CreditbureauToPublicitemdetailsPipe,

@@ -1,6 +1,6 @@
 import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
-import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
+import { IMergeReport, IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 import { FORBEARANCE_TYPE } from '@shared/utils/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
@@ -35,6 +35,19 @@ export class TransunionReportQueries extends TransunionBase {
     return description ? description : AccountTypes.Unknown;
   }
 
+  /**
+   * Helper function to calculate the max delinquency.
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static getMaxDelinquency(partition: ITradeLinePartition | undefined): number {
+    if (!partition) return 0;
+    const count30 = partition.Tradeline?.GrantedTrade?.late30Count || 0;
+    const count60 = partition.Tradeline?.GrantedTrade?.late60Count || 0;
+    const count90 = partition.Tradeline?.GrantedTrade?.late90Count || 0;
+    return +count30 + +count60 + +count90;
+  }
+
   /*===================================*/
   //           CREDITOR RECORDS
   /*===================================*/
@@ -43,7 +56,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  static getOriginalCreditor(partition: ITradeLinePartition | undefined): string {
+  static getOriginalCreditor(partition: ITradeLinePartition | undefined | null): string {
     if (!partition) return this.bcMissing;
     const originalCreditor = partition.Tradeline?.CollectionTrade?.originalCreditor;
     const creditorName = partition.Tradeline?.creditorName || this.bcMissing;
@@ -52,6 +65,16 @@ export class TransunionReportQueries extends TransunionBase {
     } else {
       return creditorName;
     }
+  }
+
+  /**
+   * Helper function to securey look up the original creditor
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static getCreditor(partition: ITradeLinePartition | undefined | null): string {
+    if (!partition) return this.bcMissing;
+    return partition.Tradeline?.creditorName || this.bcMissing;
   }
 
   /*=====================================*/
@@ -89,6 +112,22 @@ export class TransunionReportQueries extends TransunionBase {
     return subs.find((sub) => {
       return sub.subscriberCode == code;
     });
+  }
+
+  /*=====================================*/
+  //            SUBSCRIBER
+  /*=====================================*/
+  /**
+   * Get the subscriber from the merge report by tradeline subscriber key
+   * @param tradeline
+   * @param subs
+   * @returns
+   */
+  static listSubscribers(report: IMergeReport): ISubscriber[] | [] {
+    const subscribers = report.TrueLinkCreditReportType?.Subscriber;
+    if (subscribers instanceof Array) return subscribers;
+    if (subscribers === undefined) return [];
+    return [subscribers];
   }
 
   /*=====================================*/

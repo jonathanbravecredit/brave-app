@@ -46,4 +46,7 @@ export class CreditReportCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  test() {
+    console.log('report card cliecked');
+  }
 }

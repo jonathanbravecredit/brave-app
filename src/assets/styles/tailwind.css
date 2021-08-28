@@ -1248,6 +1248,11 @@ select {
   margin-right: auto;
 }
 
+.-mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -1281,11 +1286,6 @@ select {
 .-my-1 {
   margin-top: -0.25rem;
   margin-bottom: -0.25rem;
-}
-
-.-my-2 {
-  margin-top: -0.5rem;
-  margin-bottom: -0.5rem;
 }
 
 .mt-0 {
@@ -1418,6 +1418,10 @@ select {
 
 .mb-8 {
   margin-bottom: 2rem;
+}
+
+.mb-9 {
+  margin-bottom: 2.25rem;
 }
 
 .mb-10 {
@@ -2093,11 +2097,6 @@ select {
   border-color: rgba(39, 39, 42, var(--tw-border-opacity));
 }
 
-.border-coolGray-300 {
-  --tw-border-opacity: 1;
-  border-color: rgba(209, 213, 219, var(--tw-border-opacity));
-}
-
 .border-blueGray-100 {
   --tw-border-opacity: 1;
   border-color: rgba(241, 245, 249, var(--tw-border-opacity));
@@ -2271,11 +2270,6 @@ select {
 .bg-coolGray-200 {
   --tw-bg-opacity: 1;
   background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
-}
-
-.bg-coolGray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
 }
 
 .bg-blueGray-200 {
