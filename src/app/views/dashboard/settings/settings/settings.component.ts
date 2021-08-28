@@ -4,8 +4,8 @@ import { IConfirmPassword } from '@shared/components/forms/simple-change-passwor
 import { IDeactivateAccount } from '@shared/components/forms/simple-deactive-form/interface';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SettingsService } from '@shared/services/settings/settings.service';
-import { OptionDeactivateComponent } from '@views/dashboard/settings/option-deactivate/option-deactivate.component';
-import { OptionPasswordResetComponent } from '@views/dashboard/settings/option-password-reset/option-password-reset.component';
+import { OptionDeactivateComponent } from '@views/dashboard/settings/components/option-deactivate/option-deactivate.component';
+import { OptionPasswordResetComponent } from '@views/dashboard/settings/components/option-password-reset/option-password-reset.component';
 import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/settings-pure/interface';
 
 @Component({
@@ -62,19 +62,25 @@ export class SettingsComponent implements OnInit {
       });
   }
 
-  onDeactivateClick(evt: IDeactivateAccount) {
+  onDeactivateClick() {
     // evt.password -- we actually don't need the password, just there to act as a deterent
-    this.interstitial.startSpinner();
+    setTimeout(() => {
+      this.deactivateError = 'Sorry we could not deactive your account at this time.';
+      this.haveDeactivateError = true;
+      this.interstitial.fetching$.next(false);
+    }, 4000);
     this.settings
       .deactivateAccount()
       .then((results) => {
         this.deactivateSuccess = true;
         this.interstitial.stopSpinner();
+        this.router.navigate(['/auth/deactivated']);
+        this.interstitial.fetching$.next(false);
       })
       .catch((err) => {
         this.deactivateError = 'Sorry we could not deactive your account at this time.';
         this.haveDeactivateError = true;
-        this.interstitial.stopSpinner();
+        this.interstitial.fetching$.next(false);
       });
   }
 

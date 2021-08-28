@@ -19,8 +19,17 @@
   .brave-h5 {
     @apply font-headings font-extrabold text-xl text-coolGray-900;
   }
+  .brave-h5-semibold {
+    @apply font-headings font-semibold text-xl text-coolGray-900;
+  }
   .brave-h6 {
     @apply font-headings font-extrabold text-lg text-coolGray-900;
+  }
+  .brave-h6-semibold {
+    @apply font-headings font-semibold text-lg text-coolGray-900;
+  }
+  .brave-h6-bold {
+    @apply font-headings font-bold text-lg text-coolGray-900;
   }
   .brave-body1 {
     @apply font-sans text-base font-normal tracking-normal text-coolGray-900;

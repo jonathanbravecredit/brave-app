@@ -1,0 +1,17 @@
+<div class="text-gray-900">
+  <div class="flex items-center py-3">
+    <div class="material-icons-outlined">close</div>
+    <div class="ml-2 brave-body2-semibold">{{ content.h1 }}</div>
+  </div>
+  <ng-container>
+    <p class="mt-6 brave-body2 text-center">
+      {{ content.p1 }}
+    </p>
+    <p class="mt-4 brave-body2 text-center">
+      {{ content.p2 }}
+    </p>
+    <div class="mt-16 mx-9 flex justify-center">
+      <brave-filled-spinning-button (click)="deactivateClick.emit()">{{ content.b1 }}</brave-filled-spinning-button>
+    </div>
+  </ng-container>
+</div>

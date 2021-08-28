@@ -53,14 +53,14 @@ import { PersonalitemDisputeCardComponent } from '@views/dashboard/reports/credi
 import { PublicitemCardComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitem-card/publicitem-card.component';
 import { PublicitemDisputeCardComponent } from '@views/dashboard/reports/credit-report/publicitems/publicitem-dispute-card/publicitem-dispute-card.component';
 import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
-import { OptionDeactivateComponent } from '@views/dashboard/settings/option-deactivate/option-deactivate.component';
-import { OptionPasswordResetComponent } from '@views/dashboard/settings/option-password-reset/option-password-reset.component';
-import { SettingsOptionListComponent } from '@views/dashboard/settings/settings-option-list/settings-option-list.component';
+import { OptionDeactivateComponent } from '@views/dashboard/settings/components/option-deactivate/option-deactivate.component';
+import { OptionPasswordResetComponent } from '@views/dashboard/settings/components/option-password-reset/option-password-reset.component';
+import { SettingsOptionListComponent } from '@views/dashboard/settings/components/settings-option-list/settings-option-list.component';
 
 import { ParseRiskScorePipe } from '@views/dashboard/reports/credit-report/credit-report/parse-risk-score.pipe';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
-import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
+import { SettingsOptionComponent } from './settings/components/settings-option/settings-option.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { NegativeAccountCardDetailTableComponent } from './snapshots/negative-account/negative-account-card-detail-table/negative-account-card-detail-table.component';
 import { NegativeAccountCardHeaderComponent } from './snapshots/negative-account/negative-account-card-header/negative-account-card-header.component';

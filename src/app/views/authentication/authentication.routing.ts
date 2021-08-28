@@ -12,6 +12,7 @@ import { SignupResendComponent } from '@views/authentication/signup-resend/signu
 import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
 import { RedirectResolver } from '@shared/resolvers/redirect.resolver';
+import { DeactivatedComponent } from '@views/authentication/deactivated/deactivated.component';
 
 const AuthenticationRoutes: Routes = [
   {
@@ -33,6 +34,7 @@ const AuthenticationRoutes: Routes = [
       { path: 'error', component: SignupErrorComponent },
       { path: 'invalid', component: SignupErrorValidationComponent },
       { path: 'resend', component: SignupResendComponent },
+      { path: 'deactivated', component: DeactivatedComponent },
     ],
   },
 ];
