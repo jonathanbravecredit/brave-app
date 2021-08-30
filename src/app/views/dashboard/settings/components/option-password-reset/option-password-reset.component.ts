@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
 import { SimpleChangePasswordFormComponent } from '@shared/components/forms/simple-change-password-form/simple-change-password-form.component';
-import { OptionPasswordResetViewState } from '@views/dashboard/settings/option-password-reset/interface';
+import { CODES_CONFIG } from '@views/dashboard/settings/components/option-password-reset/constants';
+import { optionPasswordResetContents } from '@views/dashboard/settings/components/option-password-reset/contents';
 
 @Component({
   selector: 'brave-option-password-reset',
@@ -10,11 +12,12 @@ import { OptionPasswordResetViewState } from '@views/dashboard/settings/option-p
 export class OptionPasswordResetComponent implements OnInit {
   @Input() haveResetError: boolean = false;
   @Input() resetSuccess: boolean = false;
-  @Input() resetError: string = '';
-  @Output() changePasswordClick: EventEmitter<IConfirmPassword> = new EventEmitter();
+  @Output() changePasswordClick: EventEmitter<void> = new EventEmitter();
   @Output() goBackToSettingsClick: EventEmitter<void> = new EventEmitter();
+  @Output() submitCodeClick: EventEmitter<FormGroup> = new EventEmitter();
   @ViewChild(SimpleChangePasswordFormComponent) pwForm: SimpleChangePasswordFormComponent | undefined;
-
+  content = optionPasswordResetContents;
+  codesConfig = CODES_CONFIG;
   constructor() {}
 
   ngOnInit(): void {}
