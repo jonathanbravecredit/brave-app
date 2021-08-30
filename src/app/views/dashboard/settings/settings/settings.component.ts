@@ -1,12 +1,13 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
-import { IDeactivateAccount } from '@shared/components/forms/simple-deactive-form/interface';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SettingsService } from '@shared/services/settings/settings.service';
-import { OptionDeactivateComponent } from '@views/dashboard/settings/option-deactivate/option-deactivate.component';
-import { OptionPasswordResetComponent } from '@views/dashboard/settings/option-password-reset/option-password-reset.component';
+import { OptionDeactivateComponent } from '@views/dashboard/settings/components/option-deactivate/option-deactivate.component';
+import { OptionPasswordResetComponent } from '@views/dashboard/settings/components/option-password-reset/option-password-reset.component';
 import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/settings-pure/interface';
+import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
+import { ALERT_CONFIG } from '@views/dashboard/settings/settings/constants';
 
 @Component({
   selector: 'brave-settings',
@@ -15,6 +16,7 @@ import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/setti
 export class SettingsComponent implements OnInit {
   @ViewChild('reset') resetOption: OptionPasswordResetComponent | undefined;
   @ViewChild('deactivate') deactivateOption: OptionDeactivateComponent | undefined;
+  @ViewChild(SettingsPureComponent) pure: SettingsPureComponent | undefined;
 
   haveResetError: boolean = false;
   resetSuccess: boolean = false;
@@ -23,7 +25,7 @@ export class SettingsComponent implements OnInit {
   deactivateSuccess: boolean = false;
   deactivateError: string = '';
   init: ISettingsViews = SettingsOptions.Init;
-
+  alertConfig = ALERT_CONFIG;
   constructor(
     public route: ActivatedRoute,
     private router: Router,
@@ -42,39 +44,59 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  onChangePasswordClick(evt: IConfirmPassword) {
-    this.interstitial.startSpinner();
+  async onChangePasswordClick(): Promise<void> {
+    const email = await this.settings.getUserEmail();
     this.settings
-      .resetPassword(evt.password, evt.newPassword)
+      .forgotPassword(email)
       .then((results) => {
-        if (results.toLowerCase() === 'success') {
-          this.resetSuccess = true;
-        } else {
-          this.resetError = results;
-          this.haveResetError = true;
-        }
+        this.resetSuccess = true;
+        this.interstitial.fetching$.next(false);
         this.interstitial.stopSpinner();
       })
       .catch((reason) => {
         this.resetError = reason;
         this.haveResetError = true;
+        this.interstitial.fetching$.next(false);
         this.interstitial.stopSpinner();
       });
   }
 
-  onDeactivateClick(evt: IDeactivateAccount) {
+  onDeactivateClick(): void {
     // evt.password -- we actually don't need the password, just there to act as a deterent
-    this.interstitial.startSpinner();
+    setTimeout(() => {
+      this.deactivateError = 'Sorry we could not deactive your account at this time.';
+      this.haveDeactivateError = true;
+      this.interstitial.fetching$.next(false);
+    }, 4000);
     this.settings
       .deactivateAccount()
       .then((results) => {
         this.deactivateSuccess = true;
         this.interstitial.stopSpinner();
+        this.router.navigate(['/auth/deactivated']);
+        this.interstitial.fetching$.next(false);
       })
       .catch((err) => {
         this.deactivateError = 'Sorry we could not deactive your account at this time.';
         this.haveDeactivateError = true;
-        this.interstitial.stopSpinner();
+        this.interstitial.fetching$.next(false);
+      });
+  }
+
+  onSubmitCodeClick(form: FormGroup): void {
+    const email = form.value.email.input;
+    const password = form.value.password.input;
+    const code = form.value.code.input;
+    this.interstitial.fetching$.next(true);
+    this.settings
+      .forgotPasswordSubmit(email, code, password)
+      ?.then((res) => {
+        this.interstitial.fetching$.next(false);
+        this.pure?.showAlert();
+      })
+      .catch((err) => {
+        this.interstitial.fetching$.next(false);
+        // this.pure?.form?.updateErrorMessage(err.message);
       });
   }
 

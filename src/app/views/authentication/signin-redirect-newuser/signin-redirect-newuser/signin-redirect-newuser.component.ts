@@ -31,8 +31,8 @@ export class SigninRedirectNewuserComponent implements OnInit {
   }
 
   async onboardUser(): Promise<void> {
-    const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-    const attrs = await Auth.userAttributes(creds);
+    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    const attrs = await Auth.userAttributes(user);
     const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     await this.sync.initUser(id);
     await this.sync.subscribeToListeners(id);

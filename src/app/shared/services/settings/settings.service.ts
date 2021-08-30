@@ -35,6 +35,40 @@ export class SettingsService {
     }
   }
 
+  async getUserEmail(): Promise<string> {
+    try {
+      return await this.auth.getUserEmail();
+    } catch (err) {
+      throw `settingsService:getUserEmail=${err}`;
+    }
+  }
+  /**
+   * Submit email to reset it...requires log out and log back in.
+   * @param email
+   * @returns
+   */
+  async forgotPassword(email: string): Promise<string> {
+    try {
+      return await this.auth.forgotPassword(email);
+    } catch (err) {
+      throw `settingService:forgotPassword=${err.message}`;
+    }
+  }
+
+  /**
+   * Submit the code and credentials to change the password
+   * @param email
+   * @param code
+   * @param password
+   * @returns
+   */
+  async forgotPasswordSubmit(email: string, code: string, password: string): Promise<any> {
+    try {
+      return await this.auth.forgotPasswordSubmit(email, code, password);
+    } catch (err) {
+      throw `settingService:forgotPasswordSubmit=${err.message}`;
+    }
+  }
   /**
    * Submit old and new password to change, if accepted returns true
    * @param oldPassword
@@ -48,7 +82,6 @@ export class SettingsService {
       throw `settingService:resetPassword=${err.message}`;
     }
   }
-
   /**
    * Submit user for deletion, disables in cognito
    * @returns
