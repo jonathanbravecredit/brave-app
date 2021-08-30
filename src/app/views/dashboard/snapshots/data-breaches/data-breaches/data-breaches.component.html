@@ -1,6 +1,6 @@
 <div class="p-2">
   <ng-container *ngIf="creditReport$ | async as report; else noReport">
-    <brave-data-breaches-pure [breachAccounts]="report | mergereportToBreachitems"> </brave-data-breaches-pure>
+    <brave-data-breaches-pure [breachCards]="report | mergereportToBreachitems"> </brave-data-breaches-pure>
   </ng-container>
 </div>
 
