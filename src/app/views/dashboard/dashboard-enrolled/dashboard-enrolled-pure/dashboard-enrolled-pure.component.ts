@@ -14,6 +14,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() lastUpdated: string | undefined | null;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
+  @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() fullReportClicked: EventEmitter<void> = new EventEmitter();
 
   content = dashboardEnrolledContent;

@@ -1,0 +1,9 @@
+<div class="p-2">
+  <ng-container *ngIf="creditReport$ | async as report; else noReport">
+    <brave-data-breaches-pure [breachAccounts]="report | mergereportToBreachitems"> </brave-data-breaches-pure>
+  </ng-container>
+</div>
+
+<ng-template #noReport>
+  <brave-base-exception-view></brave-base-exception-view>
+</ng-template>

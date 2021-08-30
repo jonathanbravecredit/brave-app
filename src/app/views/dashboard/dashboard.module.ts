@@ -77,6 +77,10 @@ import { ForbearanceTipsComponent } from './snapshots/forbearance/components/for
 import { ForbearanceBandComponent } from './snapshots/forbearance/components/forbearance-band/forbearance-band.component';
 import { ForbearanceAccountsComponent } from './snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
 import { TradelineGenericCardComponent } from './reports/credit-report/tradelines/components/tradeline-generic-card/tradeline-generic-card.component';
+import { DataBreachesComponent } from './snapshots/data-breaches/data-breaches/data-breaches.component';
+import { DataBreachesPureComponent } from './snapshots/data-breaches/data-breaches-pure/data-breaches-pure.component';
+import { DataBreachHeaderComponent } from './snapshots/data-breaches/components/data-breach-header/data-breach-header.component';
+import { DataBreachCardComponent } from './snapshots/data-breaches/components/data-breach-card/data-breach-card.component';
 
 const components = [
   DashboardComponent,
@@ -148,12 +152,14 @@ const components = [
   ForbearanceTipsComponent,
   ForbearanceBandComponent,
   ForbearanceAccountsComponent,
+  DataBreachesComponent,
+  DataBreachesPureComponent,
 ];
 
 const pipes = [ParseRiskScorePipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, DataBreachHeaderComponent, DataBreachCardComponent],
   imports: [CommonModule, SharedComponentsModule, SharedPipesModule, NgxMaskModule, DashboardRoutingModule],
   exports: [...components, ...pipes],
 })

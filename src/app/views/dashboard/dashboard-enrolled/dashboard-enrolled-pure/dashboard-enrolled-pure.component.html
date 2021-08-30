@@ -28,13 +28,10 @@
   </div>
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
-      tendency="down"
-      label="preview"
-      status="danger"
-      title="Credit Mix"
-      typeOfSnapshot="tag"
-      typeOfDate="Years"
-      [preview]="true"
+      tendency="no-tendency"
+      [title]="content.databreachAccountsTitle"
+      [status]="cards.databreachcard?.status || 'safe'"
+      (click)="databreachItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
   <div class="mt-6 hover:cursor-pointer">

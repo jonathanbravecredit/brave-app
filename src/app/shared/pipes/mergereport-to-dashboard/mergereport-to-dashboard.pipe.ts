@@ -11,6 +11,9 @@ export interface IMergereportToDashboardOutput {
   forbearancecard: {
     status: string;
   };
+  databreachcard: {
+    status: string;
+  };
 }
 
 @Pipe({
@@ -40,6 +43,7 @@ export class MergereportToDashboardPipe implements PipeTransform {
     } else {
       output = this.addForbearanceCard(output);
     }
+    output = this.addDatabreachCard(output); //TODO may need to add conditionals
     return output;
   }
 
@@ -94,6 +98,20 @@ export class MergereportToDashboardPipe implements PipeTransform {
     return {
       ...output,
       forbearancecard: {
+        status: 'danger',
+      },
+    };
+  }
+
+  /**
+   * Layers in the negative account data
+   * @param output
+   * @returns
+   */
+  private addDatabreachCard(output: IMergereportToDashboardOutput): IMergereportToDashboardOutput {
+    return {
+      ...output,
+      databreachcard: {
         status: 'danger',
       },
     };
