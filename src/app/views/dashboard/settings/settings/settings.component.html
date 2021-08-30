@@ -7,9 +7,11 @@
     [haveDeactivateError]="haveDeactivateError"
     [deactivateSuccess]="deactivateSuccess"
     [deactivateError]="deactivateError"
+    [alertConfig]="alertConfig"
     (goToPageClick)="onGoToPageClick($event)"
-    (changePasswordClick)="onChangePasswordClick($event)"
-    (deactivateClick)="onDeactivateClick($event)"
+    (changePasswordClick)="onChangePasswordClick()"
+    (submitCodeClick)="onSubmitCodeClick($event)"
+    (deactivateClick)="onDeactivateClick()"
     (logoutClick)="onLogoutClick()"
   ></brave-settings-pure>
 </div>
