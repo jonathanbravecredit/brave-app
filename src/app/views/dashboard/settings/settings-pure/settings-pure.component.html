@@ -15,11 +15,10 @@
         <ng-container *ngIf="option === settingsOptions.Reset">
           <brave-option-password-reset
             #reset
-            [haveResetError]="haveResetError"
             [resetSuccess]="resetSuccess"
-            [resetError]="resetError"
-            (changePasswordClick)="changePasswordClick.emit($event)"
+            (changePasswordClick)="changePasswordClick.emit()"
             (goBackToSettingsClick)="goBackToSettingsClick.emit()"
+            (submitCodeClick)="submitCodeClick.emit($event)"
           ></brave-option-password-reset>
         </ng-container>
         <ng-container *ngIf="option === settingsOptions.Deactivate" #deactivate>
@@ -34,4 +33,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="absolute top-20">
+  <brave-filled-closing-alert [config]="alertConfig"></brave-filled-closing-alert>
 </div>
