@@ -43,10 +43,11 @@ const Template: Story<DataBreachesPureComponent> = (args: any) => ({
   component: DataBreachesPureComponent,
   props: {
     ...args,
-    breachCards: cards,
   },
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  breachCards: cards,
+};
 Default.parameters;

@@ -1,3 +1,9 @@
-<div *ngFor="let item of items" class="mb-4">
-  <brave-data-breach-card [subscriber]="''" [paragraphs]="['']" [reason]="''"> </brave-data-breach-card>
+<div *ngFor="let card of cards; index as idx" class="mb-4">
+  <brave-data-breach-card
+    [subscriber]="card.subscriber"
+    [paragraphs]="card.paragraphs"
+    [reason]="card.reason"
+    (closeClick)="hideCard(idx)"
+  >
+  </brave-data-breach-card>
 </div>

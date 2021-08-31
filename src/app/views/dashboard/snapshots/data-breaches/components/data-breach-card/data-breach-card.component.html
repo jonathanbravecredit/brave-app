@@ -1,5 +1,5 @@
 <div class="relative p-4 rounded-lg border border-blueGray-300">
-  <span class="material-icons absolute top-1 right-1"> close </span>
+  <span class="material-icons absolute top-1 right-1 hover:cursor-pointer" (click)="closeClick.emit()"> close </span>
   <div class="-mt-1 mb-1 flex">
     <span class="material-icons"> gpp_maybe </span>
     <p class="brave-body1-bold ml-2">{{ subscriber }}</p>
