@@ -1,6 +1,6 @@
 import { IBorrowerAddress, IInquiryPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { DataBreaches } from '@shared/utils/constants';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { TransunionFilters } from '@shared/utils/transunion/filters';
 
 const dataBreachCondition1 = ({
   address,
@@ -10,7 +10,7 @@ const dataBreachCondition1 = ({
   tradelines: ITradeLinePartition[];
 }): DataBreaches => {
   if (address?.CreditAddress?.stateCode?.toLowerCase() !== 'ca') return DataBreaches.None;
-  const carLoan = TransunionUtil.filters.filterTradelinesByIndustryCode(tradelines, 'BA');
+  const carLoan = TransunionFilters.filterTradelinesByIndustryCode(tradelines, 'BA');
   if (carLoan.length > 0) return DataBreaches.Condition1;
   return DataBreaches.None;
 };
@@ -48,6 +48,12 @@ const dataBreachCondition6 = ({ address }: { address: IBorrowerAddress }) => {
   return DataBreaches.None;
 };
 
+const dataBreachCondition7 = ({ address }: { address: IBorrowerAddress }) => {
+  const code = address?.CreditAddress?.stateCode?.toUpperCase();
+  if (!code) return DataBreaches.None;
+  return experianStates[code] ? DataBreaches.Condition7 : DataBreaches.None;
+};
+
 export const DataBreachConditions: Record<string, any> = {
   [DataBreaches.Condition1]: dataBreachCondition1,
   [DataBreaches.Condition2]: dataBreachCondition2,
@@ -55,6 +61,7 @@ export const DataBreachConditions: Record<string, any> = {
   [DataBreaches.Condition4]: dataBreachCondition4,
   [DataBreaches.Condition5]: dataBreachCondition5,
   [DataBreaches.Condition6]: dataBreachCondition6,
+  [DataBreaches.Condition7]: dataBreachCondition7,
 };
 
 const krogerStates: Record<any, boolean> = {
@@ -91,4 +98,24 @@ const krogerStates: Record<any, boolean> = {
   WI: true,
   WV: true,
   WY: true,
+};
+
+const experianStates: Record<any, boolean> = {
+  ND: true,
+  SD: true,
+  WI: true,
+  OK: true,
+  ME: true,
+  VT: true,
+  NH: true,
+  NY: true,
+  MA: true,
+  NJ: true,
+  DE: true,
+  CT: true,
+  RI: true,
+  HI: true,
+  AK: true,
+  NC: true,
+  FL: true,
 };

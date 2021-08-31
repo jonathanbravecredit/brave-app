@@ -10,6 +10,17 @@
   </div>
   <div *ngIf="viewDetail.open" class="brave-body3 my-4">
     <div *ngFor="let paragraph of paragraphs" [innerHTML]="paragraph | linkify"></div>
+    <p class="mb-5">
+      <span>{{ content.p1 }}</span>
+      <a class="hover:cursor-pointer text-blue-500" (click)="goToReport()">
+        <span>&nbsp;{{ content.link1 }}&nbsp;</span>
+      </a>
+      <span>{{ content.p2 }}</span>
+      <a class="hover:cursor-pointer text-blue-500" href="https://www.transunion.com/credit-help">
+        <span>&nbsp;{{ content.link2 }}&nbsp;</span>
+      </a>
+      <span>{{ content.p2 }}</span>
+    </p>
   </div>
   <div class="flex justify-center">
     <brave-viewdetail-button #viewDetail>{{ content.b1 }}</brave-viewdetail-button>
