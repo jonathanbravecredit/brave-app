@@ -1,7 +1,17 @@
 import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
-import { IMergeReport, IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
-import { FORBEARANCE_TYPE } from '@shared/utils/constants';
+import {
+  IBorrower,
+  IBorrowerAddress,
+  ICreditAddress,
+  IInquiryPartition,
+  IMergeReport,
+  IPublicPartition,
+  ISubscriber,
+  ITradeLinePartition,
+} from '@shared/interfaces/merge-report.interface';
+import { DataBreaches, FORBEARANCE_TYPE } from '@shared/utils/constants';
+import { DataBreachConditions } from '@shared/utils/transunion/queries/utils';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionReportQueries extends TransunionBase {
@@ -12,6 +22,23 @@ export class TransunionReportQueries extends TransunionBase {
   /*===================================*/
   //           TRADELINE RECORDS
   /*===================================*/
+
+  /**
+   * Helper function to securely lookup the account type, falls back to pay status.
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static listTradelines(report: IMergeReport): ITradeLinePartition[] | [] {
+    if (!report) return [];
+    const partition = report.TrueLinkCreditReportType?.TradeLinePartition;
+    if (partition === undefined) return [];
+    if (partition instanceof Array) {
+      return partition;
+    } else {
+      return [partition];
+    }
+  }
+
   /**
    * Helper function to securely lookup the account type, falls back to pay status.
    * @param {ITradeLinePartition | undefined} partition
@@ -179,6 +206,20 @@ export class TransunionReportQueries extends TransunionBase {
   }
 
   /**
+   * Helper function to check if the tradeline is a student loan account
+   * @param partition
+   * @returns
+   */
+  static isStudentLoanAccount(partition: ITradeLinePartition | undefined): boolean {
+    if (!partition) return false;
+    const industry = partition.Tradeline?.IndustryCode?.description;
+    if (industry?.toLowerCase().includes('student')) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Helper function to securely lookup the account type
    * @param {ITradeLinePartition | undefined} partition
    * @returns
@@ -188,5 +229,94 @@ export class TransunionReportQueries extends TransunionBase {
     const symbol = partition.Tradeline?.PayStatus?.symbol;
     if (!symbol) return false;
     return !!NEGATIVE_PAY_STATUS_CODES[symbol];
+  }
+
+  /**
+   * Checks whether the report has items that fall under any of the known databreaches
+   *  - condition 1 lives in california and has car loan
+   *  - condition 2 lives in california
+   *  - condition 3 lives in colorado
+   *  - condition 4 lives in [35 states]...just do it for everyone for now
+   *  - condition 5 found T-Mobile in inquiries
+   *  - condition 6 lives in washington
+   * @param report
+   * @param condition
+   * @returns
+   */
+  static isDataBreachCondition(report: IMergeReport, condition: string): DataBreaches {
+    if (!report) return DataBreaches.None;
+    const borrower = report.TrueLinkCreditReportType?.Borrower;
+    const address = this.getCurrentAddress(borrower || {});
+    const tradelines = this.listTradelines(report);
+    const inquiries = this.listInquiries(report);
+
+    switch (condition) {
+      case DataBreaches.Condition1:
+        // Check if living in California and have car loans
+        return DataBreachConditions[DataBreaches.Condition1]({ address, tradelines });
+        break;
+      case DataBreaches.Condition2:
+        // Check if living in California
+        return DataBreachConditions[DataBreaches.Condition2]({ address });
+        break;
+      case DataBreaches.Condition3:
+        // Check if living in Colorado
+        return DataBreachConditions[DataBreaches.Condition3]({ address });
+        break;
+      case DataBreaches.Condition4:
+        // Check if living in a Kroger state
+        return DataBreachConditions[DataBreaches.Condition4]({ address, tradelines });
+        break;
+      case DataBreaches.Condition5:
+        // Check for soft/hard inquiries with T Mobile
+        return DataBreachConditions[DataBreaches.Condition5]({ inquiries });
+        break;
+      case DataBreaches.Condition6:
+        // Check if living in Washington
+        return DataBreachConditions[DataBreaches.Condition6]({ address });
+        break;
+      default:
+        return DataBreaches.None;
+        break;
+    }
+  }
+
+  /*=====================================*/
+  //            Personal Info
+  /*=====================================*/
+  /**
+   * Get the current borrower address
+   * @param borrower
+   * @returns
+   */
+  static getCurrentAddress(borrower: IBorrower): IBorrowerAddress | undefined {
+    const address = borrower?.BorrowerAddress;
+    if (address === undefined) return;
+    if (address instanceof Array) {
+      return address.sort((a, b) => {
+        return (a.addressOrder || 99) - (b.addressOrder || 99);
+      })[0];
+    } else {
+      return address;
+    }
+  }
+
+  /*=====================================*/
+  //            Inquiries
+  /*=====================================*/
+  /**
+   * Helper function to consistently pull inquiry partitions
+   * @param report
+   * @returns
+   */
+  static listInquiries(report: IMergeReport): IInquiryPartition[] | [] {
+    if (!report) return [];
+    const inquiries = report.TrueLinkCreditReportType?.InquiryPartition;
+    if (inquiries === undefined) return [];
+    if (inquiries instanceof Array) {
+      return inquiries;
+    } else {
+      return [inquiries];
+    }
   }
 }

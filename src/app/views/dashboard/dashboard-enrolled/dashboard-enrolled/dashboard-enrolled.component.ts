@@ -35,4 +35,8 @@ export class DashboardEnrolledComponent implements OnInit {
   onFullReportClicked() {
     this.router.navigate(['../report'], { relativeTo: this.route });
   }
+
+  onDatabreachItemsClicked() {
+    this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
+  }
 }

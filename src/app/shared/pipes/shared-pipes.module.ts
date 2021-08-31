@@ -24,6 +24,8 @@ import { InvestigationresultsToPersonalitemdetailsPipe } from './investigationre
 import { TradelineToAccountgroupPipe } from './tradeline-to-accountgroup/tradeline-to-accountgroup.pipe';
 import { TradelineToForbearancePipe } from './tradeline-to-forbearance/tradeline-to-forbearance.pipe';
 import { MergereportToSubscribersPipe } from './mergereport-to-subscribers/mergereport-to-subscribers.pipe';
+import { MergereportToBreachitemsPipe } from './mergereport-to-breachitems/mergereport-to-breachitems.pipe';
+import { LinkifyPipe } from './linkify/linkify.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -43,6 +45,7 @@ const pipes = [
   MergereportToTradelinesPipe,
   MergereportToSubscribersPipe,
   MergereportToConsumerStatementsPipe,
+  MergereportToBreachitemsPipe,
   CreditbureauToTradelinedetailsPipe,
   CreditbureauToPublicitemdetailsPipe,
   InvestigationresultsToPersonalitemdetailsPipe,
@@ -50,6 +53,7 @@ const pipes = [
   TradelineToForbearancePipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
+  LinkifyPipe,
 ];
 
 @NgModule({

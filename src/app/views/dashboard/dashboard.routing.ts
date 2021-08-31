@@ -18,6 +18,7 @@ import { SettingsComponent } from '@views/dashboard/settings/settings/settings.c
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
 import { ForbearanceAccountsComponent } from '@views/dashboard/snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
 import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbearance/forbearance.view';
+import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
 
 const DashboardRoutes: Routes = [
   {
@@ -68,6 +69,11 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/snapshot/forbearance',
         component: ForbearanceView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/snapshot/databreach',
+        component: DataBreachesComponent,
         canActivate: [AuthGuard],
       },
       {
