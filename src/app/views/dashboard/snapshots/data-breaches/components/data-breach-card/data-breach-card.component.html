@@ -1,15 +1,15 @@
 <div class="relative p-4 rounded-lg border border-blueGray-300">
   <span class="material-icons absolute top-1 right-1"> close </span>
-  <div class="-mt-1 flex">
-    <span class="material-icons"> shield </span>
-    <p>{{ subscriber }}</p>
+  <div class="-mt-1 mb-1 flex">
+    <span class="material-icons"> gpp_maybe </span>
+    <p class="brave-body1-bold ml-2">{{ subscriber }}</p>
   </div>
-  <div>
-    <span class="material-icons text-opacity-0"> shield </span>
-    <p>{{ reason }}</p>
+  <div class="flex mb-1">
+    <span class="material-icons" style="color: rgba(0, 0, 0, 0)"> gpp_maybe </span>
+    <p class="brave-body3 ml-2">{{ reason }}</p>
   </div>
-  <div *ngIf="viewDetail.open" class="m-4">
-    <ng-template *ngFor="let paragraph of paragraphs" [innerHTML]="paragraph | linkify"></ng-template>
+  <div *ngIf="viewDetail.open" class="brave-body3 my-4">
+    <div *ngFor="let paragraph of paragraphs" [innerHTML]="paragraph | linkify"></div>
   </div>
   <div class="flex justify-center">
     <brave-viewdetail-button #viewDetail>{{ content.b1 }}</brave-viewdetail-button>

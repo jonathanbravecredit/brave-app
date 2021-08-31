@@ -37,11 +37,17 @@
   .brave-body1-semibold {
     @apply font-sans font-semibold text-base text-coolGray-900;
   }
+  .brave-body1-bold {
+    @apply font-sans font-bold text-base text-coolGray-900;
+  }
   .brave-body2 {
     @apply font-sans text-sm font-normal tracking-normal text-coolGray-900;
   }
   .brave-body2-semibold {
     @apply font-sans font-semibold text-sm text-coolGray-900;
+  }
+  .brave-body2-bold {
+    @apply font-sans font-bold text-sm text-coolGray-900;
   }
   .brave-body3 {
     @apply font-sans text-xs text-coolGray-900;

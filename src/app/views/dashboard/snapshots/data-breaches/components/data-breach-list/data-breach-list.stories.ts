@@ -43,10 +43,12 @@ const Template: Story<DataBreachListComponent> = (args: any) => ({
   component: DataBreachListComponent,
   props: {
     ...args,
-    cards,
+    cards: cards,
   },
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  cards: cards,
+};
 Default.parameters;

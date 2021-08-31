@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DataBreachCardComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/data-breach-card.component';
-import { DateBreachCard } from '@shared/utils/constants';
+import { DataBreaches, DateBreachCard } from '@shared/utils/constants';
 
 export default {
   title: 'app/views/snapshots/databreach/breach-card',
@@ -31,18 +31,19 @@ export default {
   ],
 } as Meta;
 
-const mock = DateBreachCard.Condition5;
+const mock = DateBreachCard[DataBreaches.Condition5];
 
 const Template: Story<DataBreachCardComponent> = (args: any) => ({
   component: DataBreachCardComponent,
   props: {
     ...args,
-    subscriber: mock.subscriber,
-    paragraphs: mock.paragraphs,
-    reason: mock.paragraphs,
   },
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  subscriber: mock.subscriber,
+  paragraphs: mock.paragraphs,
+  reason: mock.reason,
+};
 Default.parameters;

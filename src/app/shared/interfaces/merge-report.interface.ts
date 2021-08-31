@@ -58,8 +58,8 @@ export interface IBorrowerAddress {
   Ownership?: ICodeRef;
   Source?: ISource;
   dateReported?: string;
-  addressOrder: number;
-  partitionSet: number;
+  addressOrder?: number;
+  partitionSet?: number;
 }
 export interface ICreditAddress {
   city?: string;

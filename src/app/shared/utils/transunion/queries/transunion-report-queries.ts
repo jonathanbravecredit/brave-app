@@ -294,7 +294,7 @@ export class TransunionReportQueries extends TransunionBase {
     if (address === undefined) return;
     if (address instanceof Array) {
       return address.sort((a, b) => {
-        return a.addressOrder - b.addressOrder;
+        return (a.addressOrder || 99) - (b.addressOrder || 99);
       })[0];
     } else {
       return address;

@@ -2,12 +2,12 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { DataBreachListComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/data-breach-list.component';
 import { DataBreaches, DateBreachCard } from '@shared/utils/constants';
+import { DataBreachesPureComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches-pure/data-breaches-pure.component';
 
 export default {
-  title: 'app/views/snapshots/databreach/list',
-  component: DataBreachListComponent,
+  title: 'app/views/snapshots/databreach',
+  component: DataBreachesPureComponent,
   decorators: [
     moduleMetadata({
       declarations: [],
@@ -39,11 +39,11 @@ const cards = [
   DateBreachCard[DataBreaches.Condition5],
   DateBreachCard[DataBreaches.Condition6],
 ];
-const Template: Story<DataBreachListComponent> = (args: any) => ({
-  component: DataBreachListComponent,
+const Template: Story<DataBreachesPureComponent> = (args: any) => ({
+  component: DataBreachesPureComponent,
   props: {
     ...args,
-    cards,
+    breachCards: cards,
   },
 });
 
