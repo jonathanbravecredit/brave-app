@@ -82,6 +82,7 @@ import { DataBreachesPureComponent } from './snapshots/data-breaches/data-breach
 import { DataBreachHeaderComponent } from './snapshots/data-breaches/components/data-breach-header/data-breach-header.component';
 import { DataBreachCardComponent } from './snapshots/data-breaches/components/data-breach-card/data-breach-card.component';
 import { DataBreachListComponent } from './snapshots/data-breaches/components/data-breach-list/data-breach-list.component';
+import { DataBreachNoneComponent } from './snapshots/data-breaches/components/data-breach-none/data-breach-none.component';
 
 const components = [
   DashboardComponent,
@@ -163,7 +164,7 @@ const components = [
 const pipes = [ParseRiskScorePipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, DataBreachNoneComponent],
   imports: [CommonModule, SharedComponentsModule, SharedPipesModule, NgxMaskModule, DashboardRoutingModule],
   exports: [...components, ...pipes],
 })

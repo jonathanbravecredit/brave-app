@@ -1,9 +1,10 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
-import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DataBreaches, DateBreachCard } from '@shared/utils/constants';
 import { DataBreachesPureComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches-pure/data-breaches-pure.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 export default {
   title: 'app/views/snapshots/databreach',
@@ -11,7 +12,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule],
+      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
@@ -51,3 +52,9 @@ Default.args = {
   breachCards: cards,
 };
 Default.parameters;
+
+export const NoCards = Template.bind({});
+NoCards.args = {
+  breachCards: [],
+};
+NoCards.parameters;

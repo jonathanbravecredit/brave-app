@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
-import { VolumeIdStringList } from 'aws-sdk/clients/ec2';
+import { dataBreachListContent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/content';
 
 @Component({
   selector: 'brave-data-breach-list',
@@ -9,6 +9,7 @@ import { VolumeIdStringList } from 'aws-sdk/clients/ec2';
 export class DataBreachListComponent implements OnInit {
   @Input() cards: IBreachCard[] = [];
   @Output() closeClick: EventEmitter<number> = new EventEmitter();
+  content = dataBreachListContent;
   constructor() {}
 
   ngOnInit(): void {}
