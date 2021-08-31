@@ -239,6 +239,7 @@ export class TransunionReportQueries extends TransunionBase {
    *  - condition 4 lives in [35 states]...just do it for everyone for now
    *  - condition 5 found T-Mobile in inquiries
    *  - condition 6 lives in washington
+   *  - condition 7 lives in experian state
    * @param report
    * @param condition
    * @returns
@@ -274,6 +275,10 @@ export class TransunionReportQueries extends TransunionBase {
       case DataBreaches.Condition6:
         // Check if living in Washington
         return DataBreachConditions[DataBreaches.Condition6]({ address });
+        break;
+      case DataBreaches.Condition7:
+        // Check if living in Washington
+        return DataBreachConditions[DataBreaches.Condition7]({ address });
         break;
       default:
         return DataBreaches.None;

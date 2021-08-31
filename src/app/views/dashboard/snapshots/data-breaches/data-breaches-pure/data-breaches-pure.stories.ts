@@ -5,13 +5,22 @@ import { DataBreaches, DateBreachCard } from '@shared/utils/constants';
 import { DataBreachesPureComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches-pure/data-breaches-pure.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { DataBreachCardComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/data-breach-card.component';
+import { DataBreachHeaderComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-header/data-breach-header.component';
+import { DataBreachListComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/data-breach-list.component';
+import { DataBreachNoneComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-none/data-breach-none.component';
 
 export default {
   title: 'app/views/snapshots/databreach',
   component: DataBreachesPureComponent,
   decorators: [
     moduleMetadata({
-      declarations: [],
+      declarations: [
+        DataBreachCardComponent,
+        DataBreachHeaderComponent,
+        DataBreachListComponent,
+        DataBreachNoneComponent,
+      ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),

@@ -8,18 +8,14 @@ import { DataBreaches, DateBreachCard } from '@shared/utils/constants';
   name: 'mergereportToBreachitems',
 })
 export class MergereportToBreachitemsPipe implements PipeTransform {
-  transform(report: IMergeReport): IBreachCard[] | [] {
-    const tradelines = report.TrueLinkCreditReportType?.TradeLinePartition;
-    const breachCards = [];
-    for (let item in DataBreaches) {
-      // for testing
-      breachCards.push(DateBreachCard[item]);
-      // if (isNaN(Number(item))) {
-      //   if (tu.queries.report.isDataBreachCondition(report, item)) {
-      //     breachCards.push(DateBreachCard[item]);
-      //   }
-      // }
-    }
+  transform(report: IMergeReport): (IBreachCard | any)[] | [] {
+    const breachCards = Object.values(DataBreaches)
+      .filter((item) => {
+        return tu.queries.report.isDataBreachCondition(report, item) !== DataBreaches.None;
+      })
+      .map((key) => {
+        return DateBreachCard[key];
+      });
     return breachCards;
   }
 }
