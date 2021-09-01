@@ -1,0 +1,27 @@
+<form [formGroup]="componentFormGroup">
+  <div class="mb-5 pt-0">
+    <label for="input_field" class="block mb-2.5 text-sm text-blueGray-600 whitespace-nowrap"
+      >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
+    >
+    <input
+      name="input_field"
+      [type]="config?.type || 'text'"
+      formControlName="input"
+      [placeholder]="config?.placeholder || ''"
+      [autocomplete]="config?.autocomplete || 'off'"
+      [mask]="config?.mask || ''"
+      [maxLength]="config?.maxLength"
+      [hiddenInput]="config?.hidden"
+      [ngClass]="{
+        'border-red-500':
+          required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
+        'border-blueGray-300': !(
+          required &&
+          componentFormGroup.controls.input.touched &&
+          !componentFormGroup.controls.input.valid
+        )
+      }"
+      class="text-base px-1 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded border outline-none focus:ring-0 focus:ring-indigo-800 w-full"
+    />
+  </div>
+</form>

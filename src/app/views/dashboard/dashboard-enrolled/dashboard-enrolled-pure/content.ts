@@ -8,4 +8,5 @@ export const dashboardEnrolledContent = {
   initialMsg: 'Welcome back!',
   negativeAccountsTitle: 'Negative Accounts',
   forbearanceAccountsTitle: 'COVID-19 Loan Relief',
+  databreachAccountsTitle: 'Data Breach & Leaks Tracker',
 };

@@ -11,10 +11,12 @@ import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { INIT_DATA } from '@shared/services/sync/constants';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
 import { StateService } from '@shared/services/state/state.service';
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 @Injectable({
   providedIn: 'root',
@@ -119,7 +121,7 @@ export class SyncService implements OnDestroy {
    * @param {string} id
    */
   async goToDashboard(id: string): Promise<void> {
-    const data = await this.syncDBDownToState(id);
+    // const data = await this.syncDBDownToState(id); // handled in resolver now
     this.router.navigate(['/dashboard/init']);
   }
 
@@ -208,13 +210,21 @@ export class SyncService implements OnDestroy {
    * @param {AppDataStateModel} payload (optional)
    */
   async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
+    let userId: string;
+    if (id === '') {
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const attrs = await Auth.userAttributes(creds);
+      userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    } else {
+      userId = id;
+    }
     if (payload) {
       this.store.dispatch(new AppDataActions.Edit(payload));
       return payload;
     }
     // no payload need to get the id
     try {
-      const raw = await this.api.GetAppData(id);
+      const raw = await this.api.GetAppData(userId);
       const clean = this.cleanBackendData(raw);
       return new Promise((resolve, reject) => {
         this.store.dispatch(new AppDataActions.Edit(clean)).subscribe((_) => {

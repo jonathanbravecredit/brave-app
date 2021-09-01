@@ -1,7 +1,10 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
+<!-- <button routerLink="/dashboard/test">test</button> -->
 
-<div class="my-2">
-  <brave-credit-report-graphic-with-graph [currentValue]="score"></brave-credit-report-graphic-with-graph>
+<div class="my-2 flex justify-center">
+  <brave-credit-report-graphic-with-graph
+    [currentValue]="report | parseRiskScore"
+  ></brave-credit-report-graphic-with-graph>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
@@ -28,13 +31,10 @@
   </div>
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
-      tendency="down"
-      label="preview"
-      status="danger"
-      title="Credit Mix"
-      typeOfSnapshot="tag"
-      typeOfDate="Years"
-      [preview]="true"
+      tendency="no-tendency"
+      [title]="content.databreachAccountsTitle"
+      [status]="cards.databreachcard?.status || 'safe'"
+      (click)="databreachItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
   <div class="mt-6 hover:cursor-pointer">

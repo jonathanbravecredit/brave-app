@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
     });
 
     (async () => {
+      console.log('calling app component auth again');
       try {
         const creds: CognitoUser = await Auth.currentAuthenticatedUser();
         const attrs = await Auth.userAttributes(creds);

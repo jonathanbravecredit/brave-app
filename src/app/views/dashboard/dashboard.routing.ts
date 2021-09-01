@@ -16,8 +16,9 @@ import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-persona
 import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
-import { ForbearanceAccountsComponent } from '@views/dashboard/snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
 import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbearance/forbearance.view';
+import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
+import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 
 const DashboardRoutes: Routes = [
   {
@@ -33,6 +34,7 @@ const DashboardRoutes: Routes = [
       {
         path: 'init',
         component: DashboardEnrolledComponent,
+        resolve: { report: DashboardInitResolver },
         canActivate: [AuthGuard],
       },
       {
@@ -68,6 +70,11 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/snapshot/forbearance',
         component: ForbearanceView,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'report/snapshot/databreach',
+        component: DataBreachesComponent,
         canActivate: [AuthGuard],
       },
       {
@@ -130,6 +137,11 @@ const DashboardRoutes: Routes = [
         component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
+      // {
+      //   path: 'test',
+      //   component: OutlineSsnFullFormComponent,
+      //   canActivate: [AuthGuard],
+      // },
     ],
   },
 ];

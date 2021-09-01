@@ -25,13 +25,11 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
   }
 
   goToNext(form: FormGroup): void {
-    // TODO !!!Important!!! consider how to handle full SSN. Don't want to keep in db
     if (form.valid) {
-      const temp = this.formatAttributes(form, ssn);
-      const full = this.formatCode(temp);
+      const { full } = this.formatAttributes(form, ssn);
       const attrs = {
         ssn: {
-          lastfour: `${temp['input-0']}${temp['input-1']}${temp['input-2']}${temp['input-3']}`,
+          lastfour: full.slice(-4),
           full: full,
         },
       } as UserAttributesInput;
@@ -55,13 +53,5 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
 }
 
 const ssn: Record<string, any> = {
-  'input-0': true,
-  'input-1': true,
-  'input-2': true,
-  'input-3': true,
-  'input-4': true,
-  'input-5': true,
-  'input-6': true,
-  'input-7': true,
-  'input-8': true,
+  full: true,
 };

@@ -11,6 +11,9 @@ export interface IMergereportToDashboardOutput {
   forbearancecard: {
     status: string;
   };
+  databreachcard: {
+    status: string;
+  };
 }
 
 @Pipe({
@@ -20,7 +23,8 @@ export class MergereportToDashboardPipe implements PipeTransform {
   tu = TransunionUtil;
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
 
-  transform(report: IMergeReport): IMergereportToDashboardOutput {
+  transform(report: IMergeReport | undefined): IMergereportToDashboardOutput | undefined {
+    if (report === undefined) return;
     let output: IMergereportToDashboardOutput = {} as IMergereportToDashboardOutput;
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!this.tradeLines) {
@@ -40,6 +44,7 @@ export class MergereportToDashboardPipe implements PipeTransform {
     } else {
       output = this.addForbearanceCard(output);
     }
+    output = this.addDatabreachCard(output); //TODO may need to add conditionals
     return output;
   }
 
@@ -94,6 +99,20 @@ export class MergereportToDashboardPipe implements PipeTransform {
     return {
       ...output,
       forbearancecard: {
+        status: 'danger',
+      },
+    };
+  }
+
+  /**
+   * Layers in the negative account data
+   * @param output
+   * @returns
+   */
+  private addDatabreachCard(output: IMergereportToDashboardOutput): IMergereportToDashboardOutput {
+    return {
+      ...output,
+      databreachcard: {
         status: 'danger',
       },
     };
