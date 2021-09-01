@@ -10,6 +10,9 @@ export interface IOutlineInputeConfig {
   autocomplete: string;
   value?: string;
   required?: boolean;
+  hidden?: boolean;
+  mask?: string;
+  maxLength?: number;
 }
 
 @Component({

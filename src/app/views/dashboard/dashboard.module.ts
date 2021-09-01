@@ -159,12 +159,13 @@ const components = [
   DataBreachHeaderComponent,
   DataBreachListComponent,
   DataBreachCardComponent,
+  DataBreachNoneComponent,
 ];
 
 const pipes = [ParseRiskScorePipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, DataBreachNoneComponent],
+  declarations: [...components, ...pipes],
   imports: [CommonModule, SharedComponentsModule, SharedPipesModule, NgxMaskModule, DashboardRoutingModule],
   exports: [...components, ...pipes],
 })

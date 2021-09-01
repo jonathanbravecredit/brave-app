@@ -1,7 +1,10 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
+<!-- <button routerLink="/dashboard/test">test</button> -->
 
-<div class="my-2">
-  <brave-credit-report-graphic-with-graph [currentValue]="score"></brave-credit-report-graphic-with-graph>
+<div class="my-2 flex justify-center">
+  <brave-credit-report-graphic-with-graph
+    [currentValue]="report | parseRiskScore"
+  ></brave-credit-report-graphic-with-graph>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
