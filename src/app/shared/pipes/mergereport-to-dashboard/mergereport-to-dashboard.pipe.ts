@@ -23,7 +23,8 @@ export class MergereportToDashboardPipe implements PipeTransform {
   tu = TransunionUtil;
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
 
-  transform(report: IMergeReport): IMergereportToDashboardOutput {
+  transform(report: IMergeReport | undefined): IMergereportToDashboardOutput | undefined {
+    if (report === undefined) return;
     let output: IMergereportToDashboardOutput = {} as IMergereportToDashboardOutput;
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!this.tradeLines) {

@@ -1,6 +1,6 @@
 <div class="w-full p-2">
-  <ng-container *ngIf="tuReport$ | async as report">
-    <ng-container *ngIf="report | mergereportToDashboard as cards">
+  <ng-container *ngIf="report | mergereportToDashboard as cards">
+    <ng-container *ngIf="cards">
       <brave-dashboard-enrolled-pure
         [report]="report"
         [cards]="cards"

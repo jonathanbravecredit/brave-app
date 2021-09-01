@@ -42,7 +42,7 @@ export interface IBorrower {
   PreviousAddress?: IBorrowerAddress | IBorrowerAddress[];
   Birth?: IBorrowerBirth | IBorrowerBirth[];
   CreditStatement?: ICreditStatement | ICreditStatement[];
-  CreditScore?: ICreditScore;
+  CreditScore?: ICreditScore | ICreditScore[];
   Employer?: IEmployer | IEmployer[];
   BorrowerName?: IBorrowerName | IBorrowerName[];
   BorrowerTelephone?: IBorrowerTelephone | IBorrowerTelephone[];

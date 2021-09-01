@@ -1,0 +1,12 @@
+<form [formGroup]="parentForm">
+  <div class="flex justify-center">
+    <brave-outline-input-ssn
+      [required]="true"
+      [asteriskOverride]="true"
+      [config]="full"
+      (onComponentReady)="addChild('full', $event)"
+      [required]="true"
+    >
+    </brave-outline-input-ssn>
+  </div>
+</form>
