@@ -11,18 +11,19 @@ import { Observable } from 'rxjs';
 export class DashboardEnrolledComponent implements OnInit {
   userName: string | undefined;
   welcomeMsg: string | undefined;
-  lastUpdated: string | undefined | null;
-  tuReport$: Observable<IMergeReport>;
+  lastUpdated: Date | undefined;
   report: IMergeReport | undefined;
 
   constructor(private router: Router, private route: ActivatedRoute, private dashboardService: DashboardService) {
-    this.tuReport$ = this.dashboardService.tuReport$.asObservable();
     this.route.data.subscribe((resp: any) => {
-      console.log('resolved report ==> ', resp.report);
       this.report = resp.report;
     });
+    this.dashboardService.tuReport$.subscribe((report) => (this.report = report));
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
-    this.lastUpdated = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
+    const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
+    if (fullfilled) {
+      this.lastUpdated = new Date(fullfilled);
+    }
   }
 
   ngOnInit(): void {
