@@ -21,6 +21,7 @@ import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbeara
 import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
 import { OutlineSsnFullFormComponent } from '@shared/components/forms/outline-ssn-full-form/outline-ssn-full-form.component';
 import { OutlineSsnLastfourFormComponent } from '@shared/components/forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component';
+import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 
 const DashboardRoutes: Routes = [
   {
@@ -36,6 +37,7 @@ const DashboardRoutes: Routes = [
       {
         path: 'init',
         component: DashboardEnrolledComponent,
+        resolve: { report: DashboardInitResolver },
         canActivate: [AuthGuard],
       },
       {

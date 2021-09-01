@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   securityFreeze$: Observable<boolean>;
-  hideBack: boolean = false;
+  showBack: boolean = false;
   constructor(
     private dashboardService: DashboardService,
     private creditReportService: CreditreportService,
@@ -18,7 +18,11 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
-    this.hideBack = this.router.url.split('/').pop()?.toLowerCase() === 'init';
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showBack = this.router.url !== '/dashboard/init';
+      }
+    });
   }
 
   ngOnInit(): void {}

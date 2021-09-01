@@ -13,9 +13,14 @@ export class DashboardEnrolledComponent implements OnInit {
   welcomeMsg: string | undefined;
   lastUpdated: string | undefined | null;
   tuReport$: Observable<IMergeReport>;
+  report: IMergeReport | undefined;
 
   constructor(private router: Router, private route: ActivatedRoute, private dashboardService: DashboardService) {
     this.tuReport$ = this.dashboardService.tuReport$.asObservable();
+    this.route.data.subscribe((resp: any) => {
+      console.log('resolved report ==> ', resp.report);
+      this.report = resp.report;
+    });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     this.lastUpdated = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
   }
