@@ -138,6 +138,11 @@ const DashboardRoutes: Routes = [
         component: BaseExceptionView,
         canActivate: [AuthGuard],
       },
+      // {
+      //   path: 'test',
+      //   component: OutlineSsnFullFormComponent,
+      //   canActivate: [AuthGuard],
+      // },
     ],
   },
 ];
