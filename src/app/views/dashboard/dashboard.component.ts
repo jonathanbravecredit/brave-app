@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   securityFreeze$: Observable<boolean>;
+  hideBack: boolean = false;
   constructor(
     private dashboardService: DashboardService,
     private creditReportService: CreditreportService,
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
+    this.hideBack = this.router.url.split('/').pop()?.toLowerCase() === 'init';
   }
 
   ngOnInit(): void {}

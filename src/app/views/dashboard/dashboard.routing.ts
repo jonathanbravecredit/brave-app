@@ -19,6 +19,8 @@ import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/ba
 import { ForbearanceAccountsComponent } from '@views/dashboard/snapshots/forbearance/components/forbearance-accounts/forbearance-accounts.component';
 import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbearance/forbearance.view';
 import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
+import { OutlineSsnFullFormComponent } from '@shared/components/forms/outline-ssn-full-form/outline-ssn-full-form.component';
+import { OutlineSsnLastfourFormComponent } from '@shared/components/forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component';
 
 const DashboardRoutes: Routes = [
   {
