@@ -4,6 +4,9 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { DataBreachCardComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/data-breach-card.component';
 import { DataBreaches, DateBreachCard } from '@shared/utils/constants';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { DashboardModule } from '@views/dashboard/dashboard.module';
 
 export default {
   title: 'app/views/snapshots/databreach/breach-card',
@@ -11,7 +14,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule],
+      imports: [DashboardModule, HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {

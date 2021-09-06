@@ -83,6 +83,7 @@ import { DataBreachHeaderComponent } from './snapshots/data-breaches/components/
 import { DataBreachCardComponent } from './snapshots/data-breaches/components/data-breach-card/data-breach-card.component';
 import { DataBreachListComponent } from './snapshots/data-breaches/components/data-breach-list/data-breach-list.component';
 import { DataBreachNoneComponent } from './snapshots/data-breaches/components/data-breach-none/data-breach-none.component';
+import { DataBreachShareComponent } from './snapshots/data-breaches/components/data-breach-share/data-breach-share.component';
 
 const components = [
   DashboardComponent,
@@ -160,6 +161,7 @@ const components = [
   DataBreachListComponent,
   DataBreachCardComponent,
   DataBreachNoneComponent,
+  DataBreachShareComponent,
 ];
 
 const pipes = [ParseRiskScorePipe];
