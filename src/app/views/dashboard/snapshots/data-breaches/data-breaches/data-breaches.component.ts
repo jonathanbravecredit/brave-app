@@ -9,9 +9,11 @@ import { Observable } from 'rxjs';
   templateUrl: './data-breaches.component.html',
 })
 export class DataBreachesComponent implements OnInit {
-  creditReport$: Observable<IMergeReport>;
+  report: IMergeReport | undefined;
   constructor(private router: Router, private route: ActivatedRoute, private creditReportService: CreditreportService) {
-    this.creditReport$ = this.creditReportService.tuReport$.asObservable();
+    this.route.data.subscribe((resp: any) => {
+      this.report = resp.report;
+    });
   }
 
   ngOnInit(): void {}

@@ -19,6 +19,7 @@ import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/ba
 import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbearance/forbearance.view';
 import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
+import { SnapshotDatabreachesResolver } from '@shared/resolvers/snapshot-databreaches/snapshot-databreaches.resolver';
 
 const DashboardRoutes: Routes = [
   {
@@ -75,6 +76,7 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/snapshot/databreach',
         component: DataBreachesComponent,
+        resolve: { report: SnapshotDatabreachesResolver },
         canActivate: [AuthGuard],
       },
       {
