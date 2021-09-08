@@ -31,14 +31,11 @@ export class DashboardEnrolledPureComponent implements OnInit {
       });
       const _score = Math.round(score?.riskScore as number);
       if (isNaN(_score)) return;
-      console.log('_score ===>  ', _score);
       return _score;
     } else {
       const score = creditScore?.riskScore;
       const _score = Math.round(score as number);
-      console.log('riskScore ===>  ', score, _score);
       if (isNaN(_score)) return;
-      console.log('_score ===>  ', _score);
       return _score;
     }
   }
