@@ -15,10 +15,10 @@ export class OutlineSsnFullFormComponent extends BaseFormComponent {
     size: 'sm',
     type: 'text',
     label: '',
-    mask: 'X X X - X X - X X X X',
+    mask: 'XXX-XX-XXXX',
     maxLength: 24,
     hidden: true,
-    placeholder: 'X X X - X X - X X X X',
+    placeholder: 'XXX-XX-XXXX',
     autocomplete: 'off',
   };
 
