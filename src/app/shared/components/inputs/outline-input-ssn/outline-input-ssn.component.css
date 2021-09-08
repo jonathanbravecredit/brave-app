@@ -1,6 +1,7 @@
 input,
 input::placeholder {
   text-align: center;
+  letter-spacing: 0.25rem;
 }
 
 input:focus {
