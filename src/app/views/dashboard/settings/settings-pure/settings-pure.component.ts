@@ -22,6 +22,7 @@ export class SettingsPureComponent {
   @Output() goBackToSettingsClick: EventEmitter<void> = new EventEmitter();
   @Output() backButtonClick: EventEmitter<void> = new EventEmitter();
   @Output() submitCodeClick: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() alertCloseClick: EventEmitter<void> = new EventEmitter();
 
   @Input() option: SettingsOptions = SettingsOptions.Init;
   @Input() haveResetError: boolean = false;

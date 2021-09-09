@@ -35,6 +35,10 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  resetView() {
+    this.init = SettingsOptions.Init;
+  }
+
   onGoToPageClick({ tab, view }: { tab: number; view: ISettingsViews }) {
     this.router.navigate([`./options`], {
       relativeTo: this.route,
@@ -102,5 +106,9 @@ export class SettingsComponent implements OnInit {
 
   onLogoutClick() {
     this.settings.signOut();
+  }
+
+  onAlertCloseClick() {
+    this.resetView();
   }
 }
