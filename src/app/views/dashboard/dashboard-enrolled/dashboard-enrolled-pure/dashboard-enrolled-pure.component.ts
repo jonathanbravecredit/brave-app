@@ -11,7 +11,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() report: IMergeReport | undefined;
   @Input() cards: IMergereportToDashboardOutput | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
-  @Input() lastUpdated: Date | undefined;
+  @Input() lastUpdated: number | string | Date | undefined;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class DashboardEnrolledComponent implements OnInit {
   userName: string | undefined;
   welcomeMsg: string | undefined;
-  lastUpdated: Date | undefined;
+  lastUpdated: number | string | Date | undefined;
   report: IMergeReport | undefined;
 
   constructor(private router: Router, private route: ActivatedRoute, private dashboardService: DashboardService) {
@@ -22,7 +22,7 @@ export class DashboardEnrolledComponent implements OnInit {
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
     if (fullfilled) {
-      this.lastUpdated = new Date(fullfilled);
+      this.lastUpdated = new Date(fullfilled).toLocaleDateString();
     }
   }
 
