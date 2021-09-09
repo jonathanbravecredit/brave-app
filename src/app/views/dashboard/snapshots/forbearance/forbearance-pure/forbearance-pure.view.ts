@@ -11,6 +11,7 @@ import { forbearanceAccountsContent } from '@views/dashboard/snapshots/forbearan
 export class ForbearancePureView implements OnInit {
   @Input() tradelines: ITradeLinePartition[] = [];
   @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
+  @Output() infoClick: EventEmitter<void> = new EventEmitter();
 
   content = forbearanceAccountsContent;
   groups = CreditReportGroups;

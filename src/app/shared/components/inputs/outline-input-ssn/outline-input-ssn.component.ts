@@ -8,6 +8,7 @@ import { OutlineInputComponent } from '@shared/components/inputs/outline-input/o
   styleUrls: ['./outline-input-ssn.component.css'],
 })
 export class OutlineInputSsnComponent extends OutlineInputComponent {
+  hide: boolean = true;
   constructor(private formBuilder: FormBuilder) {
     super(formBuilder);
   }

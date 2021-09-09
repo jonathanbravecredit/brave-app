@@ -28,4 +28,8 @@ export class ForbearanceView implements OnInit {
     this.creditReportService.setTradeline(tradeline);
     this.router.navigate(['../../../report/tradeline'], { relativeTo: this.route });
   }
+
+  onInfoClick(): void {
+    window.open('https://www.brave.credit/forbearance-blog', '_blank');
+  }
 }

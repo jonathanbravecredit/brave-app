@@ -12,6 +12,7 @@ export interface IOutlineInputeConfig {
   required?: boolean;
   hidden?: boolean;
   mask?: string;
+  unmask?: string;
   maxLength?: number;
 }
 

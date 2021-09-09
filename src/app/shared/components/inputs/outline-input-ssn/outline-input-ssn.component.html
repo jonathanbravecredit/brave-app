@@ -3,26 +3,33 @@
     <label for="input_field" class="block mb-2.5 text-sm text-blueGray-600 whitespace-nowrap"
       >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
-    <input
-      name="input_field"
-      pattern="\d*"
-      [type]="config?.type || 'text'"
-      formControlName="input"
-      [placeholder]="config?.placeholder || ''"
-      [autocomplete]="config?.autocomplete || 'off'"
-      [mask]="config?.mask || ''"
-      [maxLength]="config?.maxLength"
-      [hiddenInput]="config?.hidden"
-      [ngClass]="{
-        'border-red-500':
-          required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
-        'border-blueGray-300': !(
-          required &&
-          componentFormGroup.controls.input.touched &&
-          !componentFormGroup.controls.input.valid
-        )
-      }"
-      class="text-base px-1 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded border outline-none focus:ring-0 focus:ring-indigo-800 w-full"
-    />
+    <div class="flex">
+      <input
+        name="input_field"
+        pattern="[0-9]*"
+        [type]="'text'"
+        formControlName="input"
+        [mask]="!hide ? config?.unmask || '000000000' : config?.mask || '000000000'"
+        [hiddenInput]="config?.hidden || false"
+        [placeholder]="config?.placeholder || ''"
+        [autocomplete]="config?.autocomplete || 'off'"
+        [maxLength]="config?.maxLength"
+        [ngClass]="{
+          'border-red-500':
+            required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
+          'border-blueGray-300': !(
+            required &&
+            componentFormGroup.controls.input.touched &&
+            !componentFormGroup.controls.input.valid
+          )
+        }"
+        class="text-base px-1 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded border outline-none focus:ring-0 focus:ring-indigo-800 w-full"
+      />
+      <span
+        class="material-icons-outlined flex items-center ml-2 text-blueGray-600 hover:cursor-pointer"
+        (click)="hide = !hide"
+        >{{ hide ? 'visibility_off' : 'visibility' }}
+      </span>
+    </div>
   </div>
 </form>
