@@ -3,6 +3,7 @@
     <brave-forbearance-pure
       [tradelines]="creditReport | mergereportToTradelines: accountTypes.Mortgage : accountTypes.Installment | tradelineToForbearance"
       (viewDetailClick)="onViewDetailClick($event)"
+      (infoClick)="onInfoClick()"
     ></brave-forbearance-pure>
   </ng-container>
 </div>

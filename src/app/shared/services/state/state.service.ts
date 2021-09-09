@@ -228,7 +228,8 @@ export class StateService {
       .subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
         if (!input.id) {
-          throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
+          return;
+          // throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
         } else {
           this.api.UpdateAppData(input);
         }
@@ -247,7 +248,8 @@ export class StateService {
         .subscribe((state: { appData: AppDataStateModel }) => {
           const input = { ...state.appData } as UpdateAppDataInput;
           if (!input.id) {
-            throw new Error(`stateService:updateLastActiveAsync=No id provided ${input.id}`);
+            return;
+            // throw new Error(`stateService:updateLastActiveAsync=No id provided ${input.id}`);
           } else {
             this.api
               .UpdateAppData(input)

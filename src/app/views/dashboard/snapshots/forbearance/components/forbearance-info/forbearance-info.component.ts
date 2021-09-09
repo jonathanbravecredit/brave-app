@@ -6,7 +6,7 @@ import { forbearanceInfoContent } from '@views/dashboard/snapshots/forbearance/c
   templateUrl: './forbearance-info.component.html',
 })
 export class ForbearanceInfoComponent implements OnInit {
-  @Output() clickedInfo: EventEmitter<void> = new EventEmitter();
+  @Output() infoClick: EventEmitter<void> = new EventEmitter();
   content = forbearanceInfoContent;
   constructor() {}
 
