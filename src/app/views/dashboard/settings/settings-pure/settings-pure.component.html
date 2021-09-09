@@ -36,5 +36,8 @@
 </div>
 
 <div class="absolute top-20">
-  <brave-filled-closing-alert [config]="alertConfig"></brave-filled-closing-alert>
+  <brave-filled-closing-alert
+    [config]="alertConfig"
+    (closeClicked)="option = settingsOptions.Init"
+  ></brave-filled-closing-alert>
 </div>

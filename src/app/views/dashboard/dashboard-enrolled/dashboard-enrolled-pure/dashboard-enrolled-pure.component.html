@@ -8,7 +8,7 @@
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
-<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }} {{ lastUpdated | date: 'short-date' }}</p>
+<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }}: {{ lastUpdated | date: 'shortDate' }}</p>
 <div *ngIf="cards" class="mb-4">
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
