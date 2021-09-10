@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   templateUrl: './outline-address-form.component.html',
   providers: [{ provide: 'name', useValue: 'address-form' }],
 })
-export class OutlineAddressFormComponent extends BaseFormComponent implements AfterViewInit {
+export class OutlineAddressFormComponent extends BaseFormComponent {
   values$: Observable<any>;
   status$: Observable<any>;
   public addressOneConfig: IOutlineInputeConfig = {
@@ -52,10 +52,6 @@ export class OutlineAddressFormComponent extends BaseFormComponent implements Af
     super(fb, 'address-form');
     this.values$ = this.parentForm.valueChanges;
     this.status$ = this.parentForm.statusChanges;
-  }
-
-  ngAfterViewInit(): void {
-    console.log('parentform', this.parentForm);
   }
 }
 

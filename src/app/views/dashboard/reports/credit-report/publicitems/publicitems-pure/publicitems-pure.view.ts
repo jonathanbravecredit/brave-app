@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IPublicPartition } from '@shared/interfaces';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 
 @Component({
   selector: 'brave-publicitems-pure',
@@ -28,7 +29,7 @@ export class PublicitemsPureView {
 
   showModal: boolean = false;
 
-  constructor() {}
+  constructor(public featureFlags: FeatureFlagsService) {}
 
   disputeClicked() {
     // when clicked and do not need acknowledgment
@@ -41,7 +42,6 @@ export class PublicitemsPureView {
     if (e.isConfirmed) {
       this.showModal = false;
       this.disputeClick.emit();
-      console.log('confirmed');
     }
   }
 }

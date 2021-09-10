@@ -1,10 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
+import {
+  ICreditReportCardInputs,
+  ReportCardFieldTypes,
+} from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
 import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
   name: 'mergereportToCreditreport',
@@ -12,50 +16,15 @@ import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credi
 export class MergereportToCreditreportPipe implements PipeTransform {
   private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
   private creditReportAccounts: ICreditReportCardInputs[] | undefined;
-  transform(report: IMergeReport, prefs: PreferencesStateModel): ICreditReportTradelinesCardGroup[] {
+  transform(report: IMergeReport, prefs?: PreferencesStateModel): ICreditReportTradelinesCardGroup[] {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
-
     if (!this.tradeLines) return [{} as ICreditReportTradelinesCardGroup];
     return this.tradeLines instanceof Array
-      ? this.filterTradelines(this.tradeLines, prefs)
-          .sortByAccountType(this.tradeLines)
+      ? this.sortByCreditReportGroups(this.tradeLines)
           .sortByDateOpened(this.tradeLines)
           .mapTradeLineToAccount(this.tradeLines)
           .groupCreditReportAccounts(this.creditReportAccounts)
-      : this.filterTradelines(this.tradeLines, prefs)
-          .mapTradeLineToAccount([this.tradeLines])
-          .groupCreditReportAccounts(this.creditReportAccounts);
-  }
-
-  /**
-   * Filters the tradeline by the negative status code
-   * @param {ITradeLinePartition[]} tradeLines
-   * @returns
-   */
-  private filterTradelines(
-    partitions: ITradeLinePartition[] | ITradeLinePartition,
-    prefs: PreferencesStateModel,
-  ): MergereportToCreditreportPipe {
-    const showPositive = prefs.showAllAccounts;
-    if (!showPositive) return this;
-    if (partitions instanceof Array) {
-      this.tradeLines = partitions.filter((item) => {
-        const sym = item.accountTypeSymbol?.toLowerCase() || '';
-        const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym]?.group || '';
-        const status = item.Tradeline?.PayStatus?.symbol || '';
-        const pos = POSITIVE_PAY_STATUS_CODES[`${status}`] || null;
-        if (showPositive[group]) return true;
-        if (!showPositive[group] && pos) return false;
-        if (!showPositive[group] && !pos) return true;
-        return true;
-      });
-    } else {
-      const sym = partitions.accountTypeSymbol || '';
-      const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym].group;
-      const pos = POSITIVE_PAY_STATUS_CODES[`${partitions.Tradeline?.PayStatus?.symbol}`] || null;
-      this.tradeLines = !(!showPositive[group] && pos) ? [partitions] : [];
-    }
-    return this;
+      : this.mapTradeLineToAccount([this.tradeLines]).groupCreditReportAccounts(this.creditReportAccounts);
   }
 
   /**
@@ -63,15 +32,8 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private sortByAccountType(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = [
-      ...tradeLines.sort((a, b) => {
-        const symA = a.accountTypeSymbol?.toLowerCase();
-        const symB = b.accountTypeSymbol?.toLowerCase();
-        if (!symA || !symB) return 0;
-        return CREDIT_REPORT_GROUPS[symA]['order'] - CREDIT_REPORT_GROUPS[symB]['order'];
-      }),
-    ];
+  private sortByCreditReportGroups(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
+    this.tradeLines = tu.sorters.report.sortByCreditReportGroups(tradeLines);
     return this;
   }
 
@@ -81,20 +43,7 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @returns
    */
   private sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = [
-      ...tradeLines.sort((a, b) => {
-        if (a.accountTypeSymbol !== b.accountTypeSymbol) {
-          return 0;
-        }
-        if (a.Tradeline?.dateOpened! < b.Tradeline?.dateOpened!) {
-          return 1;
-        }
-        if (a.Tradeline?.dateOpened! > b.Tradeline?.dateOpened!) {
-          return -1;
-        }
-        return 0;
-      }),
-    ];
+    this.tradeLines = tu.sorters.report.sortTradelineByDateOpened(tradeLines);
     return this;
   }
 
@@ -113,11 +62,14 @@ export class MergereportToCreditreportPipe implements PipeTransform {
         isOpen: item.Tradeline?.OpenClosed,
         firstFieldName: firstField.firstFieldName,
         firstFieldValue: firstField.firstFieldValue,
+        firstFieldType: firstField.firstFieldType,
         secondFieldName: secondField.secondFieldName,
         secondFieldValue: secondField.secondFieldValue,
+        secondFieldType: secondField.secondFieldType,
         thirdFieldName: 'Payment Status',
         thirdFieldValue: item.Tradeline?.PayStatus?.description,
         status: item.Tradeline?.PayStatus?.symbol,
+        positive: POSITIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`] || false,
         tradeline: item,
       } as ICreditReportCardInputs;
     });
@@ -161,9 +113,9 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    */
   private getFirstFields(
     partition: ITradeLinePartition | undefined,
-  ): { firstFieldName: string; firstFieldValue: string | number } {
+  ): { firstFieldName: string; firstFieldValue: string | number; firstFieldType: ReportCardFieldTypes } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
-    if (!sym) return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown' };
+    if (!sym) return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown', firstFieldType: 'string' };
     const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym]['group'];
     switch (group) {
       case CreditReportGroups.CreditCards:
@@ -172,14 +124,16 @@ export class MergereportToCreditreportPipe implements PipeTransform {
         return {
           firstFieldName: 'Current Balance',
           firstFieldValue: partition?.Tradeline?.currentBalance || 0,
+          firstFieldType: 'currency',
         };
       case CreditReportGroups.CollectionsAccounts:
         return {
           firstFieldName: 'Original Creditor',
           firstFieldValue: partition?.Tradeline?.CollectionTrade?.originalCreditor || '',
+          firstFieldType: 'string',
         };
       default:
-        return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown' };
+        return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown', firstFieldType: 'string' };
     }
   }
 
@@ -190,33 +144,37 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    */
   private getSecondFields(
     partition: ITradeLinePartition | undefined,
-  ): { secondFieldName: string; secondFieldValue: string | number } {
+  ): { secondFieldName: string; secondFieldValue: string | number; secondFieldType: ReportCardFieldTypes } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
-    if (!sym) return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown' };
+    if (!sym) return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown', secondFieldType: 'string' };
     const group = CREDIT_REPORT_GROUPS[sym]['group'];
     switch (group) {
       case CreditReportGroups.CreditCards:
         return {
           secondFieldName: 'Credit Limit',
           secondFieldValue: partition?.Tradeline?.GrantedTrade?.CreditLimit || 0,
+          secondFieldType: 'currency',
         };
       case CreditReportGroups.CollectionsAccounts:
         return {
           secondFieldName: 'Original Creditor',
           secondFieldValue: partition?.Tradeline?.CollectionTrade?.originalCreditor || '',
+          secondFieldType: 'string',
         };
       case CreditReportGroups.InstallmentLoans:
         return {
           secondFieldName: 'Original Loan Amount',
           secondFieldValue: partition?.Tradeline?.highBalance || '',
+          secondFieldType: 'currency',
         };
       case CreditReportGroups.Mortgages:
         return {
           secondFieldName: 'Loan Amount',
           secondFieldValue: partition?.Tradeline?.highBalance || '',
+          secondFieldType: 'currency',
         };
       default:
-        return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown' };
+        return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown', secondFieldType: 'string' };
     }
   }
 }

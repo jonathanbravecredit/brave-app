@@ -1,0 +1,14 @@
+input,
+input::placeholder {
+  text-align: center;
+  letter-spacing: 0.25rem;
+}
+
+input:focus {
+  text-align: left;
+  padding-left: 0.5rem;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}

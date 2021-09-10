@@ -1,8 +1,8 @@
-type Query {
+type Query @aws_cognito_user_pools {
   transunion(action: String!, message: String!): String
 }
 
-type Mutation {
+type Mutation @aws_cognito_user_pools {
   patchTransunion(id: ID!, msg: String): Transunion
 }
 
@@ -126,6 +126,7 @@ type Dispute {
   disputeLetterContent: String
   openDisputes: DisputeSummary
   closedDisputes: DisputeSummary
+  pvDisputedItems: PVDisputedItems
   agencyName: String
   openedOn: String
   closedOn: String
@@ -146,4 +147,9 @@ type DisputeSummary {
   totalDisputedItems: String
   totalOpenDisputedItems: String
   totalPVDisputedItemCount: String
+}
+
+type PVDisputedItems {
+  pvTradelines: AWSJSON
+  pvPublicRecords: AWSJSON
 }

@@ -6,7 +6,7 @@ import { DisputeStatus } from '../enums';
   templateUrl: './dispute-current-card.component.html',
   styleUrls: ['./dispute-current-card.component.css'],
 })
-export class DisputeCurrentCardComponent implements OnInit {
+export class DisputeCurrentCardComponent {
   @Input() creditorName: string | undefined = '--';
   @Input() status: DisputeStatus | undefined = DisputeStatus.Processing;
   @Input() dateSubmitted: string | undefined = '--';
@@ -14,11 +14,6 @@ export class DisputeCurrentCardComponent implements OnInit {
   @Input() estCompletionDate: string | undefined = '--';
   @Output() viewDetailsClick: EventEmitter<void> = new EventEmitter();
 
+  processingStatus = DisputeStatus.Processing;
   constructor() {}
-
-  ngOnInit(): void {}
-
-  isStatusProcessing(): boolean {
-    return this.status === DisputeStatus.Processing;
-  }
 }

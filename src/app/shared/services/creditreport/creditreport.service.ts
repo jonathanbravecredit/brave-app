@@ -4,6 +4,7 @@ import {
   IBorrower,
   IMergeReport,
   IPublicPartition,
+  ISubscriber,
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
@@ -13,7 +14,7 @@ import { PreferencesState, PreferencesStateModel } from '@store/preferences';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 /**
  * Service to parse and pull information from credit reports
@@ -21,7 +22,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 @Injectable({
   providedIn: 'root',
 })
-export class CreditreportService extends InterstitialService implements OnDestroy {
+export class CreditreportService implements OnDestroy {
   /*=========================================================================================*/
   // The report, agency, and preference Behavior Subjects are to allow for easy access and parsing
   //   of the correct reports
@@ -51,6 +52,18 @@ export class CreditreportService extends InterstitialService implements OnDestro
   tuPersonalItem: IBorrower = {} as IBorrower;
   tuPersonalItem$: BehaviorSubject<IBorrower> = new BehaviorSubject({} as IBorrower);
 
+  /*=========================================================================================*/
+  // The Subscriber (for tradeline, publicitem) Behavior Subjects are to track the current
+  //   items matching credit subscriber data for the current item selected
+  //   - subscriber is irrelevant for personal
+  /*=========================================================================================*/
+  // the currently selected tradeline's subscriber (financial accounts, etc..)
+  tuTradelineSubscriber: ISubscriber | undefined;
+  tuTradelineSubscriber$: BehaviorSubject<ISubscriber> = new BehaviorSubject({} as ISubscriber);
+  // the currently selected public item (bankruptcies, etc...)
+  tuPublicItemSubscriber: ISubscriber | undefined;
+  tuPublicItemSubscriber$: BehaviorSubject<ISubscriber> = new BehaviorSubject({} as ISubscriber);
+
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
 
@@ -58,7 +71,6 @@ export class CreditreportService extends InterstitialService implements OnDestro
   preferencesSub$: Subscription;
 
   constructor(private statesvc: StateService, private transunion: TransunionService) {
-    super();
     this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {
@@ -100,11 +112,9 @@ export class CreditreportService extends InterstitialService implements OnDestro
 
   /**
    * Refresh the credit report if necessary
-   * @param id string
    */
-  refreshCreditReport(id: string): void {
-    if (!id) throw `Id missing=${id}`;
-    this.transunion.refreshCreditReport(id);
+  refreshCreditReport(): void {
+    this.transunion.refreshCreditReport();
   }
 
   /**
@@ -144,6 +154,12 @@ export class CreditreportService extends InterstitialService implements OnDestro
   setTradeline(tradeline: ITradeLinePartition): void {
     this.tuTradeline = tradeline;
     this.tuTradeline$.next(tradeline);
+    let subscribers = this.tuReport.TrueLinkCreditReportType.Subscriber;
+    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+    const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subscribers) || ({} as ISubscriber);
+    if (subscriber === undefined) return;
+    this.tuTradelineSubscriber = subscriber;
+    this.tuTradelineSubscriber$.next(subscriber);
   }
 
   /**
@@ -166,6 +182,12 @@ export class CreditreportService extends InterstitialService implements OnDestro
   setPublicItem(publicItem: IPublicPartition): void {
     this.tuPublicItem = publicItem;
     this.tuPublicItem$.next(publicItem);
+    let subscribers = this.tuReport.TrueLinkCreditReportType.Subscriber;
+    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
+    const subscriber = tu.queries.report.getPublicSubscriberByKey(publicItem, subscribers) || ({} as ISubscriber);
+    if (subscriber === undefined) return;
+    this.tuPublicItemSubscriber = subscriber;
+    this.tuPublicItemSubscriber$.next(subscriber);
   }
 
   /**
@@ -212,7 +234,6 @@ export class CreditreportService extends InterstitialService implements OnDestro
     try {
       return await this.statesvc.updateAgenciesAsync(agencies);
     } catch (err) {
-      console.log('err', err);
       throw new Error(`creditreportService:updateReportAsync=${err}`);
     }
   }

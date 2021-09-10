@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DEFAULT_EXCEPTION } from '@shared/components/exceptions/base-exception/constants';
 import { ExceptionHelper } from './helpers';
 import { IBaseExceptionCategory } from './interfaces';
 
@@ -7,7 +8,7 @@ import { IBaseExceptionCategory } from './interfaces';
   templateUrl: './base-exception.component.html',
 })
 export class BaseExceptionComponent implements OnInit {
-  @Input() code: string | undefined = '331';
+  @Input() code: string = DEFAULT_EXCEPTION.code;
   @Output() actionButtonClicked: EventEmitter<string> = new EventEmitter();
   exceptionCategory: IBaseExceptionCategory | undefined;
 

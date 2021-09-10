@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 export interface IFilledClosingAlertConfig {
   size: string;
   backgroundColor: string;
   color: string;
-  alertTitle: string;
+  alertTitle?: string;
   alertBody: string;
 }
 
@@ -13,6 +13,7 @@ export interface IFilledClosingAlertConfig {
   templateUrl: './filled-closing-alert.component.html',
 })
 export class FilledClosingAlertComponent implements OnInit {
+  @Output() closeClicked: EventEmitter<void> = new EventEmitter();
   @Input() config: IFilledClosingAlertConfig = {
     size: 'base',
     backgroundColor: 'bg-indigo-800',

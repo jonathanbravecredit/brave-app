@@ -6,6 +6,7 @@
     "field": "transunion",
     "arguments": $utils.toJson($context.arguments),
     "identity": $utils.toJson($context.identity),
-    "source": $utils.toJson($context.source)
+    "source": $utils.toJson($context.source),
+    "token": $utils.toJson($context.request.headers.get("authorization"))
   }
 }

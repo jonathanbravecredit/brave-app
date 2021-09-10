@@ -10,7 +10,7 @@ interface IDisputesToOverview {
 
 interface IDisputeItem extends IProcessDisputeTradelineResult {}
 // export interface IProcessDisputeTradelineResult {
-//   result: IDisputeTradelineProcessResult;
+//   result: IDisputeProcessResult;
 //   tradeline: ITradeLinePartition | undefined;
 // }
 
@@ -52,7 +52,6 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
       currentDisputeArr: currentDisputeArr,
       historicalDisputeArr: historicalDisputeArr,
     };
-    console.log('mapped dispute ===> ', mapped);
     return mapped;
   }
 

@@ -17,11 +17,16 @@ export class NavigationService {
   }
 
   back(): void {
-    this.history--;
-    if (this.history > 0) {
+    if (this.history > 0) this.history--;
+    if (this.history >= 0) {
       this.location.back();
     } else {
-      this.router.navigateByUrl('/');
+      const segments = this.router.url.split('/');
+      if (segments.length) {
+        this.router.navigate(segments.slice(0, -1));
+      } else {
+        this.router.navigateByUrl(`/`);
+      }
     }
   }
 }

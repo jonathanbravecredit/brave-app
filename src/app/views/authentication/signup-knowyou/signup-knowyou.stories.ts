@@ -4,8 +4,8 @@ import { moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SignupKnowyouComponent } from '@views/signup-knowyou/signup-knowyou.component';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SignupKnowyouComponent } from '@views/authentication/signup-knowyou/signup-knowyou.component';
 
 export default {
   title: 'app/views/onboarding/signup-knowyou',

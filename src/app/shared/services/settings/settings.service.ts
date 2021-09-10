@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  constructor(private auth: AuthService) {}
+  constructor(private router: Router, private auth: AuthService, private interstitial: InterstitialService) {}
 
   /**
    * Submit email to cognito for change, if accepted returns true
@@ -33,20 +35,53 @@ export class SettingsService {
     }
   }
 
+  async getUserEmail(): Promise<string> {
+    try {
+      return await this.auth.getUserEmail();
+    } catch (err) {
+      throw `settingsService:getUserEmail=${err}`;
+    }
+  }
+  /**
+   * Submit email to reset it...requires log out and log back in.
+   * @param email
+   * @returns
+   */
+  async forgotPassword(email: string): Promise<string> {
+    try {
+      return await this.auth.forgotPassword(email);
+    } catch (err) {
+      throw `settingService:forgotPassword=${err.message}`;
+    }
+  }
+
+  /**
+   * Submit the code and credentials to change the password
+   * @param email
+   * @param code
+   * @param password
+   * @returns
+   */
+  async forgotPasswordSubmit(email: string, code: string, password: string): Promise<any> {
+    try {
+      return await this.auth.forgotPasswordSubmit(email, code, password);
+    } catch (err) {
+      throw `settingService:forgotPasswordSubmit=${err.message}`;
+    }
+  }
   /**
    * Submit old and new password to change, if accepted returns true
    * @param oldPassword
    * @param newPassword
    * @returns
    */
-  async resetPassword(oldPassword: string, newPassword: string): Promise<boolean> {
+  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     try {
       return await this.auth.resetPassword(oldPassword, newPassword);
     } catch (err) {
-      throw `settingService:resetPassword=${err}`;
+      throw `settingService:resetPassword=${err.message}`;
     }
   }
-
   /**
    * Submit user for deletion, disables in cognito
    * @returns
@@ -54,7 +89,6 @@ export class SettingsService {
   async deactivateAccount(): Promise<string> {
     try {
       const resp = this.auth.deactivateAccount();
-      this.auth.signOut();
       return resp;
     } catch (err) {
       throw `settingService:deactivateAccount=${err}`;
@@ -67,8 +101,11 @@ export class SettingsService {
    */
   async signOut(): Promise<any> {
     try {
-      return await this.auth.signOut();
+      await this.auth.signOut();
+      this.interstitial.fetching$.next(false);
+      this.router.navigate(['/']);
     } catch (err) {
+      this.interstitial.fetching$.next(false);
       throw `settingService:signOut=${err}`;
     }
   }

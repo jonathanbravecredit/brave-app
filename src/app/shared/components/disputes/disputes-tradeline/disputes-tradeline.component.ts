@@ -1,15 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import {
-  IDisputeTradelineReasonCardPage,
-  IDisputeTradelineSelectedObj,
-  IDisputeTradelineProcessResult,
-  IDisputeTradelineReasonCardPageItem,
+  IDisputeReasonCardPage,
+  IDisputeSelectedObj,
+  IDisputeProcessResult,
+  IDisputeReasonCardPageItem,
   IDisputeReason,
 } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
 import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
-import { DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS, DEFAULT_TRADELINE_REASONS as defaultReasons } from './constants';
+import {
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS as processReasons,
+  DEFAULT_TRADELINE_REASONS as defaultReasons,
+} from './constants';
 import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';
 
 @Component({
@@ -22,8 +25,8 @@ export class DisputesTradelineComponent implements OnInit {
   /**
    * The array of pages and child items inside of them that displays the reason cards.
    */
-  reasonOptionPages: IDisputeTradelineReasonCardPage[] = [];
-  selectedIndexes: IDisputeTradelineSelectedObj[] = [];
+  reasonOptionPages: IDisputeReasonCardPage[] = [];
+  selectedIndexes: IDisputeSelectedObj[] = [];
   private navigationStack: any[] = [];
   isCustomInputSelected = false;
   showCustomInputError = false;
@@ -35,11 +38,14 @@ export class DisputesTradelineComponent implements OnInit {
   @Input() secondOptionDescription = 'This is inaccurate';
   @Input() firstOptionReasonPages = defaultReasons.NOT_MINE;
   @Input() secondOptionReasonPages = defaultReasons.INACCURATE;
-  @Output() disputeProcessResult: EventEmitter<IDisputeTradelineProcessResult> = new EventEmitter();
+  @Input() processReasons = processReasons;
+  @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {
     // Set the pages to default;
+    this.reasonOptionPages =
+      this.disputeType === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
     if (this.initialStepId === 'summary') {
       this.switchOption(0, 0);
     }
@@ -48,9 +54,6 @@ export class DisputesTradelineComponent implements OnInit {
       id: this.initialStepId,
       data: undefined,
     });
-
-    this.reasonOptionPages =
-      this.disputeType === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
   }
   /**
    * Changes the "selected" state flag of the target option.
@@ -104,7 +107,7 @@ export class DisputesTradelineComponent implements OnInit {
     return this.findIndexInSelected(pageIndex, itemIndex) !== -1;
   }
 
-  getTargetSelectedPageItem(indexObj: IDisputeTradelineSelectedObj): IDisputeTradelineReasonCardPageItem {
+  getTargetSelectedPageItem(indexObj: IDisputeSelectedObj): IDisputeReasonCardPageItem {
     return this.reasonOptionPages[indexObj.pageIndex].items[indexObj.itemIndex];
   }
 
@@ -189,19 +192,17 @@ export class DisputesTradelineComponent implements OnInit {
 
   parseSelectedItemsToIdArray(): [string?, string?] {
     let resultArr: [string?, string?] = [];
-
     this.selectedIndexes.forEach((item) => {
       const target = this.getTargetSelectedPageItem(item);
       resultArr.push(target.reason.id);
     });
-
     return resultArr;
   }
 
   parseSelectedReasonsToArray(): [IDisputeReason?, IDisputeReason?] {
     let resultsArr: [IDisputeReason?, IDisputeReason?] = [];
     let reasonIds: [string?, string?] = this.parseSelectedItemsToIdArray(); // never more than two...switch to tuple
-    let reasons = [...DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS];
+    let reasons = [...this.processReasons]; // this is filtering out the other items
 
     reasonIds.filter(Boolean).forEach((item) => {
       const reason = reasons.find((r) => r.id === item);

@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LoggingService {
-  logError(message: string, stack: string | undefined) {
+  logError(message: string, stack: string | undefined): void {
     // Send errors to be saved here
     // The console.log is only for testing this example.
-    console.log('LoggingService: ' + message);
+    // console.log('LoggingService: ' + message);
   }
 }

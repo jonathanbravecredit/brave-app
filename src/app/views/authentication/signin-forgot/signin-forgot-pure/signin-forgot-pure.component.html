@@ -1,0 +1,51 @@
+<div class="flex content-center items-center justify-center h-full p-2">
+  <div class="w-full max-w-xs">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
+      <!-- logo -->
+      <div class="flex justify-center">
+        <img class="w-64 h-64" src="https://d3e1i93f88eoxl.cloudfront.net/login-visual.svg" />
+      </div>
+
+      <!-- submit email -->
+      <ng-container *ngIf="viewState === 'init'">
+        <div class="rounded-t mb-0 py-6">
+          <div class="text-center mb-3">
+            <h4 class="brave-h4">Forgot your password?</h4>
+          </div>
+          <div class="py-3">
+            <p class="brave-body2 mb-0">Enter your email and we'll send you a code to reset it.</p>
+          </div>
+        </div>
+
+        <div class="flex-auto py-6 pt-0">
+          <brave-outline-onecolumn-form
+            [configs]="emailConfig"
+            [buttonTwoText]="'Submit'"
+            (onSubmit)="onSubmitEmail($event)"
+          ></brave-outline-onecolumn-form>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="viewState === 'submitted'">
+        <div class="rounded-t mb-0 py-6">
+          <div class="text-center mb-3">
+            <h4 class="brave-h4">Check your email's inbox</h4>
+          </div>
+          <div class="py-3">
+            <p class="brave-body2 mb-0">We sent you a confirmation code to reset your password.</p>
+          </div>
+        </div>
+
+        <div class="flex-auto py-6 pt-0">
+          <brave-outline-onecolumn-form
+            [configs]="codesConfig"
+            [buttonTwoText]="'Submit'"
+            (onSubmit)="onSubmitCode($event)"
+          ></brave-outline-onecolumn-form>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<brave-filled-closing-alert [config]="alertConfig"></brave-filled-closing-alert>

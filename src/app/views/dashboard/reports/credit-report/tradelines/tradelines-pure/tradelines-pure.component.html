@@ -1,30 +1,18 @@
 <div>
   <brave-tradeline-summary
-    [status]="config.status || ''"
-    [creditorName]="config.creditorName || ''"
-    [dateReported]="config.dateReported || ''"
-    [currentBalance]="config.currentBalance || 0"
-    [openClosed]="config.openClosed || ''"
+    [status]="config?.status || ''"
+    [creditorName]="config?.creditorName || ''"
+    [dateReported]="config?.dateReported || ''"
+    [currentBalance]="config?.currentBalance || 0"
+    [openClosed]="config?.openClosed || ''"
   ></brave-tradeline-summary>
-</div>
-
-<div>
-  <brave-tradeline-metrics></brave-tradeline-metrics>
 </div>
 
 <div class="mt-6">
   <brave-tradeline-details
-    [config]="config"
-    [paymentHistory]="paymentHistory"
-    [remarks]="remarks"
-    [address]="address"
+    [tradeline]="tradeline"
+    [subscriber]="subscriber"
     [acknowledged]="acknowledged"
     (disputeClick)="disputeClick.emit(tradeline)"
   ></brave-tradeline-details>
-</div>
-
-<div style="padding: 2.25rem 0" class="flex justify-center border border-coolGray-300 bg-coolGray-300">
-  <span>
-    <p>Ad text here</p>
-  </span>
 </div>

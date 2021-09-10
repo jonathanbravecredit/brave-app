@@ -1,0 +1,18 @@
+<div class="w-full p-2" *ngIf="route.queryParams | async as params">
+  <brave-settings-pure
+    [option]="params.option || init"
+    [haveResetError]="haveResetError"
+    [resetSuccess]="resetSuccess"
+    [resetError]="resetError"
+    [haveDeactivateError]="haveDeactivateError"
+    [deactivateSuccess]="deactivateSuccess"
+    [deactivateError]="deactivateError"
+    [alertConfig]="alertConfig"
+    (goToPageClick)="onGoToPageClick($event)"
+    (changePasswordClick)="onChangePasswordClick()"
+    (submitCodeClick)="onSubmitCodeClick($event)"
+    (deactivateClick)="onDeactivateClick()"
+    (logoutClick)="onLogoutClick()"
+    (alertCloseClick)="onAlertCloseClick()"
+  ></brave-settings-pure>
+</div>

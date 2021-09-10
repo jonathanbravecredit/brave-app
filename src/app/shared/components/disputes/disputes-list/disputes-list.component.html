@@ -3,7 +3,7 @@
     <span class="material-icons-outlined mr-4">{{ headerIcon }}</span>
     <p>{{ listHeader }}</p>
   </div>
-  <div *ngIf="disputeList.length > 0">
+  <ng-container *ngIf="disputeList.length > 0">
     <div *ngIf="disputListType === 'historical'">
       <brave-dispute-history-card
         *ngFor="let dispute of disputeList"
@@ -19,13 +19,17 @@
         [status]="dispute.status"
         [creditorName]="dispute.creditorName"
         [dateSubmitted]="dispute.dateSubmitted"
+        [estCompletionDate]="dispute.estCompletionDate"
         [accountType]="dispute.accountType"
         (viewDetailsClick)="viewDetailsClick.emit(dispute)"
       ></brave-dispute-current-card>
     </div>
-  </div>
-  <div *ngIf="disputeList.length === 0">
-    <div class="mx-auto mt-10 h-24 w-24 rounded-full bg-black"></div>
+  </ng-container>
+  <ng-container *ngIf="disputeList.length === 0">
+    <!-- logo -->
+    <div class="flex justify-center">
+      <img class="w-32 h-32" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_no_data_re_kwbl.svg" />
+    </div>
     <p class="mx-auto mt-6 text-center max-w-xs">{{ isEmptyMessage }}</p>
-  </div>
+  </ng-container>
 </div>

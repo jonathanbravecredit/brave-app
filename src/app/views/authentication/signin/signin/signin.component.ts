@@ -29,19 +29,15 @@ export class SigninComponent {
     let isValid = true;
     if (isValid) {
       try {
-        this.interstitial.changeMessage(' ');
-        this.interstitial.openInterstitial();
         const cognitorUser = await this.auth.signIn(user.username, user.password);
-        this.interstitial.closeInterstitial();
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
-          console.log('MFA challenge');
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
           const { requiredAttributes } = cognitorUser?.challengeParam;
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
-          console.log('OTP setup');
         }
+        this.interstitial.fetching$.next(false);
       } catch (err) {
-        this.interstitial.closeInterstitial();
+        this.interstitial.fetching$.next(false);
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
           this.handleSigninError('invalid', 'User is not confirmed');
@@ -56,7 +52,7 @@ export class SigninComponent {
         }
       }
     } else {
-      this.interstitial.closeInterstitial();
+      this.interstitial.fetching$.next(false);
       this.handleSigninError(
         'invalid',
         `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,

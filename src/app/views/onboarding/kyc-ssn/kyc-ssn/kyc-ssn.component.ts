@@ -34,11 +34,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
   async goToNext(form: FormGroup): Promise<void> {
     // ssn is a little different as each code is one input
     if (form.valid) {
-      const temp = this.formatAttributes(form, ssnMap);
-      const lastFour = `${temp['input-0']}${temp['input-1']}${temp['input-2']}${temp['input-3']}`;
+      const { lastfour } = this.formatAttributes(form, ssnMap);
       const attrs = {
         ssn: {
-          lastfour: lastFour,
+          lastfour: lastfour,
         },
       } as UserAttributesInput;
       try {
@@ -65,13 +64,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
    * @param { [key: string]: AbstractControl } errors
    */
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    // console.log('form errors', errors);
   }
 }
 
 const ssnMap: Record<string, any> = {
-  'input-0': true,
-  'input-1': true,
-  'input-2': true,
-  'input-3': true,
+  lastfour: true,
 };

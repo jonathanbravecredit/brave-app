@@ -1,12 +1,9 @@
 <button
-  class="hover:cursor-pointer relative flex bg-transparent font-sans text-sm text-coolGray-700 text-left focus:outline-none"
+  backButton
+  class="hover:cursor-pointer relative flex bg-transparent font-sans text-base text-coolGray-700 text-left focus:outline-none"
 >
-  <span class="material-icons" style="font-size: 20px; transform: rotate(270deg)">expand_less</span>
+  <span class="material-icons-outlined"> chevron_left </span>
   <span class="flex items-center mr-2">
     <ng-content></ng-content>
   </span>
-
-  <!-- <ng-container *ngIf="horizontal">
-    <span *ngIf="!open" class="material-icons" style="font-size: 20px; transform: rotate(90deg)">expand_less</span>
-  </ng-container> -->
 </button>
