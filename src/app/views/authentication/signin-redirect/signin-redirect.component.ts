@@ -29,13 +29,13 @@ export class SigninRedirectComponent implements OnInit {
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       const isNew = await this.sync.isUserBrandNew(id);
       if (isNew) {
-        this.interstitial.closeInterstitial();
+        this.cleanUp();
         this.router.navigate(['/auth/created']);
       } else {
         await this.sync.initUser(id);
         await this.sync.subscribeToListeners(id);
         await this.sync.onboardUser(id, true);
-        this.interstitial.closeInterstitial();
+        this.cleanUp();
       }
     } catch (err) {
       const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
@@ -43,8 +43,13 @@ export class SigninRedirectComponent implements OnInit {
         await this.auth.socialSignIn(provider);
       } else {
         this.router.navigate(['/auth/invalid']);
-        this.interstitial.closeInterstitial();
+        this.cleanUp();
       }
     }
+  }
+
+  cleanUp(): void {
+    window.sessionStorage.removeItem('braveOAuthProvider');
+    this.interstitial.closeInterstitial();
   }
 }

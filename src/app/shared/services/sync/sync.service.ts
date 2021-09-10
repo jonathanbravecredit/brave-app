@@ -17,6 +17,7 @@ import * as queries from '@shared/queries';
 import { StateService } from '@shared/services/state/state.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
