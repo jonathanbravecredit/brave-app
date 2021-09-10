@@ -135,6 +135,7 @@ import { FilledSpinningButtonComponent } from './buttons/filled-spinning-button/
 import { OutlineSsnFullFormComponent } from './forms/outline-ssn-full-form/outline-ssn-full-form.component';
 import { OutlineInputSsnComponent } from './inputs/outline-input-ssn/outline-input-ssn.component';
 import { OutlineSsnLastfourFormComponent } from './forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component';
+import { CreditReportGraphicNoGraphComponent } from './graphics/credit-report-graphic-no-graph/credit-report-graphic-no-graph.component';
 
 const components = [
   BaseFormComponent,
@@ -241,6 +242,7 @@ const components = [
   SimpleDeactiveFormComponent,
   SimpleChangePasswordFormComponent,
   FilledSpinningButtonComponent,
+  CreditReportGraphicNoGraphComponent,
 ];
 
 // component specific pipes only

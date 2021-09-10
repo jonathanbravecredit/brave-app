@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
-import { IPayStatusHistory, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 @Component({
   selector: 'brave-tradelines-pure',
   templateUrl: './tradelines-pure.component.html',
 })
-export class TradelinesPureComponent implements OnInit {
+export class TradelinesPureComponent {
   /**
    * Config parameters with parsed tradeline data
    */
@@ -30,8 +30,4 @@ export class TradelinesPureComponent implements OnInit {
   @Output() disputeClick: EventEmitter<ITradeLinePartition | undefined | null> = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {
-    console.log('current subscriber ==> ', this.subscriber);
-  }
 }
