@@ -18,7 +18,6 @@ import {
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
 } from '@shared/interfaces';
-import { ActivatedRoute, Router } from '@angular/router';
 
 export enum KYCResponse {
   Failed = 'failed',
