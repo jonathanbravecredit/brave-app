@@ -34,6 +34,8 @@ export class AppComponent implements OnInit {
       switch (payload.event) {
         case 'signIn':
           console.log('signIn called');
+          const provider = window.sessionStorage.getItem('braveOAuthProvider');
+          if (provider) return; // handled in redirect
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
           const attrs = await Auth.userAttributes(creds);
           const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
@@ -63,6 +65,8 @@ export class AppComponent implements OnInit {
     (async () => {
       console.log('calling app component auth again');
       try {
+        const provider = window.sessionStorage.getItem('braveOAuthProvider');
+        if (provider) return; // handled in redirect
         const creds: CognitoUser = await Auth.currentAuthenticatedUser();
         const attrs = await Auth.userAttributes(creds);
         const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;

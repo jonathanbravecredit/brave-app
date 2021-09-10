@@ -1,33 +1,32 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Component, OnDestroy, ApplicationRef } from '@angular/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
-import { BehaviorSubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-signin-redirect-newuser',
   templateUrl: './signin-redirect-newuser.component.html',
 })
-export class SigninRedirectNewuserComponent implements OnInit, OnDestroy, AfterViewInit {
-  destroyed$ = new BehaviorSubject(false);
-  constructor(private router: Router, private sync: SyncService, private interstitial: InterstitialService) {}
-
-  ngOnInit(): void {}
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
+export class SigninRedirectNewuserComponent implements OnDestroy {
+  private appSub$: Subscription;
+  constructor(private appRef: ApplicationRef, private sync: SyncService, private interstitial: InterstitialService) {
+    this.appSub$ = this.appRef.isStable
+      .pipe(
+        first((stable) => stable),
+        tap((stable) => {
+          setTimeout(async () => {
+            await this.onboardUser();
+          }, 4500);
+        }),
+      )
+      .subscribe();
   }
-  ngAfterViewInit(): void {
-    this.router.events.pipe(takeUntil(this.destroyed$)).subscribe((event) => {
-      if (event instanceof NavigationStart) {
-      } else if (event instanceof NavigationEnd) {
-        setTimeout(async () => {
-          await this.onboardUser();
-        }, 15000);
-      }
-    });
+
+  ngOnDestroy(): void {
+    this.appSub$.unsubscribe();
   }
 
   async onManualRedirectClick(): Promise<void> {
