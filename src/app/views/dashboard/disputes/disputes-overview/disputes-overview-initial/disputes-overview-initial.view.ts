@@ -40,7 +40,6 @@ export class DisputesOverviewInitialView implements OnInit {
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage('gathering results');
       const res = await this.getInvestigationResults(dispute.disputeId);
-      console.log('investigation results response ===> ', res);
       if (!res.success) {
         setTimeout(() => {
           this.interstitial.closeInterstitial();
