@@ -39,7 +39,6 @@ export class SettingsPureComponent {
   constructor() {}
 
   showAlert(): void {
-    console.log('calling alert ===> ', this.alert);
     if (this.alert) {
       this.alert.showAlert = true;
     }

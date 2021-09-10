@@ -28,10 +28,4 @@ export class OutlineSsnLastfourFormComponent extends BaseFormComponent {
     this.values$ = this.parentForm.valueChanges;
     this.status$ = this.parentForm.statusChanges;
   }
-
-  ngOnInit(): void {
-    this.values$.subscribe((value) => {
-      console.log('value changes ===> ', value);
-    });
-  }
 }

@@ -48,7 +48,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    // console.log('form errors', errors);
   }
 }
 

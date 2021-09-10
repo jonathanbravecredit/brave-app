@@ -25,7 +25,6 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMergeReport | null> {
     const id = this.statesvc.state?.appData.id;
     if (!id) {
-      console.log('id is missing');
       return of(null);
     } else {
       return from(this.api.GetAppData(id)).pipe(

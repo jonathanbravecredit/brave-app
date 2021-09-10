@@ -19,7 +19,6 @@ export class HttpInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(
         (evt) => {
-          console.log('http evt ===> ', evt);
           if (evt instanceof HttpResponse) {
             this.interstitial.closeInterstitial();
           }

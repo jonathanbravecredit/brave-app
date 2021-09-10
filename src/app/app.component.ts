@@ -29,11 +29,9 @@ export class AppComponent implements OnInit {
     this.message$ = this.interstitial.message$.asObservable();
 
     Hub.listen('auth', async (data) => {
-      console.log('auth hub events ===? ', data);
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
-          console.log('signIn called');
           const provider = window.sessionStorage.getItem('braveOAuthProvider');
           if (provider) return; // handled in redirect
           const creds: CognitoUser = await Auth.currentAuthenticatedUser();
@@ -58,12 +56,9 @@ export class AppComponent implements OnInit {
       }
     });
 
-    Hub.listen('api', async (data) => {
-      console.log('api hub events ===> ', data);
-    });
+    Hub.listen('api', async (data) => {});
 
     (async () => {
-      console.log('calling app component auth again');
       try {
         const provider = window.sessionStorage.getItem('braveOAuthProvider');
         if (provider) return; // handled in redirect

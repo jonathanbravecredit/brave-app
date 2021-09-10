@@ -138,6 +138,6 @@ export class KycKbaquestionsComponent implements OnInit {
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    // console.log('form errors', errors);
   }
 }
