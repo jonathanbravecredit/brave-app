@@ -1,50 +1,55 @@
-<div class="mt-4">
-  <span class="text-lg">Your TransUnion Credit Report</span>
-  <brave-credit-report-graphic-with-graph
-    class="w-full mt-4"
-    [currentValue]="creditReportScore"
-  ></brave-credit-report-graphic-with-graph>
-  <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
+<p class="mt-4 text-lg">Your TransUnion Credit Report</p>
+<!-- <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p> -->
+<div class="mt-4 flex justify-center">
+  <brave-credit-report-graphic-no-graph [currentValue]="creditReportScore"></brave-credit-report-graphic-no-graph>
 </div>
-<div class="p-4" *ngFor="let report of tradelines">
+
+<div class="py-4" *ngFor="let report of tradelines">
   <h6 class="text-lg">{{ report.title }}</h6>
-  <div *ngIf="preferences.showAllAccounts[report.group]">
-    <input type="checkbox" id="dont-show-hide" (click)="hide.emit(report)" />
+  <div>
+    <input type="checkbox" name="dont-show-hide" [checked]="report.hidden" (change)="report.hidden = !report.hidden" />
     <label for="dont-show-hide" class="ml-2 mr-auto">Only Show me delinquent accounts</label>
   </div>
   <div *ngFor="let card of report.cards; last as isLast">
-    <brave-credit-report-card
-      [creditorName]="card.creditorName"
-      [isOpen]="card.isOpen"
-      [firstFieldName]="card.firstFieldName"
-      [firstFieldValue]="card.firstFieldValue.toString()"
-      [secondFieldName]="card.secondFieldName"
-      [secondFieldValue]="card.secondFieldValue.toString()"
-      [thirdFieldName]="card.thirdFieldName"
-      [thirdFieldValue]="card.thirdFieldValue.toString()"
-      [status]="card.status"
-      (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
-    ></brave-credit-report-card>
+    <div *ngIf="report.hidden && card.positive; else showCard"></div>
+    <ng-template #showCard>
+      <brave-credit-report-card
+        [creditorName]="card.creditorName"
+        [isOpen]="card.isOpen"
+        [firstFieldName]="card.firstFieldName"
+        [firstFieldValue]="card.firstFieldValue.toString()"
+        [firstFieldType]="card.firstFieldType"
+        [secondFieldName]="card.secondFieldName"
+        [secondFieldValue]="card.secondFieldValue.toString()"
+        [secondFieldType]="card.secondFieldType"
+        [thirdFieldName]="card.thirdFieldName"
+        [thirdFieldValue]="card.thirdFieldValue.toString()"
+        [status]="card.status"
+        (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
+      ></brave-credit-report-card>
+    </ng-template>
     <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
   </div>
 </div>
 
-<div *ngIf="personalItems" class="p-4">
+<div *ngIf="personalItems?.length" class="py-4">
   <div class="flex items-center mb-3">
     <span class="material-icons-outlined">perm_identity</span>
     <span>Personal Information</span>
   </div>
   <div>
-    <brave-personalitems-details [config]="personalItems"></brave-personalitems-details>
-    <div class="mt-4">
-      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems)"
-        >see an error?</brave-viewdetail-button
-      >
-    </div>
+    <brave-personalitems-details [config]="personalItems[0].transformed"></brave-personalitems-details>
+    <ng-container *ngIf="featureFlags.disputes$ | async">
+      <div class="mt-4">
+        <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
+          ><span class="text-red-700">See an error?</span></brave-viewdetail-button
+        >
+      </div>
+    </ng-container>
   </div>
 </div>
 
-<div *ngIf="publicItems?.length" class="p-4">
+<div *ngIf="publicItems?.length" class="py-4">
   <div class="flex items-center mb-8">
     <span class="material-icons-outlined"> description </span>
     <span>Public Records</span>
@@ -54,6 +59,7 @@
       [publicItemType]="record.publicItemType || '--'"
       [firstFieldName]="'Date Filed'"
       [firstFieldValue]="record.dateFiled || '--'"
+      [firstFieldType]="'date'"
       (viewDetailClick)="viewPublicItemDetailClick.emit(record.publicPartition)"
     ></brave-publicitem-card>
     <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>

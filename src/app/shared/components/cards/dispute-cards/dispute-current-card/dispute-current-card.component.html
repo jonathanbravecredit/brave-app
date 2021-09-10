@@ -1,4 +1,7 @@
-<brave-dispute-regular-card (viewDetailsClick)="viewDetailsClick.emit()" [hideViewDetails]="!isStatusProcessing()">
+<brave-dispute-regular-card
+  (viewDetailsClick)="viewDetailsClick.emit()"
+  [hideViewDetails]="this.status === processingStatus"
+>
   <div class="mb-2" data>
     <div class="flex">
       <span class="font-semibold text-xs flex-grow">{{ creditorName }}</span>

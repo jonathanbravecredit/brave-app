@@ -1,0 +1,25 @@
+<div>
+  <div>
+    <div class="border-t border-blueGray-300 py-2"></div>
+    <span>
+      <p class="text-sm font-semibold mb-4">{{ data.creditorName }}</p>
+    </span>
+    <div>
+      <brave-negative-account-card-header [data]="data"></brave-negative-account-card-header>
+    </div>
+    <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
+      <div *ngIf="data.tradeline" class="flex flex-col w-full my-4">
+        <brave-tradeline-details
+          [tradeline]="data.tradeline"
+          [subscriber]="data.subscriber"
+          [overrideOpen]="true"
+          (disputeClick)="onDisputeClick()"
+        ></brave-tradeline-details>
+      </div>
+    </div>
+
+    <div class="flex justify-center py-3">
+      <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IPublicItemsDetailsConfig } from '@shared/components/publicitems/publicitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IMergeReport, IPublicPartition } from '@shared/interfaces';
 
 @Pipe({
@@ -19,13 +19,13 @@ export class MergereportToPublicitemsPipe implements PipeTransform {
     const publicRecord = item.PublicRecord instanceof Array ? item.PublicRecord[0] : item.PublicRecord; // schema says array but should not be;
     return {
       publicPartition: item,
-      docketNumber: publicRecord?.referenceNumber || '--',
-      courtName: publicRecord?.courtName || '--',
-      courtLocation: publicRecord?.LegalItem?.CourtLocation?.description || '--',
-      dateFiled: publicRecord?.dateFiled || '--',
-      dateUpdated: publicRecord?.dateUpdated || '--',
-      publicItemType: publicRecord?.Type?.description || '--',
-      expirationDate: publicRecord?.ExpirationDate || '--',
+      docketNumber: publicRecord?.referenceNumber,
+      courtName: publicRecord?.courtName,
+      courtLocation: publicRecord?.LegalItem?.CourtLocation?.description,
+      dateFiled: publicRecord?.dateFiled,
+      dateUpdated: publicRecord?.dateUpdated,
+      publicItemType: publicRecord?.Type?.description,
+      expirationDate: publicRecord?.ExpirationDate,
     };
   }
 }

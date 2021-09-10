@@ -1,24 +1,30 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITradelineDetailsConfig } from '@shared/components/tradelines/tradeline-details/interfaces';
-import { IPersonalInfo, IPublicRecord } from './interfaces';
+import { IDisputeToDisputeFindingOutput } from '@shared/pipes/dispute-to-dispute-finding/dispute-to-dispute-finding.pipe';
+import { CreditBureauFindingsType } from '@shared/utils/transunion/constants';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import {
+  IPersonalInfoCreditBureauConfig,
+  IPublicRecordCreditBureauConfig,
+  ITradelineCreditBureauConfig,
+} from './interfaces';
 
 @Component({
   selector: 'brave-dispute-findings-pure',
   templateUrl: './dispute-findings-pure.view.html',
-  styleUrls: ['./dispute-findings-pure.view.css']
 })
 export class DisputeFindingsPureView implements OnInit {
+  // TODO these configs and results will have to allow for arrays
+  @Input() findings: IDisputeToDisputeFindingOutput | undefined;
   @Input() reportCreatedAt: string = '';
   @Input() fileIdentificationNumber: string = '';
-  @Input() resultCode: string = '';
-  @Input() tradelineAccountConfig: ITradelineDetailsConfig | undefined;
-  @Input() publicRecordConfig: IPublicRecord | undefined;
-  @Input() personalInfoConfig: IPersonalInfo | undefined;
-  @Input() updatedValues: string[] = [];
-  @Input() type: 'tradeline' | 'public-record' | 'personal-info' = 'tradeline';
-  constructor() { }
+  @Input() tradelineAccountConfig: ITradelineCreditBureauConfig[] = [];
+  @Input() publicRecordConfig: IPublicRecordCreditBureauConfig[] = [];
+  @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
 
-  ngOnInit(): void {
-  }
+  findingTypes = CreditBureauFindingsType;
+  bcMissing = TransunionUtil.bcMissing;
 
+  constructor() {}
+
+  ngOnInit(): void {}
 }

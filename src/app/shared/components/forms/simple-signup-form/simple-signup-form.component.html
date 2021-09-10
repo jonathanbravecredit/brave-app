@@ -17,10 +17,16 @@
     <div class="flex justify-end items-end">&nbsp;</div>
   </div>
 
+  <!-- subheader -->
+  <div class="pt-3">
+    <p *ngIf="viewState !== 'invalid'" class="mb-6 text-sm text-transparent">&nbsp;</p>
+    <p *ngIf="viewState === 'invalid'" class="mb-6 text-sm text-red-500">{{ message }}</p>
+  </div>
+
   <div class="mt-5">
     <div class="flex justify-center items-center">
-      <brave-filled-onlytext-button [disabled]="!parentForm.valid" (click)="signupClick.emit(signupUser(parentForm))"
-        >Sign Up</brave-filled-onlytext-button
+      <brave-filled-spinning-button [disabled]="!parentForm.valid" (click)="signupClick.emit(signupUser(parentForm))"
+        >Sign Up</brave-filled-spinning-button
       >
     </div>
   </div>

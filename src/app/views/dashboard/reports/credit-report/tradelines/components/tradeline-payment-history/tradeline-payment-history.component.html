@@ -1,0 +1,44 @@
+<div class="my-6">
+  <span class="text-xs text-dk-gray"><p>Payment History</p></span>
+</div>
+<!-- header -->
+<div class="mb-4">
+  <div class="flex justify-between">
+    <div [ngClass]="gridHeight" class="w-11">&nbsp;</div>
+    <div
+      *ngFor="let month of history.headers.months"
+      style="font-size: 0.66rem"
+      [ngClass]="[gridWidth, gridHeight]"
+      class="font-sans mr-1 text-dk-gray"
+    >
+      <div [ngClass]="gridWidth" class="flex justify-center">
+        {{ month.toUpperCase() }}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- data -->
+<div class="mb-4">
+  <div *ngFor="let year of history.years" class="flex justify-between mb-2">
+    <div style="font-size: 0.66rem" [ngClass]="gridHeight" class="w-11 text-dk-gray">
+      {{ year.year }}
+    </div>
+    <div *ngFor="let month of year.months" [ngClass]="[gridWidth, gridHeight]" class="mr-1">
+      <brave-tradeline-payment-icon
+        [height]="gridHeight"
+        [width]="gridWidth"
+        [code]="month"
+      ></brave-tradeline-payment-icon>
+    </div>
+  </div>
+</div>
+<!-- legend -->
+<div class="mt-2 mb-6 flex flex-wrap">
+  <div class="flex items-center whitespace-nowrap mr-4">
+    <p class="text-xs whitespace-nowrap">
+      <a class="text-dk-gray underline hover:cursor-pointer" (click)="modal?.toggleShowModal()">Payment/Remarks Key</a>
+    </p>
+  </div>
+</div>
+
+<brave-tradeline-payment-icon-key></brave-tradeline-payment-icon-key>

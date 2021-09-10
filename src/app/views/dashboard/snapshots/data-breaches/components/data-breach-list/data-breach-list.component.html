@@ -1,0 +1,10 @@
+<p class="brave-body2 mb-3">{{ content.p1 }}</p>
+<div *ngFor="let card of cards; index as idx" class="mb-4">
+  <brave-data-breach-card
+    [subscriber]="card?.subscriber"
+    [paragraphs]="card?.paragraphs"
+    [reason]="card?.reason"
+    (closeClick)="hideCard(idx)"
+  >
+  </brave-data-breach-card>
+</div>

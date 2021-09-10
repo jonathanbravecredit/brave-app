@@ -1,10 +1,13 @@
 <div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
-  <div class="flex items-center" (click)="requestGoBack()">
-    <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-  </div>
   <p class="text-lg mt-4 mb-4">New Dispute</p>
-  <!-- TODO: (html) Create an ng-container to allow  -->
-  <brave-disputes-personal (disputeProcessResult)="onDisputeProcessResult($event)"></brave-disputes-personal>
+  <brave-dispute-header
+    class="mt-4"
+    [personaldispute]="personalDispute"
+    [showDisputeButton]="false"
+  ></brave-dispute-header>
+  <brave-disputes-personal
+    (disputeProcessResult)="processResult.emit({ result: $event, personalItem: personalDispute })"
+  ></brave-disputes-personal>
 </div>
 <div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
   <p class="text-lg mt-4 mb-4">New Dispute</p>

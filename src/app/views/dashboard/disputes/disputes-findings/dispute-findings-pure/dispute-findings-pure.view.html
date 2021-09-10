@@ -1,62 +1,78 @@
-<div class="flex items-center mb-3">
-  <div style="transform: rotate(180deg)"><span>&#10095;</span></div>
-  <span class="ml-4">Back</span>
-</div>
-<brave-dispute-findings-header [reportCreatedAt]="reportCreatedAt" [fileIdentificationNumber]='fileIdentificationNumber'></brave-dispute-findings-header>
+<brave-dispute-findings-header
+  [reportCreatedAt]="reportCreatedAt"
+  [fileIdentificationNumber]="fileIdentificationNumber"
+></brave-dispute-findings-header>
 <brave-dispute-findings-results></brave-dispute-findings-results>
 <div class="h-1 border-t my-3 border-black opacity-50"></div>
 <brave-dispute-findings-how-to-read></brave-dispute-findings-how-to-read>
 <div class="h-1 border-t my-3 border-black opacity-50"></div>
 <brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
-<brave-dispute-findings-definitions *ngIf="type !== 'personal-info'" [type]="type === 'tradeline' ? 'accounts' : 'public-records'"></brave-dispute-findings-definitions> 
+
+<!-- SPECIFIC DEFINITIONS FOR TRADELINES AND PUBLIC RECORDS -->
+<ng-container *ngIf="tradelineAccountConfig.length > 0">
+  <brave-dispute-findings-definitions [type]="'accounts'"></brave-dispute-findings-definitions>
+</ng-container>
+<ng-container *ngIf="publicRecordConfig.length > 0">
+  <brave-dispute-findings-definitions [type]="'public-records'"></brave-dispute-findings-definitions>
+</ng-container>
+
 <!-- // IS NOT DELETED = SHOW -->
 <brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
-<brave-dispute-findings-results-details [resultCode]="resultCode" [updatedValues]="updatedValues">
-  <div class="mt-4">
-    <p>BMW Financial Services</p>
-    <p>5550 Britton HWY</p>
-    <p>Hilliard, OH 64578</p>
+
+<div class="mx-3 my-4">
+  <div class="flex items-center py-3">
+    <div class="w-1 h-5 bg-purple-800 mr-4"></div>
+    <p class="font-semibold">Your Investigation Results</p>
   </div>
-  <div *ngIf="type === 'tradeline'">
-    <div class="flex items-center mt-4 mb-3">
-      <span>Account Details</span>
-    </div>
-    <brave-tradeline-details-table *ngIf="tradelineAccountConfig" [config]="tradelineAccountConfig"></brave-tradeline-details-table>
-    <brave-tradeline-payment-history></brave-tradeline-payment-history>
-  </div>
-  <div *ngIf="type === 'public-record'">
-    <div class="flex items-center mt-4 mb-3">
-      <span>Public Records Details</span>
-    </div>
-    <div>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Docket Number" [value]="publicRecordConfig!.docketNumber"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Name" [value]="publicRecordConfig!.name"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Date Filed" [value]="publicRecordConfig!.dateFiled"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Date Paid" [value]="publicRecordConfig!.datePaid"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Date Updated" [value]="publicRecordConfig!.dateUpdated"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Type" [value]="publicRecordConfig!.type"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Responsability" [value]="publicRecordConfig!.responsability"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Amount" [value]="publicRecordConfig!.amount"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Court Type" [value]="publicRecordConfig!.courtType"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  label="Estimated month and year that this item will be removed" [value]="publicRecordConfig!.estMonthToBeRemoved"></brave-tradeline-detail-row>
-    </div>
-  </div>
-  <div *ngIf="type === 'personal-info'">
+
+  <!-- TRADELINES -->
+  <ng-container *ngFor="let tradeline of tradelineAccountConfig">
+    <brave-dispute-findings-results-details
+      [resultCode]="tradeline.summaryResultCode"
+      [updatedValues]="[tradeline.summaryReason || 'Not Specified']"
+    >
+      <div class="mt-4">
+        <p *ngFor="let value of tradeline.contactDetails">{{value}}</p>
+      </div>
+      <div class="flex items-center mt-4 mb-3">
+        <span>Account Details</span>
+      </div>
+      <ng-container *ngIf="tradeline.tradeline">
+        <brave-tradeline-details
+          [tradeline]="tradeline.tradeline"
+          [subscriber]="tradeline.subscriber"
+        ></brave-tradeline-details>
+      </ng-container>
+    </brave-dispute-findings-results-details>
+  </ng-container>
+
+  <!-- PUBLIC ITEMS-->
+  <ng-container *ngFor="let publicItem of publicRecordConfig">
+    <brave-dispute-findings-results-details
+      [resultCode]="publicItem.summaryResultCode"
+      [updatedValues]="[publicItem.summaryReason || 'Not Specified']"
+    >
+      <div class="flex items-center mt-4 mb-3">
+        <span>Account Details</span>
+      </div>
+      <brave-publicitems-details-table [config]="publicItem"></brave-publicitems-details-table>
+    </brave-dispute-findings-results-details>
+  </ng-container>
+
+  <!-- PERSONAL ITEMS -->
+  <ng-container *ngIf="!!personalInfoConfig">
     <div class="flex items-center mt-4 mb-3">
       <span>Personal Information Details</span>
     </div>
-    <div>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Social Security Number" [value]="personalInfoConfig!.ssn"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Name" [value]="personalInfoConfig!.name"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Current Address" [value]="personalInfoConfig!.currentAddress"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Previous Address(es)" [value]="personalInfoConfig!.previousAddress"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Telephone" [value]="personalInfoConfig!.telephone"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  [enableSeparator]="true" label="Employer" [value]="personalInfoConfig!.employer"></brave-tradeline-detail-row>
-      <brave-tradeline-detail-row  label="Previous Employer(s)" [value]="personalInfoConfig!.previousEmployer"></brave-tradeline-detail-row>
-    </div>
-  </div>
-</brave-dispute-findings-results-details>
+    <brave-personalitems-details-table
+      [config]="personalInfoConfig.personalItem | personalitemsToDetails"
+    ></brave-personalitems-details-table>
+  </ng-container>
+</div>
+
 <div class="h-1 border-t my-3 border-black opacity-50"></div>
 <brave-dispute-findings-closing-paragraph></brave-dispute-findings-closing-paragraph>
 <div class="h-1 border-t my-3 border-black opacity-50"></div>
-<brave-dispute-findings-contact-info [fileIdentificationNumber]="fileIdentificationNumber"></brave-dispute-findings-contact-info>
+<brave-dispute-findings-contact-info
+  [fileIdentificationNumber]="fileIdentificationNumber"
+></brave-dispute-findings-contact-info>

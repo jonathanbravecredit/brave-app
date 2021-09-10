@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
 import {
   APIService,
@@ -12,10 +11,12 @@ import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { INIT_DATA } from '@shared/services/sync/constants';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { StateService } from '@shared/services/state/state.service';
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
@@ -23,16 +24,13 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 })
 export class SyncService implements OnDestroy {
   data$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
+  fetching$ = new BehaviorSubject<boolean>(false);
   apiUpdateListener$: ZenObservable.Subscription | undefined;
+
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(
-    private api: APIService,
-    private store: Store,
-    private router: Router,
-    private interstitial: InterstitialService,
-  ) {}
+  constructor(private api: APIService, private store: Store, private router: Router, private statesvc: StateService) {}
 
   ngOnDestroy(): void {
     // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
@@ -41,43 +39,34 @@ export class SyncService implements OnDestroy {
   }
 
   /**
-   * Hall monitor. Checks the user and tells them where to go when they come back
-   *   to the app for the first and subsequent times.
-   *   Called when:
-   *    1. User signs in
-   *    2. User refreshes (and auth service reinitiates via Auth.currentCredentials())
-   * @returns
+   * const isUserBrandNew = await this.isUserBrandNew(id);
+   * if (isUserBrandNew === undefined) return;
+   * if (isUserBrandNew && signInEvent) await this.initAppData(creds);
+   * if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
+   * @param creds
    */
-  async hallmonitor(creds: ICredentials, signInEvent: boolean = false): Promise<void> {
-    // user refreshes...on any other non-auth guarded route
-    // user signsIn and is new user
-    console.log('calling hallmonitor');
-    this.interstitial.openInterstitial();
-    const { identityId: id } = creds;
-    // TODO: BETTER USE OF ROUND TRIP CALLS
-    // Handle new users
-    // 1. No ID from Amplify to validate against...bail out
-    // 2. Brand New User and signin event..initialize DB and go to dashboard
-    // 3. Brand New User and NOT a signin event....initialize DB and go to dashboard
-    const isUserBrandNew = await this.isUserBrandNew(id);
-    if (isUserBrandNew === undefined) return;
-    if (isUserBrandNew && signInEvent) await this.initAppData(creds);
-    if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
-    // Returning user...app initiated already. Add listener
-    await this.subscribeToListeners(id);
-    // Handle returning users (implicit) !isUserBrandNew
-    // 1. No ID from Amplify to validate against...bail out
-    // 2. User has fully onboarded and a signin event...go to dashboard
-    // 3. User has fully onboarded and NOT a signin event...stay put
-    // 4. User has NOT fully onboarded and a signin event...go to last complete
-    // 5. User has NOT fully onboarded and NOT a signin event...go to last complete
-    const isUserOnboarded = await this.isUserOnboarded(id);
-    if (isUserOnboarded === undefined) return;
-    if (isUserOnboarded && signInEvent) await this.goToDashboard(id);
-    if (isUserOnboarded && !signInEvent) await this.stayPut(id);
-    if (!isUserOnboarded && signInEvent) await this.goToLastOnboarded(id);
-    if (!isUserOnboarded && !signInEvent) await this.goToLastOnboarded(id);
-    this.interstitial.closeInterstitial();
+  async initUser(id: string): Promise<void> {
+    const isNew = await this.isUserBrandNew(id);
+    isNew ? await this.initAppData(id) : await this.syncDBDownToState(id);
+  }
+
+  /**
+   * Handle returning users (implicit) !isUserBrandNew
+   * 1. No ID from Amplify to validate against...bail out
+   * 2. User has fully onboarded and a signin event...go to dashboard
+   * 3. User has fully onboarded and NOT a signin event...stay put
+   * 4. User has NOT fully onboarded and a signin event...go to last complete
+   * 5. User has NOT fully onboarded and NOT a signin event...go to last complete
+   * @param creds
+   * @param signInEvent
+   */
+  async onboardUser(id: string, signInEvent: boolean): Promise<void> {
+    const isOnboarded = await this.isUserOnboarded(id);
+    if (isOnboarded) {
+      signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
+    } else {
+      await this.goToLastOnboarded(id);
+    }
   }
 
   /**
@@ -133,8 +122,7 @@ export class SyncService implements OnDestroy {
    * @param {string} id
    */
   async goToDashboard(id: string): Promise<void> {
-    const data = await this.syncDBDownToState(id);
-    this.interstitial.closeInterstitial();
+    // const data = await this.syncDBDownToState(id); // handled in resolver now
     this.router.navigate(['/dashboard/init']);
   }
 
@@ -146,7 +134,6 @@ export class SyncService implements OnDestroy {
   async goToLastOnboarded(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
     const lastComplete = data.user?.onboarding?.lastComplete || -1;
-    this.interstitial.closeInterstitial();
     this.routeUser(lastComplete);
   }
 
@@ -158,30 +145,32 @@ export class SyncService implements OnDestroy {
    */
   async stayPut(id: string): Promise<void> {
     await this.syncDBDownToState(id);
-    this.interstitial.closeInterstitial();
   }
 
   /**
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(creds: ICredentials): Promise<void> {
+  async initAppData(id: string): Promise<void> {
+    if (!id) return;
     try {
       const input: CreateAppDataInput = {
         ...INIT_DATA,
-        id: creds.identityId,
+        id: id,
         user: {
           ...INIT_DATA.user,
-          id: creds.identityId,
+          id: id,
         },
       };
       const data = await this.api.CreateAppData(input);
-      await this.subscribeToListeners(creds.identityId); // if new
       const clean = this.cleanBackendData(data);
-      this.interstitial.closeInterstitial();
-      this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
-        this.data$.next(clean);
-        this.routeUser(-1);
+
+      await new Promise((resolve, reject) => {
+        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
+          this.data$.next(clean);
+          this.routeUser(-1);
+          return resolve(true);
+        });
       });
     } catch (err) {
       throw new Error(`syncService:InitAppData=${JSON.stringify(err)}`);
@@ -222,13 +211,21 @@ export class SyncService implements OnDestroy {
    * @param {AppDataStateModel} payload (optional)
    */
   async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
+    let userId: string;
+    if (id === '') {
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const attrs = await Auth.userAttributes(creds);
+      userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    } else {
+      userId = id;
+    }
     if (payload) {
       this.store.dispatch(new AppDataActions.Edit(payload));
       return payload;
     }
     // no payload need to get the id
     try {
-      const raw = await this.api.GetAppData(id);
+      const raw = await this.api.GetAppData(userId);
       const clean = this.cleanBackendData(raw);
       return new Promise((resolve, reject) => {
         this.store.dispatch(new AppDataActions.Edit(clean)).subscribe((_) => {

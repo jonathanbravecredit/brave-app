@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 // pipes
 import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
@@ -75,20 +76,10 @@ import { KbaMultiplechoiceInputComponent } from './inputs/kba-multiplechoice-inp
 import { SnapshotDisplayCardComponent } from './cards/snapshot-display-card/snapshot-display-card.component';
 import { NavigationTabsComponent } from './tabs/navigation-tabs/navigation-tabs.component';
 import { CreditBuilderCardComponent } from './cards/credit-builder-card/credit-builder-card.component';
-import { NegativeAccountCardComponent } from './cards/negative-account-card/negative-account-card.component';
 import { SpinnerComponent } from './interstitials/spinner/spinner.component';
 import { CreditReportCardComponent } from './cards/credit-report-card/credit-report-card.component';
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { CreditReportGraphicComponent } from './graphics/credit-report-graphic/credit-report-graphic.component';
-import { TradelineMetricsComponent } from './tradelines/tradeline-metrics/tradeline-metrics.component';
-import { TradelineSummaryComponent } from './tradelines/tradeline-summary/tradeline-summary.component';
-import { TradelineDetailsComponent } from './tradelines/tradeline-details/tradeline-details.component';
-import { TradelinePaymentsComponent } from './tradelines/tradeline-payments/tradeline-payments.component';
-import { TradelinePaymentIconComponent } from './tradelines/tradeline-payment-icon/tradeline-payment-icon.component';
-import { TradelineDetailRowComponent } from './tradelines/tradeline-detail-row/tradeline-detail-row.component';
-import { TradelineDetailsTableComponent } from './tradelines/tradeline-details-table/tradeline-details-table.component';
-import { TradelinePaymentHistoryComponent } from './tradelines/tradeline-payment-history/tradeline-payment-history.component';
-import { TradelineRemarksComponent } from './tradelines/tradeline-remarks/tradeline-remarks.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
 import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
 import { BaseModalComponent } from './modals/base-modal/base-modal.component';
@@ -102,12 +93,10 @@ import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-
 import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes-personal.component';
 import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
 import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
-import { DisputesSuccessComponent } from './disputes/disputes-success/disputes-success.component';
 import { BaseExceptionComponent } from './exceptions/base-exception/base-exception.component';
 import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
-import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { DisputesListComponent } from './disputes/disputes-list/disputes-list.component';
 import { DisputeFindingsHeaderComponent } from './disputes/findings/dispute-findings-header/dispute-findings-header.component';
 import { DisputeFindingsResultsComponent } from './disputes/findings/dispute-findings-results/dispute-findings-results.component';
@@ -125,24 +114,28 @@ import {
   DisputeHistoryCardComponent,
   DisputeRegularCardComponent,
 } from './cards/dispute-cards';
-import { SettingsComponent } from './settings/settings.component';
-import { SettingsOptionComponent } from './settings/settings-option/settings-option.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
 import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
 import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
 import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { OutlineInputCodeComponent } from './inputs/outline-input-code/outline-input-code.component';
-import { PublicitemsDetailsTableComponent } from './publicitems/publicitems-details-table/publicitems-details-table.component';
-import { PublicitemsDetailsComponent } from './publicitems/publicitems-details/publicitems-details.component';
-import { PersonalitemsDetailsComponent } from './personalitems/personalitems-details/personalitems-details.component';
-import { PersonalitemsDetailsTableComponent } from './personalitems/personalitems-details-table/personalitems-details-table.component';
-import { PublicitemCardComponent } from './cards/publicitem-card/publicitem-card.component';
-import { PublicitemDisputeCardComponent } from './cards/publicitem-dispute-card/publicitem-dispute-card.component';
-import { PersonalitemDisputeCardComponent } from './cards/personalitem-dispute-card/personalitem-dispute-card.component';
-import { TradelineDisputeCardComponent } from './cards/tradeline-dispute-card/tradeline-dispute-card.component';
 import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-back-button.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
+import { SecurityFreezeComponent } from './messages/security-freeze/security-freeze.component';
+import { DisputeHeaderComponent } from './disputes/dispute-header/dispute-header.component';
+import { DisputeHeaderTradelineComponent } from './disputes/dispute-header-tradeline/dispute-header-tradeline.component';
+import { DisputeHeaderPublicitemComponent } from './disputes/dispute-header-publicitem/dispute-header-publicitem.component';
+import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-personalitem/dispute-header-personalitem.component';
+import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
+import { SimpleChangePasswordFormComponent } from './forms/simple-change-password-form/simple-change-password-form.component';
+import { SimpleDeactiveFormComponent } from './forms/simple-deactive-form/simple-deactive-form.component';
+import { FilledSpinningButtonComponent } from './buttons/filled-spinning-button/filled-spinning-button.component';
+import { OutlineSsnFullFormComponent } from './forms/outline-ssn-full-form/outline-ssn-full-form.component';
+import { OutlineInputSsnComponent } from './inputs/outline-input-ssn/outline-input-ssn.component';
+import { OutlineSsnLastfourFormComponent } from './forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component';
+import { CreditReportGraphicNoGraphComponent } from './graphics/credit-report-graphic-no-graph/credit-report-graphic-no-graph.component';
 
 const components = [
   BaseFormComponent,
@@ -198,21 +191,11 @@ const components = [
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
   SnapshotDisplayCardComponent,
-  NegativeAccountCardComponent,
   KbaMultiplechoiceInputComponent,
   CreditReportCardComponent,
   SpinnerComponent,
   OnboardingDisputeComponent,
   CreditReportGraphicComponent,
-  TradelineMetricsComponent,
-  TradelineSummaryComponent,
-  TradelineDetailsComponent,
-  TradelineDetailRowComponent,
-  TradelineDetailsTableComponent,
-  TradelinePaymentsComponent,
-  TradelinePaymentIconComponent,
-  TradelinePaymentHistoryComponent,
-  TradelineRemarksComponent,
   CreditScoreGraphicTabsComponent,
   CreditScoreHistoryChartComponent,
   CreditScoreHistoryNgxChartComponent,
@@ -226,7 +209,6 @@ const components = [
   DisputesPersonalComponent,
   DisputesTradelineComponent,
   DisputesPublicComponent,
-  DisputesSuccessComponent,
   BaseExceptionComponent,
   DisputesDetailComponent,
   BasicCarouselComponent,
@@ -245,20 +227,22 @@ const components = [
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
-  SettingsOptionComponent,
-  SettingsComponent,
   CollectionCreditMixAccountsComponent,
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
   OutlineInputCodeComponent,
-  PublicitemsDetailsTableComponent,
-  PublicitemsDetailsComponent,
-  PersonalitemsDetailsComponent,
-  PersonalitemsDetailsTableComponent,
-  PublicitemCardComponent,
-  PublicitemDisputeCardComponent,
-  PersonalitemDisputeCardComponent,
-  TradelineDisputeCardComponent,
+  BaseTableRowComponent,
+  SecurityFreezeComponent,
+  DisputeHeaderComponent,
+  DisputeHeaderTradelineComponent,
+  SimpleBackButtonComponent,
+  DisputeHeaderPublicitemComponent,
+  DisputeHeaderPersonalitemComponent,
+  SimpleBannerComponent,
+  SimpleDeactiveFormComponent,
+  SimpleChangePasswordFormComponent,
+  FilledSpinningButtonComponent,
+  CreditReportGraphicNoGraphComponent,
 ];
 
 // component specific pipes only
@@ -278,7 +262,9 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   DisputeCardStatusPipe,
-  SimpleBackButtonComponent,
+  OutlineSsnFullFormComponent,
+  OutlineInputSsnComponent,
+  OutlineSsnLastfourFormComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

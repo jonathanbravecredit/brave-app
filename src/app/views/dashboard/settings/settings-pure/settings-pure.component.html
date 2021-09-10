@@ -1,0 +1,43 @@
+<div class="mb-8">
+  <h6 class="brave-h6">Settings</h6>
+</div>
+<div>
+  <div class="relative bg-white w-full">
+    <div class="tab-content tab-space">
+      <div class="mt-8" [ngClass]="{ hidden: option !== settingsOptions.Init, block: option === settingsOptions.Init }">
+        <brave-settings-option-list
+          (resetOptionClick)="goToPageClick.emit({ tab: 2, view: 'reset' })"
+          (deactivateOptionClick)="goToPageClick.emit({ tab: 2, view: 'deactivate' })"
+          (logoutOptionClick)="logoutClick.emit()"
+        ></brave-settings-option-list>
+      </div>
+      <div [ngClass]="{ hidden: option === settingsOptions.Init, block: option !== settingsOptions.Init }">
+        <ng-container *ngIf="option === settingsOptions.Reset">
+          <brave-option-password-reset
+            #reset
+            [resetSuccess]="resetSuccess"
+            (changePasswordClick)="changePasswordClick.emit()"
+            (goBackToSettingsClick)="goBackToSettingsClick.emit()"
+            (submitCodeClick)="submitCodeClick.emit($event)"
+          ></brave-option-password-reset>
+        </ng-container>
+        <ng-container *ngIf="option === settingsOptions.Deactivate" #deactivate>
+          <brave-option-deactivate
+            [haveDeactivateError]="haveDeactivateError"
+            [deactivateSuccess]="deactivateSuccess"
+            [deactivateError]="deactivateError"
+            (deactivateClick)="deactivateClick.emit()"
+            (goBackToSettingsClick)="goBackToSettingsClick.emit()"
+          ></brave-option-deactivate>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="absolute top-20">
+  <brave-filled-closing-alert
+    [config]="alertConfig"
+    (closeClicked)="option = settingsOptions.Init"
+  ></brave-filled-closing-alert>
+</div>

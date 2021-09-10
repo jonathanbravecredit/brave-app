@@ -19,19 +19,48 @@
   .brave-h5 {
     @apply font-headings font-extrabold text-xl text-coolGray-900;
   }
+  .brave-h5-semibold {
+    @apply font-headings font-semibold text-xl text-coolGray-900;
+  }
   .brave-h6 {
     @apply font-headings font-extrabold text-lg text-coolGray-900;
   }
+  .brave-h6-semibold {
+    @apply font-headings font-semibold text-lg text-coolGray-900;
+  }
+  .brave-h6-bold {
+    @apply font-headings font-bold text-lg text-coolGray-900;
+  }
   .brave-body1 {
-    @apply font-sans text-base text-coolGray-700;
+    @apply font-sans text-base font-normal tracking-normal text-coolGray-900;
   }
   .brave-body1-semibold {
-    @apply font-sans font-semibold text-base text-coolGray-700;
+    @apply font-sans font-semibold text-base text-coolGray-900;
+  }
+  .brave-body1-bold {
+    @apply font-sans font-bold text-base text-coolGray-900;
   }
   .brave-body2 {
-    @apply font-sans text-sm text-coolGray-700;
+    @apply font-sans text-sm font-normal tracking-normal text-coolGray-900;
   }
   .brave-body2-semibold {
-    @apply font-sans font-semibold text-sm text-coolGray-700;
+    @apply font-sans font-semibold text-sm text-coolGray-900;
+  }
+  .brave-body2-bold {
+    @apply font-sans font-bold text-sm text-coolGray-900;
+  }
+  .brave-body3 {
+    @apply font-sans text-xs text-coolGray-900;
+  }
+  .brave-body3-semibold {
+    @apply font-sans font-semibold text-xs text-coolGray-900;
+  }
+
+  .brave-waiting-cursor {
+    cursor: pointer !important;
+  }
+
+  .brave-primary-text-color {
+    @apply text-coolGray-900;
   }
 }

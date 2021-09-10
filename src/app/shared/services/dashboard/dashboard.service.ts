@@ -5,7 +5,8 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -31,35 +32,30 @@ export class DashboardService implements OnDestroy {
   }
 
   /**
-   * Enroll the user in report and score if not already
-   * @returns
-   */
-  async enrollInReportAndScore(): Promise<boolean> {
-    const appData = this.statesvc.state?.appData;
-    const id = this.statesvc.state?.appData?.id;
-    const enrolled = this.statesvc.state?.appData?.agencies?.transunion?.enrolled;
-    if (!appData || !id || enrolled) return false; // no id or already enrolled;
-    const { success, error, data } = await this.transunion.sendEnrollRequest(appData);
-    return success;
-  }
-
-  /**
    * Refresh the users report if stale
    */
   async refreshReport(): Promise<void> {
-    const id = this.statesvc.state?.appData?.id;
-    if (!id) return;
     const fulfilledOn = this.statesvc.state?.appData.agencies?.transunion?.fulfilledOn;
     if (!fulfilledOn) {
-      await this.transunion.refreshCreditReport(id);
+      await this.transunion.refreshCreditReport();
       return;
     }
     const now = new Date();
     const last = new Date(fulfilledOn);
     const refresh = dateDiffInDays(last, now) > 0 ? true : false;
     if (refresh) {
-      await this.transunion.refreshCreditReport(id);
+      await this.transunion.refreshCreditReport();
     }
     return;
+  }
+
+  isCreditFreezeEnabled(): Observable<boolean> {
+    return this.tuReport$.pipe(
+      switchMap((report) => {
+        const creditreport = report?.TrueLinkCreditReportType;
+        const isFreezeEnabled = creditreport?.SB168Frozen && creditreport?.SB168Frozen?.transunion;
+        return of(isFreezeEnabled ? true : false);
+      }),
+    );
   }
 }

@@ -1,17 +1,19 @@
-<div *ngIf="creditReport$ | async as creditReports">
-  <div *ngIf="preferences$ | async as preferences">
-    <div *ngIf="creditReports | mergereportToCreditreport: preferences as parsed">
-      <brave-credit-report-pure
-        (hide)="onHide($event)"
-        (viewDetailClick)="onViewDetailClick($event)"
-        (viewPublicItemDetailClick)="onViewPublicItemDetailClick($event)"
-        (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.personalItem)"
-        [preferences]="preferences"
-        [publicItems]="creditReports | mergereportToPublicitems"
-        [personalItems]="creditReports | mergereportToPersonalitems"
-        [tradelines]="creditReports | mergereportToCreditreport: preferences"
-        [creditReportScore]="creditReports | parseRiskScore"
-      ></brave-credit-report-pure>
+<div class="p-2">
+  <div *ngIf="creditReport$ | async as creditReports">
+    <div *ngIf="preferences$ | async as preferences">
+      <div *ngIf="creditReports | mergereportToCreditreport: preferences as parsed">
+        <brave-credit-report-pure
+          (hide)="onHide($event)"
+          (viewDetailClick)="onViewDetailClick($event)"
+          (viewPublicItemDetailClick)="onViewPublicItemDetailClick($event)"
+          (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.borrower)"
+          [preferences]="preferences"
+          [publicItems]="(creditReports | mergereportToPublicitems) || []"
+          [personalItems]="(creditReports | mergereportToPersonalitems) || []"
+          [tradelines]="creditReports | mergereportToCreditreport: preferences"
+          [creditReportScore]="creditReports | parseRiskScore"
+        ></brave-credit-report-pure>
+      </div>
     </div>
   </div>
 </div>

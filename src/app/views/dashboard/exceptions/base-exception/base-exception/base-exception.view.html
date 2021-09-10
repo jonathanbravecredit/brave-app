@@ -1,0 +1,14 @@
+<div class="w-full p-2">
+  <ng-container *ngIf="route.queryParams | async as params; else default">
+    <brave-base-exception-pure-view
+      [code]="params.code || defaultCode"
+      (actionButtonClicked)="onActionButtonClicked($event)"
+    ></brave-base-exception-pure-view>
+  </ng-container>
+
+  <ng-template #default>
+    <brave-base-exception-pure-view
+      (actionButtonClicked)="onActionButtonClicked($event)"
+    ></brave-base-exception-pure-view>
+  </ng-template>
+</div>

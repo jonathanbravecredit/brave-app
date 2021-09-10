@@ -1,0 +1,14 @@
+<div class="flex items-center content-center brave-body1-semibold">
+  <span class="material-icons-outlined">search</span>
+  <p class="ml-4">{{ content.p1 }}</p>
+</div>
+<div class="flex items-center content-center brave-body1-semibold">
+  <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0)">search</span>
+  <div class="ml-4">
+    <ul class="list-decimal ml-4 brave-body2">
+      <li *ngFor="let item of content.list1" class="mt-6 font-bold">
+        <p class="ml-3.5 font-normal">{{ item }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
