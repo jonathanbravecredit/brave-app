@@ -42,7 +42,7 @@ const updatedAwsConfig = {
 //     LOG_LEVEL: any;
 //   }
 // }
-// window.LOG_LEVEL = 'DEBUG';
+// window.LOG_LEVEL = 'DEBUG'; // amplify sucks
 
 /* Configure Amplify resources */
 Amplify.configure(updatedAwsConfig);
