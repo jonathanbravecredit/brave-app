@@ -14,9 +14,11 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return Auth.currentAuthenticatedUser()
       .then((res) => {
+        console.log('res in auth guard ===> ', res);
         return true;
       })
       .catch((err) => {
+        console.log('res in auth guard ===> ', err);
         this.router.navigate(['/auth/signin']);
         return false;
       });
