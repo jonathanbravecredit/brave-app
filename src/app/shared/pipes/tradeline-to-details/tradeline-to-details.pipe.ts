@@ -10,6 +10,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | undefined {
     if (!tradeline) return;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
+    const maxDelinquency = tu.queries.report.getMaxDelinquency(tradeline);
     return {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
@@ -36,7 +37,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
       highestBalance: tradeline?.Tradeline?.highBalance,
       disputeFlag: tradeline?.Tradeline?.DisputeFlag?.description,
       payStatus: tradeline?.Tradeline?.PayStatus?.description,
-      maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
+      maxDelinquency: maxDelinquency,
       status: tradeline?.Tradeline?.PayStatus?.symbol,
       openClosed: tradeline?.Tradeline?.OpenClosed?.symbol,
       remarks: remarks,

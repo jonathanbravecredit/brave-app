@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { Hub, ICredentials } from '@aws-amplify/core';
 import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
+import { CognitoUser, CognitoUserSession, CognitoUserAttribute, ISignUpResult } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Router } from '@angular/router';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -105,6 +105,7 @@ export class AuthService {
    * @returns
    */
   socialSignIn(provider: CognitoHostedUIIdentityProvider): Promise<ICredentials> {
+    window.sessionStorage.setItem('braveOAuthProvider', provider); // save for redirect back...Angular does not persist params on bootstrap
     return Auth.federatedSignIn({
       provider: provider,
     });
@@ -132,7 +133,7 @@ export class AuthService {
    * @param pw
    * @returns
    */
-  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<void> | undefined {
+  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<any> | undefined {
     return email && code && pw ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
   }
 
@@ -182,6 +183,37 @@ export class AuthService {
       return creds;
     } catch (err) {
       return null;
+    }
+  }
+
+  /**
+   * Returns email from user attributes.
+   *  - Email is the one attribute that is required
+   * @returns
+   */
+  async getUserEmail(): Promise<string> {
+    try {
+      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      const attrs = await Auth.userAttributes(user);
+      const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
+      return email;
+      // const attrs: CognitoUserAttribute[] | Error = await new Promise((resolve, reject) => {
+      //   user.getUserAttributes((err, result) => {
+      //     if (result) {
+      //       resolve(result);
+      //     }
+      //     if (err) {
+      //       reject(err);
+      //     }
+      //   });
+      // });
+      // if (attrs instanceof Array) {
+      //   const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
+      //   return email;
+      // }
+      // return '';
+    } catch (err) {
+      return '';
     }
   }
 

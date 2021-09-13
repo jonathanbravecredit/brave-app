@@ -2,7 +2,7 @@
   <brave-forbearance-header></brave-forbearance-header>
 </div>
 <div class="my-7">
-  <brave-forbearance-info></brave-forbearance-info>
+  <brave-forbearance-info (infoClick)="infoClick.emit()"></brave-forbearance-info>
 </div>
 <div class="my-8">
   <brave-forbearance-tips></brave-forbearance-tips>
@@ -24,7 +24,7 @@
   </brave-forbearance-accounts>
 </div>
 <div class="my-8">
-  <!-- Student Loan Accounts -->
+  <!--  Mortgages-->
   <brave-forbearance-accounts
     [accounts]="tradelines | tradelineToAccountgroup: groups.Mortgages"
     (viewDetailClick)="viewDetailClick.emit($event)"

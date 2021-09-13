@@ -23,6 +23,19 @@ export class TransunionFilters extends TransunionBase {
     });
   }
 
+  /**
+   * Filters by an industry code
+   * @param tradelines
+   * @param code
+   * @returns
+   */
+  static filterTradelinesByIndustryCode(tradelines: ITradeLinePartition[], code: string): ITradeLinePartition[] {
+    return tradelines.filter((item) => {
+      let result = `${item?.Tradeline?.IndustryCode?.symbol || ''}`.toLowerCase() === code.toLowerCase();
+      return result;
+    });
+  }
+
   /*=====================================*/
   //         CREDIT REPORT GROUPS
   /*=====================================*/

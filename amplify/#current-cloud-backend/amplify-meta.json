@@ -1,15 +1,15 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-braveapp-dev-110519-authRole",
-      "UnauthRoleArn": "arn:aws:iam::890995358345:role/amplify-braveapp-dev-110519-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::890995358345:role/amplify-braveapp-dev-110519-authRole",
+      "AuthRoleName": "amplify-braveapp-prod-115121-authRole",
+      "UnauthRoleArn": "arn:aws:iam::348692145831:role/amplify-braveapp-prod-115121-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::348692145831:role/amplify-braveapp-prod-115121-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-braveapp-dev-110519-deployment",
-      "UnauthRoleName": "amplify-braveapp-dev-110519-unauthRole",
-      "StackName": "amplify-braveapp-dev-110519",
-      "StackId": "arn:aws:cloudformation:us-east-2:890995358345:stack/amplify-braveapp-dev-110519/272b3250-995e-11eb-9b35-0a196f208d44",
-      "AmplifyAppId": "d3vym5isdd5k4u"
+      "DeploymentBucketName": "amplify-braveapp-prod-115121-deployment",
+      "UnauthRoleName": "amplify-braveapp-prod-115121-unauthRole",
+      "StackName": "amplify-braveapp-prod-115121",
+      "StackId": "arn:aws:cloudformation:us-east-2:348692145831:stack/amplify-braveapp-prod-115121/95256f90-9964-11eb-a7f9-02f96f814c7e",
+      "AmplifyAppId": "d3fcj5js8se5t3"
     }
   },
   "auth": {
@@ -30,10 +30,19 @@
       },
       "lastPushTimeStamp": "2021-05-25T21:36:55.331Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
         "logicalId": "authbraveapp0ea8ea07"
       },
-      "lastPushDirHash": "hdAKoSTOMvoCKCZ26y2woa90QZ4="
+      "lastPushTimeStamp": "2021-04-09T18:58:38.966Z",
+      "output": {
+        "UserPoolId": "us-east-2_R22DawoAR",
+        "AppClientIDWeb": "rpqo3q7uaftlr8rp39kfvh08t",
+        "AppClientID": "rqsijcgu9ilsu9t0bq42tgh38",
+        "IdentityPoolId": "us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32",
+        "IdentityPoolName": "braveapp0ea8ea07_identitypool_0ea8ea07__prod",
+        "UserPoolName": "braveapp0ea8ea07_userpool_0ea8ea07"
+      },
+      "lastPushDirHash": "LMXK8MOCvt4tU5EJRMJVMY+FREM="
     }
   },
   "api": {
@@ -50,15 +59,16 @@
           },
           "additionalAuthenticationProviders": []
         },
-        "GraphQLAPIIdOutput": "rr5wtr4ev5exlbutrkih3r5lhq",
-        "GraphQLAPIEndpointOutput": "https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql"
+        "GraphQLAPIIdOutput": "4tpaga7rzjayhk75opsmpeurme",
+        "GraphQLAPIEndpointOutput": "https://krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com/graphql"
       },
       "lastPushTimeStamp": "2021-05-25T21:36:55.331Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apibraveapp"
       },
-      "lastPushDirHash": "E4XJK8RmP8mcEuGvqYOpx566ftA="
+      "lastPushTimeStamp": "2021-04-09T18:58:38.966Z",
+      "lastPushDirHash": "4mApqlb2MluMJJV3bLy/edwg+40="
     }
   },
   "function": {
@@ -66,20 +76,24 @@
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
       "build": true,
-      "output": {
-        "Region": "us-east-2",
-        "Arn": "arn:aws:lambda:us-east-2:890995358345:function:S3Trigger3c67af6a-dev",
-        "Name": "S3Trigger3c67af6a-dev",
-        "LambdaExecutionRole": "S3Trigger3c67af6aLambdaRole3c67af6a-dev"
+      "lastBuildTimeStamp": "2021-04-09T18:53:07.631Z",
+      "lastPackageTimeStamp": "2021-04-09T18:53:07.742Z",
+      "distZipFilename": "S3Trigger3c67af6a-7979447a614d7439396a-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-braveapp-prod-115121-deployment",
+        "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
       },
       "lastPushTimeStamp": "2021-05-25T21:36:55.331Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/function/S3Trigger3c67af6a-cloudformation-template.json",
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/function/S3Trigger3c67af6a-cloudformation-template.json",
         "logicalId": "functionS3Trigger3c67af6a"
       },
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
-        "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
+      "lastPushTimeStamp": "2021-04-09T18:58:38.966Z",
+      "output": {
+        "Region": "us-east-2",
+        "Arn": "arn:aws:lambda:us-east-2:348692145831:function:S3Trigger3c67af6a-prod",
+        "Name": "S3Trigger3c67af6a-prod",
+        "LambdaExecutionRole": "S3Trigger3c67af6aLambdaRole3c67af6a-prod"
       },
       "lastBuildTimeStamp": "2021-05-25T21:36:55.085Z",
       "lastPackageTimeStamp": "2021-05-25T21:36:55.111Z",
@@ -108,8 +122,13 @@
       },
       "lastPushTimeStamp": "2021-05-25T21:36:55.331Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-prod-115121-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
         "logicalId": "storages3b5dd189d"
+      },
+      "lastPushTimeStamp": "2021-04-09T18:58:38.966Z",
+      "output": {
+        "BucketName": "braveapp7123270838f144d09004f496c2f9ef0f115121-prod",
+        "Region": "us-east-2"
       },
       "lastPushDirHash": "RiWbI0UmpfYFTrOVWAwaWwiqUao="
     }

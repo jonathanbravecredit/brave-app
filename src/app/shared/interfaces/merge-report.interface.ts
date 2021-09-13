@@ -42,7 +42,7 @@ export interface IBorrower {
   PreviousAddress?: IBorrowerAddress | IBorrowerAddress[];
   Birth?: IBorrowerBirth | IBorrowerBirth[];
   CreditStatement?: ICreditStatement | ICreditStatement[];
-  CreditScore?: ICreditScore;
+  CreditScore?: ICreditScore | ICreditScore[];
   Employer?: IEmployer | IEmployer[];
   BorrowerName?: IBorrowerName | IBorrowerName[];
   BorrowerTelephone?: IBorrowerTelephone | IBorrowerTelephone[];
@@ -57,6 +57,9 @@ export interface IBorrowerAddress {
   Origin?: ICodeRef;
   Ownership?: ICodeRef;
   Source?: ISource;
+  dateReported?: string;
+  addressOrder?: number;
+  partitionSet?: number;
 }
 export interface ICreditAddress {
   city?: string;
@@ -234,7 +237,7 @@ export interface IMonthyPayStatusItem {
 /*   Inquiry Elements    */
 /*=======================*/
 export interface IInquiryPartition {
-  Inquiry?: IInquiry | IInquiry[];
+  Inquiry?: IInquiry;
 }
 export interface IInquiry {
   IndustryCode?: ICodeRef;

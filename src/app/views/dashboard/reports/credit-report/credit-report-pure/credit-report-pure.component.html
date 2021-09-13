@@ -1,10 +1,7 @@
-<div class="mt-4">
-  <span class="text-lg">Your TransUnion Credit Report</span>
-  <brave-credit-report-graphic-with-graph
-    class="w-full mt-4"
-    [currentValue]="creditReportScore"
-  ></brave-credit-report-graphic-with-graph>
-  <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p>
+<p class="mt-4 text-lg">Your TransUnion Credit Report</p>
+<!-- <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p> -->
+<div class="mt-4 flex justify-center">
+  <brave-credit-report-graphic-no-graph [currentValue]="creditReportScore"></brave-credit-report-graphic-no-graph>
 </div>
 
 <div class="py-4" *ngFor="let report of tradelines">
@@ -42,11 +39,13 @@
   </div>
   <div>
     <brave-personalitems-details [config]="personalItems[0].transformed"></brave-personalitems-details>
-    <div class="mt-4">
-      <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
-        ><span class="text-red-700">See an error?</span></brave-viewdetail-button
-      >
-    </div>
+    <ng-container *ngIf="featureFlags.disputes$ | async">
+      <div class="mt-4">
+        <brave-viewdetail-button [horizontal]="true" (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
+          ><span class="text-red-700">See an error?</span></brave-viewdetail-button
+        >
+      </div>
+    </ng-container>
   </div>
 </div>
 

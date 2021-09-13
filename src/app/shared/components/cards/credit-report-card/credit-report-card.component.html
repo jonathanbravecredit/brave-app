@@ -19,26 +19,28 @@
     </p>
     <!-- second dynamic field -->
     <p class="text-xs text-dk-gray">{{ secondFieldName }}</p>
-    <p *ngIf="secondFieldType === 'date'" class="text-xs text-dk-gray text-opacity-50 text-right">
+    <p *ngIf="secondFieldType === 'date'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ secondFieldValue | date: 'shortDate' }}
     </p>
-    <p *ngIf="secondFieldType === 'string'" class="text-xs text-dk-gray text-opacity-50 text-right">
+    <p *ngIf="secondFieldType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ secondFieldValue }}
     </p>
-    <p *ngIf="secondFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-50 text-right">
+    <p *ngIf="secondFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ secondFieldValue | currency: 'USD':'symbol':'1.0-0' }}
     </p>
     <!-- third dynamic field -->
     <p class="text-xs text-dk-gray">{{ thirdFieldName }}</p>
-    <p *ngIf="thirdFieldType === 'date'" class="text-xs text-dk-gray text-opacity-50 text-right">
+    <p *ngIf="thirdFieldType === 'date'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ thirdFieldValue | date: 'shortDate' }}
     </p>
-    <p *ngIf="thirdFieldType === 'string'" class="text-xs text-dk-gray text-opacity-50 text-right">
+    <p *ngIf="thirdFieldType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ thirdFieldValue }}
     </p>
-    <p *ngIf="thirdFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-50 text-right">
+    <p *ngIf="thirdFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ thirdFieldValue | currency: 'USD':'symbol':'1.0-0' }}
     </p>
   </div>
-  <brave-viewdetail-button (click)="viewDetailClick.emit()" [horizontal]="true">View Detail</brave-viewdetail-button>
+  <brave-viewdetail-button (viewDetailClick)="viewDetailClick.emit()" [horizontal]="true"
+    >View Detail</brave-viewdetail-button
+  >
 </div>

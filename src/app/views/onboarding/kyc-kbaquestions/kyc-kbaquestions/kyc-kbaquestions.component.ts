@@ -13,6 +13,7 @@ import {
 import { take } from 'rxjs/operators';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -32,6 +33,7 @@ export class KycKbaquestionsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private interstitial: InterstitialService,
     private kycService: KycService,
     private store: Store,
   ) {
@@ -83,6 +85,7 @@ export class KycKbaquestionsComponent implements OnInit {
     const scroll = parseFloat(((-1 / this.numberOfQuestions) * 100).toFixed(2));
     const max = scroll * -1 - 100;
     if (this.questions.length) {
+      this.interstitial.fetching$.next(false);
       this.kba?.kba?.scroll(scroll, 0, max);
     } else {
       this.kba?.kba?.submitForm();
@@ -123,15 +126,18 @@ export class KycKbaquestionsComponent implements OnInit {
         this.router.navigate(['../congratulations'], {
           relativeTo: this.route,
         });
+        this.interstitial.fetching$.next(false);
       } else {
         this.router.navigate(['../error'], { relativeTo: this.route });
+        this.interstitial.fetching$.next(false);
       }
     } catch (err) {
       this.router.navigate(['../error'], { relativeTo: this.route });
+      this.interstitial.fetching$.next(false);
     }
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    // console.log('form errors', errors);
   }
 }
