@@ -23,7 +23,7 @@ export class SigninRedirectComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.interstitial.openInterstitial();
+    this.interstitial.closeInterstitial();
     console.log('signin redirect is working ===> ');
     setTimeout(() => {
       console.log('...and I waited for something');
