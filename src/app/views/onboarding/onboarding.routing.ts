@@ -12,6 +12,7 @@ import { KycSsnFullComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full
 import { KycSsnComponent } from '@views/onboarding/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { KycWelcomeComponent } from '@views/onboarding/kyc-welcome/kyc-welcome/kyc-welcome.component';
 import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
+import { KycErrorValidationComponent } from '@views/onboarding/kyc-error-validation/kyc-error-validation.component';
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [
@@ -73,6 +74,11 @@ const OnboardingRoutes: Routes = [
       {
         path: 'error',
         component: KycErrorComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'invalid',
+        component: KycErrorValidationComponent,
         canActivate: [AuthGuard],
       },
     ],
