@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "http://localhost:4200/auth/redirect/,https://app.brave.credit/auth/redirect/",
-        "redirectSignOut": "http://localhost:4200/auth/signin/,https://app.brave.credit/auth/signin/",
+        "redirectSignIn": "https://app.brave.credit/auth/redirect/",
+        "redirectSignOut": "https://app.brave.credit/auth/signin/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
