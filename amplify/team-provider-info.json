@@ -19,6 +19,14 @@
         "S3Trigger3c67af6a": {
           "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
           "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
+        },
+        "GraphQLResolverFunction": {
+          "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
+          "s3Key": "amplify-builds/GraphQLResolverFunction-55754b416c37716c3077-build.zip"
+        },
+        "PatchTransunionCustomResolver": {
+          "deploymentBucketName": "amplify-braveapp-dev-110519-deployment",
+          "s3Key": "amplify-builds/PatchTransunionCustomResolver-556e6233716b43684175-build.zip"
         }
       }
     }
