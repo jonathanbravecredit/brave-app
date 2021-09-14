@@ -17,7 +17,6 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
       .pipe(
         first((stable) => stable),
         tap((stable) => {
-          console.log('stable now');
           setTimeout(async () => {
             await this.onboardUser();
           }, 4500);
