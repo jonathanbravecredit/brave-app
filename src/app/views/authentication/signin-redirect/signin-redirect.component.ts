@@ -27,10 +27,8 @@ export class SigninRedirectComponent implements OnDestroy {
     this.appSub$ = this.appRef.isStable
       .pipe(
         first((stable) => stable),
-        tap((stable) => {
-          setTimeout(async () => {
-            await this.onboardUser();
-          }, 2000);
+        tap(async (stable) => {
+          await this.onboardUser();
         }),
       )
       .subscribe();
