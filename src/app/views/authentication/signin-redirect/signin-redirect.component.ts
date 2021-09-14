@@ -28,7 +28,6 @@ export class SigninRedirectComponent implements OnDestroy {
       .pipe(
         first((stable) => stable),
         tap((stable) => {
-          console.log('stable ===> ');
           setTimeout(async () => {
             await this.onboardUser();
           }, 2000);
@@ -44,29 +43,19 @@ export class SigninRedirectComponent implements OnDestroy {
   async onboardUser(): Promise<void> {
     try {
       const creds: CognitoUser = await Auth.currentAuthenticatedUser();
-      console.log('creds ===> ', creds);
       const attrs = await Auth.userAttributes(creds);
-      console.log('attrs ===> ', attrs);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
-      console.log('id ===> ', id);
       const isNew = await this.sync.isUserBrandNew(id);
-      console.log('isNew ===> ', isNew);
       if (isNew) {
         this.cleanUp();
-        console.log('routing ===> ', isNew);
         this.router.navigate(['/auth/created']);
       } else {
         await this.sync.initUser(id);
-        console.log('after init ===> ');
         await this.sync.subscribeToListeners(id);
-        console.log('after subscribe ===> ');
         await this.sync.onboardUser(id, true);
-        console.log('after onboard ===> ');
         this.cleanUp();
-        console.log('after cleanup ===> ');
       }
     } catch (err) {
-      console.log('err ===> ', err);
       let retries: string | null | number = window.sessionStorage.getItem('braveOAuthRetries');
       if (retries == null) {
         retries = 3;
@@ -78,17 +67,13 @@ export class SigninRedirectComponent implements OnDestroy {
 
       if (retries > 0) {
         const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
-        console.log('provider ===> ', provider);
         if (provider) {
-          console.log('calling social again ===> ');
           await this.auth.socialSignIn(provider);
         } else {
-          console.log('going to invalid ===> ');
           this.cleanUp();
           this.router.navigate(['/auth/invalid']);
         }
       } else {
-        console.log('counted out ===> ');
         this.cleanUp();
         this.router.navigate(['/auth/invalid']);
       }
@@ -97,7 +82,6 @@ export class SigninRedirectComponent implements OnDestroy {
 
   cleanUp(): void {
     window.sessionStorage.removeItem('braveOAuthProvider');
-    console.log('remvoing items ===> ');
     this.interstitial.closeInterstitial();
   }
 }

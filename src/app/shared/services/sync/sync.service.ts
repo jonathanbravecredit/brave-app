@@ -47,7 +47,6 @@ export class SyncService implements OnDestroy {
    */
   async initUser(id: string): Promise<void> {
     const isNew = await this.isUserBrandNew(id);
-    console.log('sync isNew ===> ', isNew);
     isNew ? await this.initAppData(id) : await this.syncDBDownToState(id);
   }
 
@@ -135,7 +134,6 @@ export class SyncService implements OnDestroy {
   async goToLastOnboarded(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
     const lastComplete = data.user?.onboarding?.lastComplete || -1;
-    console.log('lastComplete ===> ', lastComplete);
     this.routeUser(lastComplete);
   }
 
@@ -146,7 +144,6 @@ export class SyncService implements OnDestroy {
    * @param {string} id
    */
   async stayPut(id: string): Promise<void> {
-    console.log('calling stayput ===> ');
     await this.syncDBDownToState(id);
   }
 
