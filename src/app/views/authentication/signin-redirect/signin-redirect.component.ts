@@ -44,17 +44,26 @@ export class SigninRedirectComponent implements OnDestroy {
   async onboardUser(): Promise<void> {
     try {
       const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      console.log('creds ===> ', creds);
       const attrs = await Auth.userAttributes(creds);
+      console.log('attrs ===> ', attrs);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+      console.log('id ===> ', id);
       const isNew = await this.sync.isUserBrandNew(id);
+      console.log('isNew ===> ', isNew);
       if (isNew) {
         this.cleanUp();
+        console.log('routing ===> ', isNew);
         this.router.navigate(['/auth/created']);
       } else {
         await this.sync.initUser(id);
+        console.log('after init ===> ');
         await this.sync.subscribeToListeners(id);
+        console.log('after subscribe ===> ');
         await this.sync.onboardUser(id, true);
+        console.log('after onboard ===> ');
         this.cleanUp();
+        console.log('after cleanup ===> ');
       }
     } catch (err) {
       const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
@@ -69,6 +78,7 @@ export class SigninRedirectComponent implements OnDestroy {
 
   cleanUp(): void {
     window.sessionStorage.removeItem('braveOAuthProvider');
+    console.log('remvoing items ===> ');
     this.interstitial.closeInterstitial();
   }
 }
