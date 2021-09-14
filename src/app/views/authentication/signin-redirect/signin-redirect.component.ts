@@ -73,6 +73,7 @@ export class SigninRedirectComponent implements OnDestroy {
         window.sessionStorage.setItem('braveOAuthRetries', `${retries}`);
       } else {
         retries = +retries - 1;
+        window.sessionStorage.setItem('braveOAuthRetries', `${retries}`);
       }
 
       if (retries > 0) {
