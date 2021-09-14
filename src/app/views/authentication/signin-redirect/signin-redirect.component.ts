@@ -54,10 +54,28 @@ export class SigninRedirectComponent implements OnDestroy {
         this.cleanUp();
       }
     } catch (err) {
-      const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
-      if (provider) {
-        await this.auth.socialSignIn(provider);
+      console.log('err ===> ', err);
+      let retries: string | null | number = window.sessionStorage.getItem('braveOAuthRetries');
+      if (retries == null) {
+        retries = 3;
+        window.sessionStorage.setItem('braveOAuthRetries', `${retries}`);
       } else {
+        retries = +retries - 1;
+      }
+
+      if (retries > 0) {
+        const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
+        console.log('provider ===> ', provider);
+        if (provider) {
+          console.log('calling social again ===> ');
+          await this.auth.socialSignIn(provider);
+        } else {
+          console.log('going to invalid ===> ');
+          this.router.navigate(['/auth/invalid']);
+          this.cleanUp();
+        }
+      } else {
+        console.log('counted out ===> ');
         this.router.navigate(['/auth/invalid']);
         this.cleanUp();
       }
