@@ -23,6 +23,10 @@ export class SigninRedirectComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log('signin redirect is working ===> ');
+    setTimeout(() => {
+      console.log('...and I waited for something')
+    }, 5000);
     // try {
     //   const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
     //   const attrs = await Auth.userAttributes(creds);
