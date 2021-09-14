@@ -25,7 +25,7 @@
         "HostedUIDomain": "braveappb029d416-b029d416-prod",
         "IdentityPoolId": "us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32",
         "IdentityPoolName": "braveapp0ea8ea07_identitypool_0ea8ea07__prod",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/auth/redirect/\",\"https://app.brave.credit/auth/redirect/\"],\"LogoutURLs\":[\"http://localhost:4200/auth/signin/\",\"https://app.brave.credit/auth/signin/\"]}",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://app.brave.credit/auth/redirect/\"],\"LogoutURLs\":[\"https://app.brave.credit/auth/signin/\"]}",
         "UserPoolName": "braveapp0ea8ea07_userpool_0ea8ea07"
       },
       "lastPushTimeStamp": "2021-09-14T05:59:25.695Z",

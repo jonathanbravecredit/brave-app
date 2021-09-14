@@ -84,13 +84,13 @@ export class SigninRedirectComponent implements OnDestroy {
           await this.auth.socialSignIn(provider);
         } else {
           console.log('going to invalid ===> ');
-          this.router.navigate(['/auth/invalid']);
           this.cleanUp();
+          this.router.navigate(['/auth/invalid']);
         }
       } else {
         console.log('counted out ===> ');
-        this.router.navigate(['/auth/invalid']);
         this.cleanUp();
+        this.router.navigate(['/auth/invalid']);
       }
     }
   }
