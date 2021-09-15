@@ -1,23 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
+import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
 
 @Component({
   selector: 'brave-kyc-address',
   templateUrl: './kyc-address.component.html',
 })
-export class KycAddressComponent extends KycBaseComponent implements OnInit {
+export class KycAddressComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild(KycAddressPureComponent) pure: KycAddressPureComponent | undefined;
   stepID = 1;
   hasError: boolean = false;
+
   constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
   }
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    console.log('pure comp ===> ', this.pure);
+    console.log('address form ===> ', this.pure?.form);
+    this.form = this.pure?.form; //need to bring the form up from the pure component
+    console.log('component form ===> ', this.pure);
   }
 
   goBack(): void {
