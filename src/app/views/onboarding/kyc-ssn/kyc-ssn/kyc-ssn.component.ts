@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KYCResponse, KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
 
 @Component({
   selector: 'brave-kyc-ssn',
   templateUrl: './kyc-ssn.component.html',
 })
-export class KycSsnComponent extends KycBaseComponent implements OnInit {
+export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild(KycSsnPureComponent) pure: KycSsnPureComponent | undefined;
   stepID = 2;
   constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
@@ -17,6 +19,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
   /**

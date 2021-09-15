@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
+import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
+import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
 
 interface FlatForm {
   [key: string]: string;
@@ -13,7 +15,8 @@ interface FlatForm {
   selector: 'brave-kyc-welcome',
   templateUrl: './kyc-welcome.component.html',
 })
-export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
+export class KycWelcomeComponent extends KycBaseComponent implements OnInit, AfterViewInit, KycComponentCanDeactivate {
+  @ViewChild(KycWelcomePureComponent) pure: KycWelcomePureComponent | undefined;
   stepID = 0;
   hasError: boolean = false;
   constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
@@ -22,6 +25,10 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
   async goToNext(form: FormGroup): Promise<void> {
