@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -9,12 +9,14 @@ import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfa
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { Store } from '@ngxs/store';
+import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
   templateUrl: './kyc-phonenumber.component.html',
 })
-export class KycPhonenumberComponent extends KycBaseComponent implements OnInit {
+export class KycPhonenumberComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild(KycPhonenumberPureComponent) pure: KycPhonenumberPureComponent | undefined;
   private stepID = 3;
   private state: UpdateAppDataInput | undefined;
   private authXML: string | undefined;
@@ -38,6 +40,10 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit 
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
   goBack(): void {

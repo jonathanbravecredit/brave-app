@@ -30,7 +30,9 @@ export class KycBaseComponent {
 
   canDeactivate(form: FormGroup | undefined): boolean {
     if (form === undefined) return true;
-    return this.submitted || !form.dirty;
+    if (!form?.valid && !form?.touched) return true;
+    if (!!form?.valid && !!form?.touched) return true;
+    return false;
   }
 
   formatAttributes(form: FormGroup, mapObj: Record<string, any>, inputType: string = 'input'): FlatForm {

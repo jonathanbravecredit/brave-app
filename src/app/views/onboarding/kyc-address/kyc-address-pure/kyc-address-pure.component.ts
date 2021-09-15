@@ -6,13 +6,9 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
   selector: 'brave-kyc-address-pure',
   templateUrl: './kyc-address-pure.component.html',
 })
-export class KycAddressPureComponent extends KycBaseComponent implements AfterViewInit {
+export class KycAddressPureComponent extends KycBaseComponent {
   @ViewChild('form') formComponent: OutlineAddressFormComponent | undefined;
   constructor() {
     super();
-  }
-
-  ngAfterViewInit(): void {
-    this.form = this.formComponent?.parentForm;
   }
 }

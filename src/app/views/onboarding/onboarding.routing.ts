@@ -54,19 +54,16 @@ const OnboardingRoutes: Routes = [
       {
         path: 'verify',
         component: KycPhonenumberComponent,
-        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {
         path: 'code',
         component: KycIdverificationComponent,
-        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {
         path: 'kba',
         component: KycKbaquestionsComponent,
-        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {

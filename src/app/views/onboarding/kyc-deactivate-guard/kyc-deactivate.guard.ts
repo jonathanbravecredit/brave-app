@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate, UrlTree } from '@angular/router';
-
-import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
+import { FormGroup } from '@angular/forms';
+import { CanDeactivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
+export interface KycComponentCanDeactivate {
+  form: FormGroup | undefined;
+  canDeactivate(form: FormGroup | undefined): boolean | Observable<boolean>;
+}
+
+export const CanDeactivateState = {
+  defendAgainstBrowserBackButton: false,
+};
+
 @Injectable({ providedIn: 'root' })
-export class KycDeactivateGuard implements CanDeactivate<KycBaseComponent> {
+export class KycDeactivateGuard implements CanDeactivate<KycComponentCanDeactivate> {
   constructor() {}
   canDeactivate(
-    component: KycBaseComponent,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState: RouterStateSnapshot,
+    component: KycComponentCanDeactivate,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    debugger;
-    console.log('in deactivate guard');
-    console.log('component.form ===> ', component.form);
-    console.log('canDeactivate comp ===> ', component.canDeactivate(component.form));
-    console.log('!canDeactivate comp ===> ', !component.canDeactivate(component.form));
     if (!component.canDeactivate(component.form)) {
-      if (confirm('You have unsaved changes!')) {
+      if (window.confirm('Navigate away? Changes you made may not be save.')) {
         return true;
       } else {
         return false;

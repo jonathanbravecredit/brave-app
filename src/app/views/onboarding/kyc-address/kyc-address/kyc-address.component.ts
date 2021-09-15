@@ -5,12 +5,13 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
+import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 
 @Component({
   selector: 'brave-kyc-address',
   templateUrl: './kyc-address.component.html',
 })
-export class KycAddressComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+export class KycAddressComponent extends KycBaseComponent implements OnInit, AfterViewInit, KycComponentCanDeactivate {
   @ViewChild(KycAddressPureComponent) pure: KycAddressPureComponent | undefined;
   stepID = 1;
   hasError: boolean = false;
@@ -24,10 +25,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   ngAfterViewInit(): void {
-    console.log('pure comp ===> ', this.pure);
-    console.log('address form ===> ', this.pure?.form);
-    this.form = this.pure?.form; //need to bring the form up from the pure component
-    console.log('component form ===> ', this.pure);
+    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
   goBack(): void {
