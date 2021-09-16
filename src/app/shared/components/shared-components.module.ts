@@ -136,6 +136,8 @@ import { OutlineSsnFullFormComponent } from './forms/outline-ssn-full-form/outli
 import { OutlineInputSsnComponent } from './inputs/outline-input-ssn/outline-input-ssn.component';
 import { OutlineSsnLastfourFormComponent } from './forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component';
 import { CreditReportGraphicNoGraphComponent } from './graphics/credit-report-graphic-no-graph/credit-report-graphic-no-graph.component';
+import { HorizontalCreditscoreBarComponent } from './graphics/horizontal-creditscore-bar/horizontal-creditscore-bar.component';
+import { HorizontalCreditscoreInvisiblebarComponent } from './graphics/horizontal-creditscore-invisiblebar/horizontal-creditscore-invisiblebar.component';
 
 const components = [
   BaseFormComponent,
@@ -243,6 +245,11 @@ const components = [
   SimpleChangePasswordFormComponent,
   FilledSpinningButtonComponent,
   CreditReportGraphicNoGraphComponent,
+  OutlineSsnFullFormComponent,
+  OutlineInputSsnComponent,
+  OutlineSsnLastfourFormComponent,
+  HorizontalCreditscoreBarComponent,
+  HorizontalCreditscoreInvisiblebarComponent,
 ];
 
 // component specific pipes only
@@ -262,9 +269,6 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   DisputeCardStatusPipe,
-  OutlineSsnFullFormComponent,
-  OutlineInputSsnComponent,
-  OutlineSsnLastfourFormComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
