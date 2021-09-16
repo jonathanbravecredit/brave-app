@@ -10,7 +10,7 @@ export class HorizontalCreditscoreInvisiblebarComponent implements OnInit {
   @Input() currentValue: number | undefined;
   @Input() rotationOffset: number = 0;
   percentage: number = 0;
-  percentageStr: string = '0%';
+  percentageStr: string = '50%';
 
   @ViewChild('bar') bar: ElementRef | undefined;
   @ViewChild('arrow') arrow: ElementRef | undefined;
@@ -18,10 +18,11 @@ export class HorizontalCreditscoreInvisiblebarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.percentage = this.currentValue !== undefined ? Math.round(((this.currentValue - 300) / 550) * 100) : 50;
+    this.percentage =
+      this.currentValue !== undefined || this.currentValue == -1
+        ? Math.round(((this.currentValue - 300) / 550) * 100)
+        : 50;
     this.percentage = 85 * (this.percentage / 100); // 15% goes to half the marker
     this.percentageStr = `${this.percentage}%`;
-    console.log('percentage ===> ', this.percentage);
-    console.log('percentageStr ===> ', this.percentageStr);
   }
 }
