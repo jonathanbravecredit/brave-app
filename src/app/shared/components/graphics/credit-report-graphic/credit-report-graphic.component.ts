@@ -5,6 +5,8 @@ import { Component, OnInit, AfterViewInit, Input, ElementRef, ViewChild } from '
   templateUrl: './credit-report-graphic.component.html',
 })
 export class CreditReportGraphicComponent implements OnInit {
+  @Input() base: number = 300;
+  @Input() limit: number = 850;
   @Input() currentValue: number | undefined;
   @Input() ptsChange: number = 0;
 
