@@ -1,0 +1,13 @@
+<div #bar class="relative mt-1 w-full">
+  <div
+    #arrow
+    class="absolute"
+    [ngStyle]="{ left: percentageStr, transform: 'skewY(' + rotationOffset + 'deg)' }"
+    style="top: -2.25rem"
+  >
+    <div class="relative">
+      <span class="absolute" style="font-size: 0.66rem; left: 3px; top: 1px">{{ currentValue }}</span>
+      <img src="https://d3e1i93f88eoxl.cloudfront.net/credit-range-marker.svg" />
+    </div>
+  </div>
+</div>

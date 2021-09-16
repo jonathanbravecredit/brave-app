@@ -1,0 +1,13 @@
+<div #bar class="relative mt-1 h-2 w-full rounded-sm bg-gradient-to-r from-orange-500 via-yelow-300 to-emerald-400">
+  <div #arrow [ngStyle]="{ left: percentageStr }" class="absolute text-sm text-white" style="margin-left: -0.4375rem">
+    <span class="material-icons text-sm text-white align-bottom transform -rotate-90"> play_arrow </span>
+  </div>
+</div>
+<div class="w-full flex justify-between mt-2">
+  <div>
+    <p class="text-white font-bold" style="font-size: 0.66rem">{{ base }}</p>
+  </div>
+  <div>
+    <p class="text-white font-bold" style="font-size: 0.66rem">{{ limit }}</p>
+  </div>
+</div>
