@@ -88,10 +88,11 @@ export class TransunionMappers extends TransunionBase {
     return tradeLines.map((item) => {
       const firstField = this.getFirstFields(item);
       const secondField = this.getSecondFields(item);
+      const { accountTypeSymbol, Tradeline: { creditorName, OpenClosed, PayStatus } = {} } = item;
       return {
-        type: item.accountTypeSymbol,
-        creditorName: item.Tradeline?.creditorName,
-        isOpen: item.Tradeline?.OpenClosed,
+        type: accountTypeSymbol,
+        creditorName: creditorName,
+        isOpen: `${OpenClosed?.symbol}`.toLowerCase() !== 'c',
         firstFieldName: firstField.firstFieldName,
         firstFieldValue: firstField.firstFieldValue,
         firstFieldType: firstField.firstFieldType,
@@ -99,9 +100,9 @@ export class TransunionMappers extends TransunionBase {
         secondFieldValue: secondField.secondFieldValue,
         secondFieldType: secondField.secondFieldType,
         thirdFieldName: 'Payment Status',
-        thirdFieldValue: item.Tradeline?.PayStatus?.description,
-        status: item.Tradeline?.PayStatus?.symbol,
-        positive: POSITIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`] || false,
+        thirdFieldValue: PayStatus?.description,
+        status: PayStatus?.symbol,
+        positive: POSITIVE_PAY_STATUS_CODES[`${PayStatus?.symbol}`] || false,
         tradeline: item,
       } as ICreditReportCardInputs;
     });

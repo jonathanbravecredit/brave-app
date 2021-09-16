@@ -3,16 +3,30 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-2",
-    "aws_cognito_identity_pool_id": "us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32",
+    "aws_cognito_identity_pool_id": "us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612",
     "aws_cognito_region": "us-east-2",
-    "aws_user_pools_id": "us-east-2_R22DawoAR",
-    "aws_user_pools_web_client_id": "rpqo3q7uaftlr8rp39kfvh08t",
-    "oauth": {},
-    "aws_appsync_graphqlEndpoint": "https://krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com/graphql",
+    "aws_user_pools_id": "us-east-2_beTcykTM9",
+    "aws_user_pools_web_client_id": "5ig184k6ps2qf7577g2qnk4mjl",
+    "oauth": {
+        "domain": "braveappa3b93ee9-a3b93ee9-dev.auth.us-east-2.amazoncognito.com",
+        "scope": [
+            "phone",
+            "email",
+            "openid",
+            "profile",
+            "aws.cognito.signin.user.admin"
+        ],
+        "redirectSignIn": "http://localhost:4200/auth/redirect/,https://qa.d3vym5isdd5k4u.amplifyapp.com/auth/redirect/",
+        "redirectSignOut": "http://localhost:4200/,https://qa.d3vym5isdd5k4u.amplifyapp.com/auth/signin/",
+        "responseType": "code"
+    },
+    "federationTarget": "COGNITO_USER_POOLS",
+    "aws_appsync_graphqlEndpoint": "https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql",
     "aws_appsync_region": "us-east-2",
     "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-    "aws_user_files_s3_bucket": "braveapp7123270838f144d09004f496c2f9ef0f115121-prod",
+    "aws_user_files_s3_bucket": "braveapp7123270838f144d09004f496c2f9ef0f110519-dev",
     "aws_user_files_s3_bucket_region": "us-east-2"
 };
+
 
 export default awsmobile;

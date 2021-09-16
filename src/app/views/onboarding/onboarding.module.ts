@@ -12,6 +12,7 @@ import { KycCongratulationsComponent } from '@views/onboarding/kyc-congratulatio
 import { KycErrorComponent } from '@views/onboarding/kyc-error/kyc-error.component';
 import { KycIdverificationPureComponent } from '@views/onboarding/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.component';
 import { KycIdverificationComponent } from '@views/onboarding/kyc-idverification/kyc-idverification/kyc-idverification.component';
+import { KycErrorValidationComponent } from './kyc-error-validation/kyc-error-validation.component';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { KycKbaquestionsComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
@@ -43,6 +44,7 @@ const components = [
   KycCongratulationsPureComponent,
   KycIdverificationComponent,
   KycIdverificationPureComponent,
+  KycErrorValidationComponent,
   KycKbaquestionsComponent,
   KycKbaquestionsPureComponent,
   KycPhonenumberComponent,
