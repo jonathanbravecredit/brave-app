@@ -96,7 +96,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
       } catch (err) {
         this.interstitial.fetching$.next(false);
         if (this.attempts > 2) {
-          this.router.navigate(['../error'], { relativeTo: this.route });
+          this.router.navigate(['../invalid'], { relativeTo: this.route });
         }
       }
     }
@@ -256,12 +256,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
             relativeTo: this.route,
           })
         : (() => {
-            this.attempts = 3;
+            this.attempts = 3; // bail out
             throw `kycIdverification:sendCompleteOnboarding=${error}`;
           })();
       return this;
     } catch (err) {
-      this.attempts = 3;
+      this.attempts = 3; // bail out
       this.interstitial.fetching$.next(false);
       throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
     }
