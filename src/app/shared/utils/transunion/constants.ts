@@ -67,3 +67,9 @@ export const INVESTIGATION_RESULTS_CODE_MAPPING: { type: string; title: string }
     title: 'VERIFIED AS ACCURATE AND UPDATED',
   },
 ];
+
+export const INDUSTRY_CODES: Record<string, string> = {
+  bs: 'student_loan',
+  el: 'student_loan',
+  vg: 'student_loan',
+};
