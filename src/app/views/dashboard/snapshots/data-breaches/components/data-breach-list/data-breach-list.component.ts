@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 import { dataBreachListContent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/content';
 
@@ -10,12 +11,20 @@ export class DataBreachListComponent implements OnInit {
   @Input() cards: IBreachCard[] = [];
   @Output() closeClick: EventEmitter<number> = new EventEmitter();
   content = dataBreachListContent;
-  constructor() {}
+  isEmpty: boolean = false;
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isEmpty = this.cards.length > 0;
+  }
 
   hideCard(idx: number): void {
     this.cards.splice(idx, 1);
     this.cards = [...this.cards];
+    this.isEmpty = this.cards.length > 0;
+  }
+
+  goToReport(): void {
+    this.router.navigate(['/dashboard/report']);
   }
 }
