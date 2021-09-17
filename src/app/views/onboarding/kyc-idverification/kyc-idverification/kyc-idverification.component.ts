@@ -47,11 +47,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
     super();
   }
 
-  resendCode(): void {
-    // TODO resubmit code to backend
-    this.updateViewState('sent');
-  }
-
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../verify'], { relativeTo: this.route });
@@ -68,10 +63,27 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
   /**
    * Method to:
-   * - Get authentication questions
-   * - send the passcode response
-   * - Enroll the user in report & score and disputes
-   * - Update the enriched enrollment data to state
+   * - sends the 'NEWPIN' answer (using the same process as the code) to resend a new code
+   */
+  async resendCode(): Promise<void> {
+    this.code = 'NEWPIN';
+    const { appData } = this.store.snapshot();
+    this.state = appData;
+
+    try {
+      await this.processRequest(this.code);
+    } catch (err) {
+      this.interstitial.fetching$.next(false);
+      if (this.attempts > 2) {
+        this.router.navigate(['../invalid'], { relativeTo: this.route });
+      }
+    }
+    this.updateViewState('sent');
+  }
+
+  /**
+   * Method to:
+   * - takes the code passed from the form to the process request method
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
@@ -82,22 +94,40 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.state = appData;
 
       try {
-        this.getAuthenticationQuestions();
-        this.passcodeQuestion
-          ? await this.sendPasscodeResponse(this.code)
-          : (() => {
-              throw 'No passcode questionfound';
-            })();
-        this.authSuccessful
-          ? await this.sendCompleteOnboarding()
-          : (() => {
-              throw 'Authentication request failed';
-            })();
+        await this.processRequest(this.code);
       } catch (err) {
         this.interstitial.fetching$.next(false);
         if (this.attempts > 2) {
-          this.router.navigate(['../error'], { relativeTo: this.route });
+          this.router.navigate(['../invalid'], { relativeTo: this.route });
         }
+      }
+    }
+  }
+
+  /**
+   * Method to:
+   * - Get authentication questions
+   * - send the passcode response
+   * - Enroll the user in report & score and disputes
+   * - Update the enriched enrollment data to state
+   */
+  async processRequest(code: string): Promise<void> {
+    try {
+      this.getAuthenticationQuestions();
+      this.passcodeQuestion
+        ? await this.sendPasscodeResponse(code)
+        : (() => {
+            throw 'No passcode questionfound';
+          })();
+      this.authSuccessful
+        ? await this.sendCompleteOnboarding()
+        : (() => {
+            throw 'Authentication request failed';
+          })();
+    } catch (err) {
+      this.interstitial.fetching$.next(false);
+      if (this.attempts > 2) {
+        this.router.navigate(['../invalid'], { relativeTo: this.route });
       }
     }
   }
@@ -256,12 +286,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
             relativeTo: this.route,
           })
         : (() => {
-            this.attempts = 3;
+            this.attempts = 3; // bail out
             throw `kycIdverification:sendCompleteOnboarding=${error}`;
           })();
       return this;
     } catch (err) {
-      this.attempts = 3;
+      this.attempts = 3; // bail out
       this.interstitial.fetching$.next(false);
       throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
     }

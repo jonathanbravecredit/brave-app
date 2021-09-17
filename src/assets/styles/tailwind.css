@@ -1151,6 +1151,10 @@ select {
   top: 5rem;
 }
 
+.top-1\/2 {
+  top: 50%;
+}
+
 .right-0 {
   right: 0px;
 }
@@ -1681,8 +1685,8 @@ select {
   width: 16rem;
 }
 
-.w-72 {
-  width: 18rem;
+.w-80 {
+  width: 20rem;
 }
 
 .w-auto {
@@ -2506,6 +2510,11 @@ select {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.py-7 {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
 }
 
 .py-9 {

@@ -11,6 +11,7 @@ import {
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
 import { DataBreaches, FORBEARANCE_TYPE } from '@shared/utils/constants';
+import { INDUSTRY_CODES } from '@shared/utils/transunion/constants';
 import { DataBreachConditions } from '@shared/utils/transunion/queries/utils';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
@@ -67,7 +68,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  static getMaxDelinquency(partition: ITradeLinePartition | undefined): number {
+  static getDelinquencyCount(partition: ITradeLinePartition | undefined): number {
     if (!partition) return 0;
     const count30 = partition.Tradeline?.GrantedTrade?.late30Count || 0;
     const count60 = partition.Tradeline?.GrantedTrade?.late60Count || 0;
@@ -193,13 +194,15 @@ export class TransunionReportQueries extends TransunionBase {
    */
   static isForbearanceAccount(partition: ITradeLinePartition | undefined): boolean {
     if (!partition) return false;
-    const symbol = partition.accountTypeSymbol?.toLowerCase();
-    if (!symbol) return false;
-    const accountType = FORBEARANCE_TYPE[symbol];
+    const { accountTypeSymbol = '' } = partition;
+    if (!accountTypeSymbol) return false;
+    const accountType = FORBEARANCE_TYPE[accountTypeSymbol.toLowerCase()];
     if (!accountType) return false;
-    if (symbol.toLowerCase() === 'm') return true; // simple mortgage
-    const industry = partition.Tradeline?.IndustryCode?.description;
-    if (industry?.toLowerCase().includes('student')) {
+    if (accountTypeSymbol.toLowerCase() === 'm') return true; // simple mortgage
+    const {
+      Tradeline: { GrantedTrade: { AccountType: { symbol = '', description = '' } = {} } = {} } = {},
+    } = partition;
+    if (`${symbol}`.toLowerCase() === 'st') {
       return true;
     }
     return false;

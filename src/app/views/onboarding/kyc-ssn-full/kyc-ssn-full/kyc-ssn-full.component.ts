@@ -1,15 +1,17 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { FlatForm, KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { KycSsnFullPureComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
 
 @Component({
   selector: 'brave-kyc-ssn-full',
   templateUrl: './kyc-ssn-full.component.html',
 })
-export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
+export class KycSsnFullComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild(KycSsnFullPureComponent) pure: KycSsnFullPureComponent | undefined;
   stepID = 2;
   constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
@@ -17,6 +19,10 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
   goBack(): void {

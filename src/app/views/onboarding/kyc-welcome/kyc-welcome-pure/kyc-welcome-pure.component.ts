@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { OutlineNamedobFormComponent } from '@shared/components/forms/outline-namedob-form/outline-namedob-form.component';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 
 @Component({
@@ -6,6 +7,7 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
   templateUrl: './kyc-welcome-pure.component.html',
 })
 export class KycWelcomePureComponent extends KycBaseComponent {
+  @ViewChild('form') formComponent: OutlineNamedobFormComponent | undefined;
   constructor() {
     super();
   }
