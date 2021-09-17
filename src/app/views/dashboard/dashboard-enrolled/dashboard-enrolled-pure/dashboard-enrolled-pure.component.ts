@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IBaseModalRegularConfig } from '@shared/components/modals/base-modal-regular/base-modal-regular.component';
 import { IMergeReport } from '@shared/interfaces';
 import { IMergereportToDashboardOutput } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
@@ -16,9 +17,9 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() fullReportClicked: EventEmitter<void> = new EventEmitter();
-
   content = dashboardEnrolledContent;
   forbearanceClicked: boolean = false;
+  showDisclaimer: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}

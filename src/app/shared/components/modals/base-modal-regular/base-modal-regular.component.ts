@@ -6,6 +6,7 @@ export interface IBaseModalRegularConfig {
   body: string;
   actionButtonOneText: string;
   actionButtonTwoText: string;
+  hideButtons?: boolean;
 }
 
 @Component({
