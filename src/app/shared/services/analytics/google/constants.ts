@@ -5,7 +5,7 @@ export enum GooglePageViewEvents {
   OnboardingAddress = 'onboarding_address',
   OnboardingIdentity = 'onboarding_identity',
   OnboardingIdentityFull = 'onboarding_identityfull',
-  OnboardingVerify = 'onboarding_verify',
+  OnboardingPhone = 'onboarding_phone',
   OnboardingCode = 'onboarding_code',
   OnboardingKba = 'onboarding_kba',
   OnboardingSuccess = 'onboarding_success',
@@ -20,7 +20,7 @@ export enum GoogleClickEvents {
   OnboardingAddress = 'onboarding_address',
   OnboardingIdentity = 'onboarding_identity',
   OnboardingIdentityFull = 'onboarding_identityfull',
-  OnboardingVerify = 'onboarding_verify',
+  OnboardingPhone = 'onboarding_phone',
   OnboardingCode = 'onboarding_code',
   OnboardingKba = 'onboarding_kba',
 }
