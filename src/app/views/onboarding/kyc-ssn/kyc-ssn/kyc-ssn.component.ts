@@ -5,6 +5,11 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
+import {
+  GooglePageViewEvents as gtViews,
+  GoogleClickEvents as gtClicks,
+} from '@shared/services/analytics/google/constants';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -13,11 +18,17 @@ import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-
 export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterViewInit {
   @ViewChild(KycSsnPureComponent) pure: KycSsnPureComponent | undefined;
   stepID = 2;
-  constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private kycService: KycService,
+    private google: GoogleService,
+  ) {
     super();
   }
 
   ngOnInit(): void {
+    this.google.firePageViewEvent(gtViews.OnboardingIdentity);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -38,6 +49,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
+    this.google.fireClickEvent(gtClicks.OnboardingIdentity);
     // ssn is a little different as each code is one input
     if (form.valid) {
       const { lastfour } = this.formatAttributes(form, ssnMap);
