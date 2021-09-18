@@ -15,6 +15,11 @@ import {
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
+import {
+  GooglePageViewEvents as gtViews,
+  GoogleClickEvents as gtClicks,
+} from '@shared/services/analytics/google/constants';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -42,6 +47,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
     private route: ActivatedRoute,
     private store: Store,
     private kycService: KycService,
+    private google: GoogleService,
     private interstitial: InterstitialService,
   ) {
     super();
@@ -87,6 +93,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
+    this.google.fireClickEvent(gtClicks.OnboardingCode);
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
       this.code = code;

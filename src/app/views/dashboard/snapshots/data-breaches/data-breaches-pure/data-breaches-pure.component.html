@@ -1,19 +1,6 @@
 <div>
   <brave-data-breach-header></brave-data-breach-header>
 </div>
-<div *ngIf="breachCards.length; else noBreaches">
+<div>
   <brave-data-breach-list [cards]="breachCards"></brave-data-breach-list>
 </div>
-<ng-template #noBreaches>
-  <div class="mx-8 flex justify-center align-center items-center">
-    <img class="w-64 h-64" src="https://d3e1i93f88eoxl.cloudfront.net/no-data-breach.svg" />
-  </div>
-  <p class="mb-1 brave-body1 font-bold text-indigo-800 text-center">{{ content.p1 }}</p>
-  <p class="brave-body2 text-center mb-1">{{ content.p2 }}</p>
-  <p class="brave-body2 text-center mb-1">
-    {{ content.p3
-    }}<a class="hover:cursor-pointer brave-body2 text-blue-500" (click)="goToReport()"
-      ><span>&nbsp;{{ content.link1 }}&nbsp;</span></a
-    >{{ content.p4 }}
-  </p>
-</ng-template>

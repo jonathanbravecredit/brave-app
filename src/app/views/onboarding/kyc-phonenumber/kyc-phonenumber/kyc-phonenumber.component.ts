@@ -10,6 +10,11 @@ import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentic
 import { AppDataStateModel } from '@store/app-data';
 import { Store } from '@ngxs/store';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
+import {
+  GooglePageViewEvents as gtViews,
+  GoogleClickEvents as gtClicks,
+} from '@shared/services/analytics/google/constants';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -33,12 +38,14 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
     private router: Router,
     private route: ActivatedRoute,
     private store: Store,
+    private google: GoogleService,
     private kycService: KycService,
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.google.firePageViewEvent(gtViews.OnboardingPhone);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -64,6 +71,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
+    this.google.fireClickEvent(gtClicks.OnboardingPhone);
     if (form.valid) {
       const { phone } = this.formatAttributes(form, phoneMap);
       const attrs = {
