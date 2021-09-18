@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -13,15 +15,17 @@ export type SignupState = 'init' | 'invalid';
 export class SignupComponent implements OnInit {
   viewState: SignupState = 'init';
   message: string = '';
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private auth: AuthService,
+    private google: GoogleService,
     private interstitial: InterstitialService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.google.firePageViewEvent(gtEvts.AuthSignup);
+  }
 
   /**
    * Method to sign user up
