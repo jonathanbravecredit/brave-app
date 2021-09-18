@@ -14,6 +14,11 @@ import { take } from 'rxjs/operators';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import {
+  GooglePageViewEvents as gtViews,
+  GoogleClickEvents as gtClicks,
+} from '@shared/services/analytics/google/constants';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -35,6 +40,7 @@ export class KycKbaquestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private interstitial: InterstitialService,
     private kycService: KycService,
+    private google: GoogleService,
     private store: Store,
   ) {
     this.agenciesSub$ = this.agencies$.pipe(take(1)).subscribe((agencies: AgenciesStateModel) => {
@@ -49,6 +55,7 @@ export class KycKbaquestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.google.firePageViewEvent(gtViews.OnboardingKba);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -80,6 +87,7 @@ export class KycKbaquestionsComponent implements OnInit {
    *  - if no more next questions, submits the form
    */
   goToNext(): void {
+    this.google.fireClickEvent(gtClicks.OnboardingKba);
     this.answeredQuestions = [...this.answeredQuestions, this.questions[0]];
     this.questions = [...this.questions.slice(1)];
     const scroll = parseFloat(((-1 / this.numberOfQuestions) * 100).toFixed(2));
