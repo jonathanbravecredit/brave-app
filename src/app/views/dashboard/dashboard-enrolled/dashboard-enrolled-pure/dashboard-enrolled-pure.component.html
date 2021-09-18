@@ -49,8 +49,25 @@
 <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
   content.b1
 }}</brave-links-onlytext-button>
+
 <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
 <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
-<div class="mt-2 flex justify-center">
+<div class="mt-2 flex flex-col justify-center items-center">
   <brave-credit-builder-card></brave-credit-builder-card>
+  <p
+    class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
+    (click)="showDisclaimer = !showDisclaimer"
+  >
+    {{ content.link1 }}
+  </p>
+  <ng-container *ngIf="showDisclaimer">
+    <p class="brave-body3 text-opacity-50 mb-2">{{ content.p2 }}</p>
+    <div
+      class="brave-body3 text-opacity-50 flex justify-center items-center align-center hover:cursor-pointer"
+      (click)="showDisclaimer = false"
+    >
+      <span class="material-icons" style="font-size: 12px">close</span>
+      <p>close</p>
+    </div>
+  </ng-container>
 </div>

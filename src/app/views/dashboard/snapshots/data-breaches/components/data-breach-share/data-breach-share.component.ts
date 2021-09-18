@@ -9,9 +9,9 @@ import { dataBreachShareContent } from '@views/dashboard/snapshots/data-breaches
 export class DataBreachShareComponent implements OnInit {
   buttonConfig: IFilledOnlyTextButtonConfig = {
     buttonSize: 'sm',
-    backgroundColor: 'bg-indigo-800',
-    activeColor: 'bg-indigo-900',
-    color: 'text-white',
+    backgroundColor: 'bg-pink-500',
+    activeColor: 'bg-pink-500',
+    color: 'text-black',
     full: true,
   };
   content = dataBreachShareContent;

@@ -1,13 +1,13 @@
-<div class="p-2 rounded-lg border border-blueGray-300">
+<div class="p-2 rounded-lg border border-yellow-400 bg-yellow-400">
   <p class="mb-1 brave-body2-semibold">{{ content.p1 }}</p>
   <p class="mb-3 brave-body3">{{ content.p2 }}</p>
   <div class="mb-1 flex justify-center">
-    <brave-filled-onlytext-button (click)="onShareClick()">
+    <brave-filled-onlytext-button [config]="buttonConfig" (click)="onShareClick()">
       <div class="flex -my-1">
         <div class="-my-1 items-center" style="padding-top: 2px">
-          <span class="material-icons-outlined text-base mr-3">policy</span>
+          <span class="material-icons-outlined text-base mr-3 text-black">policy</span>
         </div>
-        <span class="text-sm">Help them take control</span>
+        <span class="text-sm text-black">Help them take control</span>
       </div>
     </brave-filled-onlytext-button>
   </div>

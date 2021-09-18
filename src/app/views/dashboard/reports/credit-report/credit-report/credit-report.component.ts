@@ -12,6 +12,8 @@ import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { Observable } from 'rxjs';
+import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
 
 @Component({
   selector: 'brave-credit-report',
@@ -26,12 +28,15 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
+    private google: GoogleService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.google.firePageViewEvent(gtEvts.DashboardReport);
+  }
 
   ngAfterViewInit(): void {}
 
