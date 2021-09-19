@@ -81,7 +81,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
     } catch (err) {
       this.interstitial.fetching$.next(false);
       if (this.attempts > 2) {
-        this.router.navigate(['../invalid'], { relativeTo: this.route });
+        this.router.navigate(['../error'], {
+          relativeTo: this.route,
+          queryParams: {
+            code: '11',
+          },
+        });
       }
     }
     this.updateViewState('sent');
@@ -105,7 +110,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
       } catch (err) {
         this.interstitial.fetching$.next(false);
         if (this.attempts > 2) {
-          this.router.navigate(['../invalid'], { relativeTo: this.route });
+          this.router.navigate(['../error'], {
+            relativeTo: this.route,
+            queryParams: {
+              code: '11',
+            },
+          });
         }
       }
     }
@@ -134,7 +144,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
     } catch (err) {
       this.interstitial.fetching$.next(false);
       if (this.attempts > 2) {
-        this.router.navigate(['../invalid'], { relativeTo: this.route });
+        this.router.navigate(['../error'], {
+          relativeTo: this.route,
+          queryParams: {
+            code: '15',
+          },
+        });
       }
     }
   }
@@ -291,11 +306,12 @@ export class KycIdverificationComponent extends KycBaseComponent {
       success
         ? this.router.navigate(['../congratulations'], {
             relativeTo: this.route,
-          })
-        : (() => {
-            this.attempts = 3; // bail out
-            throw `kycIdverification:sendCompleteOnboarding=${error}`;
-          })();
+          }) // api successful and TU successful
+        : this.router.navigate(['../error'], {
+            queryParams: {
+              code: error?.Code,
+            },
+          }); // api successful but TU responds with error
       return this;
     } catch (err) {
       this.attempts = 3; // bail out

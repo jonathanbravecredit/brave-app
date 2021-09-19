@@ -89,7 +89,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
               throw 'Authentication request failed';
             })();
       } catch (err) {
-        this.router.navigate(['../invalid'], { relativeTo: this.route });
+        this.router.navigate(['../error'], { relativeTo: this.route });
       }
     }
   }
