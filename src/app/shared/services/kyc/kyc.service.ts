@@ -19,6 +19,7 @@ import {
   IVerifyAuthenticationQuestionsResult,
 } from '@shared/interfaces';
 import { Router } from '@angular/router';
+import { BraveUtil } from '@shared/utils/brave/brave';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -126,6 +127,25 @@ export class KycService {
       return await this.statesvc.updateUserAttributesAsync(attrs);
     } catch (err) {
       throw new Error(`kycService:updateUserAttributesAsync=${err}`);
+    }
+  }
+
+  /**
+   * Takes the current user and suspends their account
+   */
+  async suspendUserOnAge(): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const suspended = BraveUtil.generators.createSuspendedAgeRestrictionStatus();
+    const newData = {
+      ...appData,
+      ...suspended,
+    };
+    if (appData.id && newData.id) {
+      try {
+        await this.statesvc.updateStateDBSyncAsync(newData);
+      } catch (err) {
+        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
+      }
     }
   }
 
@@ -256,17 +276,18 @@ export class KycService {
       const { success, error, data } = await this.sendGetAuthenticationQuestions(appData, ssn);
       if (!success) return { success, error, data };
       questionResponse = data;
-      if (!data) return { success: false };
-      questions = await this.processGetAuthenticationQuestionsResponse(questionResponse);
-      if (!questions) return KYCResponse.Failed;
-      // Sucess...parse questions and pass to question component
-      const questionXml = questions.Questions;
-      const xmlText = questionXml ? questionXml : null;
-      if (!xmlText) return KYCResponse.Failed;
-      await this.updateCurrentRawQuestionsAsync(xmlText || '');
-      return xmlText;
+      // if (!data) return { success: false };
+      // questions = await this.processGetAuthenticationQuestionsResponse(questionResponse);
+      // if (!questions) return KYCResponse.Failed;
+      // // Sucess...parse questions and pass to question component
+      // const questionXml = questions.Questions;
+      // const xmlText = questionXml ? questionXml : null;
+      // if (!xmlText) return KYCResponse.Failed;
+      // await this.updateCurrentRawQuestionsAsync(xmlText || '');
+      // return xmlText;
+      return { success: true };
     } catch {
-      return KYCResponse.Failed;
+      return { success: false }; // KYCResponse.Failed;
     }
   }
 

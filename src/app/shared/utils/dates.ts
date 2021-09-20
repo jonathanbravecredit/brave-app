@@ -1,5 +1,6 @@
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 const _MS_PER_HOUR = 1000 * 60 * 60;
+const _MS_PER_YEAR = 1000 * 60 * 60;
 
 export const dateDiffInDays = (a: Date, b: Date) => {
   const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());

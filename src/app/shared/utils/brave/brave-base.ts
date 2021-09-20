@@ -5,5 +5,6 @@ export class BraveBase {
   static pinMaxAge = 15 * 60 * 1000;
   static kbaAttempts = 1;
   static kbaMaxAge = 96 * 60 * 1000;
+  static minAge = 18;
   constructor() {}
 }
