@@ -18,6 +18,7 @@ import {
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
 } from '@shared/interfaces';
+import { Router } from '@angular/router';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -51,7 +52,12 @@ const parserOptions = {
 
 @Injectable()
 export class KycService {
-  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {}
+  constructor(
+    private store: Store,
+    private statesvc: StateService,
+    private transunion: TransunionService,
+    private router: Router,
+  ) {}
 
   /**
    * Takes a progress step ID and sets the status to true
@@ -198,11 +204,10 @@ export class KycService {
   async sendGetAuthenticationQuestions(
     appData: UpdateAppDataInput | AppDataStateModel,
     ssn: string = '',
-  ): Promise<IGetAuthenticationQuestionsResult | undefined> {
-    if (!ssn) return;
+  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
+    if (!ssn) return { success: false };
     try {
-      const { success, error, data } = await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
-      return success ? data : undefined;
+      return await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
     } catch (err) {
       throw new Error(`kycService:sendGetAuthenticationQuestions=${err}`);
     }
@@ -239,15 +244,19 @@ export class KycService {
    * @param {UpdateAppDataInput} data
    * @returns
    */
-  async getGetAuthenticationQuestionsResults(data: UpdateAppDataInput): Promise<KYCResponse | string> {
+  async getGetAuthenticationQuestionsResults(
+    appData: UpdateAppDataInput,
+  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
     let questionResponse: IGetAuthenticationQuestionsResult | undefined;
     let questions: IGetAuthenticationQuestionsResult | undefined;
-    const ssn = data.user?.userAttributes?.ssn?.full;
-    if (!ssn) return KYCResponse.Failed;
+    const ssn = appData.user?.userAttributes?.ssn?.full;
+    if (!ssn) return { success: false };
     // GetAuthorizationQuestions response from TU service
     try {
-      questionResponse = await this.sendGetAuthenticationQuestions(data, ssn);
-      if (!questionResponse) return KYCResponse.Failed;
+      const { success, error, data } = await this.sendGetAuthenticationQuestions(appData, ssn);
+      if (!success) return { success, error, data };
+      questionResponse = data;
+      if (!data) return { success: false };
       questions = await this.processGetAuthenticationQuestionsResponse(questionResponse);
       if (!questions) return KYCResponse.Failed;
       // Sucess...parse questions and pass to question component

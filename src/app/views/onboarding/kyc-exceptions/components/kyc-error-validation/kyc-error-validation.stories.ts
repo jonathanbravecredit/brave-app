@@ -4,7 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { KycErrorValidationComponent } from '@views/onboarding/kyc-error-validation/kyc-error-validation.component';
+import { KycErrorValidationComponent } from '@views/onboarding/kyc-exceptions/components/kyc-error-validation/kyc-error-validation.component';
 
 export default {
   title: 'app/views/kyc/kyc-error-validation',

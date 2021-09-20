@@ -9,10 +9,13 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { KycCongratulationsPureComponent } from '@views/onboarding/kyc-congratulations/kyc-congratulations-pure/kyc-congratulations-pure.component';
 import { KycCongratulationsComponent } from '@views/onboarding/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
-import { KycErrorComponent } from '@views/onboarding/kyc-error/kyc-error.component';
 import { KycIdverificationPureComponent } from '@views/onboarding/kyc-idverification/kyc-idverification-pure/kyc-idverification-pure.component';
 import { KycIdverificationComponent } from '@views/onboarding/kyc-idverification/kyc-idverification/kyc-idverification.component';
-import { KycErrorValidationComponent } from './kyc-error-validation/kyc-error-validation.component';
+import { KycErrorValidationComponent } from './kyc-exceptions/components/kyc-error-validation/kyc-error-validation.component';
+import { KycExceptionsView } from './kyc-exceptions/kyc-exceptions/kyc-exceptions.view';
+import { KycExceptionsPureView } from './kyc-exceptions/kyc-exceptions-pure/kyc-exceptions-pure.view';
+import { KycErrorComponent } from '@views/onboarding/kyc-exceptions/components/kyc-error/kyc-error.component';
+import { KycRetryComponent } from '@views/onboarding/kyc-exceptions/components/kyc-retry/kyc-retry.component';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { KycKbaquestionsComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
@@ -44,7 +47,11 @@ const components = [
   KycCongratulationsPureComponent,
   KycIdverificationComponent,
   KycIdverificationPureComponent,
+  KycErrorComponent,
   KycErrorValidationComponent,
+  KycRetryComponent,
+  KycExceptionsView,
+  KycExceptionsPureView,
   KycKbaquestionsComponent,
   KycKbaquestionsPureComponent,
   KycPhonenumberComponent,
@@ -57,7 +64,6 @@ const components = [
   KycWelcomePureComponent,
   KycWelcomebackComponent,
   KycWelcomebackPureComponent,
-  KycErrorComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];

@@ -136,11 +136,22 @@ export class KycKbaquestionsComponent implements OnInit {
         });
         this.interstitial.fetching$.next(false);
       } else {
-        this.router.navigate(['../error'], { relativeTo: this.route });
+        // this needs to go to restart or wait (invalid)
+        this.router.navigate(['../error'], {
+          relativeTo: this.route,
+          queryParams: {
+            code: error?.Code,
+          },
+        });
         this.interstitial.fetching$.next(false);
       }
     } catch (err) {
-      this.router.navigate(['../error'], { relativeTo: this.route });
+      this.router.navigate(['../error'], {
+        relativeTo: this.route,
+        queryParams: {
+          code: '11',
+        },
+      });
       this.interstitial.fetching$.next(false);
     }
   }

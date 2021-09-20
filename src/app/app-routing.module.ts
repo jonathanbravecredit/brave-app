@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'legal',
     loadChildren: () => import('./views/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
+  {
+    path: 'suspended',
+    loadChildren: () => import('./views/suspended/suspended.module').then((m) => m.SuspendedModule),
+  },
   // { path: '', component: IndexComponent }, // TODO: replace with better page
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
