@@ -34,16 +34,42 @@ subscription OnCreateAppData($owner: String) {
         lastActive
         lastComplete
         started
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -172,6 +198,11 @@ subscription OnCreateAppData($owner: String) {
         mortgages
       }
     }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
     createdAt
     updatedAt
     owner
@@ -212,16 +243,42 @@ subscription OnUpdateAppData($owner: String) {
         lastActive
         lastComplete
         started
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -350,6 +407,11 @@ subscription OnUpdateAppData($owner: String) {
         mortgages
       }
     }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
     createdAt
     updatedAt
     owner
@@ -390,16 +452,42 @@ subscription OnDeleteAppData($owner: String) {
         lastActive
         lastComplete
         started
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -528,6 +616,11 @@ subscription OnDeleteAppData($owner: String) {
         mortgages
       }
     }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
     createdAt
     updatedAt
     owner
