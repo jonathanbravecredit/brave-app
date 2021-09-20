@@ -10,11 +10,13 @@ export class KycExceptionsPureView implements OnInit {
   @Output() actionButtonClicked: EventEmitter<string> = new EventEmitter();
   @Input() code: string = '11';
   tuActions = TransunionErrorAction;
-  get action(): string {
-    return tu.queries.exceptions.getErrorCodeDetails(this.code).action || 'retry';
-  }
+  action: string | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    debugger;
+    this.action = tu.queries.exceptions.getErrorCodeDetails(this.code).action || 'retry';
+    debugger;
+  }
 }

@@ -18,6 +18,7 @@ import {
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
 } from '@shared/interfaces';
+import { Router } from '@angular/router';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -51,7 +52,12 @@ const parserOptions = {
 
 @Injectable()
 export class KycService {
-  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {}
+  constructor(
+    private store: Store,
+    private statesvc: StateService,
+    private transunion: TransunionService,
+    private router: Router,
+  ) {}
 
   /**
    * Takes a progress step ID and sets the status to true
@@ -198,11 +204,21 @@ export class KycService {
   async sendGetAuthenticationQuestions(
     appData: UpdateAppDataInput | AppDataStateModel,
     ssn: string = '',
-  ): Promise<IGetAuthenticationQuestionsResult | undefined> {
+  ): Promise<IGetAuthenticationQuestionsResult | undefined | void> {
     if (!ssn) return;
     try {
       const { success, error, data } = await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
-      return success ? data : undefined;
+      if (success) {
+        return data;
+      } else {
+        console.log('error code ===> ', error?.Code);
+        debugger;
+        this.router.navigate(['/onboarding/error'], {
+          queryParams: {
+            code: error?.Code || '11',
+          },
+        });
+      }
     } catch (err) {
       throw new Error(`kycService:sendGetAuthenticationQuestions=${err}`);
     }
