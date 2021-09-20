@@ -1,6 +1,3 @@
-<brave-filled-onlytext-button (click)="toggleModal()">
-  {{ config.openButtonText }}
-</brave-filled-onlytext-button>
 <div
   *ngIf="showModal"
   class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
@@ -8,37 +5,30 @@
   <div class="relative w-auto my-6 mx-auto max-w-3xl">
     <!--content-->
     <div
-      class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
+      class="border-0 rounded-lg shadow-lg relative flex flex-col w-full px-2 bg-white outline-none focus:outline-none"
     >
       <!--header-->
-      <div
-        class="flex items-center justify-between px-5 py-3 border-b border-solid border-blueGray-200 rounded-t"
-      >
-        <p class="font-sans font-semibold text-base text-coolGray-700">
-          {{ config.title }}
-        </p>
-        <button
-          class="p-1 ml-auto bg-transparent border-0 text-indigo-800 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-          (click)="toggleModal()"
-        >
-          <span class="material-icons text-indigo-800">close</span>
-        </button>
-      </div>
+      <ng-container *ngIf="!config.title">
+        <div class="flex items-center justify-between pt-3 rounded-t">
+          <h5 class="brave-h5-semibold">{{ config.title }}</h5>
+          <span class="material-icons text-3xl" (click)="toggleModal()">close</span>
+        </div>
+      </ng-container>
       <!--body-->
-      <div class="relative p-5 flex-auto">
-        <p class="my-4 font-sans text-sm text-coolGray-700">
-          {{ config.body }}
-        </p>
-      </div>
+      <ng-container *ngIf="!config.body">
+        <p class="font-sans text-sm">{{ config.body }}</p>
+      </ng-container>
       <!--footer-->
-      <div class="flex items-center justify-end px-5 pt-5 pb-8 rounded-b">
-        <brave-links-onlytext-button (click)="actionOne.emit($event)">
-          {{ config.actionButtonOneText }}
-        </brave-links-onlytext-button>
-        <brave-filled-onlytext-button (click)="actionTwo.emit($event)">{{
-          config.actionButtonTwoText
-        }}</brave-filled-onlytext-button>
-      </div>
+      <ng-container *ngIf="!config.hideButtons">
+        <div class="flex items-center justify-end pt-5 pb-8 rounded-b">
+          <brave-links-onlytext-button (click)="actionOne.emit($event)">
+            {{ config.actionButtonOneText }}
+          </brave-links-onlytext-button>
+          <brave-filled-onlytext-button (click)="actionTwo.emit($event)">{{
+            config.actionButtonTwoText
+          }}</brave-filled-onlytext-button>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

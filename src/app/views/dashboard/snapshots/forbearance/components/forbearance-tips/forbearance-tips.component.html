@@ -7,7 +7,7 @@
   <div class="ml-4">
     <ul class="list-decimal ml-4 brave-body2">
       <li *ngFor="let item of content.list1" class="mt-6 font-bold">
-        <p class="ml-3.5 font-normal">{{ item }}</p>
+        <p class="ml-3.5 font-normal" [innerHtml]="item | linkify"></p>
       </li>
     </ul>
   </div>

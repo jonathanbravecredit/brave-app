@@ -5,6 +5,7 @@ import {
   IPersonalItemsDetailsTable,
 } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { IBorrower } from '@shared/interfaces';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 
 @Component({
   selector: 'brave-personalitems-pure',
@@ -31,7 +32,7 @@ export class PersonalitemsPureView {
 
   showModal: boolean = false;
 
-  constructor() {}
+  constructor(public featureFlags: FeatureFlagsService) {}
 
   disputeClicked(): void {
     // when clicked and do not need acknowledgment

@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KYCResponse, KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
 
 @Component({
   selector: 'brave-kyc-ssn',
   templateUrl: './kyc-ssn.component.html',
 })
-export class KycSsnComponent extends KycBaseComponent implements OnInit {
+export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild(KycSsnPureComponent) pure: KycSsnPureComponent | undefined;
   stepID = 2;
   constructor(private router: Router, private route: ActivatedRoute, private kycService: KycService) {
     super();
@@ -17,6 +19,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.kycService.activateStep(this.stepID);
+  }
+
+  ngAfterViewInit(): void {
+    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
   /**
@@ -34,11 +40,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
   async goToNext(form: FormGroup): Promise<void> {
     // ssn is a little different as each code is one input
     if (form.valid) {
-      const temp = this.formatAttributes(form, ssnMap);
-      const lastFour = `${temp['input-0']}${temp['input-1']}${temp['input-2']}${temp['input-3']}`;
+      const { lastfour } = this.formatAttributes(form, ssnMap);
       const attrs = {
         ssn: {
-          lastfour: lastFour,
+          lastfour: lastfour,
         },
       } as UserAttributesInput;
       try {
@@ -65,13 +70,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit {
    * @param { [key: string]: AbstractControl } errors
    */
   handleError(errors: { [key: string]: AbstractControl }): void {
-    console.log('form errors', errors);
+    // console.log('form errors', errors);
   }
 }
 
 const ssnMap: Record<string, any> = {
-  'input-0': true,
-  'input-1': true,
-  'input-2': true,
-  'input-3': true,
+  lastfour: true,
 };

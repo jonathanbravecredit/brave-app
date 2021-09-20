@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
-import { IMergeReport, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
@@ -36,7 +36,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
       highestBalance: tradeline?.Tradeline?.highBalance,
       disputeFlag: tradeline?.Tradeline?.DisputeFlag?.description,
       payStatus: tradeline?.Tradeline?.PayStatus?.description,
-      maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
+      maxDelinquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
       status: tradeline?.Tradeline?.PayStatus?.symbol,
       openClosed: tradeline?.Tradeline?.OpenClosed?.symbol,
       remarks: remarks,

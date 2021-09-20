@@ -5,10 +5,21 @@ import { IMergeReport } from '@shared/interfaces/merge-report.interface';
   name: 'parseRiskScore',
 })
 export class ParseRiskScorePipe implements PipeTransform {
-  transform(report: IMergeReport): number {
-    const riskScore: number = report?.TrueLinkCreditReportType?.Borrower?.CreditScore?.riskScore as number;
-    const _score = Math.round(riskScore);
-    if (isNaN(_score)) return -1;
-    return _score;
+  transform(report: IMergeReport | undefined): number {
+    if (report === undefined) return -1;
+    const creditScore = report?.TrueLinkCreditReportType?.Borrower?.CreditScore;
+    if (creditScore instanceof Array) {
+      const score = creditScore.find((value) => {
+        return value?.scoreName?.toLowerCase() === 'vantagescore3';
+      });
+      const _score = Math.round(score?.riskScore as number);
+      if (isNaN(_score)) return -1;
+      return _score;
+    } else {
+      const score = creditScore?.riskScore;
+      const _score = Math.round(score as number);
+      if (isNaN(_score)) return -1;
+      return _score;
+    }
   }
 }

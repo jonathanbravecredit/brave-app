@@ -63,12 +63,10 @@ export class TradelinesComponent {
       return;
     }
     const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `tradelines:onDisputeClicked=Missing id:${id}`;
     this.interstitial.changeMessage('checking eligibility');
     this.interstitial.openInterstitial();
     this.disputeService
-      .sendDisputePreflightCheck(id)
+      .sendDisputePreflightCheck()
       .then((resp) => {
         const { success, error } = resp;
         if (success) {

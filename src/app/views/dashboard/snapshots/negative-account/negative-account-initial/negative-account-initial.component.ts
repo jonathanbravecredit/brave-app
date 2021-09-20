@@ -44,10 +44,8 @@ export class NegativeAccountInitialComponent {
    */
   async onConfirmed(tradeline: ITradeLinePartition): Promise<void> {
     const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `negativeAccountInitial:onConfirmed=Missing id:${id}`;
     this.disputeService
-      .sendDisputePreflightCheck(id)
+      .sendDisputePreflightCheck()
       .then((resp) => {
         const { success, error } = resp;
         if (success) {
@@ -75,5 +73,13 @@ export class NegativeAccountInitialComponent {
           },
         });
       });
+  }
+
+  onGoToDashboardClick(): void {
+    this.router.navigate(['/dashboard/init']);
+  }
+
+  onGoToReportClick(): void {
+    this.router.navigate(['/dashboard/report']);
   }
 }

@@ -1,37 +1,11 @@
 import { IErrorResponse, INil } from '@shared/interfaces/errors.interface';
+import { AddressInput, DobInput, NameInput, SsnInput } from '@shared/services/aws/api.service';
 
 export interface IIndicativeEnrichmentMsg {
-  AdditionalInputs: {
-    Data: {
-      Name: string;
-      Value: string;
-    };
-  };
-  RequestKey: string;
-  ClientKey: string;
-  Customer: {
-    CurrentAddress: {
-      AddressLine1: string;
-      AddressLine2?: string;
-      City: string;
-      State: string;
-      Zipcode: string;
-    };
-    PreviousAddress: {
-      AddressLine1?: string;
-      AddressLine2?: string;
-      City?: string;
-      State?: string;
-      Zipcode?: string;
-    };
-    DateOfBirth: string;
-    FullName: {
-      FirstName: string;
-      LastName: string;
-    };
-    Ssn: string;
-  };
-  ServiceBundleCode: string;
+  dob: DobInput;
+  ssn: SsnInput;
+  name: NameInput;
+  address: AddressInput;
 }
 
 export interface IIndicativeEnrichmentResponseSuccess {

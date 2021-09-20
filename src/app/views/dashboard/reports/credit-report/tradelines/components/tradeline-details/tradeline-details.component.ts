@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 /**
@@ -48,7 +49,7 @@ export class TradelineDetailsComponent {
   showModal: boolean = false;
   public tu = TransunionUtil;
 
-  constructor() {}
+  constructor(public featureFlags: FeatureFlagsService) {}
 
   disputeClicked() {
     // when clicked and do not need acknowledgment

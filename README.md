@@ -69,11 +69,6 @@ Most likely you will not have to push changes to the Amplify backend using the C
 - Run `amplify env list` to check current branch
 - Run `amplify env checkout branchname` to switch branches
 
-**IMPORTANT**
-If making updates to the GraphQL schema you must run codegen locally in order to update and push the newly created mutations, queries, and subscriptions files to the Amplify backend.
-
-- Run `amplify codegen --maxDepth 8` from project root.
-
 ## Software architecture
 
 To see current architectural diagrams visit [diagrams](https://drive.google.com/drive/u/0/folders/1nE9JuE9Brm66pKi3B1H9yNhjxKeIfSHI)

@@ -5,6 +5,7 @@ import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-repor
 import { CreditReportGroups } from '@shared/constants/credit-report';
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 
 export interface ICreditReportTradelinesCardGroup {
   title: string;
@@ -27,7 +28,7 @@ export class CreditReportPureComponent implements OnInit {
   @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Output() viewPublicItemDetailClick: EventEmitter<IPublicPartition> = new EventEmitter();
   @Output() viewPersonalItemDetailClick: EventEmitter<IPersonalItemsDetailsConfig> = new EventEmitter();
-  constructor() {}
+  constructor(public featureFlags: FeatureFlagsService) {}
 
   ngOnInit(): void {}
 }

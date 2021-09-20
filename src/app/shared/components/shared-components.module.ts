@@ -132,6 +132,12 @@ import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.com
 import { SimpleChangePasswordFormComponent } from './forms/simple-change-password-form/simple-change-password-form.component';
 import { SimpleDeactiveFormComponent } from './forms/simple-deactive-form/simple-deactive-form.component';
 import { FilledSpinningButtonComponent } from './buttons/filled-spinning-button/filled-spinning-button.component';
+import { OutlineSsnFullFormComponent } from './forms/outline-ssn-full-form/outline-ssn-full-form.component';
+import { OutlineInputSsnComponent } from './inputs/outline-input-ssn/outline-input-ssn.component';
+import { OutlineSsnLastfourFormComponent } from './forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component';
+import { CreditReportGraphicNoGraphComponent } from './graphics/credit-report-graphic-no-graph/credit-report-graphic-no-graph.component';
+import { HorizontalCreditscoreBarComponent } from './graphics/horizontal-creditscore-bar/horizontal-creditscore-bar.component';
+import { HorizontalCreditscoreInvisiblebarComponent } from './graphics/horizontal-creditscore-invisiblebar/horizontal-creditscore-invisiblebar.component';
 
 const components = [
   BaseFormComponent,
@@ -238,6 +244,12 @@ const components = [
   SimpleDeactiveFormComponent,
   SimpleChangePasswordFormComponent,
   FilledSpinningButtonComponent,
+  CreditReportGraphicNoGraphComponent,
+  OutlineSsnFullFormComponent,
+  OutlineInputSsnComponent,
+  OutlineSsnLastfourFormComponent,
+  HorizontalCreditscoreBarComponent,
+  HorizontalCreditscoreInvisiblebarComponent,
 ];
 
 // component specific pipes only

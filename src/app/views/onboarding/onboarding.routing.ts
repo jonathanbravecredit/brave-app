@@ -12,6 +12,8 @@ import { KycSsnFullComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full
 import { KycSsnComponent } from '@views/onboarding/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { KycWelcomeComponent } from '@views/onboarding/kyc-welcome/kyc-welcome/kyc-welcome.component';
 import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
+import { KycErrorValidationComponent } from '@views/onboarding/kyc-error-validation/kyc-error-validation.component';
+import { KycDeactivateGuard } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [
@@ -28,21 +30,25 @@ const OnboardingRoutes: Routes = [
       {
         path: 'name',
         component: KycWelcomeComponent,
+        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {
         path: 'address',
         component: KycAddressComponent,
+        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {
         path: 'identity',
         component: KycSsnComponent,
+        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {
         path: 'identityfull',
         component: KycSsnFullComponent,
+        canDeactivate: [KycDeactivateGuard],
         canActivate: [AuthGuard],
       },
       {
@@ -75,6 +81,11 @@ const OnboardingRoutes: Routes = [
         component: KycErrorComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'invalid',
+        component: KycErrorValidationComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];
@@ -82,5 +93,6 @@ const OnboardingRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(OnboardingRoutes)],
   exports: [RouterModule],
+  providers: [],
 })
 export class OnboardingRoutingModule {}

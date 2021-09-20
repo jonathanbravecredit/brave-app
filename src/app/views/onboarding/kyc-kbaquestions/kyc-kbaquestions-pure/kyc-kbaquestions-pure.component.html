@@ -10,8 +10,8 @@
       <div class="py-3">
         <div class="text-base">
           <p class="mb-6 text-blueGray-600">
-            These questions are from the credit bureaus to verify your identiy.
-            Please answer them to the best of your knowledge
+            These questions are from the credit bureaus to verify your identiy. Please answer them to the best of your
+            knowledge
           </p>
         </div>
       </div>
@@ -35,15 +35,16 @@
             (click)="backClick.emit()"
             [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
           >
-            <span class="flex items-center">
-              <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-            </span>
+            <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
-          <brave-filled-onlytext-button (click)="nextClick.emit()"
+          <brave-filled-spinning-button (click)="nextClick.emit()">
+            <span class="flex items-center">Next<span class="material-icons px-1">arrow_forward</span></span>
+          </brave-filled-spinning-button>
+          <!-- <brave-filled-onlytext-button (click)="nextClick.emit()"
             ><span class="flex items-center"
               >Next<span class="material-icons px-1">arrow_forward</span></span
             ></brave-filled-onlytext-button
-          >
+          > -->
         </div>
       </div>
     </div>

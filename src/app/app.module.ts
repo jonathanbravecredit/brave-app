@@ -37,12 +37,13 @@ const updatedAwsConfig = {
   },
 };
 
-declare global {
-  interface Window {
-    LOG_LEVEL: any;
-  }
-}
-window.LOG_LEVEL = 'debug';
+// declare global {
+//   interface Window {
+//     LOG_LEVEL: any;
+//   }
+// }
+// window.LOG_LEVEL = 'DEBUG';
+
 /* Configure Amplify resources */
 Amplify.configure(updatedAwsConfig);
 

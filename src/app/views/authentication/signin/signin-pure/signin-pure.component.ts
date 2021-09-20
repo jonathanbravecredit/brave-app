@@ -6,7 +6,7 @@ import { SigninState } from '@views/authentication/signin/signin/signin.componen
   selector: 'brave-signin-pure',
   templateUrl: './signin-pure.component.html',
 })
-export class SigninPureComponent implements OnInit {
+export class SigninPureComponent {
   @Output() clickGoogle: EventEmitter<void> = new EventEmitter();
   @Output() clickFacebook: EventEmitter<void> = new EventEmitter();
   @Output() clickForgot: EventEmitter<void> = new EventEmitter();
@@ -16,6 +16,4 @@ export class SigninPureComponent implements OnInit {
   @Input() message: string = '';
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -1,0 +1,23 @@
+<div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
+  <!-- image -->
+  <div class="flex justify-center mb-10">
+    <img class="h-64 w-64" src="https://d3e1i93f88eoxl.cloudfront.net/no_negative_accounts.svg" />
+  </div>
+
+  <!-- header -->
+  <div class="px-8 mb-8">
+    <p class="brave-body1-semibold text-center">{{ content.p1 }}</p>
+  </div>
+
+  <!-- message -->
+  <div class="px-8 mb-10">
+    <p class="brave-body1">{{ content.p2 }}</p>
+  </div>
+
+  <!-- footer -->
+  <div class="py-3">
+    <brave-links-onlytext-button (click)="manualRedirectClick.emit()">
+      <span class="brave-body2 text-indigo-800">{{ content.b1 }}</span>
+    </brave-links-onlytext-button>
+  </div>
+</div>

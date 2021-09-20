@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ICredentials } from '@aws-amplify/core';
 import { Store } from '@ngxs/store';
 import {
   APIService,
@@ -12,11 +11,13 @@ import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { INIT_DATA } from '@shared/services/sync/constants';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { StateService } from '@shared/services/state/state.service';
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from 'amazon-cognito-identity-js';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Injectable({
   providedIn: 'root',
@@ -44,11 +45,9 @@ export class SyncService implements OnDestroy {
    * if (isUserBrandNew && !signInEvent) await this.initAppData(creds); // refreshed event
    * @param creds
    */
-  async initUser(creds: ICredentials): Promise<void> {
-    const id = creds.identityId;
+  async initUser(id: string): Promise<void> {
     const isNew = await this.isUserBrandNew(id);
-    console.log('isNew: ', isNew);
-    isNew ? await this.initAppData(creds) : await this.syncDBDownToState(id);
+    isNew ? await this.initAppData(id) : await this.syncDBDownToState(id);
   }
 
   /**
@@ -61,12 +60,9 @@ export class SyncService implements OnDestroy {
    * @param creds
    * @param signInEvent
    */
-  async onboardUser(creds: ICredentials, signInEvent: boolean): Promise<void> {
-    const id = creds.identityId;
+  async onboardUser(id: string, signInEvent: boolean): Promise<void> {
     const isOnboarded = await this.isUserOnboarded(id);
-    console.log('isOnboarded: ', isOnboarded);
     if (isOnboarded) {
-      console.log('signInEvent: ', signInEvent);
       signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
     } else {
       await this.goToLastOnboarded(id);
@@ -78,17 +74,13 @@ export class SyncService implements OnDestroy {
    * @param id
    */
   async subscribeToListeners(id: string): Promise<void> {
-    console.log('subscribing to listeners');
     const { owner } = await queries.GetOwner(id);
-    console.log('owner ===> ', owner);
     if (owner) {
       this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
-        console.log('data has updated ===> ', data);
         if (data.value.errors) throw `API OnUpdateAppDataListener error`;
         const appData = data.value.data['onUpdateAppData'];
         if (!appData) return;
         const clean = this.cleanBackendData(appData);
-        console.log('dispatching ===> ', clean);
         this.store.dispatch(new AppDataActions.Edit(clean));
       });
     }
@@ -130,7 +122,7 @@ export class SyncService implements OnDestroy {
    * @param {string} id
    */
   async goToDashboard(id: string): Promise<void> {
-    const data = await this.syncDBDownToState(id);
+    // const data = await this.syncDBDownToState(id); // handled in resolver now
     this.router.navigate(['/dashboard/init']);
   }
 
@@ -159,14 +151,15 @@ export class SyncService implements OnDestroy {
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(creds: ICredentials): Promise<void> {
+  async initAppData(id: string): Promise<void> {
+    if (!id) return;
     try {
       const input: CreateAppDataInput = {
         ...INIT_DATA,
-        id: creds.identityId,
+        id: id,
         user: {
           ...INIT_DATA.user,
-          id: creds.identityId,
+          id: id,
         },
       };
       const data = await this.api.CreateAppData(input);
@@ -218,13 +211,21 @@ export class SyncService implements OnDestroy {
    * @param {AppDataStateModel} payload (optional)
    */
   async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
+    let userId: string;
+    if (id === '') {
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const attrs = await Auth.userAttributes(creds);
+      userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    } else {
+      userId = id;
+    }
     if (payload) {
       this.store.dispatch(new AppDataActions.Edit(payload));
       return payload;
     }
     // no payload need to get the id
     try {
-      const raw = await this.api.GetAppData(id);
+      const raw = await this.api.GetAppData(userId);
       const clean = this.cleanBackendData(raw);
       return new Promise((resolve, reject) => {
         this.store.dispatch(new AppDataActions.Edit(clean)).subscribe((_) => {

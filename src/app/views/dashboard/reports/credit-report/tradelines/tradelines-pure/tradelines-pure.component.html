@@ -8,10 +8,6 @@
   ></brave-tradeline-summary>
 </div>
 
-<div class="-my-2">
-  <brave-tradeline-metrics></brave-tradeline-metrics>
-</div>
-
 <div class="mt-6">
   <brave-tradeline-details
     [tradeline]="tradeline"
@@ -19,10 +15,4 @@
     [acknowledged]="acknowledged"
     (disputeClick)="disputeClick.emit(tradeline)"
   ></brave-tradeline-details>
-</div>
-
-<div style="padding: 2.25rem 0" class="flex justify-center border border-coolGray-300 bg-coolGray-300">
-  <span>
-    <p>Ad text here</p>
-  </span>
 </div>

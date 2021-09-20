@@ -88,7 +88,7 @@ export class TransunionReportParsers extends TransunionBase {
    */
   static unparsePhone(phone: IPhoneNumber | undefined): string {
     if (!phone) return this.bcMissing;
-    let area = phone.AreaCode ? `${phone.AreaCode}` : '';
+    let area = phone.AreaCode ? `${phone.AreaCode}` : '000';
     let main = phone.Number ? `${phone.Number}` : '';
     const digits = `${area}${main}`.replace(/[^0-9]/g, '');
     if (!digits) return '';
@@ -100,9 +100,9 @@ export class TransunionReportParsers extends TransunionBase {
    * @param subscriber
    * @returns
    */
-  static unparseSubscriber(subscriber: ISubscriber | undefined): [string?, string?, string?] {
+  static unparseSubscriber(subscriber: ISubscriber | undefined, nameOverride?: string): [string?, string?, string?] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
-    const name = subscriber.name;
+    const name = nameOverride ? nameOverride : subscriber.name;
     const address = this.unparseAddress(subscriber.CreditAddress);
     const phone = subscriber.telephone;
     const filtered = [name, address, phone].filter((x) => x && x.length > 0) as [string, string, string];
