@@ -61,7 +61,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
       if (!isOldEnough) {
         // suspend the user account and route them to the suspended page
         await this.kycService.suspendUserOnAge();
-        this.router.navigate(['/suspended']);
+        this.router.navigate(['/suspended/default']);
       } else {
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../address'], { relativeTo: this.route });

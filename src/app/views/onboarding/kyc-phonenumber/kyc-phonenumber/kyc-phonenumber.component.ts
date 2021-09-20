@@ -161,7 +161,8 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
    */
   async getAuthQuestions(data: UpdateAppDataInput | undefined): Promise<KycPhonenumberComponent> {
     if (!data) return this;
-    this.authXML = await this.kycService.getGetAuthenticationQuestionsResults(data);
+    const resp = await this.kycService.getGetAuthenticationQuestionsResults(data);
+    this.authXML = ''; // TODO need to fix!!!!
     return this;
   }
 

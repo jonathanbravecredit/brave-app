@@ -10,7 +10,7 @@ const SuspendedRoutes: Routes = [
     component: SuspendedView,
     children: [
       {
-        path: 'init',
+        path: 'default',
         component: SuspendedDefaultView,
       },
     ],
