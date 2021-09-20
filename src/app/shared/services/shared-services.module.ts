@@ -12,6 +12,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
 import { NavigationService } from '@shared/services/navigation/navigation.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
 
 const services = [
   AuthService,
@@ -26,6 +27,7 @@ const services = [
   CustomLineChartService,
   NavigationService,
   FeatureFlagsService,
+  GoogleService,
 ];
 
 @NgModule({

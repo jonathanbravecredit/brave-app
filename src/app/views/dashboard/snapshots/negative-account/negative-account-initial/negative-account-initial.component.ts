@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -8,22 +7,22 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { Observable } from 'rxjs';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
 
 @Component({
   selector: 'brave-negative-account-initial',
   templateUrl: './negative-account-initial.component.html',
 })
-export class NegativeAccountInitialComponent {
+export class NegativeAccountInitialComponent implements OnInit {
   creditReport$: Observable<IMergeReport>;
-  /**
-   * Flag to indicate that dispute terms have been acknowledged
-   */
   _acknowledged: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private statesvc: StateService,
+    private google: GoogleService,
     private creditReportService: CreditreportService,
     private disputeService: DisputeService,
   ) {
@@ -36,6 +35,10 @@ export class NegativeAccountInitialComponent {
   }
   get acknowledged(): boolean {
     return this._acknowledged;
+  }
+
+  ngOnInit(): void {
+    this.google.firePageViewEvent(gtEvts.DashboardReportSnapshotNegative);
   }
 
   /**
