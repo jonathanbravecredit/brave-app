@@ -10,7 +10,6 @@ import {
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
@@ -18,6 +17,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { BraveUtil } from '@shared/utils/brave/brave';
 
 @Injectable({
   providedIn: 'root',
@@ -154,14 +154,8 @@ export class SyncService implements OnDestroy {
   async initAppData(id: string): Promise<void> {
     if (!id) return;
     try {
-      const input: CreateAppDataInput = {
-        ...INIT_DATA,
-        id: id,
-        user: {
-          ...INIT_DATA.user,
-          id: id,
-        },
-      };
+      const input: CreateAppDataInput | undefined = BraveUtil.generators.createNewUserData(id);
+      if (input === undefined) return;
       const data = await this.api.CreateAppData(input);
       const clean = this.cleanBackendData(data);
 
@@ -244,10 +238,7 @@ export class SyncService implements OnDestroy {
    * @returns
    */
   cleanBackendData(data: GetAppDataQuery | OnUpdateAppDataSubscription): AppDataStateModel {
-    let clean = deleteKeyNestedObject(data, '__typename');
-    delete clean.createdAt; // this is a graphql managed field
-    delete clean.updatedAt; // this is a graphql managed field
-    delete clean.owner; // this is a graphql managed field
+    let clean = BraveUtil.scrubbers.scrubBackendData(data);
     return clean;
   }
 }
