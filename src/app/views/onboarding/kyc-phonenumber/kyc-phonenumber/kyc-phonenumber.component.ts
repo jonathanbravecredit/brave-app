@@ -3,7 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import { TUReportResponse, UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
+import {
+  TransunionInput,
+  TUReportResponse,
+  UpdateAppDataInput,
+  UserAttributesInput,
+} from '@shared/services/aws/api.service';
 import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
 import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
@@ -18,6 +23,7 @@ import { GoogleService } from '@shared/services/analytics/google/google.service'
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { IGetAuthenticationQuestionsResult } from '@shared/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { TUBundles } from '@shared/utils/transunion/constants';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -89,29 +95,24 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
       try {
         const data = await this.kycService.updateUserAttributesAsync(attrs);
         const authResp = await this.kycService.getGetAuthenticationQuestionsResults(data);
-        debugger;
         if (!authResp.success || !authResp.data) {
           this.bailOut<IGetAuthenticationQuestionsResult>(authResp); // TU response or BC technical error
         } else {
           const questions = await this.kycService.processGetAuthenticationQuestionsResponse(authResp.data);
           const xml = tu.parsers.onboarding.parseAuthQuestions(questions);
-          debugger;
           if (!xml) {
             this.bailOut();
           } else {
             await this.kycService.updateCurrentRawQuestionsAsync(xml); // will through error if connection issue
             const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xml);
             const otpQuestion = this.kycService.getOTPQuestion(authQuestions);
-            debugger;
             if (otpQuestion) {
               const otpResp = await this.sendOTPResponse(otpQuestion);
-              debugger;
               if (!otpResp.success || !otpResp.data) {
                 this.bailOut<IVerifyAuthenticationQuestionsResult>(otpResp);
               } else {
                 const codeQuestions = otpResp.data?.AuthenticationDetails;
                 await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
-                debugger;
                 this.router.navigate(['../code'], { relativeTo: this.route });
               }
             } else {
@@ -120,16 +121,24 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
           }
         }
       } catch (err) {
-        debugger;
         this.bailOut();
       }
     }
   }
 
+  /**
+   * Method to route user to appropriate error screen using kyc service
+   * @param resp
+   */
   bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
-    //handle the errors correctly
-    // if resp is undefined = BC technical error...go to retry.
-    // otherwise validate the error responses against the flow (-1) is BC technical...go to retry
+    const tuPartial: Partial<TransunionInput> = {
+      getAuthenticationQuestionsSuccess: false,
+      getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
+        TUBundles.GetAuthenticationQuestions,
+        false,
+      ),
+    };
+    this.kycService.bailoutFromOnboarding(tuPartial, resp);
   }
 
   /**

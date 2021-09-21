@@ -31,18 +31,27 @@ export class BraveGenerators extends BraveBase {
   }
 
   /**
-   * Method to generate the state for an account suspended due to an age restriction
+   * Generic Method to generate the state for an account suspended due to a provided reasons
+   * - duration is in hours
+   * @param { status, reason, duration}
    * @returns
    */
-  static createSuspendedAgeRestrictionStatus(): IAppStatus {
+  static createSuspendedStatus({
+    status,
+    reason,
+    duration,
+  }: {
+    status: AppStatus;
+    reason: AppStatusReason;
+    duration: number;
+  }): IAppStatus {
     const now = new Date();
-    const thirtydays = 24 * 30;
     return {
-      status: AppStatus.Suspended,
-      statusReason: AppStatusReason.AgeRestriction,
-      statusReasonDescription: AppStatusReasonDescriptions[AppStatusReason.AgeRestriction],
+      status: status,
+      statusReason: reason,
+      statusReasonDescription: AppStatusReasonDescriptions[reason],
       lastStatusModifiedOn: now.toISOString(),
-      nextStatusModifiedOn: addHoursToDate(now, thirtydays).toISOString(),
+      nextStatusModifiedOn: addHoursToDate(now, duration).toISOString(),
     };
   }
 }

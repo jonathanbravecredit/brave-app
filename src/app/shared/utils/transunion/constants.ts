@@ -39,6 +39,11 @@ export enum TUStatusRefStatuses {
   Bypassed = 'bypassed',
 }
 
+export enum TUBundles {
+  IndicativeEnrichment = 'IndicativeEnrichment',
+  GetAuthenticationQuestions = 'GetAuthenticationQuestions',
+}
+
 export const INVESTIGATION_RESULTS_CODE_MAPPING: { type: string; title: string }[] = [
   {
     type: 'deleted',
@@ -78,6 +83,18 @@ export const INDUSTRY_CODES: Record<string, string> = {
   bs: 'student_loan',
   el: 'student_loan',
   vg: 'student_loan',
+};
+
+export const TRANSUNION_CRITICAL_ERRORS: Record<string, { keyWords: [string] }> = {
+  15: {
+    keyWords: ['duplicate'],
+  },
+  103011: {
+    keyWords: ['ssncachematchtodatabasefailed'],
+  },
+  103014: {
+    keyWords: ['dateofbirthmatchtodatabasefailed'],
+  },
 };
 
 export const TRANSUNION_ERROR_CODES: Record<string, any> = {

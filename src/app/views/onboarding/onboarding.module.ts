@@ -15,7 +15,6 @@ import { KycErrorValidationComponent } from './kyc-exceptions/components/kyc-err
 import { KycExceptionsView } from './kyc-exceptions/kyc-exceptions/kyc-exceptions.view';
 import { KycExceptionsPureView } from './kyc-exceptions/kyc-exceptions-pure/kyc-exceptions-pure.view';
 import { KycErrorComponent } from '@views/onboarding/kyc-exceptions/components/kyc-error/kyc-error.component';
-import { KycRetryComponent } from '@views/onboarding/kyc-exceptions/components/kyc-retry/kyc-retry.component';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { KycKbaquestionsComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
@@ -30,6 +29,7 @@ import { KycWelcomebackPureComponent } from '@views/onboarding/kyc-welcomeback/k
 import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
 import { KycAddressComponent } from '@views/onboarding/kyc-address/kyc-address/kyc-address.component';
 import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
+import { KycRetryComponent } from './kyc-retry/kyc-retry.component';
 
 // SERVICES
 import { OnboardingService } from '@views/onboarding/onboarding.service';
@@ -49,7 +49,6 @@ const components = [
   KycIdverificationPureComponent,
   KycErrorComponent,
   KycErrorValidationComponent,
-  KycRetryComponent,
   KycExceptionsView,
   KycExceptionsPureView,
   KycKbaquestionsComponent,
@@ -64,6 +63,7 @@ const components = [
   KycWelcomePureComponent,
   KycWelcomebackComponent,
   KycWelcomebackPureComponent,
+  KycRetryComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];

@@ -1,5 +1,6 @@
+import { ITUServiceResponse } from '@shared/interfaces';
 import { ITransunionErrorCode } from '@shared/interfaces/tu-error-codes.interface';
-import { TRANSUNION_ERROR_CODES } from '@shared/utils/transunion/constants';
+import { TRANSUNION_CRITICAL_ERRORS, TRANSUNION_ERROR_CODES } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionExceptionQueries extends TransunionBase {
@@ -12,5 +13,16 @@ export class TransunionExceptionQueries extends TransunionBase {
     return !detail
       ? TRANSUNION_ERROR_CODES['11'] // non-specific error
       : detail;
+  }
+
+  static isErrorCritical(resp: ITUServiceResponse<any>): boolean {
+    const { error: { Code, Message } = {} } = resp;
+    const { keyWords } = TRANSUNION_CRITICAL_ERRORS[`${Code}`];
+    const found = keyWords.find((w) => {
+      const msg = Message?.toLowerCase() || '';
+      const word = w.toLowerCase();
+      return msg.indexOf(word) >= 0;
+    });
+    return found ? true : false;
   }
 }

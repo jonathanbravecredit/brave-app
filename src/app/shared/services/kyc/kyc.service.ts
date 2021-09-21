@@ -3,7 +3,12 @@ import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
 import * as parser from 'fast-xml-parser';
 const he = require('he');
-import { AgenciesInput, UpdateAppDataInput, UserAttributesInput } from '@shared/services/aws/api.service';
+import {
+  AgenciesInput,
+  TransunionInput,
+  UpdateAppDataInput,
+  UserAttributesInput,
+} from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
@@ -22,6 +27,9 @@ import {
 import { Router } from '@angular/router';
 import { BraveUtil as bc } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { from } from 'rxjs';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -159,7 +167,60 @@ export class KycService {
    */
   async suspendUserOnAge(): Promise<void> {
     const { appData } = this.statesvc.state$.value;
-    const suspended = bc.generators.createSuspendedAgeRestrictionStatus();
+    const duration = 24 * 30;
+    const suspended = bc.generators.createSuspendedStatus({
+      status: AppStatus.Suspended,
+      reason: AppStatusReason.AgeRestriction,
+      duration: duration,
+    });
+    const newData = {
+      ...appData,
+      ...suspended,
+    };
+    if (appData.id && newData.id) {
+      try {
+        await this.statesvc.updateStateDBSyncAsync(newData);
+      } catch (err) {
+        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
+      }
+    }
+  }
+
+  /**
+   * Takes the current user and suspends their account
+   */
+  async suspendUserOnCriticalFail(): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const duration = 24 * 30;
+    const suspended = bc.generators.createSuspendedStatus({
+      status: AppStatus.Suspended,
+      reason: AppStatusReason.ThirtyDayLockout,
+      duration: duration,
+    });
+    const newData = {
+      ...appData,
+      ...suspended,
+    };
+    if (appData.id && newData.id) {
+      try {
+        await this.statesvc.updateStateDBSyncAsync(newData);
+      } catch (err) {
+        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
+      }
+    }
+  }
+
+  /**
+   * Takes the current user and suspends their account
+   */
+  async suspendUserOnAuthAttempts(): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const duration = 24 * 30;
+    const suspended = bc.generators.createSuspendedStatus({
+      status: AppStatus.Suspended,
+      reason: AppStatusReason.AuthAttemptsExceeded,
+      duration: duration,
+    });
     const newData = {
       ...appData,
       ...suspended,
@@ -207,7 +268,7 @@ export class KycService {
     const { appData } = this.statesvc.state$.value;
     const transunion = appData.agencies?.transunion;
     if (enrichment.ResponseType.toLowerCase() === 'success') {
-      const status = tu.generators.createOnboardingStatus('IndicativeEnrichment', true);
+      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, true);
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           ...transunion,
@@ -218,7 +279,7 @@ export class KycService {
       });
       return enrichment;
     } else {
-      const status = tu.generators.createOnboardingStatus('IndicativeEnrichment', false);
+      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false);
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           ...transunion,
@@ -279,7 +340,7 @@ export class KycService {
     const { appData } = this.statesvc.state$.value;
     const transunion = appData.agencies?.transunion;
     if (questions.ResponseType.toLowerCase() === 'success') {
-      const status = tu.generators.createOnboardingStatus('GetAuthenticationQuestions', true);
+      const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, true);
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           ...transunion,
@@ -291,7 +352,7 @@ export class KycService {
       // now do the authentication
       return questions;
     } else {
-      const status = tu.generators.createOnboardingStatus('GetAuthenticationQuestions', false);
+      const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, false);
       await this.updateTransunionIndicativeEnrichment({
         transunion: {
           ...transunion,
@@ -474,11 +535,44 @@ export class KycService {
     }
   }
 
-  bailoutFromOnboarding(error: IErrorResponse) {
-    // take the error code
-    // determine path
-    // read message if needed
-    // update account if needed
-    // route user to appropriate view
+  async bailoutFromOnboarding(
+    tuPartial: Partial<TransunionInput>,
+    resp?: ITUServiceResponse<any | undefined>,
+  ): Promise<void> {
+    debugger;
+    const agencies = this.statesvc.state$.value.appData.agencies;
+    const transunion = this.statesvc.state$.value.appData.agencies?.transunion;
+    if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
+      // technical error...api did not respond and error thrown (empty resp);
+      this.router.navigate(['/onboarding/retry']);
+    } else {
+      const critical = tu.queries.exceptions.isErrorCritical(resp);
+      const authAttempt = (transunion.authAttempt || 0) + 1;
+      if (critical) {
+        await this.statesvc.updateAgenciesAsync({
+          ...agencies,
+          transunion: {
+            ...transunion,
+            ...tuPartial,
+            authAttempt,
+          },
+        });
+        await this.suspendUserOnCriticalFail();
+        this.router.navigate(['/suspended/default']);
+      } else if (authAttempt >= 2) {
+        await this.statesvc.updateAgenciesAsync({
+          ...agencies,
+          transunion: {
+            ...transunion,
+            ...tuPartial,
+            authAttempt,
+          },
+        });
+        await this.suspendUserOnAuthAttempts();
+        this.router.navigate(['/suspended/default']);
+      } else {
+        this.router.navigate(['/onboarding/retry']);
+      }
+    }
   }
 }
