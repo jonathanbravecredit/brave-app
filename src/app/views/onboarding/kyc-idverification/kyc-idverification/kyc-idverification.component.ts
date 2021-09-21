@@ -5,7 +5,7 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
-import { UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
@@ -21,6 +21,8 @@ import {
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ITUServiceResponse } from '@shared/interfaces';
+import { TUBundles } from '@shared/utils/transunion/constants';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -132,11 +134,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
   async processRequest(code: string): Promise<void> {
     try {
       this.getAuthenticationQuestions();
-      this.passcodeQuestion
-        ? await this.sendPasscodeResponse(code)
-        : (() => {
-            throw 'No passcode questionfound';
-          })();
+      this.passcodeQuestion ? await this.sendPasscodeResponse(code) : this.bailOut<any>();
       this.authSuccessful
         ? await this.sendCompleteOnboarding()
         : (() => {
@@ -171,20 +169,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
   }
 
   /**
-   * Method to:
-   * - get the passcode answer
-   * - verify the answer with TU
-   * - confirm authentication
-   * // passcodeAnswer > verifyResponse > authResponse
-   */
-  async sendPasscodeResponse(code: string): Promise<void> {
-    this.getPasscodeAnswer(this.passcodeQuestion, code);
-    (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
-      .parseVerifyResponse(this.verifyResponse)
-      .isVerificationSuccesful(this.authResponse);
-  }
-
-  /**
    * Updates the authXML prop with the authentication questions back from TU
    * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
    * @returns
@@ -197,7 +181,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
   /**
    * Update the authQuestions prop with the parsed authXML prop
-   * @param {string | undefined} xml
+   * @param xml
    * @returns
    */
   parseAuthDetails(xml: string | undefined): KycIdverificationComponent {
@@ -217,10 +201,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
     };
     return this;
   }
+
   /**
    * Updates the otpQuestion prop with the OTP question provided by TU
    *   - Searches the questions returned for specific OTP text
-   * @param {ITransunionKBAQuestions | undefined} questions
+   * @param questions
    * @returns
    */
   getPasscodeQuestion(questions: ITransunionKBAQuestions | undefined): KycIdverificationComponent {
@@ -232,9 +217,23 @@ export class KycIdverificationComponent extends KycBaseComponent {
   }
 
   /**
+   * Method to:
+   * - get the passcode answer
+   * - verify the answer with TU
+   * - confirm authentication
+   * // passcodeAnswer > verifyResponse > authResponse
+   */
+  async sendPasscodeResponse(code: string): Promise<void> {
+    this.getPasscodeAnswer(this.passcodeQuestion, code);
+    (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
+      .parseVerifyResponse(this.verifyResponse)
+      .isVerificationSuccesful(this.authResponse);
+  }
+
+  /**
    * Updates the otpAnswer prop with the OTP answer provided by TU
    *   - Searches the answers returned for the specific OTP text (send text message)
-   * @param {ITransunionKBAQuestion | undefined} otpQuestion
+   * @param otpQuestion
    * @returns
    */
   getPasscodeAnswer(passcodeQuestion: ITransunionKBAQuestion | undefined, code: string): KycIdverificationComponent {
@@ -248,9 +247,9 @@ export class KycIdverificationComponent extends KycBaseComponent {
   /**
    * Updates the verifyResponse prop with the VerifyAuthenticationQuestions response from TU
    *   - This is the response to our answer to send OTP (send text message)
-   *   - This response will contain an question (enter the passcode) embeded in CDATA
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
-   * @param {IVerifyAuthenticationAnswer | undefined} otpAnswer
+   *   - This response will contain a question (enter the passcode) embeded in CDATA
+   * @param state
+   * @param otpAnswer
    * @returns
    */
   async sendVerifyAuthQuestions(
@@ -282,7 +281,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
     if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
     this.authSuccessful = resp.ResponseType.toLowerCase() === 'success';
     if (!this.authSuccessful) {
-      this.attempts++;
+      this.attempts++; // TODO replace with state/db update
       this.updateViewState('error');
     }
     return this;
@@ -297,7 +296,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
   /**
    * Once the user is verified complete the onboarding step on the server
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+   * @param state
    * @returns
    */
   async sendCompleteOnboarding(): Promise<KycIdverificationComponent> {
@@ -319,6 +318,21 @@ export class KycIdverificationComponent extends KycBaseComponent {
       this.interstitial.fetching$.next(false);
       throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
     }
+  }
+
+  /**
+   * Method to route user to appropriate error screen using kyc service
+   * @param resp
+   */
+  bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: Partial<TransunionInput> = {
+      getAuthenticationQuestionsSuccess: false, // NEED TO UPDATE TO VERIFY OTP in state
+      getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
+        TUBundles.GetAuthenticationQuestions,
+        false,
+      ),
+    };
+    this.kycService.bailoutFromOnboarding(tuPartial, resp);
   }
 }
 
