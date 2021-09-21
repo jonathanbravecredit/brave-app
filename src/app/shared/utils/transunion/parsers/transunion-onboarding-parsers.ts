@@ -1,6 +1,7 @@
-import { ISubscriber } from '@shared/interfaces/credit-bureau.interface';
 import { IGetAuthenticationQuestionsResult } from '@shared/interfaces/get-authorization-questions.interface';
-import { ITransunionKBAChallengeAnswer } from '@shared/interfaces/tu-kba-questions.interface';
+import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
+import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
+import { OTPQuestion, OTPReponse, PassCodeQuestion } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import * as parser from 'fast-xml-parser';
 const he = require('he');
@@ -39,5 +40,86 @@ export class TransunionOnboardingParsers extends TransunionBase {
     const clean = he.decode(he.decode(xml));
     const questions: T = parser.parse(clean, parserOptions);
     return questions;
+  }
+
+  /**
+   * Runs a series of tests to see if the question is a OTP
+   * @param questions
+   * @returns
+   */
+  static parseOTPQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
+    const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
+      questions?.ChallengeConfigurationType?.MultiChoiceQuestion instanceof Array
+        ? questions?.ChallengeConfigurationType?.MultiChoiceQuestion
+        : new Array(questions?.ChallengeConfigurationType?.MultiChoiceQuestion);
+    return series.find(
+      (q) =>
+        q.FullQuestionText === OTPQuestion.FullText ||
+        q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
+        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0,
+    );
+  }
+
+  /**
+   * Runs a series of test to find the 'Send text message' answer for OTP
+   * @param question
+   * @returns
+   */
+  static parseOTPSendTextAnswer(question: ITransunionKBAQuestion): IVerifyAuthenticationAnswer {
+    const answerChoice =
+      question?.AnswerChoice instanceof Array ? question?.AnswerChoice : new Array(question?.AnswerChoice);
+
+    let answer = answerChoice.find(
+      (c) => c.AnswerChoiceText === OTPReponse.FullText || c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0,
+    );
+    return {
+      VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+        QuestionId: question?.QuestionId,
+        SelectedAnswerChoice: {
+          AnswerChoiceId: answer?.AnswerChoiceId || '',
+        },
+      },
+    };
+  }
+
+  /**
+   * Runs a series of tests to see if the question is for the passcode
+   * @param questions
+   * @returns
+   */
+  static parsePassCodeQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
+    const series: ITransunionKBAQuestion[] =
+      questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
+        ? questions.ChallengeConfigurationType.MultiChoiceQuestion
+        : new Array(questions.ChallengeConfigurationType.MultiChoiceQuestion);
+    return series.find(
+      (q) =>
+        q.FullQuestionText === PassCodeQuestion.FullText ||
+        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0,
+    );
+  }
+
+  /**
+   * Runs a series of test to find the 'Send text message' answer for OTP
+   * @param question
+   * @returns
+   */
+  static parsePassCodeAnswer(question: ITransunionKBAQuestion, input: string): IVerifyAuthenticationAnswer {
+    const answerChoice =
+      question.AnswerChoice instanceof Array ? question.AnswerChoice : new Array(question.AnswerChoice);
+    const answer = answerChoice.find(
+      (c) =>
+        c.AnswerChoiceText === PassCodeQuestion.FullText ||
+        c.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0,
+    );
+    return {
+      VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+        QuestionId: question?.QuestionId,
+        SelectedAnswerChoice: {
+          AnswerChoiceId: answer?.AnswerChoiceId || '',
+          UserInputAnswer: input,
+        },
+      },
+    };
   }
 }

@@ -36,22 +36,6 @@ export enum KYCResponse {
   Success = 'success',
 }
 
-export enum OTPQuestion {
-  FullText = 'Please select your preferred method of Authentication?(Standard text message and voice rates apply)*</FullQuestionText',
-  PartialOne = 'preferred method of Authentication',
-  PartialTwo = 'Standard text message and voice rates apply',
-}
-
-export enum OTPReponse {
-  FullText = 'Deliver passcode via Text Message',
-  PartialOne = 'via Text Message',
-}
-
-export enum PassCodeQuestion {
-  FullText = 'Enter the passcode you received',
-  PartialOne = 'passcode',
-}
-
 const parserOptions = {
   attributeNamePrefix: '',
   ignoreAttributes: false,
@@ -414,16 +398,7 @@ export class KycService {
    * @returns
    */
   getOTPQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
-    const series: ITransunionKBAQuestion[] | ITransunionKBAQuestion =
-      questions?.ChallengeConfigurationType?.MultiChoiceQuestion instanceof Array
-        ? questions?.ChallengeConfigurationType?.MultiChoiceQuestion
-        : new Array(questions?.ChallengeConfigurationType?.MultiChoiceQuestion);
-    return series.find(
-      (q) =>
-        q.FullQuestionText === OTPQuestion.FullText ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0,
-    );
+    return tu.parsers.onboarding.parseOTPQuestion(questions);
   }
 
   /**
@@ -432,20 +407,7 @@ export class KycService {
    * @returns
    */
   getOTPSendTextAnswer(question: ITransunionKBAQuestion): IVerifyAuthenticationAnswer {
-    const answerChoice =
-      question?.AnswerChoice instanceof Array ? question?.AnswerChoice : new Array(question?.AnswerChoice);
-
-    let answer = answerChoice.find(
-      (c) => c.AnswerChoiceText === OTPReponse.FullText || c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0,
-    );
-    return {
-      VerifyChallengeAnswersRequestMultiChoiceQuestion: {
-        QuestionId: question?.QuestionId,
-        SelectedAnswerChoice: {
-          AnswerChoiceId: answer?.AnswerChoiceId || '',
-        },
-      },
-    };
+    return tu.parsers.onboarding.parseOTPSendTextAnswer(question);
   }
 
   /**
@@ -454,15 +416,7 @@ export class KycService {
    * @returns
    */
   getPassCodeQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
-    const series: ITransunionKBAQuestion[] =
-      questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
-        ? questions.ChallengeConfigurationType.MultiChoiceQuestion
-        : new Array(questions.ChallengeConfigurationType.MultiChoiceQuestion);
-    return series.find(
-      (q) =>
-        q.FullQuestionText === PassCodeQuestion.FullText ||
-        q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0,
-    );
+    return tu.parsers.onboarding.parsePassCodeQuestion(questions);
   }
 
   /**
@@ -471,22 +425,7 @@ export class KycService {
    * @returns
    */
   getPassCodeAnswer(question: ITransunionKBAQuestion, input: string): IVerifyAuthenticationAnswer {
-    const answerChoice =
-      question.AnswerChoice instanceof Array ? question.AnswerChoice : new Array(question.AnswerChoice);
-    const answer = answerChoice.find(
-      (c) =>
-        c.AnswerChoiceText === PassCodeQuestion.FullText ||
-        c.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0,
-    );
-    return {
-      VerifyChallengeAnswersRequestMultiChoiceQuestion: {
-        QuestionId: question?.QuestionId,
-        SelectedAnswerChoice: {
-          AnswerChoiceId: answer?.AnswerChoiceId || '',
-          UserInputAnswer: input,
-        },
-      },
-    };
+    return tu.parsers.onboarding.parsePassCodeAnswer(question, input);
   }
 
   /**

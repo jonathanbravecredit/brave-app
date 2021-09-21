@@ -32,15 +32,6 @@ import { TUBundles } from '@shared/utils/transunion/constants';
 export class KycPhonenumberComponent extends KycBaseComponent implements OnInit, AfterViewInit {
   @ViewChild(KycPhonenumberPureComponent) pure: KycPhonenumberPureComponent | undefined;
   private stepID = 3;
-  private state: UpdateAppDataInput | undefined;
-  private authXML: string | undefined;
-  private authQuestions: ITransunionKBAQuestions | undefined;
-  private otpQuestion: ITransunionKBAQuestion | undefined;
-  private otpAnswer: IVerifyAuthenticationAnswer | undefined;
-  private verifyResponse: IVerifyAuthenticationQuestionsResult | undefined;
-  private codeQuestion: string | undefined;
-  private authResponse: IVerifyAuthenticationQuestionsResult | undefined;
-  private authSuccessful: boolean = false;
   public hasError: boolean = false;
 
   constructor(

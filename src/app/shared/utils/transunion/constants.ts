@@ -79,6 +79,22 @@ export const INVESTIGATION_RESULTS_CODE_MAPPING: { type: string; title: string }
   },
 ];
 
+export enum OTPQuestion {
+  FullText = 'Please select your preferred method of Authentication?(Standard text message and voice rates apply)*</FullQuestionText',
+  PartialOne = 'preferred method of Authentication',
+  PartialTwo = 'Standard text message and voice rates apply',
+}
+
+export enum OTPReponse {
+  FullText = 'Deliver passcode via Text Message',
+  PartialOne = 'via Text Message',
+}
+
+export enum PassCodeQuestion {
+  FullText = 'Enter the passcode you received',
+  PartialOne = 'passcode',
+}
+
 export const INDUSTRY_CODES: Record<string, string> = {
   bs: 'student_loan',
   el: 'student_loan',
