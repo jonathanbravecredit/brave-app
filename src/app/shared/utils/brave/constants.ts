@@ -1,4 +1,5 @@
 import { CreateAppDataInput } from '@shared/services/aws/api.service';
+import { IBraveTechnicalError } from '@shared/utils/brave/interfaces';
 
 export enum AppStatus {
   Active = 'active',
@@ -43,7 +44,7 @@ export const INIT_DATA: CreateAppDataInput = {
     },
   },
   agencies: {
-    transunion: { authenticated: false },
+    transunion: { authenticated: false, authAttempt: 1 },
     experian: { authenticated: false },
     equifax: { authenticated: false },
   },
@@ -58,4 +59,9 @@ export const INIT_DATA: CreateAppDataInput = {
   status: AppStatus.Active,
   statusReason: AppStatusReason.Active,
   statusReasonDescription: AppStatusReasonDescriptions[AppStatusReason.Active],
+};
+
+export const BRAVE_TECHNICAL_ERROR: IBraveTechnicalError = {
+  success: false,
+  error: { Code: -1 },
 };

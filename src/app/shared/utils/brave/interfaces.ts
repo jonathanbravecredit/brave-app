@@ -1,4 +1,5 @@
-import { AppStatus, AppStatusReason } from "@shared/utils/brave/constants";
+import { ITUServiceResponse } from '@shared/interfaces';
+import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
 export interface IAppStatus {
   status: AppStatus;
@@ -7,3 +8,5 @@ export interface IAppStatus {
   lastStatusModifiedOn: string;
   nextStatusModifiedOn: string;
 }
+
+export interface IBraveTechnicalError extends ITUServiceResponse<undefined> {}

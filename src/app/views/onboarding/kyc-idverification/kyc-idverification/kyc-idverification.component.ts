@@ -20,6 +20,7 @@ import {
   GooglePageViewEvents as gtViews,
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -201,7 +202,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   parseAuthDetails(xml: string | undefined): KycIdverificationComponent {
     if (!xml) return this;
-    this.authQuestions = this.kycService.parseCurrentRawAuthDetails(xml);
+    this.authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(xml);
     return this;
   }
 

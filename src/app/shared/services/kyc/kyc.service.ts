@@ -17,9 +17,11 @@ import {
   IGetAuthenticationQuestionsResult,
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
+  IErrorResponse,
 } from '@shared/interfaces';
 import { Router } from '@angular/router';
-import { BraveUtil } from '@shared/utils/brave/brave';
+import { BraveUtil as bc } from '@shared/utils/brave/brave';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -131,202 +133,6 @@ export class KycService {
   }
 
   /**
-   * Takes the current user and suspends their account
-   */
-  async suspendUserOnAge(): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const suspended = BraveUtil.generators.createSuspendedAgeRestrictionStatus();
-    const newData = {
-      ...appData,
-      ...suspended,
-    };
-    if (appData.id && newData.id) {
-      try {
-        await this.statesvc.updateStateDBSyncAsync(newData);
-      } catch (err) {
-        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
-      }
-    }
-  }
-
-  /**
-   * Takes the agency status and updates the state with them
-   * @param {AgenciesInput} agency the new agency input data to write to db and state
-   */
-  updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
-    this.statesvc.updateAgencies(agency);
-  }
-
-  /**
-   * Send the indicative enrichment message to the Transunion backend and await a response
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendIndicativeEnrichment(
-    appData: UpdateAppDataInput | AppDataStateModel,
-  ): Promise<IIndicativeEnrichmentResult | undefined> {
-    try {
-      const { success, error, data } = await this.transunion.sendIndicativeEnrichment(appData);
-      return success ? data : undefined;
-    } catch (err) {
-      throw new Error(`kycService:sendIndicativeEnrichment=${err}`);
-    }
-  }
-
-  /**
-   * Process and clean the indicative enrichment response back from Transunion
-   * @param {string} resp this is the JSON string back from the Transunion service
-   * @returns
-   */
-  async processIndicativeEnrichmentResponse(
-    enrichment: IIndicativeEnrichmentResult,
-  ): Promise<IIndicativeEnrichmentResult | undefined> {
-    if (enrichment.ResponseType.toLowerCase() === 'success') {
-      await this.updateTransunionIndicativeEnrichment({
-        transunion: {
-          authenticated: false,
-          indicativeEnrichmentSuccess: true,
-        },
-      });
-      return enrichment;
-    } else {
-      return;
-    }
-  }
-
-  /**
-   * Method to send and process the indicative enrichment request and response.
-   * @param {UpdateAppDataInput} data
-   * @returns Full ssn or a failure (TODO: handle failures)
-   */
-  async getIndicativeEnrichmentResults(data: UpdateAppDataInput): Promise<KYCResponse | string> {
-    let enrichmentResponse: IIndicativeEnrichmentResult | undefined;
-    let enrichment: IIndicativeEnrichmentResult | undefined;
-
-    try {
-      enrichmentResponse = await this.sendIndicativeEnrichment(data);
-      if (!enrichmentResponse) return KYCResponse.Failed;
-      enrichment = await this.processIndicativeEnrichmentResponse(enrichmentResponse);
-      if (!enrichment) return KYCResponse.Failed;
-      const ssn = `${enrichment.SSN}`;
-      return ssn ? ssn : KYCResponse.Failed;
-    } catch {
-      return KYCResponse.Failed;
-    }
-  }
-
-  /**
-   * Send the full ssn to the Transunion backend and await the KBA questions
-   *   - questions can be actual questions or a passcode for the phone
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendGetAuthenticationQuestions(
-    appData: UpdateAppDataInput | AppDataStateModel,
-    ssn: string = '',
-  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
-    if (!ssn) return { success: false };
-    try {
-      return await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
-    } catch (err) {
-      throw new Error(`kycService:sendGetAuthenticationQuestions=${err}`);
-    }
-  }
-
-  /**
-   * Process and clean the indicative enrichment response back from Transunion
-   * TODO move parsers to Transunion Service and then eventually backend
-   * @param {string} resp this is the JSON string back from the Transunion service
-   * @returns
-   */
-  async processGetAuthenticationQuestionsResponse(
-    questions: IGetAuthenticationQuestionsResult,
-  ): Promise<IGetAuthenticationQuestionsResult | undefined> {
-    if (questions.ResponseType.toLowerCase() === 'success') {
-      await this.updateTransunionIndicativeEnrichment({
-        transunion: {
-          authenticated: false,
-          indicativeEnrichmentSuccess: true,
-          getAuthenticationQuestionsSuccess: true,
-          serviceBundleFulfillmentKey: questions.ServiceBundleFulfillmentKey,
-        },
-      });
-      // now do the authentication
-      return questions;
-    } else {
-      return;
-    }
-  }
-
-  /**
-   * Method to send and process the authentication questions request and response
-   *   - Does not verify the accuracy of the methods...see (sendVerifyAuthenticationQuestions)
-   * @param {UpdateAppDataInput} data
-   * @returns
-   */
-  async getGetAuthenticationQuestionsResults(
-    appData: UpdateAppDataInput,
-  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
-    let questionResponse: IGetAuthenticationQuestionsResult | undefined;
-    let questions: IGetAuthenticationQuestionsResult | undefined;
-    const ssn = appData.user?.userAttributes?.ssn?.full;
-    if (!ssn) return { success: false };
-    // GetAuthorizationQuestions response from TU service
-    try {
-      const { success, error, data } = await this.sendGetAuthenticationQuestions(appData, ssn);
-      if (!success) return { success, error, data };
-      questionResponse = data;
-      // if (!data) return { success: false };
-      // questions = await this.processGetAuthenticationQuestionsResponse(questionResponse);
-      // if (!questions) return KYCResponse.Failed;
-      // // Sucess...parse questions and pass to question component
-      // const questionXml = questions.Questions;
-      // const xmlText = questionXml ? questionXml : null;
-      // if (!xmlText) return KYCResponse.Failed;
-      // await this.updateCurrentRawQuestionsAsync(xmlText || '');
-      // return xmlText;
-      return { success: true };
-    } catch {
-      return { success: false }; // KYCResponse.Failed;
-    }
-  }
-
-  /**
-   * This parses the xml string and returns it as the TU question format
-   * - TODO move this back to server
-   * @param {string} xml xml string in the TU question schema
-   * @returns
-   */
-  parseCurrentRawQuestions(xml: string): ITransunionKBAQuestions {
-    // need two decodes, encoded by TU and our default parser settings
-    const clean = he.decode(he.decode(xml));
-    const questions: ITransunionKBAQuestions = parser.parse(clean, parserOptions);
-    return questions;
-  }
-
-  /**
-   * Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param {string} questions the string of xml questions returned by Transunion or other agency
-   */
-  updateCurrentRawQuestions(questions: string): void {
-    this.statesvc.updateTransunionQuestions(questions);
-  }
-
-  /**
-   * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param {string} questions the string of xml questions returned by Transunion or other agency
-   */
-  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput | undefined> {
-    try {
-      return await this.statesvc.updateTransunionQuestionsAsync(questions);
-    } catch (err) {
-      throw new Error(`kycService:updateCurrentRawQuestionsAsync=${err}`);
-    }
-  }
-
-  /**
    * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
    *   - Does not store in the database as there is no need to.
    * @param agencies
@@ -349,15 +155,174 @@ export class KycService {
   }
 
   /**
-   * This parses the xml string and returns it as the TU question format
-   * @param {string} xml xml string in the TU question schema
+   * Takes the current user and suspends their account
+   */
+  async suspendUserOnAge(): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const suspended = bc.generators.createSuspendedAgeRestrictionStatus();
+    const newData = {
+      ...appData,
+      ...suspended,
+    };
+    if (appData.id && newData.id) {
+      try {
+        await this.statesvc.updateStateDBSyncAsync(newData);
+      } catch (err) {
+        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
+      }
+    }
+  }
+
+  /**
+   * Takes the agency status and updates the state with them
+   * @param {AgenciesInput} agency the new agency input data to write to db and state
+   */
+  updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
+    this.statesvc.updateAgencies(agency);
+  }
+
+  /**
+   * Method to send and process the indicative enrichment request and response.
+   * @param {UpdateAppDataInput} appData
+   * @returns Full ssn or a failure (TODO: handle failures)
+   */
+  async getIndicativeEnrichmentResults(
+    appData: UpdateAppDataInput,
+  ): Promise<ITUServiceResponse<IIndicativeEnrichmentResult | undefined>> {
+    try {
+      return await this.transunion.sendIndicativeEnrichment(appData);
+    } catch {
+      return bc.technicalError;
+    }
+  }
+
+  /**
+   * Process and clean the indicative enrichment response back from Transunion
+   * @param {string} resp this is the JSON string back from the Transunion service
    * @returns
    */
-  parseCurrentRawAuthDetails(xml: string): ITransunionKBAChallengeAnswer {
-    // need two decodes, encoded by TU and our default parser settings
-    const clean = he.decode(he.decode(xml));
-    const questions: ITransunionKBAChallengeAnswer = parser.parse(clean, parserOptions);
-    return questions;
+  async processIndicativeEnrichmentResponse(
+    enrichment: IIndicativeEnrichmentResult,
+  ): Promise<IIndicativeEnrichmentResult | undefined> {
+    const { appData } = this.statesvc.state$.value;
+    const transunion = appData.agencies?.transunion;
+    if (enrichment.ResponseType.toLowerCase() === 'success') {
+      const status = tu.generators.createOnboardingStatus('IndicativeEnrichment', true);
+      await this.updateTransunionIndicativeEnrichment({
+        transunion: {
+          ...transunion,
+          authenticated: false,
+          indicativeEnrichmentSuccess: true,
+          indicativeEnrichmentStatus: status,
+        },
+      });
+      return enrichment;
+    } else {
+      const status = tu.generators.createOnboardingStatus('IndicativeEnrichment', false);
+      await this.updateTransunionIndicativeEnrichment({
+        transunion: {
+          ...transunion,
+          authenticated: false,
+          indicativeEnrichmentSuccess: false,
+          indicativeEnrichmentStatus: status,
+        },
+      });
+      return;
+    }
+  }
+
+  /**
+   * Method to send and process the authentication questions request and response
+   *   - Does not verify the accuracy of the methods...see (sendVerifyAuthenticationQuestions)
+   * @param {UpdateAppDataInput} data
+   * @returns
+   */
+  async getGetAuthenticationQuestionsResults(
+    appData: UpdateAppDataInput,
+  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
+    const ssn = appData.user?.userAttributes?.ssn?.full;
+    if (!ssn) return bc.technicalError;
+    try {
+      return await this.sendGetAuthenticationQuestions(appData, ssn);
+    } catch {
+      return bc.technicalError;
+    }
+  }
+
+  /**
+   * Send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendGetAuthenticationQuestions(
+    appData: UpdateAppDataInput | AppDataStateModel,
+    ssn: string = '',
+  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
+    if (!ssn) return bc.technicalError;
+    try {
+      return await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
+    } catch (err) {
+      return bc.technicalError;
+    }
+  }
+
+  /**
+   * Process and clean the indicative enrichment response back from Transunion
+   * TODO move parsers to Transunion Service and then eventually backend
+   * @param {string} resp this is the JSON string back from the Transunion service
+   * @returns
+   */
+  async processGetAuthenticationQuestionsResponse(
+    questions: IGetAuthenticationQuestionsResult,
+  ): Promise<IGetAuthenticationQuestionsResult | undefined> {
+    const { appData } = this.statesvc.state$.value;
+    const transunion = appData.agencies?.transunion;
+    if (questions.ResponseType.toLowerCase() === 'success') {
+      const status = tu.generators.createOnboardingStatus('GetAuthenticationQuestions', true);
+      await this.updateTransunionIndicativeEnrichment({
+        transunion: {
+          ...transunion,
+          getAuthenticationQuestionsSuccess: true,
+          getAuthenticationQuestionsStatus: status,
+          serviceBundleFulfillmentKey: questions.ServiceBundleFulfillmentKey,
+        },
+      });
+      // now do the authentication
+      return questions;
+    } else {
+      const status = tu.generators.createOnboardingStatus('GetAuthenticationQuestions', false);
+      await this.updateTransunionIndicativeEnrichment({
+        transunion: {
+          ...transunion,
+          getAuthenticationQuestionsSuccess: false,
+          getAuthenticationQuestionsStatus: status,
+        },
+      });
+      return;
+    }
+  }
+
+  /**
+   * Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  updateCurrentRawQuestions(questions: string): void {
+    this.statesvc.updateTransunionQuestions(questions);
+  }
+
+  /**
+   * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
+   *   - Does not store in the database as there is no need to.
+   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   */
+  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput | undefined> {
+    try {
+      return await this.statesvc.updateTransunionQuestionsAsync(questions);
+    } catch (err) {
+      throw new Error(`kycService:updateCurrentRawQuestionsAsync=${err}`);
+    }
   }
 
   /**
@@ -470,14 +435,14 @@ export class KycService {
    * @returns
    */
   async sendVerifyAuthenticationQuestions(
-    appData: UpdateAppDataInput | AppDataStateModel,
-    answers: IVerifyAuthenticationAnswer[],
+    appData: UpdateAppDataInput | AppDataStateModel | undefined,
+    answers: IVerifyAuthenticationAnswer[] | undefined,
   ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
-    if (!answers.length) throw new Error('No answers provided');
+    if (!answers?.length || !appData?.id) return bc.technicalError;
     try {
       return await this.transunion.sendVerifyAuthenticationQuestions(appData, answers);
     } catch (err) {
-      throw new Error(`kycService:sendVerifyAuthenticationQuestions=${err}`);
+      return bc.technicalError;
     }
   }
 
@@ -491,7 +456,7 @@ export class KycService {
     try {
       return await this.transunion.sendCompleteOnboarding();
     } catch (err) {
-      throw new Error(`kycService:sendEnrollRequest=${err}`);
+      return bc.technicalError;
     }
   }
 
@@ -505,7 +470,15 @@ export class KycService {
     try {
       return await this.transunion.sendEnrollRequest();
     } catch (err) {
-      throw new Error(`kycService:sendEnrollRequest=${err}`);
+      return bc.technicalError;
     }
+  }
+
+  bailoutFromOnboarding(error: IErrorResponse) {
+    // take the error code
+    // determine path
+    // read message if needed
+    // update account if needed
+    // route user to appropriate view
   }
 }

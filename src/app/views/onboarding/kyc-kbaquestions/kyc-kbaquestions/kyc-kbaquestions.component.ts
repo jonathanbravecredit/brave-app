@@ -19,6 +19,7 @@ import {
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -44,10 +45,9 @@ export class KycKbaquestionsComponent implements OnInit {
     private store: Store,
   ) {
     this.agenciesSub$ = this.agencies$.pipe(take(1)).subscribe((agencies: AgenciesStateModel) => {
-      if (!agencies.transunion?.currentRawQuestions) return;
-      const xml: ITransunionKBAQuestions = this.kycService.parseCurrentRawQuestions(
-        agencies.transunion?.currentRawQuestions,
-      );
+      const rawQuestions = agencies.transunion?.currentRawQuestions;
+      if (!rawQuestions) return;
+      const xml = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(rawQuestions);
       const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
       questions instanceof Array ? (this.questions = questions) : [questions];
       this.numberOfQuestions = this.questions.length;

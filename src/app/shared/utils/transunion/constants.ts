@@ -33,6 +33,12 @@ export enum CreditBureauFindingsType {
   PersonalInfo = 'personalinfo',
 }
 
+export enum TUStatusRefStatuses {
+  Success = 'success',
+  Failed = 'failed',
+  Bypassed = 'bypassed',
+}
+
 export const INVESTIGATION_RESULTS_CODE_MAPPING: { type: string; title: string }[] = [
   {
     type: 'deleted',

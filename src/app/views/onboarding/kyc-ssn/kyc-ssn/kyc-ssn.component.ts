@@ -50,7 +50,6 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    */
   async goToNext(form: FormGroup): Promise<void> {
     this.google.fireClickEvent(gtClicks.OnboardingIdentity);
-    // ssn is a little different as each code is one input
     if (form.valid) {
       const { lastfour } = this.formatAttributes(form, ssnMap);
       const attrs = {
@@ -58,21 +57,29 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
           lastfour: lastfour,
         },
       } as UserAttributesInput;
+
       try {
         const data = await this.kycService.updateUserAttributesAsync(attrs);
-        const full = await this.kycService.getIndicativeEnrichmentResults(data);
-        if (full === KYCResponse.Failed) {
-          this.router.navigate(['../identityfull'], { relativeTo: this.route });
+        const resp = await this.kycService.getIndicativeEnrichmentResults(data);
+        if (!resp.success || !resp.data) {
+          this.bailOut();
         } else {
-          const newAttrs = {
-            ssn: { ...attrs.ssn, full },
-          } as UserAttributesInput;
-          this.kycService.updateUserAttributesAsync(newAttrs);
-          this.kycService.completeStep(this.stepID);
-          this.router.navigate(['../verify'], { relativeTo: this.route });
+          const enrichment = await this.kycService.processIndicativeEnrichmentResponse(resp.data);
+          const ssn = `${enrichment?.SSN}`;
+          const full = ssn ? ssn : undefined;
+          if (!full) {
+            this.bailOut();
+          } else {
+            const newAttrs = {
+              ssn: { ...attrs.ssn, full },
+            } as UserAttributesInput;
+            this.kycService.updateUserAttributesAsync(newAttrs);
+            this.kycService.completeStep(this.stepID);
+            this.router.navigate(['../verify'], { relativeTo: this.route });
+          }
         }
       } catch {
-        this.router.navigate(['../identityfull'], { relativeTo: this.route });
+        this.bailOut();
       }
     }
   }
@@ -83,6 +90,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    */
   handleError(errors: { [key: string]: AbstractControl }): void {
     // console.log('form errors', errors);
+  }
+
+  bailOut(): void {
+    this.router.navigate(['../identityfull'], { relativeTo: this.route });
   }
 }
 
