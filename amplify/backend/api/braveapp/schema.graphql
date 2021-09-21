@@ -126,7 +126,7 @@ type Experian {
   authenticated: Boolean
 }
 type TUStatusRef {
-  id: Int
+  id: ID
   status: String
   statusDescription: String
   statusModifiedOn: String

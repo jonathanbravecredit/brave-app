@@ -51,7 +51,7 @@ export type Transunion = {
 
 export type TUStatusRef = {
   __typename: "TUStatusRef";
-  id?: number | null;
+  id?: string | null;
   status?: string | null;
   statusDescription?: string | null;
   statusModifiedOn?: string | null;
@@ -225,7 +225,7 @@ export type TransunionInput = {
 };
 
 export type TUStatusRefInput = {
-  id?: number | null;
+  id?: string | null;
   status?: string | null;
   statusDescription?: string | null;
   statusModifiedOn?: string | null;
@@ -517,7 +517,7 @@ export type PatchTransunionMutation = {
   indicativeEnrichmentSuccess?: boolean | null;
   indicativeEnrichmentStatus?: {
     __typename: "TUStatusRef";
-    id?: number | null;
+    id?: string | null;
     status?: string | null;
     statusDescription?: string | null;
     statusModifiedOn?: string | null;
@@ -526,7 +526,7 @@ export type PatchTransunionMutation = {
   getAuthenticationQuestionsSuccess?: boolean | null;
   getAuthenticationQuestionsStatus?: {
     __typename: "TUStatusRef";
-    id?: number | null;
+    id?: string | null;
     status?: string | null;
     statusDescription?: string | null;
     statusModifiedOn?: string | null;
@@ -535,7 +535,7 @@ export type PatchTransunionMutation = {
   verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
   verifyAuthenticationQuestionsOTPStatus?: {
     __typename: "TUStatusRef";
-    id?: number | null;
+    id?: string | null;
     status?: string | null;
     statusDescription?: string | null;
     statusModifiedOn?: string | null;
@@ -544,7 +544,7 @@ export type PatchTransunionMutation = {
   verifyAuthenticationQuestionsKBASuccess?: boolean | null;
   verifyAuthenticationQuestionsKBAStatus?: {
     __typename: "TUStatusRef";
-    id?: number | null;
+    id?: string | null;
     status?: string | null;
     statusDescription?: string | null;
     statusModifiedOn?: string | null;
@@ -743,7 +743,7 @@ export type CreateAppDataMutation = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -752,7 +752,7 @@ export type CreateAppDataMutation = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -761,7 +761,7 @@ export type CreateAppDataMutation = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -770,7 +770,7 @@ export type CreateAppDataMutation = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -997,7 +997,7 @@ export type UpdateAppDataMutation = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1006,7 +1006,7 @@ export type UpdateAppDataMutation = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1015,7 +1015,7 @@ export type UpdateAppDataMutation = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1024,7 +1024,7 @@ export type UpdateAppDataMutation = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1251,7 +1251,7 @@ export type DeleteAppDataMutation = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1260,7 +1260,7 @@ export type DeleteAppDataMutation = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1269,7 +1269,7 @@ export type DeleteAppDataMutation = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1278,7 +1278,7 @@ export type DeleteAppDataMutation = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1505,7 +1505,7 @@ export type GetAppDataQuery = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1514,7 +1514,7 @@ export type GetAppDataQuery = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1523,7 +1523,7 @@ export type GetAppDataQuery = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1532,7 +1532,7 @@ export type GetAppDataQuery = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -1761,7 +1761,7 @@ export type ListAppDatasQuery = {
         indicativeEnrichmentSuccess?: boolean | null;
         indicativeEnrichmentStatus?: {
           __typename: "TUStatusRef";
-          id?: number | null;
+          id?: string | null;
           status?: string | null;
           statusDescription?: string | null;
           statusModifiedOn?: string | null;
@@ -1770,7 +1770,7 @@ export type ListAppDatasQuery = {
         getAuthenticationQuestionsSuccess?: boolean | null;
         getAuthenticationQuestionsStatus?: {
           __typename: "TUStatusRef";
-          id?: number | null;
+          id?: string | null;
           status?: string | null;
           statusDescription?: string | null;
           statusModifiedOn?: string | null;
@@ -1779,7 +1779,7 @@ export type ListAppDatasQuery = {
         verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
         verifyAuthenticationQuestionsOTPStatus?: {
           __typename: "TUStatusRef";
-          id?: number | null;
+          id?: string | null;
           status?: string | null;
           statusDescription?: string | null;
           statusModifiedOn?: string | null;
@@ -1788,7 +1788,7 @@ export type ListAppDatasQuery = {
         verifyAuthenticationQuestionsKBASuccess?: boolean | null;
         verifyAuthenticationQuestionsKBAStatus?: {
           __typename: "TUStatusRef";
-          id?: number | null;
+          id?: string | null;
           status?: string | null;
           statusDescription?: string | null;
           statusModifiedOn?: string | null;
@@ -2017,7 +2017,7 @@ export type OnCreateAppDataSubscription = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2026,7 +2026,7 @@ export type OnCreateAppDataSubscription = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2035,7 +2035,7 @@ export type OnCreateAppDataSubscription = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2044,7 +2044,7 @@ export type OnCreateAppDataSubscription = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2271,7 +2271,7 @@ export type OnUpdateAppDataSubscription = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2280,7 +2280,7 @@ export type OnUpdateAppDataSubscription = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2289,7 +2289,7 @@ export type OnUpdateAppDataSubscription = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2298,7 +2298,7 @@ export type OnUpdateAppDataSubscription = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2525,7 +2525,7 @@ export type OnDeleteAppDataSubscription = {
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2534,7 +2534,7 @@ export type OnDeleteAppDataSubscription = {
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2543,7 +2543,7 @@ export type OnDeleteAppDataSubscription = {
       verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
       verifyAuthenticationQuestionsOTPStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
@@ -2552,7 +2552,7 @@ export type OnDeleteAppDataSubscription = {
       verifyAuthenticationQuestionsKBASuccess?: boolean | null;
       verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
-        id?: number | null;
+        id?: string | null;
         status?: string | null;
         statusDescription?: string | null;
         statusModifiedOn?: string | null;
