@@ -326,10 +326,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
    */
   bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
     const tuPartial: Partial<TransunionInput> = {
-      getAuthenticationQuestionsSuccess: false, // NEED TO UPDATE TO VERIFY OTP in state
-      getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
-        TUBundles.GetAuthenticationQuestions,
+      verifyAuthenticationQuestionsOTPSuccess: false,
+      verifyAuthenticationQuestionsOTPStatus: tu.generators.createOnboardingStatus(
+        TUBundles.VerifyAuthenticationQuestionsOTP,
         false,
+        resp,
       ),
     };
     this.kycService.bailoutFromOnboarding(tuPartial, resp);

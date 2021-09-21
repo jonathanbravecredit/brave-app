@@ -127,6 +127,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
       getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
         TUBundles.GetAuthenticationQuestions,
         false,
+        resp,
       ),
     };
     this.kycService.bailoutFromOnboarding(tuPartial, resp);

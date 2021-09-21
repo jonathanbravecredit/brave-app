@@ -42,6 +42,8 @@ export enum TUStatusRefStatuses {
 export enum TUBundles {
   IndicativeEnrichment = 'IndicativeEnrichment',
   GetAuthenticationQuestions = 'GetAuthenticationQuestions',
+  VerifyAuthenticationQuestionsOTP = 'VerifyAuthenticationQuestionsOTP',
+  VerifyAuthenticationQuestionsKBA = 'VerifyAuthenticationQuestionsKBA',
 }
 
 export const INVESTIGATION_RESULTS_CODE_MAPPING: { type: string; title: string }[] = [

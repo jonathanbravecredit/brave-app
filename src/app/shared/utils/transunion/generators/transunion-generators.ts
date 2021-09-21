@@ -1,6 +1,8 @@
+import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { TUStatusRefInput } from '@shared/services/aws/api.service';
 import { TUStatusRefStatuses } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
+import * as uuid from 'uuid';
 
 export class TransunionGenerators extends TransunionBase {
   constructor() {
@@ -12,14 +14,23 @@ export class TransunionGenerators extends TransunionBase {
    * @param error
    * @returns
    */
-  static createOnboardingStatus(process: string, successful: boolean): TUStatusRefInput {
+  static createOnboardingStatus(
+    process: string,
+    successful: boolean,
+    resp?: ITUServiceResponse<any | undefined>,
+  ): TUStatusRefInput {
     const now = new Date();
+    const code = resp ? resp.error?.Code || '-1' : successful ? '1' : '-1';
+    const description = resp
+      ? resp.error?.Message ||
+        `${process} status: ${successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed}`
+      : `${process} status: ${successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed}`;
     return {
-      id: successful ? 1 : 0,
+      id: uuid.v4(),
       status: successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed,
-      statusDescription: `${process} status: ${successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed}`,
+      statusDescription: description,
       statusModifiedOn: now.toISOString(),
-      statusCode: successful ? '1' : '0',
+      statusCode: `${code}`,
     };
   }
 }
