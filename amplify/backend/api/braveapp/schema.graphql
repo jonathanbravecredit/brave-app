@@ -97,9 +97,9 @@ type Transunion {
   authAttempt: Int
   pinRequests: Int
   pinAttempts: Int
-  pinCurrentAge: Int
+  pinCurrentAge: Float
   kbaAttempts: Int
-  kbaCurrentAge: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
