@@ -149,13 +149,20 @@ export class KycService {
   /**
    * Takes the current user and suspends their account
    */
-  async suspendUserOnAge(): Promise<void> {
+  async suspendUser({
+    status,
+    reason,
+    duration,
+  }: {
+    status: AppStatus;
+    reason: AppStatusReason;
+    duration: number;
+  }): Promise<void> {
     const { appData } = this.statesvc.state$.value;
-    const duration = 24 * 30;
     const suspended = bc.generators.createSuspendedStatus({
-      status: AppStatus.Suspended,
-      reason: AppStatusReason.AgeRestriction,
-      duration: duration,
+      status,
+      reason,
+      duration,
     });
     const newData = {
       ...appData,
@@ -165,55 +172,7 @@ export class KycService {
       try {
         await this.statesvc.updateStateDBSyncAsync(newData);
       } catch (err) {
-        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
-      }
-    }
-  }
-
-  /**
-   * Takes the current user and suspends their account
-   */
-  async suspendUserOnCriticalFail(): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const duration = 24 * 30;
-    const suspended = bc.generators.createSuspendedStatus({
-      status: AppStatus.Suspended,
-      reason: AppStatusReason.ThirtyDayLockout,
-      duration: duration,
-    });
-    const newData = {
-      ...appData,
-      ...suspended,
-    };
-    if (appData.id && newData.id) {
-      try {
-        await this.statesvc.updateStateDBSyncAsync(newData);
-      } catch (err) {
-        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
-      }
-    }
-  }
-
-  /**
-   * Takes the current user and suspends their account
-   */
-  async suspendUserOnAuthAttempts(): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const duration = 24 * 30;
-    const suspended = bc.generators.createSuspendedStatus({
-      status: AppStatus.Suspended,
-      reason: AppStatusReason.AuthAttemptsExceeded,
-      duration: duration,
-    });
-    const newData = {
-      ...appData,
-      ...suspended,
-    };
-    if (appData.id && newData.id) {
-      try {
-        await this.statesvc.updateStateDBSyncAsync(newData);
-      } catch (err) {
-        console.log(`kycService:suspendUserOnAge=Db Sync Error ${err}`);
+        console.log(`kycService:suspendUser=Db Sync Error ${err}`);
       }
     }
   }
@@ -345,6 +304,65 @@ export class KycService {
         },
       });
       return;
+    }
+  }
+
+  /**
+   * Initiate the OTP pin in DB
+   */
+  async startPinClock(): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const transunion = appData.agencies?.transunion;
+    const now = new Date();
+    debugger;
+    if (!transunion) {
+      return;
+    } else {
+      await this.statesvc.updateAgenciesAsync({
+        ...appData.agencies,
+        transunion: {
+          ...transunion,
+          pinRequests: 1,
+          pinAttempts: 0,
+          pinCurrentAge: now.valueOf(),
+        },
+      });
+    }
+  }
+
+  async incrementPinRequest(count: number): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const transunion = appData.agencies?.transunion;
+    const pinRequests = count + 1;
+    const now = new Date();
+    if (!transunion) {
+      return;
+    } else {
+      await this.statesvc.updateAgenciesAsync({
+        ...appData.agencies,
+        transunion: {
+          ...transunion,
+          pinRequests: pinRequests,
+          pinCurrentAge: now.valueOf(),
+        },
+      });
+    }
+  }
+
+  async incrementPinAttempts(count: number): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const transunion = appData.agencies?.transunion;
+    const pinAttempts = count + 1;
+    if (!transunion) {
+      return;
+    } else {
+      await this.statesvc.updateAgenciesAsync({
+        ...appData.agencies,
+        transunion: {
+          ...transunion,
+          pinAttempts: pinAttempts,
+        },
+      });
     }
   }
 
@@ -496,7 +514,11 @@ export class KycService {
             authAttempt,
           },
         });
-        await this.suspendUserOnCriticalFail();
+        await this.suspendUser({
+          status: AppStatus.Suspended,
+          reason: AppStatusReason.ThirtyDayLockout,
+          duration: 24 * 30,
+        });
         this.router.navigate(['/suspended/default']);
       } else if (authAttempt >= 2) {
         await this.statesvc.updateAgenciesAsync({
@@ -507,7 +529,11 @@ export class KycService {
             authAttempt,
           },
         });
-        await this.suspendUserOnAuthAttempts();
+        await this.suspendUser({
+          status: AppStatus.Suspended,
+          reason: AppStatusReason.AuthAttemptsExceeded,
+          duration: 24 * 30,
+        });
         this.router.navigate(['/suspended/default']);
       } else {
         this.router.navigate(['/onboarding/retry']);

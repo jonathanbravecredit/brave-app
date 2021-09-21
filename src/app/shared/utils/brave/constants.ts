@@ -19,6 +19,7 @@ export enum AppStatusReason {
   PinAgeExceeded = 'pinAgeExceeded',
   KbaAttemptsExceeded = 'kbaAttemptsExceeded',
   KbaAgeExceeded = 'kbaAgeExceeded',
+  EnrollmentFailed = 'enrollmentFailed',
 }
 
 export const AppStatusReasonDescriptions: Record<string, string> = {
@@ -33,6 +34,7 @@ export const AppStatusReasonDescriptions: Record<string, string> = {
   [AppStatusReason.PinAgeExceeded]: `Account disabled for 30 days for allowing the pin to expire after 15 minutes`,
   [AppStatusReason.KbaAttemptsExceeded]: `Account disabled for 30 days for exceeding the number of kba attempts`,
   [AppStatusReason.KbaAgeExceeded]: `Account disabled for 30 days for allowing the kba questions to expire after 96 hours`,
+  [AppStatusReason.EnrollmentFailed]: `Non-specific enrollment failure`,
 };
 
 export const INIT_DATA: CreateAppDataInput = {

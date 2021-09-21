@@ -40,40 +40,36 @@ export class StateService {
    */
   async updateStateDBSyncAsync(appdata: AppDataStateModel): Promise<AppDataStateModel> {
     return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AppDataActions.Edit(appdata))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            console.log('failed to update state')
-            return;
-          } else {
-            this.api.UpdateAppData(input)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          }
+      this.store.dispatch(new AppDataActions.Edit(appdata)).subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          console.log('failed to update state');
+          return;
+        } else {
+          this.api
+            .UpdateAppData(input)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        }
       });
     });
-  };
+  }
 
   /**
    * Updates the state asynchronously, updates the db
    * @param appdata
    */
-  updateStateDBSync(appdata:AppDataStateModel): void {
-    this.store
-      .dispatch(new AppDataActions.Edit(appdata))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          console.log('failed to update state')
-          return;
-        } else {
-          this.api.UpdateAppData(input);
-        }
+  updateStateDBSync(appdata: AppDataStateModel): void {
+    this.store.dispatch(new AppDataActions.Edit(appdata)).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        console.log('failed to update state');
+        return;
+      } else {
+        this.api.UpdateAppData(input);
+      }
     });
-  };
-
+  }
 
   /**
    * Takes the attributes and updates the state with them

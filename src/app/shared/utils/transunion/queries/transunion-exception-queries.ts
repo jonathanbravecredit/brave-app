@@ -25,4 +25,12 @@ export class TransunionExceptionQueries extends TransunionBase {
     });
     return found ? true : false;
   }
+
+  static isPinStale(pinAge: number): boolean {
+    // 15 minutes in millisends...is now in milliseconds greater than the age
+    const _MS_MINS = 15 * 60 * 1000;
+    const now = new Date();
+    const ms = now.valueOf();
+    return ms - pinAge >= _MS_MINS;
+  }
 }

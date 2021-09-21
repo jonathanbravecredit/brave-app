@@ -103,17 +103,46 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
                 this.bailOut<IVerifyAuthenticationQuestionsResult>(otpResp);
               } else {
                 const codeQuestions = otpResp.data?.AuthenticationDetails;
+                await this.kycService.startPinClock();
                 await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
+                debugger;
                 this.router.navigate(['../code'], { relativeTo: this.route });
               }
             } else {
+              // TODO may need to start KBA clock here.
               this.router.navigate(['../kba'], { relativeTo: this.route });
             }
           }
         }
       } catch (err) {
+        console.log('error ==> ', err);
         this.bailOut();
       }
+    }
+  }
+
+  /**
+   * Method to:
+   * - Find the correct OTP answer in the response from TU
+   * - Select the answer for the user to receive a text message
+   * - Confirm answer is received
+   */
+  async sendOTPResponse(
+    otpQuestion: ITransunionKBAQuestion,
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
+    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
+    const otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion);
+    try {
+      const resp = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
+      if (!resp.success || !resp.data) {
+        return resp;
+      } else {
+        const parsed = resp.data ? resp.data : ({} as IVerifyAuthenticationQuestionsResult);
+        const success = parsed ? parsed.ResponseType.toLowerCase() === 'success' : false;
+        return { success, data: parsed };
+      }
+    } catch (err: any) {
+      return { success: false };
     }
   }
 
@@ -131,31 +160,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
       ),
     };
     this.kycService.bailoutFromOnboarding(tuPartial, resp);
-  }
-
-  /**
-   * Method to:
-   * - Find the correct OTP answer in the response from TU
-   * - Select the answer for the user to receive a text message
-   * - Confirm answer is received
-   */
-  async sendOTPResponse(
-    otpQuestion: ITransunionKBAQuestion,
-  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
-    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
-    const otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion); //this.getOTPAnswer(otpQuestion); // automatically select (send text for user)
-    try {
-      const resp = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
-      if (!resp.success || !resp.data) {
-        return resp;
-      } else {
-        const parsed = resp.data ? resp.data : ({} as IVerifyAuthenticationQuestionsResult);
-        const success = parsed ? parsed.ResponseType.toLowerCase() === 'success' : false;
-        return { success, data: parsed };
-      }
-    } catch (err: any) {
-      return { success: false };
-    }
   }
 }
 
