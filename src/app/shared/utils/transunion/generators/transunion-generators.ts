@@ -21,10 +21,9 @@ export class TransunionGenerators extends TransunionBase {
   ): TUStatusRefInput {
     const now = new Date();
     const code = resp ? resp.error?.Code || '-1' : successful ? '1' : '-1';
-    const description = resp
-      ? resp.error?.Message ||
-        `${process} status: ${successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed}`
-      : `${process} status: ${successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed}`;
+    const description =
+      resp?.error?.Message ||
+      `${process} status: ${successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed}`;
     return {
       id: uuid.v4(),
       status: successful ? TUStatusRefStatuses.Success : TUStatusRefStatuses.Failed,
