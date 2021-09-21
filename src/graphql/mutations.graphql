@@ -18,6 +18,22 @@ mutation PatchTransunion($id: ID!, $msg: String) {
       statusModifiedOn
       statusCode
     }
+    verifyAuthenticationQuestionsOTPSuccess
+    verifyAuthenticationQuestionsOTPStatus {
+      id
+      status
+      statusDescription
+      statusModifiedOn
+      statusCode
+    }
+    verifyAuthenticationQuestionsKBASuccess
+    verifyAuthenticationQuestionsKBAStatus {
+      id
+      status
+      statusDescription
+      statusModifiedOn
+      statusCode
+    }
     serviceBundleFulfillmentKey
     currentRawQuestions
     currentRawAuthDetails
@@ -200,6 +216,22 @@ mutation CreateAppData(
         }
         getAuthenticationQuestionsSuccess
         getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
           id
           status
           statusDescription
@@ -418,6 +450,22 @@ mutation UpdateAppData(
           statusModifiedOn
           statusCode
         }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
@@ -624,6 +672,22 @@ mutation DeleteAppData(
         }
         getAuthenticationQuestionsSuccess
         getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
           id
           status
           statusDescription

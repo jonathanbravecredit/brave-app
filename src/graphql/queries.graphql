@@ -64,6 +64,22 @@ query GetAppData($id: ID!) {
           statusModifiedOn
           statusCode
         }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
@@ -272,6 +288,22 @@ query ListAppDatas(
           }
           getAuthenticationQuestionsSuccess
           getAuthenticationQuestionsStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsOTPSuccess
+          verifyAuthenticationQuestionsOTPStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsKBASuccess
+          verifyAuthenticationQuestionsKBAStatus {
             id
             status
             statusDescription
