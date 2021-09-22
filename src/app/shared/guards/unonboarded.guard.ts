@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class OnboardedGuard implements CanActivate {
+export class UnonboardedGuard implements CanActivate {
   constructor(private router: Router, private route: ActivatedRoute, private onboarding: OnboardingService) {}
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -17,7 +17,7 @@ export class OnboardedGuard implements CanActivate {
         return value;
       })
       .catch((reason) => {
-        console.log('onboarded guard:catch ==>', reason);
+        console.log('unonboarded guard:catch ==>', reason);
         return false;
       });
   }
@@ -38,7 +38,7 @@ export class OnboardedGuard implements CanActivate {
         status = await this.handleListeners(id);
         // go to onboarding if not onboarded, otherwise return true
         status = await this.handleOnboarding(isOnboarded);
-        return status;
+        return !status;
       } catch (err) {
         this.router.navigate(['/auth/signin']); // need a please confirm account view
         return false;

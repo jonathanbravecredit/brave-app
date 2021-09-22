@@ -45,36 +45,6 @@ export class AgenciesState {
     });
   }
 
-  // @Action(AgenciesActions.EditTransunionQuestions)
-  // updateTransunionQuestions(
-  //   ctx: StateContext<AgenciesStateModel>,
-  //   { payload }: AgenciesActions.EditTransunionQuestions,
-  // ) {
-  //   const state = ctx.getState();
-  //   ctx.patchState({
-  //     ...state,
-  //     transunion: {
-  //       ...state.transunion,
-  //       ...payload,
-  //     },
-  //   });
-  // }
-
-  // @Action(AgenciesActions.EditTransunionAuthDetails)
-  // updateTransunionAuthDetails(
-  //   ctx: StateContext<AgenciesStateModel>,
-  //   { payload }: AgenciesActions.EditTransunionAuthDetails,
-  // ) {
-  //   const state = ctx.getState();
-  //   ctx.patchState({
-  //     ...state,
-  //     transunion: {
-  //       ...state.transunion,
-  //       ...payload,
-  //     },
-  //   });
-  // }
-
   @Action(AgenciesActions.IncrementTransunionAuthAttempts)
   incrementTransunionAuthAttempt(ctx: StateContext<AgenciesStateModel>) {
     const state = ctx.getState();
@@ -88,7 +58,7 @@ export class AgenciesState {
     });
   }
 
-  @Action(AgenciesActions.IncrementTransunionPinRequest)
+  @Action(AgenciesActions.InitiateTransunionPinDetails)
   initiateTransunionPinDetails(ctx: StateContext<AgenciesStateModel>) {
     const state = ctx.getState();
     const pinRequests = 1;
@@ -133,22 +103,7 @@ export class AgenciesState {
     });
   }
 
-  // @Action(AgenciesActions.EditTransunionPinDetails)
-  // updateTransunionPinDetails(
-  //   ctx: StateContext<AgenciesStateModel>,
-  //   { payload }: AgenciesActions.EditTransunionPinDetails,
-  // ) {
-  //   const state = ctx.getState();
-  //   ctx.patchState({
-  //     ...state,
-  //     transunion: {
-  //       ...state.transunion,
-  //       ...payload,
-  //     },
-  //   });
-  // }
-
-  @Action(AgenciesActions.IncrementTransunionPinRequest)
+  @Action(AgenciesActions.InitiateTransunionKBADetails)
   initiateTransunionKBADetails(ctx: StateContext<AgenciesStateModel>) {
     const state = ctx.getState();
     const kbaAttempts = 0;

@@ -101,15 +101,16 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
                 this.handleBailout<IVerifyAuthenticationQuestionsResult>(otpResp);
               } else {
                 const codeQuestions = otpResp.data?.AuthenticationDetails;
-                await this.kycService.startPinClock();
-                const otpAppData = await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
-                await this.kycService.updateAgenciesAsync(otpAppData.agencies); // success, sync up to db
+                const pinData = await this.kycService.startPinClock();
+                const questionData = await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
+                await this.kycService.updateAgenciesAsync(questionData.agencies); // success, sync up to db
                 this.router.navigate(['../code'], { relativeTo: this.route });
               }
             } else {
               // since no otp question found, they are kba based and already save...start KBA countdown
-              await this.kycService.startKbaClock();
-              await this.kycService.updateAgenciesAsync(kbaAppData.agencies);
+              debugger;
+              const kbaData = await this.kycService.startKbaClock();
+              await this.kycService.updateAgenciesAsync(kbaData.agencies);
               this.router.navigate(['../kba'], { relativeTo: this.route });
             }
           }

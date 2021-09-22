@@ -39,8 +39,11 @@ export class OnboardingService implements OnDestroy {
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
   }
 
+  /**
+   * Returns the user id from the authenticated user
+   */
   async getUserId(): Promise<string | undefined> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser();
     const attrs = await Auth.userAttributes(user);
     const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     return id;
@@ -55,27 +58,41 @@ export class OnboardingService implements OnDestroy {
   }
 
   /**
+   * Creates a user record in the database
+   * @param id
+   */
+  async initUser(id: string): Promise<AppDataStateModel | undefined> {
+    return await this.sync.initAppData(id);
+  }
+
+  /**
    * Returns whether the user has completed the onboarding steps
    * @param id
-   * @returns
    */
   async isUserOnboarded(): Promise<boolean> {
     const onboarding = await from(this.onboarding$).toPromise();
     return onboarding.lastComplete === 3;
   }
 
-  async initUser(id: string): Promise<AppDataStateModel | undefined> {
-    return await this.sync.initAppData(id);
-  }
-
+  /**
+   * Subscribe to AppSync socket listeners
+   * @param id
+   */
   async subscribeToListeners(id: string): Promise<void> {
     return await this.sync.subscribeToListeners(id);
   }
 
+  /**
+   * Sync the database records to state
+   * @param id
+   */
   async syncDbToState(id: string): Promise<any> {
     return await this.sync.syncDBDownToState(id);
   }
 
+  /**
+   * Route the user to the last onboarded view
+   */
   async goToLastOnboarded(): Promise<void> {
     const { lastComplete } = await from(this.onboarding$).toPromise();
     const { transunion } = await from(this.agencies$).toPromise();
@@ -92,34 +109,14 @@ export class OnboardingService implements OnDestroy {
         break;
       case 2:
         // if last on otp or kba go to either one.
-        this.router.navigate(['/onboarding/verify']);
+        transunion?.kbaCurrentAge
+          ? this.router.navigate(['/onboarding/kba'])
+          : this.router.navigate(['/onboarding/code']);
         break;
       default:
         // nothing to do, stay on same route
+        this.router.navigate(['/auth/signin']);
         break;
     }
   }
-
-  // async onboardUser(id: string): Promise<void> {
-  //   await this.sync.onboardUser(id, true);
-  // }
-
-  // /**
-  //  * Handle returning users (implicit) !isUserBrandNew
-  //  * 1. No ID from Amplify to validate against...bail out
-  //  * 2. User has fully onboarded and a signin event...go to dashboard
-  //  * 3. User has fully onboarded and NOT a signin event...stay put
-  //  * 4. User has NOT fully onboarded and a signin event...go to last complete
-  //  * 5. User has NOT fully onboarded and NOT a signin event...go to last complete
-  //  * @param creds
-  //  * @param signInEvent
-  //  */
-  //  async onboardUser(id: string, signInEvent: boolean): Promise<void> {
-  //   const isOnboarded = await this.isUserOnboarded(id);
-  //   if (isOnboarded) {
-  //     signInEvent ? await this.goToDashboard(id) : await this.stayPut(id);
-  //   } else {
-  //     await this.goToLastOnboarded(id);
-  //   }
-  // }
 }

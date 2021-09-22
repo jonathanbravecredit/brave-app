@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { OnboardedGuard } from '@shared/guards/onboarded.guard';
+import { UnonboardedGuard } from '@shared/guards/unonboarded.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    canActivate: [ActiveGuard, OnboardedGuard, AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     loadChildren: () => import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { OnboardingStateModel } from '@store/onboarding';
-import * as parser from 'fast-xml-parser';
-const he = require('he');
 import {
-  AgenciesInput,
   TransunionInput,
   TUStatusRefInput,
   UpdateAppDataInput,
@@ -16,19 +13,16 @@ import { AgenciesStateModel } from '@store/agencies';
 import { StateService } from '@shared/services/state/state.service';
 import {
   ITransunionKBAQuestions,
-  ITransunionKBAChallengeAnswer,
   ITransunionKBAQuestion,
   IVerifyAuthenticationAnswer,
   ITUServiceResponse,
   IGetAuthenticationQuestionsResult,
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
-  IErrorResponse,
 } from '@shared/interfaces';
 import { Router } from '@angular/router';
 import { BraveUtil as bc } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { from } from 'rxjs';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
@@ -36,15 +30,6 @@ export enum KYCResponse {
   Failed = 'failed',
   Success = 'success',
 }
-
-const parserOptions = {
-  attributeNamePrefix: '',
-  ignoreAttributes: false,
-  ignoreNameSpace: true,
-  parseAttributeValue: true,
-  attrValueProcessor: (val: any, attrName: any) => he.encode(val, { isAttributeValue: true }), //default is a=>a
-  tagValueProcessor: (val: any, tagName: any) => he.encode(val), //default is a=>a
-};
 
 @Injectable()
 export class KycService {
@@ -456,7 +441,6 @@ export class KycService {
     tuPartial: Partial<TransunionInput>,
     resp?: ITUServiceResponse<any | undefined>,
   ): Promise<void> {
-    debugger;
     const appData = await this.incrementAuthAttempt();
     const agencies = appData.agencies;
     const transunion = appData.agencies?.transunion;
