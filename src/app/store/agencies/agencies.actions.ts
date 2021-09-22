@@ -1,3 +1,4 @@
+import { TransunionInput, TUStatusRefInput } from '@shared/services/aws/api.service';
 import { AgenciesStateModel } from '@store/agencies';
 
 export class Add {
@@ -15,17 +16,32 @@ export class Delete {
   constructor() {}
 }
 
-export class EditTransunionQuestions {
-  static readonly type = '[Agencies] EditTransunionQuestions';
-  constructor(public payload: { currentRawQuestions: string }) {}
+export class EditTransunion {
+  static readonly type = '[Agencies] EditTransunion';
+  constructor(public payload: TransunionInput | Partial<TransunionInput>) {}
 }
 
-export class EditTransunionAuthDetails {
-  static readonly type = '[Agencies] EditTransunionAuthDetails';
-  constructor(public payload: { currentRawAuthDetails: string }) {}
+export class IncrementTransunionAuthAttempts {
+  static readonly type = '[Agencies] IncrementTransunionAuthAttempts';
+  constructor() {}
 }
 
-export class EditTransunionReports {
-  static readonly type = '[Agencies] EditTransunionReports';
-  constructor(public payload: AgenciesStateModel | Partial<AgenciesStateModel>) {}
+export class InitiateTransunionPinDetails {
+  static readonly type = '[Agencies] InitiateTransunionPinDetails';
+  constructor() {}
+}
+
+export class IncrementTransunionPinRequest {
+  static readonly type = '[Agencies] IncrementTransunionPinRequest';
+  constructor() {}
+}
+
+export class IncrementTransunionPinAttempts {
+  static readonly type = '[Agencies] IncrementTransunionPinRequest';
+  constructor() {}
+}
+
+export class InitiateTransunionKBADetails {
+  static readonly type = '[Agencies] InitiateTransunionKBADetails';
+  constructor() {}
 }

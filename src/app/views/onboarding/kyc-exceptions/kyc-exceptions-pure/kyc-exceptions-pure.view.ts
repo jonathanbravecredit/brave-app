@@ -15,8 +15,6 @@ export class KycExceptionsPureView implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    debugger;
     this.action = tu.queries.exceptions.getErrorCodeDetails(this.code).action || 'retry';
-    debugger;
   }
 }

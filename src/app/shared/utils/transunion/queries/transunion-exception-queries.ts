@@ -17,7 +17,8 @@ export class TransunionExceptionQueries extends TransunionBase {
 
   static isErrorCritical(resp: ITUServiceResponse<any>): boolean {
     const { error: { Code, Message } = {} } = resp;
-    const { keyWords } = TRANSUNION_CRITICAL_ERRORS[`${Code}`];
+    const { keyWords } = TRANSUNION_CRITICAL_ERRORS[`${Code}`] || {};
+    if (!keyWords) return false;
     const found = keyWords.find((w) => {
       const msg = Message?.toLowerCase() || '';
       const word = w.toLowerCase();
@@ -32,5 +33,13 @@ export class TransunionExceptionQueries extends TransunionBase {
     const now = new Date();
     const ms = now.valueOf();
     return ms - pinAge >= _MS_MINS;
+  }
+
+  static isKBAStale(kbaAge: number): boolean {
+    // 96 hours in milliseconds...is now in ms greater than age
+    const _MS_HOURS = 96 * 60 * 60 * 1000;
+    const now = new Date();
+    const ms = now.valueOf();
+    return ms - kbaAge >= _MS_HOURS;
   }
 }

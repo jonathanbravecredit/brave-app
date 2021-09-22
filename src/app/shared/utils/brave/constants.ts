@@ -48,7 +48,7 @@ export const INIT_DATA: CreateAppDataInput = {
     },
   },
   agencies: {
-    transunion: { authenticated: false, authAttempt: 1 },
+    transunion: { authenticated: false, authAttempt: 0 },
     experian: { authenticated: false },
     equifax: { authenticated: false },
   },

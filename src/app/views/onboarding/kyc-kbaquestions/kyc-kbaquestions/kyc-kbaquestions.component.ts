@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { Observable, Subscription } from 'rxjs';
@@ -20,6 +20,10 @@ import {
 } from '@shared/services/analytics/google/constants';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
+import { TransunionInput } from '@shared/services/aws/api.service';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -51,6 +55,7 @@ export class KycKbaquestionsComponent implements OnInit {
       const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
       questions instanceof Array ? (this.questions = questions) : [questions];
       this.numberOfQuestions = this.questions.length;
+      // start kba questions clock
     });
   }
 
@@ -106,57 +111,96 @@ export class KycKbaquestionsComponent implements OnInit {
    *   Upon success, will be routed to congratulations screen
    * @param form the KBA answer form
    */
-  async handleSubmit(form: FormGroup) {
+  async handleSubmit(form: FormGroup): Promise<void> {
     const formValues = this.kba?.kba?.parentForm.value;
-    if (Object.keys(formValues).length) this.router.navigate(['../error'], { relativeTo: this.route });
-
-    const answers: IVerifyAuthenticationAnswer[] = Object.keys(formValues)
-      .filter((key) => {
-        return formValues[key]?.input?.answer && formValues[key]?.input?.question;
-      })
-      .map((key) => {
-        let answer: ITransunionKBAAnswer = formValues[key]?.input?.answer;
-        let question: ITransunionKBAQuestion = formValues[key]?.input?.question;
-        return {
-          VerifyChallengeAnswersRequestMultiChoiceQuestion: {
-            QuestionId: question?.QuestionId,
-            SelectedAnswerChoice: {
-              AnswerChoiceId: answer?.AnswerChoiceId,
+    if (Object.keys(formValues).length) {
+      const answers: IVerifyAuthenticationAnswer[] = Object.keys(formValues)
+        .filter((key) => {
+          return formValues[key]?.input?.answer && formValues[key]?.input?.question;
+        })
+        .map((key) => {
+          let answer: ITransunionKBAAnswer = formValues[key]?.input?.answer;
+          let question: ITransunionKBAQuestion = formValues[key]?.input?.question;
+          return {
+            VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+              QuestionId: question?.QuestionId,
+              SelectedAnswerChoice: {
+                AnswerChoiceId: answer?.AnswerChoiceId,
+              },
             },
-          },
-        };
-      });
-    const { appData: state } = this.store.snapshot();
-    try {
-      const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, answers);
-      if (success) {
-        this.kycService.completeStep(this.stepID);
-        this.router.navigate(['../congratulations'], {
-          relativeTo: this.route,
+          };
         });
+      const { appData } = this.store.snapshot();
+      const kbaAge = appData?.agencies?.transunion?.kbaCurrentAge;
+      const kbaAttempts = appData?.agencies?.transunion?.kbaAttempts || 0;
+
+      if (!kbaAge || !(kbaAttempts >= 0)) {
         this.interstitial.fetching$.next(false);
+        this.bailOut(); //bail out on technical error...no pin
+      } else if (tu.queries.exceptions.isKBAStale(kbaAge)) {
+        this.handleSuspension(AppStatusReason.KbaAgeExceeded);
+      } else if (kbaAttempts > 0) {
+        this.handleSuspension(AppStatusReason.KbaAttemptsExceeded);
       } else {
-        // this needs to go to restart or wait (invalid)
-        this.router.navigate(['../error'], {
-          relativeTo: this.route,
-          queryParams: {
-            code: error?.Code,
-          },
-        });
-        this.interstitial.fetching$.next(false);
+        try {
+          const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, answers);
+          resp.success ? this.handleSuccess() : this.handleError(resp);
+          this.interstitial.fetching$.next(false);
+        } catch (err) {
+          console.log('error:kbaHandleSubmit ===> ', err);
+          this.interstitial.fetching$.next(false);
+          this.bailOut();
+        }
       }
-    } catch (err) {
-      this.router.navigate(['../error'], {
-        relativeTo: this.route,
-        queryParams: {
-          code: '11',
-        },
-      });
-      this.interstitial.fetching$.next(false);
     }
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    // console.log('form errors', errors);
+  handleSuccess(): void {
+    this.kycService.completeStep(this.stepID);
+    this.interstitial.fetching$.next(false);
+    this.router.navigate(['../congratulations'], {
+      relativeTo: this.route,
+    });
+  }
+
+  handleError(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): void {
+    this.interstitial.fetching$.next(false);
+    this.kycService.suspendUser({
+      status: AppStatus.Suspended,
+      reason: AppStatusReason.KbaAttemptsExceeded,
+      duration: 24 * 30,
+    });
+    this.bailOut<IVerifyAuthenticationQuestionsResult>(resp);
+  }
+
+  /**
+   * Method to route user to appropriate error screen using kyc service
+   * @param resp
+   */
+  bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: Partial<TransunionInput> = {
+      verifyAuthenticationQuestionsKBASuccess: false,
+      verifyAuthenticationQuestionsKBAStatus: tu.generators.createOnboardingStatus(
+        TUBundles.VerifyAuthenticationQuestionsKBA,
+        false,
+        resp,
+      ),
+    };
+    this.kycService.bailoutFromOnboarding(tuPartial, resp);
+  }
+
+  /**
+   * Helper to generate suspension requests
+   * @param reason
+   */
+  handleSuspension(reason: AppStatusReason): void {
+    const suspension = {
+      status: AppStatus.Suspended,
+      reason: reason,
+      duration: 24 * 30,
+    };
+    this.kycService.suspendUser(suspension);
+    this.interstitial.fetching$.next(false);
+    this.router.navigate(['/suspended/default']);
   }
 }

@@ -6,6 +6,7 @@ const he = require('he');
 import {
   AgenciesInput,
   TransunionInput,
+  TUStatusRefInput,
   UpdateAppDataInput,
   UserAttributesInput,
 } from '@shared/services/aws/api.service';
@@ -54,6 +55,11 @@ export class KycService {
     private router: Router,
   ) {}
 
+  /*=====================================*/
+  /*
+  /*              ONBOARDING
+  /*
+  /*=====================================*/
   /**
    * Takes a progress step ID and sets the status to true
    * Then updates the state
@@ -104,36 +110,24 @@ export class KycService {
     return { ...state.user?.onboarding, lastActive, lastComplete, started };
   }
 
-  /**
-   * Takes the attributes and updates the state with them
-   * @param {UserAttributesInput} attributes
-   */
-  updateUserAttributes(attrs: UserAttributesInput): void {
-    this.statesvc.updateUserAttributes(attrs);
-  }
-
+  /*=====================================*/
+  /*
+  /*              USER ATTRIBUTES
+  /*
+  /*=====================================*/
   /**
    * Takes the attributes and updates the state with them
    * @param {UserAttributesInput} attributes
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
-    try {
-      return await this.statesvc.updateUserAttributesAsync(attrs);
-    } catch (err) {
-      throw new Error(`kycService:updateUserAttributesAsync=${err}`);
-    }
+    return await this.statesvc.updateUserAttributesAsync(attrs);
   }
 
-  /**
-   * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param agencies
-   */
-  updateAgencies(agencies: AgenciesStateModel | undefined): void {
-    if (!agencies) return;
-    this.statesvc.updateAgencies(agencies);
-  }
-
+  /*=====================================*/
+  /*
+  /*              AGENCY
+  /*
+  /*=====================================*/
   /**
    * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
    *   - Does not store in the database as there is no need to.
@@ -146,45 +140,12 @@ export class KycService {
     return await this.statesvc.updateAgenciesAsync(agencies);
   }
 
-  /**
-   * Takes the current user and suspends their account
-   */
-  async suspendUser({
-    status,
-    reason,
-    duration,
-  }: {
-    status: AppStatus;
-    reason: AppStatusReason;
-    duration: number;
-  }): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const suspended = bc.generators.createSuspendedStatus({
-      status,
-      reason,
-      duration,
-    });
-    const newData = {
-      ...appData,
-      ...suspended,
-    };
-    if (appData.id && newData.id) {
-      try {
-        await this.statesvc.updateStateDBSyncAsync(newData);
-      } catch (err) {
-        console.log(`kycService:suspendUser=Db Sync Error ${err}`);
-      }
-    }
-  }
-
-  /**
-   * Takes the agency status and updates the state with them
-   * @param {AgenciesInput} agency the new agency input data to write to db and state
-   */
-  updateTransunionIndicativeEnrichment(agency: AgenciesInput): void {
-    this.statesvc.updateAgencies(agency);
-  }
-
+  /*=====================================*/
+  /*
+  /*              TRANSUNION
+  /*
+  /*=====================================*/
+  //======== INDICATIVE ENRICHMENT ======//
   /**
    * Method to send and process the indicative enrichment request and response.
    * @param {UpdateAppDataInput} appData
@@ -207,34 +168,45 @@ export class KycService {
    */
   async processIndicativeEnrichmentResponse(
     enrichment: IIndicativeEnrichmentResult,
+    resp?: ITUServiceResponse<IIndicativeEnrichmentResult | undefined>,
   ): Promise<IIndicativeEnrichmentResult | undefined> {
     const { appData } = this.statesvc.state$.value;
     const transunion = appData.agencies?.transunion;
     if (enrichment.ResponseType.toLowerCase() === 'success') {
-      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, true);
-      await this.updateTransunionIndicativeEnrichment({
-        transunion: {
-          ...transunion,
-          authenticated: false,
-          indicativeEnrichmentSuccess: true,
-          indicativeEnrichmentStatus: status,
-        },
+      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, true, resp);
+      await this.updateIndicativeEnrichment({
+        indicativeEnrichmentSuccess: true,
+        indicativeEnrichmentStatus: status,
       });
       return enrichment;
     } else {
-      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false);
-      await this.updateTransunionIndicativeEnrichment({
-        transunion: {
-          ...transunion,
-          authenticated: false,
-          indicativeEnrichmentSuccess: false,
-          indicativeEnrichmentStatus: status,
-        },
+      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false, resp);
+      await this.updateIndicativeEnrichment({
+        indicativeEnrichmentSuccess: false,
+        indicativeEnrichmentStatus: status,
       });
       return;
     }
   }
 
+  /**
+   * Takes the updated indicative enrichment state and updates the state with it
+   * @param param0
+   */
+  updateIndicativeEnrichment({
+    indicativeEnrichmentSuccess,
+    indicativeEnrichmentStatus,
+  }: {
+    indicativeEnrichmentSuccess: boolean;
+    indicativeEnrichmentStatus: TUStatusRefInput;
+  }): void {
+    this.statesvc.updateIndicativeEnrichment({
+      indicativeEnrichmentSuccess,
+      indicativeEnrichmentStatus,
+    });
+  }
+
+  //======== GET AUTHENICATION QUESTIONS ======//
   /**
    * Method to send and process the authentication questions request and response
    *   - Does not verify the accuracy of the methods...see (sendVerifyAuthenticationQuestions)
@@ -252,7 +224,6 @@ export class KycService {
       return bc.technicalError;
     }
   }
-
   /**
    * Send the full ssn to the Transunion backend and await the KBA questions
    *   - questions can be actual questions or a passcode for the phone
@@ -284,95 +255,60 @@ export class KycService {
     const transunion = appData.agencies?.transunion;
     if (questions.ResponseType.toLowerCase() === 'success') {
       const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, true);
-      await this.updateTransunionIndicativeEnrichment({
-        transunion: {
-          ...transunion,
-          getAuthenticationQuestionsSuccess: true,
-          getAuthenticationQuestionsStatus: status,
-          serviceBundleFulfillmentKey: questions.ServiceBundleFulfillmentKey,
-        },
+      await this.updateGetAuthenticationQuestions({
+        getAuthenticationQuestionsSuccess: true,
+        getAuthenticationQuestionsStatus: status,
+        serviceBundleFulfillmentKey: questions.ServiceBundleFulfillmentKey,
       });
       // now do the authentication
       return questions;
     } else {
       const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, false);
-      await this.updateTransunionIndicativeEnrichment({
-        transunion: {
-          ...transunion,
-          getAuthenticationQuestionsSuccess: false,
-          getAuthenticationQuestionsStatus: status,
-        },
+      await this.updateGetAuthenticationQuestions({
+        getAuthenticationQuestionsSuccess: false,
+        getAuthenticationQuestionsStatus: status,
+        serviceBundleFulfillmentKey: null,
       });
       return;
     }
   }
-
   /**
-   * Initiate the OTP pin in DB
+   * Takes the updated indicative enrichment state and updates the state with it
+   * @param param0
    */
-  async startPinClock(): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const transunion = appData.agencies?.transunion;
-    const now = new Date();
-    debugger;
-    if (!transunion) {
-      return;
-    } else {
-      await this.statesvc.updateAgenciesAsync({
-        ...appData.agencies,
-        transunion: {
-          ...transunion,
-          pinRequests: 1,
-          pinAttempts: 0,
-          pinCurrentAge: now.valueOf(),
-        },
-      });
-    }
+  updateGetAuthenticationQuestions({
+    getAuthenticationQuestionsSuccess,
+    getAuthenticationQuestionsStatus,
+    serviceBundleFulfillmentKey,
+  }: {
+    getAuthenticationQuestionsSuccess: boolean;
+    getAuthenticationQuestionsStatus: TUStatusRefInput;
+    serviceBundleFulfillmentKey: string | null;
+  }): void {
+    this.statesvc.updateGetAuthenticationQuestions({
+      getAuthenticationQuestionsSuccess,
+      getAuthenticationQuestionsStatus,
+      serviceBundleFulfillmentKey,
+    });
   }
 
-  async incrementPinRequest(count: number): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const transunion = appData.agencies?.transunion;
-    const pinRequests = count + 1;
-    const now = new Date();
-    if (!transunion) {
-      return;
-    } else {
-      await this.statesvc.updateAgenciesAsync({
-        ...appData.agencies,
-        transunion: {
-          ...transunion,
-          pinRequests: pinRequests,
-          pinCurrentAge: now.valueOf(),
-        },
-      });
-    }
-  }
-
-  async incrementPinAttempts(count: number): Promise<void> {
-    const { appData } = this.statesvc.state$.value;
-    const transunion = appData.agencies?.transunion;
-    const pinAttempts = count + 1;
-    if (!transunion) {
-      return;
-    } else {
-      await this.statesvc.updateAgenciesAsync({
-        ...appData.agencies,
-        transunion: {
-          ...transunion,
-          pinAttempts: pinAttempts,
-        },
-      });
-    }
-  }
-
+  //======== VERIFY AUTHENTICATION QUESTIONS ======//
   /**
-   * Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param {string} questions the string of xml questions returned by Transunion or other agency
+   * Invoke the service method to send the full ssn to the Transunion backend and await the KBA questions
+   *   - questions can be actual questions or a passcode for the phone
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
    */
-  updateCurrentRawQuestions(questions: string): void {
-    this.statesvc.updateTransunionQuestions(questions);
+  async sendVerifyAuthenticationQuestions(
+    appData: UpdateAppDataInput | AppDataStateModel | undefined,
+    answers: IVerifyAuthenticationAnswer[] | undefined,
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
+    if (!answers?.length || !appData?.id) return bc.technicalError;
+    try {
+      return await this.transunion.sendVerifyAuthenticationQuestions(appData, answers);
+    } catch (err) {
+      return bc.technicalError;
+    }
   }
 
   /**
@@ -380,7 +316,7 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput | undefined> {
+  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput> {
     try {
       return await this.statesvc.updateTransunionQuestionsAsync(questions);
     } catch (err) {
@@ -389,20 +325,11 @@ export class KycService {
   }
 
   /**
-   * Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
-   * @param {string} questions the string of xml questions returned by Transunion or other agency
-   */
-  updateCurrentRawAuthDetails(questions: string): void {
-    this.statesvc.updateTransunionAuthDetails(questions);
-  }
-
-  /**
    * (Promise) Takes the string of KBA questions returned by the agency service and stores them in state
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput | undefined> {
+  async updateCurrentRawAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput> {
     try {
       return this.statesvc.updateTransunionAuthDetailsAsync(questions);
     } catch (err) {
@@ -410,6 +337,79 @@ export class KycService {
     }
   }
 
+  /**
+   * Invoke the service method to send the verified user to transunion to complete onboarding
+   *  - enrolls them in report and score as well as disputes
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
+    try {
+      return await this.transunion.sendCompleteOnboarding();
+    } catch (err) {
+      return bc.technicalError;
+    }
+  }
+
+  //======== ENROLL ======//
+  /**
+   * Invoke the service method to send the verified user to transunion to complete onboarding
+   *  - enrolls them in report and score as well as disputes
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendEnrollRequest(): Promise<ITUServiceResponse<any>> {
+    try {
+      return await this.transunion.sendEnrollRequest();
+    } catch (err) {
+      return bc.technicalError;
+    }
+  }
+
+  /*=====================================*/
+  /*
+  /*         TU ONBOARDING FLOW
+  /*
+  /*=====================================*/
+  /**
+   * Increment auth attempts by 1.
+   */
+  async incrementAuthAttempt(): Promise<UpdateAppDataInput> {
+    return await this.statesvc.incrementAuthAttemptsAsync();
+  }
+  /**
+   * Initiate the OTP pin in DB
+   */
+  async startPinClock(): Promise<UpdateAppDataInput> {
+    return await this.statesvc.initiateTransunionPinDetailsAsync();
+  }
+
+  /**
+   * Increment pin request by 1. Resets pin age
+   */
+  async incrementPinRequest(): Promise<UpdateAppDataInput> {
+    return await this.statesvc.incrementTransunionPinRequestAsync();
+  }
+
+  /**
+   * Increment pin attempt by 1.
+   */
+  async incrementPinAttempts(): Promise<UpdateAppDataInput> {
+    return await this.statesvc.incrementTransunionPinAttemptsAsync();
+  }
+
+  /**
+   * Initiate the OTP pin in DB
+   */
+  async startKbaClock(): Promise<UpdateAppDataInput> {
+    return await this.statesvc.initiateKBADetailsAsync();
+  }
+
+  /*=====================================*/
+  /*
+  /*                PARSERS
+  /*
+  /*=====================================*/
   /**
    * Runs a series of tests to see if the question is a OTP
    * @param {ITransunionKBAQuestions} questions
@@ -446,97 +446,84 @@ export class KycService {
     return tu.parsers.onboarding.parsePassCodeAnswer(question, input);
   }
 
-  /**
-   * Invoke the service method to send the full ssn to the Transunion backend and await the KBA questions
-   *   - questions can be actual questions or a passcode for the phone
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendVerifyAuthenticationQuestions(
-    appData: UpdateAppDataInput | AppDataStateModel | undefined,
-    answers: IVerifyAuthenticationAnswer[] | undefined,
-  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
-    if (!answers?.length || !appData?.id) return bc.technicalError;
-    try {
-      return await this.transunion.sendVerifyAuthenticationQuestions(appData, answers);
-    } catch (err) {
-      return bc.technicalError;
-    }
-  }
-
-  /**
-   * Invoke the service method to send the verified user to transunion to complete onboarding
-   *  - enrolls them in report and score as well as disputes
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
-    try {
-      return await this.transunion.sendCompleteOnboarding();
-    } catch (err) {
-      return bc.technicalError;
-    }
-  }
-
-  /**
-   * Invoke the service method to send the verified user to transunion to complete onboarding
-   *  - enrolls them in report and score as well as disputes
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendEnrollRequest(): Promise<ITUServiceResponse<any>> {
-    try {
-      return await this.transunion.sendEnrollRequest();
-    } catch (err) {
-      return bc.technicalError;
-    }
-  }
+  /*=====================================*/
+  /*
+  /*              BAILOUT
+  /*
+  /*=====================================*/
 
   async bailoutFromOnboarding(
     tuPartial: Partial<TransunionInput>,
     resp?: ITUServiceResponse<any | undefined>,
   ): Promise<void> {
     debugger;
-    const agencies = this.statesvc.state$.value.appData.agencies;
-    const transunion = this.statesvc.state$.value.appData.agencies?.transunion;
+    const appData = await this.incrementAuthAttempt();
+    const agencies = appData.agencies;
+    const transunion = appData.agencies?.transunion;
     if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
       // technical error...api did not respond and error thrown (empty resp);
       this.router.navigate(['/onboarding/retry']);
     } else {
       const critical = tu.queries.exceptions.isErrorCritical(resp);
-      const authAttempt = (transunion.authAttempt || 0) + 1;
+      const authAttempts = transunion.authAttempt || 0;
+      await this.statesvc.updateAgenciesAsync({
+        ...appData.agencies,
+        transunion: {
+          ...transunion,
+          ...tuPartial,
+        },
+      });
       if (critical) {
-        await this.statesvc.updateAgenciesAsync({
-          ...agencies,
-          transunion: {
-            ...transunion,
-            ...tuPartial,
-            authAttempt,
-          },
-        });
-        await this.suspendUser({
-          status: AppStatus.Suspended,
-          reason: AppStatusReason.ThirtyDayLockout,
-          duration: 24 * 30,
-        });
-        this.router.navigate(['/suspended/default']);
-      } else if (authAttempt >= 2) {
-        await this.statesvc.updateAgenciesAsync({
-          ...agencies,
-          transunion: {
-            ...transunion,
-            ...tuPartial,
-            authAttempt,
-          },
-        });
-        await this.suspendUser({
-          status: AppStatus.Suspended,
-          reason: AppStatusReason.AuthAttemptsExceeded,
-          duration: 24 * 30,
-        });
-        this.router.navigate(['/suspended/default']);
+        await this.handleSuspension(AppStatusReason.ThirtyDayLockout);
+      } else if (authAttempts >= 2) {
+        await this.handleSuspension(AppStatusReason.AuthAttemptsExceeded);
       } else {
         this.router.navigate(['/onboarding/retry']);
+      }
+    }
+  }
+
+  /**
+   * Helper to generate suspension requests
+   * @param reason
+   */
+  async handleSuspension(reason: AppStatusReason): Promise<void> {
+    const suspension = {
+      status: AppStatus.Suspended,
+      reason: reason,
+      duration: 24 * 30,
+    };
+    await this.suspendUser(suspension);
+    this.router.navigate(['/suspended/default']);
+  }
+
+  /**
+   * Takes the current user and suspends their account
+   */
+  async suspendUser({
+    status,
+    reason,
+    duration,
+  }: {
+    status: AppStatus;
+    reason: AppStatusReason;
+    duration: number;
+  }): Promise<void> {
+    const { appData } = this.statesvc.state$.value;
+    const suspended = bc.generators.createSuspendedStatus({
+      status,
+      reason,
+      duration,
+    });
+    const newData = {
+      ...appData,
+      ...suspended,
+    };
+    if (appData.id && newData.id) {
+      try {
+        await this.statesvc.updateStateDBSyncAsync(newData);
+      } catch (err) {
+        console.log(`kycService:suspendUser=Db Sync Error ${err}`);
       }
     }
   }

@@ -16,7 +16,7 @@ export class ActiveGuard implements CanActivate {
     const {
       appData: { status },
     } = this.statesvc.state$.value;
-    if (status !== AppStatus.Active) {
+    if (status && status !== AppStatus.Active) {
       this.router.navigate(['/suspended/default']);
       return false;
     }

@@ -3,13 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KYCResponse, KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { TransunionInput, TUStatusRefInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import {
   GooglePageViewEvents as gtViews,
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
+import { IIndicativeEnrichmentResult, ITUServiceResponse } from '@shared/interfaces';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -62,24 +65,24 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
         const data = await this.kycService.updateUserAttributesAsync(attrs);
         const resp = await this.kycService.getIndicativeEnrichmentResults(data);
         if (!resp.success || !resp.data) {
-          this.bailOut();
+          this.handleBailout<IIndicativeEnrichmentResult>(resp);
         } else {
           const enrichment = await this.kycService.processIndicativeEnrichmentResponse(resp.data);
           const ssn = `${enrichment?.SSN}`;
           const full = ssn ? ssn : undefined;
           if (!full) {
-            this.bailOut();
+            this.handleBailout<IIndicativeEnrichmentResult>(resp);
           } else {
             const newAttrs = {
               ssn: { ...attrs.ssn, full },
             } as UserAttributesInput;
-            this.kycService.updateUserAttributesAsync(newAttrs);
+            await this.kycService.updateUserAttributesAsync(newAttrs);
             this.kycService.completeStep(this.stepID);
             this.router.navigate(['../verify'], { relativeTo: this.route });
           }
         }
       } catch {
-        this.bailOut();
+        this.handleBailout<IIndicativeEnrichmentResult>(); // generic api error
       }
     }
   }
@@ -92,7 +95,15 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
     // console.log('form errors', errors);
   }
 
-  bailOut(): void {
+  handleBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: {
+      indicativeEnrichmentSuccess: boolean;
+      indicativeEnrichmentStatus: TUStatusRefInput;
+    } = {
+      indicativeEnrichmentSuccess: false,
+      indicativeEnrichmentStatus: tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false, resp),
+    };
+    this.kycService.updateIndicativeEnrichment(tuPartial);
     this.router.navigate(['../identityfull'], { relativeTo: this.route });
   }
 }

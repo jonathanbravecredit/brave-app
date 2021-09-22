@@ -1,10 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
 import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
@@ -12,7 +11,6 @@ import {
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
-import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
@@ -31,10 +29,9 @@ export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
   selector: 'brave-kyc-idverification',
   templateUrl: './kyc-idverification.component.html',
 })
-export class KycIdverificationComponent extends KycBaseComponent {
+export class KycIdverificationComponent extends KycBaseComponent implements OnInit {
   @Input() viewState: KycIdverificationState = 'init';
   stepID = 3;
-  private state: UpdateAppDataInput | undefined;
 
   constructor(
     private router: Router,
@@ -45,6 +42,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
     private interstitial: InterstitialService,
   ) {
     super();
+  }
+
+  ngOnInit(): void {
+    this.google.firePageViewEvent(gtViews.OnboardingCode);
+    this.kycService.activateStep(this.stepID);
   }
 
   goBack(): void {
@@ -69,7 +71,6 @@ export class KycIdverificationComponent extends KycBaseComponent {
     const code = 'NEWPIN';
     const { appData } = this.store.snapshot();
     const pinRequests = appData?.agencies?.transunion?.pinRequests || 0;
-
     if (!(pinRequests >= 0)) {
       this.interstitial.fetching$.next(false);
       this.bailOut(); //bail out on technical error...no prior pin requests
@@ -84,10 +85,11 @@ export class KycIdverificationComponent extends KycBaseComponent {
     } else {
       try {
         await this.processRequest(code, appData);
-        await this.kycService.incrementPinRequest(pinRequests); // increment up the pin count
+        await this.kycService.incrementPinRequest(); // increment up the pin count
         this.interstitial.fetching$.next(false);
         this.updateViewState('sent');
       } catch (err) {
+        console.log('error:resendCode ===> ', err);
         this.interstitial.fetching$.next(false);
         this.bailOut(); // bail out on technical error...non specific api
       }
@@ -116,29 +118,16 @@ export class KycIdverificationComponent extends KycBaseComponent {
         this.interstitial.fetching$.next(false);
         this.bailOut(); //bail out on technical error...no pin
       } else if (tu.queries.exceptions.isPinStale(pinAge)) {
-        const suspension = {
-          status: AppStatus.Suspended,
-          reason: AppStatusReason.PinAgeExceeded,
-          duration: 24 * 30,
-        };
-        this.kycService.suspendUser(suspension);
-        this.interstitial.fetching$.next(false);
-        this.router.navigate(['/suspended/default']);
+        this.handleSuspension(AppStatusReason.PinAgeExceeded);
       } else if (pinAttempts >= 3) {
-        const suspension = {
-          status: AppStatus.Suspended,
-          reason: AppStatusReason.PinAttemptsExceeded,
-          duration: 24 * 30,
-        };
-        this.kycService.suspendUser(suspension);
-        this.interstitial.fetching$.next(false);
-        this.router.navigate(['/suspended/default']);
+        this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
       } else {
         try {
-          await this.kycService.incrementPinAttempts(pinAttempts);
+          await this.kycService.incrementPinAttempts();
           await this.processRequest(code, appData);
           this.interstitial.fetching$.next(false);
         } catch (err) {
+          console.log('error:goToNext ===> ', err);
           this.bailOut(); // bail out on technical error...non specific api
         }
       }
@@ -171,6 +160,7 @@ export class KycIdverificationComponent extends KycBaseComponent {
           this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
         }
       } catch (err) {
+        console.log('error:processRequest ===> ', err);
         this.bailOut(); // bail out on technical error...non specific api
       }
     }
@@ -187,7 +177,8 @@ export class KycIdverificationComponent extends KycBaseComponent {
   getAuthenticationQuestions(
     state: UpdateAppDataInput | AppDataStateModel | undefined,
   ): ITransunionKBAQuestion | undefined {
-    const authXML = returnNestedObject(state, 'currentRawQuestions') || {};
+    if (!state) return;
+    const authXML = returnNestedObject(state, 'currentRawQuestions') || '';
     const authQuestion = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(authXML);
     const authChallenge = this.createChallengeConfig(authQuestion);
     return authChallenge ? this.kycService.getPassCodeQuestion(authChallenge) : undefined;
@@ -222,21 +213,13 @@ export class KycIdverificationComponent extends KycBaseComponent {
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
-      if (success) {
-        this.router.navigate(['../congratulations'], {
-          relativeTo: this.route,
-        }); // api successful and TU successful
-      } else {
-        const suspension = {
-          status: AppStatus.Suspended,
-          reason: AppStatusReason.EnrollmentFailed,
-          duration: 24 * 30,
-        };
-        this.kycService.suspendUser(suspension);
-        this.interstitial.fetching$.next(false);
-        this.router.navigate(['/suspended/default']); // api successful but TU responds with error
-      }
+      success
+        ? this.router.navigate(['../congratulations'], {
+            relativeTo: this.route,
+          }) // api successful and TU successful
+        : this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
+      console.log('error:completeOnboarding ===> ', err);
       this.interstitial.fetching$.next(false);
       this.bailOut(); // bail out on technical error...non specific api
     }
@@ -256,6 +239,21 @@ export class KycIdverificationComponent extends KycBaseComponent {
       ),
     };
     this.kycService.bailoutFromOnboarding(tuPartial, resp);
+  }
+
+  /**
+   * Helper to generate suspension requests
+   * @param reason
+   */
+  handleSuspension(reason: AppStatusReason): void {
+    const suspension = {
+      status: AppStatus.Suspended,
+      reason: reason,
+      duration: 24 * 30,
+    };
+    this.kycService.suspendUser(suspension);
+    this.interstitial.fetching$.next(false);
+    this.router.navigate(['/suspended/default']);
   }
 }
 

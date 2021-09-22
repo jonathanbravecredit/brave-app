@@ -6,6 +6,7 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
 import {
   TransunionInput,
   TUReportResponse,
+  TUStatusRefInput,
   UpdateAppDataInput,
   UserAttributesInput,
 } from '@shared/services/aws/api.service';
@@ -58,10 +59,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
     this.router.navigate(['../identity'], { relativeTo: this.route });
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    this.hasError = true;
-  }
-
   /**
    * Method to:
    * - Update the phone number
@@ -71,6 +68,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
    * - find the OTP question (if not go to KBA)
    * - Choose send to send to cell phone (over landline)
    * - Confirm response, save to state, and go to code input
+   * BE CAREFUL OF RACE CONDITIONS HERE!!!
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
@@ -87,36 +85,38 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
         const data = await this.kycService.updateUserAttributesAsync(attrs);
         const authResp = await this.kycService.getGetAuthenticationQuestionsResults(data);
         if (!authResp.success || !authResp.data) {
-          this.bailOut<IGetAuthenticationQuestionsResult>(authResp); // TU response or BC technical error
+          this.handleBailout<IGetAuthenticationQuestionsResult>(authResp); // TU response or BC technical error
         } else {
           const questions = await this.kycService.processGetAuthenticationQuestionsResponse(authResp.data);
           const xml = tu.parsers.onboarding.parseAuthQuestions(questions);
           if (!xml) {
-            this.bailOut();
+            this.handleBailout();
           } else {
-            await this.kycService.updateCurrentRawQuestionsAsync(xml); // will through error if connection issue
-            const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xml);
+            const kbaAppData = await this.kycService.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
+            const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xml); // check if OTP eligible
             const otpQuestion = this.kycService.getOTPQuestion(authQuestions);
             if (otpQuestion) {
               const otpResp = await this.sendOTPResponse(otpQuestion);
               if (!otpResp.success || !otpResp.data) {
-                this.bailOut<IVerifyAuthenticationQuestionsResult>(otpResp);
+                this.handleBailout<IVerifyAuthenticationQuestionsResult>(otpResp);
               } else {
                 const codeQuestions = otpResp.data?.AuthenticationDetails;
                 await this.kycService.startPinClock();
-                await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
-                debugger;
+                const otpAppData = await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
+                await this.kycService.updateAgenciesAsync(otpAppData.agencies); // success, sync up to db
                 this.router.navigate(['../code'], { relativeTo: this.route });
               }
             } else {
-              // TODO may need to start KBA clock here.
+              // since no otp question found, they are kba based and already save...start KBA countdown
+              await this.kycService.startKbaClock();
+              await this.kycService.updateAgenciesAsync(kbaAppData.agencies);
               this.router.navigate(['../kba'], { relativeTo: this.route });
             }
           }
         }
       } catch (err) {
         console.log('error ==> ', err);
-        this.bailOut();
+        this.handleBailout();
       }
     }
   }
@@ -146,19 +146,29 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
     }
   }
 
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    this.hasError = true;
+  }
+
   /**
    * Method to route user to appropriate error screen using kyc service
    * @param resp
    */
-  bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
-    const tuPartial: Partial<TransunionInput> = {
+  handleBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: {
+      getAuthenticationQuestionsSuccess: boolean;
+      getAuthenticationQuestionsStatus: TUStatusRefInput;
+      serviceBundleFulfillmentKey: string | null;
+    } = {
       getAuthenticationQuestionsSuccess: false,
       getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
         TUBundles.GetAuthenticationQuestions,
         false,
         resp,
       ),
+      serviceBundleFulfillmentKey: '',
     };
+    this.kycService.updateGetAuthenticationQuestions(tuPartial);
     this.kycService.bailoutFromOnboarding(tuPartial, resp);
   }
 }
