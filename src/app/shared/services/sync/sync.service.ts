@@ -151,7 +151,7 @@ export class SyncService implements OnDestroy {
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(id: string): Promise<void> {
+  async initAppData(id: string): Promise<AppDataStateModel | undefined> {
     if (!id) return;
     try {
       const input: CreateAppDataInput | undefined = BraveUtil.generators.createNewUserData(id);
@@ -159,11 +159,11 @@ export class SyncService implements OnDestroy {
       const data = await this.api.CreateAppData(input);
       const clean = this.cleanBackendData(data);
 
-      await new Promise((resolve, reject) => {
-        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
+      return await new Promise((resolve, reject) => {
+        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((appData) => {
           this.data$.next(clean);
           this.routeUser(-1);
-          return resolve(true);
+          return resolve(clean);
         });
       });
     } catch (err) {
