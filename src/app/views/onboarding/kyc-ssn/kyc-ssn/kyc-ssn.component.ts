@@ -55,11 +55,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
     this.google.fireClickEvent(gtClicks.OnboardingIdentity);
     if (form.valid) {
       const { lastfour } = this.formatAttributes(form, ssnMap);
-      const attrs = {
-        ssn: {
-          lastfour: lastfour,
-        },
-      } as UserAttributesInput;
+      const attrs = { ssn: { lastfour: lastfour } } as UserAttributesInput;
 
       try {
         const data = await this.kycService.updateUserAttributesAsync(attrs);

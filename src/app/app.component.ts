@@ -34,17 +34,18 @@ export class AppComponent implements OnInit {
         case 'signIn':
           const provider = window.sessionStorage.getItem('braveOAuthProvider');
           if (provider) return; // handled in redirect
-          const creds: CognitoUser = await Auth.currentAuthenticatedUser();
-          const attrs = await Auth.userAttributes(creds);
-          const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
-          if (id) {
-            this.interstitial.changeMessage(' ');
-            this.interstitial.openInterstitial();
-            await this.sync.initUser(id);
-            await this.sync.subscribeToListeners(id);
-            await this.sync.onboardUser(id, true);
-            this.interstitial.closeInterstitial();
-          }
+          this.router.navigate(['/dashboard/init']);
+          // const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+          // const attrs = await Auth.userAttributes(creds);
+          // const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+          // if (id) {
+          //   this.interstitial.changeMessage(' ');
+          //   this.interstitial.openInterstitial();
+          //   await this.sync.initUser(id);
+          //   await this.sync.subscribeToListeners(id);
+          //   await this.sync.onboardUser(id, true);
+          //   this.interstitial.closeInterstitial();
+          // }
           break;
         case 'signOut':
           this.router.navigate(['/auth/signin']);
