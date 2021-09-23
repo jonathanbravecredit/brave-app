@@ -1,6 +1,13 @@
 import { CreateAppDataInput } from '@shared/services/aws/api.service';
+import { BraveUtil } from '@shared/utils/brave/brave';
 import { BraveBase } from '@shared/utils/brave/brave-base';
-import { AppStatus, AppStatusReason, AppStatusReasonDescriptions, INIT_DATA } from '@shared/utils/brave/constants';
+import {
+  AppStatus,
+  AppStatusReason,
+  AppStatusReasonDescriptions,
+  INIT_DATA,
+  INIT_ONBOARDING_STATE,
+} from '@shared/utils/brave/constants';
 import { IAppStatus } from '@shared/utils/brave/interfaces';
 import { addHoursToDate } from '@shared/utils/dates';
 
@@ -28,6 +35,18 @@ export class BraveGenerators extends BraveBase {
       lastStatusModifiedOn: now.toISOString(),
       nextStatusModifiedOn: addHoursToDate(now, ninetyDays).toISOString(),
     };
+  }
+
+  /**
+   * Generate the initial onboarding state
+   * @returns
+   */
+  static createInitOnboardingState(): {
+    lastActive: number;
+    lastComplete: number;
+    started: boolean;
+  } {
+    return INIT_ONBOARDING_STATE;
   }
 
   /**
