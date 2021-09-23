@@ -33,11 +33,8 @@ export class AgenciesState {
     });
   }
 
-  @Action(AgenciesActions.EditTransunionQuestions)
-  updateTransunionQuestions(
-    ctx: StateContext<AgenciesStateModel>,
-    { payload }: AgenciesActions.EditTransunionQuestions,
-  ) {
+  @Action(AgenciesActions.EditTransunion)
+  updateTransunion(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.EditTransunion) {
     const state = ctx.getState();
     ctx.patchState({
       ...state,
@@ -48,17 +45,75 @@ export class AgenciesState {
     });
   }
 
-  @Action(AgenciesActions.EditTransunionAuthDetails)
-  updateTransunionAuthDetails(
-    ctx: StateContext<AgenciesStateModel>,
-    { payload }: AgenciesActions.EditTransunionAuthDetails,
-  ) {
+  @Action(AgenciesActions.IncrementTransunionAuthAttempts)
+  incrementTransunionAuthAttempt(ctx: StateContext<AgenciesStateModel>) {
     const state = ctx.getState();
+    const authAttempt = (state.transunion?.authAttempt || 0) + 1;
     ctx.patchState({
       ...state,
       transunion: {
         ...state.transunion,
-        ...payload,
+        authAttempt,
+      },
+    });
+  }
+
+  @Action(AgenciesActions.InitiateTransunionPinDetails)
+  initiateTransunionPinDetails(ctx: StateContext<AgenciesStateModel>) {
+    const state = ctx.getState();
+    const pinRequests = 1;
+    const pinAttempts = 0;
+    const pinCurrentAge = new Date().valueOf();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        pinRequests,
+        pinAttempts,
+        pinCurrentAge,
+      },
+    });
+  }
+
+  @Action(AgenciesActions.IncrementTransunionPinRequest)
+  incrementTransunionPinRequest(ctx: StateContext<AgenciesStateModel>) {
+    const state = ctx.getState();
+    const pinRequests = (state.transunion?.pinRequests || 0) + 1;
+    const pinCurrentAge = new Date().valueOf();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        pinRequests,
+        pinCurrentAge,
+      },
+    });
+  }
+
+  @Action(AgenciesActions.IncrementTransunionPinAttempts)
+  incrementTransunionPinAttempts(ctx: StateContext<AgenciesStateModel>) {
+    const state = ctx.getState();
+    const pinAttempts = (state.transunion?.pinAttempts || 0) + 1;
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        pinAttempts,
+      },
+    });
+  }
+
+  @Action(AgenciesActions.InitiateTransunionKBADetails)
+  initiateTransunionKBADetails(ctx: StateContext<AgenciesStateModel>) {
+    const state = ctx.getState();
+    const kbaAttempts = 0;
+    const kbaCurrentAge = new Date().valueOf();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        kbaAttempts,
+        kbaCurrentAge,
       },
     });
   }

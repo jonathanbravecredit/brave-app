@@ -106,15 +106,19 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
   getAuthenticationQuestionsStatus: TUStatusRef
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRef
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRef
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
   authAttempt: Int
   pinRequests: Int
   pinAttempts: Int
-  pinCurrentAge: Int
+  pinCurrentAge: Float
   kbaAttempts: Int
-  kbaCurrentAge: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
@@ -144,7 +148,7 @@ type Experian @aws_iam @aws_cognito_user_pools {
 }
 
 type TUStatusRef @aws_iam @aws_cognito_user_pools {
-  id: Int
+  id: ID
   status: String
   statusDescription: String
   statusModifiedOn: String
@@ -268,15 +272,19 @@ input TransunionInput {
   indicativeEnrichmentStatus: TUStatusRefInput
   getAuthenticationQuestionsSuccess: Boolean
   getAuthenticationQuestionsStatus: TUStatusRefInput
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRefInput
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRefInput
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
   authAttempt: Int
   pinRequests: Int
   pinAttempts: Int
-  pinCurrentAge: Int
+  pinCurrentAge: Float
   kbaAttempts: Int
-  kbaCurrentAge: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponseInput
   enrollMergeReport: TUReportResponseInput
@@ -298,7 +306,7 @@ input TransunionInput {
 }
 
 input TUStatusRefInput {
-  id: Int
+  id: ID
   status: String
   statusDescription: String
   statusModifiedOn: String

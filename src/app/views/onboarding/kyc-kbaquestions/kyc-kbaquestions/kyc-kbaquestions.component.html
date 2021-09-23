@@ -2,7 +2,6 @@
   <div *ngIf="agencies$ | async as agencies">
     <brave-kyc-kbaquestions-pure
       (formSubmit)="handleSubmit($event)"
-      (formError)="handleError($event)"
       (nextClick)="goToNext()"
       (backClick)="goBack()"
       [kbas]="agencies.transunion?.currentRawQuestions | kycKbaquestions"
