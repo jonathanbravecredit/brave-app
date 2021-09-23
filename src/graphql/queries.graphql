@@ -37,16 +37,58 @@ query GetAppData($id: ID!) {
         lastActive
         lastComplete
         started
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -175,6 +217,11 @@ query GetAppData($id: ID!) {
         mortgages
       }
     }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
     createdAt
     updatedAt
     owner
@@ -220,16 +267,58 @@ query ListAppDatas(
           lastActive
           lastComplete
           started
+          display {
+            id
+            active
+            complete
+            name
+          }
         }
       }
       agencies {
         transunion {
           authenticated
           indicativeEnrichmentSuccess
+          indicativeEnrichmentStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
           getAuthenticationQuestionsSuccess
+          getAuthenticationQuestionsStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsOTPSuccess
+          verifyAuthenticationQuestionsOTPStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsKBASuccess
+          verifyAuthenticationQuestionsKBAStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
           serviceBundleFulfillmentKey
           currentRawQuestions
           currentRawAuthDetails
+          authAttempt
+          pinRequests
+          pinAttempts
+          pinCurrentAge
+          kbaAttempts
+          kbaCurrentAge
           enrollmentKey
           enrollReport {
             bureau
@@ -358,6 +447,11 @@ query ListAppDatas(
           mortgages
         }
       }
+      status
+      statusReason
+      statusReasonDescription
+      lastStatusModifiedOn
+      nextStatusModifiedOn
       createdAt
       updatedAt
       owner

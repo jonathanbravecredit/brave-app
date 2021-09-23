@@ -36,7 +36,7 @@ export class SigninComponent {
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
         }
         this.interstitial.fetching$.next(false);
-      } catch (err) {
+      } catch (err: any) {
         this.interstitial.fetching$.next(false);
         if (err.code === 'UserNotConfirmedException') {
           const unconfirmedUserState = {};
