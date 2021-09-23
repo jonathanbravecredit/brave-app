@@ -5,6 +5,7 @@ import {
   UpdateAppDataInput,
   APIService,
   TUStatusRefInput,
+  TransunionInput,
 } from '@shared/services/aws/api.service';
 import { AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
@@ -172,6 +173,21 @@ export class StateService {
   /*              TRANSUNION
   /*
   /*=====================================*/
+  /**
+   * (Promise) Update Transunion based on the partial
+   * @param param0
+   */
+  async updateTransunion(tuPartial: Partial<TransunionInput>): Promise<UpdateAppDataInput> {
+    return new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new AgenciesActions.EditTransunion(tuPartial))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
+  }
+
   /**
    * (Asynchronous) Update the indicative enrichment states
    * @param param0

@@ -130,6 +130,11 @@ export class KycService {
   /*              TRANSUNION
   /*
   /*=====================================*/
+  //========== GENERAL ==================//
+  async updateTransunion(tuPartial: Partial<TransunionInput>): Promise<UpdateAppDataInput> {
+    return await this.statesvc.updateTransunion(tuPartial);
+  }
+
   //======== INDICATIVE ENRICHMENT ======//
   /**
    * Method to send and process the indicative enrichment request and response.
@@ -322,20 +327,6 @@ export class KycService {
     }
   }
 
-  /**
-   * Invoke the service method to send the verified user to transunion to complete onboarding
-   *  - enrolls them in report and score as well as disputes
-   * @param {UpdateAppDataInput} data AppData state
-   * @returns
-   */
-  async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
-    try {
-      return await this.transunion.sendCompleteOnboarding();
-    } catch (err) {
-      return bc.technicalError;
-    }
-  }
-
   //======== ENROLL ======//
   /**
    * Invoke the service method to send the verified user to transunion to complete onboarding
@@ -351,6 +342,19 @@ export class KycService {
     }
   }
 
+  /**
+   * Invoke the service method to send the verified user to transunion to complete onboarding
+   *  - enrolls them in report and score as well as disputes
+   * @param {UpdateAppDataInput} data AppData state
+   * @returns
+   */
+  async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
+    try {
+      return await this.transunion.sendCompleteOnboarding();
+    } catch (err) {
+      return bc.technicalError;
+    }
+  }
   /*=====================================*/
   /*
   /*         TU ONBOARDING FLOW
