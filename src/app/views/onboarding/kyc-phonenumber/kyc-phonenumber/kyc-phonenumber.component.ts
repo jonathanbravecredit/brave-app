@@ -108,7 +108,6 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
               }
             } else {
               // since no otp question found, they are kba based and already save...start KBA countdown
-              debugger;
               const kbaData = await this.kycService.startKbaClock();
               await this.kycService.updateAgenciesAsync(kbaData.agencies);
               this.router.navigate(['../kba'], { relativeTo: this.route });

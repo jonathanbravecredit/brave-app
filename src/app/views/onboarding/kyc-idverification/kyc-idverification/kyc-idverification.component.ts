@@ -75,13 +75,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       this.interstitial.fetching$.next(false);
       this.bailOut(); //bail out on technical error...no prior pin requests
     } else if (pinRequests >= 3) {
-      const suspension = {
-        status: AppStatus.Suspended,
-        reason: AppStatusReason.PinRequestsExceeded,
-        duration: 24 * 30,
-      };
-      this.kycService.suspendUser(suspension);
-      this.interstitial.fetching$.next(false);
+      this.handleSuspension(AppStatusReason.PinRequestsExceeded);
     } else {
       try {
         await this.processRequest(code, appData);
@@ -155,7 +149,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         if (!resp.success || !resp.data) {
           this.bailOut(resp); // need to handle this appropriately
         } else if (resp.data.ResponseType.toLowerCase() === 'success') {
-          await this.sendCompleteOnboarding();
+          await this.handleSuccess();
         } else {
           this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
         }
@@ -209,7 +203,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    * @param state
    * @returns
    */
-  async sendCompleteOnboarding(): Promise<void> {
+  async handleSuccess(): Promise<void> {
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
@@ -226,6 +220,21 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
   }
 
   /**
+   * Helper to generate suspension requests
+   * @param reason
+   */
+  handleSuspension(reason: AppStatusReason): void {
+    const suspension = {
+      status: AppStatus.Suspended,
+      reason: reason,
+      duration: 24 * 30,
+    };
+    this.kycService.suspendUser(suspension);
+    this.interstitial.fetching$.next(false);
+    this.router.navigate(['/suspended/default']);
+  }
+
+  /**
    * Method to route user to appropriate error screen using kyc service
    * @param resp
    */
@@ -239,21 +248,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       ),
     };
     this.kycService.bailoutFromOnboarding(tuPartial, resp);
-  }
-
-  /**
-   * Helper to generate suspension requests
-   * @param reason
-   */
-  handleSuspension(reason: AppStatusReason): void {
-    const suspension = {
-      status: AppStatus.Suspended,
-      reason: reason,
-      duration: 24 * 30,
-    };
-    this.kycService.suspendUser(suspension);
-    this.interstitial.fetching$.next(false);
-    this.router.navigate(['/suspended/default']);
   }
 }
 

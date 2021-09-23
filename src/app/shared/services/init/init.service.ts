@@ -22,9 +22,9 @@ export class InitService {
   private onboarding$: Observable<OnboardingStateModel> = this.store.select(OnboardingSelectors.getOnboarding);
   private onboardingSub$: Subscription;
 
-  private transunion: TransunionInput = {} as TransunionInput;
-  private transunion$: Observable<TransunionInput> = this.store.select(AgenciesSelectors.getTransunion);
-  private transunionSub$: Subscription;
+  private agencies: AgenciesStateModel = {} as AgenciesStateModel;
+  private agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
+  private agenciesSub$: Subscription;
 
   constructor(private store: Store, private sync: SyncService, private router: Router) {
     this.onboardingSub$ = this.onboarding$
@@ -33,16 +33,17 @@ export class InitService {
         this.onboarding = onboarding;
       });
 
-    this.transunionSub$ = this.transunion$
-      .pipe(filter((transunion: TransunionInput) => transunion !== undefined))
-      .subscribe((transunion: TransunionInput) => {
-        this.transunion = transunion;
+    this.agenciesSub$ = this.agencies$
+      .pipe(filter((agencies: AgenciesStateModel) => agencies !== undefined))
+      .subscribe((agencies: AgenciesStateModel) => {
+        this.agencies = agencies;
       });
   }
 
   ngOnDestroy(): void {
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
-    if (this.transunionSub$) this.transunionSub$.unsubscribe();
+    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
+    // if (this.transunionSub$) this.transunionSub$.unsubscribe();
   }
 
   async resolver(): Promise<boolean> {
@@ -168,7 +169,7 @@ export class InitService {
    */
   goToLastOnboarded(): void {
     const { lastComplete } = this.onboarding;
-    const transunion = this.transunion;
+    const { transunion } = this.agencies;
 
     switch (lastComplete) {
       case -1:
