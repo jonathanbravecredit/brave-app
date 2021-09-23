@@ -148,7 +148,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]); //this.sendVerifyAuthQuestions(this.state, answer);
         if (!resp.success || !resp.data) {
           this.bailOut(resp); // need to handle this appropriately
-        } else if (resp.data.ResponseType.toLowerCase() === 'success') {
+        } else if (resp.data.AuthenticationStatus.toLowerCase() === 'correct') {
           await this.handleSuccess();
         } else {
           this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
