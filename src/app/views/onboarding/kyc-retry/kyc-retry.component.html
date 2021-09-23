@@ -1,0 +1,31 @@
+<div class="container mx-auto max-w-xs h-full">
+  <div class="flex content-center items-center justify-center h-full">
+    <div class="w-full max-w-xs">
+      <div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
+        <!-- image -->
+        <div class="flex justify-center mb-6">
+          <img class="h-64 w-64" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_welcoming_xvuq.svg" />
+        </div>
+
+        <!-- header -->
+        <div class="py-3">
+          <h4 class="brave-h4">Verification Error</h4>
+        </div>
+
+        <!-- message -->
+        <div class="py-3">
+          <div class="text-sm text-blueGray-600">
+            <p class="mb-0">Unfortunately there was a connection issue and you need to re-enter your information.</p>
+          </div>
+        </div>
+
+        <!-- action -->
+        <div class="mt-5">
+          <div class="flex justify-center items-center">
+            <brave-filled-onlytext-button [routerLink]="['/onboarding/name']">Retry</brave-filled-onlytext-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

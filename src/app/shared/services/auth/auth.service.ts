@@ -268,7 +268,7 @@ export class AuthService {
       const resp = await Auth.changePassword(user, oldPassword, newPassword);
       this.interstitial.fetching$.next(false);
       return resp.toLowerCase();
-    } catch (err) {
+    } catch (err: any) {
       this.interstitial.fetching$.next(false);
       return err.message;
     }

@@ -48,7 +48,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -70,7 +70,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('GetAuthenticationQuestions', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -92,7 +92,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -104,7 +104,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -116,7 +116,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('Enroll', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -128,7 +128,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('EnrollDisputes', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -140,7 +140,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -152,7 +152,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -167,7 +167,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify({}));
       return res ? JSON.parse(res) : false;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -181,7 +181,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -199,7 +199,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -216,7 +216,7 @@ export class TransunionService {
       const msg = { disputeId };
       const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }

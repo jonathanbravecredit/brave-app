@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { AgenciesState, AgenciesStateModel } from '@store/agencies';
+import { AgenciesSelectors, AgenciesState, AgenciesStateModel } from '@store/agencies';
 import { Observable, Subscription } from 'rxjs';
 import {
   ITransunionKBAQuestion,
   ITransunionKBAAnswer,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
-import { take } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -19,6 +19,11 @@ import {
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
+import { TransunionInput } from '@shared/services/aws/api.service';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -32,7 +37,7 @@ export class KycKbaquestionsComponent implements OnInit {
   numberOfQuestions: number = 0;
   stepID = 3;
 
-  @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
+  agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
   agenciesSub$: Subscription;
 
   constructor(
@@ -43,15 +48,17 @@ export class KycKbaquestionsComponent implements OnInit {
     private google: GoogleService,
     private store: Store,
   ) {
-    this.agenciesSub$ = this.agencies$.pipe(take(1)).subscribe((agencies: AgenciesStateModel) => {
-      if (!agencies.transunion?.currentRawQuestions) return;
-      const xml: ITransunionKBAQuestions = this.kycService.parseCurrentRawQuestions(
-        agencies.transunion?.currentRawQuestions,
-      );
-      const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
-      questions instanceof Array ? (this.questions = questions) : [questions];
-      this.numberOfQuestions = this.questions.length;
-    });
+    this.agenciesSub$ = this.agencies$
+      .pipe(filter((agencies: AgenciesStateModel) => agencies !== undefined))
+      .subscribe((agencies: AgenciesStateModel) => {
+        const rawQuestions = agencies.transunion?.currentRawQuestions;
+        if (!rawQuestions) return;
+        const xml = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(rawQuestions);
+        const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
+        questions instanceof Array ? (this.questions = questions) : [questions];
+        this.numberOfQuestions = this.questions.length;
+        // start kba questions clock
+      });
   }
 
   ngOnInit(): void {
@@ -106,46 +113,105 @@ export class KycKbaquestionsComponent implements OnInit {
    *   Upon success, will be routed to congratulations screen
    * @param form the KBA answer form
    */
-  async handleSubmit(form: FormGroup) {
+  async handleSubmit(form: FormGroup): Promise<void> {
     const formValues = this.kba?.kba?.parentForm.value;
-    if (Object.keys(formValues).length) this.router.navigate(['../error'], { relativeTo: this.route });
-
-    const answers: IVerifyAuthenticationAnswer[] = Object.keys(formValues)
-      .filter((key) => {
-        return formValues[key]?.input?.answer && formValues[key]?.input?.question;
-      })
-      .map((key) => {
-        let answer: ITransunionKBAAnswer = formValues[key]?.input?.answer;
-        let question: ITransunionKBAQuestion = formValues[key]?.input?.question;
-        return {
-          VerifyChallengeAnswersRequestMultiChoiceQuestion: {
-            QuestionId: question?.QuestionId,
-            SelectedAnswerChoice: {
-              AnswerChoiceId: answer?.AnswerChoiceId,
+    if (Object.keys(formValues).length) {
+      const answers: IVerifyAuthenticationAnswer[] = Object.keys(formValues)
+        .filter((key) => {
+          return formValues[key]?.input?.answer && formValues[key]?.input?.question;
+        })
+        .map((key) => {
+          let answer: ITransunionKBAAnswer = formValues[key]?.input?.answer;
+          let question: ITransunionKBAQuestion = formValues[key]?.input?.question;
+          return {
+            VerifyChallengeAnswersRequestMultiChoiceQuestion: {
+              QuestionId: question?.QuestionId,
+              SelectedAnswerChoice: {
+                AnswerChoiceId: answer?.AnswerChoiceId,
+              },
             },
-          },
-        };
-      });
-    const { appData: state } = this.store.snapshot();
-    try {
-      const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, answers);
-      if (success) {
-        this.kycService.completeStep(this.stepID);
-        this.router.navigate(['../congratulations'], {
-          relativeTo: this.route,
+          };
         });
+      const { appData } = this.store.snapshot();
+      const kbaAge = appData?.agencies?.transunion?.kbaCurrentAge;
+      const kbaAttempts = appData?.agencies?.transunion?.kbaAttempts || 0;
+
+      if (!kbaAge || !(kbaAttempts >= 0)) {
         this.interstitial.fetching$.next(false);
+        this.bailOut(); //bail out on technical error...no pin
+      } else if (tu.queries.exceptions.isKBAStale(kbaAge)) {
+        this.handleSuspension(AppStatusReason.KbaAgeExceeded);
+      } else if (kbaAttempts > 0) {
+        this.handleSuspension(AppStatusReason.KbaAttemptsExceeded);
       } else {
-        this.router.navigate(['../error'], { relativeTo: this.route });
-        this.interstitial.fetching$.next(false);
+        try {
+          const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, answers);
+          resp.success ? this.handleSuccess() : this.handleError(resp);
+          this.interstitial.fetching$.next(false);
+        } catch (err) {
+          console.log('error:kbaHandleSubmit ===> ', err);
+          this.interstitial.fetching$.next(false);
+          this.bailOut();
+        }
       }
-    } catch (err) {
-      this.router.navigate(['../error'], { relativeTo: this.route });
-      this.interstitial.fetching$.next(false);
     }
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    // console.log('form errors', errors);
+  async handleSuccess(): Promise<void> {
+    try {
+      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+      const { success, error } = await this.kycService.sendEnrollRequest();
+      success
+        ? this.router.navigate(['../congratulations'], {
+            relativeTo: this.route,
+          })
+        : this.handleSuspension(AppStatusReason.EnrollmentFailed);
+    } catch (err) {
+      console.log('error:completeOnboarding ===> ', err);
+      this.interstitial.fetching$.next(false);
+      this.bailOut(); // bail out on technical error...non specific api
+    }
+  }
+
+  handleError(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): void {
+    this.interstitial.fetching$.next(false);
+    this.kycService.suspendUser({
+      status: AppStatus.Suspended,
+      reason: AppStatusReason.KbaAttemptsExceeded,
+      duration: 24 * 30,
+    });
+    this.bailOut<IVerifyAuthenticationQuestionsResult>(resp);
+  }
+
+  /**
+   * Helper to generate suspension requests
+   * @param reason
+   */
+  handleSuspension(reason: AppStatusReason): void {
+    const suspension = {
+      status: AppStatus.Suspended,
+      reason: reason,
+      duration: 24 * 30,
+    };
+    this.kycService.suspendUser(suspension);
+    this.interstitial.fetching$.next(false);
+    this.router.navigate(['/suspended/default']);
+  }
+
+  /**
+   * Method to route user to appropriate error screen using kyc service
+   * @param resp
+   */
+  bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: Partial<TransunionInput> = {
+      verifyAuthenticationQuestionsKBASuccess: false,
+      verifyAuthenticationQuestionsKBAStatus: tu.generators.createOnboardingStatus(
+        TUBundles.VerifyAuthenticationQuestionsKBA,
+        false,
+        resp,
+      ),
+    };
+    this.interstitial.fetching$.next(false);
+    this.kycService.bailoutFromOnboarding(tuPartial, resp);
   }
 }

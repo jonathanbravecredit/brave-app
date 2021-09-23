@@ -7,4 +7,9 @@ export class AppDataStateModel implements UpdateAppDataInput {
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
 }
