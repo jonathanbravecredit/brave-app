@@ -16,13 +16,14 @@ export class TransunionExceptionQueries extends TransunionBase {
   }
 
   static isErrorCritical(resp: ITUServiceResponse<any>): boolean {
-    const { error: { Code, Message } = {} } = resp;
+    const { error: { Code, Message, Name } = {} } = resp;
     const { keyWords } = TRANSUNION_CRITICAL_ERRORS[`${Code}`] || {};
     if (!keyWords) return false;
     const found = keyWords.find((w) => {
       const msg = Message?.toLowerCase() || '';
+      const name = Name?.toLowerCase() || '';
       const word = w.toLowerCase();
-      return msg.indexOf(word) >= 0;
+      return msg.indexOf(word) >= 0 || name.indexOf(word) >= 0;
     });
     return found ? true : false;
   }

@@ -146,13 +146,11 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       try {
         const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
         const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]); //this.sendVerifyAuthQuestions(this.state, answer);
-        if (!resp.success || !resp.data) {
-          this.bailOut(resp); // need to handle this appropriately
-        } else if (resp.data.ResponseType.toLowerCase() === 'success') {
-          await this.handleSuccess();
-        } else {
-          this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
-        }
+        resp.success &&
+        resp.data?.ResponseType.toLowerCase() === 'success' &&
+        resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
+          ? this.handleSuccess()
+          : this.handleAPIError(resp);
       } catch (err) {
         console.log('error:processRequest ===> ', err);
         this.bailOut(); // bail out on technical error...non specific api
@@ -216,6 +214,14 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       console.log('error:completeOnboarding ===> ', err);
       this.interstitial.fetching$.next(false);
       this.bailOut(); // bail out on technical error...non specific api
+    }
+  }
+
+  handleAPIError(resp: ITUServiceResponse<any | undefined>): void {
+    if (!resp.success || !resp.data) {
+      this.bailOut(resp); // need to handle this appropriately
+    } else {
+      this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
     }
   }
 

@@ -146,7 +146,11 @@ export class KycKbaquestionsComponent implements OnInit {
       } else {
         try {
           const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, answers);
-          resp.success ? this.handleSuccess() : this.handleError(resp);
+          resp.success &&
+          resp.data?.ResponseType.toLowerCase() === 'success' &&
+          resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
+            ? this.handleSuccess()
+            : this.handleError(resp);
           this.interstitial.fetching$.next(false);
         } catch (err) {
           console.log('error:kbaHandleSubmit ===> ', err);
