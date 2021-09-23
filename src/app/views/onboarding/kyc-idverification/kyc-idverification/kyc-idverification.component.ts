@@ -103,6 +103,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
   async goToNext(form: FormGroup): Promise<void> {
     this.google.fireClickEvent(gtClicks.OnboardingCode);
     if (form.valid) {
+      this.updateViewState('init');
       const { code } = this.formatAttributes(form, codeMap);
       const { appData } = this.store.snapshot();
       const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
@@ -149,8 +150,8 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         resp.success &&
         resp.data?.ResponseType.toLowerCase() === 'success' &&
         resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
-          ? this.handleSuccess()
-          : this.handleAPIError(resp);
+          ? await this.handleSuccess()
+          : await this.handleAPIError(resp);
       } catch (err) {
         console.log('error:processRequest ===> ', err);
         this.bailOut(); // bail out on technical error...non specific api
@@ -209,7 +210,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         ? this.router.navigate(['../congratulations'], {
             relativeTo: this.route,
           }) // api successful and TU successful
-        : this.handleSuspension(AppStatusReason.EnrollmentFailed);
+        : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
       console.log('error:completeOnboarding ===> ', err);
       this.interstitial.fetching$.next(false);
@@ -217,7 +218,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     }
   }
 
-  handleAPIError(resp: ITUServiceResponse<any | undefined>): void {
+  async handleAPIError(resp: ITUServiceResponse<any | undefined>): Promise<void> {
     if (!resp.success || !resp.data) {
       this.bailOut(resp); // need to handle this appropriately
     } else {
@@ -229,15 +230,9 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    * Helper to generate suspension requests
    * @param reason
    */
-  handleSuspension(reason: AppStatusReason): void {
-    const suspension = {
-      status: AppStatus.Suspended,
-      reason: reason,
-      duration: 24 * 30,
-    };
-    this.kycService.suspendUser(suspension);
+  async handleSuspension(reason: AppStatusReason): Promise<void> {
+    await this.kycService.handleSuspension(reason);
     this.interstitial.fetching$.next(false);
-    this.router.navigate(['/suspended/default']);
   }
 
   /**

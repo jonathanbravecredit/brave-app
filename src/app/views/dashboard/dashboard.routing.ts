@@ -20,12 +20,13 @@ import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbeara
 import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 import { SnapshotDatabreachesResolver } from '@shared/resolvers/snapshot-databreaches/snapshot-databreaches.resolver';
+import { ActiveGuard } from '@shared/guards/active.guard';
 
 const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: '',
@@ -36,113 +37,113 @@ const DashboardRoutes: Routes = [
         path: 'init',
         component: DashboardEnrolledComponent,
         resolve: { report: DashboardInitResolver },
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'settings',
         component: SettingsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'settings/options',
         component: SettingsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report',
         component: CreditReportComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'disputes',
         component: DisputesOverviewInitialView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'error',
         component: BaseExceptionView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/snapshot/negative',
         component: NegativeAccountInitialComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/snapshot/forbearance',
         component: ForbearanceView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/snapshot/databreach',
         component: DataBreachesComponent,
         resolve: { report: SnapshotDatabreachesResolver },
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/tradeline',
         component: TradelinesComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/publicitem',
         component: PublicitemsView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/personalitem',
         component: PersonalitemsView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute',
         component: DisputesReconfirmView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute/tradeline',
         component: DisputesTradelineView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute/personalitem',
         component: DisputesPersonalView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute/publicitem',
         component: DisputesPublicView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute/tradeline/error',
         component: BaseExceptionView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute/personalitem/error',
         component: BaseExceptionView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/dispute/publicitem/error',
         component: BaseExceptionView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'disputes/findings',
         component: DisputeFindingsView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'report/error',
         component: BaseExceptionView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       // {
       //   path: 'test',
       //   component: OutlineSsnFullFormComponent,
-      //   canActivate: [AuthGuard],
+      //   canActivate: [ActiveGuard, AuthGuard],
       // },
     ],
   },
