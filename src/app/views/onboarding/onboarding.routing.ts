@@ -13,7 +13,7 @@ import { KycWelcomeComponent } from '@views/onboarding/kyc-welcome/kyc-welcome/k
 import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
 import { KycDeactivateGuard } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 import { KycExceptionsView } from '@views/onboarding/kyc-exceptions/kyc-exceptions/kyc-exceptions.view';
-import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry.component';
+import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-retry.component';
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [

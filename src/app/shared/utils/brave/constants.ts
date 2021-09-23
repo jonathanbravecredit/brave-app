@@ -37,6 +37,16 @@ export const AppStatusReasonDescriptions: Record<string, string> = {
   [AppStatusReason.EnrollmentFailed]: `Non-specific enrollment failure`,
 };
 
+export const INIT_ONBOARDING_STATE: {
+  lastActive: number;
+  lastComplete: number;
+  started: boolean;
+} = {
+  lastActive: 0,
+  lastComplete: -1,
+  started: true,
+};
+
 export const INIT_DATA: CreateAppDataInput = {
   id: '',
   user: {

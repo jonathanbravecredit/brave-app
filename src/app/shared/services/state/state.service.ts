@@ -518,6 +518,22 @@ export class StateService {
   }
 
   /**
+   * (Asynchronous) Takes a progress step ID and sets the active status to true or false
+   * Then updates the state
+   */
+  resetOnboarding(): void {
+    this.store.dispatch(new OnboardingActions.ResetOnboarding()).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        return;
+        // throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
+      } else {
+        this.api.UpdateAppData(input);
+      }
+    });
+  }
+
+  /**
    * (Promise) Takes a progress step ID and sets the active status to true or false
    * Then updates the state
    * @param {number} step the progress step ID
