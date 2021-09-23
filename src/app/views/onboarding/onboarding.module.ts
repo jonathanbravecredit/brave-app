@@ -29,7 +29,8 @@ import { KycWelcomebackPureComponent } from '@views/onboarding/kyc-welcomeback/k
 import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
 import { KycAddressComponent } from '@views/onboarding/kyc-address/kyc-address/kyc-address.component';
 import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
-import { KycRetryComponent } from './kyc-retry/kyc-retry.component';
+import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-retry.component';
+import { KycRetryPureComponent } from '@views/onboarding/kyc-retry/kyc-retry-pure/kyc-retry-pure.component';
 
 // SERVICES
 import { OnboardingService } from '@views/onboarding/onboarding.service';
@@ -64,6 +65,7 @@ const components = [
   KycWelcomebackComponent,
   KycWelcomebackPureComponent,
   KycRetryComponent,
+  KycRetryPureComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];
