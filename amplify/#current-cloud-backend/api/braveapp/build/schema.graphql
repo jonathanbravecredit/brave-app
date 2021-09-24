@@ -16,11 +16,6 @@ type AppData @aws_iam @aws_cognito_user_pools {
   user: User!
   agencies: Agencies!
   preferences: Preferences!
-  status: String
-  statusReason: String
-  statusReasonDescription: String
-  lastStatusModifiedOn: String
-  nextStatusModifiedOn: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
@@ -73,10 +68,9 @@ type Onboarding @aws_iam @aws_cognito_user_pools {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
-  display: [OnboardingStep]
 }
 
-type OnboardingStep @aws_iam @aws_cognito_user_pools {
+type OnboardingStep {
   id: Int
   active: Boolean
   complete: Boolean
@@ -103,22 +97,10 @@ type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
 type Transunion @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
-  indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
-  getAuthenticationQuestionsStatus: TUStatusRef
-  verifyAuthenticationQuestionsOTPSuccess: Boolean
-  verifyAuthenticationQuestionsOTPStatus: TUStatusRef
-  verifyAuthenticationQuestionsKBASuccess: Boolean
-  verifyAuthenticationQuestionsKBAStatus: TUStatusRef
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
-  authAttempt: Int
-  pinRequests: Int
-  pinAttempts: Int
-  pinCurrentAge: Float
-  kbaAttempts: Int
-  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
@@ -145,14 +127,6 @@ type Equifax @aws_iam @aws_cognito_user_pools {
 
 type Experian @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
-}
-
-type TUStatusRef @aws_iam @aws_cognito_user_pools {
-  id: ID
-  status: String
-  statusDescription: String
-  statusModifiedOn: String
-  statusCode: String
 }
 
 type TUReportResponse @aws_iam @aws_cognito_user_pools {
@@ -250,14 +224,6 @@ input OnboardingInput {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
-  display: [OnboardingStepInput]
-}
-
-input OnboardingStepInput {
-  id: Int
-  active: Boolean
-  complete: Boolean
-  name: String
 }
 
 input AgenciesInput {
@@ -269,22 +235,10 @@ input AgenciesInput {
 input TransunionInput {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
-  indicativeEnrichmentStatus: TUStatusRefInput
   getAuthenticationQuestionsSuccess: Boolean
-  getAuthenticationQuestionsStatus: TUStatusRefInput
-  verifyAuthenticationQuestionsOTPSuccess: Boolean
-  verifyAuthenticationQuestionsOTPStatus: TUStatusRefInput
-  verifyAuthenticationQuestionsKBASuccess: Boolean
-  verifyAuthenticationQuestionsKBAStatus: TUStatusRefInput
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
-  authAttempt: Int
-  pinRequests: Int
-  pinAttempts: Int
-  pinCurrentAge: Float
-  kbaAttempts: Int
-  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponseInput
   enrollMergeReport: TUReportResponseInput
@@ -303,14 +257,6 @@ input TransunionInput {
   disputeEnrolledOn: String
   disputeStatus: String
   disputes: [DisputeInput]
-}
-
-input TUStatusRefInput {
-  id: ID
-  status: String
-  statusDescription: String
-  statusModifiedOn: String
-  statusCode: String
 }
 
 input TUReportResponseInput {
@@ -465,11 +411,6 @@ input ModelSizeInput {
 
 input ModelAppDataFilterInput {
   id: ModelIDInput
-  status: ModelStringInput
-  statusReason: ModelStringInput
-  statusReasonDescription: ModelStringInput
-  lastStatusModifiedOn: ModelStringInput
-  nextStatusModifiedOn: ModelStringInput
   and: [ModelAppDataFilterInput]
   or: [ModelAppDataFilterInput]
   not: ModelAppDataFilterInput
@@ -493,11 +434,6 @@ input CreateAppDataInput {
   user: UserInput!
   agencies: AgenciesInput!
   preferences: PreferencesInput!
-  status: String
-  statusReason: String
-  statusReasonDescription: String
-  lastStatusModifiedOn: String
-  nextStatusModifiedOn: String
 }
 
 input UpdateAppDataInput {
@@ -505,11 +441,6 @@ input UpdateAppDataInput {
   user: UserInput
   agencies: AgenciesInput
   preferences: PreferencesInput
-  status: String
-  statusReason: String
-  statusReasonDescription: String
-  lastStatusModifiedOn: String
-  nextStatusModifiedOn: String
 }
 
 input DeleteAppDataInput {
@@ -517,11 +448,6 @@ input DeleteAppDataInput {
 }
 
 input ModelAppDataConditionInput {
-  status: ModelStringInput
-  statusReason: ModelStringInput
-  statusReasonDescription: ModelStringInput
-  lastStatusModifiedOn: ModelStringInput
-  nextStatusModifiedOn: ModelStringInput
   and: [ModelAppDataConditionInput]
   or: [ModelAppDataConditionInput]
   not: ModelAppDataConditionInput
