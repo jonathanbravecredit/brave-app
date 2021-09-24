@@ -62,7 +62,8 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
       const month = +(attrs.dob?.month || 0) - 1;
       const day = +(attrs.dob?.day || 0);
       const dobDte = new Date(year, month, day);
-      const isOldEnough = isNaN(dobDte.valueOf()) ? false : BraveUtil.queries.isUserValidAge(dobDte.toISOString());
+      // just pass them through for now
+      const isOldEnough = isNaN(dobDte.valueOf()) ? true : BraveUtil.queries.isUserValidAge(dobDte.toISOString());
       if (!isOldEnough) {
         // suspend the user account and route them to the suspended page
         const suspension = {
