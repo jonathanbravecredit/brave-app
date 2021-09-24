@@ -13,6 +13,11 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
 }
 type User {
   id: ID!
@@ -54,6 +59,7 @@ type Onboarding {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
+  display: [OnboardingStep]
 }
 type OnboardingStep {
   id: Int
@@ -78,10 +84,22 @@ type ShowAccountsPreference {
 type Transunion {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
+  indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
+  getAuthenticationQuestionsStatus: TUStatusRef
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRef
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRef
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
+  authAttempt: Int
+  pinRequests: Int
+  pinAttempts: Int
+  pinCurrentAge: Float
+  kbaAttempts: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
@@ -106,6 +124,13 @@ type Equifax {
 }
 type Experian {
   authenticated: Boolean
+}
+type TUStatusRef {
+  id: ID
+  status: String
+  statusDescription: String
+  statusModifiedOn: String
+  statusCode: String
 }
 type TUReportResponse {
   bureau: String
