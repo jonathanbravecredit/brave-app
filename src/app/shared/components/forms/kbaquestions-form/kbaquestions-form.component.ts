@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 import { IKbaMultipleChoiceConfig } from '@shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
@@ -18,9 +9,7 @@ import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.inte
   templateUrl: './kbaquestions-form.component.html',
   providers: [{ provide: 'name', useValue: 'kba-form' }],
 })
-export class KbaquestionsFormComponent
-  extends BaseFormComponent
-  implements AfterViewInit {
+export class KbaquestionsFormComponent extends BaseFormComponent implements AfterViewInit {
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
@@ -46,6 +35,7 @@ export class KbaquestionsFormComponent
   }
 
   ngAfterViewInit(): void {
+    this.sliderWidth = this.kbas.length ? this.kbas.length * this.itemWidth : this.sliderWidth;
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
   }
@@ -60,11 +50,7 @@ export class KbaquestionsFormComponent
    */
   setSliderWindowWidth(width: number): void {
     // TODO need to set floor to width of containing elements
-    this.renderer.setStyle(
-      this.sliderWindow.nativeElement,
-      'width',
-      `${width}px`
-    );
+    this.renderer.setStyle(this.sliderWindow.nativeElement, 'width', `${width}px`);
   }
 
   /**
@@ -95,10 +81,6 @@ export class KbaquestionsFormComponent
     }
 
     this.carouselXAxis += value;
-    this.renderer.setStyle(
-      this.slider.nativeElement,
-      'transform',
-      `translateX(${this.carouselXAxis}%)`
-    );
+    this.renderer.setStyle(this.slider.nativeElement, 'transform', `translateX(${this.carouselXAxis}%)`);
   }
 }
