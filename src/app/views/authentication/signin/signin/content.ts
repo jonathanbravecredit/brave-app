@@ -1,3 +1,4 @@
+// see https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html#API_InitiateAuth_Errors
 export enum SignInErrors {
   UserNotConfirmedException = 'UserNotConfirmedException',
   PasswordResetRequiredException = 'PasswordResetRequiredException',
