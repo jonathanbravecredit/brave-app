@@ -5,6 +5,7 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
+import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/signup/signup/content';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -38,13 +39,21 @@ export class SignupComponent implements OnInit {
     let isValid = true;
     if (isValid) {
       try {
-        await this.auth.signUp(user);
+        const resp = await this.auth.signUp(user);
         this.interstitial.fetching$.next(false);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
-      } catch (err) {
-        this.interstitial.fetching$.next(false);
-        this.handleSignupError('invalid', err.message);
+      } catch (err: any) {
+        if (err.code === SignUpErrors.UsernameExistsException) {
+          this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
+        } else if (err.code === SignUpErrors.NotAuthorizedException) {
+          this.handleSignupError('invalid', err.message);
+        } else if (err.code === SignUpErrors.InvalidPasswordException) {
+          this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]);
+        } else {
+          this.handleSignupError('invalid', 'Invalid sign up credentials');
+        }
       }
+      this.interstitial.fetching$.next(false);
     } else {
       this.interstitial.fetching$.next(false);
       this.handleSignupError('invalid', 'Invalid sign up credentials');

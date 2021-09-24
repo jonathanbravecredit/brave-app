@@ -3,13 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KYCResponse, KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { TransunionInput, TUStatusRefInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import {
   GooglePageViewEvents as gtViews,
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
+import { IIndicativeEnrichmentResult, ITUServiceResponse } from '@shared/interfaces';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -50,29 +53,32 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    */
   async goToNext(form: FormGroup): Promise<void> {
     this.google.fireClickEvent(gtClicks.OnboardingIdentity);
-    // ssn is a little different as each code is one input
     if (form.valid) {
       const { lastfour } = this.formatAttributes(form, ssnMap);
-      const attrs = {
-        ssn: {
-          lastfour: lastfour,
-        },
-      } as UserAttributesInput;
+      const attrs = { ssn: { lastfour: lastfour } } as UserAttributesInput;
+
       try {
         const data = await this.kycService.updateUserAttributesAsync(attrs);
-        const full = await this.kycService.getIndicativeEnrichmentResults(data);
-        if (full === KYCResponse.Failed) {
-          this.router.navigate(['../identityfull'], { relativeTo: this.route });
+        const resp = await this.kycService.getIndicativeEnrichmentResults(data);
+        if (!resp.success || !resp.data) {
+          this.handleBailout<IIndicativeEnrichmentResult>(resp);
         } else {
-          const newAttrs = {
-            ssn: { ...attrs.ssn, full },
-          } as UserAttributesInput;
-          this.kycService.updateUserAttributesAsync(newAttrs);
-          this.kycService.completeStep(this.stepID);
-          this.router.navigate(['../verify'], { relativeTo: this.route });
+          const enrichment = await this.kycService.processIndicativeEnrichmentResponse(resp.data);
+          const ssn = `${enrichment?.SSN}`;
+          const full = ssn ? ssn : undefined;
+          if (!full) {
+            this.handleBailout<IIndicativeEnrichmentResult>(resp);
+          } else {
+            const newAttrs = {
+              ssn: { ...attrs.ssn, full },
+            } as UserAttributesInput;
+            await this.kycService.updateUserAttributesAsync(newAttrs);
+            this.kycService.completeStep(this.stepID);
+            this.router.navigate(['../verify'], { relativeTo: this.route });
+          }
         }
       } catch {
-        this.router.navigate(['../identityfull'], { relativeTo: this.route });
+        this.handleBailout<IIndicativeEnrichmentResult>(); // generic api error
       }
     }
   }
@@ -83,6 +89,18 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    */
   handleError(errors: { [key: string]: AbstractControl }): void {
     // console.log('form errors', errors);
+  }
+
+  handleBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: {
+      indicativeEnrichmentSuccess: boolean;
+      indicativeEnrichmentStatus: TUStatusRefInput;
+    } = {
+      indicativeEnrichmentSuccess: false,
+      indicativeEnrichmentStatus: tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false, resp),
+    };
+    this.kycService.updateIndicativeEnrichment(tuPartial);
+    this.router.navigate(['../identityfull'], { relativeTo: this.route });
   }
 }
 
