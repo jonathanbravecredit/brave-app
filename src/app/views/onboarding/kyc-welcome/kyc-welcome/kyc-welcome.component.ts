@@ -10,6 +10,7 @@ import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
+import { dateDiffInDays } from '@shared/utils/dates';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
@@ -57,8 +58,12 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
         },
       } as UserAttributesInput;
       await this.kycService.updateUserAttributesAsync(attrs);
-      const dobDte = new Date(`${attrs.dob?.year}-${attrs.dob?.month}-${attrs.dob?.day}`);
-      const isOldEnough = isNaN(dobDte.valueOf()) ? false : BraveUtil.queries.isUserValidAge(dobDte.toISOString());
+      const year = +(attrs.dob?.year || 0);
+      const month = +(attrs.dob?.month || 0) - 1;
+      const day = +(attrs.dob?.day || 0);
+      const dobDte = new Date(year, month, day);
+      // just pass them through for now
+      const isOldEnough = isNaN(dobDte.valueOf()) ? true : BraveUtil.queries.isUserValidAge(dobDte.toISOString());
       if (!isOldEnough) {
         // suspend the user account and route them to the suspended page
         const suspension = {
