@@ -17,7 +17,7 @@ export class BraveQueries extends BraveBase {
     const dobDay = dobDate.getDate();
 
     if (nowYear - dobYear > 18) return true;
-    if (nowYear - dobYear === 18) {
+    if (nowYear - dobYear === this.minAge) {
       return nowMonth > dobMonth ? true : nowMonth === dobMonth ? (nowDay > dobDay ? true : false) : false;
     } else {
       return false;
