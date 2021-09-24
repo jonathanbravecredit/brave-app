@@ -60,11 +60,23 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
 
   /**
    * Method to:
-   * - sends the 'NEWPIN' answer (using the same process as the code) to resend a new code
+   * - takes the code passed from the form
+   * - grabs the state, the pin age, and pin attempts
+   * - if pin age or pin attempt null, then no pin through technical error
+   * - else if pin is stale (> 15 mins), suspend them for pin age exceeded
+   * - else if pin attempts >= 3, suspend them for pin attempts exceeded
+   * - else increase the pin attempts by 1 and process the pin code
+   * Then, Get authentication questions from the state
+   * - if no questions found, then technical parsing error
+   * - else generate answer by injecting OTP code in to answer
+   *   - send answer to TU
+   *   - if response is unsuccessful or no data returned, bailout (with error)
+   *   - else if successful and response in data is success, complete onboarding
+   *   - else the code is increect and display message to user...DO NOT increment pin (already done)
+   * @param code
    */
-  async resendCode(): Promise<void> {
+  async processRequest(code: string, newpin: boolean = false): Promise<void> {
     this.updateViewState('init');
-    const code = 'NEWPIN';
     const { appData } = this.store.snapshot();
     const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
     const pinAttempts = appData?.agencies?.transunion?.pinAttempts || 0;
@@ -77,12 +89,22 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
     } else {
       try {
-        await this.kycService.incrementPinRequest();
+        newpin ? await this.kycService.incrementPinRequest() : await this.kycService.incrementPinAttempts();
         const passcodeQuestion = this.getAuthenticationQuestions(appData);
         if (!passcodeQuestion) throw 'No passcode question';
         const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
         const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]);
-        // no need to validate resp for pin request
+        if (!newpin) {
+          !resp.success
+            ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
+            : resp.success &&
+              resp.data?.ResponseType.toLowerCase() === 'success' &&
+              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
+            ? await this.handleSuccess()
+            : await this.handleIncorrect(resp);
+        } else {
+          this.updateViewState('sent');
+        }
         this.interstitial.fetching$.next(false);
       } catch (err) {
         console.log('error:processRequest ===> ', err);
@@ -93,47 +115,35 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
 
   /**
    * Method to:
+   * - sends the 'NEWPIN' answer (using the same process as the code) to resend a new code
+   */
+  async resendCode(): Promise<void> {
+    const code = 'NEWPIN';
+    await this.processRequest(code, true);
+  }
+
+  /**
+   * Method to:
    * - send pin to tu services to authenticate user
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
     this.google.fireClickEvent(gtClicks.OnboardingCode);
     if (form.valid) {
-      this.updateViewState('init');
       const { code } = this.formatAttributes(form, codeMap);
-      const { appData } = this.store.snapshot();
-      const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
-      const pinAttempts = appData?.agencies?.transunion?.pinAttempts || 0;
-
-      if (!pinAge || !(pinAttempts >= 0)) {
-        this.handleAPIError(); //bail out on technical error...no pin
-      } else if (tu.queries.exceptions.isPinStale(pinAge)) {
-        this.handleSuspension(AppStatusReason.PinAgeExceeded);
-      } else if (pinAttempts >= 3) {
-        this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
-      } else {
-        try {
-          await this.kycService.incrementPinAttempts();
-          const passcodeQuestion = this.getAuthenticationQuestions(appData);
-          if (!passcodeQuestion) throw 'No passcode question';
-          const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
-          const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]);
-          !resp.success
-            ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
-            : resp.success &&
-              resp.data?.ResponseType.toLowerCase() === 'success' &&
-              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
-            ? await this.handleSuccess()
-            : await this.handleIncorrect(resp);
-          this.interstitial.fetching$.next(false);
-        } catch (err) {
-          console.log('error:processRequest ===> ', err);
-          this.handleAPIError(); // bail out on technical error...non specific api
-        }
-      }
+      await this.processRequest(code, false);
     }
   }
 
+  /**
+   * Once the user is verified complete the onboarding step on the server
+   * - update the state to indicate the step is complete (IMPORTANT, needs to be called first)
+   * - send request to TU to enroll user
+   * - if successfull, route user to congratulations
+   * - else suspend user for enrollment failure
+   * @param state
+   * @returns
+   */
   async handleSuccess(): Promise<void> {
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
