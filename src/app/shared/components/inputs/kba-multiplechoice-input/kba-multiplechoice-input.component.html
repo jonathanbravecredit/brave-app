@@ -18,9 +18,7 @@
                   answer: choice
                 }"
               />
-              <span class="font-sans text-sm text-coolGray-700 ml-4">{{
-                choice?.AnswerChoiceText
-              }}</span>
+              <span class="font-sans text-sm text-coolGray-700 ml-4" [innerHtml]="choice?.AnswerChoiceText"></span>
             </label>
           </div>
         </div>
