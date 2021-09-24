@@ -14,13 +14,14 @@ import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-w
 import { KycDeactivateGuard } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 import { KycExceptionsView } from '@views/onboarding/kyc-exceptions/kyc-exceptions/kyc-exceptions.view';
 import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-retry.component';
+import { ActiveGuard } from '@shared/guards/active.guard';
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [
   {
     path: '',
     component: OnboardingComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: '',
@@ -31,60 +32,60 @@ const OnboardingRoutes: Routes = [
         path: 'name',
         component: KycWelcomeComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'address',
         component: KycAddressComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'identity',
         component: KycSsnComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'identityfull',
         component: KycSsnFullComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'verify',
         component: KycPhonenumberComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'code',
         component: KycIdverificationComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'kba',
         component: KycKbaquestionsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'congratulations',
         component: KycCongratulationsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'returning',
         component: KycWelcomebackComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'error',
         component: KycExceptionsView,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'retry',
         component: KycRetryComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
     ],
   },
