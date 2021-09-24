@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ActiveGuard } from '@shared/guards/active.guard';
 import { AuthGuard } from '@shared/guards/auth.guard';
+import { OnboardedGuard } from '@shared/guards/onboarded.guard';
+import { UnonboardedGuard } from '@shared/guards/unonboarded.guard';
 
 const routes: Routes = [
   {
@@ -9,17 +12,21 @@ const routes: Routes = [
   },
   {
     path: 'onboarding',
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     loadChildren: () => import('./views/onboarding/onboarding.module').then((m) => m.OnboardingModule),
   },
   {
     path: 'dashboard',
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     loadChildren: () => import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'legal',
     loadChildren: () => import('./views/compliance/compliance.module').then((m) => m.ComplianceModule),
+  },
+  {
+    path: 'suspended',
+    loadChildren: () => import('./views/suspended/suspended.module').then((m) => m.SuspendedModule),
   },
   // { path: '', component: IndexComponent }, // TODO: replace with better page
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page

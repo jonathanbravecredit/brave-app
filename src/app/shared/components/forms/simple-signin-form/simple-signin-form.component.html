@@ -22,7 +22,7 @@
   <!-- subheader -->
   <div class="pt-3">
     <p *ngIf="viewState !== 'invalid'" class="mb-6 text-sm text-transparent">&nbsp;</p>
-    <p *ngIf="viewState === 'invalid'" class="mb-6 text-sm text-red-500">{{ message }}</p>
+    <p *ngIf="viewState === 'invalid'" class="mb-6 text-sm text-red-500" [innerHTML]="message | linkify"></p>
   </div>
 
   <div class="mt-6">
