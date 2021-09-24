@@ -25,7 +25,7 @@ export class HorizontalCreditscoreInvisiblebarComponent implements OnInit {
         ? Math.round(((this.currentValue - 300) / 550) * 100)
         : 50;
     this.percentage = 85 * (this.percentage / 100); // 15% goes to half the marker
-    this.percentageStr =
-      this.percentage > this.minPct ? `85%` : this.percentage < this.minPct ? `0%` : `${this.percentage}%`;
+    this.percentageStr = `${this.percentage}%`;
+    // this.percentage > this.minPct ? `85%` : this.percentage < this.minPct ? `0%` : `${this.percentage}%`;
   }
 }
