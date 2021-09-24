@@ -19,13 +19,15 @@
       <!-- form -->
       <div class="py-3 pt-0 h-1/3">
         <div class="flex justify-center items-center">
-          <brave-kbaquestions-form
-            #form
-            (clickAnswer)="onClickAnswer.emit($event)"
-            (onSubmit)="formSubmit.emit($event)"
-            (onSubmitError)="formError.emit($event)"
-            [kbas]="kbas"
-          ></brave-kbaquestions-form>
+          <ng-container *ngIf="kbas.length">
+            <brave-kbaquestions-form
+              #form
+              (clickAnswer)="onClickAnswer.emit($event)"
+              (onSubmit)="formSubmit.emit($event)"
+              (onSubmitError)="formError.emit($event)"
+              [kbas]="kbas"
+            ></brave-kbaquestions-form>
+          </ng-container>
         </div>
       </div>
 
