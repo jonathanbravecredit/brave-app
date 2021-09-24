@@ -5,6 +5,11 @@ export class BraveQueries extends BraveBase {
     super();
   }
 
+  /**
+   *
+   * @param dob must be ISO string
+   * @returns
+   */
   static isUserValidAge(dob: string): boolean {
     const now = new Date();
     const nowYear = now.getFullYear();
