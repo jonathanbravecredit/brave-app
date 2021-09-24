@@ -137,8 +137,7 @@ export class KycKbaquestionsComponent implements OnInit {
       const kbaAttempts = appData?.agencies?.transunion?.kbaAttempts || 0;
 
       if (!kbaAge || !(kbaAttempts >= 0)) {
-        this.interstitial.fetching$.next(false);
-        this.bailOut(); //bail out on technical error...no pin
+        this.handleAPIError(); //bail out on technical error...no pin
       } else if (tu.queries.exceptions.isKBAStale(kbaAge)) {
         this.handleSuspension(AppStatusReason.KbaAgeExceeded);
       } else if (kbaAttempts > 0) {
@@ -146,16 +145,17 @@ export class KycKbaquestionsComponent implements OnInit {
       } else {
         try {
           const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, answers);
-          resp.success &&
-          resp.data?.ResponseType.toLowerCase() === 'success' &&
-          resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
+          !resp.success
+            ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
+            : resp.success &&
+              resp.data?.ResponseType.toLowerCase() === 'success' &&
+              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
             ? await this.handleSuccess()
             : await this.handleIncorrect(resp);
           this.interstitial.fetching$.next(false);
         } catch (err) {
           console.log('error:kbaHandleSubmit ===> ', err);
-          this.interstitial.fetching$.next(false);
-          this.bailOut();
+          this.handleAPIError();
         }
       }
     }
@@ -172,31 +172,27 @@ export class KycKbaquestionsComponent implements OnInit {
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
       console.log('error:completeOnboarding ===> ', err);
-      this.interstitial.fetching$.next(false);
-      this.bailOut(); // bail out on technical error...non specific api
+      this.handleAPIError();
     }
   }
 
   async handleIncorrect(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
-    this.interstitial.fetching$.next(false);
-    await this.kycService.updateTransunion(this.bailOut<IVerifyAuthenticationQuestionsResult>(resp));
+    await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
     await this.handleSuspension(AppStatusReason.KbaAttemptsExceeded);
+    this.interstitial.fetching$.next(false);
   }
 
-  /**
-   * Helper to generate suspension requests
-   * @param reason
-   */
+  async handleAPIError(): Promise<void> {
+    this.router.navigate(['/onboarding/retry']);
+    this.interstitial.fetching$.next(false);
+  }
+
   async handleSuspension(reason: AppStatusReason): Promise<void> {
     await this.kycService.handleSuspension(reason);
     this.interstitial.fetching$.next(false);
   }
 
-  /**
-   * Method to route user to appropriate error screen using kyc service
-   * @param resp
-   */
-  bailOut<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
+  createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
     const tuPartial: Partial<TransunionInput> = {
       verifyAuthenticationQuestionsKBASuccess: false,
       verifyAuthenticationQuestionsKBAStatus: tu.generators.createOnboardingStatus(
@@ -206,5 +202,10 @@ export class KycKbaquestionsComponent implements OnInit {
       ),
     };
     return tuPartial;
+  }
+
+  async bailOut<T>(resp?: ITUServiceResponse<T | undefined>): Promise<void> {
+    const partial = this.createTuPartial<T>(resp);
+    await this.kycService.bailoutFromOnboarding(partial, resp);
   }
 }

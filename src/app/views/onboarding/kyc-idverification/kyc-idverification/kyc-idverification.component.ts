@@ -19,7 +19,7 @@ import {
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { ITUServiceResponse } from '@shared/interfaces';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
@@ -54,11 +54,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     this.router.navigate(['../verify'], { relativeTo: this.route });
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    this.interstitial.fetching$.next(false);
-    this.updateViewState('minimum');
-  }
-
   updateViewState(viewState: KycIdverificationState) {
     this.viewState = viewState;
   }
@@ -69,24 +64,19 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    */
   async resendCode(): Promise<void> {
     const code = 'NEWPIN';
-    const { appData } = this.store.snapshot();
-    const pinRequests = appData?.agencies?.transunion?.pinRequests || 0;
-    if (!(pinRequests >= 0)) {
-      this.interstitial.fetching$.next(false);
-      this.bailOut(); //bail out on technical error...no prior pin requests
-    } else if (pinRequests >= 3) {
-      this.handleSuspension(AppStatusReason.PinRequestsExceeded);
-    } else {
-      try {
-        await this.processRequest(code, appData);
-        await this.kycService.incrementPinRequest(); // increment up the pin count
-        this.interstitial.fetching$.next(false);
-        this.updateViewState('sent');
-      } catch (err) {
-        console.log('error:resendCode ===> ', err);
-        this.interstitial.fetching$.next(false);
-        this.bailOut(); // bail out on technical error...non specific api
-      }
+    await this.processRequest(code);
+  }
+
+  /**
+   * Method to:
+   * - send pin to tu services to authenticate user
+   * @param form
+   */
+  async goToNext(form: FormGroup): Promise<void> {
+    this.google.fireClickEvent(gtClicks.OnboardingCode);
+    if (form.valid) {
+      const { code } = this.formatAttributes(form, codeMap);
+      await this.processRequest(code);
     }
   }
 
@@ -98,65 +88,109 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    * - else if pin is stale (> 15 mins), suspend them for pin age exceeded
    * - else if pin attempts >= 3, suspend them for pin attempts exceeded
    * - else increase the pin attempts by 1 and process the pin code
-   * @param form
-   */
-  async goToNext(form: FormGroup): Promise<void> {
-    this.google.fireClickEvent(gtClicks.OnboardingCode);
-    if (form.valid) {
-      this.updateViewState('init');
-      const { code } = this.formatAttributes(form, codeMap);
-      const { appData } = this.store.snapshot();
-      const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
-      const pinAttempts = appData?.agencies?.transunion?.pinAttempts || 0;
-
-      if (!pinAge || !(pinAttempts >= 0)) {
-        this.interstitial.fetching$.next(false);
-        this.bailOut(); //bail out on technical error...no pin
-      } else if (tu.queries.exceptions.isPinStale(pinAge)) {
-        this.handleSuspension(AppStatusReason.PinAgeExceeded);
-      } else if (pinAttempts >= 3) {
-        this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
-      } else {
-        try {
-          await this.kycService.incrementPinAttempts();
-          await this.processRequest(code, appData);
-          this.interstitial.fetching$.next(false);
-        } catch (err) {
-          console.log('error:goToNext ===> ', err);
-          this.bailOut(); // bail out on technical error...non specific api
-        }
-      }
-    }
-  }
-
-  /**
-   * Method to:
-   * - Get authentication questions from the state
+   * Then, Get authentication questions from the state
    * - if no questions found, then technical parsing error
    * - else generate answer by injecting OTP code in to answer
    *   - send answer to TU
    *   - if response is unsuccessful or no data returned, bailout (with error)
    *   - else if successful and response in data is success, complete onboarding
    *   - else the code is increect and display message to user...DO NOT increment pin (already done)
+   * @param code
    */
-  async processRequest(code: string, appData: UpdateAppDataInput): Promise<void> {
-    const passcodeQuestion = this.getAuthenticationQuestions(appData);
-    if (!passcodeQuestion) {
-      this.bailOut<any>(); // bail out on technical error...could not parse questions
+  async processRequest(code: string): Promise<void> {
+    this.updateViewState('init');
+    const { appData } = this.store.snapshot();
+    const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
+    const pinAttempts = appData?.agencies?.transunion?.pinAttempts || 0;
+
+    if (!pinAge || !(pinAttempts >= 0)) {
+      this.handleAPIError(); //bail out on technical error...no pin
+    } else if (tu.queries.exceptions.isPinStale(pinAge)) {
+      this.handleSuspension(AppStatusReason.PinAgeExceeded);
+    } else if (pinAttempts >= 3) {
+      this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
     } else {
       try {
+        await this.kycService.incrementPinAttempts();
+        const passcodeQuestion = this.getAuthenticationQuestions(appData);
+        if (!passcodeQuestion) throw 'No passcode question';
         const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
-        const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]); //this.sendVerifyAuthQuestions(this.state, answer);
-        resp.success &&
-        resp.data?.ResponseType.toLowerCase() === 'success' &&
-        resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
+        const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]);
+        !resp.success
+          ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
+          : resp.success &&
+            resp.data?.ResponseType.toLowerCase() === 'success' &&
+            resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
           ? await this.handleSuccess()
-          : await this.handleAPIError(resp);
+          : await this.handleIncorrect(resp);
+        this.interstitial.fetching$.next(false);
       } catch (err) {
         console.log('error:processRequest ===> ', err);
-        this.bailOut(); // bail out on technical error...non specific api
+        this.handleAPIError(); // bail out on technical error...non specific api
       }
     }
+  }
+
+  /**
+   * Once the user is verified complete the onboarding step on the server
+   * - update the state to indicate the step is complete (IMPORTANT, needs to be called first)
+   * - send request to TU to enroll user
+   * - if successfull, route user to congratulations
+   * - else suspend user for enrollment failure
+   * @param state
+   * @returns
+   */
+  async handleSuccess(): Promise<void> {
+    try {
+      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+      const { success, error } = await this.kycService.sendEnrollRequest();
+      success
+        ? this.router.navigate(['../congratulations'], {
+            relativeTo: this.route,
+          }) // api successful and TU successful
+        : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
+    } catch (err) {
+      console.log('error:completeOnboarding ===> ', err);
+      this.handleAPIError(); // bail out on technical error...non specific api
+    }
+  }
+
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    this.updateViewState('minimum');
+    this.interstitial.fetching$.next(false);
+  }
+
+  async handleIncorrect(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
+    this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
+    this.interstitial.fetching$.next(false);
+  }
+
+  handleAPIError(): void {
+    this.router.navigate(['/onboarding/retry']);
+    this.interstitial.fetching$.next(false);
+  }
+
+  async handleSuspension(reason: AppStatusReason): Promise<void> {
+    await this.kycService.handleSuspension(reason);
+    this.interstitial.fetching$.next(false);
+  }
+
+  createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
+    const tuPartial: Partial<TransunionInput> = {
+      verifyAuthenticationQuestionsOTPSuccess: false,
+      verifyAuthenticationQuestionsOTPStatus: tu.generators.createOnboardingStatus(
+        TUBundles.VerifyAuthenticationQuestionsOTP,
+        false,
+        resp,
+      ),
+    };
+    return tuPartial;
+  }
+
+  async bailOut<T>(resp?: ITUServiceResponse<T | undefined>): Promise<void> {
+    const partial = this.createTuPartial<T>(resp);
+    await this.kycService.bailoutFromOnboarding(partial, resp);
   }
 
   /**
@@ -191,64 +225,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         ...config,
       },
     };
-  }
-
-  /**
-   * Once the user is verified complete the onboarding step on the server
-   * - update the state to indicate the step is complete (IMPORTANT, needs to be called first)
-   * - send request to TU to enroll user
-   * - if successfull, route user to congratulations
-   * - else suspend user for enrollment failure
-   * @param state
-   * @returns
-   */
-  async handleSuccess(): Promise<void> {
-    try {
-      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
-      const { success, error } = await this.kycService.sendEnrollRequest();
-      success
-        ? this.router.navigate(['../congratulations'], {
-            relativeTo: this.route,
-          }) // api successful and TU successful
-        : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
-    } catch (err) {
-      console.log('error:completeOnboarding ===> ', err);
-      this.interstitial.fetching$.next(false);
-      this.bailOut(); // bail out on technical error...non specific api
-    }
-  }
-
-  async handleAPIError(resp: ITUServiceResponse<any | undefined>): Promise<void> {
-    if (!resp.success || !resp.data) {
-      this.bailOut(resp); // need to handle this appropriately
-    } else {
-      this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
-    }
-  }
-
-  /**
-   * Helper to generate suspension requests
-   * @param reason
-   */
-  async handleSuspension(reason: AppStatusReason): Promise<void> {
-    await this.kycService.handleSuspension(reason);
-    this.interstitial.fetching$.next(false);
-  }
-
-  /**
-   * Method to route user to appropriate error screen using kyc service
-   * @param resp
-   */
-  bailOut<T>(resp?: ITUServiceResponse<T | undefined>) {
-    const tuPartial: Partial<TransunionInput> = {
-      verifyAuthenticationQuestionsOTPSuccess: false,
-      verifyAuthenticationQuestionsOTPStatus: tu.generators.createOnboardingStatus(
-        TUBundles.VerifyAuthenticationQuestionsOTP,
-        false,
-        resp,
-      ),
-    };
-    this.kycService.bailoutFromOnboarding(tuPartial, resp);
   }
 }
 
