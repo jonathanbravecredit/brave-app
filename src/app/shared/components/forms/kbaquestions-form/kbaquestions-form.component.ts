@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  Renderer2,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 import { IKbaMultipleChoiceConfig } from '@shared/components/inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
@@ -9,7 +20,7 @@ import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.inte
   templateUrl: './kbaquestions-form.component.html',
   providers: [{ provide: 'name', useValue: 'kba-form' }],
 })
-export class KbaquestionsFormComponent extends BaseFormComponent implements AfterViewInit {
+export class KbaquestionsFormComponent extends BaseFormComponent implements AfterViewInit, OnChanges {
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
@@ -32,6 +43,12 @@ export class KbaquestionsFormComponent extends BaseFormComponent implements Afte
 
   constructor(fb: FormBuilder, private renderer: Renderer2) {
     super(fb, 'kba-form');
+  }
+
+  ngOnChanges(change: SimpleChanges) {
+    // this.sliderWidth = this.kbas.length ? this.kbas.length * this.itemWidth : this.sliderWidth;
+    // this.setSliderWindowWidth(this.itemWidth);
+    // this.setSliderWidth(this.sliderWidth);
   }
 
   ngAfterViewInit(): void {
