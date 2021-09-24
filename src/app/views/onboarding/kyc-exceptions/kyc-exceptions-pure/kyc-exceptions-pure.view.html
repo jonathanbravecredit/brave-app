@@ -1,0 +1,9 @@
+<ng-container *ngIf="action === tuActions.Error">
+  <brave-kyc-error></brave-kyc-error>
+</ng-container>
+<ng-container *ngIf="action === tuActions.Retry">
+  <brave-kyc-retry></brave-kyc-retry>
+</ng-container>
+<ng-container *ngIf="action === tuActions.Unavailable">
+  <brave-kyc-error-validation></brave-kyc-error-validation>
+</ng-container>

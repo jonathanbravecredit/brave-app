@@ -1,18 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
-import { UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
-import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
@@ -20,6 +18,10 @@ import {
   GooglePageViewEvents as gtViews,
   GoogleClickEvents as gtClicks,
 } from '@shared/services/analytics/google/constants';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -27,20 +29,9 @@ export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
   selector: 'brave-kyc-idverification',
   templateUrl: './kyc-idverification.component.html',
 })
-export class KycIdverificationComponent extends KycBaseComponent {
+export class KycIdverificationComponent extends KycBaseComponent implements OnInit {
   @Input() viewState: KycIdverificationState = 'init';
   stepID = 3;
-  private attempts = 0;
-  private state: UpdateAppDataInput | undefined;
-  private code: string | undefined;
-  private authXML: string | undefined;
-  private authQuestions: ITransunionKBAChallengeAnswer | undefined;
-  private passcodeQuestion: ITransunionKBAQuestion | undefined;
-  private passcodeAnswer: IVerifyAuthenticationAnswer | undefined;
-  private authChallenge: ITransunionKBAQuestions | undefined;
-  private verifyResponse: IVerifyAuthenticationQuestionsResult | undefined;
-  private authResponse: IVerifyAuthenticationQuestionsResult | undefined;
-  private authSuccessful: boolean = false;
 
   constructor(
     private router: Router,
@@ -53,14 +44,14 @@ export class KycIdverificationComponent extends KycBaseComponent {
     super();
   }
 
+  ngOnInit(): void {
+    this.google.firePageViewEvent(gtViews.OnboardingCode);
+    this.kycService.activateStep(this.stepID);
+  }
+
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../verify'], { relativeTo: this.route });
-  }
-
-  handleError(errors: { [key: string]: AbstractControl }): void {
-    this.interstitial.fetching$.next(false);
-    this.updateViewState('minimum');
   }
 
   updateViewState(viewState: KycIdverificationState) {
@@ -69,74 +60,141 @@ export class KycIdverificationComponent extends KycBaseComponent {
 
   /**
    * Method to:
-   * - sends the 'NEWPIN' answer (using the same process as the code) to resend a new code
+   * - takes the code passed from the form
+   * - grabs the state, the pin age, and pin attempts
+   * - if pin age or pin attempt null, then no pin through technical error
+   * - else if pin is stale (> 15 mins), suspend them for pin age exceeded
+   * - else if pin attempts >= 3, suspend them for pin attempts exceeded
+   * - else increase the pin attempts by 1 and process the pin code
+   * Then, Get authentication questions from the state
+   * - if no questions found, then technical parsing error
+   * - else generate answer by injecting OTP code in to answer
+   *   - send answer to TU
+   *   - if response is unsuccessful or no data returned, bailout (with error)
+   *   - else if successful and response in data is success, complete onboarding
+   *   - else the code is increect and display message to user...DO NOT increment pin (already done)
+   * @param code
    */
-  async resendCode(): Promise<void> {
-    this.code = 'NEWPIN';
+  async processRequest(code: string, newpin: boolean = false): Promise<void> {
+    this.updateViewState('init');
     const { appData } = this.store.snapshot();
-    this.state = appData;
+    const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
+    const pinAttempts = appData?.agencies?.transunion?.pinAttempts || 0;
 
-    try {
-      await this.processRequest(this.code);
-    } catch (err) {
-      this.interstitial.fetching$.next(false);
-      if (this.attempts > 2) {
-        this.router.navigate(['../invalid'], { relativeTo: this.route });
+    if (!pinAge || !(pinAttempts >= 0)) {
+      this.handleAPIError(); //bail out on technical error...no pin
+    } else if (tu.queries.exceptions.isPinStale(pinAge)) {
+      this.handleSuspension(AppStatusReason.PinAgeExceeded);
+    } else if (pinAttempts >= 3) {
+      this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
+    } else {
+      try {
+        newpin ? await this.kycService.incrementPinRequest() : await this.kycService.incrementPinAttempts();
+        const passcodeQuestion = this.getAuthenticationQuestions(appData);
+        if (!passcodeQuestion) throw 'No passcode question';
+        const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
+        const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]);
+        if (!newpin) {
+          !resp.success
+            ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
+            : resp.success &&
+              resp.data?.ResponseType.toLowerCase() === 'success' &&
+              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
+            ? await this.handleSuccess()
+            : await this.handleIncorrect(resp);
+        } else {
+          this.updateViewState('sent');
+        }
+        this.interstitial.fetching$.next(false);
+      } catch (err) {
+        console.log('error:processRequest ===> ', err);
+        this.handleAPIError(); // bail out on technical error...non specific api
       }
     }
-    this.updateViewState('sent');
   }
 
   /**
    * Method to:
-   * - takes the code passed from the form to the process request method
+   * - sends the 'NEWPIN' answer (using the same process as the code) to resend a new code
+   */
+  async resendCode(): Promise<void> {
+    const code = 'NEWPIN';
+    await this.processRequest(code, true);
+  }
+
+  /**
+   * Method to:
+   * - send pin to tu services to authenticate user
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
     this.google.fireClickEvent(gtClicks.OnboardingCode);
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
-      this.code = code;
-      const { appData } = this.store.snapshot();
-      this.state = appData;
-
-      try {
-        await this.processRequest(this.code);
-      } catch (err) {
-        this.interstitial.fetching$.next(false);
-        if (this.attempts > 2) {
-          this.router.navigate(['../invalid'], { relativeTo: this.route });
-        }
-      }
+      await this.processRequest(code, false);
     }
   }
 
   /**
-   * Method to:
-   * - Get authentication questions
-   * - send the passcode response
-   * - Enroll the user in report & score and disputes
-   * - Update the enriched enrollment data to state
+   * Once the user is verified complete the onboarding step on the server
+   * - update the state to indicate the step is complete (IMPORTANT, needs to be called first)
+   * - send request to TU to enroll user
+   * - if successfull, route user to congratulations
+   * - else suspend user for enrollment failure
+   * @param state
+   * @returns
    */
-  async processRequest(code: string): Promise<void> {
+  async handleSuccess(): Promise<void> {
     try {
-      this.getAuthenticationQuestions();
-      this.passcodeQuestion
-        ? await this.sendPasscodeResponse(code)
-        : (() => {
-            throw 'No passcode questionfound';
-          })();
-      this.authSuccessful
-        ? await this.sendCompleteOnboarding()
-        : (() => {
-            throw 'Authentication request failed';
-          })();
+      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+      const { success, error } = await this.kycService.sendEnrollRequest();
+      success
+        ? this.router.navigate(['../congratulations'], {
+            relativeTo: this.route,
+          }) // api successful and TU successful
+        : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
-      this.interstitial.fetching$.next(false);
-      if (this.attempts > 2) {
-        this.router.navigate(['../invalid'], { relativeTo: this.route });
-      }
+      console.log('error:completeOnboarding ===> ', err);
+      this.handleAPIError(); // bail out on technical error...non specific api
     }
+  }
+
+  handleError(errors: { [key: string]: AbstractControl }): void {
+    this.updateViewState('minimum');
+    this.interstitial.fetching$.next(false);
+  }
+
+  async handleIncorrect(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
+    this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
+    this.interstitial.fetching$.next(false);
+  }
+
+  handleAPIError(): void {
+    this.router.navigate(['/onboarding/retry']);
+    this.interstitial.fetching$.next(false);
+  }
+
+  async handleSuspension(reason: AppStatusReason): Promise<void> {
+    await this.kycService.handleSuspension(reason);
+    this.interstitial.fetching$.next(false);
+  }
+
+  createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
+    const tuPartial: Partial<TransunionInput> = {
+      verifyAuthenticationQuestionsOTPSuccess: false,
+      verifyAuthenticationQuestionsOTPStatus: tu.generators.createOnboardingStatus(
+        TUBundles.VerifyAuthenticationQuestionsOTP,
+        false,
+        resp,
+      ),
+    };
+    return tuPartial;
+  }
+
+  async bailOut<T>(resp?: ITUServiceResponse<T | undefined>): Promise<void> {
+    const partial = this.createTuPartial<T>(resp);
+    await this.kycService.bailoutFromOnboarding(partial, resp);
   }
 
   /**
@@ -147,161 +205,30 @@ export class KycIdverificationComponent extends KycBaseComponent {
    * // authQuestions > authChallenge > passcodeQuestion
    * @param attrs
    */
-  getAuthenticationQuestions(): void {
-    this.getAuthDetails(this.state)
-      .parseAuthDetails(this.authXML)
-      .createChallengeConfig(this.authQuestions)
-      .getPasscodeQuestion(this.authChallenge);
+  getAuthenticationQuestions(
+    state: UpdateAppDataInput | AppDataStateModel | undefined,
+  ): ITransunionKBAQuestion | undefined {
+    if (!state) return;
+    const authXML = returnNestedObject(state, 'currentRawQuestions') || '';
+    const authQuestion = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(authXML);
+    const authChallenge = this.createChallengeConfig(authQuestion);
+    return authChallenge ? this.kycService.getPassCodeQuestion(authChallenge) : undefined;
   }
 
   /**
-   * Method to:
-   * - get the passcode answer
-   * - verify the answer with TU
-   * - confirm authentication
-   * // passcodeAnswer > verifyResponse > authResponse
-   */
-  async sendPasscodeResponse(code: string): Promise<void> {
-    this.getPasscodeAnswer(this.passcodeQuestion, code);
-    (await this.sendVerifyAuthQuestions(this.state, this.passcodeAnswer))
-      .parseVerifyResponse(this.verifyResponse)
-      .isVerificationSuccesful(this.authResponse);
-  }
-
-  /**
-   * Updates the authXML prop with the authentication questions back from TU
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
+   * Method to find and restructure ChallengeConfiguration
+   * @param questions
    * @returns
    */
-  getAuthDetails(state: UpdateAppDataInput | AppDataStateModel | undefined): KycIdverificationComponent {
-    if (!state) return this;
-    this.authXML = returnNestedObject(state, 'currentRawQuestions');
-    return this;
-  }
-
-  /**
-   * Update the authQuestions prop with the parsed authXML prop
-   * @param {string | undefined} xml
-   * @returns
-   */
-  parseAuthDetails(xml: string | undefined): KycIdverificationComponent {
-    if (!xml) return this;
-    this.authQuestions = this.kycService.parseCurrentRawAuthDetails(xml);
-    return this;
-  }
-
-  createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): KycIdverificationComponent {
-    if (!questions) throw 'kycIdverification:createChallengeConfig=Missing questions';
+  createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): ITransunionKBAQuestions | undefined {
+    if (!questions) return;
     const config = returnNestedObject(questions, 'ChallengeConfiguration');
-    if (!config) throw 'kycIdverification:createChallengeConfig=ChallengeConfiguration not found';
-    this.authChallenge = {
+    if (!config) return;
+    return {
       ChallengeConfigurationType: {
         ...config,
       },
     };
-    return this;
-  }
-  /**
-   * Updates the otpQuestion prop with the OTP question provided by TU
-   *   - Searches the questions returned for specific OTP text
-   * @param {ITransunionKBAQuestions | undefined} questions
-   * @returns
-   */
-  getPasscodeQuestion(questions: ITransunionKBAQuestions | undefined): KycIdverificationComponent {
-    if (!questions) throw 'kycIdverification:getPasscodeQuestion=Missing questions';
-    const question = this.kycService.getPassCodeQuestion(questions);
-    if (!question) throw 'kycIdverification:getPasscodeQuestion=No passcode question returned';
-    this.passcodeQuestion = question;
-    return this;
-  }
-
-  /**
-   * Updates the otpAnswer prop with the OTP answer provided by TU
-   *   - Searches the answers returned for the specific OTP text (send text message)
-   * @param {ITransunionKBAQuestion | undefined} otpQuestion
-   * @returns
-   */
-  getPasscodeAnswer(passcodeQuestion: ITransunionKBAQuestion | undefined, code: string): KycIdverificationComponent {
-    if (!passcodeQuestion) throw 'kycIdverification:getPasscodeAnswer=Missing question';
-    const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
-    if (!answer) throw 'kycIdverification:getPasscodeAnswer=No passcode answer returned';
-    this.passcodeAnswer = answer;
-    return this;
-  }
-
-  /**
-   * Updates the verifyResponse prop with the VerifyAuthenticationQuestions response from TU
-   *   - This is the response to our answer to send OTP (send text message)
-   *   - This response will contain an question (enter the passcode) embeded in CDATA
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
-   * @param {IVerifyAuthenticationAnswer | undefined} otpAnswer
-   * @returns
-   */
-  async sendVerifyAuthQuestions(
-    state: UpdateAppDataInput | AppDataStateModel | undefined,
-    passcodeAnswer: IVerifyAuthenticationAnswer | undefined,
-  ): Promise<KycIdverificationComponent> {
-    if (!passcodeAnswer || !state) throw 'kycIdverification:sendVerifyAuthQuestions=Missing answer or state';
-    const { success, error, data } = await this.kycService.sendVerifyAuthenticationQuestions(state, [passcodeAnswer]);
-    if (!success) throw `kycIdverification:sendVerifyAuthQuestions=${error}`;
-    this.verifyResponse = data;
-    return this;
-  }
-
-  /**
-   * Update the authResponse prop with the parsed verifyResp prop
-   * @param {string | undefined} verifyResp
-   * @returns
-   */
-  parseVerifyResponse(verifyResp: IVerifyAuthenticationQuestionsResult | undefined): KycIdverificationComponent {
-    this.authResponse = verifyResp ? verifyResp : ({} as IVerifyAuthenticationQuestionsResult);
-    return this;
-  }
-  /**
-   * Update the prop to indicate that verification was successful
-   * @param {IVerifyAuthenticationQuestionsResult | undefined} resp
-   * @returns
-   */
-  isVerificationSuccesful(resp: IVerifyAuthenticationQuestionsResult | undefined): KycIdverificationComponent {
-    if (!resp) throw 'kycIdverification:isVerificationSuccesful=Missing response message';
-    this.authSuccessful = resp.ResponseType.toLowerCase() === 'success';
-    if (!this.authSuccessful) {
-      this.attempts++;
-      this.updateViewState('error');
-    }
-    return this;
-  }
-
-  onSuccessfulSignup() {
-    this.kycService.completeStep(this.stepID);
-    this.router.navigate(['../congratulations'], {
-      relativeTo: this.route,
-    });
-  }
-
-  /**
-   * Once the user is verified complete the onboarding step on the server
-   * @param {UpdateAppDataInput | AppDataStateModel | undefined} state
-   * @returns
-   */
-  async sendCompleteOnboarding(): Promise<KycIdverificationComponent> {
-    try {
-      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
-      const { success, error } = await this.kycService.sendEnrollRequest();
-      success
-        ? this.router.navigate(['../congratulations'], {
-            relativeTo: this.route,
-          })
-        : (() => {
-            this.attempts = 3; // bail out
-            throw `kycIdverification:sendCompleteOnboarding=${error}`;
-          })();
-      return this;
-    } catch (err) {
-      this.attempts = 3; // bail out
-      this.interstitial.fetching$.next(false);
-      throw new Error(`kycIdverification:sendCompleteOnboarding=${err}`);
-    }
   }
 }
 

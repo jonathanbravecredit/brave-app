@@ -13,8 +13,10 @@ import { CustomLineChartService } from '@shared/services/charts/custom-line-char
 import { NavigationService } from '@shared/services/navigation/navigation.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { InitService } from '@shared/services/init/init.service';
 
 const services = [
+  InitService,
   AuthService,
   APIService,
   SyncService,

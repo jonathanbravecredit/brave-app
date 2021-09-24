@@ -30,6 +30,8 @@
         <brave-simple-signup-form
           (signupClick)="clickSignup.emit($event)"
           (forgotClick)="clickForgot.emit()"
+          [viewState]="viewState"
+          [message]="message"
         ></brave-simple-signup-form>
       </div>
 

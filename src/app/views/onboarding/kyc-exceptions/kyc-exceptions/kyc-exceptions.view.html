@@ -1,0 +1,12 @@
+<div class="container mx-auto max-w-xs h-full">
+  <ng-container *ngIf="route.queryParams | async as params; else default">
+    <brave-kyc-exceptions-pure
+      [code]="params.code || defaultCode"
+      (actionButtonClicked)="onActionButtonClicked($event)"
+    ></brave-kyc-exceptions-pure>
+  </ng-container>
+
+  <ng-template #default>
+    <brave-kyc-exceptions-pure (actionButtonClicked)="onActionButtonClicked($event)"></brave-kyc-exceptions-pure>
+  </ng-template>
+</div>
