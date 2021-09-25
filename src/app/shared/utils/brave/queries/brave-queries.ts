@@ -5,6 +5,11 @@ export class BraveQueries extends BraveBase {
     super();
   }
 
+  /**
+   *
+   * @param dob must be ISO string
+   * @returns
+   */
   static isUserValidAge(dob: string): boolean {
     const now = new Date();
     const nowYear = now.getFullYear();
@@ -16,7 +21,7 @@ export class BraveQueries extends BraveBase {
     const dobMonth = dobDate.getMonth();
     const dobDay = dobDate.getDate();
 
-    if (nowYear - dobYear > this.minAge) return true;
+    if (nowYear - dobYear > 18) return true;
     if (nowYear - dobYear === this.minAge) {
       return nowMonth > dobMonth ? true : nowMonth === dobMonth ? (nowDay > dobDay ? true : false) : false;
     } else {

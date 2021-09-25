@@ -4,8 +4,10 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
   Renderer2,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -18,9 +20,7 @@ import { ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.inte
   templateUrl: './kbaquestions-form.component.html',
   providers: [{ provide: 'name', useValue: 'kba-form' }],
 })
-export class KbaquestionsFormComponent
-  extends BaseFormComponent
-  implements AfterViewInit {
+export class KbaquestionsFormComponent extends BaseFormComponent implements AfterViewInit, OnChanges {
   @ViewChild('slider') slider!: ElementRef;
   @ViewChild('sliderWindow') sliderWindow!: ElementRef;
 
@@ -45,7 +45,14 @@ export class KbaquestionsFormComponent
     super(fb, 'kba-form');
   }
 
+  ngOnChanges(change: SimpleChanges) {
+    // this.sliderWidth = this.kbas.length ? this.kbas.length * this.itemWidth : this.sliderWidth;
+    // this.setSliderWindowWidth(this.itemWidth);
+    // this.setSliderWidth(this.sliderWidth);
+  }
+
   ngAfterViewInit(): void {
+    this.sliderWidth = this.kbas.length ? this.kbas.length * this.itemWidth : this.sliderWidth;
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
   }
@@ -60,11 +67,7 @@ export class KbaquestionsFormComponent
    */
   setSliderWindowWidth(width: number): void {
     // TODO need to set floor to width of containing elements
-    this.renderer.setStyle(
-      this.sliderWindow.nativeElement,
-      'width',
-      `${width}px`
-    );
+    this.renderer.setStyle(this.sliderWindow.nativeElement, 'width', `${width}px`);
   }
 
   /**
@@ -95,10 +98,6 @@ export class KbaquestionsFormComponent
     }
 
     this.carouselXAxis += value;
-    this.renderer.setStyle(
-      this.slider.nativeElement,
-      'transform',
-      `translateX(${this.carouselXAxis}%)`
-    );
+    this.renderer.setStyle(this.slider.nativeElement, 'transform', `translateX(${this.carouselXAxis}%)`);
   }
 }
