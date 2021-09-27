@@ -1151,6 +1151,10 @@ select {
   top: 5rem;
 }
 
+.top-0\.5 {
+  top: 0.125rem;
+}
+
 .top-1\/2 {
   top: 50%;
 }
