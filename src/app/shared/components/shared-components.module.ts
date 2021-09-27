@@ -138,6 +138,7 @@ import { OutlineSsnLastfourFormComponent } from './forms/outline-ssn-lastfour-fo
 import { CreditReportGraphicNoGraphComponent } from './graphics/credit-report-graphic-no-graph/credit-report-graphic-no-graph.component';
 import { HorizontalCreditscoreBarComponent } from './graphics/horizontal-creditscore-bar/horizontal-creditscore-bar.component';
 import { HorizontalCreditscoreInvisiblebarComponent } from './graphics/horizontal-creditscore-invisiblebar/horizontal-creditscore-invisiblebar.component';
+import { OutlineInputHiddenComponent } from './inputs/outline-input-hidden/outline-input-hidden.component';
 
 const components = [
   BaseFormComponent,
@@ -250,6 +251,7 @@ const components = [
   OutlineSsnLastfourFormComponent,
   HorizontalCreditscoreBarComponent,
   HorizontalCreditscoreInvisiblebarComponent,
+  OutlineInputHiddenComponent,
 ];
 
 // component specific pipes only
