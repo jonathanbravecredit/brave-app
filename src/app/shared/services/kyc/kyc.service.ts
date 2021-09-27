@@ -25,6 +25,8 @@ import { BraveUtil as bc } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
+import { GoogleErrorEvents as gtErrs } from '@shared/services/analytics/google/constants';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -37,6 +39,7 @@ export class KycService {
     private store: Store,
     private statesvc: StateService,
     private transunion: TransunionService,
+    private google: GoogleService,
     private router: Router,
   ) {}
 
@@ -450,6 +453,7 @@ export class KycService {
     const transunion = appData.agencies?.transunion;
     if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
       // technical error...api did not respond and error thrown (empty resp);
+      this.google.fireErrorEvent(gtErrs.ApiTechnicalIssue);
       this.router.navigate(['/onboarding/retry']);
     } else {
       const critical = tu.queries.exceptions.isErrorCritical(resp);
