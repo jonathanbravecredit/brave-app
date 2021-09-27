@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { GoogleClickEvents, GooglePageViewEvents } from '@shared/services/analytics/google/constants';
+import {
+  GoogleClickEvents,
+  GoogleErrorEvents,
+  GooglePageViewEvents,
+} from '@shared/services/analytics/google/constants';
 
 declare let gtag: (arg1: string, arg2: any, arg3?: any) => void;
 
@@ -64,6 +68,17 @@ export class GoogleService {
     gtag('event', 'bc_page_view', {
       event_category: event,
       event_label: `${event}_view`,
+      view: 1,
+    });
+  }
+
+  fireErrorEvent(event: GoogleErrorEvents) {
+    if (!environment.production) {
+      return; // don't fire on dev
+    }
+    gtag('event', 'bc_error', {
+      event_category: event,
+      event_label: `${event}_error`,
       view: 1,
     });
   }

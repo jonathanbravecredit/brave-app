@@ -17,7 +17,7 @@ export class SignupThankyouComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.AuthWelcome);
+    this.google.firePageViewEvent(gtEvts.AuthThankyou);
   }
 
   ngOnDestroy(): void {
