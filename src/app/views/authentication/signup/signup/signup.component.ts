@@ -40,8 +40,9 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         const resp = await this.auth.signUp(user);
-        this.interstitial.fetching$.next(false);
-        this.router.navigate(['../thankyou'], { relativeTo: this.route });
+        const signin = await this.auth.signIn(user.username, user.password);
+        // this.interstitial.fetching$.next(false);
+        // this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);

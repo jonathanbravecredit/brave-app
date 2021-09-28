@@ -255,6 +255,24 @@ export class AuthService {
   }
 
   /**
+   * Checks if user is currently authenticated
+   * @returns
+   */
+  async verifyUserConfirmed(): Promise<boolean> {
+    try {
+      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      const attrs = await Auth.userAttributes(user);
+      // attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
+      attrs.filter((a) => {
+        console.log('attr ==> ', a);
+      });
+      return false;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  /**
    * Submit old and new password to change, if accepted returns true
    * - triggers and resolves fetching
    * @param oldPassword
