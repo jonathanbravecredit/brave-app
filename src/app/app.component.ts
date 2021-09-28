@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
+          console.log('signin ===> ', data);
           const provider = window.sessionStorage.getItem('braveOAuthProvider');
           if (provider) return; // handled in redirect
           await this.init.resolver();
