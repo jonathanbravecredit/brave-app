@@ -12,18 +12,16 @@ import { GoogleService } from '@shared/services/analytics/google/google.service'
 export class SignupThankyouComponent implements OnInit, OnDestroy {
   private emailSub$: Subscription;
   private email: string | undefined;
-  private interval: any;
   constructor(private router: Router, private auth: AuthService, private google: GoogleService) {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.google.firePageViewEvent(gtEvts.AuthThankyou);
   }
 
   ngOnDestroy(): void {
     if (this.emailSub$) this.emailSub$.unsubscribe();
-    clearInterval(this.interval);
   }
 
   /**
