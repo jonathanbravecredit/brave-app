@@ -11,7 +11,7 @@ export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private google: GoogleService) {}
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.OnboardingSuccess);
+    this.google.firePageViewEvent(gtEvts.OnboardingCongratulations);
   }
 
   ngAfterViewInit(): void {

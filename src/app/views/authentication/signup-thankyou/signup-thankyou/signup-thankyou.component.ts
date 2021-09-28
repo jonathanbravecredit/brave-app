@@ -9,16 +9,21 @@ import { GoogleService } from '@shared/services/analytics/google/google.service'
   selector: 'brave-signup-thankyou',
   templateUrl: './signup-thankyou.component.html',
 })
-export class SignupThankyouComponent implements OnDestroy {
+export class SignupThankyouComponent implements OnInit, OnDestroy {
   private emailSub$: Subscription;
   private email: string | undefined;
+  private interval: any;
   constructor(private router: Router, private auth: AuthService, private google: GoogleService) {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }
 
+  async ngOnInit(): Promise<void> {
+    this.google.firePageViewEvent(gtEvts.AuthThankyou);
+  }
+
   ngOnDestroy(): void {
-    this.google.firePageViewEvent(gtEvts.AuthWelcome);
     if (this.emailSub$) this.emailSub$.unsubscribe();
+    clearInterval(this.interval);
   }
 
   /**
