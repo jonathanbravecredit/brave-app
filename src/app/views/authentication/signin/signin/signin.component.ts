@@ -68,7 +68,8 @@ export class SigninComponent {
    */
   handleSigninError(viewState: SigninState, message: string): void {
     this.viewState = viewState;
-    this.message = message;
+    this.message =
+      message || `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`;
   }
 
   /**
