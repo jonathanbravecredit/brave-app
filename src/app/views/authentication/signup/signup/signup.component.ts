@@ -66,7 +66,7 @@ export class SignupComponent implements OnInit {
    */
   handleSignupError(viewState: SignupState, message: string): void {
     this.viewState = viewState;
-    this.message = message;
+    this.message = message || `Invalid sign up credentials`;
   }
 
   /**
