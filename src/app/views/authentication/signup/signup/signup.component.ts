@@ -40,9 +40,8 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         const resp = await this.auth.signUp(user);
-        const signin = await this.auth.signIn(user.username, user.password);
-        // this.interstitial.fetching$.next(false);
-        // this.router.navigate(['../thankyou'], { relativeTo: this.route });
+        this.interstitial.fetching$.next(false);
+        this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
@@ -67,7 +66,7 @@ export class SignupComponent implements OnInit {
    */
   handleSignupError(viewState: SignupState, message: string): void {
     this.viewState = viewState;
-    this.message = message;
+    this.message = message || `Invalid sign up credentials`;
   }
 
   /**
