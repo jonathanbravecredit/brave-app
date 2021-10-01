@@ -47,12 +47,12 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   //   console.log('response ==> ', resp);
   // }
 
-  async test() {
-    const visible = document.visibilityState;
-    const email = await this.kycService.getUserEmail();
-    const resp = await this.kycService.sendDropOutEmail(email);
-    console.log('response ==> ', resp);
-  }
+  // async test() {
+  //   const visible = document.visibilityState;
+  //   const email = await this.kycService.getUserEmail();
+  //   const resp = await this.kycService.sendDropOutEmail(email);
+  //   console.log('response ==> ', resp);
+  // }
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
