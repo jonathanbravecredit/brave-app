@@ -34,6 +34,7 @@ subscription OnCreateAppData($owner: String) {
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
@@ -260,6 +261,7 @@ subscription OnUpdateAppData($owner: String) {
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
@@ -486,6 +488,7 @@ subscription OnDeleteAppData($owner: String) {
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
