@@ -169,6 +169,7 @@ export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
   started?: boolean | null;
+  abandoned?: boolean | null;
   display?: Array<OnboardingStepInput | null> | null;
 };
 
@@ -176,7 +177,6 @@ export type OnboardingStepInput = {
   id?: number | null;
   active?: boolean | null;
   complete?: boolean | null;
-  abandoned?: boolean | null;
   name?: string | null;
 };
 
@@ -421,6 +421,7 @@ export type Onboarding = {
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
+  abandoned?: boolean | null;
   display?: Array<OnboardingStep | null> | null;
 };
 
@@ -429,7 +430,6 @@ export type OnboardingStep = {
   id?: number | null;
   active?: boolean | null;
   complete?: boolean | null;
-  abandoned?: boolean | null;
   name?: string | null;
 };
 
@@ -728,12 +728,12 @@ export type CreateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -983,12 +983,12 @@ export type UpdateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -1238,12 +1238,12 @@ export type DeleteAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -1493,12 +1493,12 @@ export type GetAppDataQuery = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -1750,12 +1750,12 @@ export type ListAppDatasQuery = {
         lastActive: number;
         lastComplete: number;
         started?: boolean | null;
+        abandoned?: boolean | null;
         display?: Array<{
           __typename: "OnboardingStep";
           id?: number | null;
           active?: boolean | null;
           complete?: boolean | null;
-          abandoned?: boolean | null;
           name?: string | null;
         } | null> | null;
       } | null;
@@ -2007,12 +2007,12 @@ export type OnCreateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -2262,12 +2262,12 @@ export type OnUpdateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -2517,12 +2517,12 @@ export type OnDeleteAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -2969,12 +2969,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -3240,12 +3240,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -3511,12 +3511,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -3792,12 +3792,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -4063,12 +4063,12 @@ export class APIService {
                 lastActive
                 lastComplete
                 started
+                abandoned
                 display {
                   __typename
                   id
                   active
                   complete
-                  abandoned
                   name
                 }
               }
@@ -4339,12 +4339,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -4607,12 +4607,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -4875,12 +4875,12 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }

@@ -37,11 +37,11 @@ query GetAppData($id: ID!) {
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
           complete
-          abandoned
           name
         }
       }
@@ -268,11 +268,11 @@ query ListAppDatas(
           lastActive
           lastComplete
           started
+          abandoned
           display {
             id
             active
             complete
-            abandoned
             name
           }
         }
