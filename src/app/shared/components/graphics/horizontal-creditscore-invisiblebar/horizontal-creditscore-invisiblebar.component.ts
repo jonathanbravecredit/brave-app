@@ -11,6 +11,8 @@ export class HorizontalCreditscoreInvisiblebarComponent implements OnInit {
   @Input() rotationOffset: number = 0;
   percentage: number = 0;
   percentageStr: string = '50%';
+  minPct = 0;
+  maxPct = 85;
 
   @ViewChild('bar') bar: ElementRef | undefined;
   @ViewChild('arrow') arrow: ElementRef | undefined;
@@ -23,6 +25,6 @@ export class HorizontalCreditscoreInvisiblebarComponent implements OnInit {
         ? Math.round(((this.currentValue - 300) / 550) * 100)
         : 50;
     this.percentage = 85 * (this.percentage / 100); // 15% goes to half the marker
-    this.percentageStr = `${this.percentage}%`;
+    this.percentageStr = this.percentage > this.maxPct ? `85%` : this.percentage < this.minPct ? `0%` : `${this.percentage}%`;
   }
 }

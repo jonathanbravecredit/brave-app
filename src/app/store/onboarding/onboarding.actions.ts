@@ -24,3 +24,8 @@ export class UpdateLastComplete {
   static readonly type = '[Onboarding] UpdateLastComplete';
   constructor(public payload: number) {}
 }
+
+export class ResetOnboarding {
+  static readonly type = '[Onboarding] ResetOnboarding';
+  constructor() {}
+}

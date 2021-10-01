@@ -51,9 +51,10 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
           full: full,
         },
       } as UserAttributesInput;
-      this.kycService.updateUserAttributes(attrs);
-      this.kycService.completeStep(this.stepID);
-      this.router.navigate(['../verify'], { relativeTo: this.route });
+      this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
+        this.kycService.completeStep(this.stepID);
+        this.router.navigate(['../verify'], { relativeTo: this.route });
+      });
     }
   }
 
