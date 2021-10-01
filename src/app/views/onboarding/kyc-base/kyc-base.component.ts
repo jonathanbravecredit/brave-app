@@ -24,8 +24,8 @@ export class KycBaseComponent {
   constructor() {}
 
   @HostListener('window:beforeunload', ['$event'])
-  unloadNotification($event: any) {
-    $event.returnValue = false;
+  beforeUnloadNotification(event: BeforeUnloadEvent) {
+    event.returnValue = false;
   }
 
   canDeactivate(form: FormGroup | undefined): boolean {

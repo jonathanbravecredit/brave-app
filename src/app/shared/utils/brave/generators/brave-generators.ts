@@ -8,7 +8,7 @@ import {
   INIT_DATA,
   INIT_ONBOARDING_STATE,
 } from '@shared/utils/brave/constants';
-import { IAppStatus } from '@shared/utils/brave/interfaces';
+import { IAppStatus, IProxyRequest } from '@shared/utils/brave/interfaces';
 import { addHoursToDate } from '@shared/utils/dates';
 
 export class BraveGenerators extends BraveBase {
@@ -71,6 +71,14 @@ export class BraveGenerators extends BraveBase {
       statusReasonDescription: AppStatusReasonDescriptions[reason],
       lastStatusModifiedOn: now.toISOString(),
       nextStatusModifiedOn: addHoursToDate(now, duration).toISOString(),
+    };
+  }
+
+  static createProxyRequest<T>(service: string, command: string, message: T): IProxyRequest<T> {
+    return {
+      service,
+      command,
+      message,
     };
   }
 }

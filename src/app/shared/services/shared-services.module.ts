@@ -14,11 +14,13 @@ import { NavigationService } from '@shared/services/navigation/navigation.servic
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { InitService } from '@shared/services/init/init.service';
+import { ProxyService } from '@shared/services/proxy/proxy.service';
 
 const services = [
   InitService,
   AuthService,
   APIService,
+  ProxyService,
   SyncService,
   GuestService,
   IamService,
