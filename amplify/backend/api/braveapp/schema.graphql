@@ -65,6 +65,7 @@ type OnboardingStep {
   id: Int
   active: Boolean
   complete: Boolean
+  abandoned: Boolean
   name: String
 }
 type Agencies {
