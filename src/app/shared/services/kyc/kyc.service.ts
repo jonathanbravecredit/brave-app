@@ -21,12 +21,16 @@ import {
   IVerifyAuthenticationQuestionsResult,
 } from '@shared/interfaces';
 import { Router } from '@angular/router';
-import { BraveUtil as bc } from '@shared/utils/brave/brave';
+import { BraveUtil as bc, BraveUtil } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 import { GoogleErrorEvents as gtErrs } from '@shared/services/analytics/google/constants';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { ProxyService } from '@shared/services/proxy/proxy.service';
+import { MailchimpUtil } from '@shared/utils/mailchimp/mailchimp';
+import { MailMessage } from '@shared/utils/mailchimp/interfaces';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -37,6 +41,8 @@ export enum KYCResponse {
 export class KycService {
   constructor(
     private store: Store,
+    private auth: AuthService,
+    private proxy: ProxyService,
     private statesvc: StateService,
     private transunion: TransunionService,
     private google: GoogleService,
@@ -109,6 +115,14 @@ export class KycService {
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
     return await this.statesvc.updateUserAttributesAsync(attrs);
+  }
+
+  /**
+   * Invokes the auth service method to return the current user email
+   * @returns
+   */
+  async getUserEmail(): Promise<string> {
+    return await this.auth.getUserEmail();
   }
 
   /*=====================================*/
@@ -440,7 +454,7 @@ export class KycService {
 
   /*=====================================*/
   /*
-  /*              BAILOUT
+  /*         ONBOARDING BAILOUT
   /*
   /*=====================================*/
 
@@ -518,5 +532,24 @@ export class KycService {
         console.log(`kycService:suspendUser=Db Sync Error ${err}`);
       }
     }
+  }
+
+  /*=====================================*/
+  /*
+  /*         HTTP PROXY REQUESTS
+  /*
+  /*=====================================*/
+  /**
+   * Send the drop out email encouraging them to come back
+   * if they leave the onboarding process without completing
+   */
+  async sendDropOutEmail(email: string): Promise<any> {
+    const action = 'nt-04-drop-out-of-onboarding';
+    const message = MailchimpUtil.generators.createMailMessage(email, action);
+    const service = 'mailchimp';
+    const command = 'POST';
+    const request = BraveUtil.generators.createProxyRequest<MailMessage>(service, command, message);
+    console.log(request);
+    const resp = await this.proxy.postProxyRequest<MailMessage>(request);
   }
 }

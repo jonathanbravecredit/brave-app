@@ -197,21 +197,6 @@ export class AuthService {
       const attrs = await Auth.userAttributes(user);
       const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
       return email;
-      // const attrs: CognitoUserAttribute[] | Error = await new Promise((resolve, reject) => {
-      //   user.getUserAttributes((err, result) => {
-      //     if (result) {
-      //       resolve(result);
-      //     }
-      //     if (err) {
-      //       reject(err);
-      //     }
-      //   });
-      // });
-      // if (attrs instanceof Array) {
-      //   const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
-      //   return email;
-      // }
-      // return '';
     } catch (err) {
       return '';
     }

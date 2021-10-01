@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -38,6 +38,21 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   ngAfterViewInit(): void {
     this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
+
+  // @HostListener('window:onunload', ['$event'])
+  // async ngOnDestroy(event: BeforeUnloadEvent) {
+  //   const visible = document.visibilityState;
+  //   const email = await this.kycService.getUserEmail();
+  //   const resp = this.kycService.sendDropOutEmail(email);
+  //   console.log('response ==> ', resp);
+  // }
+
+  // async test() {
+  //   const visible = document.visibilityState;
+  //   const email = await this.kycService.getUserEmail();
+  //   const resp = await this.kycService.sendDropOutEmail(email);
+  //   console.log('response ==> ', resp);
+  // }
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
