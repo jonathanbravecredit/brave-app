@@ -41,10 +41,12 @@ export const INIT_ONBOARDING_STATE: {
   lastActive: number;
   lastComplete: number;
   started: boolean;
+  abandoned: boolean;
 } = {
   lastActive: 0,
   lastComplete: -1,
   started: true,
+  adandoned: false,
 };
 
 export const INIT_DATA: CreateAppDataInput = {
@@ -55,6 +57,7 @@ export const INIT_DATA: CreateAppDataInput = {
       lastActive: 0,
       lastComplete: -1,
       started: true,
+      adandoned: false,
     },
   },
   agencies: {
