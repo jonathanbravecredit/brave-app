@@ -80,6 +80,7 @@ type OnboardingStep @aws_iam @aws_cognito_user_pools {
   id: Int
   active: Boolean
   complete: Boolean
+  abandoned: Boolean
   name: String
 }
 
@@ -257,6 +258,7 @@ input OnboardingStepInput {
   id: Int
   active: Boolean
   complete: Boolean
+  abandoned: Boolean
   name: String
 }
 
