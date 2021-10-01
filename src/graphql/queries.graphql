@@ -42,7 +42,6 @@ query GetAppData($id: ID!) {
           id
           active
           complete
-          abandoned
           name
         }
       }
@@ -274,7 +273,6 @@ query ListAppDatas(
             id
             active
             complete
-            abandoned
             name
           }
         }

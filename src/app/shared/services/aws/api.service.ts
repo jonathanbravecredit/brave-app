@@ -177,7 +177,6 @@ export type OnboardingStepInput = {
   id?: number | null;
   active?: boolean | null;
   complete?: boolean | null;
-  abandoned?: boolean | null;
   name?: string | null;
 };
 
@@ -431,7 +430,6 @@ export type OnboardingStep = {
   id?: number | null;
   active?: boolean | null;
   complete?: boolean | null;
-  abandoned?: boolean | null;
   name?: string | null;
 };
 
@@ -736,7 +734,6 @@ export type CreateAppDataMutation = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -992,7 +989,6 @@ export type UpdateAppDataMutation = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -1248,7 +1244,6 @@ export type DeleteAppDataMutation = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -1504,7 +1499,6 @@ export type GetAppDataQuery = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -1762,7 +1756,6 @@ export type ListAppDatasQuery = {
           id?: number | null;
           active?: boolean | null;
           complete?: boolean | null;
-          abandoned?: boolean | null;
           name?: string | null;
         } | null> | null;
       } | null;
@@ -2020,7 +2013,6 @@ export type OnCreateAppDataSubscription = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -2276,7 +2268,6 @@ export type OnUpdateAppDataSubscription = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -2532,7 +2523,6 @@ export type OnDeleteAppDataSubscription = {
         id?: number | null;
         active?: boolean | null;
         complete?: boolean | null;
-        abandoned?: boolean | null;
         name?: string | null;
       } | null> | null;
     } | null;
@@ -2985,7 +2975,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -3257,7 +3246,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -3529,7 +3517,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -3811,7 +3798,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -4083,7 +4069,6 @@ export class APIService {
                   id
                   active
                   complete
-                  abandoned
                   name
                 }
               }
@@ -4360,7 +4345,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -4629,7 +4613,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
@@ -4898,7 +4881,6 @@ export class APIService {
                 id
                 active
                 complete
-                abandoned
                 name
               }
             }
