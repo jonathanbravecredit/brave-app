@@ -55,6 +55,7 @@ export const INIT_DATA: CreateAppDataInput = {
       lastActive: 0,
       lastComplete: -1,
       started: true,
+      abandoned: false,
     },
   },
   agencies: {
