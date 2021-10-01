@@ -38,6 +38,7 @@ subscription OnCreateAppData($owner: String) {
           id
           active
           complete
+          abandoned
           name
         }
       }
@@ -263,6 +264,7 @@ subscription OnUpdateAppData($owner: String) {
           id
           active
           complete
+          abandoned
           name
         }
       }
@@ -488,6 +490,7 @@ subscription OnDeleteAppData($owner: String) {
           id
           active
           complete
+          abandoned
           name
         }
       }
