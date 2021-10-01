@@ -534,6 +534,42 @@ export class StateService {
   }
 
   /**
+   * (Asynchronous) Update the onboarding when a user abandons the onboarding flow
+   */
+  updateAbandonedStatus(): void {
+    this.store
+      .dispatch(new OnboardingActions.AbandonOnboarding())
+      .subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        if (!input.id) {
+          return;
+        } else {
+          this.api.UpdateAppData(input);
+        }
+      });
+  }
+
+  /**
+   * (Promise) Update the onboarding when a user abandons the onboarding flow
+   */
+  async updateAbandonedStatusAsync(): Promise<UpdateAppDataInput> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new OnboardingActions.AbandonOnboarding())
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          if (!input.id) {
+            return;
+          } else {
+            this.api
+              .UpdateAppData(input)
+              .then((res) => resolve(res))
+              .catch((err) => reject(err));
+          }
+        });
+    });
+  }
+  /**
    * (Asynchronous) Takes a progress step ID and sets the active status to true or false
    * Then updates the state
    */

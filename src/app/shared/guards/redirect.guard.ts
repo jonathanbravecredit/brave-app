@@ -14,7 +14,7 @@ export class RedirectGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     const map = this.route.snapshot.paramMap;
     window.sessionStorage.setItem(`paramMao${new Date().getMilliseconds()}`, JSON.stringify(map));
-    return Auth.currentAuthenticatedUser()
+    return Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((res) => {
         return true;
       })

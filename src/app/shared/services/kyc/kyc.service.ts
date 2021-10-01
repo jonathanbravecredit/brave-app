@@ -28,9 +28,6 @@ import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 import { GoogleErrorEvents as gtErrs } from '@shared/services/analytics/google/constants';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { ProxyService } from '@shared/services/proxy/proxy.service';
-import { MailchimpUtil } from '@shared/utils/mailchimp/mailchimp';
-import { MailMessage } from '@shared/utils/mailchimp/interfaces';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -42,7 +39,6 @@ export class KycService {
   constructor(
     private store: Store,
     private auth: AuthService,
-    private proxy: ProxyService,
     private statesvc: StateService,
     private transunion: TransunionService,
     private google: GoogleService,
@@ -103,6 +99,14 @@ export class KycService {
     const state = this.store.snapshot();
     return { ...state.user?.onboarding, lastActive, lastComplete, started };
   }
+
+  async abandonOnboarding(): Promise<void> {
+    await this.statesvc.updateAbandonedStatusAsync();
+  }
+
+  // abandonOnboarding(): void {
+  //   this.statesvc.updateAbandonedStatus();
+  // }
 
   /*=====================================*/
   /*
@@ -532,24 +536,5 @@ export class KycService {
         console.log(`kycService:suspendUser=Db Sync Error ${err}`);
       }
     }
-  }
-
-  /*=====================================*/
-  /*
-  /*         HTTP PROXY REQUESTS
-  /*
-  /*=====================================*/
-  /**
-   * Send the drop out email encouraging them to come back
-   * if they leave the onboarding process without completing
-   */
-  async sendDropOutEmail(email: string): Promise<any> {
-    const action = 'nt-04-drop-out-of-onboarding';
-    const message = MailchimpUtil.generators.createMailMessage(email, action);
-    const service = 'mailchimp';
-    const command = 'POST';
-    const request = BraveUtil.generators.createProxyRequest<MailMessage>(service, command, message);
-    console.log(request);
-    const resp = await this.proxy.postProxyRequest<MailMessage>(request);
   }
 }
