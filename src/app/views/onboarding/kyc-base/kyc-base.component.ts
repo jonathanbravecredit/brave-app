@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 export interface FlatForm {
@@ -20,13 +20,7 @@ export class KycBaseComponent {
   }> = new EventEmitter();
   submitted: boolean = false;
   form: FormGroup | undefined;
-
   constructor() {}
-
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnloadNotification(event: BeforeUnloadEvent) {
-    event.returnValue = false;
-  }
 
   canDeactivate(form: FormGroup | undefined): boolean {
     if (form === undefined) return true;

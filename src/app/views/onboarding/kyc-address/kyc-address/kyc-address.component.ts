@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, HostListener, OnDestroy, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -20,6 +20,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   @ViewChild(KycAddressPureComponent) pure: KycAddressPureComponent | undefined;
   stepID = 1;
   hasError: boolean = false;
+  listener: any;
 
   constructor(
     private router: Router,
@@ -39,21 +40,6 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
     this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
   }
 
-  // @HostListener('window:onunload', ['$event'])
-  // async ngOnDestroy(event: BeforeUnloadEvent) {
-  //   const visible = document.visibilityState;
-  //   const email = await this.kycService.getUserEmail();
-  //   const resp = this.kycService.sendDropOutEmail(email);
-  //   console.log('response ==> ', resp);
-  // }
-
-  // async test() {
-  //   const visible = document.visibilityState;
-  //   const email = await this.kycService.getUserEmail();
-  //   const resp = await this.kycService.sendDropOutEmail(email);
-  //   console.log('response ==> ', resp);
-  // }
-
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
     this.router.navigate(['../name'], { relativeTo: this.route });
@@ -61,7 +47,6 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
 
   goToNext(form: FormGroup): void {
     this.google.fireClickEvent(gtClicks.OnboardingAddress);
-    // need to add form validation before moving forward
     if (form.valid) {
       const attrs = {
         address: {

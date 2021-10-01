@@ -10,6 +10,7 @@ import { Auth } from 'aws-amplify';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { Router } from '@angular/router';
 import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
+import { StateService } from '@shared/services/state/state.service';
 
 @Injectable()
 export class OnboardingService implements OnDestroy {
@@ -21,7 +22,7 @@ export class OnboardingService implements OnDestroy {
   private agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
   private agenciesSub$: Subscription;
 
-  constructor(private store: Store, private sync: SyncService, private router: Router) {
+  constructor(private store: Store, private statesvc: StateService, private sync: SyncService, private router: Router) {
     this.onboardingSub$ = this.onboarding$
       .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
       .subscribe((onboarding: OnboardingStateModel) => {
@@ -43,7 +44,7 @@ export class OnboardingService implements OnDestroy {
    * Returns the user id from the authenticated user
    */
   async getUserId(): Promise<string | undefined> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser();
+    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
     const attrs = await Auth.userAttributes(user);
     const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     return id;
@@ -88,6 +89,10 @@ export class OnboardingService implements OnDestroy {
    */
   async syncDbToState(id: string): Promise<any> {
     return await this.sync.syncDBDownToState(id);
+  }
+
+  async abandonOnboarding(): Promise<void> {
+    await this.statesvc.updateAbandonedStatusAsync();
   }
 
   /**
