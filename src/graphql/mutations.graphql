@@ -199,6 +199,7 @@ mutation CreateAppData(
           id
           active
           complete
+          abandoned
           name
         }
       }
@@ -427,6 +428,7 @@ mutation UpdateAppData(
           id
           active
           complete
+          abandoned
           name
         }
       }
@@ -655,6 +657,7 @@ mutation DeleteAppData(
           id
           active
           complete
+          abandoned
           name
         }
       }
