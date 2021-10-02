@@ -13,7 +13,7 @@ export class SuspendedGuard implements CanActivate {
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
     return true;
-    // return Auth.currentAuthenticatedUser()
+    // return Auth.currentAuthenticatedUser({ bypassCache: true })
     //   .then((res) => {
     //     return true;
     //   })
