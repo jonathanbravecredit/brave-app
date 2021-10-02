@@ -10,3 +10,9 @@ export interface IAppStatus {
 }
 
 export interface IBraveTechnicalError extends ITUServiceResponse<undefined> {}
+
+export interface IProxyRequest<T> {
+  service: string;
+  command: string;
+  message: T;
+}

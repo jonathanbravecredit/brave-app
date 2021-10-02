@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, HostListener, OnDestroy, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
@@ -20,6 +20,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   @ViewChild(KycAddressPureComponent) pure: KycAddressPureComponent | undefined;
   stepID = 1;
   hasError: boolean = false;
+  listener: any;
 
   constructor(
     private router: Router,
@@ -46,7 +47,6 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
 
   goToNext(form: FormGroup): void {
     this.google.fireClickEvent(gtClicks.OnboardingAddress);
-    // need to add form validation before moving forward
     if (form.valid) {
       const attrs = {
         address: {
