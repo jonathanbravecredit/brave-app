@@ -1,7 +1,7 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { from, Observable, Subscription } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { OnboardingStateModel } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import { CognitoUser } from 'amazon-cognito-identity-js';
@@ -10,7 +10,6 @@ import { Auth } from 'aws-amplify';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { Router } from '@angular/router';
 import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
-import { TransunionInput } from '@shared/services/aws/api.service';
 import { AppStatus } from '@shared/utils/brave/constants';
 
 @Injectable({
@@ -101,6 +100,7 @@ export class InitService {
       this.router.navigate(['/suspended/default']);
       return false;
     }
+    console.log('isOnboarded ==> ', isOnboarded);
     try {
       if (!isOnboarded) {
         await this.goToLastOnboarded();
