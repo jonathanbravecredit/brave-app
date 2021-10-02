@@ -7,4 +7,5 @@ export class OnboardingStateModel implements OnboardingInput {
   lastActive: number = -1;
   lastComplete: number = -1;
   started?: boolean | null | undefined;
+  abandoned?: boolean | null | undefined;
 }

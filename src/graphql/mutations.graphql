@@ -195,11 +195,11 @@ mutation CreateAppData(
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
           complete
-          abandoned
           name
         }
       }
@@ -424,11 +424,11 @@ mutation UpdateAppData(
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
           complete
-          abandoned
           name
         }
       }
@@ -653,11 +653,11 @@ mutation DeleteAppData(
         lastActive
         lastComplete
         started
+        abandoned
         display {
           id
           active
           complete
-          abandoned
           name
         }
       }

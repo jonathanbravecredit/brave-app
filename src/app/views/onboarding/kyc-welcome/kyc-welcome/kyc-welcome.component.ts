@@ -10,7 +10,6 @@ import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
-import { dateDiffInDays } from '@shared/utils/dates';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';

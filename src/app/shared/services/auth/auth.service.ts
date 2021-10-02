@@ -149,8 +149,8 @@ export class AuthService {
    * Get current authenticated user
    * @return - A promise resolves to current authenticated CognitoUser if success
    */
-  getCurrentAuthenticatedUser(): Promise<CognitoUser> {
-    return Auth.currentAuthenticatedUser();
+  getcurrentAuthenticatedUser(): Promise<CognitoUser> {
+    return Auth.currentAuthenticatedUser({ bypassCache: true });
   }
 
   /**
@@ -166,7 +166,7 @@ export class AuthService {
    */
   async getAuthTokens(): Promise<string> {
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       let session = user.getSignInUserSession();
       return session ? session.getIdToken().getJwtToken() : '';
     } catch (err) {
@@ -193,25 +193,10 @@ export class AuthService {
    */
   async getUserEmail(): Promise<string> {
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const attrs = await Auth.userAttributes(user);
       const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
       return email;
-      // const attrs: CognitoUserAttribute[] | Error = await new Promise((resolve, reject) => {
-      //   user.getUserAttributes((err, result) => {
-      //     if (result) {
-      //       resolve(result);
-      //     }
-      //     if (err) {
-      //       reject(err);
-      //     }
-      //   });
-      // });
-      // if (attrs instanceof Array) {
-      //   const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
-      //   return email;
-      // }
-      // return '';
     } catch (err) {
       return '';
     }
@@ -226,7 +211,7 @@ export class AuthService {
   async updateUserEmail(email: string): Promise<boolean> {
     this.interstitial.fetching$.next(true);
     try {
-      const user = await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
       await Auth.updateUserAttributes(user, { email: email });
       this.interstitial.fetching$.next(false);
       return true;
@@ -264,7 +249,7 @@ export class AuthService {
   async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     this.interstitial.fetching$.next(true);
     try {
-      const user = await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const resp = await Auth.changePassword(user, oldPassword, newPassword);
       this.interstitial.fetching$.next(false);
       return resp.toLowerCase();
@@ -282,7 +267,7 @@ export class AuthService {
   async deactivateAccount(): Promise<string> {
     this.interstitial.fetching$.next(true);
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       return new Promise((resolve, reject) => {
         this.interstitial.fetching$.next(false);
         user.deleteUser((err, res) => {
