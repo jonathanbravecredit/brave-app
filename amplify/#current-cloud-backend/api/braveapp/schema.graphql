@@ -59,7 +59,6 @@ type Onboarding {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
-  abandoned: Boolean
   display: [OnboardingStep]
 }
 type OnboardingStep {
