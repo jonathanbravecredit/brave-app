@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import {
   FilledChecktextProgressbarComponent,
   IFilledChecktextProgressbarConfig,
@@ -9,12 +9,15 @@ import { Store } from '@ngxs/store';
 import { filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { OnboardingService } from '@views/onboarding/onboarding.service';
+
+// const terminationEvent = 'onpagehide' in self ? 'pagehide' : 'unload';
 
 @Component({
   selector: 'brave-onboarding',
   templateUrl: './onboarding.component.html',
 })
-export class OnboardingComponent {
+export class OnboardingComponent implements OnDestroy, AfterViewInit {
   @ViewChild(FilledChecktextProgressbarComponent)
   progressBar: FilledChecktextProgressbarComponent | undefined;
   progressConfig: IFilledChecktextProgressbarConfig = {
@@ -22,9 +25,7 @@ export class OnboardingComponent {
   };
 
   onboarding: OnboardingStateModel = {} as OnboardingStateModel;
-  onboarding$: Observable<OnboardingStateModel> = this.store.select(
-    OnboardingSelectors.getOnboarding
-  );
+  onboarding$: Observable<OnboardingStateModel> = this.store.select(OnboardingSelectors.getOnboarding);
   onboardingSub$: Subscription;
   steps: OnboardingStep[] = [
     { id: 0, active: false, complete: false, name: 'Name' },
@@ -32,14 +33,34 @@ export class OnboardingComponent {
     { id: 2, active: false, complete: false, name: 'Identity' },
     { id: 3, active: false, complete: false, name: 'Verify' },
   ];
+  listener: any;
 
-  constructor(private auth: AuthService, private store: Store) {
+  constructor(
+    private store: Store,
+    private auth: AuthService,
+    private renderer: Renderer2,
+    private onboardingService: OnboardingService,
+  ) {
     this.onboardingSub$ = this.onboarding$
-      .pipe(
-        filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
-      )
+      .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
       .subscribe((onboarding: OnboardingStateModel) => {
         this.onboarding = onboarding;
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.listener = this.renderer.listen(window, 'beforeunload', (event: BeforeUnloadEvent) => {
+      if (!this.onboarding.abandoned) {
+        this.onboardingService.abandonOnboarding();
+      }
+      event.returnValue = false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.listener) {
+      this.listener(); // listener returns a function to invoke which 'unlistens'
+      this.listener = null;
+    }
   }
 }

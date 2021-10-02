@@ -61,4 +61,13 @@ export class OnboardingState {
       started,
     });
   }
+
+  @Action(OnboardingActions.AbandonOnboarding)
+  abandonOnboarding(ctx: StateContext<OnboardingStateModel>): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      ...state,
+      abandoned: true,
+    });
+  }
 }

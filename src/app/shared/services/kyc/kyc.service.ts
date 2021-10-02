@@ -21,12 +21,13 @@ import {
   IVerifyAuthenticationQuestionsResult,
 } from '@shared/interfaces';
 import { Router } from '@angular/router';
-import { BraveUtil as bc } from '@shared/utils/brave/brave';
+import { BraveUtil as bc, BraveUtil } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 import { GoogleErrorEvents as gtErrs } from '@shared/services/analytics/google/constants';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -37,6 +38,7 @@ export enum KYCResponse {
 export class KycService {
   constructor(
     private store: Store,
+    private auth: AuthService,
     private statesvc: StateService,
     private transunion: TransunionService,
     private google: GoogleService,
@@ -98,6 +100,14 @@ export class KycService {
     return { ...state.user?.onboarding, lastActive, lastComplete, started };
   }
 
+  async abandonOnboarding(): Promise<void> {
+    await this.statesvc.updateAbandonedStatusAsync();
+  }
+
+  // abandonOnboarding(): void {
+  //   this.statesvc.updateAbandonedStatus();
+  // }
+
   /*=====================================*/
   /*
   /*              USER ATTRIBUTES
@@ -109,6 +119,14 @@ export class KycService {
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
     return await this.statesvc.updateUserAttributesAsync(attrs);
+  }
+
+  /**
+   * Invokes the auth service method to return the current user email
+   * @returns
+   */
+  async getUserEmail(): Promise<string> {
+    return await this.auth.getUserEmail();
   }
 
   /*=====================================*/
@@ -440,7 +458,7 @@ export class KycService {
 
   /*=====================================*/
   /*
-  /*              BAILOUT
+  /*         ONBOARDING BAILOUT
   /*
   /*=====================================*/
 

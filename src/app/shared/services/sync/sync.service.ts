@@ -93,11 +93,16 @@ export class SyncService implements OnDestroy {
    */
   async isUserBrandNew(id: string): Promise<boolean | undefined> {
     if (!id) return;
-    const data = await this.api.GetAppData(id);
-    if (!data) return true;
-    const clean = this.cleanBackendData(data);
-    this.data$.next(clean);
-    return !data.id;
+    try {
+      const data = await this.api.GetAppData(id);
+      if (!data) return true;
+      const clean = this.cleanBackendData(data);
+      this.data$.next(clean);
+      return !data.id;
+    } catch (err) {
+      console.log('isUserBrandNew ==> ', err);
+      return true;
+    }
   }
 
   /**
@@ -108,11 +113,16 @@ export class SyncService implements OnDestroy {
    */
   async isUserOnboarded(id: string): Promise<boolean | undefined> {
     if (!id) return;
-    const data = await this.api.GetAppData(id);
-    if (!data) return false;
-    const clean = this.cleanBackendData(data);
-    this.data$.next(clean);
-    return data.user?.onboarding?.lastComplete === 3;
+    try {
+      const data = await this.api.GetAppData(id);
+      if (!data) return false;
+      const clean = this.cleanBackendData(data);
+      this.data$.next(clean);
+      return data.user?.onboarding?.lastComplete === 3;
+    } catch (err) {
+      console.log('isUserOnboarded ==> ', err);
+      return false;
+    }
   }
 
   /**
@@ -157,6 +167,7 @@ export class SyncService implements OnDestroy {
       if (input === undefined) return;
       const data = await this.api.CreateAppData(input);
       const clean = this.cleanBackendData(data);
+      console.log('init data ==> ', data);
 
       return await new Promise((resolve, reject) => {
         this.store.dispatch(new AppDataActions.Add(clean)).subscribe((appData) => {
@@ -205,7 +216,7 @@ export class SyncService implements OnDestroy {
   async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
     let userId: string;
     if (id === '') {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const attrs = await Auth.userAttributes(creds);
       userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     } else {

@@ -169,6 +169,7 @@ export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
   started?: boolean | null;
+  abandoned?: boolean | null;
   display?: Array<OnboardingStepInput | null> | null;
 };
 
@@ -420,6 +421,7 @@ export type Onboarding = {
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
+  abandoned?: boolean | null;
   display?: Array<OnboardingStep | null> | null;
 };
 
@@ -726,6 +728,7 @@ export type CreateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -980,6 +983,7 @@ export type UpdateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -1234,6 +1238,7 @@ export type DeleteAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -1488,6 +1493,7 @@ export type GetAppDataQuery = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -1744,6 +1750,7 @@ export type ListAppDatasQuery = {
         lastActive: number;
         lastComplete: number;
         started?: boolean | null;
+        abandoned?: boolean | null;
         display?: Array<{
           __typename: "OnboardingStep";
           id?: number | null;
@@ -2000,6 +2007,7 @@ export type OnCreateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -2254,6 +2262,7 @@ export type OnUpdateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -2508,6 +2517,7 @@ export type OnDeleteAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
       display?: Array<{
         __typename: "OnboardingStep";
         id?: number | null;
@@ -2959,6 +2969,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
@@ -3229,6 +3240,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
@@ -3499,6 +3511,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
@@ -3779,6 +3792,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
@@ -4049,6 +4063,7 @@ export class APIService {
                 lastActive
                 lastComplete
                 started
+                abandoned
                 display {
                   __typename
                   id
@@ -4324,6 +4339,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
@@ -4591,6 +4607,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
@@ -4858,6 +4875,7 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
               display {
                 __typename
                 id
