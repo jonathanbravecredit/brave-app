@@ -65,6 +65,7 @@ export class InitService {
         status = await this.handleRouting(isOnboarded, isSuspended);
         return status;
       } catch (err) {
+        console.log('error in resolver ===> ', err);
         this.router.navigate(['/auth/signin']); // need a please confirm account view
         return false;
       }
