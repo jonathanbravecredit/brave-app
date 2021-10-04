@@ -1,11 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { Hub, ICredentials } from '@aws-amplify/core';
-import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
-import { APIService } from '@shared/services/aws/api.service';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Hub } from '@aws-amplify/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SyncService } from '@shared/services/sync/sync.service';
 import { Observable } from 'rxjs';
 import { InitService } from '@shared/services/init/init.service';
 
@@ -28,8 +24,8 @@ export class AppComponent implements OnInit {
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
-          const provider = window.sessionStorage.getItem('braveOAuthProvider');
-          if (provider) return; // handled in redirect
+          // const provider = window.sessionStorage.getItem('braveOAuthProvider');
+          // if (provider) return; // handled in redirect
           await this.init.resolver();
           break;
         case 'signOut':
@@ -46,8 +42,8 @@ export class AppComponent implements OnInit {
 
     (async () => {
       try {
-        const provider = window.sessionStorage.getItem('braveOAuthProvider');
-        if (provider) return; // handled in redirect
+        // const provider = window.sessionStorage.getItem('braveOAuthProvider');
+        // if (provider) return; // handled in redirect
         await this.init.resolver();
       } catch (err) {
         console.log('Not signed in');

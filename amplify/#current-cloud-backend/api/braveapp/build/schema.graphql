@@ -73,7 +73,6 @@ type Onboarding @aws_iam @aws_cognito_user_pools {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
-  abandoned: Boolean
   display: [OnboardingStep]
 }
 
@@ -251,7 +250,6 @@ input OnboardingInput {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
-  abandoned: Boolean
   display: [OnboardingStepInput]
 }
 
