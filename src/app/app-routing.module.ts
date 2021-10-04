@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AutocompleteAddressFormComponent } from '@shared/components/forms/autocomplete-address-form/autocomplete-address-form.component';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { AuthGuard } from '@shared/guards/auth.guard';
 
@@ -26,7 +27,7 @@ const routes: Routes = [
     path: 'suspended',
     loadChildren: () => import('./views/suspended/suspended.module').then((m) => m.SuspendedModule),
   },
-  // { path: '', component: IndexComponent }, // TODO: replace with better page
+  { path: 'testing', component: AutocompleteAddressFormComponent }, // TODO: replace with better page
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

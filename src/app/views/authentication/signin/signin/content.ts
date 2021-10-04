@@ -10,5 +10,5 @@ export const SignInErrorDescriptions: Record<any, string> = {
   [SignInErrors.UserNotConfirmedException]: `To log in please confirm your account by clicking on the button in the email we sent you`,
   [SignInErrors.PasswordResetRequiredException]: `Password reset required`,
   [SignInErrors.NotAuthorizedException]: `Not authorized`,
-  [SignInErrors.UserNotFoundException]: `Please use a registered email`,
+  [SignInErrors.UserNotFoundException]: `<p>This account does not exist. <a href="/auth/signup"><span><strong>&nbsp;Please create an account by clicking here.</strong></span></a></p>`,
 };
