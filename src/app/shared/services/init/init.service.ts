@@ -1,8 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { from, Observable, Subscription } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
-import { OnboardingStateModel } from '@store/onboarding';
+import { Injectable } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { OnboardingState, OnboardingStateModel } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';
@@ -10,7 +10,6 @@ import { Auth } from 'aws-amplify';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { Router } from '@angular/router';
 import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
-import { TransunionInput } from '@shared/services/aws/api.service';
 import { AppStatus } from '@shared/utils/brave/constants';
 
 @Injectable({
@@ -55,7 +54,7 @@ export class InitService {
       try {
         let status: boolean = false;
         const isUserNew = await this.isUserNew(id);
-        const isOnboarded = await this.isUserOnboarded();
+        const isOnboarded = await this.isUserOnboarded(id);
         // initiate a new user else sync db to state
         status = await this.handleUser(isUserNew, id);
         // subscribe to listeners
@@ -63,9 +62,10 @@ export class InitService {
         // if suspended, go to suspended page
         const isSuspended: AppStatus = this.data?.status as AppStatus;
         // go to onboarding if not onboarded, otherwise return true
-        status = await this.handleRouting(isOnboarded, isSuspended);
+        status = await this.handleRouting(isOnboarded || false, isSuspended);
         return status;
       } catch (err) {
+        console.log('error in resolver ===> ', err);
         this.router.navigate(['/auth/signin']); // need a please confirm account view
         return false;
       }
@@ -101,6 +101,7 @@ export class InitService {
       this.router.navigate(['/suspended/default']);
       return false;
     }
+    console.log('isOnboarded ==> ', isOnboarded);
     try {
       if (!isOnboarded) {
         await this.goToLastOnboarded();
@@ -144,8 +145,8 @@ export class InitService {
    * Returns whether the user has completed the onboarding steps
    * @param id
    */
-  async isUserOnboarded(): Promise<boolean> {
-    return this.onboarding.lastComplete === 3;
+  async isUserOnboarded(id: string): Promise<boolean | undefined> {
+    return await this.sync.isUserOnboarded(id);
   }
 
   /**
