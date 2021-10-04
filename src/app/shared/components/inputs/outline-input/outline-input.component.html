@@ -4,6 +4,7 @@
       >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
     <input
+      #inputField
       name="input_field"
       [type]="config?.type || 'text'"
       formControlName="input"

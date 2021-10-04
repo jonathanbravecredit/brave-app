@@ -139,6 +139,8 @@ import { CreditReportGraphicNoGraphComponent } from './graphics/credit-report-gr
 import { HorizontalCreditscoreBarComponent } from './graphics/horizontal-creditscore-bar/horizontal-creditscore-bar.component';
 import { HorizontalCreditscoreInvisiblebarComponent } from './graphics/horizontal-creditscore-invisiblebar/horizontal-creditscore-invisiblebar.component';
 import { OutlineInputHiddenComponent } from './inputs/outline-input-hidden/outline-input-hidden.component';
+import { PlacesAutocompleteInputComponent } from './inputs/places-autocomplete-input/places-autocomplete-input.component';
+import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-form/autocomplete-address-form.component';
 
 const components = [
   BaseFormComponent,
@@ -252,6 +254,8 @@ const components = [
   HorizontalCreditscoreBarComponent,
   HorizontalCreditscoreInvisiblebarComponent,
   OutlineInputHiddenComponent,
+  PlacesAutocompleteInputComponent,
+  AutocompleteAddressFormComponent,
 ];
 
 // component specific pipes only
