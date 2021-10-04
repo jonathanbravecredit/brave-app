@@ -4,6 +4,11 @@ import { moduleMetadata } from '@storybook/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlacesAutocompleteInputComponent } from '@shared/components/inputs/places-autocomplete-input/places-autocomplete-input.component';
 
+// DO NOT REMOVE BELOW REFERENCE!!!!
+/// <reference types="google.maps" />
+declare var google: any;
+// DO NOT REMOVE ABOVE REFERENCE!!!!
+
 export default {
   title: 'app/components/inputs/places-autocomplete-input',
   component: PlacesAutocompleteInputComponent,

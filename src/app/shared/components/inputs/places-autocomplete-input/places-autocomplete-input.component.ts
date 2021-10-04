@@ -20,12 +20,15 @@ export class PlacesAutocompleteInputComponent extends OutlineInputComponent impl
     super(new FormBuilder());
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.getPlaceAutocomplete();
+  }
 
   getPlaceAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
       componentRestrictions: { country: 'US' },
       types: [this.addressType], // 'establishment' / 'address' / 'geocode'
+      fields: ['address_components', 'name'],
     });
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       const place = autocomplete.getPlace();
@@ -34,9 +37,9 @@ export class PlacesAutocompleteInputComponent extends OutlineInputComponent impl
   }
 
   onPlaceChanged(place: google.maps.places.PlaceResult) {
-    if (!place.geometry) {
+    if (!place.name) {
       // no item clicked, and just typed and hit entered.
-      this.componentFormGroup.controls['input'].setValue(this.config?.placeholder || '');
+      this.componentFormGroup.controls['input'].setValue('');
     } else {
       this.componentFormGroup.controls['input'].setValue(place.formatted_address);
       this.addressClick.emit(place);
