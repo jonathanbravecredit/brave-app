@@ -27,7 +27,7 @@ const routes: Routes = [
     path: 'suspended',
     loadChildren: () => import('./views/suspended/suspended.module').then((m) => m.SuspendedModule),
   },
-  { path: 'testing', component: AutocompleteAddressFormComponent }, // TODO: replace with better page
+  // { path: 'testing', component: AutocompleteAddressFormComponent }, // TODO: replace with better page
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
