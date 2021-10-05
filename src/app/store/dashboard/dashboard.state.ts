@@ -38,10 +38,12 @@ export class DashboardState {
     const state = ctx.getState();
     const negativeCardCount = (state.negativeCardCount || 0) + 1;
     const negativeCardStatus = 'critical';
+    const negativeReviewed = false;
     ctx.patchState({
       ...state,
       negativeCardCount,
       negativeCardStatus,
+      negativeReviewed,
     });
   }
 
@@ -50,10 +52,12 @@ export class DashboardState {
     const state = ctx.getState();
     const negativeCardCount = (state.negativeCardCount || 0) <= 1 ? 0 : (state.negativeCardCount || 0) - 1;
     const negativeCardStatus = negativeCardCount <= 0 ? 'safe' : 'critical';
+    const negativeReviewed = negativeCardCount <= 0 ? true : false;
     ctx.patchState({
       ...state,
       negativeCardCount,
       negativeCardStatus,
+      negativeReviewed,
     });
   }
 
@@ -62,10 +66,12 @@ export class DashboardState {
     const state = ctx.getState();
     const forbearanceCardCount = (state.forbearanceCardCount || 0) + 1;
     const forbearanceCardStatus = 'danger';
+    const forbearanceReviewed = false;
     ctx.patchState({
       ...state,
       forbearanceCardCount,
       forbearanceCardStatus,
+      forbearanceReviewed,
     });
   }
 
@@ -74,10 +80,12 @@ export class DashboardState {
     const state = ctx.getState();
     const forbearanceCardCount = (state.forbearanceCardCount || 0) <= 1 ? 0 : (state.forbearanceCardCount || 0) - 1;
     const forbearanceCardStatus = forbearanceCardCount <= 0 ? 'safe' : 'danger';
+    const forbearanceReviewed = forbearanceCardCount <= 0 ? true : false;
     ctx.patchState({
       ...state,
       forbearanceCardCount,
       forbearanceCardStatus,
+      forbearanceReviewed,
     });
   }
 
@@ -86,10 +94,12 @@ export class DashboardState {
     const state = ctx.getState();
     const databreachCardCount = (state.databreachCardCount || 0) + 1;
     const databreachCardStatus = 'danger';
+    const databreachReviewed = false;
     ctx.patchState({
       ...state,
       databreachCardCount,
       databreachCardStatus,
+      databreachReviewed,
     });
   }
 
@@ -98,10 +108,12 @@ export class DashboardState {
     const state = ctx.getState();
     const databreachCardCount = (state.databreachCardCount || 0) <= 1 ? 0 : (state.databreachCardCount || 0) - 1;
     const databreachCardStatus = databreachCardCount <= 0 ? 'safe' : 'danger';
+    const databreachReviewed = databreachCardCount <= 0 ? true : false;
     ctx.patchState({
       ...state,
       databreachCardCount,
       databreachCardStatus,
+      databreachReviewed,
     });
   }
 }
