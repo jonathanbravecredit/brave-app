@@ -18,7 +18,7 @@
       [title]="content.negativeAccountsTitle"
       typeOfSnapshot="time"
       [value]="cards.negativeCardCount || 0"
-      [status]="cards.negativeCardStatus || 'safe'"
+      [status]="cards.negativeReviewed ? 'safe' : cards.negativeCardStatus || 'safe'"
       (click)="negativeItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -26,7 +26,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.forbearanceAccountsTitle"
-      [status]="cards.forbearanceCardStatus || 'safe'"
+      [status]="cards.forbearanceReviewed ? 'safe' : cards.forbearanceCardStatus || 'safe'"
       (click)="forbearanceItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -34,7 +34,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.databreachAccountsTitle"
-      [status]="cards.databreachCardStatus || 'safe'"
+      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
       (click)="databreachItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
