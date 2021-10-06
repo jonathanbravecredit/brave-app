@@ -69,9 +69,17 @@ type Dashboard {
   forbearanceReviewed: Boolean
   forbearanceStatus: String
   databreachFlagged: Boolean
+  databreachCards: [DataBreachCard]
   databreachCardStatus: String
   databreachReviewed: Boolean
   databreachStatus: String
+}
+
+type DataBreachCard {
+  reason: String
+  reviewed: Boolean
+  subscriber: String
+  paragraphs: String
 }
 
 type Onboarding {
