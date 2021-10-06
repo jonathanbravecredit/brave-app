@@ -10,6 +10,7 @@ import { IMergeReport } from '@shared/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { BraveUtil as bc } from '@shared/utils/brave/brave';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { AppDataSelectors } from '@store/app-data';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +26,12 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IMergeReport | null> {
     const id = this.statesvc.state?.appData.id;
     const sub = await this.auth.getUserSub();
-    console.log('id ==> ', id);
-    console.log('sub ==> ', sub);
+    const appData = await this.store.selectOnce(AppDataSelectors.getAppData).toPromise();
     if (!id && !sub) {
       return new Promise((resolve) => resolve(null));
+    } else if (appData.isLoaded) {
+      const report = bc.parsers.parseTransunionMergeReport(appData.agencies?.transunion);
+      return new Promise((resolve) => resolve(report));
     } else {
       let cred = id || sub;
       return from(this.api.GetAppData(cred))
@@ -36,7 +39,7 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
           map((res) => tu.scrubbers.scrubBackendData(res)),
           tap({
             next: (clean) => {
-              this.store.dispatch(new AppDataActions.Edit(clean));
+              this.store.dispatch(new AppDataActions.Edit({ ...clean, isLoaded: true }));
             },
             error: (err) => {
               console.error(err);

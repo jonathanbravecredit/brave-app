@@ -5,7 +5,9 @@ import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 
 @State<DashboardStateModel>({
   name: 'dashboard',
-  defaults: {},
+  defaults: {
+    isLoaded: false,
+  },
 })
 @Injectable()
 export class DashboardState {
@@ -37,81 +39,101 @@ export class DashboardState {
   incrementNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
     const negativeCardCount = (state.negativeCardCount || 0) + 1;
-    const negativeCardStatus = 'critical';
-    const negativeReviewed = false;
     ctx.patchState({
       ...state,
       negativeCardCount,
-      negativeCardStatus,
-      negativeReviewed,
     });
   }
 
   @Action(DashboardActions.DecrementNegativeCardCount)
-  decrementNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
+  DecrementNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const negativeCardCount = (state.negativeCardCount || 0) <= 1 ? 0 : (state.negativeCardCount || 0) - 1;
-    const negativeCardStatus = negativeCardCount <= 0 ? 'safe' : 'critical';
-    const negativeReviewed = negativeCardCount <= 0 ? true : false;
+    const negativeCardCount = (state.negativeCardCount || 0) - 1 <= 0 ? 0 : (state.negativeCardCount || 0) - 1;
     ctx.patchState({
       ...state,
       negativeCardCount,
+    });
+  }
+
+  @Action(DashboardActions.FlagNegativeSnapshot)
+  flagNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
+    const state = ctx.getState();
+    const negativeFlagged = true;
+    const negativeCardStatus = 'critical';
+    const negativeReviewed = false;
+    ctx.patchState({
+      ...state,
+      negativeFlagged,
       negativeCardStatus,
       negativeReviewed,
     });
   }
 
-  @Action(DashboardActions.IncrementForbearanceCardCount)
-  incrementForbearanceCardCount(ctx: StateContext<DashboardStateModel>) {
+  @Action(DashboardActions.UnflagNegativeSnapshot)
+  unflagNegativeSnapshot(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const forbearanceCardCount = (state.forbearanceCardCount || 0) + 1;
+    const negativeFlagged = false;
+    const negativeCardStatus = 'safe';
+    const negativeReviewed = true;
+    ctx.patchState({
+      ...state,
+      negativeFlagged,
+      negativeCardStatus,
+      negativeReviewed,
+    });
+  }
+
+  @Action(DashboardActions.FlagForbearanceSnapshot)
+  flagForbearanceSnapshot(ctx: StateContext<DashboardStateModel>) {
+    const state = ctx.getState();
+    const forbearanceFlagged = true;
     const forbearanceCardStatus = 'danger';
     const forbearanceReviewed = false;
     ctx.patchState({
       ...state,
-      forbearanceCardCount,
+      forbearanceFlagged,
       forbearanceCardStatus,
       forbearanceReviewed,
     });
   }
 
-  @Action(DashboardActions.DecrementForbearanceCardCount)
-  decrementForbearanceCardCount(ctx: StateContext<DashboardStateModel>) {
+  @Action(DashboardActions.UnflagForbearanceSnapshot)
+  unflagForbearanceSnapshot(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const forbearanceCardCount = (state.forbearanceCardCount || 0) <= 1 ? 0 : (state.forbearanceCardCount || 0) - 1;
-    const forbearanceCardStatus = forbearanceCardCount <= 0 ? 'safe' : 'danger';
-    const forbearanceReviewed = forbearanceCardCount <= 0 ? true : false;
+    const forbearanceFlagged = false;
+    const forbearanceCardStatus = 'safe';
+    const forbearanceReviewed = true;
     ctx.patchState({
       ...state,
-      forbearanceCardCount,
+      forbearanceFlagged,
       forbearanceCardStatus,
       forbearanceReviewed,
     });
   }
 
-  @Action(DashboardActions.IncrementDatabreachCardCount)
-  incrementDatabreachCardCount(ctx: StateContext<DashboardStateModel>) {
+  @Action(DashboardActions.FlagDatabreachSnapshot)
+  flagDatabreachSnapshot(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const databreachCardCount = (state.databreachCardCount || 0) + 1;
+    const databreachFlagged = true;
     const databreachCardStatus = 'danger';
     const databreachReviewed = false;
     ctx.patchState({
       ...state,
-      databreachCardCount,
+      databreachFlagged,
       databreachCardStatus,
       databreachReviewed,
     });
   }
 
-  @Action(DashboardActions.DecrementDatabreachCardCount)
-  decrementDatabreachCardCount(ctx: StateContext<DashboardStateModel>) {
+  @Action(DashboardActions.UnflagDatabreachSnapshot)
+  unflagDatabreachSnapshot(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const databreachCardCount = (state.databreachCardCount || 0) <= 1 ? 0 : (state.databreachCardCount || 0) - 1;
-    const databreachCardStatus = databreachCardCount <= 0 ? 'safe' : 'danger';
-    const databreachReviewed = databreachCardCount <= 0 ? true : false;
+    const databreachFlagged = false;
+    const databreachCardStatus = 'safe';
+    const databreachReviewed = true;
     ctx.patchState({
       ...state,
-      databreachCardCount,
+      databreachFlagged,
       databreachCardStatus,
       databreachReviewed,
     });

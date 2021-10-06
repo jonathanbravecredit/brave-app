@@ -63,7 +63,7 @@ export class StateService {
         } else {
           this.api
             .UpdateAppData(input)
-            .then((res) => resolve(res))
+            .then((res) => resolve({ ...res, isLoaded: true }))
             .catch((err) => reject(err));
         }
       });
@@ -140,19 +140,6 @@ export class StateService {
   async incrementActionAsync(Action: any): Promise<void> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new Action()).subscribe(
-        (res) => resolve(res),
-        (err) => reject(err),
-      );
-    });
-  }
-
-  /**
-   * Helper to await the negative card count incrementation
-   * @returns
-   */
-  async incrementNegativeCardCount(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.store.dispatch(new DashboardActions.IncrementNegativeCardCount()).subscribe(
         (res) => resolve(res),
         (err) => reject(err),
       );

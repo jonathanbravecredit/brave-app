@@ -25,22 +25,32 @@ export class DecrementNegativeCardCount {
   constructor() {}
 }
 
-export class IncrementForbearanceCardCount {
-  static readonly type = '[Dashboard] IncrementForbearanceCardCount';
+export class FlagNegativeSnapshot {
+  static readonly type = '[Dashboard] FlagNegativeSnapshot';
   constructor() {}
 }
 
-export class DecrementForbearanceCardCount {
-  static readonly type = '[Dashboard] DecrementForbearanceCardCount';
+export class UnflagNegativeSnapshot {
+  static readonly type = '[Dashboard] UnflagNegativeSnapshot';
   constructor() {}
 }
 
-export class IncrementDatabreachCardCount {
-  static readonly type = '[Dashboard] IncrementDatabreachCardCount';
+export class FlagForbearanceSnapshot {
+  static readonly type = '[Dashboard] FlagForbearanceSnapshot';
   constructor() {}
 }
 
-export class DecrementDatabreachCardCount {
-  static readonly type = '[Dashboard] DecrementDatabreachCardCount';
+export class UnflagForbearanceSnapshot {
+  static readonly type = '[Dashboard] UnflagForbearanceSnapshot';
+  constructor() {}
+}
+
+export class FlagDatabreachSnapshot {
+  static readonly type = '[Dashboard] FlagDatabreachSnapshot';
+  constructor() {}
+}
+
+export class UnflagDatabreachSnapshot {
+  static readonly type = '[Dashboard] UnflagDatabreachSnapshot';
   constructor() {}
 }
