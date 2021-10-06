@@ -219,6 +219,7 @@ query GetAppData($id: ID!) {
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -238,6 +239,7 @@ query GetAppData($id: ID!) {
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -465,6 +467,7 @@ query ListAppDatas(
         }
       }
       dashboard {
+        isLoaded
         negativeFlagged
         negativeCardCount
         negativeCardStatus
@@ -484,6 +487,7 @@ query ListAppDatas(
       statusReasonDescription
       lastStatusModifiedOn
       nextStatusModifiedOn
+      isLoaded
       createdAt
       updatedAt
       owner

@@ -121,6 +121,7 @@ export type CreateAppDataInput = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
 };
 
 export type UserInput = {
@@ -302,6 +303,7 @@ export type ShowAccountsPreferenceInput = {
 };
 
 export type DashboardInput = {
+  isLoaded?: boolean | null;
   negativeFlagged?: boolean | null;
   negativeCardCount?: number | null;
   negativeCardStatus?: string | null;
@@ -323,6 +325,7 @@ export type ModelAppDataConditionInput = {
   statusReasonDescription?: ModelStringInput | null;
   lastStatusModifiedOn?: ModelStringInput | null;
   nextStatusModifiedOn?: ModelStringInput | null;
+  isLoaded?: ModelBooleanInput | null;
   and?: Array<ModelAppDataConditionInput | null> | null;
   or?: Array<ModelAppDataConditionInput | null> | null;
   not?: ModelAppDataConditionInput | null;
@@ -367,6 +370,13 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
 export type AppData = {
   __typename: "AppData";
   id?: string;
@@ -379,6 +389,7 @@ export type AppData = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
@@ -483,6 +494,7 @@ export type ShowAccountsPreference = {
 
 export type Dashboard = {
   __typename: "Dashboard";
+  isLoaded?: boolean | null;
   negativeFlagged?: boolean | null;
   negativeCardCount?: number | null;
   negativeCardStatus?: string | null;
@@ -509,6 +521,7 @@ export type UpdateAppDataInput = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
 };
 
 export type DeleteAppDataInput = {
@@ -522,6 +535,7 @@ export type ModelAppDataFilterInput = {
   statusReasonDescription?: ModelStringInput | null;
   lastStatusModifiedOn?: ModelStringInput | null;
   nextStatusModifiedOn?: ModelStringInput | null;
+  isLoaded?: ModelBooleanInput | null;
   and?: Array<ModelAppDataFilterInput | null> | null;
   or?: Array<ModelAppDataFilterInput | null> | null;
   not?: ModelAppDataFilterInput | null;
@@ -968,6 +982,7 @@ export type CreateAppDataMutation = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -987,6 +1002,7 @@ export type CreateAppDataMutation = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1239,6 +1255,7 @@ export type UpdateAppDataMutation = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -1258,6 +1275,7 @@ export type UpdateAppDataMutation = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1510,6 +1528,7 @@ export type DeleteAppDataMutation = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -1529,6 +1548,7 @@ export type DeleteAppDataMutation = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1781,6 +1801,7 @@ export type GetAppDataQuery = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -1800,6 +1821,7 @@ export type GetAppDataQuery = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2054,6 +2076,7 @@ export type ListAppDatasQuery = {
     };
     dashboard?: {
       __typename: "Dashboard";
+      isLoaded?: boolean | null;
       negativeFlagged?: boolean | null;
       negativeCardCount?: number | null;
       negativeCardStatus?: string | null;
@@ -2073,6 +2096,7 @@ export type ListAppDatasQuery = {
     statusReasonDescription?: string | null;
     lastStatusModifiedOn?: string | null;
     nextStatusModifiedOn?: string | null;
+    isLoaded?: boolean | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -2327,6 +2351,7 @@ export type OnCreateAppDataSubscription = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -2346,6 +2371,7 @@ export type OnCreateAppDataSubscription = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2598,6 +2624,7 @@ export type OnUpdateAppDataSubscription = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -2617,6 +2644,7 @@ export type OnUpdateAppDataSubscription = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2869,6 +2897,7 @@ export type OnDeleteAppDataSubscription = {
   };
   dashboard?: {
     __typename: "Dashboard";
+    isLoaded?: boolean | null;
     negativeFlagged?: boolean | null;
     negativeCardCount?: number | null;
     negativeCardStatus?: string | null;
@@ -2888,6 +2917,7 @@ export type OnDeleteAppDataSubscription = {
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -3337,6 +3367,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -3356,6 +3387,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3624,6 +3656,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -3643,6 +3676,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3911,6 +3945,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -3930,6 +3965,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -4208,6 +4244,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -4227,6 +4264,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -4495,6 +4533,7 @@ export class APIService {
             }
             dashboard {
               __typename
+              isLoaded
               negativeFlagged
               negativeCardCount
               negativeCardStatus
@@ -4514,6 +4553,7 @@ export class APIService {
             statusReasonDescription
             lastStatusModifiedOn
             nextStatusModifiedOn
+            isLoaded
             createdAt
             updatedAt
             owner
@@ -4787,6 +4827,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -4806,6 +4847,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -5071,6 +5113,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -5090,6 +5133,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -5355,6 +5399,7 @@ export class APIService {
           }
           dashboard {
             __typename
+            isLoaded
             negativeFlagged
             negativeCardCount
             negativeCardStatus
@@ -5374,6 +5419,7 @@ export class APIService {
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
