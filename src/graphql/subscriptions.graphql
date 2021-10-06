@@ -215,6 +215,21 @@ subscription OnCreateAppData($owner: String) {
         mortgages
       }
     }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
@@ -441,6 +456,21 @@ subscription OnUpdateAppData($owner: String) {
         mortgages
       }
     }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
@@ -666,6 +696,21 @@ subscription OnDeleteAppData($owner: String) {
         installmentLoans
         mortgages
       }
+    }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
     }
     status
     statusReason

@@ -115,6 +115,7 @@ export type CreateAppDataInput = {
   user: UserInput;
   agencies: AgenciesInput;
   preferences: PreferencesInput;
+  dashboard?: DashboardInput | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -300,6 +301,22 @@ export type ShowAccountsPreferenceInput = {
   mortgages?: boolean | null;
 };
 
+export type DashboardInput = {
+  negativeFlagged?: boolean | null;
+  negativeCardCount?: number | null;
+  negativeCardStatus?: string | null;
+  negativeReviewed?: boolean | null;
+  negativeStatus?: string | null;
+  forbearanceFlagged?: boolean | null;
+  forbearanceCardStatus?: string | null;
+  forbearanceReviewed?: boolean | null;
+  forbearanceStatus?: string | null;
+  databreachFlagged?: boolean | null;
+  databreachCardStatus?: string | null;
+  databreachReviewed?: boolean | null;
+  databreachStatus?: string | null;
+};
+
 export type ModelAppDataConditionInput = {
   status?: ModelStringInput | null;
   statusReason?: ModelStringInput | null;
@@ -356,6 +373,7 @@ export type AppData = {
   user?: User;
   agencies?: Agencies;
   preferences?: Preferences;
+  dashboard?: Dashboard;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -463,11 +481,29 @@ export type ShowAccountsPreference = {
   mortgages?: boolean | null;
 };
 
+export type Dashboard = {
+  __typename: "Dashboard";
+  negativeFlagged?: boolean | null;
+  negativeCardCount?: number | null;
+  negativeCardStatus?: string | null;
+  negativeReviewed?: boolean | null;
+  negativeStatus?: string | null;
+  forbearanceFlagged?: boolean | null;
+  forbearanceCardStatus?: string | null;
+  forbearanceReviewed?: boolean | null;
+  forbearanceStatus?: string | null;
+  databreachFlagged?: boolean | null;
+  databreachCardStatus?: string | null;
+  databreachReviewed?: boolean | null;
+  databreachStatus?: string | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
+  dashboard?: DashboardInput | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -930,6 +966,22 @@ export type CreateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1185,6 +1237,22 @@ export type UpdateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1440,6 +1508,22 @@ export type DeleteAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1695,6 +1779,22 @@ export type GetAppDataQuery = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1952,6 +2052,22 @@ export type ListAppDatasQuery = {
         mortgages?: boolean | null;
       } | null;
     };
+    dashboard?: {
+      __typename: "Dashboard";
+      negativeFlagged?: boolean | null;
+      negativeCardCount?: number | null;
+      negativeCardStatus?: string | null;
+      negativeReviewed?: boolean | null;
+      negativeStatus?: string | null;
+      forbearanceFlagged?: boolean | null;
+      forbearanceCardStatus?: string | null;
+      forbearanceReviewed?: boolean | null;
+      forbearanceStatus?: string | null;
+      databreachFlagged?: boolean | null;
+      databreachCardStatus?: string | null;
+      databreachReviewed?: boolean | null;
+      databreachStatus?: string | null;
+    } | null;
     status?: string | null;
     statusReason?: string | null;
     statusReasonDescription?: string | null;
@@ -2209,6 +2325,22 @@ export type OnCreateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -2464,6 +2596,22 @@ export type OnUpdateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -2719,6 +2867,22 @@ export type OnDeleteAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -3171,6 +3335,22 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
@@ -3442,6 +3622,22 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
@@ -3712,6 +3908,22 @@ export class APIService {
               installmentLoans
               mortgages
             }
+          }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
           }
           status
           statusReason
@@ -3994,6 +4206,22 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
@@ -4264,6 +4492,22 @@ export class APIService {
                 installmentLoans
                 mortgages
               }
+            }
+            dashboard {
+              __typename
+              negativeFlagged
+              negativeCardCount
+              negativeCardStatus
+              negativeReviewed
+              negativeStatus
+              forbearanceFlagged
+              forbearanceCardStatus
+              forbearanceReviewed
+              forbearanceStatus
+              databreachFlagged
+              databreachCardStatus
+              databreachReviewed
+              databreachStatus
             }
             status
             statusReason
@@ -4541,6 +4785,22 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
@@ -4809,6 +5069,22 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
@@ -5076,6 +5352,22 @@ export class APIService {
               installmentLoans
               mortgages
             }
+          }
+          dashboard {
+            __typename
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
           }
           status
           statusReason

@@ -376,6 +376,21 @@ mutation CreateAppData(
         mortgages
       }
     }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
@@ -605,6 +620,21 @@ mutation UpdateAppData(
         mortgages
       }
     }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
@@ -833,6 +863,21 @@ mutation DeleteAppData(
         installmentLoans
         mortgages
       }
+    }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
     }
     status
     statusReason
