@@ -13,6 +13,7 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  dashboard: Dashboard
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -55,6 +56,22 @@ type Ssn {
   lastfour: String!
   full: String
 }
+type Dashboard {
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!

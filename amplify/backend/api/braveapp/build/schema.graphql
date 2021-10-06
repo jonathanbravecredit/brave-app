@@ -16,6 +16,7 @@ type AppData @aws_iam @aws_cognito_user_pools {
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  dashboard: Dashboard
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -67,6 +68,22 @@ type Dob @aws_iam @aws_cognito_user_pools {
 type Ssn @aws_iam @aws_cognito_user_pools {
   lastfour: String!
   full: String
+}
+
+type Dashboard @aws_iam @aws_cognito_user_pools {
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
 }
 
 type Onboarding @aws_iam @aws_cognito_user_pools {
@@ -382,6 +399,22 @@ input ShowAccountsPreferenceInput {
   mortgages: Boolean
 }
 
+input DashboardInput {
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
 enum ModelSortDirection {
   ASC
   DESC
@@ -495,6 +528,7 @@ input CreateAppDataInput {
   user: UserInput!
   agencies: AgenciesInput!
   preferences: PreferencesInput!
+  dashboard: DashboardInput
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -507,6 +541,7 @@ input UpdateAppDataInput {
   user: UserInput
   agencies: AgenciesInput
   preferences: PreferencesInput
+  dashboard: DashboardInput
   status: String
   statusReason: String
   statusReasonDescription: String

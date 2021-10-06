@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 export interface IMergereportToDashboardOutput {
   negativecard: {
@@ -44,7 +45,12 @@ export class MergereportToDashboardPipe implements PipeTransform {
     } else {
       output = this.addForbearanceCard(output);
     }
-    output = this.addDatabreachCard(output); //TODO may need to add conditionals
+    if (this.haveDatabreaches(report)) {
+      const databreaches = this.tu.queries.report.listDataBreaches(report) as IBreachCard[];
+      output = this.addDatabreachCard(output, databreaches); //TODO may need to add conditionals
+    } else {
+      output = this.addDatabreachCard(output, []);
+    }
     return output;
   }
 
@@ -68,6 +74,10 @@ export class MergereportToDashboardPipe implements PipeTransform {
 
   private haveForbearanceAccounts(tradelines: ITradeLinePartition[]): boolean {
     return tradelines.filter((item) => this.tu.queries.report.isForbearanceAccount(item)).length > 0;
+  }
+
+  private haveDatabreaches(report: IMergeReport): boolean {
+    return this.tu.queries.report.listDataBreaches(report)?.length > 0;
   }
 
   /**
@@ -109,7 +119,11 @@ export class MergereportToDashboardPipe implements PipeTransform {
    * @param output
    * @returns
    */
-  private addDatabreachCard(output: IMergereportToDashboardOutput): IMergereportToDashboardOutput {
+  private addDatabreachCard(
+    output: IMergereportToDashboardOutput,
+    breaches: IBreachCard[],
+  ): IMergereportToDashboardOutput {
+    const status = breaches.length > 0 ? 'danger' : 'safe'; // TODO need a more sophisticated way to determine this
     return {
       ...output,
       databreachcard: {

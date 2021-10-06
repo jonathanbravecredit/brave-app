@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IBaseModalRegularConfig } from '@shared/components/modals/base-modal-regular/base-modal-regular.component';
 import { IMergeReport } from '@shared/interfaces';
-import { IMergereportToDashboardOutput } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
+import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 
 @Component({
@@ -10,7 +9,7 @@ import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/da
 })
 export class DashboardEnrolledPureComponent implements OnInit {
   @Input() report: IMergeReport | undefined;
-  @Input() cards: IMergereportToDashboardOutput | undefined;
+  @Input() cards: DashboardStateModel | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();

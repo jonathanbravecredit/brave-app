@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { Observable } from 'rxjs';
+import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
+import * as DashboardActions from '@store/dashboard/dashboard.actions';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -13,12 +15,18 @@ export class DashboardEnrolledComponent implements OnInit {
   welcomeMsg: string | undefined;
   lastUpdated: number | string | Date | undefined;
   report: IMergeReport | undefined;
+  snapshots: DashboardStateModel | undefined;
 
-  constructor(private router: Router, private route: ActivatedRoute, private dashboardService: DashboardService) {
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dashboardService: DashboardService,
+  ) {
     this.route.data.subscribe((resp: any) => {
-      this.report = resp.report;
+      this.report = resp.dashboard.report;
+      this.snapshots = resp.dashboard.snapshots;
     });
-    this.dashboardService.tuReport$.subscribe((report) => (this.report = report));
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
     if (fullfilled) {
@@ -31,18 +39,36 @@ export class DashboardEnrolledComponent implements OnInit {
   }
 
   onNegativeItemsClicked() {
+    this.store.dispatch(
+      new DashboardActions.Edit({
+        negativeReviewed: true,
+        negativeStatus: DashboardStatus.Stale,
+      }),
+    );
     this.router.navigate(['../report/snapshot/negative'], { relativeTo: this.route });
   }
 
   onForbearanceItemsClicked() {
+    this.store.dispatch(
+      new DashboardActions.Edit({
+        forbearanceReviewed: true,
+        forbearanceStatus: DashboardStatus.Stale,
+      }),
+    );
     this.router.navigate(['../report/snapshot/forbearance'], { relativeTo: this.route });
+  }
+
+  onDatabreachItemsClicked() {
+    this.store.dispatch(
+      new DashboardActions.Edit({
+        databreachReviewed: true,
+        databreachStatus: DashboardStatus.Stale,
+      }),
+    );
+    this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
   }
 
   onFullReportClicked() {
     this.router.navigate(['../report'], { relativeTo: this.route });
-  }
-
-  onDatabreachItemsClicked() {
-    this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
   }
 }

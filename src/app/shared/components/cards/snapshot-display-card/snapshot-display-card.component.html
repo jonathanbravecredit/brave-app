@@ -5,7 +5,7 @@
 ></div>
 
 <div
-  class="relative flex break-words w-full py-2 shadow-sm rounded-lg border border-blueGray-300 min-h-14 max-h-14 mt-3"
+  class="relative flex break-words w-full py-2 shadow rounded-sm border border-blueGray-300 min-h-14 max-h-14 mt-3"
   [ngClass]="{ 'opacity-40': preview }"
 >
   <!-- tag div: Display of current type of snapshot -->
@@ -14,7 +14,9 @@
   </div>
   <!-- left column  section 1: Display of current snapshot status indicator-->
   <div class="flex items-center ml-3 mr-6">
-    <div class="rounded-full border-none w-4 h-4" [ngClass]="status | snapshotStatus: 'background'"></div>
+    <div style="width: 0.1875rem" class="h-full rounded border-none" [ngClass]="status | snapshotStatus: 'background'">
+      &nbsp;
+    </div>
   </div>
   <div class="flex flex-col mr-auto justify-center">
     <!--  center column section 2: Display of snapshot card information -->
