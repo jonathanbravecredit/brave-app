@@ -5,6 +5,7 @@ import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
+import { AppDataStateModel } from '@store/app-data/app-data.model';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -39,32 +40,26 @@ export class DashboardEnrolledComponent implements OnInit {
   }
 
   onNegativeItemsClicked() {
-    this.store.dispatch(
-      new DashboardActions.Edit({
-        negativeReviewed: true,
-        negativeStatus: DashboardStatus.Stale,
-      }),
-    );
+    this.dashboardService.syncDashboardStateToDB({
+      negativeReviewed: true,
+      negativeStatus: DashboardStatus.Stale,
+    });
     this.router.navigate(['../report/snapshot/negative'], { relativeTo: this.route });
   }
 
   onForbearanceItemsClicked() {
-    this.store.dispatch(
-      new DashboardActions.Edit({
-        forbearanceReviewed: true,
-        forbearanceStatus: DashboardStatus.Stale,
-      }),
-    );
+    this.dashboardService.syncDashboardStateToDB({
+      forbearanceReviewed: true,
+      forbearanceStatus: DashboardStatus.Stale,
+    });
     this.router.navigate(['../report/snapshot/forbearance'], { relativeTo: this.route });
   }
 
   onDatabreachItemsClicked() {
-    this.store.dispatch(
-      new DashboardActions.Edit({
-        databreachReviewed: true,
-        databreachStatus: DashboardStatus.Stale,
-      }),
-    );
+    this.dashboardService.syncDashboardStateToDB({
+      databreachReviewed: true,
+      databreachStatus: DashboardStatus.Stale,
+    });
     this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
   }
 

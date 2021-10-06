@@ -216,6 +216,7 @@ subscription OnCreateAppData($owner: String) {
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -235,6 +236,7 @@ subscription OnCreateAppData($owner: String) {
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -457,6 +459,7 @@ subscription OnUpdateAppData($owner: String) {
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -476,6 +479,7 @@ subscription OnUpdateAppData($owner: String) {
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -698,6 +702,7 @@ subscription OnDeleteAppData($owner: String) {
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -717,6 +722,7 @@ subscription OnDeleteAppData($owner: String) {
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner

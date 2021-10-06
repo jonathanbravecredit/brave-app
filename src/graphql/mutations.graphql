@@ -377,6 +377,7 @@ mutation CreateAppData(
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -396,6 +397,7 @@ mutation CreateAppData(
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -621,6 +623,7 @@ mutation UpdateAppData(
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -640,6 +643,7 @@ mutation UpdateAppData(
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -865,6 +869,7 @@ mutation DeleteAppData(
       }
     }
     dashboard {
+      isLoaded
       negativeFlagged
       negativeCardCount
       negativeCardStatus
@@ -884,6 +889,7 @@ mutation DeleteAppData(
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
