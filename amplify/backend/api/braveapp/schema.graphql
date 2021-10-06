@@ -19,6 +19,7 @@ type AppData
   statusReasonDescription: String
   lastStatusModifiedOn: String
   nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 type User {
   id: ID!
@@ -57,6 +58,7 @@ type Ssn {
   full: String
 }
 type Dashboard {
+  isLoaded: Boolean
   negativeFlagged: Boolean
   negativeCardCount: Int
   negativeCardStatus: String
