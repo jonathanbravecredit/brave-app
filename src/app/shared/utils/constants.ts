@@ -25,6 +25,7 @@ export enum DataBreaches {
 
 export const DateBreachCard: Record<any, IBreachCard> = {
   [DataBreaches.Condition1]: {
+    reviewed: false,
     subscriber: 'California DMV',
     reason: 'Based on your personal information',
     paragraphs: [
@@ -32,6 +33,7 @@ export const DateBreachCard: Record<any, IBreachCard> = {
     ],
   },
   [DataBreaches.Condition2]: {
+    reviewed: false,
     subscriber: 'University of California',
     reason: 'Based on your state of residence',
     paragraphs: [
@@ -40,6 +42,7 @@ export const DateBreachCard: Record<any, IBreachCard> = {
     ],
   },
   [DataBreaches.Condition3]: {
+    reviewed: false,
     subscriber: 'University of Colorado',
     reason: 'Based on your state of residence',
     paragraphs: [
@@ -48,6 +51,7 @@ export const DateBreachCard: Record<any, IBreachCard> = {
     ],
   },
   [DataBreaches.Condition4]: {
+    reviewed: false,
     subscriber: 'Kroger',
     reason: 'Based on your state of residence',
     paragraphs: [
@@ -55,6 +59,7 @@ export const DateBreachCard: Record<any, IBreachCard> = {
     ],
   },
   [DataBreaches.Condition5]: {
+    reviewed: false,
     subscriber: 'T-Mobile',
     reason: 'Based on your inquiries',
     paragraphs: [
@@ -62,6 +67,7 @@ export const DateBreachCard: Record<any, IBreachCard> = {
     ],
   },
   [DataBreaches.Condition6]: {
+    reviewed: false,
     subscriber: 'State of Washington',
     reason: 'Based on your state of residence',
     paragraphs: [
@@ -69,6 +75,7 @@ export const DateBreachCard: Record<any, IBreachCard> = {
     ],
   },
   [DataBreaches.Condition7]: {
+    reviewed: false,
     subscriber: 'Experian',
     reason: 'Based on your personal information',
     paragraphs: [

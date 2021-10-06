@@ -6,11 +6,13 @@ import { CreditReportGroups } from '@shared/constants/credit-report';
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 export interface ICreditReportTradelinesCardGroup {
   title: string;
   group: CreditReportGroups;
   cards: ICreditReportCardInputs[];
+  tradelines: ITradeLinePartition[];
   hidden: boolean;
 }
 
@@ -28,6 +30,7 @@ export class CreditReportPureComponent implements OnInit {
   @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Output() viewPublicItemDetailClick: EventEmitter<IPublicPartition> = new EventEmitter();
   @Output() viewPersonalItemDetailClick: EventEmitter<IPersonalItemsDetailsConfig> = new EventEmitter();
+  tu = TransunionUtil;
   constructor(public featureFlags: FeatureFlagsService) {}
 
   ngOnInit(): void {}
