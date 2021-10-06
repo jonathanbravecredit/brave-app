@@ -1,5 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
+import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
@@ -7,6 +9,8 @@ import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import * as DashboardActions from '@store/dashboard/dashboard.actions';
+import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -17,6 +21,8 @@ export class DashboardService implements OnDestroy {
 
   constructor(
     private statesvc: StateService,
+    private api: APIService,
+    private store: Store,
     private reportService: CreditreportService,
     private transunion: TransunionService,
   ) {
@@ -57,5 +63,17 @@ export class DashboardService implements OnDestroy {
         return of(isFreezeEnabled ? true : false);
       }),
     );
+  }
+
+  syncDashboardStateToDB(payload: Partial<DashboardStateModel>): void {
+    this.store.dispatch(new DashboardActions.Edit(payload)).subscribe((state: { appData: AppDataStateModel }) => {
+      const input = { ...state.appData } as UpdateAppDataInput;
+      if (!input.id) {
+        console.log('failed to update state');
+        return;
+      } else {
+        this.api.UpdateAppData(input);
+      }
+    });
   }
 }

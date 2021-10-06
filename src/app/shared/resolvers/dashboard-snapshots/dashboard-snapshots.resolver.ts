@@ -9,6 +9,7 @@ import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardSelectors } from '@store/dashboard/dashboard.selectors';
 import { AgenciesSelectors } from '@store/agencies/agencies.selectors';
 import { StateService } from '@shared/services/state/state.service';
+import { AppDataStateModel } from '@store/app-data';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +27,11 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
       return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     } else {
       this.transform(report);
-      this.store.dispatch(new DashboardActions.Edit({ isLoaded: true })).subscribe((data) => {
-        this.statesvc.updateStateDBSync(data);
-      });
+      this.store
+        .dispatch(new DashboardActions.Edit({ isLoaded: true }))
+        .subscribe((data: { appData: AppDataStateModel }) => {
+          this.statesvc.updateStateDBSync(data.appData);
+        });
       return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     }
   }
