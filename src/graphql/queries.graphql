@@ -218,6 +218,21 @@ query GetAppData($id: ID!) {
         mortgages
       }
     }
+    dashboard {
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
@@ -448,6 +463,21 @@ query ListAppDatas(
           installmentLoans
           mortgages
         }
+      }
+      dashboard {
+        negativeFlagged
+        negativeCardCount
+        negativeCardStatus
+        negativeReviewed
+        negativeStatus
+        forbearanceFlagged
+        forbearanceCardStatus
+        forbearanceReviewed
+        forbearanceStatus
+        databreachFlagged
+        databreachCardStatus
+        databreachReviewed
+        databreachStatus
       }
       status
       statusReason

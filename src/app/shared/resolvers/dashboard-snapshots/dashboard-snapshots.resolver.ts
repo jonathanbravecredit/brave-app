@@ -8,12 +8,13 @@ import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardSelectors } from '@store/dashboard/dashboard.selectors';
 import { AgenciesSelectors } from '@store/agencies/agencies.selectors';
+import { StateService } from '@shared/services/state/state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel | null> {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private statesvc: StateService) {}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<DashboardStateModel | null> {
     const transunion = await this.store.selectOnce(AgenciesSelectors.getTransunion).toPromise();
@@ -21,16 +22,18 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
     const report = BraveUtil.parsers.parseTransunionMergeReport(transunion);
     if (!Object.keys(transunion).length || !Object.keys(report).length) {
       return new Promise((resolve) => resolve(null));
-    } else if (dashboard.isLoaded) {
+    } else if (dashboard?.isLoaded) {
       return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     } else {
-      this.transform(report, dashboard);
-      this.store.dispatch(new DashboardActions.Edit({ isLoaded: true }));
+      this.transform(report);
+      this.store.dispatch(new DashboardActions.Edit({ isLoaded: true })).subscribe((data) => {
+        this.statesvc.updateStateDBSync(data);
+      });
       return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     }
   }
 
-  private transform(report: IMergeReport | undefined, dashboard: DashboardStateModel): void {
+  private transform(report: IMergeReport | undefined): void {
     if (report === undefined) return;
     let tradelines = report?.TrueLinkCreditReportType?.TradeLinePartition;
     tradelines = tradelines instanceof Array ? tradelines : ([tradelines] as ITradeLinePartition[]);
