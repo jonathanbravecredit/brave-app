@@ -5,6 +5,10 @@
   }} flex bg-transparent font-sans text-sm text-indigo-800 font-bold text-left hover:cursor-pointer focus:outline-none"
   (click)="open = !open; open$.next(open); viewDetailClick.emit()"
 >
+  <ng-container *ngIf="horizontal">
+    <span *ngIf="open" class="material-icons" style="font-size: 20px; transform: rotate(270deg)">expand_less</span>
+  </ng-container>
+
   <span class="flex items-center mr-2">
     <p *ngIf="!open"><ng-content></ng-content></p>
     <p *ngIf="open">Close</p>
@@ -12,7 +16,6 @@
 
   <ng-container *ngIf="horizontal">
     <span *ngIf="!open" class="material-icons" style="font-size: 20px; transform: rotate(90deg)">expand_less</span>
-    <span *ngIf="open" class="material-icons" style="font-size: 20px; transform: rotate(270deg)">expand_less</span>
   </ng-container>
 
   <ng-container *ngIf="!horizontal">
