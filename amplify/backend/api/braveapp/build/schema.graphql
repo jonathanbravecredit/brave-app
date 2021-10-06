@@ -22,6 +22,7 @@ type AppData @aws_iam @aws_cognito_user_pools {
   statusReasonDescription: String
   lastStatusModifiedOn: String
   nextStatusModifiedOn: String
+  isLoaded: Boolean
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
@@ -71,6 +72,7 @@ type Ssn @aws_iam @aws_cognito_user_pools {
 }
 
 type Dashboard @aws_iam @aws_cognito_user_pools {
+  isLoaded: Boolean
   negativeFlagged: Boolean
   negativeCardCount: Int
   negativeCardStatus: String
@@ -400,6 +402,7 @@ input ShowAccountsPreferenceInput {
 }
 
 input DashboardInput {
+  isLoaded: Boolean
   negativeFlagged: Boolean
   negativeCardCount: Int
   negativeCardStatus: String
@@ -505,6 +508,7 @@ input ModelAppDataFilterInput {
   statusReasonDescription: ModelStringInput
   lastStatusModifiedOn: ModelStringInput
   nextStatusModifiedOn: ModelStringInput
+  isLoaded: ModelBooleanInput
   and: [ModelAppDataFilterInput]
   or: [ModelAppDataFilterInput]
   not: ModelAppDataFilterInput
@@ -534,6 +538,7 @@ input CreateAppDataInput {
   statusReasonDescription: String
   lastStatusModifiedOn: String
   nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 
 input UpdateAppDataInput {
@@ -547,6 +552,7 @@ input UpdateAppDataInput {
   statusReasonDescription: String
   lastStatusModifiedOn: String
   nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 
 input DeleteAppDataInput {
@@ -559,6 +565,7 @@ input ModelAppDataConditionInput {
   statusReasonDescription: ModelStringInput
   lastStatusModifiedOn: ModelStringInput
   nextStatusModifiedOn: ModelStringInput
+  isLoaded: ModelBooleanInput
   and: [ModelAppDataConditionInput]
   or: [ModelAppDataConditionInput]
   not: ModelAppDataConditionInput
