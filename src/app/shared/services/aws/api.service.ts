@@ -115,11 +115,13 @@ export type CreateAppDataInput = {
   user: UserInput;
   agencies: AgenciesInput;
   preferences: PreferencesInput;
+  dashboard?: DashboardInput | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
 };
 
 export type UserInput = {
@@ -300,12 +302,30 @@ export type ShowAccountsPreferenceInput = {
   mortgages?: boolean | null;
 };
 
+export type DashboardInput = {
+  isLoaded?: boolean | null;
+  negativeFlagged?: boolean | null;
+  negativeCardCount?: number | null;
+  negativeCardStatus?: string | null;
+  negativeReviewed?: boolean | null;
+  negativeStatus?: string | null;
+  forbearanceFlagged?: boolean | null;
+  forbearanceCardStatus?: string | null;
+  forbearanceReviewed?: boolean | null;
+  forbearanceStatus?: string | null;
+  databreachFlagged?: boolean | null;
+  databreachCardStatus?: string | null;
+  databreachReviewed?: boolean | null;
+  databreachStatus?: string | null;
+};
+
 export type ModelAppDataConditionInput = {
   status?: ModelStringInput | null;
   statusReason?: ModelStringInput | null;
   statusReasonDescription?: ModelStringInput | null;
   lastStatusModifiedOn?: ModelStringInput | null;
   nextStatusModifiedOn?: ModelStringInput | null;
+  isLoaded?: ModelBooleanInput | null;
   and?: Array<ModelAppDataConditionInput | null> | null;
   or?: Array<ModelAppDataConditionInput | null> | null;
   not?: ModelAppDataConditionInput | null;
@@ -350,17 +370,26 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
 export type AppData = {
   __typename: "AppData";
   id?: string;
   user?: User;
   agencies?: Agencies;
   preferences?: Preferences;
+  dashboard?: Dashboard;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
@@ -463,16 +492,36 @@ export type ShowAccountsPreference = {
   mortgages?: boolean | null;
 };
 
+export type Dashboard = {
+  __typename: "Dashboard";
+  isLoaded?: boolean | null;
+  negativeFlagged?: boolean | null;
+  negativeCardCount?: number | null;
+  negativeCardStatus?: string | null;
+  negativeReviewed?: boolean | null;
+  negativeStatus?: string | null;
+  forbearanceFlagged?: boolean | null;
+  forbearanceCardStatus?: string | null;
+  forbearanceReviewed?: boolean | null;
+  forbearanceStatus?: string | null;
+  databreachFlagged?: boolean | null;
+  databreachCardStatus?: string | null;
+  databreachReviewed?: boolean | null;
+  databreachStatus?: string | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
+  dashboard?: DashboardInput | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
 };
 
 export type DeleteAppDataInput = {
@@ -486,6 +535,7 @@ export type ModelAppDataFilterInput = {
   statusReasonDescription?: ModelStringInput | null;
   lastStatusModifiedOn?: ModelStringInput | null;
   nextStatusModifiedOn?: ModelStringInput | null;
+  isLoaded?: ModelBooleanInput | null;
   and?: Array<ModelAppDataFilterInput | null> | null;
   or?: Array<ModelAppDataFilterInput | null> | null;
   not?: ModelAppDataFilterInput | null;
@@ -930,11 +980,29 @@ export type CreateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1185,11 +1253,29 @@ export type UpdateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1440,11 +1526,29 @@ export type DeleteAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1695,11 +1799,29 @@ export type GetAppDataQuery = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1952,11 +2074,29 @@ export type ListAppDatasQuery = {
         mortgages?: boolean | null;
       } | null;
     };
+    dashboard?: {
+      __typename: "Dashboard";
+      isLoaded?: boolean | null;
+      negativeFlagged?: boolean | null;
+      negativeCardCount?: number | null;
+      negativeCardStatus?: string | null;
+      negativeReviewed?: boolean | null;
+      negativeStatus?: string | null;
+      forbearanceFlagged?: boolean | null;
+      forbearanceCardStatus?: string | null;
+      forbearanceReviewed?: boolean | null;
+      forbearanceStatus?: string | null;
+      databreachFlagged?: boolean | null;
+      databreachCardStatus?: string | null;
+      databreachReviewed?: boolean | null;
+      databreachStatus?: string | null;
+    } | null;
     status?: string | null;
     statusReason?: string | null;
     statusReasonDescription?: string | null;
     lastStatusModifiedOn?: string | null;
     nextStatusModifiedOn?: string | null;
+    isLoaded?: boolean | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -2209,11 +2349,29 @@ export type OnCreateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2464,11 +2622,29 @@ export type OnUpdateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2719,11 +2895,29 @@ export type OnDeleteAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -3171,11 +3365,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3442,11 +3654,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3713,11 +3943,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3994,11 +4242,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -4265,11 +4531,29 @@ export class APIService {
                 mortgages
               }
             }
+            dashboard {
+              __typename
+              isLoaded
+              negativeFlagged
+              negativeCardCount
+              negativeCardStatus
+              negativeReviewed
+              negativeStatus
+              forbearanceFlagged
+              forbearanceCardStatus
+              forbearanceReviewed
+              forbearanceStatus
+              databreachFlagged
+              databreachCardStatus
+              databreachReviewed
+              databreachStatus
+            }
             status
             statusReason
             statusReasonDescription
             lastStatusModifiedOn
             nextStatusModifiedOn
+            isLoaded
             createdAt
             updatedAt
             owner
@@ -4541,11 +4825,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -4809,11 +5111,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -5077,11 +5397,29 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
           status
           statusReason
           statusReasonDescription
           lastStatusModifiedOn
           nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner

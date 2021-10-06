@@ -1,7 +1,11 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
 <div class="my-4 flex justify-center">
-  <brave-credit-report-graphic-no-graph [currentValue]="report | parseRiskScore"></brave-credit-report-graphic-no-graph>
+  <a [routerLink]="['/dashboard/report']">
+    <brave-credit-report-graphic-no-graph
+      [currentValue]="report | parseRiskScore"
+    ></brave-credit-report-graphic-no-graph>
+  </a>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
@@ -13,8 +17,8 @@
       label="update"
       [title]="content.negativeAccountsTitle"
       typeOfSnapshot="time"
-      [value]="cards.negativecard?.count || 0"
-      [status]="cards.negativecard?.status || 'safe'"
+      [value]="cards.negativeCardCount || 0"
+      [status]="cards.negativeReviewed ? 'safe' : cards.negativeCardStatus || 'safe'"
       (click)="negativeItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -22,7 +26,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.forbearanceAccountsTitle"
-      [status]="cards.forbearancecard?.status || 'safe'"
+      [status]="cards.forbearanceReviewed ? 'safe' : cards.forbearanceCardStatus || 'safe'"
       (click)="forbearanceItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -30,7 +34,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.databreachAccountsTitle"
-      [status]="cards.databreachcard?.status || 'safe'"
+      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
       (click)="databreachItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>

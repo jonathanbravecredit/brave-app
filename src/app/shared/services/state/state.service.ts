@@ -7,13 +7,17 @@ import {
   TUStatusRefInput,
   TransunionInput,
 } from '@shared/services/aws/api.service';
-import { AgenciesStateModel } from '@store/agencies';
+import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import * as UserActions from '@store/user/user.actions';
 import * as AgenciesActions from '@store/agencies/agencies.actions';
 import * as OnboardingActions from '@store/onboarding/onboarding.actions';
+import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BraveUtil } from '@shared/utils/brave/brave';
+import { map } from 'rxjs/operators';
+import { IMergeReport } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +63,7 @@ export class StateService {
         } else {
           this.api
             .UpdateAppData(input)
-            .then((res) => resolve(res))
+            .then((res) => resolve({ ...res, isLoaded: true }))
             .catch((err) => reject(err));
         }
       });
@@ -126,9 +130,28 @@ export class StateService {
 
   /*=====================================*/
   /*
+  /*               DASHBOARD
+  /*
+  /*=====================================*/
+  /**
+   * (Promise) Generic helper to await an increment action
+   * @returns
+   */
+  async incrementActionAsync(Action: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new Action()).subscribe(
+        (res) => resolve(res),
+        (err) => reject(err),
+      );
+    });
+  }
+
+  /*=====================================*/
+  /*
   /*                AGENCY
   /*
   /*=====================================*/
+
   /**
    * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
    *   - Does not store in the database as there is no need to.
@@ -173,6 +196,17 @@ export class StateService {
   /*              TRANSUNION
   /*
   /*=====================================*/
+  /**
+   * Helper to parse the transunion report from the agencies state
+   * @returns
+   */
+  async getTransunion(): Promise<IMergeReport> {
+    return this.store
+      .selectOnce(AgenciesSelectors.getAgencies)
+      .pipe(map((agencies) => BraveUtil.parsers.parseTransunionMergeReport(agencies?.transunion)))
+      .toPromise();
+  }
+
   /**
    * (Promise) Update Transunion based on the partial
    * @param param0

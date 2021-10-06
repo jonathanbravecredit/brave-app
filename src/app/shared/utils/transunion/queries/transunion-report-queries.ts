@@ -10,10 +10,11 @@ import {
   ISubscriber,
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
-import { DataBreaches, FORBEARANCE_TYPE } from '@shared/utils/constants';
+import { DataBreaches, DateBreachCard, FORBEARANCE_TYPE } from '@shared/utils/constants';
 import { INDUSTRY_CODES } from '@shared/utils/transunion/constants';
 import { DataBreachConditions } from '@shared/utils/transunion/queries/utils';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
+import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 export class TransunionReportQueries extends TransunionBase {
   constructor() {
@@ -287,6 +288,22 @@ export class TransunionReportQueries extends TransunionBase {
         return DataBreaches.None;
         break;
     }
+  }
+
+  /**
+   * Go through the data breaches identified and determine if the credit report matches any condtions
+   * @param report
+   * @returns
+   */
+  static listDataBreaches(report: IMergeReport): (IBreachCard | any)[] | [] {
+    const breachCards = Object.values(DataBreaches)
+      .filter((item) => {
+        return this.isDataBreachCondition(report, item) !== DataBreaches.None;
+      })
+      .map((key) => {
+        return DateBreachCard[key];
+      });
+    return breachCards;
   }
 
   /*=====================================*/
