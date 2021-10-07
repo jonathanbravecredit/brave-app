@@ -61,3 +61,8 @@ export class AddDatabreachCards {
   static readonly type = '[Dashboard] AddDatabreachCards';
   constructor(public payload: IBreachCard[]) {}
 }
+
+export class MarkDatabreachAsReviewed {
+  static readonly type = '[Dashboard] MarkDatabreachAsReviewed';
+  constructor(public payload: number) {}
+}

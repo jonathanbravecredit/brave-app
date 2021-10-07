@@ -79,7 +79,7 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
     const breaches = tu.queries.report.listDataBreaches(report);
     if (breaches.length > 0) {
       this.store.dispatch(new DashboardActions.AddDatabreachCards(breaches));
-      this.store.dispatch(new DashboardActions.FlagDatabreachSnapshot());
+      // this.store.dispatch(new DashboardActions.FlagDatabreachSnapshot());
     }
   }
 }

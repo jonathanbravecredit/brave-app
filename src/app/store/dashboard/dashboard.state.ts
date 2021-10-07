@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
+import { patch, updateItem } from '@ngxs/store/operators';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
+import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 @State<DashboardStateModel>({
   name: 'dashboard',
@@ -143,9 +146,39 @@ export class DashboardState {
   addDatabreachCards(ctx: StateContext<DashboardStateModel>, { payload }: DashboardActions.AddDatabreachCards) {
     const state = ctx.getState();
     const databreachCards = state.databreachCards ? [...state.databreachCards, ...payload] : [...payload];
+    const databreachFlagged = true;
+    const databreachCardStatus = 'danger';
+    const databreachReviewed = !(databreachCards.filter((c) => !c.reviewed).length > 0);
     ctx.patchState({
       ...state,
       databreachCards,
+      databreachFlagged,
+      databreachCardStatus,
+      databreachReviewed,
+    });
+  }
+
+  @Action(DashboardActions.MarkDatabreachAsReviewed)
+  markDatabreachAsReviewed(
+    ctx: StateContext<DashboardStateModel>,
+    { payload }: DashboardActions.MarkDatabreachAsReviewed,
+  ) {
+    ctx.setState(
+      patch({
+        databreachCards: updateItem<IBreachCard>(payload, (card) => {
+          return {
+            ...card,
+            reviewed: true,
+          };
+        }),
+      }),
+    );
+    const state = ctx.getState();
+    const databreachCards = state.databreachCards;
+    const databreachReviewed = !(databreachCards?.filter((c) => !c.reviewed)?.length || 0 > 0);
+    ctx.patchState({
+      ...state,
+      databreachReviewed,
     });
   }
 }

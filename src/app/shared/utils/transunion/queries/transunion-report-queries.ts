@@ -307,7 +307,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param report
    * @returns
    */
-  static listDataBreaches(report: IMergeReport): (IBreachCard | any)[] | [] {
+  static listDataBreaches(report: IMergeReport): IBreachCard[] {
     const breachCards = Object.values(DataBreaches)
       .filter((item) => {
         return this.isDataBreachCondition(report, item) !== DataBreaches.None;

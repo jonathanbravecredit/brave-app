@@ -1,6 +1,6 @@
 <div class="p-2">
   <ng-container *ngIf="breaches; else noBreaches">
-    <brave-data-breaches-pure [breachCards]="breaches"> </brave-data-breaches-pure>
+    <brave-data-breaches-pure [breachCards]="breaches" (cardClick)="onCardClick($event)"> </brave-data-breaches-pure>
   </ng-container>
 </div>
 

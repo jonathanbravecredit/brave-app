@@ -227,6 +227,13 @@ subscription OnCreateAppData($owner: String) {
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus
@@ -470,6 +477,13 @@ subscription OnUpdateAppData($owner: String) {
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus
@@ -713,6 +727,13 @@ subscription OnDeleteAppData($owner: String) {
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus
