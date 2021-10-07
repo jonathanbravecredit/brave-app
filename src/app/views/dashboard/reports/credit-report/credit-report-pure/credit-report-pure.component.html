@@ -8,7 +8,7 @@
   <h6 class="text-lg">{{ report.title }}</h6>
   <div>
     <input type="checkbox" name="dont-show-hide" [checked]="report.hidden" (change)="report.hidden = !report.hidden" />
-    <label for="dont-show-hide" class="ml-2 mr-auto">Only Show me delinquent accounts</label>
+    <label for="dont-show-hide" class="ml-2 mr-auto">Only show me delinquent accounts</label>
   </div>
   <div *ngFor="let card of report.cards; last as isLast">
     <div *ngIf="report.hidden && card.positive; else showCard"></div>
