@@ -92,6 +92,7 @@ type Dashboard @aws_iam @aws_cognito_user_pools {
 type DataBreachCard @aws_iam @aws_cognito_user_pools {
   reason: String
   reviewed: Boolean
+  condition: String
   subscriber: String
   paragraphs: String
 }
@@ -430,6 +431,7 @@ input DashboardInput {
 input DataBreachCardInput {
   reason: String
   reviewed: Boolean
+  condition: String
   subscriber: String
   paragraphs: String
 }
