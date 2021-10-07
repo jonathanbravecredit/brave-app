@@ -21,7 +21,7 @@ export class DataBreachListComponent implements OnInit {
       if (c.reviewed) this.reviewed.push(c);
       if (!c.reviewed) this.unreviewed.push(c);
     });
-    this.isEmpty = this.unreviewed.length > 0;
+    this.isEmpty = this.unreviewed.length === 0;
   }
 
   hideCard(idx: number): void {
@@ -32,7 +32,7 @@ export class DataBreachListComponent implements OnInit {
     } else {
       this.unreviewed.splice(idx, 1);
       this.unreviewed = [...this.unreviewed];
-      this.isEmpty = this.unreviewed.length > 0;
+      this.isEmpty = this.unreviewed.length === 0;
     }
   }
 

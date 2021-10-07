@@ -167,7 +167,6 @@ export class SyncService implements OnDestroy {
       if (input === undefined) return;
       const data = await this.api.CreateAppData(input);
       const clean = this.cleanBackendData(data);
-      console.log('init data ==> ', data);
 
       return await new Promise((resolve, reject) => {
         this.store.dispatch(new AppDataActions.Add(clean)).subscribe((appData) => {
