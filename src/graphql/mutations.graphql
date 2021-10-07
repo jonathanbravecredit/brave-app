@@ -388,6 +388,13 @@ mutation CreateAppData(
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus
@@ -634,6 +641,13 @@ mutation UpdateAppData(
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus
@@ -880,6 +894,13 @@ mutation DeleteAppData(
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus

@@ -230,6 +230,13 @@ query GetAppData($id: ID!) {
       forbearanceReviewed
       forbearanceStatus
       databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
       databreachCardStatus
       databreachReviewed
       databreachStatus
@@ -478,6 +485,13 @@ query ListAppDatas(
         forbearanceReviewed
         forbearanceStatus
         databreachFlagged
+        databreachCards {
+          reason
+          reviewed
+          condition
+          subscriber
+          paragraphs
+        }
         databreachCardStatus
         databreachReviewed
         databreachStatus

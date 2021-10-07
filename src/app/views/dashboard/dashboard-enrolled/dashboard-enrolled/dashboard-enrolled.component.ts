@@ -57,9 +57,8 @@ export class DashboardEnrolledComponent implements OnInit {
 
   onDatabreachItemsClicked() {
     this.dashboardService.syncDashboardStateToDB({
-      databreachReviewed: true,
       databreachStatus: DashboardStatus.Stale,
-    });
+    }); // not updating reviewed bc user needs to review all cards
     this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
   }
 

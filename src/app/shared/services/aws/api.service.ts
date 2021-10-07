@@ -314,9 +314,18 @@ export type DashboardInput = {
   forbearanceReviewed?: boolean | null;
   forbearanceStatus?: string | null;
   databreachFlagged?: boolean | null;
+  databreachCards?: Array<DataBreachCardInput | null> | null;
   databreachCardStatus?: string | null;
   databreachReviewed?: boolean | null;
   databreachStatus?: string | null;
+};
+
+export type DataBreachCardInput = {
+  reason?: string | null;
+  reviewed?: boolean | null;
+  condition?: string | null;
+  subscriber?: string | null;
+  paragraphs?: string | null;
 };
 
 export type ModelAppDataConditionInput = {
@@ -505,9 +514,19 @@ export type Dashboard = {
   forbearanceReviewed?: boolean | null;
   forbearanceStatus?: string | null;
   databreachFlagged?: boolean | null;
+  databreachCards?: Array<DataBreachCard | null> | null;
   databreachCardStatus?: string | null;
   databreachReviewed?: boolean | null;
   databreachStatus?: string | null;
+};
+
+export type DataBreachCard = {
+  __typename: "DataBreachCard";
+  reason?: string | null;
+  reviewed?: boolean | null;
+  condition?: string | null;
+  subscriber?: string | null;
+  paragraphs?: string | null;
 };
 
 export type UpdateAppDataInput = {
@@ -993,6 +1012,14 @@ export type CreateAppDataMutation = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -1266,6 +1293,14 @@ export type UpdateAppDataMutation = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -1539,6 +1574,14 @@ export type DeleteAppDataMutation = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -1812,6 +1855,14 @@ export type GetAppDataQuery = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -2087,6 +2138,14 @@ export type ListAppDatasQuery = {
       forbearanceReviewed?: boolean | null;
       forbearanceStatus?: string | null;
       databreachFlagged?: boolean | null;
+      databreachCards?: Array<{
+        __typename: "DataBreachCard";
+        reason?: string | null;
+        reviewed?: boolean | null;
+        condition?: string | null;
+        subscriber?: string | null;
+        paragraphs?: string | null;
+      } | null> | null;
       databreachCardStatus?: string | null;
       databreachReviewed?: boolean | null;
       databreachStatus?: string | null;
@@ -2362,6 +2421,14 @@ export type OnCreateAppDataSubscription = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -2635,6 +2702,14 @@ export type OnUpdateAppDataSubscription = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -2908,6 +2983,14 @@ export type OnDeleteAppDataSubscription = {
     forbearanceReviewed?: boolean | null;
     forbearanceStatus?: string | null;
     databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: string | null;
+    } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
@@ -3378,6 +3461,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
@@ -3667,6 +3758,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
@@ -3956,6 +4055,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
@@ -4255,6 +4362,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
@@ -4544,6 +4659,14 @@ export class APIService {
               forbearanceReviewed
               forbearanceStatus
               databreachFlagged
+              databreachCards {
+                __typename
+                reason
+                reviewed
+                condition
+                subscriber
+                paragraphs
+              }
               databreachCardStatus
               databreachReviewed
               databreachStatus
@@ -4838,6 +4961,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
@@ -5124,6 +5255,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
@@ -5410,6 +5549,14 @@ export class APIService {
             forbearanceReviewed
             forbearanceStatus
             databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
             databreachCardStatus
             databreachReviewed
             databreachStatus
