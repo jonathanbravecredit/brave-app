@@ -1,10 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {
-  ICreditReportCardInputs,
-  ReportCardFieldTypes,
-} from '@shared/components/cards/credit-report-card/credit-report-card.component';
-import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
-import { CreditReportGroups, CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
+import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
+import { CREDIT_REPORT_GROUPS } from '@shared/constants/credit-report';
 import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { PreferencesStateModel } from '@store/preferences';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
@@ -74,11 +70,13 @@ export class MergereportToCreditreportPipe implements PipeTransform {
             title: CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['title'],
             group: CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['group'],
             cards: [...res[index]['cards'], r],
+            tradelines: [...res[index]['tradelines'], r.tradeline],
           }
         : {
             title: CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['title'],
             group: CREDIT_REPORT_GROUPS[r.type.toLowerCase()]['group'],
             cards: [r],
+            tradelines: [r.tradeline],
           };
     });
     let results: ICreditReportTradelinesCardGroup[] = Object.keys(res).map((k) => {

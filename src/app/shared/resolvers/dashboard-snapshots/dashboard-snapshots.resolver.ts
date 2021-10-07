@@ -23,7 +23,18 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
     const report = BraveUtil.parsers.parseTransunionMergeReport(transunion);
     if (!Object.keys(transunion).length || !Object.keys(report).length) {
       return new Promise((resolve) => resolve(null));
+    } else if (dashboard?.isLoaded && dashboard?.databreachCards && dashboard?.databreachCards?.length > 0) {
+      // loaded and cards already loaded
+      // TODO...check if there are any new one
+      return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     } else if (dashboard?.isLoaded) {
+      // loaded but cards not loaded...need to load them up
+      this.flagDatabreaches(report);
+      this.store
+        .dispatch(new DashboardActions.Edit({ isLoaded: true }))
+        .subscribe((data: { appData: AppDataStateModel }) => {
+          this.statesvc.updateStateDBSync(data.appData);
+        });
       return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     } else {
       this.transform(report);
@@ -65,7 +76,10 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
   }
 
   private flagDatabreaches(report: IMergeReport): void {
-    if (tu.queries.report.listDataBreaches(report).length > 0)
-      this.store.dispatch(new DashboardActions.FlagDatabreachSnapshot());
+    const breaches = tu.queries.report.listDataBreaches(report);
+    if (breaches.length > 0) {
+      this.store.dispatch(new DashboardActions.AddDatabreachCards(breaches));
+      // this.store.dispatch(new DashboardActions.FlagDatabreachSnapshot());
+    }
   }
 }

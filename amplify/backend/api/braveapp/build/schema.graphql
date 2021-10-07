@@ -83,9 +83,18 @@ type Dashboard @aws_iam @aws_cognito_user_pools {
   forbearanceReviewed: Boolean
   forbearanceStatus: String
   databreachFlagged: Boolean
+  databreachCards: [DataBreachCard]
   databreachCardStatus: String
   databreachReviewed: Boolean
   databreachStatus: String
+}
+
+type DataBreachCard @aws_iam @aws_cognito_user_pools {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: String
 }
 
 type Onboarding @aws_iam @aws_cognito_user_pools {
@@ -413,9 +422,18 @@ input DashboardInput {
   forbearanceReviewed: Boolean
   forbearanceStatus: String
   databreachFlagged: Boolean
+  databreachCards: [DataBreachCardInput]
   databreachCardStatus: String
   databreachReviewed: Boolean
   databreachStatus: String
+}
+
+input DataBreachCardInput {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: String
 }
 
 enum ModelSortDirection {

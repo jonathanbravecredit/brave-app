@@ -1,4 +1,4 @@
-import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
+import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES, POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import {
   IBorrower,
@@ -236,6 +236,18 @@ export class TransunionReportQueries extends TransunionBase {
   }
 
   /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static isPositiveAccount(partition: ITradeLinePartition | undefined): boolean {
+    if (!partition) return false;
+    const symbol = partition.Tradeline?.PayStatus?.symbol;
+    if (!symbol) return false;
+    return POSITIVE_PAY_STATUS_CODES[`${symbol}`] || false;
+  }
+
+  /**
    * Checks whether the report has items that fall under any of the known databreaches
    *  - condition 1 lives in california and has car loan
    *  - condition 2 lives in california
@@ -295,7 +307,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param report
    * @returns
    */
-  static listDataBreaches(report: IMergeReport): (IBreachCard | any)[] | [] {
+  static listDataBreaches(report: IMergeReport): IBreachCard[] {
     const breachCards = Object.values(DataBreaches)
       .filter((item) => {
         return this.isDataBreachCondition(report, item) !== DataBreaches.None;

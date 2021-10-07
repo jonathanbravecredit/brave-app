@@ -1,3 +1,5 @@
+import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
+
 export class DashboardStateModel {
   isLoaded: boolean = false;
   negativeFlagged?: boolean;
@@ -10,6 +12,7 @@ export class DashboardStateModel {
   forbearanceReviewed?: boolean;
   forbearanceStatus?: DashboardStatus;
   databreachFlagged?: boolean;
+  databreachCards?: IBreachCard[];
   databreachCardStatus?: string;
   databreachReviewed?: boolean;
   databreachStatus?: DashboardStatus;
