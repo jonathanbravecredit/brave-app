@@ -138,4 +138,14 @@ export class DashboardState {
       databreachReviewed,
     });
   }
+
+  @Action(DashboardActions.AddDatabreachCards)
+  addDatabreachCards(ctx: StateContext<DashboardStateModel>, { payload }: DashboardActions.AddDatabreachCards) {
+    const state = ctx.getState();
+    const databreachCards = state.databreachCards ? [...state.databreachCards, ...payload] : [...payload];
+    ctx.patchState({
+      ...state,
+      databreachCards,
+    });
+  }
 }

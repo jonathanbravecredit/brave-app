@@ -77,7 +77,7 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/snapshot/databreach',
         component: DataBreachesComponent,
-        resolve: { report: SnapshotDatabreachesResolver },
+        resolve: { breaches: SnapshotDatabreachesResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

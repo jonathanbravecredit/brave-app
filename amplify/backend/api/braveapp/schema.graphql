@@ -78,6 +78,7 @@ type Dashboard {
 type DataBreachCard {
   reason: String
   reviewed: Boolean
+  condition: String
   subscriber: String
   paragraphs: String
 }
