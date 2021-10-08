@@ -2,28 +2,25 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { FormGroup } from '@angular/forms';
-import { Select, Store } from '@ngxs/store';
-import { AgenciesSelectors, AgenciesState, AgenciesStateModel } from '@store/agencies';
+import { Store } from '@ngxs/store';
+import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
 import { Observable, Subscription } from 'rxjs';
 import {
   ITransunionKBAQuestion,
   ITransunionKBAAnswer,
   ITransunionKBAQuestions,
 } from '@shared/interfaces/tu-kba-questions.interface';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { TUBundles } from '@shared/utils/transunion/constants';
-import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
+import { AppStatusReason } from '@shared/utils/brave/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -45,7 +42,7 @@ export class KycKbaquestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private interstitial: InterstitialService,
     private kycService: KycService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
     private store: Store,
   ) {
     this.agenciesSub$ = this.agencies$
@@ -62,7 +59,7 @@ export class KycKbaquestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingKba);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingKba);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -94,7 +91,7 @@ export class KycKbaquestionsComponent implements OnInit {
    *  - if no more next questions, submits the form
    */
   goToNext(): void {
-    this.google.fireClickEvent(gtClicks.OnboardingKba);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingKba);
     this.answeredQuestions = [...this.answeredQuestions, this.questions[0]];
     this.questions = [...this.questions.slice(1)];
     const scroll = parseFloat(((-1 / this.numberOfQuestions) * 100).toFixed(2));

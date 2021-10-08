@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import {
-  GoogleClickEvents,
-  GoogleErrorEvents,
-  GooglePageViewEvents,
-} from '@shared/services/analytics/google/constants';
+  AnalyticClickEvents,
+  AnalyticPageViewEvents,
+  AnalyticErrorEvents,
+} from '@shared/services/analytics/analytics/constants';
 
 declare let gtag: (arg1: string, arg2: any, arg3?: any) => void;
 
@@ -12,19 +12,18 @@ declare let gtag: (arg1: string, arg2: any, arg3?: any) => void;
   providedIn: 'root',
 })
 export class GoogleService {
-  googlePageViewEvents = GooglePageViewEvents;
-  googleClickEvents = GoogleClickEvents;
+  enable = !environment.production;
   constructor() {}
 
   fireUserTrackingEvent(userId: string) {
-    if (!environment.production) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('set', { user_id: userId }); // Set the user ID using signed-in user_id.
   }
 
   fireLoginEvent() {
-    if (!environment.production) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('event', 'login', {
@@ -33,7 +32,7 @@ export class GoogleService {
   }
 
   fireSignUpEvent() {
-    if (!environment.production) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('event', 'sign_up', {
@@ -42,7 +41,7 @@ export class GoogleService {
   }
 
   fireVideoEvent(videoTag: string) {
-    if (!environment.production) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('event', videoTag, {
@@ -50,8 +49,8 @@ export class GoogleService {
     });
   }
 
-  fireClickEvent(event: GoogleClickEvents) {
-    if (!environment.production) {
+  fireClickEvent(event: AnalyticClickEvents) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('event', 'bc_click', {
@@ -61,8 +60,8 @@ export class GoogleService {
     });
   }
 
-  firePageViewEvent(event: GooglePageViewEvents) {
-    if (!environment.production) {
+  firePageViewEvent(event: AnalyticPageViewEvents) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('event', 'bc_page_view', {
@@ -72,8 +71,8 @@ export class GoogleService {
     });
   }
 
-  fireErrorEvent(event: GoogleErrorEvents) {
-    if (!environment.production) {
+  fireErrorEvent(event: AnalyticErrorEvents) {
+    if (!this.enable) {
       return; // don't fire on dev
     }
     gtag('event', 'bc_error', {

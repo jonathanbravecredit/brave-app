@@ -1,64 +1,46 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import {
-  MixpanelClickEvents,
-  MixpanelPageViewEvents,
-  MixpanelErrorEvents,
-} from '@shared/services/analytics/mixpanel/constants';
+  AnalyticClickEvents,
+  AnalyticPageViewEvents,
+  AnalyticErrorEvents,
+} from '@shared/services/analytics/analytics/constants';
 import mixpanel from 'mixpanel-browser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MixpanelService {
-  enable: boolean = !environment.production;
+  enable: boolean = true; //!environment.production; TODO...remove after testing
   constructor() {
     mixpanel.init('d07193d6548e3fbf533e95038cb36a11', { debug: this.enable });
   }
 
   fireUserTrackingEvent(userId: string) {
-    // if (this.enable) {
-    //   return; // don't fire on dev
-    // }
-    // mixpanel.('set', { user_id: userId }); // Set the user ID using signed-in user_id.
-  }
-
-  fireLoginEvent() {
     if (this.enable) {
       return; // don't fire on dev
     }
-    // mixpanel.track('event', 'login', {
-    //   value: 1,
-    // });
+    mixpanel.identify(userId); // Set the user ID using signed-in user_id.
   }
 
-  fireSignUpEvent() {
+  fireClickEvent(event: AnalyticClickEvents) {
     if (this.enable) {
       return; // don't fire on dev
     }
+    mixpanel.track('click', { category: event });
   }
 
-  fireVideoEvent(videoTag: string) {
+  firePageViewEvent(event: AnalyticPageViewEvents) {
     if (this.enable) {
       return; // don't fire on dev
     }
+    mixpanel.track('view', { category: event });
   }
 
-  fireClickEvent(event: MixpanelClickEvents) {
+  fireErrorEvent(event: AnalyticErrorEvents) {
     if (this.enable) {
       return; // don't fire on dev
     }
-  }
-
-  firePageViewEvent(event: MixpanelPageViewEvents) {
-    if (this.enable) {
-      return; // don't fire on dev
-    }
-  }
-
-  fireErrorEvent(event: MixpanelErrorEvents) {
-    if (this.enable) {
-      return; // don't fire on dev
-    }
+    mixpanel.track('error', { category: event });
   }
 }

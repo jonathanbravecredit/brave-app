@@ -4,8 +4,8 @@ import { AccountTypes } from '@shared/constants/account-types';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { Observable } from 'rxjs';
-import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-forbearance',
@@ -19,13 +19,13 @@ export class ForbearanceView implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private creditReportService: CreditreportService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.DashboardReportSnapshotForbearance);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotForbearance);
   }
 
   /**
