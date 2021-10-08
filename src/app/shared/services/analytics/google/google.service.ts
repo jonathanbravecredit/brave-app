@@ -12,18 +12,18 @@ declare let gtag: (arg1: string, arg2: any, arg3?: any) => void;
   providedIn: 'root',
 })
 export class GoogleService {
-  enable = !environment.production;
+  disable = !environment.production;
   constructor() {}
 
   fireUserTrackingEvent(userId: string) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('set', { user_id: userId }); // Set the user ID using signed-in user_id.
   }
 
   fireLoginEvent() {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('event', 'login', {
@@ -32,7 +32,7 @@ export class GoogleService {
   }
 
   fireSignUpEvent() {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('event', 'sign_up', {
@@ -41,7 +41,7 @@ export class GoogleService {
   }
 
   fireVideoEvent(videoTag: string) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('event', videoTag, {
@@ -50,7 +50,7 @@ export class GoogleService {
   }
 
   fireClickEvent(event: AnalyticClickEvents) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('event', 'bc_click', {
@@ -61,7 +61,7 @@ export class GoogleService {
   }
 
   firePageViewEvent(event: AnalyticPageViewEvents) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('event', 'bc_page_view', {
@@ -72,7 +72,7 @@ export class GoogleService {
   }
 
   fireErrorEvent(event: AnalyticErrorEvents) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     gtag('event', 'bc_error', {

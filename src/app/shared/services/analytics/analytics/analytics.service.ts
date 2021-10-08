@@ -12,11 +12,11 @@ import { MixpanelService } from '@shared/services/analytics/mixpanel/mixpanel.se
   providedIn: 'root',
 })
 export class AnalyticsService {
-  enable: boolean = true; //!environment.production; TODO...remove after testing
+  disable: boolean = !environment.production;
   constructor(protected google: GoogleService, protected mixpanel: MixpanelService) {}
 
   fireUserTrackingEvent(userId: string) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     this.google.fireUserTrackingEvent(userId);
@@ -24,7 +24,7 @@ export class AnalyticsService {
   }
 
   fireClickEvent(event: AnalyticClickEvents) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     this.google.fireClickEvent(event);
@@ -32,7 +32,7 @@ export class AnalyticsService {
   }
 
   firePageViewEvent(event: AnalyticPageViewEvents) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
     this.google.firePageViewEvent(event);
@@ -40,11 +40,17 @@ export class AnalyticsService {
   }
 
   fireErrorEvent(event: AnalyticErrorEvents) {
-    if (!this.enable) {
+    if (this.disable) {
       return; // don't fire on dev
     }
-
     this.google.fireErrorEvent(event);
     this.mixpanel.fireErrorEvent(event);
+  }
+
+  fireTimeTracking(page: string) {
+    if (this.disable) {
+      return; // don't fire on dev
+    }
+    this.mixpanel.fireTimeTracking(page);
   }
 }
