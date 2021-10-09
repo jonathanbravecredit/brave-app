@@ -4,6 +4,7 @@ import { Hub } from '@aws-amplify/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Observable } from 'rxjs';
 import { InitService } from '@shared/services/init/init.service';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 @Component({
   selector: 'brave-root',
@@ -16,7 +17,12 @@ export class AppComponent implements OnInit {
   message$: Observable<string>;
 
   // inject app monitoring services and auth service
-  constructor(private router: Router, private init: InitService, private interstitial: InterstitialService) {
+  constructor(
+    private router: Router,
+    private analytics: AnalyticsService,
+    private init: InitService,
+    private interstitial: InterstitialService,
+  ) {
     this.spinner$ = this.interstitial.open$.asObservable();
     this.message$ = this.interstitial.message$.asObservable();
 
@@ -55,6 +61,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
       } else if (event instanceof NavigationEnd) {
+        this.analytics.fireTimeTracking(event.url);
         this.interstitial.fetching$.next(false);
       }
     });

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
-import { resolve } from 'dns';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-data-breaches',
@@ -18,7 +17,7 @@ export class DataBreachesComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
     private store: Store,
     private api: APIService,
   ) {
@@ -28,7 +27,7 @@ export class DataBreachesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.DashboardReportSnapshotDatabreach);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotDatabreach);
   }
 
   onCardClick(idx: number): void {

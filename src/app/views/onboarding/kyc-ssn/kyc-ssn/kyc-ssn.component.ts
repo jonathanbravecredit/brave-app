@@ -1,18 +1,15 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { KYCResponse, KycService } from '@shared/services/kyc/kyc.service';
+import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import { TransunionInput, TUStatusRefInput, UserAttributesInput } from '@shared/services/aws/api.service';
+import { TUStatusRefInput, UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycSsnPureComponent } from '@views/onboarding/kyc-ssn/kyc-ssn-pure/kyc-ssn-pure.component';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
 import { IIndicativeEnrichmentResult, ITUServiceResponse } from '@shared/interfaces';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -25,13 +22,13 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
     private router: Router,
     private route: ActivatedRoute,
     private kycService: KycService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingIdentity);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingIdentity);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -52,7 +49,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
-    this.google.fireClickEvent(gtClicks.OnboardingIdentity);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentity);
     if (form.valid) {
       const { lastfour } = this.formatAttributes(form, ssnMap);
       const attrs = { ssn: { lastfour: lastfour } } as UserAttributesInput;

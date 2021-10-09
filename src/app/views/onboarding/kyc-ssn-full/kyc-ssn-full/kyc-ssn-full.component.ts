@@ -5,11 +5,8 @@ import { FlatForm, KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycSsnFullPureComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 @Component({
   selector: 'brave-kyc-ssn-full',
@@ -22,13 +19,13 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
     private router: Router,
     private route: ActivatedRoute,
     private kycService: KycService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingIdentityFull);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingIdentityFull);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -42,7 +39,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   goToNext(form: FormGroup): void {
-    this.google.fireClickEvent(gtClicks.OnboardingIdentityFull);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentityFull);
     if (form.valid) {
       const { full } = this.formatAttributes(form, ssn);
       const attrs = {
