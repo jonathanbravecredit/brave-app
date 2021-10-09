@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GoogleErrorEvents as gtErrs } from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticErrorEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-kyc-exceptions',
@@ -9,10 +9,10 @@ import { GoogleService } from '@shared/services/analytics/google/google.service'
 })
 export class KycExceptionsView implements OnInit {
   defaultCode = '11'; // general app errod
-  constructor(private router: Router, readonly route: ActivatedRoute, private google: GoogleService) {}
+  constructor(private router: Router, readonly route: ActivatedRoute, private analytics: AnalyticsService) {}
 
   ngOnInit(): void {
-    this.google.fireErrorEvent(gtErrs.ApiTechnicalIssue);
+    this.analytics.fireErrorEvent(AnalyticErrorEvents.ApiTechnicalIssue);
   }
 
   onActionButtonClicked(route: string): void {

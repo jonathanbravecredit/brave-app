@@ -8,7 +8,7 @@
   <h6 class="text-lg">{{ report.title }}</h6>
   <div>
     <input type="checkbox" name="dont-show-hide" [checked]="report.hidden" (change)="report.hidden = !report.hidden" />
-    <label for="dont-show-hide" class="ml-2 mr-auto">Only Show me delinquent accounts</label>
+    <label for="dont-show-hide" class="ml-2 mr-auto">Only show me delinquent accounts</label>
   </div>
   <div *ngFor="let card of report.cards; last as isLast">
     <div *ngIf="report.hidden && card.positive; else showCard"></div>
@@ -29,6 +29,16 @@
       ></brave-credit-report-card>
     </ng-template>
     <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
+    <div
+      *ngIf="
+        report.hidden &&
+        isLast &&
+        (report.tradelines | filterTradelines: tu.queries.report.isNegativeAccount).length === 0
+      "
+      class="my-8"
+    >
+      <p class="brave-body2 text-center">We don’t see any delinquent accounts here!</p>
+    </div>
   </div>
 </div>
 

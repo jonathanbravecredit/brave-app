@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces/merge-report.interface';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { AgenciesStateModel } from '@store/agencies';
+import { Store } from '@ngxs/store';
+import { DashboardSelectors } from '@store/dashboard/dashboard.selectors';
+import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SnapshotDatabreachesResolver implements Resolve<IMergeReport> {
-  constructor(private creditReport: CreditreportService) {}
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMergeReport> {
-    const agencies$ = this.creditReport.agencies$;
-    return agencies$.pipe(
-      take(1),
-      map((agencies: AgenciesStateModel) => {
-        return this.creditReport.getCreditReport(agencies);
+export class SnapshotDatabreachesResolver implements Resolve<IBreachCard[] | undefined> {
+  constructor(private store: Store) {}
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IBreachCard[] | undefined> {
+    return this.store.selectOnce(DashboardSelectors.getDashboard).pipe(
+      map((value) => {
+        return value.databreachCards;
       }),
     );
   }

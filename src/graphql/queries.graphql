@@ -218,11 +218,35 @@ query GetAppData($id: ID!) {
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -449,11 +473,35 @@ query ListAppDatas(
           mortgages
         }
       }
+      dashboard {
+        isLoaded
+        negativeFlagged
+        negativeCardCount
+        negativeCardStatus
+        negativeReviewed
+        negativeStatus
+        forbearanceFlagged
+        forbearanceCardStatus
+        forbearanceReviewed
+        forbearanceStatus
+        databreachFlagged
+        databreachCards {
+          reason
+          reviewed
+          condition
+          subscriber
+          paragraphs
+        }
+        databreachCardStatus
+        databreachReviewed
+        databreachStatus
+      }
       status
       statusReason
       statusReasonDescription
       lastStatusModifiedOn
       nextStatusModifiedOn
+      isLoaded
       createdAt
       updatedAt
       owner

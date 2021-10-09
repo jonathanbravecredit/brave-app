@@ -7,8 +7,8 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { Observable } from 'rxjs';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-negative-account-initial',
@@ -22,7 +22,7 @@ export class NegativeAccountInitialComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private statesvc: StateService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
     private creditReportService: CreditreportService,
     private disputeService: DisputeService,
   ) {
@@ -38,7 +38,7 @@ export class NegativeAccountInitialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.DashboardReportSnapshotNegative);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotNegative);
   }
 
   /**

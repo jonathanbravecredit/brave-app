@@ -376,11 +376,35 @@ mutation CreateAppData(
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -605,11 +629,35 @@ mutation UpdateAppData(
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -834,11 +882,35 @@ mutation DeleteAppData(
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner

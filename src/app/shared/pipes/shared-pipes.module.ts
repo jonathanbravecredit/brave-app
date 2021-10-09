@@ -26,6 +26,7 @@ import { TradelineToForbearancePipe } from './tradeline-to-forbearance/tradeline
 import { MergereportToSubscribersPipe } from './mergereport-to-subscribers/mergereport-to-subscribers.pipe';
 import { MergereportToBreachitemsPipe } from './mergereport-to-breachitems/mergereport-to-breachitems.pipe';
 import { LinkifyPipe } from './linkify/linkify.pipe';
+import { FilterTradelinesPipe } from './filterTradelines/filter-tradelines.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -54,6 +55,7 @@ const pipes = [
   AccountNumberMaskPipe,
   SsnMaskPipe,
   LinkifyPipe,
+  FilterTradelinesPipe,
 ];
 
 @NgModule({

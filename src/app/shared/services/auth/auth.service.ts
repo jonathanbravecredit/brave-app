@@ -203,6 +203,22 @@ export class AuthService {
   }
 
   /**
+   * Returns email from user attributes.
+   *  - Email is the one attribute that is required
+   * @returns
+   */
+  async getUserSub(): Promise<string> {
+    try {
+      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const attrs = await Auth.userAttributes(user);
+      const email = attrs.filter((a) => a.Name.toLowerCase() === 'sub')[0]?.Value;
+      return email;
+    } catch (err) {
+      return '';
+    }
+  }
+
+  /**
    * Submit email to cognito for change, if accepted returns true
    * - triggers and resolves fetching
    * @param email
