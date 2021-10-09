@@ -13,15 +13,12 @@ import {
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { AppDataStateModel } from '@store/app-data';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
 import { TUBundles } from '@shared/utils/transunion/constants';
-import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
+import { AppStatusReason } from '@shared/utils/brave/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -38,14 +35,14 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     private route: ActivatedRoute,
     private store: Store,
     private kycService: KycService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
     private interstitial: InterstitialService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingCode);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingCode);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -128,7 +125,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
-    this.google.fireClickEvent(gtClicks.OnboardingCode);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingCode);
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
       await this.processRequest(code, false);

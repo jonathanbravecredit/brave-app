@@ -103,6 +103,7 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
       zip: { input: zip },
     });
     this.addressTwoInput?.focus();
+    this.parentForm.markAllAsTouched();
   }
 }
 

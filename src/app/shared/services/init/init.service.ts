@@ -101,7 +101,6 @@ export class InitService {
       this.router.navigate(['/suspended/default']);
       return false;
     }
-    console.log('isOnboarded ==> ', isOnboarded);
     try {
       if (!isOnboarded) {
         await this.goToLastOnboarded();

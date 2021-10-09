@@ -6,11 +6,8 @@ import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
 import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 @Component({
   selector: 'brave-kyc-address',
@@ -26,13 +23,13 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
     private router: Router,
     private route: ActivatedRoute,
     private kycService: KycService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingAddress);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingAddress);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -46,7 +43,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   goToNext(form: FormGroup): void {
-    this.google.fireClickEvent(gtClicks.OnboardingAddress);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingAddress);
     if (form.valid) {
       const attrs = {
         address: {

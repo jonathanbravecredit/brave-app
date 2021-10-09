@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { Subscription } from 'rxjs';
-import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-signup-thankyou',
@@ -12,12 +12,12 @@ import { GoogleService } from '@shared/services/analytics/google/google.service'
 export class SignupThankyouComponent implements OnInit, OnDestroy {
   private emailSub$: Subscription;
   private email: string | undefined;
-  constructor(private router: Router, private auth: AuthService, private google: GoogleService) {
+  constructor(private router: Router, private auth: AuthService, private analytics: AnalyticsService) {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.AuthThankyou);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.AuthThankyou);
   }
 
   ngOnDestroy(): void {

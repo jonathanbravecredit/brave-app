@@ -25,6 +25,8 @@ import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { IGetAuthenticationQuestionsResult } from '@shared/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { TUBundles } from '@shared/utils/transunion/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -39,14 +41,14 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
     private router: Router,
     private route: ActivatedRoute,
     private store: Store,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
     private kycService: KycService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingPhone);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingPhone);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -72,7 +74,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
    * @param form
    */
   async goToNext(form: FormGroup): Promise<void> {
-    this.google.fireClickEvent(gtClicks.OnboardingPhone);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingPhone);
     if (form.valid) {
       const { phone } = this.formatAttributes(form, phoneMap);
       const attrs = {

@@ -1,17 +1,17 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import { GooglePageViewEvents as gtEvts } from '@shared/services/analytics/google/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-kyc-congratulations',
   templateUrl: './kyc-congratulations.component.html',
 })
 export class KycCongratulationsComponent implements OnInit, AfterViewInit {
-  constructor(private router: Router, private google: GoogleService) {}
+  constructor(private router: Router, private analytics: AnalyticsService) {}
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtEvts.OnboardingCongratulations);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingCongratulations);
   }
 
   ngAfterViewInit(): void {
