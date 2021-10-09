@@ -4,14 +4,14 @@ import {
   AnalyticPageViewEvents,
 } from '@shared/services/analytics/analytics/constants';
 
-export const GooglePageViewEvents = {
+export const MixpanelPageViewEvents = {
   ...AnalyticPageViewEvents,
 };
 
-export const GoogleClickEvents = {
+export const MixpanelClickEvents = {
   ...AnalyticClickEvents,
 };
 
-export const GoogleErrorEvents = {
+export const MixpanelErrorEvents = {
   ...AnalyticErrorEvents,
 };

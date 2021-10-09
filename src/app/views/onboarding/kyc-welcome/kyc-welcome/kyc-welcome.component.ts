@@ -1,11 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
@@ -30,13 +27,13 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
     private router: Router,
     private route: ActivatedRoute,
     private kycService: KycService,
-    private google: GoogleService,
+    private analytics: AnalyticsService,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.google.firePageViewEvent(gtViews.OnboardingName);
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingName);
     this.kycService.activateStep(this.stepID);
   }
 
@@ -45,7 +42,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   async goToNext(form: FormGroup): Promise<void> {
-    this.google.fireClickEvent(gtClicks.OnboardingName);
+    this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingName);
     if (form.valid) {
       // write to state...TODO write to DB
       const attrs = {
