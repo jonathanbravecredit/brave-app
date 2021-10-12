@@ -6,6 +6,7 @@ import { CognitoUser, CognitoUserSession, CognitoUserAttribute, ISignUpResult } 
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Router } from '@angular/router';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 export interface NewUser {
   username: string;
@@ -22,7 +23,7 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private router: Router, private interstitial: InterstitialService) {}
+  constructor(private router: Router, private analytics: AnalyticsService, private interstitial: InterstitialService) {}
 
   /**
    * This method is designed to help reload the user if the ID ever goes null
