@@ -81,7 +81,6 @@ import { CreditReportCardComponent } from './cards/credit-report-card/credit-rep
 import { OnboardingDisputeComponent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { CreditReportGraphicComponent } from './graphics/credit-report-graphic/credit-report-graphic.component';
 import { BasePaginationComponent } from './paginations/base-pagination/base-pagination.component';
-import { ReasonCardComponent } from './cards/reason-card/reason-card.component';
 import { BaseModalComponent } from './modals/base-modal/base-modal.component';
 import { ConfirmationModalComponent } from './modals/confirmation-modal/confirmation-modal.component';
 import { ConditionalTermComponent } from './terms/conditional-term/conditional-term.component';
@@ -89,31 +88,10 @@ import { CreditScoreGraphicTabsComponent } from './tabs/credit-score-graphic-tab
 import { CreditScoreHistoryChartComponent } from './charts/credit-score-history-chart/credit-score-history-chart.component';
 import { CreditScoreHistoryNgxChartComponent } from './charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
 import { CreditReportGraphicWithGraphComponent } from './graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component';
-import { DisputeHeaderCardComponent } from './cards/dispute-header-card/dispute-header-card.component';
-import { DisputesPersonalComponent } from './disputes/disputes-personal/disputes-personal.component';
-import { DisputesTradelineComponent } from './disputes/disputes-tradeline/disputes-tradeline.component';
-import { DisputesPublicComponent } from './disputes/disputes-public/disputes-public.component';
 import { BaseExceptionComponent } from './exceptions/base-exception/base-exception.component';
-import { DisputesDetailComponent } from './disputes/disputes-detail/disputes-detail.component';
+
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
-import { DisputesListComponent } from './disputes/disputes-list/disputes-list.component';
-import { DisputeFindingsHeaderComponent } from './disputes/findings/dispute-findings-header/dispute-findings-header.component';
-import { DisputeFindingsResultsComponent } from './disputes/findings/dispute-findings-results/dispute-findings-results.component';
-import { DisputeFindingsHowToReadComponent } from './disputes/findings/dispute-findings-how-to-read/dispute-findings-how-to-read.component';
-import { DisputeFindingsDefinitionsHeaderComponent } from './disputes/findings/dispute-findings-definitions-header/dispute-findings-definitions-header.component';
-import { DisputeFindingsNoteCreditReportComponent } from './disputes/findings/dispute-findings-note-credit-report/dispute-findings-note-credit-report.component';
-import { DisputeFindingsDefinitionsComponent } from './disputes/findings/dispute-findings-definitions/dispute-findings-definitions.component';
-import { DisputeFindingsRatingKeyComponent } from './disputes/findings/dispute-findings-rating-key/dispute-findings-rating-key.component';
-import { DisputeFindingsResultsDetailsComponent } from './disputes/findings/dispute-findings-results-details/dispute-findings-results-details.component';
-import { DisputeFindingsClosingParagraphComponent } from './disputes/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
-import { DisputeFindingsContactInfoComponent } from './disputes/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
-import {
-  DisputeCardStatusPipe,
-  DisputeCurrentCardComponent,
-  DisputeHistoryCardComponent,
-  DisputeRegularCardComponent,
-} from './cards/dispute-cards';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
 import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
 import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
@@ -124,10 +102,7 @@ import { SimpleBackButtonComponent } from './buttons/simple-back-button/simple-b
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { BaseTableRowComponent } from './tables/base-table-row/base-table-row.component';
 import { SecurityFreezeComponent } from './messages/security-freeze/security-freeze.component';
-import { DisputeHeaderComponent } from './disputes/dispute-header/dispute-header.component';
-import { DisputeHeaderTradelineComponent } from './disputes/dispute-header-tradeline/dispute-header-tradeline.component';
-import { DisputeHeaderPublicitemComponent } from './disputes/dispute-header-publicitem/dispute-header-publicitem.component';
-import { DisputeHeaderPersonalitemComponent } from './disputes/dispute-header-personalitem/dispute-header-personalitem.component';
+
 import { SimpleBannerComponent } from './banners/simple-banner/simple-banner.component';
 import { SimpleChangePasswordFormComponent } from './forms/simple-change-password-form/simple-change-password-form.component';
 import { SimpleDeactiveFormComponent } from './forms/simple-deactive-form/simple-deactive-form.component';
@@ -206,43 +181,20 @@ const components = [
   CreditScoreHistoryNgxChartComponent,
   CreditReportGraphicWithGraphComponent,
   BasePaginationComponent,
-  ReasonCardComponent,
   BaseModalComponent,
   ConfirmationModalComponent,
   ConditionalTermComponent,
-  DisputeHeaderCardComponent,
-  DisputesPersonalComponent,
-  DisputesTradelineComponent,
-  DisputesPublicComponent,
   BaseExceptionComponent,
-  DisputesDetailComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
-  DisputeRegularCardComponent,
-  DisputeHistoryCardComponent,
-  DisputeCurrentCardComponent,
-  DisputesListComponent,
-  DisputeFindingsHeaderComponent,
-  DisputeFindingsResultsComponent,
-  DisputeFindingsHowToReadComponent,
-  DisputeFindingsDefinitionsHeaderComponent,
-  DisputeFindingsNoteCreditReportComponent,
-  DisputeFindingsDefinitionsComponent,
-  DisputeFindingsRatingKeyComponent,
-  DisputeFindingsResultsDetailsComponent,
-  DisputeFindingsClosingParagraphComponent,
-  DisputeFindingsContactInfoComponent,
+
   CollectionCreditMixAccountsComponent,
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
   OutlineInputCodeComponent,
   BaseTableRowComponent,
   SecurityFreezeComponent,
-  DisputeHeaderComponent,
-  DisputeHeaderTradelineComponent,
   SimpleBackButtonComponent,
-  DisputeHeaderPublicitemComponent,
-  DisputeHeaderPersonalitemComponent,
   SimpleBannerComponent,
   SimpleDeactiveFormComponent,
   SimpleChangePasswordFormComponent,
@@ -274,7 +226,6 @@ const pipes = [
   CreditReportGraphicPipe,
   BasePaginationPipe,
   BaseModalPipe,
-  DisputeCardStatusPipe,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

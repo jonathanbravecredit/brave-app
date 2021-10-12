@@ -27,6 +27,7 @@ import { MergereportToSubscribersPipe } from './mergereport-to-subscribers/merge
 import { MergereportToBreachitemsPipe } from './mergereport-to-breachitems/mergereport-to-breachitems.pipe';
 import { LinkifyPipe } from './linkify/linkify.pipe';
 import { FilterTradelinesPipe } from './filterTradelines/filter-tradelines.pipe';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 const pipes = [
   TradelineToDisputePipe,
@@ -56,6 +57,7 @@ const pipes = [
   SsnMaskPipe,
   LinkifyPipe,
   FilterTradelinesPipe,
+  ParseRiskScorePipe,
 ];
 
 @NgModule({

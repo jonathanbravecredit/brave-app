@@ -146,6 +146,9 @@ type Transunion {
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
   disputeStatus: String
+  dusputeCurrent: Dispute
+  disputeHistorical: [Dispute]
+  disputeStatus: String
   disputes: [Dispute]
 }
 type Equifax {

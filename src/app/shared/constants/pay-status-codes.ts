@@ -13,7 +13,7 @@ export const PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff`,
 };
 
-export const NEGATIVE_PAY_STATUS_CODES: Record<string, any> = {
+export const NEGATIVE_PAY_STATUS_CODES: Record<string, string> = {
   '1': `Late 30 Days`,
   '2': `Late 60 Days`,
   '3': `Late 90 Days`,
@@ -22,7 +22,7 @@ export const NEGATIVE_PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff`,
 };
 
-export const POSITIVE_PAY_STATUS_CODES: Record<string, any> = {
+export const POSITIVE_PAY_STATUS_CODES: Record<string, string> = {
   U: `No Data / Unknown`,
   C: `Current`,
   '0': `Too New to Rate`,

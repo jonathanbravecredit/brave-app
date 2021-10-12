@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
 import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer, IMergeReport } from '@shared/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import {
   IPersonalItemsDetailsConfig,
   IPersonalItemsDetailsTable,
-} from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+} from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 
 @Pipe({
   name: 'mergereportToPersonalitems',
@@ -27,7 +26,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.borrowersNamesRaw
       ? [
           ...mapped,
-          ...transformed.borrowersNamesRaw.map((name) => {
+          ...transformed.borrowersNamesRaw.map((name: any) => {
             return this.mapSubitem(
               'name',
               name,
@@ -42,7 +41,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.employersRaw
       ? [
           ...mapped,
-          ...transformed.employersRaw.map((employer) => {
+          ...transformed.employersRaw.map((employer: any) => {
             return this.mapSubitem(
               'employer',
               employer,
@@ -57,7 +56,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.previousAddressesRaw
       ? [
           ...mapped,
-          ...transformed.previousAddressesRaw.map((address) => {
+          ...transformed.previousAddressesRaw.map((address: any) => {
             return this.mapSubitem(
               'address',
               address,

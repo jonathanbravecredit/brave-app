@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
-import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { IPublicPartition } from '@shared/interfaces';
 import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import { DisputesTradelineComponent } from '@views/dashboard/disputes/components/disputes-tradeline/disputes-tradeline.component';
+import { IDisputeProcessResult } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
 
 export interface IProcessDisputePublicResult {
   result: IDisputeProcessResult;

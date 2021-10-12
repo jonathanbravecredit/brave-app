@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';

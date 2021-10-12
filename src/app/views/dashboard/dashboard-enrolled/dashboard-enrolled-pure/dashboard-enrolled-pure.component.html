@@ -50,7 +50,8 @@
       label="preview"
       status="danger"
       title="Account Disputes"
-      [preview]="true"
+      [preview]="false"
+      (click)="disputesClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
 </div>
