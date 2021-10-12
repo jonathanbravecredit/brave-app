@@ -27,6 +27,7 @@ export enum AnalyticClickEvents {
   SnapshotFraudModule = 'snapshot_fraud',
   SnapshotForbearanceModule = 'snapshot_forbearance',
   SnapshotNegativeItemsModule = 'snapshot_negativeitems',
+  NavigationFraudToCreditReport = 'navigation_fraudtocreditreport',
 }
 
 export enum AnalyticErrorEvents {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router, RoutesRecognized } from '@angular/router';
 import { environment } from '@environments/environment';
 import {
   AnalyticPageViewEvents,
@@ -8,6 +9,7 @@ import {
 import { FacebookService } from '@shared/services/analytics/facebook/facebook.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { MixpanelService } from '@shared/services/analytics/mixpanel/mixpanel.service';
+import { filter, pairwise } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +20,21 @@ export class AnalyticsService {
     protected google: GoogleService,
     private facebook: FacebookService,
     protected mixpanel: MixpanelService,
-  ) {}
+    private router: Router,
+  ) {
+    this.router.events
+      .pipe(
+        filter((evt: any) => evt instanceof RoutesRecognized),
+        pairwise(),
+      )
+      .subscribe((events: RoutesRecognized[]) => {
+        const previousUrl = events[0].urlAfterRedirects;
+        const currentUrl = events[1].urlAfterRedirects;
+        if (previousUrl === '/dashboard/report/snapshot/databreach' && currentUrl === '/dashboard/report') {
+          this.fireClickEvent(AnalyticClickEvents.NavigationFraudToCreditReport);
+        }
+      });
+  }
 
   fireUserTrackingEvent(userId: string | undefined) {
     if (this.disable || !userId) {
