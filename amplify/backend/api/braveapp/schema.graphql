@@ -80,7 +80,7 @@ type DataBreachCard {
   reviewed: Boolean
   condition: String
   subscriber: String
-  paragraphs: String
+  paragraphs: [String]
 }
 
 type Onboarding {

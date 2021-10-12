@@ -6,6 +6,8 @@ import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -22,6 +24,7 @@ export class DashboardEnrolledComponent implements OnInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
+    private analytics: AnalyticsService,
     private dashboardService: DashboardService,
   ) {
     this.route.data.subscribe((resp: any) => {
@@ -44,6 +47,7 @@ export class DashboardEnrolledComponent implements OnInit {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
+    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotNegativeItemsModule);
     this.router.navigate(['../report/snapshot/negative'], { relativeTo: this.route });
   }
 
@@ -52,6 +56,7 @@ export class DashboardEnrolledComponent implements OnInit {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
+    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotForbearanceModule);
     this.router.navigate(['../report/snapshot/forbearance'], { relativeTo: this.route });
   }
 
@@ -59,6 +64,7 @@ export class DashboardEnrolledComponent implements OnInit {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
+    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotFraudModule);
     this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
   }
 

@@ -15,6 +15,7 @@ export interface IOutlineInputeConfig {
   mask?: string;
   unmask?: string;
   maxLength?: number;
+  minLength?: number;
 }
 
 @Component({
