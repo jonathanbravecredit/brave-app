@@ -24,6 +24,9 @@ export enum AnalyticClickEvents {
   OnboardingCode = 'onboarding_code',
   OnboardingKba = 'onboarding_kba',
   SnapshotBreachCard = 'snapshot_breachcard',
+  SnapshotFraudModule = 'snapshot_fraud',
+  SnapshotForbearanceModule = 'snapshot_forbearance',
+  SnapshotNegativeItemsModule = 'snapshot_negativeitems',
 }
 
 export enum AnalyticErrorEvents {
