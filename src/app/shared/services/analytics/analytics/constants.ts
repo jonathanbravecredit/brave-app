@@ -23,6 +23,11 @@ export enum AnalyticClickEvents {
   OnboardingPhone = 'onboarding_phone',
   OnboardingCode = 'onboarding_code',
   OnboardingKba = 'onboarding_kba',
+  SnapshotBreachCard = 'snapshot_breachcard',
+  SnapshotFraudModule = 'snapshot_fraud',
+  SnapshotForbearanceModule = 'snapshot_forbearance',
+  SnapshotNegativeItemsModule = 'snapshot_negativeitems',
+  NavigationFraudToCreditReport = 'navigation_fraudtocreditreport',
 }
 
 export enum AnalyticErrorEvents {

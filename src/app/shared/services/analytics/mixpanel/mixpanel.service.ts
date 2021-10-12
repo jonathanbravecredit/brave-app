@@ -25,6 +25,13 @@ export class MixpanelService {
     mixpanel.identify(userId); // Set the user ID using signed-in user_id.
   }
 
+  fireLoginTrackingEvent(): void {
+    if (this.disable) {
+      return;
+    }
+    mixpanel.people.increment('logins');
+  }
+
   fireClickEvent(event: AnalyticClickEvents) {
     if (this.disable) {
       return; // don't fire on dev
@@ -53,5 +60,19 @@ export class MixpanelService {
     this.previousPage = this.currentPage;
     this.currentPage = page;
     mixpanel.time_event(page);
+  }
+
+  addToCohort(cohort: string) {
+    if (this.disable) {
+      return;
+    }
+    mixpanel.people.set({ cohort });
+  }
+
+  incrementUserPageView(page: string) {
+    if (this.disable) {
+      return;
+    }
+    mixpanel.people.increment(page);
   }
 }

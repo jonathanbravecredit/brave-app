@@ -8,6 +8,8 @@
       name="input_field"
       [type]="config?.type || 'text'"
       formControlName="input"
+      [maxlength]="config?.maxLength || 255"
+      [minlength]="config?.minLength || 0"
       [placeholder]="config?.placeholder || ''"
       [autocomplete]="config?.autocomplete || 'off'"
       [ngClass]="{
