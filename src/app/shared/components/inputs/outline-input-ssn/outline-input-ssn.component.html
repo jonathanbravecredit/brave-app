@@ -14,7 +14,7 @@
         [hiddenInput]="config?.hidden || false"
         [placeholder]="config?.placeholder || ''"
         [autocomplete]="config?.autocomplete || 'off'"
-        [maxLength]="config?.maxLength"
+        [maxlength]="config?.maxLength || 255"
         [ngClass]="{
           'border-red-500':
             required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,

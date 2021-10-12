@@ -32,6 +32,9 @@ export class AppComponent implements OnInit {
         case 'signIn':
           // const provider = window.sessionStorage.getItem('braveOAuthProvider');
           // if (provider) return; // handled in redirect
+          const sub = await this.init.getUserId();
+          this.analytics.fireUserTrackingEvent(sub);
+          this.analytics.fireLoginTrackingEvent();
           await this.init.resolver();
           break;
         case 'signOut':
@@ -62,6 +65,7 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
       } else if (event instanceof NavigationEnd) {
         this.analytics.fireTimeTracking(event.url);
+        this.analytics.incrementUserPageView(event.url);
         this.interstitial.fetching$.next(false);
       }
     });

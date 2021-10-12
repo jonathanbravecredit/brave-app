@@ -22,15 +22,20 @@ export class MixpanelService {
     if (this.disable) {
       return; // don't fire on dev
     }
-    console.log('firing mx user tracking ==> ', userId);
     mixpanel.identify(userId); // Set the user ID using signed-in user_id.
+  }
+
+  fireLoginTrackingEvent(): void {
+    if (this.disable) {
+      return;
+    }
+    mixpanel.people.increment('logins');
   }
 
   fireClickEvent(event: AnalyticClickEvents) {
     if (this.disable) {
       return; // don't fire on dev
     }
-    console.log('firing mx click event ==> ', event);
     mixpanel.track('click', { category: event });
   }
 
@@ -38,7 +43,6 @@ export class MixpanelService {
     if (this.disable) {
       return; // don't fire on dev
     }
-    console.log('firing mx page view event ==> ', event);
     mixpanel.track('view', { category: event });
   }
 
@@ -46,18 +50,29 @@ export class MixpanelService {
     if (this.disable) {
       return; // don't fire on dev
     }
-    console.log('firing mx error event ==> ', event);
     mixpanel.track('error', { category: event });
   }
 
   fireTimeTracking(page: string) {
-    console.log('firing mx time tracking 1 ==> ', page, this.previousPage, this.currentPage);
     if (this.previousPage !== undefined) {
       mixpanel.track(this.previousPage);
     }
     this.previousPage = this.currentPage;
     this.currentPage = page;
-    console.log('firing mx time tracking 2 ==> ', page, this.previousPage, this.currentPage);
     mixpanel.time_event(page);
+  }
+
+  addToCohort(cohort: string) {
+    if (this.disable) {
+      return;
+    }
+    mixpanel.people.set({ cohort });
+  }
+
+  incrementUserPageView(page: string) {
+    if (this.disable) {
+      return;
+    }
+    mixpanel.people.increment(page);
   }
 }

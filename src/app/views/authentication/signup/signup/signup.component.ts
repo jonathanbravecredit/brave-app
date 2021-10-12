@@ -39,7 +39,12 @@ export class SignupComponent implements OnInit {
     let isValid = true;
     if (isValid) {
       try {
-        const resp = await this.auth.signUp(user);
+        const resp = await this.auth.signUp(user).then((value) => {
+          const sub = value.userSub;
+          this.analytics.fireCompleteRegistration(0.0, 'USD');
+          this.analytics.fireUserTrackingEvent(sub);
+          this.analytics.addToCohort();
+        });
         this.interstitial.fetching$.next(false);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err: any) {

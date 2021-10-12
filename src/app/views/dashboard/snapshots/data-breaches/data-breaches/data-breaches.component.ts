@@ -6,7 +6,7 @@ import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-data-breaches',
@@ -31,6 +31,7 @@ export class DataBreachesComponent implements OnInit {
   }
 
   onCardClick(idx: number): void {
+    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotBreachCard);
     this.store
       .dispatch(new DashboardActions.MarkDatabreachAsReviewed(idx))
       .subscribe((state: { appData: AppDataStateModel }) => {

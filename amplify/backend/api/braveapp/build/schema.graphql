@@ -94,7 +94,7 @@ type DataBreachCard @aws_iam @aws_cognito_user_pools {
   reviewed: Boolean
   condition: String
   subscriber: String
-  paragraphs: String
+  paragraphs: [String]
 }
 
 type Onboarding @aws_iam @aws_cognito_user_pools {
@@ -433,7 +433,7 @@ input DataBreachCardInput {
   reviewed: Boolean
   condition: String
   subscriber: String
-  paragraphs: String
+  paragraphs: [String]
 }
 
 enum ModelSortDirection {
