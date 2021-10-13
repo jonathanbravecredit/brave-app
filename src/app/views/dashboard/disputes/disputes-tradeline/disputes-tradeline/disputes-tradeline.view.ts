@@ -26,12 +26,12 @@ export class DisputesTradelineView implements OnDestroy {
   }
 
   onGoBack() {
-    const currentInnerProcessNavigationIndex = this.disputeProcess?.getCurrentNavigationIndex();
-    if (currentInnerProcessNavigationIndex) {
-      if (currentInnerProcessNavigationIndex > 0) {
-        this.disputeProcess?.goBack();
-      }
-    }
+    // const currentInnerProcessNavigationIndex = this.disputeProcess?.getCurrentNavigationIndex();
+    // if (currentInnerProcessNavigationIndex) {
+    //   if (currentInnerProcessNavigationIndex > 0) {
+    //     this.disputeProcess?.goBack();
+    //   }
+    // }
   }
 
   ngOnDestroy(): void {

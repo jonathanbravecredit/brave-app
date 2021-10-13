@@ -1,4 +1,4 @@
-import { IDisputeReason, IDisputeReasonCardPage } from './interfaces';
+import { IDisputeReason, IDisputeReasonCardPage, IDisputeReasonCardPageItem } from './interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
@@ -160,6 +160,41 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   },
 ];
 
+export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCardPageItem[] = [
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
+    allowUserInput: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[4],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
+    allowUserInput: false,
+  },
+];
+
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeReasonCardPage[] = [
   {
     pageIndex: 0,
@@ -202,6 +237,41 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeReaso
         allowUserInput: false,
       },
     ],
+  },
+];
+
+export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
+    allowUserInput: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[8],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[10],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[11],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
+    allowUserInput: false,
   },
 ];
 

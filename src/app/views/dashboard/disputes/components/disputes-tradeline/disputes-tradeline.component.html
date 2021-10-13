@@ -1,4 +1,4 @@
-<div class="w-full p-4" *ngIf="getLastNavigationStackId() === 'select'">
+<div class="w-full p-4" *ngIf="currentView === 'select'">
   <p class="text-lg">Which option matches your request?</p>
   <form class="mt-4">
     <div class="flex items-center">
@@ -19,43 +19,58 @@
     >
   </div>
 </div>
-<div class="w-full" *ngIf="getLastNavigationStackId() === 'reason'">
-  <div class="w-full" (swipe)="onSwipe($event)">
-    <ng-template ngFor let-page [ngForOf]="reasonOptionPages" let-pageIndex="index">
-      <ng-template [ngIf]="(basePagination.currentActivePage$ | async)?.valueOf() === page.pageIndex">
-        <div class="mt-4" *ngFor="let reason of page.items; let itemIndex = index">
-          <brave-reason-card
-            (clicked)="switchOption(pageIndex, itemIndex)"
-            [allowUserInput]="reason.allowUserInput || false"
-            [text]="reason.reason.text"
-            [customUserInput]="customReason"
-            (customInputChanged)="customReason = $event"
-            [isSelected]="isSelected(pageIndex, itemIndex)"
-            [userInputDescriptionText]="reason.userInputDescriptionText"
-          >
-          </brave-reason-card>
-        </div>
-      </ng-template>
-    </ng-template>
+
+<div class="w-full" *ngIf="currentView === 'reason'">
+  <p *ngIf="disputeType !== 'not-mine'" class="text-lg font-bold mb-2">Please select up to two reasons:</p>
+  <p *ngIf="disputeType === 'not-mine'" class="text-lg font-bold mb-2">Please select a reason:</p>
+  <div class="w-full">
+    <!-- NOT MINE REASONS -->
+    <ng-container *ngIf="disputeType === 'not-mine'">
+      <div class="mt-4" *ngFor="let reason of notMineReasons; index as itemIndex">
+        <brave-reason-card
+          #mineCard
+          [allowUserInput]="reason.allowUserInput || false"
+          [text]="reason.reason.text"
+          [userInputDescriptionText]="reason.userInputDescriptionText"
+          (click)="mineCard.isSelected = !mineCard.isSelected; addSelection(reason)"
+        >
+        </brave-reason-card>
+      </div>
+    </ng-container>
+    <!-- INACCURATE REASONS -->
+    <ng-container *ngIf="disputeType !== 'not-mine'">
+      <div class="mt-4" *ngFor="let reason of inaccurateReasons; index as idx">
+        <brave-reason-card
+          #inaccurateCard
+          [allowUserInput]="reason.allowUserInput || false"
+          [text]="reason.reason.text"
+          [userInputDescriptionText]="reason.userInputDescriptionText"
+          (click)="inaccurateCard.isSelected = !inaccurateCard.isSelected; addSelection(reason)"
+        >
+        </brave-reason-card>
+      </div>
+    </ng-container>
   </div>
-  <div class="p-4">
+  <!-- <div class="p-4">
     <brave-base-pagination
       #basePagination
       paginationStyle="point"
       [numberOfPages]="reasonOptionPages.length"
     ></brave-base-pagination>
-  </div>
+  </div> -->
   <div class="p-4">
     <p class="text-lg font-bold mb-2">Reason(s) selected:</p>
     <span class="text-sm" *ngIf="selectedIndexes.length === 0">You have not selected any reasons.</span>
     <div>
-      <div class="mt-4" *ngFor="let indexObj of selectedIndexes">
+      <div class="mt-4" *ngFor="let reason of reasons; index as idx">
         <brave-reason-card
-          (clicked)="switchOption(indexObj.pageIndex, indexObj.itemIndex)"
-          [allowUserInput]="false"
-          [text]="getTargetSelectedPageItem(indexObj).reason.text"
-          [isSelected]="isSelected(indexObj.pageIndex, indexObj.itemIndex)"
-          [userInputDescriptionText]="getTargetSelectedPageItem(indexObj).reason.userInputDescriptionText || ''"
+          #reasonCard
+          [text]="reason?.text || ''"
+          [allowUserInput]="reason?.allowUserInput || false"
+          [userInputDescriptionText]="reason?.userInputDescriptionText || ''"
+          [customUserInput]="customReason"
+          (customInputChanged)="customReason = $event"
+          (clicked)="reasonCard.isSelected = !reasonCard.isSelected; removeSelection(idx)"
         ></brave-reason-card>
       </div>
     </div>
@@ -72,15 +87,16 @@
     </div>
   </div>
 </div>
-<div *ngIf="getLastNavigationStackId() === 'summary'">
+
+<div *ngIf="currentView === 'summary'">
   <div class="p-4">
     <p class="text-lg font-bold mb-6">Reason(s)</p>
-    <div class="mt-4" *ngFor="let indexObj of selectedIndexes">
+    <div class="mt-4" *ngFor="let reason of reasons">
       <brave-reason-card
+        [isSelected]="true"
         [allowUserInput]="false"
-        [text]="getTargetSelectedPageItem(indexObj).reason.text"
-        [isSelected]="isSelected(indexObj.pageIndex, indexObj.itemIndex)"
-        [userInputDescriptionText]="getTargetSelectedPageItem(indexObj).reason.userInputDescriptionText || ''"
+        [text]="reason?.text || ''"
+        [userInputDescriptionText]="reason?.userInputDescriptionText || ''"
       ></brave-reason-card>
     </div>
   </div>
