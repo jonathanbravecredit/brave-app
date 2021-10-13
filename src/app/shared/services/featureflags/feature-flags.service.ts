@@ -5,6 +5,6 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class FeatureFlagsService {
-  disputes$: Observable<boolean> = of(false);
+  disputes$: Observable<boolean> = of(true);
   constructor() {}
 }

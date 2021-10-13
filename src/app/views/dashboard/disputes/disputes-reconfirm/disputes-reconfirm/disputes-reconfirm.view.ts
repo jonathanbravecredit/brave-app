@@ -58,7 +58,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputeTradelineClick=Missing id:${id}`;
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['./tradeline'], {
+    this.router.navigate(['../tradeline'], {
       relativeTo: this.route,
       queryParams: {
         type: null,

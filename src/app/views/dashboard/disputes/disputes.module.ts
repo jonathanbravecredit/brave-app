@@ -55,6 +55,7 @@ import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradel
 import { ReasonCardComponent } from '@views/dashboard/disputes/components/cards/reason-card/reason-card.component';
 import { DisputesComponent } from '@views/dashboard/disputes/disputes.component';
 import { DisputeHeaderComponent } from '@views/dashboard/disputes/components/dispute-header/dispute-header.component';
+import { DisputeConditionalTermsComponent } from './components/dispute-conditional-terms/dispute-conditional-terms.component';
 
 const modules = [
   CommonModule,
@@ -87,6 +88,7 @@ const components = [
   DisputesDetailComponent,
   DisputesListComponent,
   ReasonCardComponent,
+  DisputeConditionalTermsComponent,
   DisputeFindingsHeaderComponent,
   DisputeFindingsResultsComponent,
   DisputeFindingsHowToReadComponent,
