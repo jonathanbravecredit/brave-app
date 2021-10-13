@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IDisputeProcessResult } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
+import {
+  IDisputeProcessResult,
+  IDisputeReasonCardPageItem,
+} from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS as processReasons,
-  DEFAULT_TRADELINE_DISPUTE_PUBLIC_RECORDS_REASONS as defaultReasons,
+  DISPUTES_PERSONAL_REASONS_TOBEREMOVED,
 } from './constants';
 
 @Component({
@@ -15,8 +18,7 @@ export class DisputesPersonalComponent {
   @Input() nameTypeAbbreviation: string | undefined;
   @Input() previousValue: string | undefined;
   @Input() valueDescription: string | undefined;
-
-  @Input() defaultReasonPage = defaultReasons.TO_BE_REMOVED;
+  @Input() defaultReasonPage: IDisputeReasonCardPageItem[] = DISPUTES_PERSONAL_REASONS_TOBEREMOVED;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   processReasons = processReasons;
   constructor() {}

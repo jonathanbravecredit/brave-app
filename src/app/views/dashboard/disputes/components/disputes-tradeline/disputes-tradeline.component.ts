@@ -1,21 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
-import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
 import {
   IDisputeReasonCardPage,
   IDisputeSelectedObj,
   IDisputeProcessResult,
   IDisputeReasonCardPageItem,
-  IDisputeReason,
 } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
-  DEFAULT_TRADELINE_REASONS,
   DISPUTE_REASONS_INACCURATE,
   DISPUTE_REASONS_NOTMINE,
 } from './constants';
-import { TRADELINE_DISPUTES_NUMBER_OF_MAXIMUM_SELECTED_REASONS as maxSelectedItemAmount } from './settings';
 
 type viewState = 'select' | 'summary' | 'reason';
 
@@ -29,6 +25,8 @@ export class DisputesTradelineComponent implements OnInit {
   @Input() initialStepId: string = 'select';
   @Input() firstOptionDescription = 'This is not mine';
   @Input() secondOptionDescription = 'Account information is inaccurate';
+  @Input() firstOptionReasonPages = DISPUTE_REASONS_NOTMINE;
+  @Input() secondOptionReasonPages = DISPUTE_REASONS_INACCURATE;
   @Input() processReasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
 
@@ -40,14 +38,14 @@ export class DisputesTradelineComponent implements OnInit {
   showCustomInputError = false;
   showMaxError = false;
   customReason: string = '';
-  notMineReasons = DISPUTE_REASONS_NOTMINE;
-  inaccurateReasons = DISPUTE_REASONS_INACCURATE;
+  // notMineReasons = DISPUTE_REASONS_NOTMINE;
+  // inaccurateReasons = DISPUTE_REASONS_INACCURATE;
   reasons: [IDisputeReasonCardPageItem?, IDisputeReasonCardPageItem?] = [];
 
   constructor() {}
 
   get currentView(): viewState {
-    return this.viewState[this.viewState.length];
+    return this.viewState[this.viewState.length - 1];
   }
 
   ngOnInit(): void {}

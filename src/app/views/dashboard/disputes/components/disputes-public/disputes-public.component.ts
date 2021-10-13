@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IDisputeProcessResult } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
+import {
+  IDisputeProcessResult,
+  IDisputeReasonCardPageItem,
+} from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS as processReasons,
-  DEFAULT_TRADELINE_DISPUTE_PUBLIC_RECORDS_REASONS as defaultReasons,
+  PUBLIC_REASONS_INACCURATE,
+  PUBLIC_REASONS_NOTMINE,
 } from './constants';
 
 @Component({
@@ -14,8 +18,8 @@ export class DisputesPublicComponent implements OnInit {
   @Input() initialStepId: string = 'select';
   @Input() description: string | undefined;
   @Input() dateReported: string | undefined;
-  @Input() firstOptionReasonPages = defaultReasons.NOT_MINE;
-  @Input() secondOptionReasonPages = defaultReasons.INACCURATE;
+  @Input() firstOptionReasonPages: IDisputeReasonCardPageItem[] = PUBLIC_REASONS_NOTMINE;
+  @Input() secondOptionReasonPages: IDisputeReasonCardPageItem[] = PUBLIC_REASONS_INACCURATE;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
   processReasons = processReasons;
 

@@ -28,12 +28,12 @@ export class DisputesPublicPureView implements OnInit {
   ngOnInit(): void {}
 
   requestGoBack() {
-    const currentInnerProcessNavigationIndex = this.disputeProcess?.getCurrentNavigationIndex();
-    if (currentInnerProcessNavigationIndex) {
-      if (currentInnerProcessNavigationIndex > 0) {
-        this.disputeProcess?.goBack();
-      }
-    }
+    // const currentInnerProcessNavigationIndex = this.disputeProcess?.getCurrentNavigationIndex();
+    // if (currentInnerProcessNavigationIndex) {
+    //   if (currentInnerProcessNavigationIndex > 0) {
+    //     this.disputeProcess?.goBack();
+    //   }
+    // }
   }
 
   onDisputeProcessResult(result: IDisputeProcessResult): void {

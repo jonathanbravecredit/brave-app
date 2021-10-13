@@ -26,7 +26,7 @@
   <div class="w-full">
     <!-- NOT MINE REASONS -->
     <ng-container *ngIf="disputeType === 'not-mine'">
-      <div class="mt-4" *ngFor="let reason of notMineReasons; index as itemIndex">
+      <div class="mt-4" *ngFor="let reason of firstOptionReasonPages; index as itemIndex">
         <brave-reason-card
           #mineCard
           [allowUserInput]="reason.allowUserInput || false"
@@ -39,7 +39,7 @@
     </ng-container>
     <!-- INACCURATE REASONS -->
     <ng-container *ngIf="disputeType !== 'not-mine'">
-      <div class="mt-4" *ngFor="let reason of inaccurateReasons; index as idx">
+      <div class="mt-4" *ngFor="let reason of secondOptionReasonPages; index as idx">
         <brave-reason-card
           #inaccurateCard
           [allowUserInput]="reason.allowUserInput || false"
@@ -65,6 +65,7 @@
       <div class="mt-4" *ngFor="let reason of reasons; index as idx">
         <brave-reason-card
           #reasonCard
+          [isSelected]="true"
           [text]="reason?.text || ''"
           [allowUserInput]="reason?.allowUserInput || false"
           [userInputDescriptionText]="reason?.userInputDescriptionText || ''"

@@ -1,6 +1,7 @@
 import {
   IDisputeReason,
   IDisputeReasonCardPage,
+  IDisputeReasonCardPageItem,
 } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeReason[] = [
@@ -43,6 +44,44 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeR
     id: 'pr-7',
     claimCode: 'P3',
     text: 'This is not my public record',
+  },
+];
+
+export const PUBLIC_REASONS_INACCURATE: IDisputeReasonCardPageItem[] = [
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[0],
+    allowUserInput: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[1],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[2],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[3],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[4],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[5],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[6],
+    allowUserInput: false,
+  },
+];
+
+export const PUBLIC_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[7],
+    allowUserInput: true,
   },
 ];
 
