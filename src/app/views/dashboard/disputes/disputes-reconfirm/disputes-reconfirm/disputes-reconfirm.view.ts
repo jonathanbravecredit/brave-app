@@ -1,20 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AccountTypes } from '@shared/constants/account-types';
-import {
-  IBorrower,
-  IBorrowerAddress,
-  IBorrowerName,
-  IEmployer,
-  IMergeReport,
-  IPublicPartition,
-  ITradeLinePartition,
-} from '@shared/interfaces';
+import { IMergeReport, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
-import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -68,7 +58,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputeTradelineClick=Missing id:${id}`;
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['./tradeline'], {
+    this.router.navigate(['../tradeline'], {
       relativeTo: this.route,
       queryParams: {
         type: null,

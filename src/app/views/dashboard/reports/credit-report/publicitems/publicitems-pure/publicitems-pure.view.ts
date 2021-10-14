@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
 import { IPublicPartition } from '@shared/interfaces';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 
 @Component({
   selector: 'brave-publicitems-pure',

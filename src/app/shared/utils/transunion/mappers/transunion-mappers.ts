@@ -3,13 +3,13 @@ import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces'
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
 import { TransunionQueries } from '@shared/utils/transunion/queries/transunion-queries';
-import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import {
   ICreditReportCardInputs,
   ReportCardFieldTypes,
 } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { CREDIT_REPORT_GROUPS, CreditReportGroups } from '@shared/constants/credit-report';
 import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
+import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 
 export class TransunionMappers extends TransunionBase {
   static parser = TransunionParsers;

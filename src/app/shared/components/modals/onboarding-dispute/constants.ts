@@ -7,7 +7,7 @@ export const REFRESH_TERMS = [
 export const ONLINE_DISPUTE_TERMS = [
   `As part of the dispute process, TransUnion® may contact the data furnisher that reported the information being disputed. `,
   `Any disputed information that is verified as accurate will remain on the credit report.`,
-  `The dispute options provided through this dispute service do not include “all” possible dispute options; consumers need to raise their dispute directly through TransUnion® instead if they wish to update the SSN, date of birth, phone number, current name or address, or want to add new name or address information to their TransUnion® credit report.`,
+  `The dispute options provided through this dispute service do not include the ability to update or add certain personally identifiable information fields.  Consumers may need to contact TransUnion directly to update the SSN, date of birth, phone number, current name or address, or to add a new name or address to their TransUnion credit report`,
   `Consumers are unable to provide supporting documentation through this Dispute Service. In the event the consumer wants to submit supporting documentation, consumer should submit their dispute to TransUnion® directly.`,
   `Consumer agrees to be notified via email when the dispute is complete, and agrees to log into this site to access their Investigation results`,
   `I am requesting an investigation based on my own TransUnion® credit report information`,

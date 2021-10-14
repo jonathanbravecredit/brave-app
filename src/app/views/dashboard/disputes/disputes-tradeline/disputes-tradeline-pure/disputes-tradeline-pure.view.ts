@@ -1,8 +1,14 @@
-import { Component, EventEmitter, Input, ViewChild, Output } from '@angular/core';
-import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
-import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import {
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
+  DISPUTE_REASONS_INACCURATE,
+  DISPUTE_REASONS_NOTMINE,
+} from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/constants';
+
+type viewDisplay = 'sent' | 'not-sent';
 
 export interface IProcessDisputeTradelineResult {
   result: IDisputeProcessResult;
@@ -14,13 +20,12 @@ export interface IProcessDisputeTradelineResult {
   templateUrl: './disputes-tradeline-pure.view.html',
 })
 export class DisputesTradelinePureView {
-  @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
-  @Input() isDisputeProcessInProgress = true;
-  @Input() isDisputeSent = false;
-  @Input() initialStepId = 'select';
-  @Input() initialDisputeType: string | undefined = undefined;
+  @Input() viewDisplay: viewDisplay = 'not-sent';
   @Input() dispute: IDisputeTradelineItem | undefined;
-  @Output() goBack: EventEmitter<void> = new EventEmitter();
   @Output() processResult: EventEmitter<IProcessDisputeTradelineResult> = new EventEmitter();
+
+  reasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
+  pageOne = DISPUTE_REASONS_NOTMINE;
+  pageTwo = DISPUTE_REASONS_INACCURATE;
   constructor() {}
 }

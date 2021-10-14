@@ -8,6 +8,7 @@ import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-addre
 import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Component({
   selector: 'brave-kyc-address',
@@ -44,12 +45,21 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
 
   goToNext(form: FormGroup): void {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingAddress);
+    // const clean = TransunionUtil.scrubbers.{ ...this.formatAttributes(form, address) };
     if (form.valid) {
-      const attrs = {
+      let attrs = {
         address: {
           ...this.formatAttributes(form, address),
         },
       } as UserAttributesInput;
+      attrs.address = {
+        addressOne: tu.scrubbers.scrubAddressStreets(attrs.address?.addressOne || ''),
+        addressTwo: tu.scrubbers.scrubAddressStreets(attrs.address?.addressTwo || ''),
+        city: tu.scrubbers.scrubAddressStreets(attrs.address?.city || ''),
+        state: attrs.address?.state || '',
+        zip: attrs.address?.zip || '',
+      };
+
       this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
         this.kycService.completeStep(this.stepID);
         this.router.navigate(['../identity'], { relativeTo: this.route });

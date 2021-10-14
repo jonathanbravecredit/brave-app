@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IDisputeCurrent, IDisputeHistorical } from '@shared/components/cards/dispute-cards';
 import { DisputeInput } from '@shared/services/aws/api.service';
+import { IDisputeCurrent, IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 interface IDisputesToOverview {

@@ -10,7 +10,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | undefined {
     if (!tradeline) return;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
-    return {
+    const mapped = {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
       accountTypeSymbol: tradeline?.accountTypeSymbol,
@@ -41,5 +41,6 @@ export class TradelineToDetailsPipe implements PipeTransform {
       openClosed: tradeline?.Tradeline?.OpenClosed?.symbol,
       remarks: remarks,
     } as ITradelineDetailsConfig;
+    return mapped;
   }
 }

@@ -1,19 +1,18 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
 import { IPublicPartition } from '@shared/interfaces';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
-import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { Observable } from 'rxjs';
+
+type viewDisplay = 'sent' | 'not-sent';
 
 @Component({
   selector: 'brave-disputes-public-view',
   templateUrl: './disputes-public.view.html',
 })
 export class DisputesPublicView implements OnDestroy {
-  isDisputeProcessInProgress = true;
-  isDisputeSent = false;
+  viewDisplay: viewDisplay = 'not-sent';
   publicItem$: Observable<IPublicPartition>;
 
   constructor(private router: Router, private route: ActivatedRoute, private disputeService: DisputeService) {
@@ -35,8 +34,7 @@ export class DisputesPublicView implements OnDestroy {
         // TODO need to handle the response appropriately now that we are set up with TU
         const { success, error, data } = await this.disputeService.sendStartDispute();
         if (success) {
-          this.isDisputeSent = true;
-          this.isDisputeProcessInProgress = false;
+          this.viewDisplay = 'sent';
         } else {
           const errorCode = error?.Code;
           this.router.navigate([`/dashboard/report/dispute/publicitem/error`], {

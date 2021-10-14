@@ -1,0 +1,32 @@
+<div class="p-4 rounded-lg border" [ngClass]="{ 'border-indigo-800': selected, 'border-blueGray-500': !selected }">
+  <div>
+    <div class="flex flex-row items-center">
+      <span class="text-sm font-semibold">{{ label }}</span>
+      <div class="ml-auto cursor-pointer flex justify-end" (click)="toggleClick.emit()">
+        <span class="material-icons-outlined">{{ selected ? 'remove' : 'add' }}</span>
+      </div>
+    </div>
+    <div *ngIf="selected && allowInput && showInput">
+      <p class="my-2 text-sm font-semibold">{{ content.textAreaHeader }}</p>
+      <p class="my-2 text-xs font-light">{{ content.textAreaSubheader }}</p>
+      <textarea
+        #textArea
+        [ngModel]="input"
+        (ngModelChange)="textChange.emit($event)"
+        class="resize-none w-full rounded-sm h-32 text-xs bg-blueGray-300"
+        placeholder="Add your reason to dispute here"
+      ></textarea>
+    </div>
+  </div>
+</div>
+<!-- <brave-confirmation-modal
+  (confirmed)="modalActionHandler($event)"
+  btnTextConfirm="Continue providing details"
+  btnTextCancel="Choose other reasons"
+>
+  <div>
+    <p class="font-semibold text-sm">{{ content.alertHeader }}</p>
+    <p class="text-xs">{{ content.alertSubheaderOne }}</p>
+    <p class="text-xs">{{ content.alertSubheaderTwo }}</p>
+  </div>
+</brave-confirmation-modal> -->

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import { IPublicPartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';

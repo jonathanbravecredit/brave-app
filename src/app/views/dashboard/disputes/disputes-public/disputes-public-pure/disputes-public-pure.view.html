@@ -1,14 +1,20 @@
-<div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
+<div class="container mx-auto max-w-xs h-full" *ngIf="viewDisplay === 'not-sent'">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
   <brave-dispute-header class="mt-4" [publicdispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
-  <brave-disputes-public
-    [disputeType]="initialDisputeType"
-    [initialStepId]="initialStepId"
-    (disputeProcessResult)="processResult.emit({ result: $event, publicItem: dispute?.publicPartition })"
-  ></brave-disputes-public>
+  <div class="w-full p-4">
+    <brave-dispute-base
+      [initialStepId]="'select'"
+      (disputeProcessResult)="processResult.emit({ result: $event, publicItem: dispute?.publicPartition })"
+      [firstOptionReasonPages]="pageOne"
+      [secondOptionReasonPages]="pageTwo"
+      [secondOptionDescription]="'Public record information is inaccurate'"
+      [processReasons]="reasons"
+    >
+    </brave-dispute-base>
+  </div>
 </div>
-<div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
+
+<div class="container mx-auto max-w-xs h-full" *ngIf="viewDisplay === 'sent'">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
   <brave-disputes-success></brave-disputes-success>
 </div>
-<!-- <p>In progress</p> -->
