@@ -148,7 +148,6 @@ type Transunion {
   disputeStatus: String
   dusputeCurrent: Dispute
   disputeHistorical: [Dispute]
-  disputeStatus: String
   disputes: [Dispute]
 }
 type Equifax {

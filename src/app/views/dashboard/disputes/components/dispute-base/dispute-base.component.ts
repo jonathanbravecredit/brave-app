@@ -71,7 +71,7 @@ export class DisputeBaseComponent implements OnInit {
       setTimeout(() => (this.showMaxError = false), 3000);
       return;
     } else {
-      reason.selected = true; // flag it
+      reason.selected = true; // flag it as selected
       this.selections = this.selections.length > 0 ? [this.selections[0], reason] : [reason];
     }
   }
