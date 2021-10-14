@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TDisputeEntity } from '@shared/components/cards/dispute-cards';
 import { DisputeStatus } from '@shared/constants/disputes.interface';
 import { ITUServiceResponse } from '@shared/interfaces';
 import { DisputeInput } from '@shared/services/aws/api.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { Observable, Subscription } from 'rxjs';
+import { TDisputeEntity } from '@views/dashboard/disputes/components/cards/interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'brave-disputes-overview-initial',
@@ -70,7 +70,7 @@ export class DisputesOverviewInitialView implements OnInit {
     try {
       if (!disputeId) throw `Missing dispute Id=${disputeId}`;
       return await this.disputeService.getInvestigationResults(disputeId);
-    } catch (err) {
+    } catch (err: any) {
       this.interstitial.changeMessage('Error fetching results');
       return { success: false, error: err };
     }

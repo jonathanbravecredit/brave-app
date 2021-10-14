@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IDisputeCurrent, IDisputeHistorical, TDisputeEntity } from '@shared/components/cards/dispute-cards';
+import { IDisputeCurrent, IDisputeHistorical, TDisputeEntity } from '@views/dashboard/disputes/components/cards';
 
 @Component({
   selector: 'brave-disputes-overview-initial-pure',

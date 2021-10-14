@@ -1,9 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
-import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { IPublicPartition } from '@shared/interfaces';
 import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import {
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS,
+  PUBLIC_REASONS_INACCURATE,
+  PUBLIC_REASONS_NOTMINE,
+} from '@views/dashboard/disputes/disputes-public/disputes-public-pure/constants';
 
+type viewDisplay = 'sent' | 'not-sent';
 export interface IProcessDisputePublicResult {
   result: IDisputeProcessResult;
   publicItem: IPublicPartition | undefined;
@@ -14,33 +19,15 @@ export interface IProcessDisputePublicResult {
   templateUrl: './disputes-public-pure.view.html',
 })
 export class DisputesPublicPureView implements OnInit {
-  @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
-  @Input() isDisputeProcessInProgress = true;
-  @Input() isDisputeSent = false;
-  @Input() initialStepId = 'select';
-  @Input() initialDisputeType: string | undefined = undefined;
+  @Input() viewDisplay: viewDisplay = 'not-sent';
   @Input() dispute: IDisputePublicItem | undefined;
-  @Output() goBack: EventEmitter<void> = new EventEmitter();
   @Output() processResult: EventEmitter<IProcessDisputePublicResult> = new EventEmitter();
+
+  reasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS;
+  pageOne = PUBLIC_REASONS_NOTMINE;
+  pageTwo = PUBLIC_REASONS_INACCURATE;
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  requestGoBack() {
-    const currentInnerProcessNavigationIndex = this.disputeProcess?.getCurrentNavigationIndex();
-    if (currentInnerProcessNavigationIndex) {
-      if (currentInnerProcessNavigationIndex > 0) {
-        this.disputeProcess?.goBack();
-      }
-    }
-  }
-
-  onDisputeProcessResult(result: IDisputeProcessResult): void {
-    // result event has a data property where the reason ids can be pull out and find them in the constants of the tradeline component
-    if (result.isFinished) {
-      this.isDisputeSent = true;
-      this.isDisputeProcessInProgress = false;
-    }
-  }
 }

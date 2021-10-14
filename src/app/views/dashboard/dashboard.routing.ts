@@ -56,8 +56,8 @@ const DashboardRoutes: Routes = [
       },
       {
         path: 'disputes',
-        component: DisputesOverviewInitialView,
         canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () => import('./disputes/disputes.module').then((m) => m.DisputesModule),
       },
       {
         path: 'error',
@@ -95,46 +95,46 @@ const DashboardRoutes: Routes = [
         component: PersonalitemsView,
         canActivate: [ActiveGuard, AuthGuard],
       },
-      {
-        path: 'report/dispute',
-        component: DisputesReconfirmView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'report/dispute/tradeline',
-        component: DisputesTradelineView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'report/dispute/personalitem',
-        component: DisputesPersonalView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'report/dispute/publicitem',
-        component: DisputesPublicView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'report/dispute/tradeline/error',
-        component: BaseExceptionView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'report/dispute/personalitem/error',
-        component: BaseExceptionView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'report/dispute/publicitem/error',
-        component: BaseExceptionView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
-      {
-        path: 'disputes/findings',
-        component: DisputeFindingsView,
-        canActivate: [ActiveGuard, AuthGuard],
-      },
+      // {
+      //   path: 'report/dispute',
+      //   component: DisputesReconfirmView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'report/dispute/tradeline',
+      //   component: DisputesTradelineView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'report/dispute/personalitem',
+      //   component: DisputesPersonalView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'report/dispute/publicitem',
+      //   component: DisputesPublicView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'report/dispute/tradeline/error',
+      //   component: BaseExceptionView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'report/dispute/personalitem/error',
+      //   component: BaseExceptionView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'report/dispute/publicitem/error',
+      //   component: BaseExceptionView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
+      // {
+      //   path: 'disputes/findings',
+      //   component: DisputeFindingsView,
+      //   canActivate: [ActiveGuard, AuthGuard],
+      // },
       {
         path: 'report/error',
         component: BaseExceptionView,
