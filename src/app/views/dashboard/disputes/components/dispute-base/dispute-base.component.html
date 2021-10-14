@@ -23,16 +23,10 @@
 <div class="w-full" *ngIf="currentView === 'reason'">
   <p class="text-lg font-bold mb-2">{{ disputeType !== 'not-mine' ? content.p1 : content.p2 }}</p>
   <div class="w-full">
-    <div class="mt-4" *ngFor="let card of reasonCards; index as itemIndex">
-      <brave-reason-card
-        #reasonCard
-        [label]="card.reason.text"
-        [allowInput]="card.allowUserInput || false"
-        [selected]="card.selected || false"
-        (toggleClick)="addSelection(card)"
-      >
-      </brave-reason-card>
-    </div>
+    <ng-container *ngIf="reasonCards | reasonsToPages: 5 as pages">
+      <brave-basic-carousel [pages]="pages.pages" [data]="pages.data" (pageClicked)="test($event)">
+      </brave-basic-carousel>
+    </ng-container>
   </div>
   <div class="p-4">
     <p class="text-lg font-bold mb-2">{{ content.p3 }}</p>
@@ -44,7 +38,7 @@
           [selected]="true"
           [label]="selection?.reason?.text || ''"
           [showInput]="true"
-          [allowInput]="selection?.allowUserInput || false"
+          [allowInput]="selection?.allowInput || false"
           (textChange)="onTextChange($event, idx)"
           (toggleClick)="removeSelection(idx)"
         ></brave-reason-card>
@@ -71,7 +65,7 @@
         [label]="selection?.reason?.text || ''"
         [input]="selection?.customInput || ''"
         [showInput]="true"
-        [allowInput]="selection?.allowUserInput || false"
+        [allowInput]="selection?.allowInput || false"
       ></brave-reason-card>
     </div>
   </div>

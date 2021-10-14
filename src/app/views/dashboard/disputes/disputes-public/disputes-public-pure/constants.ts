@@ -1,7 +1,4 @@
-import {
-  IDisputeReason,
-  IDisputeReasonCardPageItem,
-} from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import { IDisputeReason, IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeReason[] = [
   {
@@ -46,40 +43,48 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeR
   },
 ];
 
-export const PUBLIC_REASONS_INACCURATE: IDisputeReasonCardPageItem[] = [
+export const PUBLIC_REASONS_INACCURATE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[0],
-    allowUserInput: true,
+    allowInput: true,
+    allowMore: false,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[1],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[2],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[3],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[4],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[5],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[6],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
 ];
 
-export const PUBLIC_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
+export const PUBLIC_REASONS_NOTMINE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[7],
-    allowUserInput: true,
+    allowInput: true,
+    allowMore: false,
   },
 ];

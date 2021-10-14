@@ -55,6 +55,7 @@ import { DisputeHeaderComponent } from '@views/dashboard/disputes/components/dis
 import { DisputeConditionalTermsComponent } from './components/dispute-conditional-terms/dispute-conditional-terms.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisputeBaseComponent } from './components/dispute-base/dispute-base.component';
+import { DisputeReasonPageComponent } from './components/dispute-reason-page/dispute-reason-page.component';
 
 const modules = [
   CommonModule,
@@ -110,6 +111,7 @@ const components = [
   DisputesSuccessView,
   DisputesSuccessPureView,
   DisputeHeaderComponent,
+  DisputeReasonPageComponent,
 ];
 
 const pipes = [DisputeCardStatusPipe];

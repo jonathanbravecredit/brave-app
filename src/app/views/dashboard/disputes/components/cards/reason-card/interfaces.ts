@@ -1,6 +1,15 @@
 export interface IDisputeReasonCard {
-  allowUserInput: boolean;
+  reason: IDisputeReason;
+  allowInput?: boolean;
+  allowMore?: boolean;
+  selected?: boolean;
+  customInput?: string;
+  index?: number;
+}
+
+export interface IDisputeReason {
+  id: string;
   text: string;
-  isSelected: boolean;
-  userInputDescriptionText?: string;
+  claimCode: string;
+  userInputDescriptionText?: string | null;
 }

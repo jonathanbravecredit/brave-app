@@ -1,7 +1,4 @@
-import {
-  IDisputeReason,
-  IDisputeReasonCardPageItem,
-} from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import { IDisputeReason, IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
@@ -161,120 +158,147 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   },
 ];
 
-export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCardPageItem[] = [
+export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-    allowUserInput: true,
+    allowInput: true,
+    allowMore: false,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[4],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
 ];
 
-export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
+export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-    allowUserInput: true,
+    allowInput: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[8],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[10],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[11],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[13],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[14],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[15],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[16],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[17],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[18],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[19],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[20],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[21],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[22],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[23],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[24],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
 ];

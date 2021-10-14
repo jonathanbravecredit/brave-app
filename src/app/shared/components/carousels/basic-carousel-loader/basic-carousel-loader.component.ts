@@ -4,10 +4,12 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Input,
+  Output,
   OnDestroy,
   AfterViewInit,
   ViewChild,
   ViewContainerRef,
+  EventEmitter,
 } from '@angular/core';
 
 @Component({
@@ -24,6 +26,10 @@ export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
    */
   @Input() data: Record<string, any> = {};
   /**
+   * @property Detect when a carousel page is clicked...can be bubble of from smaller items in component
+   */
+  @Output() pageClicked: EventEmitter<any> = new EventEmitter();
+  /**
    * @property ViewContainerRef to bind component to
    */
   @ViewChild('containerHost', { read: ViewContainerRef }) containerRef!: ViewContainerRef;
@@ -36,7 +42,7 @@ export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     // added Promise to resolve change after check error
-    Promise.resolve(null).then(() => this.loadComponent().bindData(this.componentRef));
+    Promise.resolve(null).then(() => this.loadComponent().bindData(this.componentRef).bindEvents(this.componentRef));
   }
 
   ngOnDestroy() {
@@ -61,11 +67,23 @@ export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
    * @param ref
    * @returns void
    */
-  bindData(ref: ComponentRef<any> | undefined): void {
-    if (!this.data) return;
-    if (!ref) return;
+  bindData(ref: ComponentRef<any> | undefined): BasicCarouselLoaderComponent {
+    if (!this.data) return this;
+    if (!ref) return this;
     Object.keys(this.data).forEach((key) => {
       ref.instance[`${key}`] = this.data[key];
     });
+    return this;
+  }
+
+  /**
+   * Binds a basic event to the component
+   * -
+   * @param ref
+   * @returns
+   */
+  bindEvents(ref: ComponentRef<any> | undefined): void {
+    if (!ref) return;
+    ref.instance['pageClicked'] = new EventEmitter<any>();
   }
 }
