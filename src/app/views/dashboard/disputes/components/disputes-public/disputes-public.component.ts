@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SelectionTypes } from '@views/dashboard/disputes/components/disputes-tradeline/disputes-tradeline.component';
 import {
   IDisputeProcessResult,
   IDisputeReasonCardPageItem,
@@ -14,7 +15,7 @@ import {
   templateUrl: './disputes-public.component.html',
 })
 export class DisputesPublicComponent implements OnInit {
-  @Input() disputeType: string | undefined = undefined;
+  @Input() disputeType: SelectionTypes | undefined = undefined;
   @Input() initialStepId: string = 'select';
   @Input() description: string | undefined;
   @Input() dateReported: string | undefined;

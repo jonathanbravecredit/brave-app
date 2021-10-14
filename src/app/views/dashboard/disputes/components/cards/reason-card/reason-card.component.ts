@@ -1,47 +1,33 @@
-import { Component, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
-import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { REASON_CARD_CONTENT } from '@views/dashboard/disputes/components/cards/reason-card/constants';
 
 @Component({
   selector: 'brave-reason-card',
   templateUrl: './reason-card.component.html',
 })
 export class ReasonCardComponent implements OnInit {
-  @ViewChild(ConfirmationModalComponent) confirmationModal: ConfirmationModalComponent | undefined;
   // Allows the user to write the reason of the selection of the current card.
-  @Input() allowUserInput = false;
+  @Input() allowInput = false;
+  // toggles the text area open...can allow user input but still not show it
+  @Input() showInput = false;
+  // actuall user input value
+  @Input() input: string = '';
+  // Text that the card will hold inside.
+  @Input() label = '';
   // If the card is it will be selected
-  @Input() isSelected = false;
-  // Text that the card will hold inside.
-  @Input() text = '';
-  // Text that the card will hold inside.
-  @Input() userInputDescriptionText: string | undefined = '';
-  // Input provided by the user. This is the user's custom "reason".
-  @Input() customUserInput = '';
+  @Input() selected = false;
 
-  @Output() clicked: EventEmitter<void> = new EventEmitter();
-  @Output() customInputChanged: EventEmitter<string> = new EventEmitter();
+  @Output() toggleClick: EventEmitter<void> = new EventEmitter();
+  @Output() textChange: EventEmitter<string> = new EventEmitter();
+
+  confirmed: boolean = false;
+  content = REASON_CARD_CONTENT;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  requestClick(): void {
-    if (this.allowUserInput) {
-      if (!this.isSelected) {
-        this.confirmationModal?.open();
-      }
-    } else {
-      this.clicked.emit();
-    }
-  }
-
-  emitCustomInputChanges(event: any): void {
-    this.customInputChanged.emit(event.target.value);
-  }
-
-  modalActionHandler(isConfirmed: boolean): void {
-    if (isConfirmed) {
-      this.clicked.emit();
-    }
-  }
+  // requestClick(): void {
+  //   this.allowInput ? (!this.confirmed ? this.confirmationModal?.open() : this.clicked.emit()) : this.clicked.emit();
+  // }
 }

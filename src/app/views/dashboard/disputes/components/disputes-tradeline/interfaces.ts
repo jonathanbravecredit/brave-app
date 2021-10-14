@@ -5,7 +5,11 @@ export interface IDisputeReasonCardPage {
   items: IDisputeReasonCardPageItem[];
 }
 
-export type IDisputeReasonCardPageItem = { reason: IDisputeReason } & Partial<IDisputeReasonCard>;
+export type IDisputeReasonCardPageItem = {
+  reason: IDisputeReason;
+  selected?: boolean;
+  customInput?: string;
+} & Partial<IDisputeReasonCard>;
 
 export interface IDisputeSelectedObj {
   pageIndex: number;

@@ -5,8 +5,6 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
     id: '1',
     claimCode: 'C9',
     text: 'Other, provide details in "Additional Comments" field below',
-    userInputDescriptionText:
-      "Please don't include personal medical or information that can identify you (such as your social security number)",
   },
   {
     id: '2',
@@ -195,51 +193,6 @@ export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCardPageItem[] = [
   },
 ];
 
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeReasonCardPage[] = [
-  {
-    pageIndex: 0,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-        allowUserInput: true,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
-        allowUserInput: false,
-      },
-    ],
-  },
-  {
-    pageIndex: 1,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[4],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
-        allowUserInput: false,
-      },
-    ],
-  },
-];
-
 export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
@@ -273,117 +226,210 @@ export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
     allowUserInput: false,
   },
-];
-
-export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_NOT_MINE: IDisputeReasonCardPage[] = [
   {
-    pageIndex: 0,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-        allowUserInput: true,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[8],
-        allowUserInput: false,
-      },
-    ],
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[13],
+    allowUserInput: false,
   },
   {
-    pageIndex: 1,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[10],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[11],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
-        allowUserInput: false,
-      },
-    ],
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[14],
+    allowUserInput: false,
   },
   {
-    pageIndex: 2,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[13],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[14],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[15],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[16],
-        allowUserInput: false,
-      },
-    ],
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[15],
+    allowUserInput: false,
   },
   {
-    pageIndex: 3,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[17],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[18],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[19],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[20],
-        allowUserInput: false,
-      },
-    ],
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[16],
+    allowUserInput: false,
   },
   {
-    pageIndex: 4,
-    items: [
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[21],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[22],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[23],
-        allowUserInput: false,
-      },
-      {
-        reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[24],
-        allowUserInput: false,
-      },
-    ],
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[17],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[18],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[19],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[20],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[21],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[22],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[23],
+    allowUserInput: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[24],
+    allowUserInput: false,
   },
 ];
 
-export const DEFAULT_TRADELINE_REASONS = {
-  NOT_MINE: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_NOT_MINE,
-  INACCURATE: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE,
-};
+// export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_NOT_MINE: IDisputeReasonCardPage[] = [
+//   {
+//     pageIndex: 0,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
+//         allowUserInput: true,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[8],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+//   {
+//     pageIndex: 1,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[10],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[11],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+//   {
+//     pageIndex: 2,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[13],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[14],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[15],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[16],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+//   {
+//     pageIndex: 3,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[17],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[18],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[19],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[20],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+//   {
+//     pageIndex: 4,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[21],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[22],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[23],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[24],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+// ];
+
+// export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE: IDisputeReasonCardPage[] = [
+//   {
+//     pageIndex: 0,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
+//         allowUserInput: true,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+//   {
+//     pageIndex: 1,
+//     items: [
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[4],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
+//         allowUserInput: false,
+//       },
+//       {
+//         reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
+//         allowUserInput: false,
+//       },
+//     ],
+//   },
+// ];
+
+// export const DEFAULT_TRADELINE_REASONS = {
+//   NOT_MINE: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_NOT_MINE,
+//   INACCURATE: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS_INACCURATE,
+// };

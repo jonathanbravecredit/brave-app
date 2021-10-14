@@ -56,11 +56,15 @@ import { ReasonCardComponent } from '@views/dashboard/disputes/components/cards/
 import { DisputesComponent } from '@views/dashboard/disputes/disputes.component';
 import { DisputeHeaderComponent } from '@views/dashboard/disputes/components/dispute-header/dispute-header.component';
 import { DisputeConditionalTermsComponent } from './components/dispute-conditional-terms/dispute-conditional-terms.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DisputeBaseComponent } from './components/dispute-base/dispute-base.component';
 
 const modules = [
   CommonModule,
   SharedComponentsModule,
   SharedPipesModule,
+  FormsModule,
+  ReactiveFormsModule,
   NgxMaskModule,
   TradelinesModule,
   PublicitemsModule,
@@ -70,6 +74,7 @@ const modules = [
 
 const components = [
   DisputesComponent,
+  DisputeBaseComponent,
   DisputesPersonalView,
   DisputesPersonalPureView,
   DisputesPublicPureView,

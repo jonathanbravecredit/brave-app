@@ -165,8 +165,9 @@ export class TransunionService {
    */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
     try {
-      const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify({}));
-      return res ? JSON.parse(res) : false;
+      // const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify({}));
+      return { success: true }; //TODO by pass backend for now
+      // return res ? JSON.parse(res) : false;
     } catch (err: any) {
       return { success: false, error: err };
     }
@@ -195,10 +196,11 @@ export class TransunionService {
     disputes: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[],
   ): Promise<ITUServiceResponse<any>> {
     try {
-      const msg = { disputes }; //this.createStartDisputePayload(data, disputes);
-      const clean = this.tu.scrubbers.scrubBackendData(msg);
-      const res = await this.api.Transunion('StartDispute', JSON.stringify(clean));
-      return res ? JSON.parse(res) : undefined;
+      // const msg = { disputes }; //this.createStartDisputePayload(data, disputes);
+      // const clean = this.tu.scrubbers.scrubBackendData(msg);
+      // const res = await this.api.Transunion('StartDispute', JSON.stringify(clean));
+      return { success: true }; //TODO by pass backend for now
+      // return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };
     }

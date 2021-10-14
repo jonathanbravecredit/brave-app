@@ -1,21 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
+import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/disputes-tradeline/content';
 
 @Component({
   selector: 'brave-dispute-conditional-terms',
   templateUrl: './dispute-conditional-terms.component.html',
 })
 export class DisputeConditionalTermsComponent implements OnInit {
-  @Input() title: string = '';
-  @Input() termDescription: string = '';
   @Output() accepted: EventEmitter<void> = new EventEmitter();
-  isConfirmed: boolean = false;
+
+  confirmed: boolean = false;
+  content = TERMS_CONDITIONS;
+
   constructor() {}
 
   ngOnInit(): void {}
 
   setValue(e: any): void {
-    this.isConfirmed = e.target.checked;
+    this.confirmed = e.target.checked;
   }
 
   getButtonConfig(): IFilledOnlyTextButtonConfig {
@@ -27,7 +29,7 @@ export class DisputeConditionalTermsComponent implements OnInit {
       full: false,
     };
 
-    if (this.isConfirmed) {
+    if (this.confirmed) {
       return defaultConfig;
     } else {
       defaultConfig.backgroundColor = 'bg-black';
@@ -37,6 +39,6 @@ export class DisputeConditionalTermsComponent implements OnInit {
   }
 
   getBtnInteractionClass(): string {
-    return this.isConfirmed === false ? 'pointer-events-none' : '';
+    return this.confirmed === false ? 'pointer-events-none' : '';
   }
 }

@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
-import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
+import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
 import {
-  IDisputeReasonCardPage,
-  IDisputeSelectedObj,
+  COMPONENT_CONTENT,
+  MODAL_CONFIRMATION_CONTENT,
+  TERMS_CONDITIONS,
+} from '@views/dashboard/disputes/components/disputes-tradeline/content';
+import {
   IDisputeProcessResult,
   IDisputeReasonCardPageItem,
+  IDisputeReason,
 } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
@@ -14,14 +18,15 @@ import {
 } from './constants';
 
 type viewState = 'select' | 'summary' | 'reason';
+export type SelectionTypes = 'not-mine' | 'inaccurate';
 
 @Component({
   selector: 'brave-disputes-tradeline',
   templateUrl: './disputes-tradeline.component.html',
 })
 export class DisputesTradelineComponent implements OnInit {
-  @ViewChild(BasePaginationComponent) basePagination: BasePaginationComponent | undefined;
-  @Input() disputeType: string | undefined = undefined;
+  @ViewChild(ConfirmationModalComponent) modal: ConfirmationModalComponent | undefined;
+  @Input() disputeType: SelectionTypes | undefined = undefined;
   @Input() initialStepId: string = 'select';
   @Input() firstOptionDescription = 'This is not mine';
   @Input() secondOptionDescription = 'Account information is inaccurate';
@@ -29,18 +34,19 @@ export class DisputesTradelineComponent implements OnInit {
   @Input() secondOptionReasonPages = DISPUTE_REASONS_INACCURATE;
   @Input() processReasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
-
+  // component props
   viewState: viewState[] = ['select'];
-  timeout: any;
-  reasonOptionPages: IDisputeReasonCardPage[] = [];
-  selectedIndexes: IDisputeSelectedObj[] = [];
-  isCustomInputSelected = false;
-  showCustomInputError = false;
   showMaxError = false;
-  customReason: string = '';
-  // notMineReasons = DISPUTE_REASONS_NOTMINE;
-  // inaccurateReasons = DISPUTE_REASONS_INACCURATE;
-  reasons: [IDisputeReasonCardPageItem?, IDisputeReasonCardPageItem?] = [];
+  maxSelections: number = 2;
+  confirmed: boolean = false;
+  customInput: string = '';
+  customInputSelected = false;
+  reasonCards: IDisputeReasonCardPageItem[] = [];
+  selections: IDisputeReasonCardPageItem[] = [];
+  // template content
+  modalContent = MODAL_CONFIRMATION_CONTENT;
+  termsContent = TERMS_CONDITIONS;
+  content = COMPONENT_CONTENT;
 
   constructor() {}
 
@@ -50,100 +56,54 @@ export class DisputesTradelineComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  /**
-   * Changes the "selected" state flag of the target option.
-   * @param index - The position inside of the option array
-   * @example
-   *
-   *   switchOption(1); // Switch or Swap the values of the option in position 1.
-   */
-  switchOption(itemIndex: number, options: IDisputeReasonCardPageItem[]): void {
-    // const isCustomInput = options[itemIndex].allowUserInput;
-    // const isSelected = indexInSelectedArr !== -1;
-    // if (isSelected) {
-    //   this.selectedIndexes.splice(indexInSelectedArr, 1);
-    //   if (isCustomInput) {
-    //     this.isCustomInputSelected = false;
-    //   }
-    // } else {
-    //   if (isCustomInput) {
-    //     this.selectedIndexes = [];
-    //     this.selectedIndexes.push({ pageIndex, itemIndex });
-    //     this.isCustomInputSelected = true;
-    //   } else {
-    //     if (this.isCustomInputSelected) {
-    //       this.showCustomInputError = true;
-    //     } else {
-    //       const isLimitReached = this.isLimitOfSelectionReached();
-    //       if (!isLimitReached) {
-    //         this.selectedIndexes.push({ pageIndex, itemIndex });
-    //       } else {
-    //         this.showMaxError = true;
-    //       }
-    //     }
-    //   }
-    //   clearTimeout(this.timeout);
-    //   this.timeout = setTimeout(() => {
-    //     this.showMaxError = false;
-    //     this.showCustomInputError = false;
-    //   }, 3000);
-    // }
-  }
-
-  // private findIndexInSelected(itemIndex: number): number {
-  //   return this.selectedIndexes.findIndex(
-  //     (indexObj) => indexObj.pageIndex === pageIndex && indexObj.itemIndex === itemIndex,
-  //   );
-  // }
-
-  // isSelected(itemIndex: number): boolean {
-  //   return this.findIndexInSelected(itemIndex) !== -1;
-  // }
-
-  // getTargetSelectedPageItem(indexObj: IDisputeSelectedObj): IDisputeReasonCardPageItem {
-  //   return this.reasonOptionPages[indexObj.pageIndex].items[indexObj.itemIndex];
-  // }
-
-  // getCurrentNavigationIndex(): number {
-  //   const navStackLength = this.navigationStack.length;
-  //   return navStackLength === 0 ? 0 : navStackLength - 1;
-  // }
-
-  // getLastNavigationStackId(): string {
-  //   return this.navigationStack[this.navigationStack.length - 1].id;
-  // }
-
   addSelection(reason: IDisputeReasonCardPageItem): void {
-    this.reasons = this.reasons.length > 0 ? [this.reasons[0], reason] : [reason];
+    if (reason.selected) return; // already selected don't add again
+    if (reason.allowUserInput) {
+      // custom input reason only allows one selection and requires confirmation
+      this.maxSelections = 1;
+      this.customInputSelected = true;
+      if (!this.confirmed) this.modal?.open();
+    }
+
+    if (this.selections.length >= this.maxSelections) {
+      // cannot select more than two
+      this.showMaxError = true;
+      setTimeout(() => (this.showMaxError = false), 3000);
+      return;
+    } else {
+      reason.selected = true; // flag it
+      this.selections = this.selections.length > 0 ? [this.selections[0], reason] : [reason];
+    }
   }
 
   removeSelection(idx: number): void {
-    this.reasons.splice(idx, 1);
-    this.reasons = [...this.reasons];
+    const removed = this.selections.splice(idx, 1).pop();
+    this.selections = [...this.selections];
+
+    // if the one being removed is custom, reset to 2 max
+    if (removed?.allowUserInput) {
+      this.maxSelections = 2;
+      this.customInputSelected = false;
+    }
+
+    // reset the static card selected status to false
+    const origIdx = this.reasonCards.findIndex((v) => v.reason.id === removed?.reason.id);
+    this.reasonCards[origIdx].selected = false;
   }
 
-  // private isLimitOfSelectionReached(): boolean {
-  //   const max = maxSelectedItemAmount;
-  //   const numberOfSelectedReasons = this.selectedIndexes.length;
-  //   return numberOfSelectedReasons >= max;
-  // }
-
-  // onSwipe(e: any): void {
-  //   if (e.type === 'swipe') {
-  //     if (this.basePagination !== undefined) {
-  //       let direction: TBasePaginationNavigationDirection | undefined = 'forward';
-  //       if (e.offsetDirection === 2) {
-  //         direction = 'forward';
-  //       } else if (e.offsetDirection === 4) {
-  //         direction = 'back';
-  //       }
-  //       this.basePagination.navigate(direction);
-  //     }
-  //   }
-  // }
-
   onRadioChanges(event: any): void {
-    this.disputeType = event.target.value;
+    const value: SelectionTypes = event.target.value;
+    this.disputeType = value;
+    this.reasonCards = value === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
+  }
+
+  onTextChange(event: string, idx: number): void {
+    this.customInput = event;
+    this.selections[idx]['customInput'] = event;
+  }
+
+  onConfirmed(event: boolean): void {
+    this.confirmed = event; // need to save this to state...may be doing it on process results
   }
 
   goToReasons(): void {
@@ -157,57 +117,38 @@ export class DisputesTradelineComponent implements OnInit {
   goBack(): void {
     const current = this.viewState.pop();
     if (current === 'reason') {
-      this.selectedIndexes = [];
-      this.customReason = '';
-      this.isCustomInputSelected = false;
-      this.disputeType = '';
+      // reset everything
+      this.selections = [];
+      this.customInput = '';
+      this.customInputSelected = false;
+      this.disputeType = undefined;
     }
   }
 
-  sendDispute(): void {
-    // this.disputeProcessResult.emit({
-    //   isFinished: true,
-    //   data: {
-    //     hasCustomInput: this.isCustomInputInSelectedArr(),
-    //     customInput: this.customReason,
-    //     reasonsId: this.parseSelectedItemsToIdArray(),
-    //     reasons: this.parseSelectedReasonsToArray(),
-    //   },
-    // });
+  parseIds(): [string, string] {
+    return this.selections.filter((v) => v.reason.id).map((v) => v.reason.id) as [string, string];
   }
 
-  // parseSelectedItemsToIdArray(): [string?, string?] {
-  //   let resultArr: [string?, string?] = [];
-  //   this.selectedIndexes.forEach((item) => {
-  //     const target = this.getTargetSelectedPageItem(item);
-  //     resultArr.push(target.reason.id);
-  //   });
-  //   return resultArr;
-  // }
+  parseReasons(ids: [string, string]): [IDisputeReason?, IDisputeReason?] {
+    return ids.map((id) => {
+      return this.processReasons.find((r) => r.id === id);
+    }) as [IDisputeReason, IDisputeReason?];
+  }
 
-  // parseSelectedReasonsToArray(): [IDisputeReason?, IDisputeReason?] {
-  //   let resultsArr: [IDisputeReason?, IDisputeReason?] = [];
-  //   let reasonIds: [string?, string?] = this.parseSelectedItemsToIdArray(); // never more than two...switch to tuple
-  //   let reasons = [...this.processReasons]; // this is filtering out the other items
-
-  //   reasonIds.filter(Boolean).forEach((item) => {
-  //     const reason = reasons.find((r) => r.id === item);
-  //     if (reason?.claimCode) resultsArr.push(reason);
-  //   });
-  //   return resultsArr;
-  // }
-
-  // isCustomInputInSelectedArr(): boolean {
-  //   let result: boolean = false;
-  //   this.selectedIndexes.forEach((item) => {
-  //     const target = this.getTargetSelectedPageItem(item);
-  //     if (target.allowUserInput === true) {
-  //       result = true;
-  //     }
-  //   });
-
-  //   return result;
-  // }
+  sendDispute(): void {
+    const reasonIds = this.parseIds();
+    const reasons = this.parseReasons(reasonIds);
+    debugger;
+    this.disputeProcessResult.emit({
+      isFinished: true,
+      data: {
+        hasCustomInput: this.customInputSelected,
+        customInput: this.customInput,
+        reasonsId: reasonIds,
+        reasons: reasons,
+      },
+    });
+  }
 
   getButtonConfig(): IFilledOnlyTextButtonConfig {
     let defaultConfig: IFilledOnlyTextButtonConfig = {

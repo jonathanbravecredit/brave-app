@@ -39,6 +39,7 @@ export class DisputesTradelineView implements OnDestroy {
   }
 
   async onProcessResult(event: IProcessDisputeTradelineResult): Promise<void> {
+    console.log('process results ==> ', event);
     // result event has a data property where the reason ids can be pull out and find them in the constants of the tradeline component
     const { result, tradeline } = event;
     if (tradeline === undefined) throw new Error(`Tradeline is missing from dispute`);
