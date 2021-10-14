@@ -1,8 +1,7 @@
 import {
   IDisputeReason,
-  IDisputeReasonCardPage,
   IDisputeReasonCardPageItem,
-} from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
+} from '@views/dashboard/disputes/components/dispute-base/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeReason[] = [
   {

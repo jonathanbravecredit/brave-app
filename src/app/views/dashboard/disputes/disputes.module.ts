@@ -21,9 +21,6 @@ import { DisputeHeaderPublicitemComponent } from '@views/dashboard/disputes/comp
 import { DisputeHeaderTradelineComponent } from '@views/dashboard/disputes/components/dispute-header-tradeline/dispute-header-tradeline.component';
 import { DisputesDetailComponent } from '@views/dashboard/disputes/components/disputes-detail/disputes-detail.component';
 import { DisputesListComponent } from '@views/dashboard/disputes/components/disputes-list/disputes-list.component';
-import { DisputesPersonalComponent } from '@views/dashboard/disputes/components/disputes-personal/disputes-personal.component';
-import { DisputesPublicComponent } from '@views/dashboard/disputes/components/disputes-public/disputes-public.component';
-import { DisputesTradelineComponent } from '@views/dashboard/disputes/components/disputes-tradeline/disputes-tradeline.component';
 import { DisputeFindingsClosingParagraphComponent } from '@views/dashboard/disputes/components/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from '@views/dashboard/disputes/components/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
 import { DisputeFindingsDefinitionsHeaderComponent } from '@views/dashboard/disputes/components/findings/dispute-findings-definitions-header/dispute-findings-definitions-header.component';
@@ -87,9 +84,6 @@ const components = [
   DisputeFindingsPureView,
   DisputesOverviewInitialPureView,
   DisputesOverviewInitialView,
-  DisputesPersonalComponent,
-  DisputesTradelineComponent,
-  DisputesPublicComponent,
   DisputesDetailComponent,
   DisputesListComponent,
   ReasonCardComponent,

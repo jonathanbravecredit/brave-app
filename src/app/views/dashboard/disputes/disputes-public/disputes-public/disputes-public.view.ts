@@ -12,10 +12,8 @@ type viewDisplay = 'sent' | 'not-sent';
   templateUrl: './disputes-public.view.html',
 })
 export class DisputesPublicView implements OnDestroy {
-  isDisputeProcessInProgress = true;
-  isDisputeSent = false;
-  publicItem$: Observable<IPublicPartition>;
   viewDisplay: viewDisplay = 'not-sent';
+  publicItem$: Observable<IPublicPartition>;
 
   constructor(private router: Router, private route: ActivatedRoute, private disputeService: DisputeService) {
     this.publicItem$ = this.disputeService.publicItem$.asObservable();
@@ -37,8 +35,6 @@ export class DisputesPublicView implements OnDestroy {
         const { success, error, data } = await this.disputeService.sendStartDispute();
         if (success) {
           this.viewDisplay = 'sent';
-          this.isDisputeSent = true;
-          this.isDisputeProcessInProgress = false;
         } else {
           const errorCode = error?.Code;
           this.router.navigate([`/dashboard/report/dispute/publicitem/error`], {

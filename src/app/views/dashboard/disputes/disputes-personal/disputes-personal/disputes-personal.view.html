@@ -1,7 +1,7 @@
 <ng-container *ngIf="personalItem$ | async as dispute">
   <brave-disputes-personal-pure-view
-    [isDisputeSent]="isDisputeSent"
-    [personalDispute]="dispute"
+    [viewDisplay]="viewDisplay"
+    [dispute]="dispute"
     (processResult)="onProcessResult($event)"
   ></brave-disputes-personal-pure-view>
 </ng-container>

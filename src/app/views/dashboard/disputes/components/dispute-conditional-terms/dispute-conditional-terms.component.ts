@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
-import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/disputes-tradeline/content';
+import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/dispute-conditional-terms/content';
 
 @Component({
   selector: 'brave-dispute-conditional-terms',

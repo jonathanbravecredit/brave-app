@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IPublicPartition } from '@shared/interfaces';
 import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
-import { IDisputeProcessResult } from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
+import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS,
   PUBLIC_REASONS_INACCURATE,
@@ -21,7 +21,6 @@ export interface IProcessDisputePublicResult {
 export class DisputesPublicPureView implements OnInit {
   @Input() viewDisplay: viewDisplay = 'not-sent';
   @Input() dispute: IDisputePublicItem | undefined;
-  @Output() goBack: EventEmitter<void> = new EventEmitter();
   @Output() processResult: EventEmitter<IProcessDisputePublicResult> = new EventEmitter();
 
   reasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS;

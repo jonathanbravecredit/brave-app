@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
 import {
-  COMPONENT_CONTENT,
   MODAL_CONFIRMATION_CONTENT,
-  TERMS_CONDITIONS,
-} from '@views/dashboard/disputes/components/disputes-tradeline/content';
+  COMPONENT_CONTENT,
+} from '@views/dashboard/disputes/components/dispute-base/content';
 import {
   IDisputeProcessResult,
   IDisputeReasonCardPageItem,
   IDisputeReason,
-} from '@views/dashboard/disputes/components/disputes-tradeline/interfaces';
+} from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/dispute-conditional-terms/content';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
   DISPUTE_REASONS_INACCURATE,
@@ -138,7 +138,6 @@ export class DisputeBaseComponent implements OnInit {
   sendDispute(): void {
     const reasonIds = this.parseIds();
     const reasons = this.parseReasons(reasonIds);
-    debugger;
     this.disputeProcessResult.emit({
       isFinished: true,
       data: {

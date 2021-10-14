@@ -5,14 +5,16 @@ import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/dispute
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
 
+type viewDisplay = 'sent' | 'not-sent';
+
 @Component({
   selector: 'brave-disputes-personal-view',
   templateUrl: './disputes-personal.view.html',
 })
 export class DisputesPersonalView implements OnDestroy {
-  isDisputeProcessInProgress = true;
-  isDisputeSent = false;
+  viewDisplay: viewDisplay = 'not-sent';
   personalItem$: Observable<IPersonalItemsDetailsConfig>;
+
   constructor(private router: Router, private route: ActivatedRoute, private disputeService: DisputeService) {
     this.personalItem$ = this.disputeService.personalItem$.asObservable();
   }
@@ -32,8 +34,7 @@ export class DisputesPersonalView implements OnDestroy {
         // TODO need to handle the response appropriately now that we are set up with TU
         const { success, error, data } = await this.disputeService.sendStartDispute();
         if (success) {
-          this.isDisputeSent = true;
-          this.isDisputeProcessInProgress = false;
+          this.viewDisplay = 'sent';
         } else {
           const errorCode = error?.Code;
           this.router.navigate([`./error`], {
