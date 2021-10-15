@@ -21,8 +21,8 @@
       </div>
       <ng-container *ngIf="featureFlags.disputes$ | async">
         <div *ngIf="!disableDispute" class="flex justify-center mb-2">
-          <brave-filled-onlytext-button (click)="showModal = !showModal; this.disputeClicked()"
-            >Dispute in a few clicks</brave-filled-onlytext-button
+          <brave-filled-spinning-button (click)="showModal = !showModal; this.disputeClicked()"
+            >Dispute in a few clicks</brave-filled-spinning-button
           >
           <brave-onboarding-dispute
             [showModal]="showModal && !acknowledged"

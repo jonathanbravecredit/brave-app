@@ -93,7 +93,7 @@ const DashboardRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'dashboard/init',
+    redirectTo: 'init',
     pathMatch: 'full',
   },
 ];

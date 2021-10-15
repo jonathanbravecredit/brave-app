@@ -8,6 +8,8 @@
     <label for="condition-approval" class="ml-2 text-xs">{{ content.termDescription }}</label>
   </div>
   <div class="flex justify-center">
-    <brave-filled-spinning-button (click)="accepted.emit()">Submit my dispute</brave-filled-spinning-button>
+    <brave-filled-spinning-button [disabled]="!confirmed" (click)="accepted.emit()"
+      >Submit my dispute</brave-filled-spinning-button
+    >
   </div>
 </div>
