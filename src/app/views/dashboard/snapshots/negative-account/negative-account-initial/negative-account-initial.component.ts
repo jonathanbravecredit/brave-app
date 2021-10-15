@@ -53,14 +53,14 @@ export class NegativeAccountInitialComponent implements OnInit {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate(['../../dispute'], {
+          this.router.navigate(['/disputes/reconfirm'], {
             relativeTo: this.route,
             queryParams: {
               type: filter,
             },
           });
         } else {
-          this.router.navigate(['../../error'], {
+          this.router.navigate(['/disputes/error'], {
             relativeTo: this.route,
             queryParams: {
               code: error?.Code || '197',
@@ -69,7 +69,7 @@ export class NegativeAccountInitialComponent implements OnInit {
         }
       })
       .catch((err) => {
-        this.router.navigate(['../../error'], {
+        this.router.navigate(['/disputes/error'], {
           relativeTo: this.route,
           queryParams: {
             code: '197',
@@ -84,5 +84,9 @@ export class NegativeAccountInitialComponent implements OnInit {
 
   onGoToReportClick(): void {
     this.router.navigate(['/dashboard/report']);
+  }
+
+  onDisputeClick(tradeline: ITradeLinePartition): void {
+    this.disputeService;
   }
 }
