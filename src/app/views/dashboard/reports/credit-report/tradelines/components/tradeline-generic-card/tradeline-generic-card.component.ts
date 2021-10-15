@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { tradelineGenericCardContent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-generic-card/content';
@@ -10,6 +10,8 @@ import { tradelineGenericCardContent } from '@views/dashboard/reports/credit-rep
 export class TradelineGenericCardComponent implements OnInit {
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition;
   @Input() subscribers: ISubscriber[] = [];
+  @Output() disputeClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
+
   missing = tu.bcMissing;
   subscriber: ISubscriber | undefined = {} as ISubscriber;
   content = tradelineGenericCardContent;
