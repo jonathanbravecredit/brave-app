@@ -1,5 +1,5 @@
 <!-- Display Container (not part of component) START -->
-<div class="window-wrapper flex justify-center items-center w-full">
+<div class="window-wrapper flex justify-center items-center w-full" [ngStyle]="{ 'min-width.px': itemWidth }">
   <!-- Carousel Body -->
   <div #sliderWindow class="window justify-center overflow-hidden">
     <div #slider class="slider transition-all">

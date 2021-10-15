@@ -134,7 +134,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
     id: '27',
     claimCode: 'C4',
-    text: 'TThe credit limit and/or high balance are/is incorrect',
+    text: 'The credit limit and/or high balance are/is incorrect',
   },
   {
     id: '28',

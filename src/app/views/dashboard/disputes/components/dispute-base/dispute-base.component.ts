@@ -1,19 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { IDisputeReasonCard, IDisputeReason } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
-import { ReasonCardComponent } from '@views/dashboard/disputes/components/cards/reason-card/reason-card.component';
 import {
   MODAL_CONFIRMATION_CONTENT,
   COMPONENT_CONTENT,
@@ -51,7 +39,7 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
 
   // component props
-  viewState: viewState[] = ['select'];
+  @Input() viewState: viewState[] = ['select']; // can override
   showMaxError = false;
   maxSelections: number = 2;
   confirmed: boolean = false;
@@ -83,6 +71,7 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.cardSelected$) this.cardSelected$.unsubscribe();
   }
+
   addSelection(reason: IDisputeReasonCard): void {
     if (reason.selected) return; // already selected don't add again
     if (reason.allowInput) {

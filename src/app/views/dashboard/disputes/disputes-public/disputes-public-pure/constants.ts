@@ -46,8 +46,8 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS: IDisputeR
 export const PUBLIC_REASONS_INACCURATE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[0],
-    allowInput: true,
-    allowMore: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[1],
@@ -84,7 +84,7 @@ export const PUBLIC_REASONS_INACCURATE: IDisputeReasonCard[] = [
 export const PUBLIC_REASONS_NOTMINE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS[7],
-    allowInput: true,
+    allowInput: false,
     allowMore: false,
   },
 ];

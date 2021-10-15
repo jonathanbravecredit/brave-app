@@ -10,25 +10,28 @@
     <ng-container *ngIf="personaldispute">
       <brave-dispute-header-personalitem [dispute]="personaldispute"></brave-dispute-header-personalitem>
     </ng-container>
-    <div *ngIf="viewDetail?.open$ | async as open" class="flex flex-col w-full">
-      <div class="flex items-center mt-3">
-        <span>Account Details</span>
+    <div
+      *ngIf="viewDetail?.open$ | async as open"
+      class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
+    >
+      <div class="flex flex-col items-start mt-3">
+        <p class="ml-1">Account Details</p>
+        <ng-container *ngIf="tradelinedispute">
+          <brave-disputes-detail
+            [pages]="tradelinepages"
+            [data]="tradelinedispute.tradeline | tradelineToPages"
+          ></brave-disputes-detail>
+        </ng-container>
+        <ng-container *ngIf="publicdispute">
+          <brave-disputes-detail [pages]="publicitempages" [data]="[{ config: publicdispute }]"></brave-disputes-detail>
+        </ng-container>
+        <ng-container *ngIf="personaldispute">
+          <brave-disputes-detail
+            [pages]="personalitempages"
+            [data]="[{ config: personaldispute.transformed }]"
+          ></brave-disputes-detail>
+        </ng-container>
       </div>
-      <ng-container *ngIf="tradelinedispute">
-        <brave-disputes-detail
-          [pages]="tradelinepages"
-          [data]="tradelinedispute.tradeline | tradelineToPages"
-        ></brave-disputes-detail>
-      </ng-container>
-      <ng-container *ngIf="publicdispute">
-        <brave-disputes-detail [pages]="publicitempages" [data]="[{ config: publicdispute }]"></brave-disputes-detail>
-      </ng-container>
-      <ng-container *ngIf="personaldispute">
-        <brave-disputes-detail
-          [pages]="personalitempages"
-          [data]="[{ config: personaldispute.transformed }]"
-        ></brave-disputes-detail>
-      </ng-container>
     </div>
     <div class="flex justify-center py-3">
       <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>

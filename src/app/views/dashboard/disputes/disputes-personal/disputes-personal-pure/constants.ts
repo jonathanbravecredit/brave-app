@@ -11,7 +11,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS: IDisputeRe
 export const DISPUTES_PERSONAL_REASONS_TOBEREMOVED: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS[0],
-    allowInput: true,
+    allowInput: false,
     allowMore: false,
   },
 ];
