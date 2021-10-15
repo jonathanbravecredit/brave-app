@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import { patch, updateItem } from '@ngxs/store/operators';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
@@ -145,7 +144,7 @@ export class DashboardState {
   @Action(DashboardActions.AddDatabreachCards)
   addDatabreachCards(ctx: StateContext<DashboardStateModel>, { payload }: DashboardActions.AddDatabreachCards) {
     const state = ctx.getState();
-    const databreachCards = state.databreachCards ? [...state.databreachCards, ...payload] : [...payload];
+    const databreachCards = state?.databreachCards ? [...state.databreachCards, ...payload] : [...payload];
     const databreachFlagged = true;
     const databreachCardStatus = 'danger';
     const databreachReviewed = !(databreachCards.filter((c) => !c.reviewed).length > 0);

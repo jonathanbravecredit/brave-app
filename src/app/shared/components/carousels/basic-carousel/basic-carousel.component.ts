@@ -10,8 +10,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BasePaginationComponent } from '@shared/components/paginations/base-pagination/base-pagination.component';
+import { TBasePaginationNavigationDirection } from '@shared/components/paginations/base-pagination/interfaces';
 import { Subscription } from 'rxjs';
-
 @Component({
   selector: 'brave-basic-carousel',
   templateUrl: './basic-carousel.component.html',
@@ -34,6 +34,7 @@ export class BasicCarouselComponent implements AfterViewInit, OnDestroy {
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
+    this.sliderWidth = this.pages.length ? this.pages.length * this.itemWidth : this.sliderWidth;
     this.setSliderWindowWidth(this.itemWidth);
     this.setSliderWidth(this.sliderWidth);
     if (this.pagination) {
@@ -73,18 +74,27 @@ export class BasicCarouselComponent implements AfterViewInit, OnDestroy {
    * @param max the max translation the scrill should go to (e.g. -75...if 4 items)
    */
   scroll(value: number, min: number, max: number): void {
-    if (this.carouselXAxis + value > min || this.carouselXAxis + value < max) {
+    let trimmedValue = value;
+    if (this.carouselXAxis + value > min) {
+      const haircut = this.carouselXAxis + value + min;
+      trimmedValue = trimmedValue - haircut;
+    }
+    if (this.carouselXAxis + value < max) {
+      const haircut = this.carouselXAxis + value - max;
+      trimmedValue = trimmedValue - haircut;
+    }
+    if (this.carouselXAxis + trimmedValue > min || this.carouselXAxis + trimmedValue < max) {
       return;
     }
     // pop and push tracker to know which page we are on
-    if (value < 0) {
+    if (trimmedValue < 0) {
       this.tracker = [...this.tracker, 0];
     }
-    if (value > 0) {
+    if (trimmedValue > 0) {
       this.tracker = [...this.tracker.slice(1)];
     }
 
-    this.carouselXAxis += value;
+    this.carouselXAxis += trimmedValue;
     this.renderer.setStyle(this.slider.nativeElement, 'transform', `translateX(${this.carouselXAxis}%)`);
   }
 
@@ -120,5 +130,19 @@ export class BasicCarouselComponent implements AfterViewInit, OnDestroy {
     const scroll = parseFloat(((-1 / this.pages.length) * 100).toFixed(2));
     const max = scroll * -1 - 100;
     this.scroll(scroll, 0, max);
+  }
+
+  onSwipe(e: any): void {
+    if (e.type === 'swipe') {
+      if (this.pagination !== undefined) {
+        let direction: TBasePaginationNavigationDirection | undefined = 'forward';
+        if (e.offsetDirection === 2) {
+          direction = 'forward';
+        } else if (e.offsetDirection === 4) {
+          direction = 'back';
+        }
+        this.pagination.navigate(direction);
+      }
+    }
   }
 }

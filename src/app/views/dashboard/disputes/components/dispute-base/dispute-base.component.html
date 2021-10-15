@@ -1,4 +1,4 @@
-<div class="w-full p-4" *ngIf="currentView === 'select'">
+<div class="w-full py-4" *ngIf="currentView === 'select'">
   <p class="text-lg">Which option matches your request?</p>
   <form class="mt-4">
     <div class="flex items-center">
@@ -20,19 +20,12 @@
   </div>
 </div>
 
-<div class="w-full" *ngIf="currentView === 'reason'">
+<div class="w-full py-4" *ngIf="currentView === 'reason'">
   <p class="text-lg font-bold mb-2">{{ disputeType !== 'not-mine' ? content.p1 : content.p2 }}</p>
-  <div class="w-full">
-    <div class="mt-4" *ngFor="let card of reasonCards; index as itemIndex">
-      <brave-reason-card
-        #reasonCard
-        [label]="card.reason.text"
-        [allowInput]="card.allowUserInput || false"
-        [selected]="card.selected || false"
-        (toggleClick)="addSelection(card)"
-      >
-      </brave-reason-card>
-    </div>
+  <div class="w-full" style="min-width: 300px">
+    <ng-container *ngIf="reasonCards | reasonsToPages: (disputeType === 'not-mine' ? 5 : 4) as pages">
+      <brave-basic-carousel [pages]="pages.pages" [data]="pages.data"> </brave-basic-carousel>
+    </ng-container>
   </div>
   <div class="p-4">
     <p class="text-lg font-bold mb-2">{{ content.p3 }}</p>
@@ -44,7 +37,7 @@
           [selected]="true"
           [label]="selection?.reason?.text || ''"
           [showInput]="true"
-          [allowInput]="selection?.allowUserInput || false"
+          [allowInput]="selection?.allowInput || false"
           (textChange)="onTextChange($event, idx)"
           (toggleClick)="removeSelection(idx)"
         ></brave-reason-card>
@@ -63,7 +56,7 @@
 </div>
 
 <div *ngIf="currentView === 'summary'">
-  <div class="p-4">
+  <div class="py-4">
     <p class="text-lg font-bold mb-6">{{ content.p6 }}</p>
     <div class="mt-4" *ngFor="let selection of selections">
       <brave-reason-card
@@ -71,7 +64,7 @@
         [label]="selection?.reason?.text || ''"
         [input]="selection?.customInput || ''"
         [showInput]="true"
-        [allowInput]="selection?.allowUserInput || false"
+        [allowInput]="selection?.allowInput || false"
       ></brave-reason-card>
     </div>
   </div>

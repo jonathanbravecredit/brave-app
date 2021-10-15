@@ -26,8 +26,4 @@ export class ReasonCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  // requestClick(): void {
-  //   this.allowInput ? (!this.confirmed ? this.confirmationModal?.open() : this.clicked.emit()) : this.clicked.emit();
-  // }
 }
