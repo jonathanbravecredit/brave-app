@@ -27,7 +27,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
     this.disputeService.setPersonalItem(personalItem);
-    this.router.navigate(['./personalitem'], {
+    this.router.navigate(['../personalitem'], {
       relativeTo: this.route,
       queryParams: {
         type: null,
@@ -40,7 +40,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputePublicClick=Missing id:${id}`;
     this.disputeService.setPublicItem(publicItem);
-    this.router.navigate(['./publicitem'], {
+    this.router.navigate(['../publicitem'], {
       relativeTo: this.route,
       queryParams: {
         type: null,

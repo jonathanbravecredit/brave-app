@@ -1,7 +1,4 @@
-import {
-  IDisputeReason,
-  IDisputeReasonCardPageItem,
-} from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import { IDisputeReason, IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS: IDisputeReason[] = [
   {
@@ -11,9 +8,10 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS: IDisputeRe
   },
 ];
 
-export const DISPUTES_PERSONAL_REASONS_TOBEREMOVED: IDisputeReasonCardPageItem[] = [
+export const DISPUTES_PERSONAL_REASONS_TOBEREMOVED: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS[0],
-    allowUserInput: true,
+    allowInput: false,
+    allowMore: false,
   },
 ];

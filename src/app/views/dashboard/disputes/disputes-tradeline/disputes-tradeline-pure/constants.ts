@@ -1,7 +1,4 @@
-import {
-  IDisputeReason,
-  IDisputeReasonCardPageItem,
-} from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import { IDisputeReason, IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 
 export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
@@ -137,7 +134,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
     id: '27',
     claimCode: 'C4',
-    text: 'TThe credit limit and/or high balance are/is incorrect',
+    text: 'The credit limit and/or high balance are/is incorrect',
   },
   {
     id: '28',
@@ -159,122 +156,195 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
     claimCode: 'F7',
     text: 'I am not deceased',
   },
-];
-
-export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCardPageItem[] = [
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-    allowUserInput: true,
+    id: '32',
+    claimCode: 'D2',
+    text: 'This account was opened fraudulently',
   },
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-    allowUserInput: false,
+    id: '33',
+    claimCode: 'A2',
+    text: 'I have no knowledge of this account',
   },
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-    allowUserInput: false,
+    id: '34',
+    claimCode: 'F5',
+    text: 'The account is too old to be on my credit report',
   },
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
-    allowUserInput: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[4],
-    allowUserInput: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
-    allowUserInput: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
-    allowUserInput: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
-    allowUserInput: false,
+    id: '35',
+    claimCode: 'A7',
+    text: 'This account is settled',
   },
 ];
 
-export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCardPageItem[] = [
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-    allowUserInput: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-    allowUserInput: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-    allowUserInput: false,
-  },
+export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCard[] = [
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[8],
-    allowUserInput: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[10],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[11],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
-    allowUserInput: false,
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[33],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[34],
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[13],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[14],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[15],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[16],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[17],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[18],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[19],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
+    allowInput: true,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[20],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[21],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[22],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[23],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
   },
   {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[24],
-    allowUserInput: false,
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[25],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[26],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[27],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[28],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[29],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[30],
+    allowInput: false,
+    allowMore: true,
+  },
+];
+
+export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[32],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[31],
+    allowInput: false,
+    allowMore: false,
   },
 ];

@@ -1,21 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { IDisputeReasonCard, IDisputeReason } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 import {
   MODAL_CONFIRMATION_CONTENT,
   COMPONENT_CONTENT,
 } from '@views/dashboard/disputes/components/dispute-base/content';
-import {
-  IDisputeProcessResult,
-  IDisputeReasonCardPageItem,
-  IDisputeReason,
-} from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
 import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/dispute-conditional-terms/content';
+import { DisputeReasonPageService } from '@views/dashboard/disputes/components/dispute-reason-page/dispute-reason-page.service';
 import {
-  DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
-  DISPUTE_REASONS_INACCURATE,
   DISPUTE_REASONS_NOTMINE,
-} from './constants';
+  DISPUTE_REASONS_INACCURATE,
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
+} from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/constants';
+import { Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 
 type viewState = 'select' | 'summary' | 'reason';
 export type SelectionTypes = 'not-mine' | 'inaccurate';
@@ -24,41 +24,57 @@ export type SelectionTypes = 'not-mine' | 'inaccurate';
   selector: 'brave-dispute-base',
   templateUrl: './dispute-base.component.html',
 })
-export class DisputeBaseComponent implements OnInit {
+export class DisputeBaseComponent implements OnInit, OnDestroy {
   @ViewChild(ConfirmationModalComponent) modal: ConfirmationModalComponent | undefined;
+
   @Input() disputeType: SelectionTypes | undefined = undefined;
   @Input() initialStepId: string = 'select';
   @Input() firstOptionDescription = 'This is not mine';
   @Input() secondOptionDescription = 'Account information is inaccurate';
+  // using tradeline reasons as defaults
   @Input() firstOptionReasonPages = DISPUTE_REASONS_NOTMINE;
   @Input() secondOptionReasonPages = DISPUTE_REASONS_INACCURATE;
   @Input() processReasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
+
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
+
   // component props
-  viewState: viewState[] = ['select'];
+  @Input() viewState: viewState[] = ['select']; // can override
   showMaxError = false;
   maxSelections: number = 2;
   confirmed: boolean = false;
   customInput: string = '';
   customInputSelected = false;
-  reasonCards: IDisputeReasonCardPageItem[] = [];
-  selections: IDisputeReasonCardPageItem[] = [];
+  reasonCards: IDisputeReasonCard[] = [];
+  selections: IDisputeReasonCard[] = [];
   // template content
   modalContent = MODAL_CONFIRMATION_CONTENT;
   termsContent = TERMS_CONDITIONS;
   content = COMPONENT_CONTENT;
 
-  constructor() {}
+  cardSelected$: Subscription | undefined;
+
+  constructor(private reasonPageService: DisputeReasonPageService) {
+    this.cardSelected$ = this.reasonPageService.cardSelected$
+      .pipe(
+        filter((c) => Object.keys(c).length > 0),
+        tap((c: IDisputeReasonCard) => this.addSelection(c)),
+      )
+      .subscribe();
+  }
 
   get currentView(): viewState {
     return this.viewState[this.viewState.length - 1];
   }
 
   ngOnInit(): void {}
+  ngOnDestroy(): void {
+    if (this.cardSelected$) this.cardSelected$.unsubscribe();
+  }
 
-  addSelection(reason: IDisputeReasonCardPageItem): void {
+  addSelection(reason: IDisputeReasonCard): void {
     if (reason.selected) return; // already selected don't add again
-    if (reason.allowUserInput) {
+    if (reason.allowInput) {
       // custom input reason only allows one selection and requires confirmation
       this.maxSelections = 1;
       this.customInputSelected = true;
@@ -81,7 +97,7 @@ export class DisputeBaseComponent implements OnInit {
     this.selections = [...this.selections];
 
     // if the one being removed is custom, reset to 2 max
-    if (removed?.allowUserInput) {
+    if (removed?.allowInput) {
       this.maxSelections = 2;
       this.customInputSelected = false;
     }
@@ -89,6 +105,7 @@ export class DisputeBaseComponent implements OnInit {
     // reset the static card selected status to false
     const origIdx = this.reasonCards.findIndex((v) => v.reason.id === removed?.reason.id);
     this.reasonCards[origIdx].selected = false;
+    this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
   }
 
   onRadioChanges(event: any): void {

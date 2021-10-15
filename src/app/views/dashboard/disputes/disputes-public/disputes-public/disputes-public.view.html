@@ -1,7 +1,9 @@
-<ng-container *ngIf="publicItem$ | async | publicitemToDispute as dispute">
-  <brave-disputes-public-pure-view
-    [dispute]="dispute"
-    [viewDisplay]="viewDisplay"
-    (processResult)="onProcessResult($event)"
-  ></brave-disputes-public-pure-view>
-</ng-container>
+<div class="p-2">
+  <ng-container *ngIf="publicItem$ | async | publicitemToDispute as dispute">
+    <brave-disputes-public-pure-view
+      [dispute]="dispute"
+      [viewDisplay]="viewDisplay"
+      (processResult)="onProcessResult($event)"
+    ></brave-disputes-public-pure-view>
+  </ng-container>
+</div>
