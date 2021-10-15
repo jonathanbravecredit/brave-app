@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { IDisputeReasonCard, IDisputeReason } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
@@ -24,7 +24,7 @@ export type SelectionTypes = 'not-mine' | 'inaccurate';
   selector: 'brave-dispute-base',
   templateUrl: './dispute-base.component.html',
 })
-export class DisputeBaseComponent implements OnInit, OnDestroy {
+export class DisputeBaseComponent implements AfterViewInit, OnDestroy {
   @ViewChild(ConfirmationModalComponent) modal: ConfirmationModalComponent | undefined;
 
   @Input() disputeType: SelectionTypes | undefined = undefined;
@@ -53,6 +53,8 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
   content = COMPONENT_CONTENT;
 
   cardSelected$: Subscription | undefined;
+  pendingReasonCard: IDisputeReasonCard | undefined;
+  confirmSub$: Subscription | undefined;
 
   constructor(private reasonPageService: DisputeReasonPageService) {
     this.cardSelected$ = this.reasonPageService.cardSelected$
@@ -67,39 +69,70 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
     return this.viewState[this.viewState.length - 1];
   }
 
-  ngOnInit(): void {}
-  ngOnDestroy(): void {
-    if (this.cardSelected$) this.cardSelected$.unsubscribe();
+  ngAfterViewInit(): void {
+    this.confirmSub$ = this.modal?.confirmed$.subscribe((val) => {
+      this.confirmed = val;
+      val ? this.addSelection(this.pendingReasonCard) : (this.pendingReasonCard = undefined);
+    });
   }
 
-  addSelection(reason: IDisputeReasonCard): void {
+  ngOnDestroy(): void {
+    if (this.cardSelected$) this.cardSelected$.unsubscribe();
+    if (this.confirmSub$) this.confirmSub$.unsubscribe();
+  }
+
+  addSelection(reason: IDisputeReasonCard | undefined): void {
+    if (!reason) return;
     if (reason.selected) return; // already selected don't add again
     if (reason.allowInput) {
       // custom input reason only allows one selection and requires confirmation
       this.maxSelections = 1;
       this.customInputSelected = true;
-      if (!this.confirmed) this.modal?.open();
+      if (!this.confirmed) {
+        this.pendingReasonCard = reason; // stage the card until the user confirms they want to proceed
+        this.modal?.open();
+        return;
+      }
+    } else {
+      // custom input reason only allows one selection and requires confirmation
+      this.maxSelections = 2;
+      this.customInputSelected = false;
     }
 
-    if (this.selections.length >= this.maxSelections) {
+    if (this.selections.length >= this.maxSelections && !reason.allowInput) {
       // cannot select more than two
       this.showMaxError = true;
       setTimeout(() => (this.showMaxError = false), 3000);
       return;
+    } else if (this.selections.length >= this.maxSelections && reason.allowInput) {
+      // will replace the existing one
+      this.removeAllSelections(this.selections);
+      reason.selected = true;
+      this.selections = [reason];
     } else {
       reason.selected = true; // flag it as selected
       this.selections = this.selections.length > 0 ? [this.selections[0], reason] : [reason];
     }
   }
 
+  removeAllSelections(selections: IDisputeReasonCard[]): void {
+    // first deselect all of them from carousel
+    selections.forEach((card) => {
+      this.reasonPageService.cardDeselected$.next(card);
+    });
+    // then set selections to an empty array
+    this.selections = [];
+  }
+
   removeSelection(idx: number): void {
     const removed = this.selections.splice(idx, 1).pop();
     this.selections = [...this.selections];
 
-    // if the one being removed is custom, reset to 2 max
+    // if the one being removed is custom, reset to 2 max and they'll need to reconfirm again if they add it back
     if (removed?.allowInput) {
       this.maxSelections = 2;
       this.customInputSelected = false;
+      this.confirmed = false;
     }
 
     // reset the static card selected status to false
@@ -117,10 +150,6 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
   onTextChange(event: string, idx: number): void {
     this.customInput = event;
     this.selections[idx]['customInput'] = event;
-  }
-
-  onConfirmed(event: boolean): void {
-    this.confirmed = event; // need to save this to state...may be doing it on process results
   }
 
   goToReasons(): void {

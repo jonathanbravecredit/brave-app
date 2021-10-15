@@ -4,7 +4,7 @@ export const MODAL_CONFIRMATION_CONTENT = {
   alertHeader: `Alert:`,
   alertSubheaderOne: `If selecting 'Other, provide details in "Additional Comments" field below', you cannot select any additional
   reasons to dispute.`,
-  alertSubheaderTwo: `You may neither continue to provide details for your dispute, or select up to two alternative reasons.`,
+  alertSubheaderTwo: `You may either continue to provide details for your dispute, or select up to two alternative reasons.`,
 };
 
 export const COMPONENT_CONTENT = {
