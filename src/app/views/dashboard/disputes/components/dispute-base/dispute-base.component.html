@@ -23,9 +23,8 @@
 <div class="w-full" *ngIf="currentView === 'reason'">
   <p class="text-lg font-bold mb-2">{{ disputeType !== 'not-mine' ? content.p1 : content.p2 }}</p>
   <div class="w-full">
-    <ng-container *ngIf="reasonCards | reasonsToPages: 5 as pages">
-      <brave-basic-carousel [pages]="pages.pages" [data]="pages.data" (pageClicked)="test($event)">
-      </brave-basic-carousel>
+    <ng-container *ngIf="reasonCards | reasonsToPages: (disputeType === 'not-mine' ? 5 : 4) as pages">
+      <brave-basic-carousel [pages]="pages.pages" [data]="pages.data"> </brave-basic-carousel>
     </ng-container>
   </div>
   <div class="p-4">

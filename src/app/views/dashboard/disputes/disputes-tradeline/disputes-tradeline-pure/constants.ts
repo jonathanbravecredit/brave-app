@@ -156,73 +156,31 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
     claimCode: 'F7',
     text: 'I am not deceased',
   },
+  {
+    id: '32',
+    claimCode: 'D2',
+    text: 'This account was opened fraudulently',
+  },
+  {
+    id: '33',
+    claimCode: 'A2',
+    text: 'I have no knowledge of this account',
+  },
+  {
+    id: '34',
+    claimCode: 'F5',
+    text: 'The account is too old to be on my credit report',
+  },
+  {
+    id: '35',
+    claimCode: 'A7',
+    text: 'This account is settled',
+  },
 ];
 
 export const DISPUTE_REASONS_INACCURATE: IDisputeReasonCard[] = [
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-    allowInput: true,
-    allowMore: false,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[4],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
-    allowInput: false,
-    allowMore: true,
-  },
-];
-
-export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
-    allowInput: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[8],
-    allowInput: false,
-    allowMore: true,
-  },
-  {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
     allowInput: false,
     allowMore: true,
   },
@@ -232,12 +190,22 @@ export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
     allowMore: true,
   },
   {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[9],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[11],
     allowInput: false,
     allowMore: true,
   },
   {
-    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[12],
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[33],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[34],
     allowInput: false,
     allowMore: true,
   },
@@ -277,6 +245,26 @@ export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
     allowMore: true,
   },
   {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[0],
+    allowInput: true,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[1],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[2],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[3],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[20],
     allowInput: false,
     allowMore: true,
@@ -300,5 +288,63 @@ export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
     reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[24],
     allowInput: false,
     allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[25],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[26],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[27],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[28],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[29],
+    allowInput: false,
+    allowMore: true,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[30],
+    allowInput: false,
+    allowMore: true,
+  },
+];
+
+export const DISPUTE_REASONS_NOTMINE: IDisputeReasonCard[] = [
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[32],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[5],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[6],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[7],
+    allowInput: false,
+    allowMore: false,
+  },
+  {
+    reason: DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS[31],
+    allowInput: false,
+    allowMore: false,
   },
 ];

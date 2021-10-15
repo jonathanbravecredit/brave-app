@@ -5,7 +5,7 @@
     <div #slider class="slider transition-all">
       <!-- put the questions here -->
       <div class="items flex overflow-x-hidden">
-        <div *ngFor="let page of pages; index as i">
+        <div *ngFor="let page of pages; index as i" (swipe)="onSwipe($event)">
           <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
             <!-- put the page item here -->
             <brave-basic-carousel-loader

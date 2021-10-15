@@ -47,7 +47,9 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
   @Input() firstOptionReasonPages = DISPUTE_REASONS_NOTMINE;
   @Input() secondOptionReasonPages = DISPUTE_REASONS_INACCURATE;
   @Input() processReasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
+
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
+
   // component props
   viewState: viewState[] = ['select'];
   showMaxError = false;
@@ -82,7 +84,6 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
     if (this.cardSelected$) this.cardSelected$.unsubscribe();
   }
   addSelection(reason: IDisputeReasonCard): void {
-    console.log('add selection called ==> ', reason);
     if (reason.selected) return; // already selected don't add again
     if (reason.allowInput) {
       // custom input reason only allows one selection and requires confirmation
@@ -100,10 +101,6 @@ export class DisputeBaseComponent implements OnInit, OnDestroy {
       reason.selected = true; // flag it as selected
       this.selections = this.selections.length > 0 ? [this.selections[0], reason] : [reason];
     }
-  }
-
-  test(event: any) {
-    console.log('test ==> ', event);
   }
 
   removeSelection(idx: number): void {

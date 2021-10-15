@@ -4,7 +4,7 @@
     [label]="card.reason.text"
     [allowInput]="card.allowInput || false"
     [selected]="card.selected || false"
-    (toggleClick)="onToggleClick(card)"
+    (toggleClick)="selectCard(card)"
   >
   </brave-reason-card>
 </div>

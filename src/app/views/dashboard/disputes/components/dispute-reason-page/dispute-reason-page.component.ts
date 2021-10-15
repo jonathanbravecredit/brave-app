@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 import { DisputeReasonPageService } from '@views/dashboard/disputes/components/dispute-reason-page/dispute-reason-page.service';
 import { Subscription } from 'rxjs';
@@ -26,13 +26,11 @@ export class DisputeReasonPageComponent implements OnInit, OnDestroy {
     if (this.cardSelectedSub$) this.cardSelectedSub$.unsubscribe();
   }
 
-  onToggleClick(card: IDisputeReasonCard) {
-    console.log('toggle clicked ==> ', card);
+  selectCard(card: IDisputeReasonCard) {
     this.reasonPageService.cardSelected$.next(card);
   }
 
   deselectCard(card: IDisputeReasonCard) {
-    console.log('deselect ==> ', card, this.reasonCards);
     this.reasonCards = this.reasonCards.map((c) => {
       if (c.reason.id === card.reason.id) {
         return {

@@ -29,11 +29,6 @@ const DashboardRoutes: Routes = [
     canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
-        path: '',
-        redirectTo: 'init',
-        pathMatch: 'full',
-      },
-      {
         path: 'init',
         component: DashboardEnrolledComponent,
         resolve: { dashboard: DashboardResolver },
@@ -95,57 +90,17 @@ const DashboardRoutes: Routes = [
         component: PersonalitemsView,
         canActivate: [ActiveGuard, AuthGuard],
       },
-      // {
-      //   path: 'report/dispute',
-      //   component: DisputesReconfirmView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'report/dispute/tradeline',
-      //   component: DisputesTradelineView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'report/dispute/personalitem',
-      //   component: DisputesPersonalView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'report/dispute/publicitem',
-      //   component: DisputesPublicView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'report/dispute/tradeline/error',
-      //   component: BaseExceptionView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'report/dispute/personalitem/error',
-      //   component: BaseExceptionView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'report/dispute/publicitem/error',
-      //   component: BaseExceptionView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
-      // {
-      //   path: 'disputes/findings',
-      //   component: DisputeFindingsView,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
       {
         path: 'report/error',
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
-      // {
-      //   path: 'test',
-      //   component: OutlineSsnFullFormComponent,
-      //   canActivate: [ActiveGuard, AuthGuard],
-      // },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard/init',
+    pathMatch: 'full',
   },
 ];
 

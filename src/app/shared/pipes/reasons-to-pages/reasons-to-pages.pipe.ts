@@ -24,7 +24,6 @@ export class ReasonsToPagesPipe implements PipeTransform {
           ? [...data, { reasonCards: cards.splice(0, cards.length) }] // don't leave a page with just one
           : [...data, { reasonCards: cards.splice(0, pageBreak) }];
     }
-    console.log('pages ==> ', { pages, data });
     return { pages, data };
   }
 }
