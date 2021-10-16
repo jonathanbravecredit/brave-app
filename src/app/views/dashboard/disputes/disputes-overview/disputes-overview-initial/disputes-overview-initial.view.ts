@@ -45,7 +45,7 @@ export class DisputesOverviewInitialView implements OnInit {
           this.interstitial.closeInterstitial();
         }, 2000);
       } else {
-        this.router.navigate(['./findings'], {
+        this.router.navigate(['../findings'], {
           relativeTo: this.route,
           queryParams: {
             id: dispute.disputeId,
@@ -53,7 +53,7 @@ export class DisputesOverviewInitialView implements OnInit {
         });
       }
     } else {
-      this.router.navigate(['./findings'], {
+      this.router.navigate(['../findings'], {
         relativeTo: this.route,
         queryParams: {
           id: dispute.disputeId,
