@@ -9,6 +9,7 @@
           [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"
           [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails : findings.investigationResults"
           [personalInfoConfig]="(findings.investigationResults?.Borrower || {}) | personalitemsToDetails"
+          [stateOfResidence]="stateOfResidence"
         ></brave-dispute-findings-pure>
       </ng-container>
     </ng-container>

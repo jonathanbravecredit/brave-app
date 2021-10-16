@@ -20,6 +20,7 @@ export class DisputeFindingsPureView implements OnInit {
   @Input() tradelineAccountConfig: ITradelineCreditBureauConfig[] = [];
   @Input() publicRecordConfig: IPublicRecordCreditBureauConfig[] = [];
   @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
+  @Input() stateOfResidence: string = '';
 
   findingTypes = CreditBureauFindingsType;
   bcMissing = TransunionUtil.bcMissing;

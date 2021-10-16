@@ -56,6 +56,7 @@ import { DisputeConditionalTermsComponent } from './components/dispute-condition
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisputeBaseComponent } from './components/dispute-base/dispute-base.component';
 import { DisputeReasonPageComponent } from './components/dispute-reason-page/dispute-reason-page.component';
+import { DisputeFindingsYourRightsComponent } from './components/findings/dispute-findings-your-rights/dispute-findings-your-rights.component';
 
 const modules = [
   CommonModule,
@@ -99,6 +100,7 @@ const components = [
   DisputeFindingsResultsDetailsComponent,
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
+  DisputeFindingsYourRightsComponent,
   DisputeHeaderTradelineComponent,
   DisputeHeaderPublicitemComponent,
   DisputeHeaderPersonalitemComponent,
