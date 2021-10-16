@@ -97,6 +97,10 @@ export class DisputeService implements OnDestroy {
     if (this.stateSub$) this.stateSub$.unsubscribe();
   }
 
+  getUserStateOfResidence(): string {
+    return this.statesvc.state?.appData.user?.userAttributes?.address?.state || '';
+  }
+
   setTradelineItem(tradeline: ITradeLinePartition): void {
     this.tradeline$.next(tradeline);
     const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline) || ({} as ISubscriber);
