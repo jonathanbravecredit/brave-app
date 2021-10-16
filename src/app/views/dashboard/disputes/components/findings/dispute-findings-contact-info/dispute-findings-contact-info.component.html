@@ -1,20 +1,28 @@
 <div class="mx-3 my-4">
   <div class="flex items-center">
-    <div class="w-1 h-10 bg-purple-800 mr-4">
-    </div>
-    <p class="font-semibold">Should You Wish to Contact TransUnion</p>
+    <div class="w-1 h-10 bg-purple-800 mr-4"></div>
+    <p class="font-semibold">{{ content.p1 }}</p>
   </div>
   <div>
     <p class="text-sm">
-      Please have your TransUnion FILE NUMBER available. Your unique FILE NUMBER is {{ fileIdentificationNumber }} and also located at the top of this page.
+      <span>{{ content.span1 }}</span>
+      <span>&nbsp;{{ fileIdentificationNumber }}&nbsp;</span>
+      <span>{{ content.span2 }}</span>
     </p>
-    <p class="text-sm font-semibold">Online</p>
-    <p class="text-sm mt-2">To dispute information contained in your credit report, please visit the Dispute Center <a href="www.transunion.com/disputeonline " target="_blank">Dispute Center</a> or go to <a href="www.transunion.com/disputeonline" target="_blank">www.transunion.com/disputeonline</a></p>
-    <p class="text-sm mt-2">For more information please visit our <a href="" target="_blank">Frequently Asked Questions</a> or go to <a href="http://transunion.com/consumerfaqs" target="_blank">http://transunion.com/consumerfaqs</a></p>
-    <p class="text-sm mt-4 font-semibold">Mail</p>
-    <p class="text-sm">TransUnion P. O. Box 2000 Chester, PA 19016-2000</p>
-    <p class="text-sm mt-4 font-semibold">By Phone:</p>
-    <p class="text-sm">(800) 916-8800</p>
-    <p class="text-sm mt-4">You may contact us between the hours of 8:00 AM – 11:00 PM ET, Monday through Friday, except major holidays.</p>
+    <p class="text-sm mt-4 font-semibold">{{ content.p2 }}</p>
+    <p class="text-sm" [innerHTML]="content.p3 | linkify"></p>
+    <p class="text-sm mt-2" [innerHTML]="content.p4 | linkify"></p>
+    <p class="text-sm mt-4 font-semibold">{{ content.p5 }}</p>
+    <p class="text-sm">{{ content.p6 }}</p>
+    <p class="text-sm mt-4 font-semibold">{{ content.p7 }}</p>
+    <p class="text-sm">{{ content.p8 }}</p>
+    <p class="text-sm mt-4">{{ content.p9 }}</p>
+    <p class="text-sm mt-4">
+      <span>{{ content.span3 }}</span>
+      <span>
+        <a [routerLink]="['/dashboard/report']" class="text-indigo-800">&nbsp;{{ content.link1 }}&nbsp;</a>
+      </span>
+      <span [innerHTML]="content.span4 | linkify"></span>
+    </p>
   </div>
 </div>

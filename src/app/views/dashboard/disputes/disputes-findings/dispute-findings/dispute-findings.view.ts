@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 export class DisputeFindingsView implements OnInit {
   disputes$: Observable<(DisputeInput | null)[] | null | undefined>;
   dispute$: Observable<DisputeInput>;
+  stateOfResidence: string = '';
   tuQuery = TransunionQueries;
 
   constructor(
@@ -44,5 +45,7 @@ export class DisputeFindingsView implements OnInit {
     } else {
       this.interstitial.closeInterstitial();
     }
+
+    this.stateOfResidence = this.disputeService.getUserStateOfResidence();
   }
 }
