@@ -114,6 +114,88 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     disputeEnrolled
     disputeEnrolledOn
     disputeStatus
+    dusputeCurrent {
+      id
+      appDataId
+      disputeId
+      disputeStatus
+      disputeLetterCode
+      disputeLetterContent
+      openDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
+      }
+      closedDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
+      }
+      pvDisputedItems {
+        pvTradelines
+        pvPublicRecords
+      }
+      agencyName
+      openedOn
+      closedOn
+      disputeItems
+      disputeInvestigationResults
+      disputeCreditBureau
+      notificationStatus
+      notificationMessage
+      notificationSentOn
+    }
+    disputeHistorical {
+      id
+      appDataId
+      disputeId
+      disputeStatus
+      disputeLetterCode
+      disputeLetterContent
+      openDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
+      }
+      closedDisputes {
+        estimatedCompletionDate
+        lastUpdatedDate
+        openDate
+        requestedDate
+        totalClosedDisputedItems
+        totalDisputedItems
+        totalOpenDisputedItems
+        totalPVDisputedItemCount
+      }
+      pvDisputedItems {
+        pvTradelines
+        pvPublicRecords
+      }
+      agencyName
+      openedOn
+      closedOn
+      disputeItems
+      disputeInvestigationResults
+      disputeCreditBureau
+      notificationStatus
+      notificationMessage
+      notificationSentOn
+    }
     disputes {
       id
       appDataId
@@ -319,6 +401,88 @@ mutation CreateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        dusputeCurrent {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+        disputeHistorical {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
         disputes {
           id
           appDataId
@@ -572,6 +736,88 @@ mutation UpdateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        dusputeCurrent {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+        disputeHistorical {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
         disputes {
           id
           appDataId
@@ -825,6 +1071,88 @@ mutation DeleteAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        dusputeCurrent {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+        disputeHistorical {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
         disputes {
           id
           appDataId
