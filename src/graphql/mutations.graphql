@@ -114,7 +114,7 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     disputeEnrolled
     disputeEnrolledOn
     disputeStatus
-    dusputeCurrent {
+    disputeCurrent {
       id
       appDataId
       disputeId
@@ -401,7 +401,7 @@ mutation CreateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId
@@ -736,7 +736,7 @@ mutation UpdateAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId
@@ -1071,7 +1071,7 @@ mutation DeleteAppData(
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId

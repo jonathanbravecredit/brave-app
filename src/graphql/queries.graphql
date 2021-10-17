@@ -161,7 +161,7 @@ query GetAppData($id: ID!) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId
@@ -498,7 +498,7 @@ query ListAppDatas(
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
-          dusputeCurrent {
+          disputeCurrent {
             id
             appDataId
             disputeId

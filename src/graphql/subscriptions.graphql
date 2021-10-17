@@ -158,7 +158,7 @@ subscription OnCreateAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId
@@ -490,7 +490,7 @@ subscription OnUpdateAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId
@@ -822,7 +822,7 @@ subscription OnDeleteAppData($owner: String) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        dusputeCurrent {
+        disputeCurrent {
           id
           appDataId
           disputeId

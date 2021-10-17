@@ -46,7 +46,7 @@ export type Transunion = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
-  dusputeCurrent?: Dispute;
+  disputeCurrent?: Dispute;
   disputeHistorical?: Array<Dispute | null> | null;
   disputes?: Array<Dispute | null> | null;
 };
@@ -226,7 +226,7 @@ export type TransunionInput = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
-  dusputeCurrent?: DisputeInput | null;
+  disputeCurrent?: DisputeInput | null;
   disputeHistorical?: Array<DisputeInput | null> | null;
   disputes?: Array<DisputeInput | null> | null;
 };
@@ -711,7 +711,7 @@ export type PatchTransunionMutation = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
-  dusputeCurrent?: {
+  disputeCurrent?: {
     __typename: "Dispute";
     id: string;
     appDataId: string;
@@ -1028,7 +1028,7 @@ export type CreateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -1399,7 +1399,7 @@ export type UpdateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -1770,7 +1770,7 @@ export type DeleteAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -2141,7 +2141,7 @@ export type GetAppDataQuery = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -2514,7 +2514,7 @@ export type ListAppDatasQuery = {
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
         disputeStatus?: string | null;
-        dusputeCurrent?: {
+        disputeCurrent?: {
           __typename: "Dispute";
           id: string;
           appDataId: string;
@@ -2887,7 +2887,7 @@ export type OnCreateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -3258,7 +3258,7 @@ export type OnUpdateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -3629,7 +3629,7 @@ export type OnDeleteAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
-      dusputeCurrent?: {
+      disputeCurrent?: {
         __typename: "Dispute";
         id: string;
         appDataId: string;
@@ -3954,7 +3954,7 @@ export class APIService {
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
-          dusputeCurrent {
+          disputeCurrent {
             __typename
             id
             appDataId
@@ -4287,7 +4287,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
@@ -4674,7 +4674,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
@@ -5061,7 +5061,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
@@ -5458,7 +5458,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
@@ -5845,7 +5845,7 @@ export class APIService {
                 disputeEnrolled
                 disputeEnrolledOn
                 disputeStatus
-                dusputeCurrent {
+                disputeCurrent {
                   __typename
                   id
                   appDataId
@@ -6237,7 +6237,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
@@ -6621,7 +6621,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
@@ -7005,7 +7005,7 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
-              dusputeCurrent {
+              disputeCurrent {
                 __typename
                 id
                 appDataId
