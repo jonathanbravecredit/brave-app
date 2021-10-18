@@ -161,6 +161,88 @@ query GetAppData($id: ID!) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputeCurrent {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+        disputeHistorical {
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
         disputes {
           id
           appDataId
@@ -416,6 +498,88 @@ query ListAppDatas(
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
+          disputeCurrent {
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes {
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            closedDisputes {
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            pvDisputedItems {
+              pvTradelines
+              pvPublicRecords
+            }
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeInvestigationResults
+            disputeCreditBureau
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
+          disputeHistorical {
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes {
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            closedDisputes {
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            pvDisputedItems {
+              pvTradelines
+              pvPublicRecords
+            }
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeInvestigationResults
+            disputeCreditBureau
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
           disputes {
             id
             appDataId

@@ -146,7 +146,7 @@ type Transunion {
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
   disputeStatus: String
-  dusputeCurrent: Dispute
+  disputeCurrent: Dispute
   disputeHistorical: [Dispute]
   disputes: [Dispute]
 }

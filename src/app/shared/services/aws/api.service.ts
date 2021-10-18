@@ -46,6 +46,8 @@ export type Transunion = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputeCurrent?: Dispute;
+  disputeHistorical?: Array<Dispute | null> | null;
   disputes?: Array<Dispute | null> | null;
 };
 
@@ -224,6 +226,8 @@ export type TransunionInput = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputeCurrent?: DisputeInput | null;
+  disputeHistorical?: Array<DisputeInput | null> | null;
   disputes?: Array<DisputeInput | null> | null;
 };
 
@@ -707,6 +711,96 @@ export type PatchTransunionMutation = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputeCurrent?: {
+    __typename: "Dispute";
+    id: string;
+    appDataId: string;
+    disputeId?: string | null;
+    disputeStatus?: string | null;
+    disputeLetterCode?: string | null;
+    disputeLetterContent?: string | null;
+    openDisputes?: {
+      __typename: "DisputeSummary";
+      estimatedCompletionDate?: string | null;
+      lastUpdatedDate?: string | null;
+      openDate?: string | null;
+      requestedDate?: string | null;
+      totalClosedDisputedItems?: string | null;
+      totalDisputedItems?: string | null;
+      totalOpenDisputedItems?: string | null;
+      totalPVDisputedItemCount?: string | null;
+    } | null;
+    closedDisputes?: {
+      __typename: "DisputeSummary";
+      estimatedCompletionDate?: string | null;
+      lastUpdatedDate?: string | null;
+      openDate?: string | null;
+      requestedDate?: string | null;
+      totalClosedDisputedItems?: string | null;
+      totalDisputedItems?: string | null;
+      totalOpenDisputedItems?: string | null;
+      totalPVDisputedItemCount?: string | null;
+    } | null;
+    pvDisputedItems?: {
+      __typename: "PVDisputedItems";
+      pvTradelines?: string | null;
+      pvPublicRecords?: string | null;
+    } | null;
+    agencyName?: string | null;
+    openedOn?: string | null;
+    closedOn?: string | null;
+    disputeItems?: string | null;
+    disputeInvestigationResults?: string | null;
+    disputeCreditBureau?: string | null;
+    notificationStatus?: string | null;
+    notificationMessage?: string | null;
+    notificationSentOn?: string | null;
+  } | null;
+  disputeHistorical?: Array<{
+    __typename: "Dispute";
+    id: string;
+    appDataId: string;
+    disputeId?: string | null;
+    disputeStatus?: string | null;
+    disputeLetterCode?: string | null;
+    disputeLetterContent?: string | null;
+    openDisputes?: {
+      __typename: "DisputeSummary";
+      estimatedCompletionDate?: string | null;
+      lastUpdatedDate?: string | null;
+      openDate?: string | null;
+      requestedDate?: string | null;
+      totalClosedDisputedItems?: string | null;
+      totalDisputedItems?: string | null;
+      totalOpenDisputedItems?: string | null;
+      totalPVDisputedItemCount?: string | null;
+    } | null;
+    closedDisputes?: {
+      __typename: "DisputeSummary";
+      estimatedCompletionDate?: string | null;
+      lastUpdatedDate?: string | null;
+      openDate?: string | null;
+      requestedDate?: string | null;
+      totalClosedDisputedItems?: string | null;
+      totalDisputedItems?: string | null;
+      totalOpenDisputedItems?: string | null;
+      totalPVDisputedItemCount?: string | null;
+    } | null;
+    pvDisputedItems?: {
+      __typename: "PVDisputedItems";
+      pvTradelines?: string | null;
+      pvPublicRecords?: string | null;
+    } | null;
+    agencyName?: string | null;
+    openedOn?: string | null;
+    closedOn?: string | null;
+    disputeItems?: string | null;
+    disputeInvestigationResults?: string | null;
+    disputeCreditBureau?: string | null;
+    notificationStatus?: string | null;
+    notificationMessage?: string | null;
+    notificationSentOn?: string | null;
+  } | null> | null;
   disputes?: Array<{
     __typename: "Dispute";
     id: string;
@@ -934,6 +1028,96 @@ export type CreateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -1215,6 +1399,96 @@ export type UpdateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -1496,6 +1770,96 @@ export type DeleteAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -1777,6 +2141,96 @@ export type GetAppDataQuery = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -2060,6 +2514,96 @@ export type ListAppDatasQuery = {
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
         disputeStatus?: string | null;
+        disputeCurrent?: {
+          __typename: "Dispute";
+          id: string;
+          appDataId: string;
+          disputeId?: string | null;
+          disputeStatus?: string | null;
+          disputeLetterCode?: string | null;
+          disputeLetterContent?: string | null;
+          openDisputes?: {
+            __typename: "DisputeSummary";
+            estimatedCompletionDate?: string | null;
+            lastUpdatedDate?: string | null;
+            openDate?: string | null;
+            requestedDate?: string | null;
+            totalClosedDisputedItems?: string | null;
+            totalDisputedItems?: string | null;
+            totalOpenDisputedItems?: string | null;
+            totalPVDisputedItemCount?: string | null;
+          } | null;
+          closedDisputes?: {
+            __typename: "DisputeSummary";
+            estimatedCompletionDate?: string | null;
+            lastUpdatedDate?: string | null;
+            openDate?: string | null;
+            requestedDate?: string | null;
+            totalClosedDisputedItems?: string | null;
+            totalDisputedItems?: string | null;
+            totalOpenDisputedItems?: string | null;
+            totalPVDisputedItemCount?: string | null;
+          } | null;
+          pvDisputedItems?: {
+            __typename: "PVDisputedItems";
+            pvTradelines?: string | null;
+            pvPublicRecords?: string | null;
+          } | null;
+          agencyName?: string | null;
+          openedOn?: string | null;
+          closedOn?: string | null;
+          disputeItems?: string | null;
+          disputeInvestigationResults?: string | null;
+          disputeCreditBureau?: string | null;
+          notificationStatus?: string | null;
+          notificationMessage?: string | null;
+          notificationSentOn?: string | null;
+        } | null;
+        disputeHistorical?: Array<{
+          __typename: "Dispute";
+          id: string;
+          appDataId: string;
+          disputeId?: string | null;
+          disputeStatus?: string | null;
+          disputeLetterCode?: string | null;
+          disputeLetterContent?: string | null;
+          openDisputes?: {
+            __typename: "DisputeSummary";
+            estimatedCompletionDate?: string | null;
+            lastUpdatedDate?: string | null;
+            openDate?: string | null;
+            requestedDate?: string | null;
+            totalClosedDisputedItems?: string | null;
+            totalDisputedItems?: string | null;
+            totalOpenDisputedItems?: string | null;
+            totalPVDisputedItemCount?: string | null;
+          } | null;
+          closedDisputes?: {
+            __typename: "DisputeSummary";
+            estimatedCompletionDate?: string | null;
+            lastUpdatedDate?: string | null;
+            openDate?: string | null;
+            requestedDate?: string | null;
+            totalClosedDisputedItems?: string | null;
+            totalDisputedItems?: string | null;
+            totalOpenDisputedItems?: string | null;
+            totalPVDisputedItemCount?: string | null;
+          } | null;
+          pvDisputedItems?: {
+            __typename: "PVDisputedItems";
+            pvTradelines?: string | null;
+            pvPublicRecords?: string | null;
+          } | null;
+          agencyName?: string | null;
+          openedOn?: string | null;
+          closedOn?: string | null;
+          disputeItems?: string | null;
+          disputeInvestigationResults?: string | null;
+          disputeCreditBureau?: string | null;
+          notificationStatus?: string | null;
+          notificationMessage?: string | null;
+          notificationSentOn?: string | null;
+        } | null> | null;
         disputes?: Array<{
           __typename: "Dispute";
           id: string;
@@ -2343,6 +2887,96 @@ export type OnCreateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -2624,6 +3258,96 @@ export type OnUpdateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -2905,6 +3629,96 @@ export type OnDeleteAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputeCurrent?: {
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null;
+      disputeHistorical?: Array<{
+        __typename: "Dispute";
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: "DisputeSummary";
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        pvDisputedItems?: {
+          __typename: "PVDisputedItems";
+          pvTradelines?: string | null;
+          pvPublicRecords?: string | null;
+        } | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeInvestigationResults?: string | null;
+        disputeCreditBureau?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
       disputes?: Array<{
         __typename: "Dispute";
         id: string;
@@ -3140,6 +3954,96 @@ export class APIService {
           disputeEnrolled
           disputeEnrolledOn
           disputeStatus
+          disputeCurrent {
+            __typename
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes {
+              __typename
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            closedDisputes {
+              __typename
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            pvDisputedItems {
+              __typename
+              pvTradelines
+              pvPublicRecords
+            }
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeInvestigationResults
+            disputeCreditBureau
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
+          disputeHistorical {
+            __typename
+            id
+            appDataId
+            disputeId
+            disputeStatus
+            disputeLetterCode
+            disputeLetterContent
+            openDisputes {
+              __typename
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            closedDisputes {
+              __typename
+              estimatedCompletionDate
+              lastUpdatedDate
+              openDate
+              requestedDate
+              totalClosedDisputedItems
+              totalDisputedItems
+              totalOpenDisputedItems
+              totalPVDisputedItemCount
+            }
+            pvDisputedItems {
+              __typename
+              pvTradelines
+              pvPublicRecords
+            }
+            agencyName
+            openedOn
+            closedOn
+            disputeItems
+            disputeInvestigationResults
+            disputeCreditBureau
+            notificationStatus
+            notificationMessage
+            notificationSentOn
+          }
           disputes {
             __typename
             id
@@ -3383,6 +4287,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
@@ -3680,6 +4674,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
@@ -3977,6 +5061,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
@@ -4284,6 +5458,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
@@ -4581,6 +5845,96 @@ export class APIService {
                 disputeEnrolled
                 disputeEnrolledOn
                 disputeStatus
+                disputeCurrent {
+                  __typename
+                  id
+                  appDataId
+                  disputeId
+                  disputeStatus
+                  disputeLetterCode
+                  disputeLetterContent
+                  openDisputes {
+                    __typename
+                    estimatedCompletionDate
+                    lastUpdatedDate
+                    openDate
+                    requestedDate
+                    totalClosedDisputedItems
+                    totalDisputedItems
+                    totalOpenDisputedItems
+                    totalPVDisputedItemCount
+                  }
+                  closedDisputes {
+                    __typename
+                    estimatedCompletionDate
+                    lastUpdatedDate
+                    openDate
+                    requestedDate
+                    totalClosedDisputedItems
+                    totalDisputedItems
+                    totalOpenDisputedItems
+                    totalPVDisputedItemCount
+                  }
+                  pvDisputedItems {
+                    __typename
+                    pvTradelines
+                    pvPublicRecords
+                  }
+                  agencyName
+                  openedOn
+                  closedOn
+                  disputeItems
+                  disputeInvestigationResults
+                  disputeCreditBureau
+                  notificationStatus
+                  notificationMessage
+                  notificationSentOn
+                }
+                disputeHistorical {
+                  __typename
+                  id
+                  appDataId
+                  disputeId
+                  disputeStatus
+                  disputeLetterCode
+                  disputeLetterContent
+                  openDisputes {
+                    __typename
+                    estimatedCompletionDate
+                    lastUpdatedDate
+                    openDate
+                    requestedDate
+                    totalClosedDisputedItems
+                    totalDisputedItems
+                    totalOpenDisputedItems
+                    totalPVDisputedItemCount
+                  }
+                  closedDisputes {
+                    __typename
+                    estimatedCompletionDate
+                    lastUpdatedDate
+                    openDate
+                    requestedDate
+                    totalClosedDisputedItems
+                    totalDisputedItems
+                    totalOpenDisputedItems
+                    totalPVDisputedItemCount
+                  }
+                  pvDisputedItems {
+                    __typename
+                    pvTradelines
+                    pvPublicRecords
+                  }
+                  agencyName
+                  openedOn
+                  closedOn
+                  disputeItems
+                  disputeInvestigationResults
+                  disputeCreditBureau
+                  notificationStatus
+                  notificationMessage
+                  notificationSentOn
+                }
                 disputes {
                   __typename
                   id
@@ -4883,6 +6237,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
@@ -5177,6 +6621,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
@@ -5471,6 +7005,96 @@ export class APIService {
               disputeEnrolled
               disputeEnrolledOn
               disputeStatus
+              disputeCurrent {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
+              disputeHistorical {
+                __typename
+                id
+                appDataId
+                disputeId
+                disputeStatus
+                disputeLetterCode
+                disputeLetterContent
+                openDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                closedDisputes {
+                  __typename
+                  estimatedCompletionDate
+                  lastUpdatedDate
+                  openDate
+                  requestedDate
+                  totalClosedDisputedItems
+                  totalDisputedItems
+                  totalOpenDisputedItems
+                  totalPVDisputedItemCount
+                }
+                pvDisputedItems {
+                  __typename
+                  pvTradelines
+                  pvPublicRecords
+                }
+                agencyName
+                openedOn
+                closedOn
+                disputeItems
+                disputeInvestigationResults
+                disputeCreditBureau
+                notificationStatus
+                notificationMessage
+                notificationSentOn
+              }
               disputes {
                 __typename
                 id
