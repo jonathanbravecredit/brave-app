@@ -27,18 +27,21 @@
     <p class="text-xs text-dk-gray">{{ content.p4 }}</p>
     <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ details.disputeFlag || missing }}</p>
   </div>
-  <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
-    <div *ngIf="tradeline" class="flex flex-col w-full my-4">
-      <brave-tradeline-details
-        [tradeline]="tradeline"
-        [subscriber]="subscriber"
-        [overrideOpen]="true"
-        (disputeClick)="disputeClick.emit(tradeline)"
-      ></brave-tradeline-details>
-    </div>
-  </div>
 
-  <div class="flex justify-center py-3">
-    <brave-viewdetail-button #viewDetail size="full">{{ content.b1 }}</brave-viewdetail-button>
-  </div>
+  <ng-container *ngIf="canOpen">
+    <div *ngIf="viewDetail.open$ | async as open" class="flex flex-col w-full my-4">
+      <div *ngIf="tradeline" class="flex flex-col w-full my-4">
+        <brave-tradeline-details
+          [tradeline]="tradeline"
+          [subscriber]="subscriber"
+          [overrideOpen]="true"
+          (disputeClick)="disputeClick.emit(tradeline)"
+        ></brave-tradeline-details>
+      </div>
+    </div>
+
+    <div class="flex justify-center py-3">
+      <brave-viewdetail-button #viewDetail size="full">{{ content.b1 }}</brave-viewdetail-button>
+    </div>
+  </ng-container>
 </ng-container>

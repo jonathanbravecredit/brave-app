@@ -19,6 +19,7 @@ export interface IDisputeToDisputeFindingOutput {
 })
 export class DisputeToDisputeFindingPipe implements PipeTransform {
   transform(dispute: DisputeInput): IDisputeToDisputeFindingOutput | undefined {
+    debugger;
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
@@ -36,7 +37,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
       : tempReport?.trueLinkCreditReportType;
 
     const disputeItems: IDisputeTradelineItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
-    if (!creditBureau || !disputeItems) return;
+    if (!creditBureau || !disputeItems) return this.mapOpenDispute(dispute);
     return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
   }
 
