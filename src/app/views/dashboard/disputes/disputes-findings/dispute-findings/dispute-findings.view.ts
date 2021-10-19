@@ -34,7 +34,9 @@ export class DisputeFindingsView implements OnInit {
     }
     if (
       dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete &&
-      !JSON.parse(dispute.disputeInvestigationResults || '')
+      (dispute.disputeInvestigationResults === undefined ||
+        dispute.disputeInvestigationResults === null ||
+        !JSON.parse(dispute.disputeInvestigationResults))
     ) {
       // auto close...need to get results
       this.interstitial.changeMessage('gathering results');

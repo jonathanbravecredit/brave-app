@@ -5,6 +5,7 @@ import { IBottomNavbarItem } from './interfaces';
 @Component({
   selector: 'brave-bottom-navbar',
   templateUrl: './bottom-navbar.component.html',
+  styleUrls: ['./bottom-navbar.component.css'],
 })
 export class BottomNavbarComponent implements OnInit {
   navigationItems: IBottomNavbarItem[] = navigationItems;
@@ -13,9 +14,9 @@ export class BottomNavbarComponent implements OnInit {
   disableEventEmitter: boolean = false;
   @Output() navigationTo: EventEmitter<string> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   navigate(navigationItemName: string): void {
     if (!this.disableLocalNavigationHandler) {

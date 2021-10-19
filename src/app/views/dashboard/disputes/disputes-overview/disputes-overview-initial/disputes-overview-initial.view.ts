@@ -38,7 +38,9 @@ export class DisputesOverviewInitialView implements OnInit {
     const dispute: DisputeInput = entity.dispute;
     if (
       dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete &&
-      !JSON.parse(dispute.disputeInvestigationResults || '')
+      (dispute.disputeInvestigationResults === undefined ||
+        dispute.disputeInvestigationResults === null ||
+        !JSON.parse(dispute.disputeInvestigationResults))
     ) {
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage('gathering results');
