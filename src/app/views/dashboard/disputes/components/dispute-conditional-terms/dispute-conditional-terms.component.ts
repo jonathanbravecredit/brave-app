@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/dispute-conditional-terms/content';
 
 @Component({
@@ -20,25 +19,9 @@ export class DisputeConditionalTermsComponent implements OnInit {
     this.confirmed = e.target.checked;
   }
 
-  getButtonConfig(): IFilledOnlyTextButtonConfig {
-    let defaultConfig: IFilledOnlyTextButtonConfig = {
-      buttonSize: 'base',
-      backgroundColor: 'bg-indigo-800',
-      activeColor: 'bg-indigo-900',
-      color: 'text-white',
-      full: false,
-    };
-
+  submitAcceptance(): void {
     if (this.confirmed) {
-      return defaultConfig;
-    } else {
-      defaultConfig.backgroundColor = 'bg-black';
-      defaultConfig.activeColor = 'bg-black';
-      return defaultConfig;
+      this.accepted.emit();
     }
-  }
-
-  getBtnInteractionClass(): string {
-    return this.confirmed === false ? 'pointer-events-none' : '';
   }
 }

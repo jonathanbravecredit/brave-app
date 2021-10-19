@@ -1,4 +1,23 @@
-<div>
+<div class="mb-9">
+  <div *ngIf="dispute.tradeline | tradelineToDetails as header">
+    <div class="flex justify-start items-start content-start">
+      <div class="ml-2 mb-4">
+        <p class="text-sm font-semibold">
+          {{ header.creditorName }} {{ header.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+        </p>
+        <p class="text-sm font-semibold">{{ header.accountTypeDescription || '' }}</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-1 mb-2">
+      <p class="text-xs font-dk-gray whitespace-nowrap">Last Reported Payment to Creditor:</p>
+      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ header.dateReported | date: 'shortDate' }}</p>
+      <p class="text-xs text-dk-gray whitespace-nowrap">Original Creditor:</p>
+      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ header.originalCreditor }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- <div>
   <p class="text-sm font-semibold mb-4">{{ dispute.creditorName || missing }}</p>
 </div>
 <div class="grid grid-cols-2 gap-2 mb-2">
@@ -34,4 +53,4 @@
       {{ dispute.originalCreditor || missing }}
     </p>
   </div>
-</div>
+</div> -->

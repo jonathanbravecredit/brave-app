@@ -11,4 +11,8 @@ export class DisputeFindingsHeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  print(): void {
+    window.print();
+  }
 }

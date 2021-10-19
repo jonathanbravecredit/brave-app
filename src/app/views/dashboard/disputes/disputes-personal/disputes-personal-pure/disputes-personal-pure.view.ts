@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IDisputePersonalItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 import { DisputeBaseComponent } from '@views/dashboard/disputes/components/dispute-base/dispute-base.component';
 import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
 import {
@@ -17,7 +18,7 @@ export interface IProcessDisputePersonalResult {
   selector: 'brave-disputes-personal-pure-view',
   templateUrl: './disputes-personal-pure.view.html',
 })
-export class DisputesPersonalPureView implements OnInit, AfterViewInit {
+export class DisputesPersonalPureView implements OnInit {
   @Input() viewDisplay: viewDisplay = 'not-sent';
   @Input() dispute: IDisputePersonalItem | undefined;
   @Output() processResult: EventEmitter<IProcessDisputePersonalResult> = new EventEmitter();
@@ -25,13 +26,15 @@ export class DisputesPersonalPureView implements OnInit, AfterViewInit {
 
   reasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS;
   pageOne = DISPUTES_PERSONAL_REASONS_TOBEREMOVED;
+  defaultReasonCard: IDisputeReasonCard | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.base?.addSelection(this.pageOne[0]); // manually set the reason
-    }, 0);
+  ngOnInit(): void {
+    this.defaultReasonCard = {
+      ...this.pageOne[0],
+      selected: false,
+      index: 0,
+    };
   }
 }
