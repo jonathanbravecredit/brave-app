@@ -1,16 +1,18 @@
-<div class="w-full py-4" *ngIf="currentView === 'select'">
-  <p class="text-lg">Which option matches your request?</p>
-  <form class="mt-4">
-    <div class="flex items-center">
+<div class="border-t border-blueGray-300 py-2"></div>
+
+<div class="w-full pb-4 mt-8" *ngIf="currentView === 'select'">
+  <p class="text-lg font-semibold">Which option matches your request?</p>
+  <form class="ml-8 mt-4 text-sm">
+    <div class="flex items-center my-8">
       <input type="radio" name="disputeType" value="not-mine" (change)="onRadioChanges($event)" />
-      <label class="ml-4">{{ firstOptionDescription }}</label>
+      <label class="ml-3">{{ firstOptionDescription }}</label>
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center my-8">
       <input type="radio" name="disputeType" value="inaccurate" (change)="onRadioChanges($event)" />
-      <label class="ml-4">{{ secondOptionDescription }}</label>
+      <label class="ml-3">{{ secondOptionDescription }}</label>
     </div>
   </form>
-  <div class="flex justify-center mt-4">
+  <div class="flex justify-center my-8">
     <brave-filled-onlytext-button
       class="{{ disputeType === undefined ? 'pointer-events-none' : '' }}"
       [config]="getButtonConfig()"
@@ -21,17 +23,23 @@
 </div>
 
 <div class="w-full py-4" *ngIf="currentView === 'reason'">
+  <div
+    *ngIf="showMaxError"
+    class="mb-4 text-white bg-red-600 font-bold text-sm text-center px-6 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+  >
+    <p>{{ content.p5 }}</p>
+  </div>
   <p class="text-lg font-bold mb-2">{{ disputeType !== 'not-mine' ? content.p1 : content.p2 }}</p>
   <div class="w-full" style="min-width: 300px">
     <ng-container *ngIf="reasonCards | reasonsToPages: (disputeType === 'not-mine' ? 5 : 4) as pages">
       <brave-basic-carousel [pages]="pages.pages" [data]="pages.data"> </brave-basic-carousel>
     </ng-container>
   </div>
-  <div class="p-4">
+  <div class="py-4">
     <p class="text-lg font-bold mb-2">{{ content.p3 }}</p>
     <p class="text-sm" *ngIf="selections.length === 0">{{ content.p4 }}</p>
-    <div>
-      <div class="mt-4" *ngFor="let selection of selections; index as idx">
+    <div class="mt-4 flex justify-center" *ngFor="let selection of selections; index as idx">
+      <div style="width: 300px">
         <brave-reason-card
           #selectionCard
           [selected]="true"
@@ -45,12 +53,6 @@
     </div>
     <div class="flex justify-center">
       <brave-filled-onlytext-button class="mt-4" (click)="goToSummary()">{{ content.b1 }}</brave-filled-onlytext-button>
-    </div>
-    <div
-      *ngIf="showMaxError"
-      class="mb-4 text-white bg-red-600 font-bold text-sm text-center px-6 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-    >
-      <p>{{ content.p5 }}</p>
     </div>
   </div>
 </div>

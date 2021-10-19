@@ -36,7 +36,12 @@ export class DisputesOverviewInitialView implements OnInit {
     if (!entity.dispute) throw `dispute missing`;
     if (!entity.dispute) return;
     const dispute: DisputeInput = entity.dispute;
-    if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && !dispute.disputeInvestigationResults) {
+    if (
+      dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete &&
+      (dispute.disputeInvestigationResults === undefined ||
+        dispute.disputeInvestigationResults === null ||
+        !JSON.parse(dispute.disputeInvestigationResults))
+    ) {
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage('gathering results');
       const res = await this.getInvestigationResults(dispute.disputeId);
@@ -53,6 +58,7 @@ export class DisputesOverviewInitialView implements OnInit {
         });
       }
     } else {
+      // do I need to set the current dispute
       this.router.navigate(['../findings'], {
         relativeTo: this.route,
         queryParams: {

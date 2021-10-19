@@ -7,6 +7,9 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 })
 export class FilledSpinningButtonComponent {
   @Input() disabled: boolean = false;
+  @Input() backgroundColor: string = 'bg-indigo-800';
+  @Input() color: string = 'text-white';
+
   spinning: boolean = false;
   constructor(private interstitial: InterstitialService) {
     this.interstitial.fetching$.subscribe((fetching) => {

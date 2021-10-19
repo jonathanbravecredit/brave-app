@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { OnInit, AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { IDisputeReasonCard, IDisputeReason } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
@@ -24,7 +24,7 @@ export type SelectionTypes = 'not-mine' | 'inaccurate';
   selector: 'brave-dispute-base',
   templateUrl: './dispute-base.component.html',
 })
-export class DisputeBaseComponent implements AfterViewInit, OnDestroy {
+export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(ConfirmationModalComponent) modal: ConfirmationModalComponent | undefined;
 
   @Input() disputeType: SelectionTypes | undefined = undefined;
@@ -35,7 +35,7 @@ export class DisputeBaseComponent implements AfterViewInit, OnDestroy {
   @Input() firstOptionReasonPages = DISPUTE_REASONS_NOTMINE;
   @Input() secondOptionReasonPages = DISPUTE_REASONS_INACCURATE;
   @Input() processReasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
-
+  @Input() defaultReasonCard: IDisputeReasonCard | undefined;
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
 
   // component props
@@ -69,6 +69,10 @@ export class DisputeBaseComponent implements AfterViewInit, OnDestroy {
     return this.viewState[this.viewState.length - 1];
   }
 
+  ngOnInit(): void {
+    if (this.defaultReasonCard) this.addSelection(this.defaultReasonCard);
+  }
+
   ngAfterViewInit(): void {
     this.confirmSub$ = this.modal?.confirmed$.subscribe((val) => {
       this.confirmed = val;
@@ -84,9 +88,10 @@ export class DisputeBaseComponent implements AfterViewInit, OnDestroy {
   addSelection(reason: IDisputeReasonCard | undefined): void {
     if (!reason) return;
     if (reason.selected) return; // already selected don't add again
+    this.maxSelections = reason.allowMore ? 2 : 1;
+    // handle custom input allowed
     if (reason.allowInput) {
       // custom input reason only allows one selection and requires confirmation
-      this.maxSelections = 1;
       this.customInputSelected = true;
       if (!this.confirmed) {
         this.pendingReasonCard = reason; // stage the card until the user confirms they want to proceed
@@ -95,17 +100,16 @@ export class DisputeBaseComponent implements AfterViewInit, OnDestroy {
       }
     } else {
       // custom input reason only allows one selection and requires confirmation
-      this.maxSelections = 2;
       this.customInputSelected = false;
     }
 
     if (this.selections.length >= this.maxSelections && !reason.allowInput) {
-      // cannot select more than two
+      // cannot select more than two...and not a custom input
       this.showMaxError = true;
       setTimeout(() => (this.showMaxError = false), 3000);
       return;
     } else if (this.selections.length >= this.maxSelections && reason.allowInput) {
-      // will replace the existing one
+      // will replace the existing one...as specified in the instructions
       this.removeAllSelections(this.selections);
       reason.selected = true;
       this.selections = [reason];

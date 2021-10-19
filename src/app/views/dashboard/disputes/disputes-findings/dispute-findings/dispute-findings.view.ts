@@ -28,7 +28,16 @@ export class DisputeFindingsView implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const dispute = this.disputeService.currentDispute$.value;
-    if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && !dispute.disputeInvestigationResults) {
+    if (!dispute.disputeStatus) {
+      // current dispute not set...get it from the
+      this.interstitial.closeInterstitial();
+    }
+    if (
+      dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete &&
+      (dispute.disputeInvestigationResults === undefined ||
+        dispute.disputeInvestigationResults === null ||
+        !JSON.parse(dispute.disputeInvestigationResults))
+    ) {
       // auto close...need to get results
       this.interstitial.changeMessage('gathering results');
       this.interstitial.openInterstitial();

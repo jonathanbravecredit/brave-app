@@ -10,6 +10,7 @@ import { tradelineGenericCardContent } from '@views/dashboard/reports/credit-rep
 export class TradelineGenericCardComponent implements OnInit {
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition;
   @Input() subscribers: ISubscriber[] = [];
+  @Input() canOpen: boolean = true;
   @Output() disputeClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
 
   missing = tu.bcMissing;

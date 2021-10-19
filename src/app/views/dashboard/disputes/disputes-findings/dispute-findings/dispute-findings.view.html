@@ -15,3 +15,13 @@
     </ng-container>
   </ng-container>
 </ng-container>
+
+<!-- <brave-dispute-findings-pure
+  [findings]="findings"
+  [reportCreatedAt]="findings.reportCreatedAt"
+  [fileIdentificationNumber]="findings.fileIdentificationNumber"
+  [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"
+  [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails : findings.investigationResults"
+  [personalInfoConfig]="(findings.investigationResults?.Borrower || {}) | personalitemsToDetails"
+  [stateOfResidence]="stateOfResidence"
+></brave-dispute-findings-pure> -->
