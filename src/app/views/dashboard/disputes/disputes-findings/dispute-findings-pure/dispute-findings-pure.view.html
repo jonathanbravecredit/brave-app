@@ -9,10 +9,10 @@
 <brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
 
 <!-- SPECIFIC DEFINITIONS FOR TRADELINES AND PUBLIC RECORDS -->
-<ng-container *ngIf="tradelineAccountConfig.length > 0">
+<ng-container *ngIf="tradelineAccountConfig?.length">
   <brave-dispute-findings-definitions [type]="'accounts'"></brave-dispute-findings-definitions>
 </ng-container>
-<ng-container *ngIf="publicRecordConfig.length > 0">
+<ng-container *ngIf="publicRecordConfig?.length">
   <brave-dispute-findings-definitions [type]="'public-records'"></brave-dispute-findings-definitions>
 </ng-container>
 
@@ -32,12 +32,9 @@
       [updatedValues]="[tradeline.summaryReason || 'Not Specified']"
     >
       <div class="mt-4">
-        <p *ngFor="let value of tradeline.contactDetails">{{value}}</p>
+        <p *ngFor="let value of tradeline?.contactDetails">{{value}}</p>
       </div>
-      <div class="flex items-center mt-4 mb-3">
-        <span>Account Details</span>
-      </div>
-      <ng-container *ngIf="tradeline.tradeline">
+      <ng-container *ngIf="tradeline?.tradeline">
         <brave-tradeline-details
           [tradeline]="tradeline.tradeline"
           [subscriber]="tradeline.subscriber"
