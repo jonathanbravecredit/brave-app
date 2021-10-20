@@ -158,6 +158,20 @@ export class TransunionService {
   }
 
   /**
+   * Get the investigation results data. Due to its size, saved in aux table
+   * @param id
+   * @returns
+   */
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetInvestigationResultsByID', JSON.stringify({ id }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
    * Send the preflight check which performs the following:
    *  - Checks if the user is enrolled in disputes, if not, enrolls them
    *  - Checks when the user last refreshed their report, if < 24hrs, refreshes
