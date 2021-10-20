@@ -204,6 +204,38 @@ export class TransunionService {
     }
   }
 
+  // /**
+  //  * !!! REMOVING...NEVER CALL FROM FRONT END
+  //  * Call the backend to query TU for investigation results
+  //  * - occurs if a dispute is closed, but the results not returned
+  //  * - this happens when results are auto closed
+  //  * @param disputeId
+  //  * @returns
+  //  */
+  // async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+  //   try {
+  //     const msg = { disputeId };
+  //     const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
+  //     return res ? JSON.parse(res) : undefined;
+  //   } catch (err: any) {
+  //     return { success: false, error: err };
+  //   }
+  // }
+
+  /**
+   * Get the investigation results data. Due to its size, saved in aux table
+   * @param id
+   * @returns
+   */
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetInvestigationResultsByID', JSON.stringify({ id }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
   /**
    * Call the backend to query TU for investigation results
    * - occurs if a dispute is closed, but the results not returned
@@ -211,10 +243,9 @@ export class TransunionService {
    * @param disputeId
    * @returns
    */
-  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
     try {
-      const msg = { disputeId };
-      const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
+      const res = await this.api.Transunion('GetCreditBureauResultsByID', JSON.stringify({ id }));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };

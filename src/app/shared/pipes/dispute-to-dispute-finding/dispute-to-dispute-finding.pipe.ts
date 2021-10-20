@@ -18,26 +18,15 @@ export interface IDisputeToDisputeFindingOutput {
   name: 'disputeToDisputeFinding',
 })
 export class DisputeToDisputeFindingPipe implements PipeTransform {
-  transform(dispute: DisputeInput): IDisputeToDisputeFindingOutput | undefined {
+  transform(
+    dispute: DisputeInput | null,
+    creditBureau: ICreditBureau | undefined,
+  ): IDisputeToDisputeFindingOutput | undefined {
+    if (!dispute) return;
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    // get and parse the credit bureau data
-    const creditBureau: IDisputeCreditBureau = dispute.disputeCreditBureau
-      ? JSON.parse(dispute.disputeCreditBureau)
-      : undefined;
-    // get and parse the investigation results data
-    const tempReport: {
-      TrueLinkCreditReportType?: any;
-      trueLinkCreditReportType?: any;
-    } = dispute.disputeInvestigationResults ? JSON.parse(dispute.disputeInvestigationResults) : undefined;
-    const investigationResults: ITrueLinkCreditReportType = tempReport?.TrueLinkCreditReportType
-      ? tempReport?.TrueLinkCreditReportType
-      : tempReport?.trueLinkCreditReportType;
-
-    const disputeItems: IDisputeTradelineItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
-    if (!creditBureau || !disputeItems) return this.mapOpenDispute(dispute);
-    return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
+    return this.mapClosedDispute(dispute, creditBureau);
   }
 
   mapOpenDispute(dispute: DisputeInput): IDisputeToDisputeFindingOutput {
@@ -50,18 +39,11 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     } as IDisputeToDisputeFindingOutput;
   }
 
-  mapClosedDispute(
-    disputeItems: IDisputeTradelineItem,
-    dispute: DisputeInput,
-    creditBureau: IDisputeCreditBureau,
-    investigationResults: ITrueLinkCreditReportType,
-  ): IDisputeToDisputeFindingOutput {
+  mapClosedDispute(dispute: DisputeInput, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
     return {
       status: 'closed',
       reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
-      fileIdentificationNumber: `${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
-      creditBureau: creditBureau.creditBureau,
-      investigationResults: investigationResults,
+      fileIdentificationNumber: `${creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
     };
   }
 }

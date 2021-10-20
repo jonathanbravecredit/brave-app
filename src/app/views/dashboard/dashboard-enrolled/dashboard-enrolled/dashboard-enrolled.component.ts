@@ -4,8 +4,6 @@ import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import * as DashboardActions from '@store/dashboard/dashboard.actions';
-import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 
