@@ -10,6 +10,7 @@ import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradel
 import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-personal/disputes-personal/disputes-personal.view';
 import { DisputesPublicView } from '@views/dashboard/disputes/disputes-public/disputes-public/disputes-public.view';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
+import { FindingsResolver } from '@shared/resolvers/findings/findings.resolver';
 
 const DisputeRoutes: Routes = [
   {
@@ -28,8 +29,9 @@ const DisputeRoutes: Routes = [
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'findings',
+        path: 'findings/:investigation/:creditbureau',
         component: DisputeFindingsView,
+        resolve: { reports: FindingsResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

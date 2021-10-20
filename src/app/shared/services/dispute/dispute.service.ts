@@ -192,13 +192,25 @@ export class DisputeService implements OnDestroy {
     }
   }
 
+  // /**
+  //  * Query the TU service for any investigation results
+  //  * @returns
+  //  */
+  // async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+  //   try {
+  //     return await this.transunion.getInvestigationResults(disputeId);
+  //   } catch (err) {
+  //     throw `disputeService:getInvestigationResults=${err}`;
+  //   }
+  // }
+
   /**
-   * Query the TU service for any investigation results
+   * Query the TU service for any investigation results by report id
    * @returns
    */
-  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
     try {
-      return await this.transunion.getInvestigationResults(disputeId);
+      return await this.transunion.getInvestigationResultsById(id);
     } catch (err) {
       throw `disputeService:getInvestigationResults=${err}`;
     }
@@ -208,9 +220,9 @@ export class DisputeService implements OnDestroy {
    * Query the TU service for any investigation results by report id
    * @returns
    */
-  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
     try {
-      return await this.transunion.getInvestigationResultsById(id);
+      return await this.transunion.getCreditBureauResultsById(id);
     } catch (err) {
       throw `disputeService:getInvestigationResults=${err}`;
     }

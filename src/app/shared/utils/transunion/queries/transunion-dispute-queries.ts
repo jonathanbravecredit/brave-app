@@ -119,7 +119,7 @@ export class TransunionDisputeQueries extends TransunionBase {
     if (!credit) return [];
     const prodArr = credit?.productArray;
     const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
-    const subjectRecord = product.subject.subjectRecord;
+    const subjectRecord = product?.subject?.subjectRecord;
 
     const trade = subjectRecord?.custom?.credit?.trade;
     if (trade instanceof Array) {
@@ -155,7 +155,7 @@ export class TransunionDisputeQueries extends TransunionBase {
     if (!credit) return [];
     const prodArr = credit?.productArray;
     const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
-    const subjectRecord = product.subject.subjectRecord;
+    const subjectRecord = product?.subject?.subjectRecord;
 
     const lineItems = subjectRecord?.fileSummary?.disclosureCoverInfo?.summarySection?.lineItem;
     if (lineItems instanceof Array) {
@@ -174,7 +174,7 @@ export class TransunionDisputeQueries extends TransunionBase {
     if (!credit) return [];
     const prodArr = credit?.productArray;
     const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
-    const subjectRecord = product.subject.subjectRecord;
+    const subjectRecord = product?.subject?.subjectRecord;
 
     const findings = subjectRecord?.fileSummary?.disclosureCoverInfo?.summarySection?.lineItem;
     let findingsArr = findings instanceof Array ? findings : findings ? [findings] : [];

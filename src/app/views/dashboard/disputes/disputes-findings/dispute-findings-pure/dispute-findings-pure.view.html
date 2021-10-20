@@ -34,13 +34,13 @@
       <div class="mt-4">
         <p *ngFor="let value of tradeline?.contactDetails">{{value}}</p>
       </div>
-      <ng-container *ngIf="tradeline?.tradeline">
+      <div *ngIf="tradeline?.tradeline" class="mt-4">
         <brave-tradeline-details
           [disableDispute]="true"
           [tradeline]="tradeline.tradeline"
           [subscriber]="tradeline.subscriber"
         ></brave-tradeline-details>
-      </ng-container>
+      </div>
     </brave-dispute-findings-results-details>
   </ng-container>
 

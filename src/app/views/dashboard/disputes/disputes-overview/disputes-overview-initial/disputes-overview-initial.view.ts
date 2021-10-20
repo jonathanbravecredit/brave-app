@@ -36,13 +36,14 @@ export class DisputesOverviewInitialView implements OnInit {
     if (!entity.dispute) return;
     const dispute: DisputeInput = entity.dispute;
     const disputeId: string = dispute.id;
+    this.disputeService.currentDispute$.next(dispute);
     const irID = JSON.parse(dispute.disputeInvestigationResults || '') as { id: string };
     const cbID = JSON.parse(dispute.disputeCreditBureau || '') as { id: string };
     if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && (!irID || !cbID)) {
       // the results are not saved...can attempt to gather them again
       this.interstitial.openInterstitial();
-      this.interstitial.changeMessage('gathering results');
-      const res = await this.getInvestigationResults(dispute.disputeId);
+      this.interstitial.changeMessage('...missing ids');
+      // const res = await this.getInvestigationResults(dispute.disputeId);
       // !!! IMPORTANT !!! need to think this through
       // need to wait until the results are updated in the database...and the state syncs
       // then get the id's for the reports
@@ -73,27 +74,23 @@ export class DisputesOverviewInitialView implements OnInit {
       // do I need to set the current dispute
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage('gathering results');
-      this.router.navigate(['../findings'], {
+      this.router.navigate(['../findings', irID.id, cbID.id], {
         relativeTo: this.route,
-        queryParams: {
-          investigation: irID,
-          creditbureau: cbID,
-        },
       });
     }
   }
 
-  /**
-   * Query the TU service for any investigation results
-   * @param disputeId - unique id sent back by TU
-   */
-  async getInvestigationResults(disputeId: string | null | undefined): Promise<ITUServiceResponse<any>> {
-    try {
-      if (!disputeId) throw `Missing dispute Id=${disputeId}`;
-      return await this.disputeService.getInvestigationResults(disputeId);
-    } catch (err: any) {
-      this.interstitial.changeMessage('Error fetching results');
-      return { success: false, error: err };
-    }
-  }
+  // /**
+  //  * Query the TU service for any investigation results
+  //  * @param disputeId - unique id sent back by TU
+  //  */
+  // async getInvestigationResults(disputeId: string | null | undefined): Promise<ITUServiceResponse<any>> {
+  //   try {
+  //     if (!disputeId) throw `Missing dispute Id=${disputeId}`;
+  //     return await this.disputeService.getInvestigationResults(disputeId);
+  //   } catch (err: any) {
+  //     this.interstitial.changeMessage('Error fetching results');
+  //     return { success: false, error: err };
+  //   }
+  // }
 }
