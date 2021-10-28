@@ -57,6 +57,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisputeBaseComponent } from './components/dispute-base/dispute-base.component';
 import { DisputeReasonPageComponent } from './components/dispute-reason-page/dispute-reason-page.component';
 import { DisputeFindingsYourRightsComponent } from './components/findings/dispute-findings-your-rights/dispute-findings-your-rights.component';
+import { DisputeTradelineCardComponent } from './components/cards/dispute-tradeline-card/dispute-tradeline-card.component';
+import { DisputePersonalCardComponent } from './components/cards/dispute-personal-card/dispute-personal-card.component';
+import { DisputePublicCardComponent } from './components/cards/dispute-public-card/dispute-public-card.component';
 
 const modules = [
   CommonModule,
@@ -108,6 +111,9 @@ const components = [
   DisputeRegularCardComponent,
   DisputeHistoryCardComponent,
   DisputeCurrentCardComponent,
+  DisputeTradelineCardComponent,
+  DisputePersonalCardComponent,
+  DisputePublicCardComponent,
   DisputesReconfirmView,
   DisputesReconfirmPureView,
   DisputesSuccessView,

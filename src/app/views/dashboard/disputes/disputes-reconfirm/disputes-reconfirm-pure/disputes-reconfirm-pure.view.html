@@ -6,11 +6,12 @@
 
 <!-- tradeline accounts -->
 <div *ngFor="let tradeline of tradelines">
-  <brave-tradeline-dispute-card
+  <brave-dispute-tradeline-card
     [tradeline]="tradeline"
     [subscriber]="tu.queries.report.getTradelineSubscriberByKey(tradeline) || {}"
     (disputeClick)="disputeTradelineClick.emit(tradeline)"
-  ></brave-tradeline-dispute-card>
+  >
+  </brave-dispute-tradeline-card>
 </div>
 
 <!-- personal items -->
@@ -20,10 +21,8 @@
 </div>
 
 <div *ngFor="let item of personalItems; index as idx">
-  <brave-personalitem-dispute-card
-    [personalItem]="item"
-    (disputeClick)="disputePersonalClick.emit(item)"
-  ></brave-personalitem-dispute-card>
+  <brave-dispute-personal-card [personalItem]="item" (disputeClick)="disputePersonalClick.emit(item)">
+  </brave-dispute-personal-card>
 </div>
 
 <!-- public items -->
@@ -33,8 +32,8 @@
 </div>
 
 <div *ngFor="let publicItem of publicItems">
-  <brave-publicitem-dispute-card
+  <brave-dispute-public-card
     [publicItem]="publicItem"
     (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
-  ></brave-publicitem-dispute-card>
+  ></brave-dispute-public-card>
 </div>

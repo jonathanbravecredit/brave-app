@@ -5,7 +5,6 @@ import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
 import { TradelineDetailsComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/tradeline-details.component';
-import { TradelineDisputeCardComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-dispute-card/tradeline-dispute-card.component';
 import { TradelineGenericCardComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-generic-card/tradeline-generic-card.component';
 import { TradelineMetricsComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-metrics/tradeline-metrics.component';
 import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';
@@ -31,7 +30,6 @@ const components = [
   TradelinePaymentHistoryComponent,
   TradelineRemarksComponent,
   TradelineDetailsComponent,
-  TradelineDisputeCardComponent,
 ];
 
 @NgModule({

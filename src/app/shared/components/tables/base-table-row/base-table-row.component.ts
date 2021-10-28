@@ -41,9 +41,21 @@ export class BaseTableRowComponent {
    */
   @Input() valueType: BaseTableRowType = 'string';
   /**
+   * Can force labels to be on one line
+   */
+  @Input() nowrapLabel: boolean = false;
+  /**
    * The global missing value placeholder
    */
   missing = TransunionUtil.bcMissing;
 
+  dynamicClass = new Set<string>();
+
   constructor() {}
+
+  ngOnInit(): void {
+    if (this.nowrapLabel) {
+      this.dynamicClass.add('whitespace-nowrap');
+    }
+  }
 }

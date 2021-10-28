@@ -1,4 +1,11 @@
-<div class="flex items-center">
+<div class="flex justify-start items-start content-start">
+  <span class="material-icons-outlined"> {{ icon }} </span>
+  <div class="ml-4 mt-1 w-full">
+    <brave-base-table-row [label]="label" [value]="value || '--'"></brave-base-table-row>
+  </div>
+</div>
+
+<!-- <div class="flex items-center">
   <span class="material-icons-outlined"> assignment </span>
   <span class="ml-3">{{ dispute.parsedValue || missing }}</span>
 </div>
@@ -17,4 +24,4 @@
   <div>
     <p class="text-xs font-semibold text-right">Delete</p>
   </div>
-</div>
+</div> -->

@@ -7,10 +7,12 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
   templateUrl: './dispute-header-tradeline.component.html',
 })
 export class DisputeHeaderTradelineComponent implements OnInit {
-  @Input() dispute: IDisputeTradelineItem = {} as IDisputeTradelineItem;
+  @Input() dispute: IDisputeTradelineItem | undefined = {} as IDisputeTradelineItem;
   missing = TransunionUtil.bcMissing;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('dispute ==> ', this.dispute);
+  }
 }
