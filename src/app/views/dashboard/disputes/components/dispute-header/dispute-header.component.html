@@ -19,13 +19,20 @@
 </div>
 
 <!-- ======= Dispute button button ======== -->
-<div *ngIf="showDisputeButton && (viewDetail?.open$ | async) as open" class="flex justify-center">
-  <div class="my-4 w-3/5">
-    <brave-filled-spinning-button [full]="true" (click)="confirmed.emit()"
-      >Dispute in a few clicks</brave-filled-spinning-button
-    >
+
+<ng-container *ngIf="featureFlags.disputes$ | async">
+  <div *ngIf="showDisputeButton && (viewDetail?.open$ | async) as open" class="flex justify-center">
+    <div class="my-4 w-3/5">
+      <brave-filled-spinning-button #spinnerBtn [full]="true" (click)="showModal = !showModal; this.disputeClicked()"
+        >Dispute in a few clicks</brave-filled-spinning-button
+      >
+    </div>
+    <brave-onboarding-dispute
+      [showModal]="showModal && !acknowledged"
+      (confirmation)="actionForDispute($event)"
+    ></brave-onboarding-dispute>
   </div>
-</div>
+</ng-container>
 
 <!-- ======= detail with carousel ====== -->
 <div

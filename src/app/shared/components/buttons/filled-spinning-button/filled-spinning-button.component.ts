@@ -25,4 +25,8 @@ export class FilledSpinningButtonComponent implements OnInit {
     this.dynamicClass.add(this.color);
     if (this.full) this.dynamicClass.add('w-full');
   }
+
+  toggleSpinner(): void {
+    this.interstitial.fetching$.next(!this.spinning);
+  }
 }
