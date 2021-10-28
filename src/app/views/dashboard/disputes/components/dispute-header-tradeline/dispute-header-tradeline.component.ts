@@ -12,7 +12,5 @@ export class DisputeHeaderTradelineComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('dispute ==> ', this.dispute);
-  }
+  ngOnInit(): void {}
 }

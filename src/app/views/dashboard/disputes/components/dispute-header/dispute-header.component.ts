@@ -26,6 +26,7 @@ export class DisputeHeaderComponent {
   disputeTermsModal: OnboardingDisputeComponent | undefined;
   @Output() confirmed: EventEmitter<void> = new EventEmitter();
   @Input() showDisputeButton = false;
+  @Input() showConfirmButton = false;
   @Input() publicdispute: IDisputePublicItem | undefined;
   @Input() personaldispute: IDisputePersonalItem | undefined;
   @Input() tradelinedispute: IDisputeTradelineItem | undefined;

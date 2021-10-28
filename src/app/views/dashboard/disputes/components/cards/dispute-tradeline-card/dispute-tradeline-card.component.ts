@@ -8,6 +8,8 @@ import { ITradeLinePartition, ISubscriber } from '@shared/interfaces';
 export class DisputeTradelineCardComponent implements OnInit {
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition;
   @Input() subscriber: ISubscriber = {} as ISubscriber;
+  @Input() hideConfirm: boolean = false;
+  @Input() enableDispute: boolean = false;
   @Output() disputeClick: EventEmitter<void> = new EventEmitter();
   constructor() {}
 

@@ -6,12 +6,13 @@
 
 <!-- tradeline accounts -->
 <div *ngFor="let tradeline of tradelines">
-  <brave-dispute-tradeline-card
-    [tradeline]="tradeline"
-    [subscriber]="tu.queries.report.getTradelineSubscriberByKey(tradeline) || {}"
-    (disputeClick)="disputeTradelineClick.emit(tradeline)"
+  <div class="border-t border-blueGray-300 py-2"></div>
+  <brave-dispute-header
+    [showConfirmButton]="true"
+    [tradelinedispute]="tradeline | tradelineToDetails"
+    (confirmed)="disputeTradelineClick.emit(tradeline)"
   >
-  </brave-dispute-tradeline-card>
+  </brave-dispute-header>
 </div>
 
 <!-- personal items -->

@@ -28,6 +28,7 @@ import { LinkifyPipe } from './linkify/linkify.pipe';
 import { FilterTradelinesPipe } from './filterTradelines/filter-tradelines.pipe';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 import { ReasonsToPagesPipe } from './reasons-to-pages/reasons-to-pages.pipe';
+import { FilterSubscribersPipe } from './filterSubscribers/filter-subscribers.pipe';
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -56,6 +57,7 @@ const pipes = [
   SsnMaskPipe,
   LinkifyPipe,
   FilterTradelinesPipe,
+  FilterSubscribersPipe,
   ParseRiskScorePipe,
   ReasonsToPagesPipe,
 ];

@@ -3,7 +3,7 @@
 <brave-dispute-header-tradeline [dispute]="tradeline | tradelineToDetails"> </brave-dispute-header-tradeline>
 
 <!-- ======= Confirmation button ======== -->
-<div class="flex justify-center my-4">
+<div *ngIf="!hideConfirm" class="flex justify-center my-4">
   <brave-filled-onlytext-button (click)="disputeClick.emit()"
     >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
   >
@@ -17,7 +17,8 @@
       [tradeline]="tradeline"
       [subscriber]="subscriber"
       [overrideOpen]="true"
-      [disableDispute]="true"
+      [disableDispute]="!enableDispute"
+      (disputeClick)="disputeClick.emit()"
     ></brave-tradeline-details>
   </div>
 </div>

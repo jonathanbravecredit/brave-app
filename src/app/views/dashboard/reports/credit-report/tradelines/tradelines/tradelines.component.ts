@@ -77,7 +77,8 @@ export class TradelinesComponent {
             },
           });
         } else {
-          this.handleError();
+          const code = `${error?.Code}`;
+          this.handleError(code);
         }
       })
       .catch((err) => {
@@ -85,12 +86,12 @@ export class TradelinesComponent {
       });
   }
 
-  handleError(): void {
+  handleError(code: string = '197'): void {
     this.interstitial.closeInterstitial();
     this.router.navigate(['/disputes/error'], {
       relativeTo: this.route,
       queryParams: {
-        code: '197',
+        code: code,
       },
     });
   }

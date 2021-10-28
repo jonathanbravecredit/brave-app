@@ -33,17 +33,21 @@
 
     <div class="mb-1">
       <brave-base-table-row
+        [label]="'Remaining Balance:'"
+        [value]="dispute?.currentBalance"
+        [enableSeparator]="false"
+        [valueType]="'currency'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
         [label]="'Original Creditor:'"
         [value]="dispute?.originalCreditor"
         [enableSeparator]="false"
         [nowrapLabel]="true"
       ></brave-base-table-row>
     </div>
-    <!-- <p class="text-xs font-dk-gray whitespace-nowrap">Last Reported Payment to Creditor:</p>
-      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ detail.dateReported | date: 'shortDate' }}</p>
-      <p class="text-xs font-dk-gray whitespace-nowrap">Amount Past Due:</p>
-      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ detail.amountPastDue | date: 'shortDate' }}</p>
-      <p class="text-xs text-dk-gray whitespace-nowrap">Original Creditor:</p>
-      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ detail.originalCreditor }}</p> -->
   </div>
 </div>

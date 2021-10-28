@@ -1,39 +1,57 @@
-<div>
-  <div>
+<!-- ======= account cards ====== -->
+<ng-container *ngIf="tradelinedispute">
+  <brave-dispute-header-tradeline [dispute]="tradelinedispute"></brave-dispute-header-tradeline>
+</ng-container>
+<ng-container *ngIf="publicdispute">
+  <brave-dispute-header-publicitem [dispute]="publicdispute"></brave-dispute-header-publicitem>
+</ng-container>
+<ng-container *ngIf="personaldispute">
+  <brave-dispute-header-personalitem [dispute]="personaldispute"></brave-dispute-header-personalitem>
+</ng-container>
+
+<!-- ======= Confirmation button ======== -->
+<div *ngIf="showConfirmButton" class="flex justify-center">
+  <div class="my-4 w-3/5">
+    <brave-filled-spinning-button [full]="true" (click)="confirmed.emit()"
+      ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+    >
+  </div>
+</div>
+
+<!-- ======= Dispute button button ======== -->
+<div *ngIf="showDisputeButton && (viewDetail?.open$ | async) as open" class="flex justify-center">
+  <div class="my-4 w-3/5">
+    <brave-filled-spinning-button [full]="true" (click)="confirmed.emit()"
+      >Dispute in a few clicks</brave-filled-spinning-button
+    >
+  </div>
+</div>
+
+<!-- ======= detail with carousel ====== -->
+<div
+  *ngIf="viewDetail?.open$ | async as open"
+  class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
+>
+  <div class="flex flex-col items-start mt-3">
+    <p class="ml-1">Account Details</p>
     <ng-container *ngIf="tradelinedispute">
-      <brave-dispute-header-tradeline [dispute]="tradelinedispute"></brave-dispute-header-tradeline>
+      <brave-disputes-detail
+        [pages]="tradelinepages"
+        [data]="tradelinedispute.tradeline | tradelineToPages"
+      ></brave-disputes-detail>
     </ng-container>
     <ng-container *ngIf="publicdispute">
-      <brave-dispute-header-publicitem [dispute]="publicdispute"></brave-dispute-header-publicitem>
+      <brave-disputes-detail [pages]="publicitempages" [data]="[{ config: publicdispute }]"></brave-disputes-detail>
     </ng-container>
     <ng-container *ngIf="personaldispute">
-      <brave-dispute-header-personalitem [dispute]="personaldispute"></brave-dispute-header-personalitem>
+      <brave-disputes-detail
+        [pages]="personalitempages"
+        [data]="[{ config: personaldispute.transformed }]"
+      ></brave-disputes-detail>
     </ng-container>
-    <div
-      *ngIf="viewDetail?.open$ | async as open"
-      class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
-    >
-      <div class="flex flex-col items-start mt-3">
-        <p class="ml-1">Account Details</p>
-        <ng-container *ngIf="tradelinedispute">
-          <brave-disputes-detail
-            [pages]="tradelinepages"
-            [data]="tradelinedispute.tradeline | tradelineToPages"
-          ></brave-disputes-detail>
-        </ng-container>
-        <ng-container *ngIf="publicdispute">
-          <brave-disputes-detail [pages]="publicitempages" [data]="[{ config: publicdispute }]"></brave-disputes-detail>
-        </ng-container>
-        <ng-container *ngIf="personaldispute">
-          <brave-disputes-detail
-            [pages]="personalitempages"
-            [data]="[{ config: personaldispute.transformed }]"
-          ></brave-disputes-detail>
-        </ng-container>
-      </div>
-    </div>
-    <div class="flex justify-center py-3">
-      <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
-    </div>
   </div>
+</div>
+
+<div class="flex justify-center py-3">
+  <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
 </div>
