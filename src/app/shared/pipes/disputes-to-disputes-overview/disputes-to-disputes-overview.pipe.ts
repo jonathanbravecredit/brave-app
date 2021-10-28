@@ -22,7 +22,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
     };
     if (!disputes || !disputes.length || !disputes.filter(Boolean).length) return dummy;
     // go through the dispute input arrays
-    const sorted = disputes.sort((a, b) => {
+    const sorted = [...disputes].sort((a, b) => {
       const openedA = new Date(a?.openedOn || 0);
       const openedB = new Date(b?.openedOn || 0);
       return +openedB - +openedA;
