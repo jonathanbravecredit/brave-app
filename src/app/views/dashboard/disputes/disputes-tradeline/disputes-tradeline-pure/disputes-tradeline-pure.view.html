@@ -3,6 +3,7 @@
   <brave-dispute-header class="mt-4" [tradelinedispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
   <brave-dispute-base
     [initialStepId]="'select'"
+    [disputeViewState]="disputeViewState"
     (disputeProcessResult)="processResult.emit({ result: $event, tradeline: dispute?.tradeline })"
     [firstOptionReasonPages]="pageOne"
     [secondOptionReasonPages]="pageTwo"

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.component';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import {
   OnboardingDisputeComponent,
@@ -9,6 +10,7 @@ import {
   IDisputePersonalItem,
   IDisputePublicItem,
 } from '@shared/services/dispute/dispute.interfaces';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
@@ -24,11 +26,19 @@ export class DisputeHeaderComponent {
   viewDetail: ViewdetailButtonComponent | undefined;
   @ViewChild(OnboardingDisputeComponent)
   disputeTermsModal: OnboardingDisputeComponent | undefined;
+  @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
+
   @Output() confirmed: EventEmitter<void> = new EventEmitter();
   @Input() showDisputeButton = false;
+  @Input() showConfirmButton = false;
   @Input() publicdispute: IDisputePublicItem | undefined;
   @Input() personaldispute: IDisputePersonalItem | undefined;
   @Input() tradelinedispute: IDisputeTradelineItem | undefined;
+
+  /**
+   * Flag to indicate they need to still acknowledge dispute terms
+   */
+  @Input() acknowledged: boolean = false;
 
   /*============================================*/
   // pass the components to form the carousel
@@ -47,12 +57,21 @@ export class DisputeHeaderComponent {
 
   showModal = false;
 
-  constructor() {}
+  constructor(public featureFlags: FeatureFlagsService) {}
+
+  disputeClicked() {
+    // when clicked and do not need acknowledgment
+    if (this.acknowledged) {
+      this.confirmed.emit();
+    }
+  }
 
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
       this.showModal = false;
       this.confirmed.emit();
+    } else {
+      this.spinnerBtn?.toggleSpinner();
     }
   }
 }

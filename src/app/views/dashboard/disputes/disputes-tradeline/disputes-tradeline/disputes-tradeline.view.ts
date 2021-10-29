@@ -18,7 +18,7 @@ export class DisputesTradelineView implements OnDestroy {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private interstitial: InterstitialService,
     private disputeService: DisputeService,
   ) {

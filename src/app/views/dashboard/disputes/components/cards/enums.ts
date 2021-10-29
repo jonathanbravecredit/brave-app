@@ -1,5 +1,6 @@
 export enum DisputeStatus {
   Decision = 'decision',
   Processing = 'processing',
-  Cancelled = 'cancelled'
+  Cancelled = 'cancelled',
+  Pending = 'pending',
 }

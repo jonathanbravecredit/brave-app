@@ -10,6 +10,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | undefined {
     if (!tradeline) return;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
+    const originalCreditor = tu.queries.report.getOriginalCreditor(tradeline);
     const mapped = {
       tradeline: tradeline,
       accountNumber: tradeline?.Tradeline?.accountNumber,
@@ -18,7 +19,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
       lastReported: tradeline?.Tradeline?.dateReported,
       accountTypeDescription: tu.queries.report.getAccountType(tradeline),
       accountTypeDescriptionValue: tradeline?.Tradeline?.OpenClosed?.description || '',
-      originalCreditor: tradeline?.Tradeline?.CollectionTrade?.originalCreditor,
+      originalCreditor: originalCreditor,
       creditType: tradeline?.Tradeline?.CollectionTrade?.creditType?.abbreviation,
       dateOpened: tradeline?.Tradeline?.dateOpened?.substring(0, 10),
       dateClosed: tradeline?.Tradeline?.dateClosed?.substring(0, 10),

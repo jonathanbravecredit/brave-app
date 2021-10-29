@@ -1,56 +1,53 @@
 <div class="mb-9">
-  <div *ngIf="dispute.tradeline | tradelineToDetails as header">
+  <div>
     <div class="flex justify-start items-start content-start">
+      <div>
+        <span class="material-icons-outlined"> assignment </span>
+      </div>
       <div class="ml-2 mb-4">
         <p class="text-sm font-semibold">
-          {{ header.creditorName }} {{ header.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+          {{ dispute?.creditorName }} {{ dispute?.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
         </p>
-        <p class="text-sm font-semibold">{{ header.accountTypeDescription || '' }}</p>
+        <p class="text-sm font-semibold">{{ dispute?.accountTypeDescription || '' }}</p>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-1 mb-2">
-      <p class="text-xs font-dk-gray whitespace-nowrap">Last Reported Payment to Creditor:</p>
-      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ header.dateReported | date: 'shortDate' }}</p>
-      <p class="text-xs text-dk-gray whitespace-nowrap">Original Creditor:</p>
-      <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ header.originalCreditor }}</p>
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Last Reported Payment to Creditor:'"
+        [value]="dispute?.lastReported"
+        [enableSeparator]="false"
+        [valueType]="'date'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Amount Past Due:'"
+        [value]="dispute?.amountPastDue"
+        [enableSeparator]="false"
+        [valueType]="'currency'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Remaining Balance:'"
+        [value]="dispute?.currentBalance"
+        [enableSeparator]="false"
+        [valueType]="'currency'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Original Creditor:'"
+        [value]="dispute?.originalCreditor"
+        [enableSeparator]="false"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
     </div>
   </div>
 </div>
-
-<!-- <div>
-  <p class="text-sm font-semibold mb-4">{{ dispute.creditorName || missing }}</p>
-</div>
-<div class="grid grid-cols-2 gap-2 mb-2">
-  <div>
-    <p class="text-xs font-dk-gray">Last Payment to Creditor</p>
-  </div>
-  <div>
-    <p class="text-xs font-semibold text-right">
-      {{ dispute.lastReported || missing }}
-    </p>
-  </div>
-  <div>
-    <p class="text-xs text-dk-gray">{{ dispute.accountTypeDescription || missing }}</p>
-  </div>
-  <div>
-    <p class="text-xs text-dk-gray text-opacity-75 text-right">
-      {{ dispute.accountTypeDescriptionValue || missing }}
-    </p>
-  </div>
-  <div>
-    <p class="text-xs text-dk-gray">Previously Disputed?</p>
-  </div>
-  <div>
-    <p class="text-xs text-dk-gray text-opacity-75 text-right">
-      {{ dispute.disputeFlag || missing }}
-    </p>
-  </div>
-  <div>
-    <p class="text-xs text-dk-gray">Original Creditor</p>
-  </div>
-  <div>
-    <p class="text-xs text-dk-gray text-opacity-75 text-right">
-      {{ dispute.originalCreditor || missing }}
-    </p>
-  </div>
-</div> -->
