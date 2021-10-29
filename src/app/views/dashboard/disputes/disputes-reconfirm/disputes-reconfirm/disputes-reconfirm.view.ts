@@ -30,6 +30,7 @@ export class DisputesReconfirmView {
     this.router.navigate(['../personalitem'], {
       relativeTo: this.route,
       queryParams: {
+        step: 'summary',
         type: null,
       },
       queryParamsHandling: 'merge',
@@ -43,6 +44,7 @@ export class DisputesReconfirmView {
     this.router.navigate(['../publicitem'], {
       relativeTo: this.route,
       queryParams: {
+        step: 'select',
         type: null,
       },
       queryParamsHandling: 'merge',
@@ -61,6 +63,7 @@ export class DisputesReconfirmView {
     this.router.navigate(['../tradeline'], {
       relativeTo: this.route,
       queryParams: {
+        step: 'select',
         type: null,
       },
       queryParamsHandling: 'merge',
