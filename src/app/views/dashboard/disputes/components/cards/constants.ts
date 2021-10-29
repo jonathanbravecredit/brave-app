@@ -7,6 +7,10 @@ export const DEFAULT_DISPUTE_STATUS_DISPLAY_INFO = {
     text: 'Processing',
     colorClass: 'text-indigo-800',
   },
+  [DisputeStatus.Pending]: {
+    text: 'Processing',
+    colorClass: 'text-indigo-800',
+  },
   [DisputeStatus.Cancelled]: {
     text: 'Cancelled',
     colorClass: 'text-red-800',

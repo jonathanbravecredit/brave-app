@@ -20,6 +20,7 @@ export const TUStatusMapping: Record<string, any> = {
   opendispute: 'processing',
   completedispute: 'decision',
   cancelleddispute: 'cancelled',
+  pendingdispute: 'pending',
 };
 
 export class TransunionMappers extends TransunionBase {

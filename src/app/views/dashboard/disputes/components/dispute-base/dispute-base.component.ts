@@ -1,4 +1,5 @@
 import { OnInit, AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { IDisputeReasonCard, IDisputeReason } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
@@ -17,7 +18,7 @@ import {
 import { Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
-type viewState = 'select' | 'summary' | 'reason';
+export type disputeViewState = 'select' | 'reason' | 'summary';
 export type SelectionTypes = 'not-mine' | 'inaccurate';
 
 @Component({
@@ -39,7 +40,7 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
 
   // component props
-  @Input() viewState: viewState[] = ['select']; // can override
+  @Input() disputeViewState: disputeViewState = 'select'; //disputeViewState[] = ['select']; // can override
   showMaxError = false;
   maxSelections: number = 2;
   confirmed: boolean = false;
@@ -55,18 +56,34 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   cardSelected$: Subscription | undefined;
   pendingReasonCard: IDisputeReasonCard | undefined;
   confirmSub$: Subscription | undefined;
+  paramsSub$: Subscription | undefined;
 
-  constructor(private reasonPageService: DisputeReasonPageService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private reasonPageService: DisputeReasonPageService,
+  ) {
     this.cardSelected$ = this.reasonPageService.cardSelected$
       .pipe(
         filter((c) => Object.keys(c).length > 0),
         tap((c: IDisputeReasonCard) => this.addSelection(c)),
       )
       .subscribe();
+    this.paramsSub$ = this.route.queryParams.subscribe((params) => {
+      this.disputeViewState = params.step;
+      if (this.disputeViewState === 'reason' || this.disputeViewState === 'select') {
+        // reset everything if going back
+        this.selections = [];
+        this.customInput = '';
+        this.customInputSelected = false;
+        this.disputeType = undefined;
+      }
+    });
   }
 
-  get currentView(): viewState {
-    return this.viewState[this.viewState.length - 1];
+  get currentView(): disputeViewState {
+    return this.disputeViewState;
+    // return this.disputeViewState[this.disputeViewState.length - 1];
   }
 
   ngOnInit(): void {
@@ -83,6 +100,7 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.cardSelected$) this.cardSelected$.unsubscribe();
     if (this.confirmSub$) this.confirmSub$.unsubscribe();
+    if (this.paramsSub$) this.paramsSub$.unsubscribe();
   }
 
   addSelection(reason: IDisputeReasonCard | undefined): void {
@@ -157,22 +175,13 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToReasons(): void {
-    this.viewState = [...this.viewState, 'reason'];
+    const url = this.router.createUrlTree([], { relativeTo: this.route, queryParams: { step: 'reason' } }).toString();
+    this.router.navigateByUrl(url);
   }
 
   goToSummary(): void {
-    this.viewState = [...this.viewState, 'summary'];
-  }
-
-  goBack(): void {
-    const current = this.viewState.pop();
-    if (current === 'reason') {
-      // reset everything
-      this.selections = [];
-      this.customInput = '';
-      this.customInputSelected = false;
-      this.disputeType = undefined;
-    }
+    const url = this.router.createUrlTree([], { relativeTo: this.route, queryParams: { step: 'summary' } }).toString();
+    this.router.navigateByUrl(url);
   }
 
   parseIds(): [string, string] {

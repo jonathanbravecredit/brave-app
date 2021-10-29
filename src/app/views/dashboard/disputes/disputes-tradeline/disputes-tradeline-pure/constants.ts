@@ -24,7 +24,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
     id: '5',
     claimCode: 'A4',
-    text: 'I am not reponsible for this account (e.g. belongs to ex-pouse or business account)',
+    text: 'I am not reponsible for this account (e.g. belongs to ex-spouse or business account)',
   },
   {
     id: '6',
@@ -34,7 +34,7 @@ export const DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS: IDisputeReason[] = [
   {
     id: '7',
     claimCode: 'A4',
-    text: 'I am not responsible for this account (e.g. belongs to ex-pouse or business account)',
+    text: 'I am not responsible for this account (e.g. belongs to ex-spouse or business account)',
   },
   {
     id: '8',

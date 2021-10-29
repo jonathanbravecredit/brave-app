@@ -4,7 +4,7 @@
   <brave-dispute-base
     [initialStepId]="'reason'"
     [disputeType]="'not-mine'"
-    [viewState]="['summary']"
+    [disputeViewState]="'summary'"
     (disputeProcessResult)="processResult.emit({ result: $event, personalItem: dispute })"
     [firstOptionReasonPages]="pageOne"
     [secondOptionDescription]="'Public record information is inaccurate'"

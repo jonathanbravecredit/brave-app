@@ -1,16 +1,14 @@
-<div>
-  <p class="text-sm font-semibold mb-4">
+<div class="flex justify-start items-start content-start">
+  <div>
     <span class="material-icons-outlined"> assignment </span>
-    <span class="ml-3">{{ dispute.publicItemType || missing }}</span>
-  </p>
-</div>
-<div class="grid grid-cols-2 gap-2 mb-2">
-  <div>
-    <p class="text-xs font-dk-gray">Date Reported:</p>
   </div>
-  <div>
-    <p class="text-xs font-semibold text-right">
-      {{ dispute.dateFiled || missing }}
+  <div class="ml-2 mb-4">
+    <p class="text-sm font-semibold">
+      {{ dispute.publicItemType }}
     </p>
   </div>
+</div>
+<div class="grid grid-cols-2 gap-1 mb-2">
+  <p class="text-xs font-dk-gray">Date Filed:</p>
+  <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ dispute.dateFiled }}</p>
 </div>

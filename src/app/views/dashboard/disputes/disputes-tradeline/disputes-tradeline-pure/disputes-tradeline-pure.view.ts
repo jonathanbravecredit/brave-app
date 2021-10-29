@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
+import { disputeViewState } from '@views/dashboard/disputes/components/dispute-base/dispute-base.component';
 import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
@@ -21,6 +22,7 @@ export interface IProcessDisputeTradelineResult {
 })
 export class DisputesTradelinePureView {
   @Input() viewDisplay: viewDisplay = 'not-sent';
+  @Input() disputeViewState: disputeViewState = 'select';
   @Input() dispute: IDisputeTradelineItem | undefined;
   @Output() processResult: EventEmitter<IProcessDisputeTradelineResult> = new EventEmitter();
 

@@ -1,0 +1,26 @@
+<div class="border-t border-blueGray-300 py-2"></div>
+<!-- ======= Public Dispute Header ======== -->
+<brave-dispute-header-publicitem [dispute]="publicItem"> </brave-dispute-header-publicitem>
+
+<!-- ======= Confirmation button ======== -->
+<div class="flex justify-center my-4">
+  <brave-filled-onlytext-button (click)="disputeClick.emit()"
+    >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
+  >
+</div>
+
+<!-- ======= Public Details ======== -->
+<div *ngIf="viewDetail.open$ | async as open" class="mt-4">
+  <div class="rounded-lg border border-blueGray-300 p-4">
+    <div class="mb-4">
+      <p class="text-sm font-semibold">Account Details</p>
+    </div>
+    <!-- ======= Public Details Comp ======== -->
+    <brave-publicitems-details [config]="publicItem"></brave-publicitems-details>
+  </div>
+</div>
+
+<!-- ======= View detail button ======== -->
+<div class="flex justify-center my-6">
+  <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
+</div>
