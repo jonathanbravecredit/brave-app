@@ -40,7 +40,7 @@ export class DashboardState {
   @Action(DashboardActions.IncrementNegativeCardCount)
   incrementNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const negativeCardCount = (state.negativeCardCount || 0) + 1;
+    const negativeCardCount = (state ? state.negativeCardCount || 0 : 0) + 1;
     ctx.patchState({
       ...state,
       negativeCardCount,
@@ -50,7 +50,8 @@ export class DashboardState {
   @Action(DashboardActions.DecrementNegativeCardCount)
   DecrementNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
     const state = ctx.getState();
-    const negativeCardCount = (state.negativeCardCount || 0) - 1 <= 0 ? 0 : (state.negativeCardCount || 0) - 1;
+    const negativeCardCount =
+      (state ? state.negativeCardCount || 0 : 0) - 1 <= 0 ? 0 : (state ? state.negativeCardCount || 0 : 0) - 1;
     ctx.patchState({
       ...state,
       negativeCardCount,
