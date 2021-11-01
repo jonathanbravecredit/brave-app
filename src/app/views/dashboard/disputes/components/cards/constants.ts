@@ -1,4 +1,4 @@
-import { DisputeInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
 import { DisputeStatus } from './enums';
 import { IDisputeCurrent, IDisputeHistorical } from './interfaces';
 
@@ -22,7 +22,7 @@ export const DEFAULT_DISPUTE_STATUS_DISPLAY_INFO = {
 };
 
 export const MOCK_DEFAULT_DISPUTE_CURRENT: IDisputeCurrent = {
-  dispute: {} as DisputeInput,
+  dispute: {} as IDispute,
   creditorName: 'Bank of States, N.A.',
   dateSubmitted: '05/15/2021',
   estCompletionDate: '06/01/2021',
@@ -31,7 +31,7 @@ export const MOCK_DEFAULT_DISPUTE_CURRENT: IDisputeCurrent = {
 };
 
 export const MOCK_DEFAULT_DISPUTE_HISTORICAL: IDisputeHistorical = {
-  dispute: {} as DisputeInput,
+  dispute: {} as IDispute,
   creditorName: 'Bank of States, N.A.',
   latestDateSubmitted: '05/15/2021',
   decision: 'Does not meet FCRA standards',

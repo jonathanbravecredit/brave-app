@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { IDispute } from '@shared/interfaces/disputes';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
-import { DisputeInput } from '@shared/services/aws/api.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { TransunionQueries } from '@shared/utils/transunion/queries/transunion-queries';
 import { Observable, Subscription } from 'rxjs';
@@ -12,8 +12,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './dispute-findings.view.html',
 })
 export class DisputeFindingsView implements OnInit, OnDestroy {
-  disputes$: Observable<(DisputeInput | null)[] | null | undefined>;
-  dispute$: Observable<DisputeInput>;
+  dispute$: Observable<IDispute>;
   routeSub$: Subscription | undefined;
   stateOfResidence: string = '';
   investigationResults: { trueLinkCreditReportType: ITrueLinkCreditReportType | undefined } | undefined;
@@ -28,7 +27,6 @@ export class DisputeFindingsView implements OnInit, OnDestroy {
       this.creditBureauResults = JSON.parse(cbRecord);
     });
     this.dispute$ = this.disputeService.currentDispute$.asObservable();
-    this.disputes$ = this.disputeService.disputes$.asObservable();
   }
 
   async ngOnInit(): Promise<void> {

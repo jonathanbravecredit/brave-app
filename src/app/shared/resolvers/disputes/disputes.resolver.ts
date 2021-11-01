@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { DisputeInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 interface IDisputeResolver {
-  allDisputes: DisputeInput[] | undefined;
-  currDispute: DisputeInput | undefined;
+  allDisputes: IDispute[] | undefined;
+  currDispute: IDispute | undefined;
 }
 
 @Injectable({

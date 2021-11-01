@@ -1,4 +1,4 @@
-import { DisputeInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
 import { DisputeStatus } from './enums';
 
 export type TDisputeStatusDisplayInfoArg = 'colorClass' | 'text';
@@ -9,7 +9,7 @@ export interface IDisputeStatusDisplayInfo {
 }
 
 export interface IDisputeBase {
-  dispute: DisputeInput | undefined | null;
+  dispute: IDispute | undefined | null;
   creditorName: string;
 }
 
