@@ -17,7 +17,9 @@
 </ng-container>
 
 <!-- // IS NOT DELETED = SHOW -->
-<brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
+<ng-container *ngIf="!publicRecordConfig?.length">
+  <brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
+</ng-container>
 
 <div class="mx-3 my-4">
   <div class="flex items-center py-3">
@@ -58,7 +60,7 @@
   </ng-container>
 
   <!-- PERSONAL ITEMS -->
-  <ng-container *ngIf="!!personalInfoConfig">
+  <ng-container *ngIf="!!personalInfoConfig && !tradelineAccountConfig?.length && !publicRecordConfig?.length">
     <div class="flex items-center mt-4 mb-3">
       <span>Personal Information Details</span>
     </div>
