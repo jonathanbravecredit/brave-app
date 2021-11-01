@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DisputeInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IDisputeCurrent, IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
@@ -15,7 +15,7 @@ export interface IDisputesToOverview {
   name: 'disputesToDisputesOverview',
 })
 export class DisputesToDisputesOverviewPipe implements PipeTransform {
-  transform(disputes: (DisputeInput | undefined | null)[] | null | undefined): IDisputesToOverview {
+  transform(disputes: (IDispute | undefined | null)[] | null | undefined): IDisputesToOverview {
     const dummy = {
       currentDisputeArr: [],
       historicalDisputeArr: [],
@@ -47,7 +47,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
   }
 
   private parseCurrentDisputeItems(
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
     disputeItems: any | any[] | undefined | null,
   ): IDisputeCurrent[] {
     if (!disputeItems) return [];
@@ -79,7 +79,7 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
   }
 
   private parseHistoricalDisputeItems(
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
     disputeItems: any | any[] | undefined | null,
   ): IDisputeHistorical[] {
     if (!disputeItems) return [];

@@ -1,22 +1,23 @@
 export interface IDispute {
   id: string;
-  appDataId: string;
   disputeId: string;
   disputeStatus: string;
   disputeLetterCode: string;
   disputeLetterContent: string;
   openDisputes: IDisputeSummary;
   closedDisputes: IDisputeSummary;
-  pvDisputedItems: IPVDisputedItems;
+  pvDisputedItems: IPVDisputedItems | null;
   agencyName: string;
   openedOn: string;
   closedOn: string;
   disputeItems: string;
-  disputeInvestigationResults: { id: string };
-  disputeCreditBureau: { id: string };
+  disputeInvestigationResults: string;
+  disputeCreditBureau: string;
   notificationStatus: string;
   notificationMessage: string;
   notificationSentOn: string;
+  createdOn: string | null;
+  modifiedOn: string | null;
 }
 
 export interface IDisputeSummary {
