@@ -164,8 +164,6 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
-  disputeStatus: String
-  disputes: [Dispute]
 }
 
 type Equifax @aws_iam @aws_cognito_user_pools {
@@ -193,43 +191,6 @@ type TUReportResponse @aws_iam @aws_cognito_user_pools {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-
-type Dispute @aws_iam @aws_cognito_user_pools {
-  id: ID!
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: DisputeSummary
-  closedDisputes: DisputeSummary
-  pvDisputedItems: PVDisputedItems
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeInvestigationResults: AWSJSON
-  disputeCreditBureau: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-type DisputeSummary @aws_iam @aws_cognito_user_pools {
-  estimatedCompletionDate: String
-  lastUpdatedDate: String
-  openDate: String
-  requestedDate: String
-  totalClosedDisputedItems: String
-  totalDisputedItems: String
-  totalOpenDisputedItems: String
-  totalPVDisputedItemCount: String
-}
-
-type PVDisputedItems @aws_iam @aws_cognito_user_pools {
-  pvTradelines: AWSJSON
-  pvPublicRecords: AWSJSON
 }
 
 input UserInput {
@@ -331,8 +292,6 @@ input TransunionInput {
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
-  disputeStatus: String
-  disputes: [DisputeInput]
 }
 
 input TUStatusRefInput {
@@ -352,43 +311,6 @@ input TUReportResponseInput {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-
-input DisputeInput {
-  id: ID!
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: DisputeSummaryInput
-  closedDisputes: DisputeSummaryInput
-  pvDisputedItems: PVDisputedItemsInput
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeInvestigationResults: AWSJSON
-  disputeCreditBureau: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-input DisputeSummaryInput {
-  estimatedCompletionDate: String
-  lastUpdatedDate: String
-  openDate: String
-  requestedDate: String
-  totalClosedDisputedItems: String
-  totalDisputedItems: String
-  totalOpenDisputedItems: String
-  totalPVDisputedItemCount: String
-}
-
-input PVDisputedItemsInput {
-  pvTradelines: AWSJSON
-  pvPublicRecords: AWSJSON
 }
 
 input EquifaxInput {

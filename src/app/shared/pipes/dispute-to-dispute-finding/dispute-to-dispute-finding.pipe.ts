@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ICreditBureau, IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { IDispute } from '@shared/interfaces/disputes';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
-import { DisputeInput } from '@shared/services/aws/api.service';
-import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IDisputeToDisputeFindingOutput {
   status: string;
@@ -19,7 +18,7 @@ export interface IDisputeToDisputeFindingOutput {
 })
 export class DisputeToDisputeFindingPipe implements PipeTransform {
   transform(
-    dispute: DisputeInput | null,
+    dispute: IDispute | null,
     creditBureau: ICreditBureau | undefined,
   ): IDisputeToDisputeFindingOutput | undefined {
     if (!dispute) return;
@@ -29,7 +28,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     return this.mapClosedDispute(dispute, creditBureau);
   }
 
-  mapOpenDispute(dispute: DisputeInput): IDisputeToDisputeFindingOutput {
+  mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {
     return {
       status: 'open',
       reportCreatedAt: dispute.openDisputes?.openDate || '--',
@@ -39,7 +38,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     } as IDisputeToDisputeFindingOutput;
   }
 
-  mapClosedDispute(dispute: DisputeInput, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
+  mapClosedDispute(dispute: IDispute, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
     return {
       status: 'closed',
       reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',

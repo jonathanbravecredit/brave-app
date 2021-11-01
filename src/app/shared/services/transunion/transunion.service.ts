@@ -13,7 +13,8 @@ import {
   IVerifyAuthenticationQuestionsMsg,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces';
-import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
+import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
@@ -246,6 +247,32 @@ export class TransunionService {
   async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
     try {
       const res = await this.api.Transunion('GetCreditBureauResultsByID', JSON.stringify({ id }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * List all disputes by user
+   * @returns
+   */
+  async listAllDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetAllDisputesByUser', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Gets only the latest and current dispute by user
+   * @returns
+   */
+  async getCurrentDisputeByUser(): Promise<ITUServiceResponse<IDispute | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetCurrentDisputeByUser', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };

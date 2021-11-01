@@ -11,6 +11,7 @@ import { DisputesPersonalView } from '@views/dashboard/disputes/disputes-persona
 import { DisputesPublicView } from '@views/dashboard/disputes/disputes-public/disputes-public/disputes-public.view';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
 import { FindingsResolver } from '@shared/resolvers/findings/findings.resolver';
+import { DisputesResolver } from '@shared/resolvers/disputes/disputes.resolver';
 
 const DisputeRoutes: Routes = [
   {
@@ -26,6 +27,7 @@ const DisputeRoutes: Routes = [
       {
         path: 'overview',
         component: DisputesOverviewInitialView,
+        resolve: { disputes: DisputesResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

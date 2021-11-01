@@ -10,11 +10,11 @@ import {
 import { CREDIT_REPORT_GROUPS, CreditReportGroups } from '@shared/constants/credit-report';
 import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
-import { DisputeInput } from '@shared/services/aws/api.service';
 import { IDisputeCurrent, IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
+import { IDispute } from '@shared/interfaces/disputes';
 
 export const TUStatusMapping: Record<string, any> = {
   opendispute: 'processing',
@@ -194,7 +194,7 @@ export class TransunionMappers extends TransunionBase {
 
   static mapTradelineDispute(
     item: IProcessDisputeTradelineResult | undefined | null,
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
   ): IDisputeCurrent {
     return {
       dispute: dispute,
@@ -209,7 +209,7 @@ export class TransunionMappers extends TransunionBase {
 
   static mapHistoricalTradelineDispute(
     item: IProcessDisputeTradelineResult | undefined | null,
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
   ): IDisputeHistorical {
     return {
       dispute: dispute,
@@ -222,7 +222,7 @@ export class TransunionMappers extends TransunionBase {
 
   static mapPersonalDispute(
     item: IProcessDisputePersonalResult | undefined | null,
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
   ): IDisputeCurrent {
     return {
       dispute: dispute,
@@ -237,7 +237,7 @@ export class TransunionMappers extends TransunionBase {
 
   static mapHistoricalPersonalDispute(
     item: IProcessDisputePersonalResult | undefined | null,
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
   ): IDisputeHistorical {
     return {
       dispute: dispute,
@@ -250,7 +250,7 @@ export class TransunionMappers extends TransunionBase {
 
   static mapPublicDispute(
     item: IProcessDisputePublicResult | undefined | null,
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
   ): IDisputeCurrent {
     return {
       dispute: dispute,
@@ -265,7 +265,7 @@ export class TransunionMappers extends TransunionBase {
 
   static mapHistoricalPublicDispute(
     item: IProcessDisputePublicResult | undefined | null,
-    dispute: DisputeInput | undefined | null,
+    dispute: IDispute | undefined | null,
   ): IDisputeHistorical {
     return {
       dispute: dispute,

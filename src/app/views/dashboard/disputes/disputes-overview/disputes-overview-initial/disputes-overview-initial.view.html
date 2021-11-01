@@ -1,12 +1,10 @@
 <div style="min-width: 20rem" class="container px-4">
-  <div *ngIf="disputes$ | async as disputes; else noDisputes">
-    <div *ngIf="disputes | disputesToDisputesOverview as parsed">
-      <brave-disputes-overview-initial-pure
-        [currentDisputeArr]="parsed.currentDisputeArr"
-        [historicalDisputeArr]="parsed.historicalDisputeArr"
-        (viewDetailsClick)="onViewDetailsClick($event)"
-      ></brave-disputes-overview-initial-pure>
-    </div>
+  <div *ngIf="(allDisputes | disputesToDisputesOverview) as parsed; else noDisputes">
+    <brave-disputes-overview-initial-pure
+      [currentDisputeArr]="parsed.currentDisputeArr"
+      [historicalDisputeArr]="parsed.historicalDisputeArr"
+      (viewDetailsClick)="onViewDetailsClick($event)"
+    ></brave-disputes-overview-initial-pure>
   </div>
 
   <ng-template #noDisputes>
