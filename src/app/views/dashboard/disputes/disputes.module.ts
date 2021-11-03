@@ -60,6 +60,9 @@ import { DisputeFindingsYourRightsComponent } from './components/findings/disput
 import { DisputeTradelineCardComponent } from './components/cards/dispute-tradeline-card/dispute-tradeline-card.component';
 import { DisputePersonalCardComponent } from './components/cards/dispute-personal-card/dispute-personal-card.component';
 import { DisputePublicCardComponent } from './components/cards/dispute-public-card/dispute-public-card.component';
+import { DisputeOverviewCardComponent } from './components/cards/dispute-overview-card/dispute-overview-card.component';
+import { DisputesHistoricalView } from './disputes-historical/disputes-historical/disputes-historical.view';
+import { DisputesHistoricalPureView } from './disputes-historical/disputes-historical-pure/disputes-historical-pure.view';
 
 const modules = [
   CommonModule,
@@ -118,6 +121,9 @@ const components = [
   DisputesReconfirmPureView,
   DisputesSuccessView,
   DisputesSuccessPureView,
+  DisputeOverviewCardComponent,
+  DisputesHistoricalView,
+  DisputesHistoricalPureView,
   DisputeHeaderComponent,
   DisputeReasonPageComponent,
 ];

@@ -5,15 +5,54 @@
     </div>
     <p class="text-sm">Check the status of any disputes currently in process and any you've disputed in the past</p>
   </div>
-  <brave-disputes-list
-    [disputeList]="currentDisputeArr"
-    listHeader="Current Disputes"
-    headerIcon="view_list"
-    disputListType="current"
-    isEmptyMessage="You don't have any dispute investigations in progress!"
-    (viewDetailsClick)="viewDetailsClick.emit($event)"
-  >
-  </brave-disputes-list>
+
+  <div class="mt-5">
+    <!-- ===== CURRENT DISPUTE ===== -->
+    <ng-container *ngIf="overview?.currentDispute as dispute; else noCurrent">
+      <div class="flex items-center mb-2">
+        <span class="material-icons-outlined mr-4">view_list</span>
+        <p>Current Disputes</p>
+      </div>
+      <brave-dispute-current-card
+        [status]="dispute.status"
+        [creditorName]="dispute.creditorName"
+        [dateSubmitted]="dispute.dateSubmitted"
+        [estCompletionDate]="dispute.estCompletionDate"
+        [accountType]="dispute.accountType"
+        (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+      ></brave-dispute-current-card>
+    </ng-container>
+
+    <!-- ===== NO CURRENT DISPUTES ===== -->
+    <ng-template #noCurrent>
+      <div class="flex justify-center">
+        <img class="w-32 h-32" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_no_data_re_kwbl.svg" />
+      </div>
+      <p class="mx-auto mt-6 text-center max-w-xs">You don't have any dispute investigations in progress!</p>
+    </ng-template>
+
+    <!-- ===== HISTORICAL DISPUTE ===== -->
+    <ng-container *ngIf="overview?.hasHistorical; else noHistorical">
+      <div class="flex items-center mb-2">
+        <span class="material-icons-outlined mr-4">history</span>
+        <p>Dispute History</p>
+      </div>
+      <div class="mt-4 w-full">
+        <brave-filled-onlytext-button (click)="viewHistoricalClick.emit()"
+          >View Dispute History</brave-filled-onlytext-button
+        >
+      </div>
+    </ng-container>
+
+    <!-- ===== NO HISTORICAL DISPUTE ===== -->
+    <ng-template #noHistorical>
+      <div class="flex justify-center">
+        <img class="w-32 h-32" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_no_data_re_kwbl.svg" />
+      </div>
+      <p class="mx-auto mt-6 text-center max-w-xs">You don't have any historical items!</p>
+    </ng-template>
+  </div>
+  <!--
   <brave-disputes-list
     [disputeList]="historicalDisputeArr"
     listHeader="Dispute History"
@@ -25,5 +64,5 @@
   </brave-disputes-list>
   <div class="flex justify-center" *ngIf="historicalDisputeArr.length > 0">
     <brave-filled-onlytext-button>View Dispute History</brave-filled-onlytext-button>
-  </div>
+  </div> -->
 </div>

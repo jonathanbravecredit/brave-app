@@ -26,7 +26,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   ngOnDestroy(): void {
     if (this.routeSub$) this.routeSub$.unsubscribe();
   }
@@ -55,5 +55,11 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
         relativeTo: this.route,
       });
     }
+  }
+
+  onViewHistoricalClick(): void {
+    this.router.navigate(['../historical'], {
+      relativeTo: this.route
+    })
   }
 }
