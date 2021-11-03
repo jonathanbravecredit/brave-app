@@ -11,7 +11,7 @@
       {{ value === undefined ? missing : value === '--' ? value : (value | date: 'shortDate') }}
     </p>
     <p *ngIf="valueType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
-      {{ value === undefined ? missing : value === '--' ? value : value }}
+      {{ value === undefined ? missing : value === '--' ? value : (value.toString() | decode) }}
     </p>
   </ng-container>
   <ng-container *ngIf="injected">

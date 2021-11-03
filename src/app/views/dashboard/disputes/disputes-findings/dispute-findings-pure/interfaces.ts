@@ -1,4 +1,9 @@
-import { ITradeLinePartition, IPublicPartition, ISubscriber } from '@shared/interfaces/merge-report.interface';
+import {
+  ITradeLinePartition,
+  IPublicPartition,
+  ISubscriber,
+  IBorrower,
+} from '@shared/interfaces/merge-report.interface';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 
@@ -30,7 +35,14 @@ export interface IPublicRecordCreditBureauConfig extends IPublicItemsDetailsConf
   amount: string;
 }
 
-export interface IPersonalInfoCreditBureauConfig extends IPersonalItemsDetailsTable {}
+export interface IPersonalInfoCreditBureauConfig extends IPersonalItemsDetailsTable {
+  summaryItemKey?: string;
+  summaryItemType?: number | string;
+  summaryResult?: string;
+  summaryResultCode?: string;
+  summaryReason?: string;
+  itemKey?: string;
+}
 // ssn: string;
 // name: string;
 // currentAddress: string;

@@ -21,6 +21,18 @@ export class TransunionDisputeQueries extends TransunionBase {
   }
 
   /*===================================*/
+  //           SUBJECT RECORDS
+  /*===================================*/
+  static getLineItems(credit: ICreditBureau): ILineItem[] {
+    if (!credit) return [];
+    const prodArr = credit?.productArray;
+    const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
+    const subjectRecord = product.subject.subjectRecord;
+    const lineItems = subjectRecord.fileSummary.disclosureCoverInfo.summarySection.lineItem;
+    return lineItems instanceof Array ? lineItems : [lineItems];
+  }
+
+  /*===================================*/
   //           PUBLIC RECORDS
   //  - INCLUDES ORIGINAL AND UPDATED
   /*===================================*/
@@ -130,6 +142,28 @@ export class TransunionDisputeQueries extends TransunionBase {
   }
 
   /*===================================*/
+  //           PERSONAL RECORDS
+  /*===================================*/
+  /**
+   * List the results for personal dispute
+   * @param credit
+   * @returns
+   */
+  static listPersonalItems(credit: ICreditBureau | undefined): ILineItem[] | [] {
+    if (!credit) return [];
+    const prodArr = credit?.productArray;
+    const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
+    const subjectRecord = product?.subject?.subjectRecord;
+
+    const personal = subjectRecord?.fileSummary.disclosureCoverInfo.summarySection.lineItem; //.custom?.credit?.trade;
+    if (personal instanceof Array) {
+      return personal;
+    } else {
+      return personal ? [personal] : [];
+    }
+  }
+
+  /*===================================*/
   //          FINDINGS RECORDS
   /*===================================*/
   /**
@@ -180,7 +214,7 @@ export class TransunionDisputeQueries extends TransunionBase {
     let findingsArr = findings instanceof Array ? findings : findings ? [findings] : [];
 
     const query = type === CreditBureauFindingsType.PublicRecord ? this.listPublicRecords : this.listTrades;
-    const creditItems = query(credit); // public or trade items
+    const creditItems = query(credit);
 
     return findingsArr.filter((item) => {
       const key = item.itemKey;

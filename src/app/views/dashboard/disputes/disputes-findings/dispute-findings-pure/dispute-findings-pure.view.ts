@@ -19,7 +19,8 @@ export class DisputeFindingsPureView implements OnInit {
   @Input() fileIdentificationNumber: string = '';
   @Input() tradelineAccountConfig: ITradelineCreditBureauConfig[] = [];
   @Input() publicRecordConfig: IPublicRecordCreditBureauConfig[] = [];
-  @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
+  @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig[] = [];
+  // @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
   @Input() stateOfResidence: string = '';
 
   findingTypes = CreditBureauFindingsType;
@@ -27,5 +28,8 @@ export class DisputeFindingsPureView implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('tradeline config ===> ', this.tradelineAccountConfig);
+    console.log('personal item config ===> ', this.personalInfoConfig);
+  }
 }

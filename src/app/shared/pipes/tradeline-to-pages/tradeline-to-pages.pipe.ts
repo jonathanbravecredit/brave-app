@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IRemark } from '@shared/interfaces/common-tu.interface';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
   name: 'tradelineToPages',
@@ -24,62 +25,63 @@ export class TradelineToPagesPipe implements PipeTransform {
   }
 
   private mapToDetailsPageOne(tradeline: ITradeLinePartition) {
+    const originalCreditor = tu.queries.report.getOriginalCreditor(tradeline);
     return {
       isDisputePageOne: true,
       config: {
-        accountNumber: tradeline.Tradeline?.accountNumber || '',
-        accountTypeSymbol: tradeline.accountTypeSymbol || '',
-        creditorName: tradeline.Tradeline?.creditorName || '',
-        originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',
-        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',
-        dateOpened: tradeline.Tradeline?.dateOpened || '',
-        dateClosed: tradeline.Tradeline?.dateClosed || '',
-        dateReported: tradeline.Tradeline?.dateReported || '',
-        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description || '',
-        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths || '',
-        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count || '',
-        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count || '',
-        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count || '',
-        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment || '',
-        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit || '',
-        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || '',
-        currentBalance: tradeline.Tradeline?.currentBalance || '',
-        highestBalance: tradeline.Tradeline?.highBalance || '',
-        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',
+        accountNumber: tradeline.Tradeline?.accountNumber,
+        accountTypeSymbol: tradeline.accountTypeSymbol,
+        creditorName: tradeline.Tradeline?.creditorName,
+        originalCreditor: originalCreditor,
+        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation,
+        dateClosed: tradeline.Tradeline?.dateClosed?.substring(0, 10),
+        dateReported: tradeline.Tradeline?.dateReported,
+        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description,
+        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths,
+        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count,
+        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count,
+        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count,
+        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment,
+        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit,
+        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue,
+        currentBalance: tradeline.Tradeline?.currentBalance,
+        highestBalance: tradeline.Tradeline?.highBalance,
+        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description,
         payStatus: tradeline?.Tradeline?.PayStatus?.description,
         maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
-        status: tradeline.Tradeline?.PayStatus?.symbol || '',
-        openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',
+        status: tradeline.Tradeline?.PayStatus?.symbol,
+        openClosed: tradeline.Tradeline?.OpenClosed?.symbol,
       },
     };
   }
   private mapToDetailsPageTwo(tradeline: ITradeLinePartition) {
+    const originalCreditor = tu.queries.report.getOriginalCreditor(tradeline);
     return {
       isDisputePageTwo: true,
       config: {
-        accountNumber: tradeline.Tradeline?.accountNumber || '',
-        accountTypeSymbol: tradeline.accountTypeSymbol || '',
-        creditorName: tradeline.Tradeline?.creditorName || '',
-        originalCreditor: tradeline.Tradeline?.CollectionTrade?.originalCreditor || '',
-        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation || '',
-        dateOpened: tradeline.Tradeline?.dateOpened || '',
-        dateClosed: tradeline.Tradeline?.dateClosed || '',
-        dateReported: tradeline.Tradeline?.dateReported || '',
-        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description || '',
-        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths || '',
-        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count || '',
-        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count || '',
-        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count || '',
-        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment || '',
-        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit || '',
-        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue || '',
-        currentBalance: tradeline.Tradeline?.currentBalance || '',
-        highestBalance: tradeline.Tradeline?.highBalance || '',
-        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description || '',
+        accountNumber: tradeline.Tradeline?.accountNumber,
+        accountTypeSymbol: tradeline.accountTypeSymbol,
+        creditorName: tradeline.Tradeline?.creditorName,
+        originalCreditor: originalCreditor,
+        creditType: tradeline.Tradeline?.CollectionTrade?.creditType?.abbreviation,
+        dateOpened: tradeline.Tradeline?.dateOpened?.substring(0, 10),
+        dateClosed: tradeline.Tradeline?.dateClosed?.substring(0, 10),
+        dateReported: tradeline.Tradeline?.dateReported,
+        accountDesignator: tradeline.Tradeline?.AccountDesignator?.description,
+        termMonths: tradeline.Tradeline?.GrantedTrade?.termMonths,
+        late30Count: tradeline.Tradeline?.GrantedTrade?.late30Count,
+        late60Count: tradeline.Tradeline?.GrantedTrade?.late60Count,
+        late90Count: tradeline.Tradeline?.GrantedTrade?.late90Count,
+        monthlyPayment: tradeline.Tradeline?.GrantedTrade?.monthlyPayment,
+        creditLimit: tradeline.Tradeline?.GrantedTrade?.CreditLimit,
+        amountPastDue: tradeline.Tradeline?.GrantedTrade?.amountPastDue,
+        currentBalance: tradeline.Tradeline?.currentBalance,
+        highestBalance: tradeline.Tradeline?.highBalance,
+        disputeFlag: tradeline.Tradeline?.DisputeFlag?.description,
         payStatus: tradeline?.Tradeline?.PayStatus?.description,
         maxDeliquency: tradeline?.Tradeline?.GrantedTrade?.WorstPayStatus?.description,
-        status: tradeline.Tradeline?.PayStatus?.symbol || '',
-        openClosed: tradeline.Tradeline?.OpenClosed?.symbol || '',
+        status: tradeline.Tradeline?.PayStatus?.symbol,
+        openClosed: tradeline.Tradeline?.OpenClosed?.symbol,
       },
     };
   }
@@ -102,10 +104,10 @@ export class TradelineToPagesPipe implements PipeTransform {
    * @param remarks
    * @returns
    */
-  parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
-    if (remarks === undefined) return '';
+  parseRemarks(remarks: IRemark | IRemark[] | undefined): string | undefined {
+    if (remarks === undefined) return;
     return remarks instanceof Array
-      ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
-      : remarks.customRemark || '';
+      ? remarks.map((r) => r.customRemark).reduce((a, b) => `${a} \n ${b}`)
+      : remarks.customRemark;
   }
 }

@@ -29,6 +29,8 @@ import { FilterTradelinesPipe } from './filterTradelines/filter-tradelines.pipe'
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 import { ReasonsToPagesPipe } from './reasons-to-pages/reasons-to-pages.pipe';
 import { FilterSubscribersPipe } from './filterSubscribers/filter-subscribers.pipe';
+import { CreditbureauToPersonalitemdetailsPipe } from './creditbureau-to-personalitemdetails/creditbureau-to-personalitemdetails.pipe';
+import { DecodePipe } from './decode/decode.pipe';
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -50,12 +52,14 @@ const pipes = [
   MergereportToBreachitemsPipe,
   CreditbureauToTradelinedetailsPipe,
   CreditbureauToPublicitemdetailsPipe,
+  CreditbureauToPersonalitemdetailsPipe,
   InvestigationresultsToPersonalitemdetailsPipe,
   TradelineToAccountgroupPipe,
   TradelineToForbearancePipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
   LinkifyPipe,
+  DecodePipe,
   FilterTradelinesPipe,
   FilterSubscribersPipe,
   ParseRiskScorePipe,
