@@ -10,7 +10,5 @@ export class DisputeFindingsYourRightsComponent implements OnInit {
   content = FINDINGS_YOUR_RIGHTS;
   constructor() {}
 
-  ngOnInit(): void {
-    this.content.link1.link = `${this.content.link1.link}/${this.stateOfResidence}`;
-  }
+  ngOnInit(): void {}
 }

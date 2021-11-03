@@ -3,7 +3,7 @@ export const FINDINGS_CLOSING_CONTENT = {
   list1: [
     `<b>Add a 100 - word statement to your report.</b> What this means is that you have the right to send us a note of 100 words or less describing your situation or why you disagree with the results, and we will add this statement to your report. Anyone who views your report will see this statement. Please know that if you include any medical information in your statement, this means you’re giving TransUnion permission to include that information in any future credit report we issue on your behalf.`,
     `<b>Dispute directly with the company that reported the information to us.</b> If you want changes made to information found on your credit report you may dispute with the company that reported it using the contact information listed in Your Investigation Results.`,
-    `<b>Provide to us any other information or documents about your dispute.</b> Please visit <a href="https://www.transunion.com/dispute" target="_blank">www.transunion.com/dispute</a> and let us know you are filing a repeat dispute. Be sure to include any other information or documentation you feel will help us resolve your dispute.`,
+    `<b>Provide to us any other information or documents about your dispute.</b> Please visit <a href="https://www.transunion.com/dispute" target="_blank" class="text-indigo-800">www.transunion.com/dispute</a> and let us know you are filing a repeat dispute. Be sure to include any other information or documentation you feel will help us resolve your dispute.`,
     `<b>File a complaint</b> about the company reporting the account or about TransUnion with the Consumer Financial Protection Bureau or with your State’s Attorney General’s office.`,
   ],
   p2: `A Note on Inquiries`,

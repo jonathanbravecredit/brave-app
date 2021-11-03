@@ -11,7 +11,7 @@
         <ng-container *ngIf="contactDetails?.length; else noContact">
           <ng-container *ngFor="let detail of contactDetails">
             <p *ngIf="detail && detail.length > 0" class="text-xs text-dk-gray text-opacity-75 text-right mb-1">
-              {{ detail }}
+              {{ detail | decode }}
             </p>
           </ng-container>
         </ng-container>

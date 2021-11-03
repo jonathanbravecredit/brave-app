@@ -117,6 +117,7 @@ export interface ISummarySection {
 }
 
 export interface ILineItem {
+  handle: string;
   itemKey: string;
   itemType: number | string;
   credit: ICredit;
