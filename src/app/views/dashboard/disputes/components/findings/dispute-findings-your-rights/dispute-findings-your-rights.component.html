@@ -6,7 +6,9 @@
   <p class="text-sm mt-4">
     <span>{{ content.p2 }}</span>
     <span
-      ><a [href]="content.link1.link" target="_blank" class="text-indigo-800">&nbsp;{{ content.link1.text }}</a></span
+      ><a [href]="content.link1.link + '/' + stateOfResidence" target="_blank" class="text-indigo-800"
+        >&nbsp;{{ content.link1.text }}</a
+      ></span
     >
   </p>
   <p class="text-sm mt-4" [innerHTML]="content.p3 | linkify"></p>

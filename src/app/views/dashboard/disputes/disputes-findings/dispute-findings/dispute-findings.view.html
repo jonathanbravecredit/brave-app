@@ -24,7 +24,7 @@
       [fileIdentificationNumber]="findings.fileIdentificationNumber"
       [tradelineAccountConfig]="creditBureauResults.creditBureau | creditbureauToTradelinedetails : investigationResults.trueLinkCreditReportType"
       [publicRecordConfig]="creditBureauResults.creditBureau | creditbureauToPublicitemdetails : investigationResults.trueLinkCreditReportType"
-      [personalInfoConfig]="(investigationResults.trueLinkCreditReportType?.Borrower || {}) | personalitemsToDetails"
+      [personalInfoConfig]="creditBureauResults.creditBureau | creditbureauToPersonalitemdetails: investigationResults.trueLinkCreditReportType"
       [stateOfResidence]="stateOfResidence"
     ></brave-dispute-findings-pure>
   </ng-container>

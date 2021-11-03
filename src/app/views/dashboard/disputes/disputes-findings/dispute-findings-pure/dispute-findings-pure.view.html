@@ -60,13 +60,18 @@
   </ng-container>
 
   <!-- PERSONAL ITEMS -->
-  <ng-container *ngIf="!!personalInfoConfig && !tradelineAccountConfig?.length && !publicRecordConfig?.length">
-    <div class="flex items-center mt-4 mb-3">
-      <span>Personal Information Details</span>
-    </div>
-    <brave-personalitems-details-table
-      [config]="personalInfoConfig.personalItem | personalitemsToDetails"
-    ></brave-personalitems-details-table>
+  <ng-container *ngFor="let personalItem of personalInfoConfig">
+    <brave-dispute-findings-results-details
+      [resultCode]="personalItem.summaryResultCode"
+      [updatedValues]="[personalItem.summaryReason || 'Not Specified']"
+    >
+      <div class="flex items-center mt-4 mb-3">
+        <span>Personal Information Details</span>
+      </div>
+      <brave-personalitems-details-table
+        [config]="personalItem.personalItem | personalitemsToDetails"
+      ></brave-personalitems-details-table>
+    </brave-dispute-findings-results-details>
   </ng-container>
 </div>
 

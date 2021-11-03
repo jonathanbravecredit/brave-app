@@ -19,7 +19,7 @@
             *ngFor="let name of config.borrowerNamesArray"
             class="text-xs text-dk-gray text-opacity-75 text-right mb-1"
           >
-            {{ name }}
+            {{ name | decode }}
           </p>
         </ng-container>
         <ng-template #noName>
@@ -48,7 +48,7 @@
             *ngFor="let address of config.previousAddressesArray"
             class="text-xs text-dk-gray text-opacity-75 text-right mb-1"
           >
-            {{ address }}
+            {{ address | decode }}
           </p>
         </ng-container>
         <ng-template #noAddress>
@@ -90,7 +90,7 @@
             *ngFor="let employer of config.employersArray; else"
             class="text-xs text-dk-gray text-opacity-75 text-right mb-1"
           >
-            {{ employer }}
+            {{ employer | decode }}
           </p>
         </ng-container>
         <ng-template #noEmployer>

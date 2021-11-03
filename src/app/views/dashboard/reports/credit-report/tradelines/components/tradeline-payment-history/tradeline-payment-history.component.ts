@@ -6,6 +6,7 @@ import {
 } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/constants';
 import { ITradelinePaymentHistory } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/interfaces';
 import { TradelinePaymentIconKeyComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'brave-tradeline-payment-history',
@@ -76,7 +77,9 @@ export class TradelinePaymentHistoryComponent implements OnInit {
             months: MONTH_ABBREVIATIONS,
           },
           years: [0, 1, 2].map((item, i) => {
-            let dte = history.startDate === undefined ? new Date() : new Date(history.startDate);
+            const badDate = history.startDate?.substring(0, 10);
+            const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
+            let dte = history.startDate === undefined ? new Date() : goodDate;
             let year = dte.getFullYear() - i;
             let monthlyStatus: IMonthyPayStatusItem[];
             if (history.MonthlyPayStatus === undefined) {
@@ -109,12 +112,16 @@ export class TradelinePaymentHistoryComponent implements OnInit {
     if (monthlyPayments === undefined) return months;
     let payments = monthlyPayments.filter((pay) => {
       if (pay.date === undefined) return false;
-      return new Date(pay.date).getFullYear() === year;
+      const badDate = pay.date.substring(0, 10);
+      const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
+      return goodDate.getFullYear() === year;
     });
     payments.forEach((pay) => {
       if (pay.date === undefined) return;
       const status = `${pay.status}`.length ? `${pay.status}`.toLowerCase() : 'u';
-      months[new Date(pay.date).getMonth()] = status;
+      const badDate = pay.date.substring(0, 10);
+      const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
+      months[goodDate.getMonth()] = status;
     });
     return months;
   }

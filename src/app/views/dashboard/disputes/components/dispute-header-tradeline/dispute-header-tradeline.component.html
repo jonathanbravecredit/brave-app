@@ -6,7 +6,8 @@
       </div>
       <div class="ml-2 mb-4">
         <p class="text-sm font-semibold">
-          {{ dispute?.creditorName }} {{ dispute?.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+          {{ dispute?.creditorName || '' | decode }}
+          {{ dispute?.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
         </p>
         <p class="text-sm font-semibold">{{ dispute?.accountTypeDescription || '' }}</p>
       </div>
