@@ -1,15 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IDisputeCurrent, IDisputeHistorical, TDisputeEntity } from '@views/dashboard/disputes/components/cards';
+import { IDisputeCurrent, TDisputeEntity } from '@views/dashboard/disputes/components/cards';
+
+export interface IDisputesOverview {
+  currentDispute: IDisputeCurrent | null;
+  hasHistorical: boolean;
+}
 
 @Component({
   selector: 'brave-disputes-overview-initial-pure',
   templateUrl: './disputes-overview-initial-pure.view.html',
 })
 export class DisputesOverviewInitialPureView implements OnInit {
-  @Input() currentDisputeArr: IDisputeCurrent[] = [];
-  @Input() historicalDisputeArr: IDisputeHistorical[] = [];
-  @Input() forceStateTo: 'default' | 'mock' = 'default';
+  @Input() overview: IDisputesOverview | undefined;
   @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
+  @Output() viewHistoricalClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 

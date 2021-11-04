@@ -21,7 +21,7 @@
   <span>Personal Information</span>
 </div>
 
-<div *ngFor="let item of personalItems; index as idx">
+<div *ngFor="let item of personalItems | filterPersonal: tu.queries.dispute.isDisputeable; index as idx">
   <brave-dispute-personal-card [personalItem]="item" (disputeClick)="disputePersonalClick.emit(item)">
   </brave-dispute-personal-card>
 </div>

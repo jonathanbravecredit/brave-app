@@ -12,6 +12,7 @@ import { DisputesPublicView } from '@views/dashboard/disputes/disputes-public/di
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
 import { FindingsResolver } from '@shared/resolvers/findings/findings.resolver';
 import { DisputesResolver } from '@shared/resolvers/disputes/disputes.resolver';
+import { DisputesHistoricalView } from '@views/dashboard/disputes/disputes-historical/disputes-historical/disputes-historical.view';
 
 const DisputeRoutes: Routes = [
   {
@@ -27,6 +28,12 @@ const DisputeRoutes: Routes = [
       {
         path: 'overview',
         component: DisputesOverviewInitialView,
+        resolve: { disputes: DisputesResolver },
+        canActivate: [ActiveGuard, AuthGuard],
+      },
+      {
+        path: 'historical',
+        component: DisputesHistoricalView,
         resolve: { disputes: DisputesResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },

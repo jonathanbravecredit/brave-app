@@ -1,20 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DisputeStatus } from '@shared/constants/disputes.interface';
 import { IDispute } from '@shared/interfaces/disputes';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { TDisputeEntity } from '@views/dashboard/disputes/components/cards/interfaces';
+import { DisputeStatus } from '@shared/constants/disputes.interface';
+import { IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { Subscription } from 'rxjs';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 @Component({
-  selector: 'brave-disputes-overview-initial',
-  templateUrl: './disputes-overview-initial.view.html',
+  selector: 'brave-disputes-historical',
+  templateUrl: './disputes-historical.view.html',
 })
-export class DisputesOverviewInitialView implements OnInit, OnDestroy {
+export class DisputesHistoricalView implements OnInit, OnDestroy {
   routeSub$: Subscription | undefined;
   allDisputes: IDispute[] | undefined;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -33,14 +34,8 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
     if (this.routeSub$) this.routeSub$.unsubscribe();
   }
 
-  /**
-   * Method to check the status of the results
-   * - two states: 1. complete, no results 2. complete, results
-   * @param entity
-   * @returns
-   */
-  async onViewDetailsClick(entity: TDisputeEntity): Promise<void> {
-    if (!entity.dispute) throw `dispute missing`;
+  async onViewDetailsClick(entity: IDisputeHistorical | undefined): Promise<void> {
+    if (!entity?.dispute) throw `dispute missing`;
     const dispute: IDispute = entity.dispute;
     const { disputeId } = dispute;
     this.disputeService.currentDispute$.next(dispute);
@@ -66,11 +61,5 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
         relativeTo: this.route,
       });
     }
-  }
-
-  onViewHistoricalClick(): void {
-    this.router.navigate(['../historical'], {
-      relativeTo: this.route,
-    });
   }
 }

@@ -26,9 +26,10 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.borrowersNamesRaw
       ? [
           ...mapped,
-          ...transformed.borrowersNamesRaw.map((name: any) => {
+          ...transformed.borrowersNamesRaw.map((name: IBorrowerName) => {
+            const nameType = name.NameType?.description?.toLowerCase() === 'primary' ? 'name' : 'aka';
             return this.mapSubitem(
-              'name',
+              nameType,
               name,
               tu.parsers.report.unparseName(name),
               name.dateUpdated || '',
@@ -41,7 +42,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.employersRaw
       ? [
           ...mapped,
-          ...transformed.employersRaw.map((employer: any) => {
+          ...transformed.employersRaw.map((employer: IEmployer) => {
             return this.mapSubitem(
               'employer',
               employer,
@@ -56,9 +57,9 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.previousAddressesRaw
       ? [
           ...mapped,
-          ...transformed.previousAddressesRaw.map((address: any) => {
+          ...transformed.previousAddressesRaw.map((address: IBorrowerAddress) => {
             return this.mapSubitem(
-              'address',
+              'prevaddress',
               address,
               tu.parsers.report.unparseAddress(address?.CreditAddress),
               '',
@@ -72,7 +73,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
       ? [
           ...mapped,
           this.mapSubitem(
-            'address',
+            'curraddress',
             transformed.currentAddressRaw,
             tu.parsers.report.unparseAddress(transformed.currentAddressRaw?.CreditAddress),
             '',

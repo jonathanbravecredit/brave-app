@@ -9,6 +9,7 @@ export class TransunionDisputeParsers extends TransunionBase {
   /**
    * Reconstitutes the investigation results public record, subscriber name, address, and phone
    * - this is typically the court house name, location, and phone for bankruptcy
+   * - [name, address, phone]
    * @param subscriber
    * @returns
    */

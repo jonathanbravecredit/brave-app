@@ -213,12 +213,16 @@
     <brave-base-table-row
       [label]="mapper['creditLimit'] || 'Credit Limit'"
       [value]="config.creditLimit"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
   <!-- Term -->
   <div class="py-2 px-1">
-    <brave-base-table-row [label]="mapper['termMonths'] || 'Term'" [value]="config.termMonths"></brave-base-table-row>
+    <brave-base-table-row
+      [label]="mapper['termMonths'] || 'Term'"
+      [value]="config.termMonths === undefined ? undefined : config.termMonths + ' mos'"
+    ></brave-base-table-row>
   </div>
 
   <!-- spacer for bottom -->
