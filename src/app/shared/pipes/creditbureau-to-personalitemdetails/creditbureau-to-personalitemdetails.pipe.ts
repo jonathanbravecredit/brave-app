@@ -23,8 +23,8 @@ export class CreditbureauToPersonalitemdetailsPipe implements PipeTransform {
         personalItem: mergeReport.Borrower || ({} as IBorrower),
         summaryItemType: CreditBureauFindingsType.PersonalInfo,
         summaryResult: item.credit.result,
-        summaryResultCode: tu.queries.dispute.getResultCode(item.credit.result),
-        summaryReason: item.credit.reason || 'Not Specified',
+        summaryResultCode: 'personal_item', //tu.queries.dispute.getResultCode(item.credit.result),
+        summaryReason: item.credit.reason || '',
       };
     });
   }
