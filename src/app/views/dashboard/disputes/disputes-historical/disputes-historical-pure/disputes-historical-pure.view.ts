@@ -10,7 +10,5 @@ export class DisputesHistoricalPureView implements OnInit {
   @Input() disputes: (IDisputeHistorical | undefined)[] | undefined = [];
   @Output() viewDetailsClick: EventEmitter<IDisputeHistorical> = new EventEmitter();
   constructor() {}
-  ngOnInit(): void {
-    console.log('in historical dispute ===. ', this.disputes);
-  }
+  ngOnInit(): void {}
 }

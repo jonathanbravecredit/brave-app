@@ -44,7 +44,6 @@ export class DisputesHistoricalView implements OnInit, OnDestroy {
       // the results are not saved...can attempt to gather them again
       // TODO need to handle this case...complete but no id's
       const resp = await this.transunion.getInvestigationResults(disputeId);
-      console.log('resp ==> ', resp);
       const { success, error, data } = resp;
       if (!success) {
         this.router.navigate(['../error'], {

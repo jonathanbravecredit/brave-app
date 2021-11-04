@@ -37,7 +37,7 @@ export class DisputesPublicView implements OnDestroy {
           this.viewDisplay = 'sent';
         } else {
           const errorCode = error?.Code;
-          this.router.navigate([`/dashboard/report/dispute/publicitem/error`], {
+          this.router.navigate([`./error`], {
             relativeTo: this.route,
             queryParams: {
               code: errorCode,

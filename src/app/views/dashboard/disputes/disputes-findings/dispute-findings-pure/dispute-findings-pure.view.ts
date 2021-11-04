@@ -28,8 +28,5 @@ export class DisputeFindingsPureView implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('tradeline config ===> ', this.tradelineAccountConfig);
-    console.log('personal item config ===> ', this.personalInfoConfig);
-  }
+  ngOnInit(): void {}
 }
