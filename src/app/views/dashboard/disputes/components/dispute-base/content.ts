@@ -12,7 +12,7 @@ export const COMPONENT_CONTENT = {
   p2: `Please select a reason:`,
   p3: `Reason(s) selected:`,
   p4: `You have not selected any reasons.`,
-  p5: `You can only choose 2 pre-set reason`,
+  p5: `You can only choose 2 pre-set reasons`,
   p8: `You can only choose 1 pre-set reason`,
   p6: `Reason(s)`,
   p7: `By submitting your dispute request below, you are authorizing Brave Credit to transmit such request to

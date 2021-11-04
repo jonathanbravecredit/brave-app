@@ -29,7 +29,7 @@
   >
     <p>{{ maxSelections === 2 ? content.p5 : content.p8 }}</p>
   </div>
-  <p class="text-lg font-bold mb-2">{{ disputeType !== 'not-mine' ? content.p1 : content.p2 }}</p>
+  <p class="text-lg font-bold mb-2">{{ maxSelections === 2 ? content.p1 : content.p2 }}</p>
   <div class="w-full" style="min-width: 300px">
     <ng-container *ngIf="reasonCards | reasonsToPages: (disputeType === 'not-mine' ? 5 : 4) as pages">
       <brave-basic-carousel [pages]="pages.pages" [data]="pages.data"> </brave-basic-carousel>

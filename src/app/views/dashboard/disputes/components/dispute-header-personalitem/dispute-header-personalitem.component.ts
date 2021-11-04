@@ -26,6 +26,12 @@ export class DisputeHeaderPersonalitemComponent implements OnInit {
         const name = this.dispute.value as IBorrowerName;
         this.value = tu.parsers.report.unparseName(name) || tu.bcMissing;
         break;
+      case 'aka':
+        this.icon = 'face';
+        this.label = 'Name';
+        const aka = this.dispute.value as IBorrowerName;
+        this.value = tu.parsers.report.unparseName(aka) || tu.bcMissing;
+        break;
       case 'curraddress':
         this.icon = 'home';
         this.label = 'Address';

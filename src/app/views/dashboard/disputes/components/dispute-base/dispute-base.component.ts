@@ -166,6 +166,7 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   onRadioChanges(event: any): void {
     const value: SelectionTypes = event.target.value;
     this.disputeType = value;
+    this.maxSelections = value === 'not-mine' ? 1 : 2;
     this.reasonCards = value === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
   }
 

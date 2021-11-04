@@ -2,8 +2,8 @@
   <span class="text-sm font-semibold">{{ resultInfo!.title || '' }}</span>
   <span>{{ resultInfo!.subtitle || '' }}</span>
   <p class="mt-4">
-    <span class="mt-4">{{ resultInfo!.description || '' }}:&nbsp;</span>
-    <span class="text-sm font-semibold mx-3" *ngFor="let val of updatedValues">{{ val }}.</span>
+    <span class="mt-4">{{ resultInfo!.description || '' }}&nbsp;</span>
+    <span class="text-sm font-semibold mx-3" *ngFor="let val of updatedValues">{{ val }}</span>
     <span>{{ resultInfo!.detailDescription || '' }}</span>
   </p>
   <div>
