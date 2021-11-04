@@ -214,9 +214,7 @@ export class TransunionMappers extends TransunionBase {
     return {
       dispute: dispute,
       creditorName: item?.tradeline?.Tradeline?.creditorName || '--',
-      latestDateSubmitted: dispute?.openedOn || '--',
-      decision: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
-      resultReceived: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
+      resultReceived: dispute?.closedOn || '--', // TODO need to get this from the actual results
     };
   }
 
@@ -242,9 +240,7 @@ export class TransunionMappers extends TransunionBase {
     return {
       dispute: dispute,
       creditorName: item?.personalItem?.key || '--',
-      latestDateSubmitted: dispute?.openedOn || '--',
-      decision: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
-      resultReceived: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
+      resultReceived: dispute?.closedOn || '--', // TODO need to get this from the actual results
     };
   }
 
@@ -270,9 +266,7 @@ export class TransunionMappers extends TransunionBase {
     return {
       dispute: dispute,
       creditorName: item?.publicItem?.PublicRecord?.Classification?.description || '--',
-      latestDateSubmitted: dispute?.openedOn || '--',
-      decision: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
-      resultReceived: dispute?.disputeInvestigationResults || '--', // TODO need to get this from the actual results
+      resultReceived: dispute?.closedOn || '--', // TODO need to get this from the actual results
     };
   }
 }

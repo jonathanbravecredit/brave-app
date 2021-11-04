@@ -21,8 +21,8 @@ export interface IDisputeCurrent extends IDisputeBase {
 }
 
 export interface IDisputeHistorical extends IDisputeBase {
-  latestDateSubmitted: string;
-  decision: string;
+  latestDateSubmitted?: string;
+  decision?: string;
   resultReceived?: string;
 }
 

@@ -1,11 +1,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IDispute } from '@shared/interfaces/disputes';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IDisputeCurrent } from '@views/dashboard/disputes/components/cards/interfaces';
 import { IDisputesOverview } from '@views/dashboard/disputes/disputes-overview/disputes-overview-initial-pure/disputes-overview-initial-pure.view';
-import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
-import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
-import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+
+const enum ParserTypes {
+  Tradeline = 'tradeline',
+  PersonalItem = 'personalItem',
+  PublicItem = 'publicItem',
+}
+
+const parsers = {
+  [ParserTypes.Tradeline]: tu.mappers.mapTradelineDispute,
+  [ParserTypes.PersonalItem]: tu.mappers.mapPersonalDispute,
+  [ParserTypes.PublicItem]: tu.mappers.mapPublicDispute,
+};
 
 @Pipe({
   name: 'disputesToDisputesOverview',
@@ -24,18 +33,19 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
       const openedB = new Date(b?.openedOn || 0);
       return +openedB - +openedA;
     });
-    console.log('sorted dispute ===> ', sorted);
-    const current = sorted[0];
-    const currentItems = current ? JSON.parse(current.disputeItems || '') : null;
-    if (!currentItems) return dummy;
-    const currentDisputeArr = this.parseCurrentDisputeItems(current, currentItems);
+
+    // parse the current dispute
+    const dispute = sorted[0];
+    const items = dispute ? JSON.parse(dispute.disputeItems) : null;
+    const currentDisputeArr = this.parseCurrentDisputeItems(dispute, items);
+
+    // check if historical disputes present
     const historicalDisputeArr = sorted.slice(1);
-    console.log('historical dispute ===> ', historicalDisputeArr);
-    const mapped = {
+
+    return {
       currentDispute: currentDisputeArr,
       hasHistorical: historicalDisputeArr?.length > 0,
     };
-    return mapped;
   }
 
   private parseCurrentDisputeItems(
@@ -43,55 +53,20 @@ export class DisputesToDisputesOverviewPipe implements PipeTransform {
     disputeItems: any | any[] | undefined | null,
   ): IDisputeCurrent | null {
     if (!disputeItems) return null;
-    if (disputeItems['tradeline'] !== undefined) {
-      return TransunionUtil.mappers.mapTradelineDispute(disputeItems as IProcessDisputeTradelineResult, dispute);
-    }
-    if (disputeItems['personalItem'] !== undefined) {
-      return TransunionUtil.mappers.mapPersonalDispute(disputeItems as IProcessDisputePersonalResult, dispute);
-    }
-    if (disputeItems['publicItem'] !== undefined) {
-      return TransunionUtil.mappers.mapPublicDispute(disputeItems as IProcessDisputePublicResult, dispute);
-    }
-    return TransunionUtil.mappers.mapTradelineDispute(disputeItems as IProcessDisputeTradelineResult, dispute);
+    // Currently only allowing one item to dispute, but this could change in future
+    return disputeItems instanceof Array
+      ? this.mapDisputeItem(disputeItems[0], dispute)
+      : this.mapDisputeItem(disputeItems, dispute);
   }
 
-  // private parseHistoricalDisputeItems(
-  //   dispute: IDispute | undefined | null,
-  //   disputeItems: any | any[] | undefined | null,
-  // ): IDisputeHistorical[] {
-  //   if (!disputeItems) return [];
-  //   if (disputeItems instanceof Array) {
-  //     return disputeItems.map((item: any) => {
-  //       if (item['tradeline'] !== undefined) {
-  //         return TransunionUtil.mappers.mapHistoricalTradelineDispute(item as IProcessDisputeTradelineResult, dispute);
-  //       }
-  //       if (item['personalItem'] !== undefined) {
-  //         return TransunionUtil.mappers.mapHistoricalPersonalDispute(item as IProcessDisputePersonalResult, dispute);
-  //       }
-  //       if (item['publicItem'] !== undefined) {
-  //         return TransunionUtil.mappers.mapHistoricalPublicDispute(item as IProcessDisputePublicResult, dispute);
-  //       }
-  //       return TransunionUtil.mappers.mapHistoricalTradelineDispute(item as IProcessDisputeTradelineResult, dispute);
-  //     });
-  //   } else {
-  //     if (disputeItems['tradeline'] !== undefined) {
-  //       return [
-  //         TransunionUtil.mappers.mapHistoricalTradelineDispute(disputeItems as IProcessDisputeTradelineResult, dispute),
-  //       ];
-  //     }
-  //     if (disputeItems['personalItem'] !== undefined) {
-  //       return [
-  //         TransunionUtil.mappers.mapHistoricalPersonalDispute(disputeItems as IProcessDisputePersonalResult, dispute),
-  //       ];
-  //     }
-  //     if (disputeItems['publicItem'] !== undefined) {
-  //       return [
-  //         TransunionUtil.mappers.mapHistoricalPublicDispute(disputeItems as IProcessDisputePublicResult, dispute),
-  //       ];
-  //     }
-  //     return [
-  //       TransunionUtil.mappers.mapHistoricalTradelineDispute(disputeItems as IProcessDisputeTradelineResult, dispute),
-  //     ];
-  //   }
-  // }
+  // TODO find better interface than any here...dispute items are stored as JSON string in DB
+  private mapDisputeItem(item: any, dispute: IDispute | null | undefined): IDisputeCurrent {
+    const cases = [ParserTypes.Tradeline, ParserTypes.PersonalItem, ParserTypes.PublicItem];
+    for (let i = 0; i < cases.length; i++) {
+      if (item[cases[i]] !== undefined) {
+        return parsers[cases[i]](item, dispute);
+      }
+    }
+    return parsers[ParserTypes.Tradeline](item, dispute); // fallback
+  }
 }

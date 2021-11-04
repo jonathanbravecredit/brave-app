@@ -5,7 +5,7 @@ import { IDispute } from '@shared/interfaces/disputes';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { TDisputeEntity } from '@views/dashboard/disputes/components/cards/interfaces';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-disputes-overview-initial',
@@ -26,7 +26,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   ngOnDestroy(): void {
     if (this.routeSub$) this.routeSub$.unsubscribe();
   }
@@ -39,7 +39,6 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
    */
   async onViewDetailsClick(entity: TDisputeEntity): Promise<void> {
     if (!entity.dispute) throw `dispute missing`;
-    if (!entity.dispute) return;
     const dispute: IDispute = entity.dispute;
     const disputeId: string = dispute.id;
     this.disputeService.currentDispute$.next(dispute);
@@ -59,7 +58,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
 
   onViewHistoricalClick(): void {
     this.router.navigate(['../historical'], {
-      relativeTo: this.route
-    })
+      relativeTo: this.route,
+    });
   }
 }

@@ -1,1 +1,33 @@
-<p>disputes-historical-pure works!</p>
+<div class="mx-4 text-gray-900">
+  <div>
+    <div class="mb-10">
+      <h1 class="text-xl font-semibold">Dispute History</h1>
+    </div>
+    <p class="text-sm">Any disputes that have reached a decision and are over 30 days old can be found here.</p>
+  </div>
+
+  <div class="mt-5">
+    <!-- ===== HISTORICAL DISPUTE ===== -->
+    <ng-container *ngIf="disputes?.length; else noHistorical">
+      <div *ngFor="let dispute of disputes; last as isLast">
+        <div class="border-t border-blueGray-300 my-2"></div>
+        <brave-dispute-history-card
+          [creditorName]="dispute?.creditorName"
+          [resultReceived]="dispute?.resultReceived"
+          [type]="'short'"
+          (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+        >
+        </brave-dispute-history-card>
+        <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
+      </div>
+    </ng-container>
+
+    <!-- ===== NO HISTORICAL DISPUTE ===== -->
+    <ng-template #noHistorical>
+      <div class="flex justify-center">
+        <img class="w-32 h-32" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_no_data_re_kwbl.svg" />
+      </div>
+      <p class="mx-auto mt-6 text-center max-w-xs">You don't have any historical items!</p>
+    </ng-template>
+  </div>
+</div>
