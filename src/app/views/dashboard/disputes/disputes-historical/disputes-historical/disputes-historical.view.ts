@@ -6,6 +6,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { DisputeStatus } from '@shared/constants/disputes.interface';
 import { IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { Subscription } from 'rxjs';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 
 @Component({
   selector: 'brave-disputes-historical',
@@ -20,6 +21,7 @@ export class DisputesHistoricalView implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private interstitial: InterstitialService,
     private disputeService: DisputeService,
+    private transunion: TransunionService,
   ) {
     this.routeSub$ = this.route.data.subscribe((resp) => {
       const { allDisputes, currDispute } = resp.disputes;
@@ -32,15 +34,26 @@ export class DisputesHistoricalView implements OnInit, OnDestroy {
     if (this.routeSub$) this.routeSub$.unsubscribe();
   }
 
-  onViewDetailsClick(entity: IDisputeHistorical | undefined): void {
+  async onViewDetailsClick(entity: IDisputeHistorical | undefined): Promise<void> {
     if (!entity?.dispute) throw `dispute missing`;
     const dispute: IDispute = entity.dispute;
-    const disputeId: string = dispute.id;
+    const { disputeId } = dispute;
     this.disputeService.currentDispute$.next(dispute);
     const { disputeInvestigationResults: irID, disputeCreditBureau: cbID } = dispute;
     if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && (!irID || !cbID)) {
       // the results are not saved...can attempt to gather them again
       // TODO need to handle this case...complete but no id's
+      const resp = await this.transunion.getInvestigationResults(disputeId);
+      console.log('resp ==> ', resp);
+      const { success, error, data } = resp;
+      if (!success) {
+        this.router.navigate(['../error'], {
+          relativeTo: this.route,
+          queryParams: {
+            code: error?.Code,
+          },
+        });
+      }
     } else {
       // do I need to set the current dispute
       this.interstitial.openInterstitial();
