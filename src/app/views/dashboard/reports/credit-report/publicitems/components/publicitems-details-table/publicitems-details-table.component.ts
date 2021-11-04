@@ -30,6 +30,8 @@ export class PublicitemsDetailsTableComponent implements OnInit {
     publicRecordType: 'Type',
     responsibility: 'Responsibility',
     expirationDate: 'Estimated month and year that this item will be removed',
+    amount: 'Amount',
+    courtType: 'Court Type',
   };
 
   constructor() {

@@ -76,6 +76,23 @@
     ></brave-base-table-row>
   </div>
 
+  <!-- Amount -->
+  <div *ngIf="config.amount" class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['amount'] || 'Amount'"
+      [value]="config.amount"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Court Type -->
+  <div *ngIf="config.courtType" class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['courtType'] || 'Court Type'"
+      [value]="config.courtType"
+    ></brave-base-table-row>
+  </div>
+
   <!-- Expiration Date -->
   <div class="py-2 px-1">
     <brave-base-table-row
