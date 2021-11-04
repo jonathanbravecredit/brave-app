@@ -32,6 +32,7 @@ import { ReasonsToPagesPipe } from './reasons-to-pages/reasons-to-pages.pipe';
 import { FilterSubscribersPipe } from './filterSubscribers/filter-subscribers.pipe';
 import { CreditbureauToPersonalitemdetailsPipe } from './creditbureau-to-personalitemdetails/creditbureau-to-personalitemdetails.pipe';
 import { DecodePipe } from './decode/decode.pipe';
+import { FilterPersonalPipe } from './filterPersonal/filter-personal.pipe';
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -64,6 +65,7 @@ const pipes = [
   DecodePipe,
   FilterTradelinesPipe,
   FilterSubscribersPipe,
+  FilterPersonalPipe,
   ParseRiskScorePipe,
   ReasonsToPagesPipe,
 ];

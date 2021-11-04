@@ -26,11 +26,17 @@ export class DisputeHeaderPersonalitemComponent implements OnInit {
         const name = this.dispute.value as IBorrowerName;
         this.value = tu.parsers.report.unparseName(name) || tu.bcMissing;
         break;
-      case 'address':
+      case 'curraddress':
         this.icon = 'home';
         this.label = 'Address';
-        const address = this.dispute.value as IBorrowerAddress;
-        this.value = tu.parsers.report.unparseAddress(address.CreditAddress) || tu.bcMissing;
+        const curraddress = this.dispute.value as IBorrowerAddress;
+        this.value = tu.parsers.report.unparseAddress(curraddress.CreditAddress) || tu.bcMissing;
+        break;
+      case 'prevaddress':
+        this.icon = 'home';
+        this.label = 'Address';
+        const prevaddress = this.dispute.value as IBorrowerAddress;
+        this.value = tu.parsers.report.unparseAddress(prevaddress.CreditAddress) || tu.bcMissing;
         break;
       case 'employer':
         this.icon = 'badge';

@@ -278,6 +278,7 @@ export interface IPublicRecord extends IRecordBase {
   suppressionIndicator: boolean;
   publicRecordTypeDescription: string;
   order: number | string;
+  originalBalance?: number | string;
 }
 
 export interface IAddOnProduct {

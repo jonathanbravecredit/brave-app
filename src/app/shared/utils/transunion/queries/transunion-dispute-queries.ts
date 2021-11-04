@@ -13,6 +13,7 @@ import {
 } from '@shared/interfaces/merge-report.interface';
 import { CreditBureauFindingsType, INVESTIGATION_RESULTS_CODE_MAPPING } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 
 export class TransunionDisputeQueries extends TransunionBase {
   static resultCodeMap = INVESTIGATION_RESULTS_CODE_MAPPING;
@@ -163,6 +164,9 @@ export class TransunionDisputeQueries extends TransunionBase {
     }
   }
 
+  static isDisputeable(personal: IPersonalItemsDetailsConfig): boolean {
+    return personal.key !== 'curraddress' && personal.key !== 'name';
+  }
   /*===================================*/
   //          FINDINGS RECORDS
   /*===================================*/
