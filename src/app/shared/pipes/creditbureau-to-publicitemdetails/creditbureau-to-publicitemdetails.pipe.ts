@@ -14,15 +14,10 @@ export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
     mergeReport: ITrueLinkCreditReportType | undefined,
   ): IPublicRecordCreditBureauConfig[] | [] {
     if (!creditBureau || !mergeReport) return [];
-    console.log('creditBureau ===>', creditBureau);
     const type = CreditBureauFindingsType.PublicRecord;
     const publicRecordFindings: ILineItem[] = tu.queries.dispute.listFindingsByType(creditBureau, type);
     const publicRecordResult: IPublicRecord[] = tu.queries.dispute.listPublicRecords(creditBureau);
     const publicRecordUpdates = tu.queries.dispute.listUpdatedPublicRecords(mergeReport);
-
-    console.log('publicRecordFindings ===>', publicRecordFindings);
-    console.log('publicRecordResult ===>', publicRecordResult);
-    console.log('publicRecordUpdates ===>', publicRecordUpdates);
 
     if (!publicRecordFindings.length) return []; // deleted record so need to return the line item summary section
     return publicRecordFindings.map((finding: ILineItem) => {
@@ -37,17 +32,7 @@ export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
           summaryReason: finding.credit.reason || '',
           itemKey: finding.itemKey,
           publicItemType: finding.itemType,
-          // courtType: result?.source?.description,
-          // courtName: result?.subscriber?.name?.unparsed,
-          // courtLocation: subscriber[1],
-          // docketNumber: finding.credit.description.descriptionText,
-          // responsibility: result?.ECOADescription,
-          // expirationDate: result?.estimatedDateOfDeletion,
-          // dateUpdated: result?.dateEffective,
-          // dateFiled: result?.dateFiled,
-          // datePaid: result?.datePaid,
           courtNameArray: subscriber,
-          // amount: '', // TODO follow up on this missing field
         } as IPublicRecordCreditBureauConfig;
       } else {
         const result = publicRecordResult.find((rec) => rec.itemKey == finding.itemKey); //

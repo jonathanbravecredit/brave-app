@@ -9,15 +9,15 @@
 <brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
 
 <!-- SPECIFIC DEFINITIONS FOR TRADELINES AND PUBLIC RECORDS -->
-<ng-container *ngIf="tradelineAccountConfig?.length">
+<ng-container *ngIf="tradelineAccountConfig | findingsTransformer: findingsConfig.ShowDefinitions">
   <brave-dispute-findings-definitions [type]="'accounts'"></brave-dispute-findings-definitions>
 </ng-container>
-<ng-container *ngIf="publicRecordConfig?.length">
+<ng-container *ngIf="publicRecordConfig | findingsTransformer: findingsConfig.ShowDefinitions">
   <brave-dispute-findings-definitions [type]="'public-records'"></brave-dispute-findings-definitions>
 </ng-container>
 
 <!-- // IS NOT DELETED = SHOW -->
-<ng-container *ngIf="!publicRecordConfig?.length">
+<ng-container *ngIf="(tradelineAccountConfig | findingsTransformer: findingsConfig.ShowRatingsKey) ">
   <brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
 </ng-container>
 
@@ -36,13 +36,16 @@
       <div class="mt-4">
         <p *ngFor="let value of tradeline?.contactDetails">{{value}}</p>
       </div>
-      <div *ngIf="tradeline?.tradeline" class="mt-4">
-        <brave-tradeline-details
-          [disableDispute]="true"
-          [tradeline]="tradeline.tradeline"
-          [subscriber]="tradeline.subscriber"
-        ></brave-tradeline-details>
-      </div>
+
+      <ng-container *ngIf="tradeline | findingsTransformer: findingsConfig.ShowDetail">
+        <div *ngIf="tradeline?.tradeline" class="mt-4">
+          <brave-tradeline-details
+            [disableDispute]="true"
+            [tradeline]="tradeline.tradeline"
+            [subscriber]="tradeline.subscriber"
+          ></brave-tradeline-details>
+        </div>
+      </ng-container>
     </brave-dispute-findings-results-details>
   </ng-container>
 
@@ -56,7 +59,7 @@
         <p *ngFor="let value of publicItem.courtNameArray">{{value}}</p>
       </div>
 
-      <ng-container *ngIf="publicItem.summaryResultCode?.toLowerCase() !== 'deleted'">
+      <ng-container *ngIf="publicItem | findingsTransformer: findingsConfig.ShowDetail">
         <div class="flex items-center mt-4 mb-3">
           <span>Account Details</span>
         </div>
