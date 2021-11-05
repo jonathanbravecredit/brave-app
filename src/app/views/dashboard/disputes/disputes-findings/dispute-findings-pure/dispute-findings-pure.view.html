@@ -31,7 +31,7 @@
   <ng-container *ngFor="let tradeline of tradelineAccountConfig">
     <brave-dispute-findings-results-details
       [resultCode]="tradeline.summaryResultCode"
-      [updatedValues]="[tradeline.summaryReason || 'Not Specified']"
+      [updatedValues]="[tradeline.summaryReason || '']"
     >
       <div class="mt-4">
         <p *ngFor="let value of tradeline?.contactDetails">{{value}}</p>
@@ -50,14 +50,20 @@
   <ng-container *ngFor="let publicItem of publicRecordConfig">
     <brave-dispute-findings-results-details
       [resultCode]="publicItem.summaryResultCode"
-      [updatedValues]="[publicItem.summaryReason || 'Not Specified']"
+      [updatedValues]="[publicItem.summaryReason || '']"
     >
-      <div class="flex items-center mt-4 mb-3">
-        <span>Account Details</span>
+      <div class="mt-4">
+        <p *ngFor="let value of publicItem.courtNameArray">{{value}}</p>
       </div>
-      <brave-publicitems-details
-        [config]="publicItem.publicPartition | publicitemToDetails: true"
-      ></brave-publicitems-details>
+
+      <ng-container *ngIf="publicItem.summaryResultCode?.toLowerCase() !== 'deleted'">
+        <div class="flex items-center mt-4 mb-3">
+          <span>Account Details</span>
+        </div>
+        <brave-publicitems-details
+          [config]="publicItem.publicPartition | publicitemToDetails: true"
+        ></brave-publicitems-details>
+      </ng-container>
       <!-- <brave-publicitems-details-table [config]="publicItem"></brave-publicitems-details-table> -->
     </brave-dispute-findings-results-details>
   </ng-container>
