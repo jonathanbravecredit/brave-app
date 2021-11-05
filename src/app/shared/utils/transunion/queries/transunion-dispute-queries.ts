@@ -217,13 +217,20 @@ export class TransunionDisputeQueries extends TransunionBase {
     const findings = subjectRecord?.fileSummary?.disclosureCoverInfo?.summarySection?.lineItem;
     let findingsArr = findings instanceof Array ? findings : findings ? [findings] : [];
 
-    const query = type === CreditBureauFindingsType.PublicRecord ? this.listPublicRecords : this.listTrades;
-    const creditItems = query(credit);
-
+    const filter = type === CreditBureauFindingsType.PublicRecord ? 'pr' : 'tr';
     return findingsArr.filter((item) => {
-      const key = item.itemKey;
-      return creditItems.findIndex((item: ITrade | IPublicRecord) => item.itemKey == key) >= 0;
+      return item.handle.substring(0, 2).toLowerCase() == filter;
     });
+
+    // removing as I don't need to align to the credit items
+    // breaks if the item is deleted
+    // const query = type === CreditBureauFindingsType.PublicRecord ? this.listPublicRecords : this.listTrades;
+    // const creditItems = query(credit);
+
+    // return findingsArr.filter((item) => {
+    //   const key = item.itemKey;
+    //   return creditItems.findIndex((item: ITrade | IPublicRecord) => item.itemKey == key) >= 0;
+    // });
   }
 
   /*===================================*/
