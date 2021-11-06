@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IDisputeToDisputeFindingOutput } from '@shared/pipes/dispute-to-dispute-finding/dispute-to-dispute-finding.pipe';
+import { FindingsConfigurations } from '@shared/pipes/findingsTransformer/findings-transformer.pipe';
 import { CreditBureauFindingsType } from '@shared/utils/transunion/constants';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import {
@@ -23,6 +24,7 @@ export class DisputeFindingsPureView implements OnInit {
   // @Input() personalInfoConfig: IPersonalInfoCreditBureauConfig | undefined;
   @Input() stateOfResidence: string = '';
 
+  findingsConfig = FindingsConfigurations;
   findingTypes = CreditBureauFindingsType;
   bcMissing = TransunionUtil.bcMissing;
 

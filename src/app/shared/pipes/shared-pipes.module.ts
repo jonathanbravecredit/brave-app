@@ -33,6 +33,7 @@ import { FilterSubscribersPipe } from './filterSubscribers/filter-subscribers.pi
 import { CreditbureauToPersonalitemdetailsPipe } from './creditbureau-to-personalitemdetails/creditbureau-to-personalitemdetails.pipe';
 import { DecodePipe } from './decode/decode.pipe';
 import { FilterPersonalPipe } from './filterPersonal/filter-personal.pipe';
+import { FindingsTransformerPipe } from './findingsTransformer/findings-transformer.pipe';
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -68,6 +69,7 @@ const pipes = [
   FilterPersonalPipe,
   ParseRiskScorePipe,
   ReasonsToPagesPipe,
+  FindingsTransformerPipe,
 ];
 
 @NgModule({
