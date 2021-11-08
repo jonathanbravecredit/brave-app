@@ -5,7 +5,7 @@ import { CreditUtilizationHeaderComponent } from "./credit-utilization-header.co
 
 export default {
   title:
-    "app/views/snapshots/credit-utilization/components/credit-utilization-card",
+    "app/views/snapshots/credit-utilization/components/credit-utilization-header",
   component: CreditUtilizationHeaderComponent,
   decorators: [
     moduleMetadata({
