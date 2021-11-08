@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditCard, ILoan, TFinantialMechanismEntity } from '@shared/components/cards/finantial-mechanism-card/interfaces';
+import { ICreditCard, ILoan, TFinantialMechanismEntity } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -13,7 +13,7 @@ export class CreditMixPureView implements OnInit {
   @Input() creditCards: ICreditCard[] = [];
   @Input() loans: ILoan[] = [];
   @Input() closedAccounts: TFinantialMechanismEntity[] = [];
-  
+
   constructor() { }
 
   ngOnInit(): void {
