@@ -1,3 +1,6 @@
+//Pipes
+import { AccountStatusPipe } from "./snapshots/credit-utilization/components/credit-utilization-card/account-status.pipe";
+
 // modules
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -50,7 +53,8 @@ import { DataBreachShareComponent } from "./snapshots/data-breaches/components/d
 import { CreditUtilizationPureView } from "./snapshots/credit-utilization/credit-utilization-pure/credit-utilization-pure.view";
 import { CreditUtilizationView } from "./snapshots/credit-utilization/credit-utilization/credit-utilization.view";
 import { CreditUtilizationCardComponent } from "./snapshots/credit-utilization/components/credit-utilization-card/credit-utilization-card.component";
-import { AccountStatusPipe } from "./snapshots/credit-utilization/components/credit-utilization-card/account-status.pipe";
+import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization/components/negative-account-card-header/credit-utilization-header.component";
+
 
 const modules = [
   CommonModule,
@@ -96,11 +100,12 @@ const components = [
   DataBreachShareComponent,
   CreditUtilizationPureView,
   CreditUtilizationView,
-  CreditUtilizationCardComponent
+  CreditUtilizationCardComponent,
+  CreditUtilizationHeaderComponent
 ];
 
 const pipes = [
-  AccountStatusPipe
+  AccountStatusPipe,
 ];
 
 @NgModule({
