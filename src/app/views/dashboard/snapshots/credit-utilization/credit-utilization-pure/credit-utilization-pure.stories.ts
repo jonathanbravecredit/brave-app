@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CreditUtilizationPureView } from './credit-utilization-pure.view';
 
 export default {
-  title: 'app/views/snapshots/databreach',
+  title: 'app/views/snapshots/credit-utilization',
   component: CreditUtilizationPureView,
   decorators: [
     moduleMetadata({

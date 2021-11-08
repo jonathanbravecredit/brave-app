@@ -49,6 +49,8 @@ import { DataBreachNoneComponent } from "./snapshots/data-breaches/components/da
 import { DataBreachShareComponent } from "./snapshots/data-breaches/components/data-breach-share/data-breach-share.component";
 import { CreditUtilizationPureView } from "./snapshots/credit-utilization/credit-utilization-pure/credit-utilization-pure.view";
 import { CreditUtilizationView } from "./snapshots/credit-utilization/credit-utilization/credit-utilization.view";
+import { CreditUtilizationCardComponent } from "./snapshots/credit-utilization/components/credit-utilization-card/credit-utilization-card.component";
+import { AccountStatusPipe } from "./snapshots/credit-utilization/components/credit-utilization-card/account-status.pipe";
 
 const modules = [
   CommonModule,
@@ -94,12 +96,15 @@ const components = [
   DataBreachShareComponent,
   CreditUtilizationPureView,
   CreditUtilizationView,
+  CreditUtilizationCardComponent
 ];
 
-// const pipes = [];
+const pipes = [
+  AccountStatusPipe
+];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })

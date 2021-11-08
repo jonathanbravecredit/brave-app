@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { CreditMixPureView } from './credit-mix-pure.view';
-import { MOCK_COLLECTION_DEFAULT_FINANTIAL_MECHANISMS as mock } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/constants';
+import { MOCK_COLLECTION_DEFAULT_CREDIT_UTILIZATION as mock } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/constants';
 
 export default {
   title: 'app/views/dashboard/credit-mix',

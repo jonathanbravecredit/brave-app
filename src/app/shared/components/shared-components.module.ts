@@ -15,7 +15,6 @@ import { OutlineSelectInputPipe } from '@shared/components/inputs/outline-select
 import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
 import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
 import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
-import { AccountStatusPipe } from '../../views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/account-status.pipe';
 import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
 import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
 import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
@@ -93,7 +92,6 @@ import { BaseExceptionComponent } from './exceptions/base-exception/base-excepti
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
-import { FinantialMechanismCardComponent } from '../../views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/credit-utilization-card.component';
 import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
 import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -166,7 +164,6 @@ const components = [
   OutlineNamedobFormComponent,
   SelectDobFormComponent,
   OutlineNameFormComponent,
-  FinantialMechanismCardComponent,
   ViewdetailButtonComponent,
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
@@ -220,7 +217,6 @@ const pipes = [
   FilledClosingAlertPipe,
   FilledOnlytextBadgePipe,
   FilledChecktextProgressbarPipe,
-  AccountStatusPipe,
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,
