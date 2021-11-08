@@ -54,6 +54,7 @@ import { CreditUtilizationPureView } from "./snapshots/credit-utilization/credit
 import { CreditUtilizationView } from "./snapshots/credit-utilization/credit-utilization/credit-utilization.view";
 import { CreditUtilizationCardComponent } from "./snapshots/credit-utilization/components/credit-utilization-card/credit-utilization-card.component";
 import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization/components/credit-utilization-header/credit-utilization-header.component";
+import { CreditUtilizationInfoComponent } from "./snapshots/credit-utilization/components/credit-utilization-info/credit-utilization-info.component";
 
 
 const modules = [
@@ -101,7 +102,8 @@ const components = [
   CreditUtilizationPureView,
   CreditUtilizationView,
   CreditUtilizationCardComponent,
-  CreditUtilizationHeaderComponent
+  CreditUtilizationHeaderComponent,
+  CreditUtilizationInfoComponent
 ];
 
 const pipes = [
