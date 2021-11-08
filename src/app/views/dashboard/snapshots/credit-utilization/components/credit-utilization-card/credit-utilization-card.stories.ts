@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { CreditUtilizationCardComponent } from './credit-utilization-card.component';
-import { MOCK_COLLECTION_DEFAULT_FINANTIAL_MECHANISMS as mocks } from './constants';
+import { MOCK_COLLECTION_DEFAULT_CREDIT_UTILIZATION as mocks } from './constants';
 
 export default {
   title: 'app/components/cards/finantial-mechanism',

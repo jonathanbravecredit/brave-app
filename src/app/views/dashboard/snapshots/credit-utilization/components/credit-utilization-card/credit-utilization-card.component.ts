@@ -6,8 +6,8 @@ import { CreditUtilizationOwnership, CreditUtilizationStatus } from './enums';
 import { TCreditUtilizationEntity, TCreditUtilizationStatus } from './interfaces';
 
 @Component({
-  selector: 'brave-finantial-mechanism-card',
-  templateUrl: './finantial-mechanism-card.component.html',
+  selector: 'brave-credit-utilization-card',
+  templateUrl: './credit-utilization-card.component.html',
 })
 export class CreditUtilizationCardComponent implements AfterViewInit {
   @ViewChild(ViewdetailButtonComponent)
