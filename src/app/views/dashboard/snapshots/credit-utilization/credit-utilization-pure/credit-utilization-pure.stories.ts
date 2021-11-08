@@ -7,7 +7,7 @@ import { CreditUtilizationPureView } from './credit-utilization-pure.view';
 import { CreditUtilizationInfoComponent } from '../components/credit-utilization-info/credit-utilization-info.component';
 import { CreditUtilizationHeaderComponent } from '../components/credit-utilization-header/credit-utilization-header.component';
 import { CreditUtilizationCardComponent } from '../components/credit-utilization-card/credit-utilization-card.component';
-import { CreditUtilizationTotalComponent } from '../components/credit-utilization-total/credit-utilization-total/credit-utilization-total.component';
+import { CreditUtilizationTotalComponent } from '../components/credit-utilization-total/credit-utilization-total.component';
 
 export default {
   title: 'app/views/snapshots/credit-utilization',
