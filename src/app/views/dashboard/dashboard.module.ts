@@ -53,7 +53,7 @@ import { DataBreachShareComponent } from "./snapshots/data-breaches/components/d
 import { CreditUtilizationPureView } from "./snapshots/credit-utilization/credit-utilization-pure/credit-utilization-pure.view";
 import { CreditUtilizationView } from "./snapshots/credit-utilization/credit-utilization/credit-utilization.view";
 import { CreditUtilizationCardComponent } from "./snapshots/credit-utilization/components/credit-utilization-card/credit-utilization-card.component";
-import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization/components/negative-account-card-header/credit-utilization-header.component";
+import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization/components/credit-utilization-header/credit-utilization-header.component";
 
 
 const modules = [
