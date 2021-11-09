@@ -57,6 +57,7 @@ import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization
 import { CreditUtilizationInfoComponent } from "./snapshots/credit-utilization/components/credit-utilization-info/credit-utilization-info.component";
 import { CreditUtilizationTotalComponent } from "./snapshots/credit-utilization/components/credit-utilization-total/credit-utilization-total.component";
 import { CreditUtilizationPercentagesComponent } from './snapshots/credit-utilization/components/credit-utilization-percentages/credit-utilization-percentages.component';
+import { CreditUtilizationAvailableComponent } from './snapshots/credit-utilization/components/credit-utilization-available/credit-utilization-available.component';
 
 
 
@@ -109,6 +110,7 @@ const components = [
   CreditUtilizationInfoComponent,
   CreditUtilizationTotalComponent,
   CreditUtilizationPercentagesComponent,
+  CreditUtilizationAvailableComponent
 ];
 
 const pipes = [

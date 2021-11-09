@@ -10,6 +10,7 @@ import { CreditUtilizationCardComponent } from '../components/credit-utilization
 import { CreditUtilizationTotalComponent } from '../components/credit-utilization-total/credit-utilization-total.component';
 import { CreditUtilizationPercentagesComponent } from '../components/credit-utilization-percentages/credit-utilization-percentages.component';
 import { PercentageBadgeComponent } from '@shared/components/badges/percentage-badge/percentage-badge.component';
+import { CreditUtilizationAvailableComponent } from '../components/credit-utilization-available/credit-utilization-available.component';
 
 export default {
   title: 'app/views/snapshots/credit-utilization',
@@ -22,7 +23,8 @@ export default {
         CreditUtilizationCardComponent,
         CreditUtilizationTotalComponent,
         CreditUtilizationPercentagesComponent,
-        PercentageBadgeComponent
+        PercentageBadgeComponent,
+        CreditUtilizationAvailableComponent
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
