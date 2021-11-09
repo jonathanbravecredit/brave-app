@@ -30,6 +30,7 @@ const Template: Story<CreditUtilizationCardComponent> = (args: any) => ({
   },
 });
 
+
 const tradeLineParseMock : ITradelineDetailsConfig = {
 tradeline: {} as ITradeLinePartition,
 creditorName: 'CITI',
