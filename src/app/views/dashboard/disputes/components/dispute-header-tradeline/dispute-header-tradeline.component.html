@@ -7,7 +7,13 @@
       <div class="ml-2 mb-4">
         <p class="text-sm font-semibold">
           {{ dispute?.creditorName || '' | decode }}
-          {{ dispute?.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+          {{
+            dispute?.openClosed?.toLowerCase() === 'c'
+              ? '(Closed)'
+              : dispute?.openClosed?.toLowerCase() === 'o'
+              ? '(Open)'
+              : ''
+          }}
         </p>
         <p class="text-sm font-semibold">{{ dispute?.accountTypeDescription || '' }}</p>
       </div>
