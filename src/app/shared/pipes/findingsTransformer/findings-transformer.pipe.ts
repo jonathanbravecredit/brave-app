@@ -9,6 +9,7 @@ export enum FindingsConfigurations {
   ShowOnDeleted = 'showOnDeleted',
   ShowRatingsKey = 'showRatingsKey',
   ShowDetail = 'showDetail',
+  IsPopulated = 'isPopulated',
 }
 
 @Pipe({
@@ -20,10 +21,16 @@ export class FindingsTransformerPipe implements PipeTransform {
     [FindingsConfigurations.ShowOnDeleted]: this.showOnDeleted,
     [FindingsConfigurations.ShowRatingsKey]: this.showRatingsKey,
     [FindingsConfigurations.ShowDetail]: this.showDetail,
+    [FindingsConfigurations.IsPopulated]: this.isPopulated,
   };
 
   transform(value: unknown | unknown[], condition: FindingsConfigurations): boolean {
     return this.cases[condition](value);
+  }
+
+  isPopulated(config: unknown | unknown[]): boolean {
+    if (!(config instanceof Array)) return false;
+    return config.length > 0;
   }
 
   showOnUpdated(config: unknown | unknown[]): boolean {
@@ -34,7 +41,7 @@ export class FindingsTransformerPipe implements PipeTransform {
       });
     } else {
       const account = config as ICreditBureauConfig;
-      return account.summaryResultCode !== 'deleted';
+      return account.summaryResultCode?.toLowerCase() !== 'deleted';
     }
   }
 
