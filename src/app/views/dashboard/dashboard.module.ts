@@ -59,6 +59,7 @@ import { CreditUtilizationTotalComponent } from "./snapshots/credit-utilization/
 import { CreditUtilizationPercentagesComponent } from './snapshots/credit-utilization/components/credit-utilization-percentages/credit-utilization-percentages.component';
 
 
+
 const modules = [
   CommonModule,
   SharedComponentsModule,
@@ -107,6 +108,7 @@ const components = [
   CreditUtilizationHeaderComponent,
   CreditUtilizationInfoComponent,
   CreditUtilizationTotalComponent,
+  CreditUtilizationPercentagesComponent,
 ];
 
 const pipes = [
@@ -114,7 +116,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes, CreditUtilizationPercentagesComponent],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })

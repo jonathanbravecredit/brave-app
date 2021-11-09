@@ -185,7 +185,6 @@ const components = [
   BaseExceptionComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
-
   CollectionCreditMixAccountsComponent,
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
@@ -206,6 +205,7 @@ const components = [
   OutlineInputHiddenComponent,
   PlacesAutocompleteInputComponent,
   AutocompleteAddressFormComponent,
+  PercentageBadgeComponent,
 ];
 
 // component specific pipes only
