@@ -13,22 +13,22 @@
       <!--  right column section 2 -->
       <div class="flex justify-between p-0 -mt-1 mb-1">
         <!-- header  -->
-        <p class="brave-body1-semibold">{{ creditUtilization!.accountName }}}</p>
-        <p class="brave-body1-semibold" *ngIf="creditUtilizationType === 'credit-utilization'">{{ creditUtilization!.percetangeUtilization }}%</p>
+        <p class="brave-body1-semibold">{{ creditUtilization!.accountName }} {{ creditUtilization!.open ? '(Open)' : '(Closed)' }}</p>
+        <p class="brave-body1-semibold">{{ creditUtilization!.percetangeUtilization }}%</p>
       </div>
 
       <div class="flex flex-row">
         <!-- credit balance  -->
-        <span><p class="brave-body1">{{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? 'Credit Balance' : 'Card Balance' }}:&nbsp;</p></span>
-        <span><p class="brave-body1">${{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? creditUtilization!.creditBalance : creditUtilization!.creditBalance }}</p></span>
+        <span><p class="brave-body1">Card Balance:&nbsp;</p></span>
+        <span><p class="brave-body1">{{ creditUtilization!.creditBalance | currency }}</p></span>
       </div>
 
       <div class="flex flex-row">
         <!-- credit limit  -->
-        <span><p class="brave-body1">{{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? 'Credit Limit' : 'Initial Loan Amount' }}:&nbsp;</p></span>
+        <span><p class="brave-body1">Credit Limit:&nbsp;</p></span>
 
         <span>
-          <p class="brave-body1">${{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? creditUtilization!.creditLimit : creditUtilization!.initialLoanAmount}}</p>
+          <p class="brave-body1">{{creditUtilization!.creditLimit | currency}}</p>
         </span>
       </div>
 

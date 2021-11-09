@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, ViewChild, Input } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { Observable, of } from 'rxjs';
-import { DEFAULT_CREDIT_CARD_STATUS_VALUES as creditCardStatuses } from './constants';
-import { CreditUtilizationOwnership, CreditUtilizationStatus } from './enums';
 import { TCreditUtilizationEntity, TCreditUtilizationStatus } from './interfaces';
 
 @Component({
@@ -25,11 +23,11 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
     }
   }
 
-  getStatusText(creditCardStatus: CreditUtilizationStatus): string {
-    return creditCardStatuses[creditCardStatus];
-  }
+  // getStatusText(creditCardStatus: CreditUtilizationStatus): string {
+  //   return creditCardStatuses[creditCardStatus];
+  // }
 
-  getOwnershipText(ownershipOfAccount: CreditUtilizationOwnership): string {
-    return creditCardStatuses[ownershipOfAccount];
-  }
+  // getOwnershipText(ownershipOfAccount: CreditUtilizationOwnership): string {
+  //   return creditCardStatuses[ownershipOfAccount];
+  // }
 }
