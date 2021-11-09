@@ -1,7 +1,10 @@
 import { AfterViewInit, Component, ViewChild, Input } from "@angular/core";
 import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
 import { ITradeLinePartition } from "@shared/interfaces";
+import { TradelineDetailsTableComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component";
 import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
+import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
+import { TradelineRemarksComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component";
 import { Observable, of } from "rxjs";
 import { TCreditUtilizationStatus } from "./interfaces";
 
@@ -24,6 +27,13 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
   percetangeUtilization: number | undefined;
 
   creditStatus: string | undefined;
+
+  tradelinepages = [
+    TradelineDetailsTableComponent,
+    TradelineDetailsTableComponent,
+    TradelinePaymentHistoryComponent,
+    TradelineRemarksComponent,
+  ];
 
   constructor() {}
 
