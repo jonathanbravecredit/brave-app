@@ -5,7 +5,8 @@ import {
 } from '@views/dashboard/disputes/disputes-findings/dispute-findings-pure/interfaces';
 
 export enum FindingsConfigurations {
-  ShowDefinitions = 'showDefinitions',
+  ShowOnUpdated = 'showOnUpdated',
+  ShowOnDeleted = 'showOnDeleted',
   ShowRatingsKey = 'showRatingsKey',
   ShowDetail = 'showDetail',
 }
@@ -15,7 +16,8 @@ export enum FindingsConfigurations {
 })
 export class FindingsTransformerPipe implements PipeTransform {
   cases = {
-    [FindingsConfigurations.ShowDefinitions]: this.showDefinitions,
+    [FindingsConfigurations.ShowOnUpdated]: this.showOnUpdated,
+    [FindingsConfigurations.ShowOnDeleted]: this.showOnDeleted,
     [FindingsConfigurations.ShowRatingsKey]: this.showRatingsKey,
     [FindingsConfigurations.ShowDetail]: this.showDetail,
   };
@@ -24,7 +26,7 @@ export class FindingsTransformerPipe implements PipeTransform {
     return this.cases[condition](value);
   }
 
-  showDefinitions(config: unknown | unknown[]): boolean {
+  showOnUpdated(config: unknown | unknown[]): boolean {
     if (config instanceof Array) {
       const accounts = config as ICreditBureauConfig[];
       return !!accounts.find((a) => {
@@ -33,6 +35,18 @@ export class FindingsTransformerPipe implements PipeTransform {
     } else {
       const account = config as ICreditBureauConfig;
       return account.summaryResultCode !== 'deleted';
+    }
+  }
+
+  showOnDeleted(config: unknown | unknown[]): boolean {
+    if (config instanceof Array) {
+      const accounts = config as ICreditBureauConfig[];
+      return !!accounts.find((a) => {
+        return a.summaryResultCode?.toLowerCase() === 'deleted';
+      });
+    } else {
+      const account = config as ICreditBureauConfig;
+      return account.summaryResultCode === 'deleted';
     }
   }
 
