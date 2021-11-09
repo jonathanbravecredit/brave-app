@@ -19,16 +19,16 @@
 
       <div class="flex flex-row">
         <!-- credit balance  -->
-        <span><p class="brave-body1">{{ isTypeCreditCard() ? 'Credit Balance' : 'Card Balance' }}:&nbsp;</p></span>
-        <span><p class="brave-body1">${{ isTypeCreditCard() ? creditUtilization!.creditBalance : creditUtilization!.cardBalance }}</p></span>
+        <span><p class="brave-body1">{{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? 'Credit Balance' : 'Card Balance' }}:&nbsp;</p></span>
+        <span><p class="brave-body1">${{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? creditUtilization!.creditBalance : creditUtilization!.creditBalance }}</p></span>
       </div>
 
       <div class="flex flex-row">
         <!-- credit limit  -->
-        <span><p class="brave-body1">{{ isTypeCredit() ? 'Credit Limit' : 'Initial Loan Amount' }}:&nbsp;</p></span>
+        <span><p class="brave-body1">{{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? 'Credit Limit' : 'Initial Loan Amount' }}:&nbsp;</p></span>
 
         <span>
-          <p class="brave-body1">${{ isTypeCreditCard() ? creditUtilization!.creditLimit : creditUtilization!.initialLoanAmount}}</p>
+          <p class="brave-body1">${{ creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization' ? creditUtilization!.creditLimit : creditUtilization!.initialLoanAmount}}</p>
         </span>
       </div>
 

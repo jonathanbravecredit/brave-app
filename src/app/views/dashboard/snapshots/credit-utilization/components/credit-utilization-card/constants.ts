@@ -28,7 +28,8 @@ export const MOCK_DEFAULT_CREDIT_UTILIZATION: ICreditUtilization = {
   ...MOCK_DEFAULT_FINANTIAL_MECHANISM,
   percetangeUtilization: 80,
   creditBalance: 800,
-  creditLimit: 1500
+  creditLimit: 1500,
+  open: true,
 };
 
 export const MOCK_DEFAULT_LOAN: ILoan = {

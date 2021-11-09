@@ -25,14 +25,6 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
     }
   }
 
-  isTypeCredit(): boolean {
-    return this.creditUtilizationType === 'credit' || this.creditUtilizationType === 'credit-utilization';
-  }
-
-  isTypeCreditCard(): boolean {
-    return this.creditUtilizationType === 'credit';
-  }
-
   getStatusText(creditCardStatus: CreditUtilizationStatus): string {
     return creditCardStatuses[creditCardStatus];
   }

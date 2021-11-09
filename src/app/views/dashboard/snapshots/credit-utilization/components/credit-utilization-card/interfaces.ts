@@ -21,6 +21,7 @@ export interface ICreditUtilization extends IBaseCreditUtilization {
   creditBalance: number;
   creditLimit: number;
   percetangeUtilization: number;
+  open: boolean;
 }
 
 export interface ILoan extends IBaseCreditUtilization {
