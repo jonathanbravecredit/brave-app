@@ -114,6 +114,7 @@ import { HorizontalCreditscoreInvisiblebarComponent } from './graphics/horizonta
 import { OutlineInputHiddenComponent } from './inputs/outline-input-hidden/outline-input-hidden.component';
 import { PlacesAutocompleteInputComponent } from './inputs/places-autocomplete-input/places-autocomplete-input.component';
 import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-form/autocomplete-address-form.component';
+import { PercentageBadgeComponent } from './badges/percentage-badge/percentage-badge.component';
 
 const components = [
   BaseFormComponent,
@@ -238,7 +239,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, PercentageBadgeComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
