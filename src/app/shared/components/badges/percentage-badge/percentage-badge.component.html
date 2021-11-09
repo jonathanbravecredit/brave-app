@@ -3,9 +3,15 @@
 
     [ngClass]="size === 'small' ? 'text-xs' : size === 'base' ? 'text-sm' : 'text-lg'"
 
-    class=" rounded-sm text-white mb-2 text-center"
+    class=" text-white mb-2 text-center"
 
-    [ngStyle]="{'background-color': color, 'max-width': '5rem', 'min-width': '5rem', 'white-space': 'nowrap'}"
+    [ngStyle]="{
+        'border-radius': '2px',
+        'background-color': color,
+        'max-width': '5rem',
+        'min-width': '5rem',
+        'white-space': 'nowrap'
+    }"
 
     >
         <p class="">{{text}}</p>
