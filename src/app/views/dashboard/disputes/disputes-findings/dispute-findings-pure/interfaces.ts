@@ -1,9 +1,5 @@
-import {
-  ITradeLinePartition,
-  IPublicPartition,
-  ISubscriber,
-  IBorrower,
-} from '@shared/interfaces/merge-report.interface';
+import { ITradeLinePartition, IPublicPartition, ISubscriber } from '@shared/interfaces/merge-report.interface';
+import { TInvestigationResultCode } from '@views/dashboard/disputes/components/findings/dispute-findings-results-details/interfaces';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 
@@ -11,7 +7,7 @@ export interface ICreditBureauConfig {
   summaryItemKey?: string;
   summaryItemType?: number | string;
   summaryResult?: string;
-  summaryResultCode?: string;
+  summaryResultCode?: TInvestigationResultCode;
   summaryReason?: string;
   itemKey?: string;
 }
@@ -21,9 +17,6 @@ export interface ITradelineCreditBureauConfig extends ICreditBureauConfig {
   accountType?: string;
   contactDetails?: [string, string, string];
 }
-// takes the public items details table config interface and layers on the summary data
-//   necessary for the investigation results view
-//   - adds courtNameArray over string courtName for better formating. TBD when implemented
 
 export interface IPublicRecordCreditBureauConfig extends IPublicItemsDetailsConfig, ICreditBureauConfig {
   publicPartition: IPublicPartition;
@@ -32,13 +25,3 @@ export interface IPublicRecordCreditBureauConfig extends IPublicItemsDetailsConf
 }
 
 export interface IPersonalInfoCreditBureauConfig extends IPersonalItemsDetailsTable, ICreditBureauConfig {}
-// ssn: string;
-// name: string;
-// currentAddress: string;
-// previousAddress: string;
-// previousAddressArray: string[];
-// telephone: string;
-// telephoneArray: string[];
-// employer: string;
-// employerArray: string[];
-// previousEmployer: string;

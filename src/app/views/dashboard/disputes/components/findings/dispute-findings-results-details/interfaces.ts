@@ -1,17 +1,17 @@
 export interface IInvestigationResult {
   updatedFields: string[];
-  type: TInvestigationResultType;
+  type: TInvestigationResultCode;
 }
 
 export interface IInvestigationResultInfo {
-  type: TInvestigationResultType;
+  type?: TInvestigationResultCode;
   title: string;
   subtitle?: string;
   description: string;
   detailDescription?: string;
 }
 
-export type TInvestigationResultType =
+export type TInvestigationResultCode =
   | 'deleted'
   | 'dispute_info_updated'
   | 'info_updated'
@@ -21,3 +21,5 @@ export type TInvestigationResultType =
   | 'verified_accurate'
   | 'verified_accurate_updated'
   | 'personal_item';
+
+export interface IInvestigationResults<TInvestigationResultType, IInvestigationResultInfo> {}
