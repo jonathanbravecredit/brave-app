@@ -1,4 +1,4 @@
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, CurrencyPipe } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { CreditUtilizationCardComponent } from './credit-utilization-card.component';
@@ -10,7 +10,7 @@ export default {
   component: CreditUtilizationCardComponent,
   decorators: [
     moduleMetadata({
-      declarations: [AccountStatusPipe],
+      declarations: [AccountStatusPipe, CurrencyPipe],
       imports: [],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),

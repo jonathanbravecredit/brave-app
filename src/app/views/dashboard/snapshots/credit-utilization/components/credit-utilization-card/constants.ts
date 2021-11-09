@@ -25,11 +25,12 @@ export const MOCK_DEFAULT_CREDIT_CARD: ICreditCard = {
 }
 
 export const MOCK_DEFAULT_CREDIT_UTILIZATION: ICreditUtilization = {
-  ...MOCK_DEFAULT_FINANTIAL_MECHANISM,
+  accountName: 'CITI',
   percetangeUtilization: 80,
   creditBalance: 800,
   creditLimit: 1500,
   open: true,
+  status: 'good',
 };
 
 export const MOCK_DEFAULT_LOAN: ILoan = {

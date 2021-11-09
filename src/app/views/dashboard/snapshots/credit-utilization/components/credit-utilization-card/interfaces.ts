@@ -17,11 +17,13 @@ export interface ICreditCard extends IBaseCreditUtilization {
   creditLimit: number;
 }
 
-export interface ICreditUtilization extends IBaseCreditUtilization {
+export interface ICreditUtilization {
+  accountName: string;
   creditBalance: number;
   creditLimit: number;
   percetangeUtilization: number;
   open: boolean;
+  status: string;
 }
 
 export interface ILoan extends IBaseCreditUtilization {

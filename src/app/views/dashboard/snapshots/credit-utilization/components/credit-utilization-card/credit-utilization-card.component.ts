@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild, Input } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { Observable, of } from 'rxjs';
-import { TCreditUtilizationEntity, TCreditUtilizationStatus } from './interfaces';
+import { ICreditUtilization, TCreditUtilizationEntity, TCreditUtilizationStatus } from './interfaces';
 
 @Component({
   selector: 'brave-credit-utilization-card',
@@ -12,7 +12,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
   viewDetail: ViewdetailButtonComponent | undefined;
   open$: Observable<boolean> = of(false);
   @Input() status: TCreditUtilizationStatus = 'good';
-  @Input() creditUtilization: TCreditUtilizationEntity | undefined;
+  @Input() creditUtilization: ICreditUtilization | undefined;
   @Input() creditUtilizationType: 'credit' | 'credit-utilization' | 'loan' = 'credit';
 
   constructor() {}
