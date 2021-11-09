@@ -2,6 +2,7 @@ import { APP_BASE_HREF } from "@angular/common";
 import { Story, Meta } from "@storybook/angular/types-6-0";
 import { componentWrapperDecorator, moduleMetadata } from "@storybook/angular";
 import { CreditUtilizationPercentagesComponent } from "./credit-utilization-percentages.component";
+import { PercentageBadgeComponent } from "@shared/components/badges/percentage-badge/percentage-badge.component";
 
 export default {
   title:
@@ -9,7 +10,7 @@ export default {
   component: CreditUtilizationPercentagesComponent,
   decorators: [
     moduleMetadata({
-      declarations: [],
+      declarations: [PercentageBadgeComponent],
       imports: [],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
     }),

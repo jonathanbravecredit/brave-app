@@ -8,6 +8,8 @@ import { CreditUtilizationInfoComponent } from '../components/credit-utilization
 import { CreditUtilizationHeaderComponent } from '../components/credit-utilization-header/credit-utilization-header.component';
 import { CreditUtilizationCardComponent } from '../components/credit-utilization-card/credit-utilization-card.component';
 import { CreditUtilizationTotalComponent } from '../components/credit-utilization-total/credit-utilization-total.component';
+import { CreditUtilizationPercentagesComponent } from '../components/credit-utilization-percentages/credit-utilization-percentages.component';
+import { PercentageBadgeComponent } from '@shared/components/badges/percentage-badge/percentage-badge.component';
 
 export default {
   title: 'app/views/snapshots/credit-utilization',
@@ -18,7 +20,9 @@ export default {
         CreditUtilizationInfoComponent,
         CreditUtilizationHeaderComponent,
         CreditUtilizationCardComponent,
-        CreditUtilizationTotalComponent
+        CreditUtilizationTotalComponent,
+        CreditUtilizationPercentagesComponent,
+        PercentageBadgeComponent
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
