@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
+import { ITradeLinePartition } from "@shared/interfaces";
 import { ICreditUtilization } from "../components/credit-utilization-card/interfaces";
 
 @Component({
@@ -7,24 +8,7 @@ import { ICreditUtilization } from "../components/credit-utilization-card/interf
   styleUrls: ["./credit-utilization-pure.view.css"],
 })
 export class CreditUtilizationPureView implements OnInit {
-  creditUtiliCardMocks: ICreditUtilization[] = [
-    {
-      accountName: "CITI",
-      percetangeUtilization: 80,
-      creditBalance: 800,
-      creditLimit: 1500,
-      open: true,
-      status: 'excellent'
-    },
-    {
-      accountName: "CITI",
-      percetangeUtilization: 50,
-      creditBalance: 1000,
-      creditLimit: 2500,
-      open: false,
-      status: 'poor'
-    },
-  ];
+  @Input() creditAcounts: ITradeLinePartition[] = []
 
   constructor() {}
 

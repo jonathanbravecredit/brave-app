@@ -1,4 +1,4 @@
-import { APP_BASE_HREF } from "@angular/common";
+import { APP_BASE_HREF, CurrencyPipe } from "@angular/common";
 import { Story, Meta } from "@storybook/angular/types-6-0";
 import { componentWrapperDecorator, moduleMetadata } from "@storybook/angular";
 import { HttpClientModule } from "@angular/common/http";
@@ -11,6 +11,9 @@ import { CreditUtilizationTotalComponent } from "../components/credit-utilizatio
 import { CreditUtilizationPercentagesComponent } from "../components/credit-utilization-percentages/credit-utilization-percentages.component";
 import { PercentageBadgeComponent } from "@shared/components/badges/percentage-badge/percentage-badge.component";
 import { CreditUtilizationAvailableComponent } from "../components/credit-utilization-available/credit-utilization-available.component";
+import { AccountStatusPipe } from "../components/credit-utilization-card/account-status.pipe";
+import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
+import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/tradeline-to-details.pipe";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
@@ -25,6 +28,9 @@ export default {
         CreditUtilizationPercentagesComponent,
         PercentageBadgeComponent,
         CreditUtilizationAvailableComponent,
+        AccountStatusPipe,
+        ViewdetailButtonComponent,
+        TradelineToDetailsPipe
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],

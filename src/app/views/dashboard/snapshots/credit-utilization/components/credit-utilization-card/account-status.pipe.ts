@@ -11,8 +11,9 @@ export class AccountStatusPipe implements PipeTransform {
 }
 
 const statuses: Record<string, any> = {
-  excellent: "bg-teal-500",
-  good: "bg-amber-300",
-  okay: "bg-orange-500",
-  poor: "bg-rose-800",
+  excellent: "#4BD269",
+  good: "#BBD904",
+  fair: "#F59300",
+  poor: "#F56700",
+  verypoor: '#E93C25',
 };
