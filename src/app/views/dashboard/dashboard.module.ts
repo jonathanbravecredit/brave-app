@@ -56,6 +56,7 @@ import { CreditUtilizationCardComponent } from "./snapshots/credit-utilization/c
 import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization/components/credit-utilization-header/credit-utilization-header.component";
 import { CreditUtilizationInfoComponent } from "./snapshots/credit-utilization/components/credit-utilization-info/credit-utilization-info.component";
 import { CreditUtilizationTotalComponent } from "./snapshots/credit-utilization/components/credit-utilization-total/credit-utilization-total.component";
+import { CreditUtilizationPercentagesComponent } from './snapshots/credit-utilization/components/credit-utilization-percentages/credit-utilization-percentages.component';
 
 
 const modules = [
@@ -113,7 +114,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, CreditUtilizationPercentagesComponent],
   imports: [...modules],
   exports: [...components],
 })

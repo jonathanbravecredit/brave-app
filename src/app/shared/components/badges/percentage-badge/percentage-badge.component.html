@@ -1,6 +1,7 @@
-<div>
-    <div class="max-w-3.75" [ngStyle]="{'background-color': color}" >
+<div [ngStyle]="{'max-width': 'max-content'}">
+    <div class=" rounded text-white mb-2 brave-body3 text-center"
+    [ngStyle]="{'background-color': color, 'max-width': '4rem', 'min-width': '4rem', 'white-space': 'nowrap'}" >
         <p class="">{{text}}</p>
     </div>
-    <p >{{label}}</p>
+    <p class="brave-body3 text-center" >{{label}}</p>
 </div>

@@ -27,4 +27,4 @@ const Template: Story<PercentageBadgeComponent> = (args: any) => ({
 });
 
 export const Test = Template.bind({});
-Test.args = {text: 'Test Text', label: '10-20%', color: 'green'};
+Test.args = {text: 'Very Poor', label: '75-100%', color: 'red'};
