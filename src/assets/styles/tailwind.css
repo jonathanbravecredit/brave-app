@@ -2020,6 +2020,10 @@ select {
   white-space: nowrap;
 }
 
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
 .break-words {
   overflow-wrap: break-word;
 }
@@ -2561,11 +2565,6 @@ select {
   padding-bottom: 2.25rem;
 }
 
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-}
-
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
@@ -2879,11 +2878,6 @@ select {
 .text-green-800 {
   --tw-text-opacity: 1;
   color: rgba(22, 101, 52, var(--tw-text-opacity));
-}
-
-.text-yellow-500 {
-  --tw-text-opacity: 1;
-  color: rgba(234, 179, 8, var(--tw-text-opacity));
 }
 
 .text-orange-500 {

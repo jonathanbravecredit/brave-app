@@ -210,7 +210,7 @@ export interface ITrade extends IRecordBase {
   terms: ITerms;
   account?: IAccount;
   paymentHistory?: IPaymentHistory;
-  mostRecentPayments: IMostRecentPayments;
+  mostRecentPayment: IMostRecentPayments;
   additionalTradeAccount: IAdditionalTradeAccount;
   suppressionFlag: boolean;
   adverseFlag: boolean;

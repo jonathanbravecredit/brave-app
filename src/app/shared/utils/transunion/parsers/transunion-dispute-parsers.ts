@@ -17,7 +17,7 @@ export class TransunionDisputeParsers extends TransunionBase {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
     const name = subscriber?.name?.unparsed || this.bcMissing;
     const address = subscriber?.address?.street?.unparsed
-      ? `${subscriber?.address?.street?.unparsed} ${subscriber?.address?.location?.unparsed}`
+      ? `${subscriber?.address?.street?.unparsed}\n${subscriber?.address?.location?.unparsed}`
       : subscriber?.address?.location?.unparsed || this.bcMissing;
     const phone = subscriber?.phone?.number?.unparsed || subscriber?.phone?.unparsed || this.bcMissing;
     return [name, address, phone];

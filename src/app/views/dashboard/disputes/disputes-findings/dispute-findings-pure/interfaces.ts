@@ -1,3 +1,4 @@
+import { ITrade } from '@shared/interfaces/credit-bureau.interface';
 import { ITradeLinePartition, IPublicPartition, ISubscriber } from '@shared/interfaces/merge-report.interface';
 import { TInvestigationResultCode } from '@views/dashboard/disputes/components/findings/dispute-findings-results-details/interfaces';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
@@ -13,6 +14,7 @@ export interface ICreditBureauConfig {
 }
 export interface ITradelineCreditBureauConfig extends ICreditBureauConfig {
   tradeline: ITradeLinePartition;
+  trade: ITrade;
   subscriber: ISubscriber;
   accountType?: string;
   contactDetails?: [string, string, string];

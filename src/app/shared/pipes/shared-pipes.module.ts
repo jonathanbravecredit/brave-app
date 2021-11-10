@@ -34,6 +34,7 @@ import { CreditbureauToPersonalitemdetailsPipe } from './creditbureau-to-persona
 import { DecodePipe } from './decode/decode.pipe';
 import { FilterPersonalPipe } from './filterPersonal/filter-personal.pipe';
 import { FindingsTransformerPipe } from './findingsTransformer/findings-transformer.pipe';
+import { TradelineToFindingsPipe } from './tradeline-to-findings/tradeline-to-findings.pipe';
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -60,6 +61,7 @@ const pipes = [
   InvestigationresultsToPersonalitemdetailsPipe,
   TradelineToAccountgroupPipe,
   TradelineToForbearancePipe,
+  TradelineToFindingsPipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
   LinkifyPipe,

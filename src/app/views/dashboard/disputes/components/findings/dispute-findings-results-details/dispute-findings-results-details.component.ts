@@ -9,6 +9,7 @@ import { TInvestigationResultCode } from './interfaces';
 export class DisputeFindingsResultsDetailsComponent implements OnInit {
   @Input() resultCode: TInvestigationResultCode | undefined;
   @Input() updatedValues: string[] = [];
+  @Input() deletion: boolean = false;
   // resultInfo: IInvestigationResultInfo | undefined;
   resultTypes = DEFAULT_INVESTIGATION_RESULT_TYPES_NEW;
   constructor() {}
