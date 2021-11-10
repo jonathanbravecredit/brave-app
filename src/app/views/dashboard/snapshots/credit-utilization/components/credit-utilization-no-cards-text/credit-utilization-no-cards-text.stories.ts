@@ -2,6 +2,7 @@ import { APP_BASE_HREF } from "@angular/common";
 import { Story, Meta } from "@storybook/angular/types-6-0";
 import { componentWrapperDecorator, moduleMetadata } from "@storybook/angular";
 import { CreditUtilizationNoCardsTextComponent } from "./credit-utilization-no-cards-text.component";
+import { SharedComponentsModule } from "@shared/components/shared-components.module";
 
 export default {
   title:
@@ -10,7 +11,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [],
+      imports: [SharedComponentsModule],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
     }),
     componentWrapperDecorator(

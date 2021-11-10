@@ -112,7 +112,9 @@ const components = [
   CreditUtilizationInfoComponent,
   CreditUtilizationTotalComponent,
   CreditUtilizationPercentagesComponent,
-  CreditUtilizationAvailableComponent
+  CreditUtilizationAvailableComponent,
+  CreditUtilizationNoCardsHeaderComponent,
+  CreditUtilizationNoCardsTextComponent
 ];
 
 const pipes = [
@@ -120,7 +122,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes, CreditUtilizationNoCardsHeaderComponent, CreditUtilizationNoCardsTextComponent],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })

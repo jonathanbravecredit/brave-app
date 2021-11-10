@@ -57,7 +57,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
       return undefined;
 
     if (currentBalence >= 0 && creditLimit !== 0) {
-      return (+currentBalence / +creditLimit) * 100;
+      return Math.floor((+currentBalence / +creditLimit) * 100);
     }
 
     return undefined;
