@@ -14,6 +14,8 @@ import { CreditUtilizationAvailableComponent } from "../components/credit-utiliz
 import { AccountStatusPipe } from "../components/credit-utilization-card/account-status.pipe";
 import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
 import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/tradeline-to-details.pipe";
+import { CreditUtilizationNoCardsHeaderComponent } from "../components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component";
+import { CreditUtilizationNoCardsTextComponent } from "../components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
@@ -30,7 +32,9 @@ export default {
         CreditUtilizationAvailableComponent,
         AccountStatusPipe,
         ViewdetailButtonComponent,
-        TradelineToDetailsPipe
+        TradelineToDetailsPipe,
+        CreditUtilizationNoCardsHeaderComponent,
+        CreditUtilizationNoCardsTextComponent,
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
