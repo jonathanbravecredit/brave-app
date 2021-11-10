@@ -24,14 +24,14 @@ export const MOCK_DEFAULT_CREDIT_CARD: ICreditCard = {
   creditLimit: 2000
 }
 
-export const MOCK_DEFAULT_CREDIT_UTILIZATION: ICreditUtilization = {
-  accountName: 'CITI',
-  percetangeUtilization: 80,
-  creditBalance: 800,
-  creditLimit: 1500,
-  open: true,
-  status: 'good',
-};
+// export const MOCK_DEFAULT_CREDIT_UTILIZATION: ICreditUtilization = {
+//   accountName: 'CITI',
+//   percetangeUtilization: 80,
+//   currentBalance: 800,
+//   creditLimit: 1500,
+//   openClosed: 'o',
+//   status: 'good',
+// };
 
 export const MOCK_DEFAULT_LOAN: ILoan = {
   ...MOCK_DEFAULT_FINANTIAL_MECHANISM,
@@ -53,7 +53,7 @@ export const MOCK_DEFAULT_CREDIT_CARDS: ICreditCard[] = [
 export const MOCK_DEFAULT_LOANS: ILoan[] = [MOCK_DEFAULT_LOAN];
 
 export const MOCK_COLLECTION_DEFAULT_CREDIT_UTILIZATION = {
-  creditUtilization: MOCK_DEFAULT_CREDIT_UTILIZATION,
+  // creditUtilization: MOCK_DEFAULT_CREDIT_UTILIZATION,
   creditCard: MOCK_DEFAULT_CREDIT_CARD,
   creditCards: MOCK_DEFAULT_CREDIT_CARDS,
   loan: MOCK_DEFAULT_LOAN,

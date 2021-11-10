@@ -1,3 +1,4 @@
+import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
 import { CreditUtilizationOwnership, CreditUtilizationStatus } from "./enums";
 
 export type TCreditUtilizationStatus = 'excellent' | 'good' | 'okay' | 'poor';
@@ -18,12 +19,14 @@ export interface ICreditCard extends IBaseCreditUtilization {
 }
 
 export interface ICreditUtilization {
-  accountName: string;
-  creditBalance: number;
+  config: ITradelineDetailsConfig;
+  creditorName: string;
+  accountName?: string;
+  currentBalance: number;
   creditLimit: number;
-  percetangeUtilization: number;
-  open: boolean;
-  status: string;
+  percetangeUtilization?: number;
+  openClosed: string;
+  status?: string;
 }
 
 export interface ILoan extends IBaseCreditUtilization {

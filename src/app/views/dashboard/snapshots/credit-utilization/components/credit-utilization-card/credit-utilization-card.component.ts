@@ -6,7 +6,7 @@ import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/
 import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
 import { TradelineRemarksComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component";
 import { Observable, of } from "rxjs";
-import { TCreditUtilizationStatus } from "./interfaces";
+import { ICreditUtilization, TCreditUtilizationStatus } from "./interfaces";
 
 @Component({
   selector: "brave-credit-utilization-card",
@@ -19,7 +19,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
 
   @Input() status: TCreditUtilizationStatus = "good";
 
-  @Input() tradeLineDetails: ITradelineDetailsConfig | undefined;
+  @Input() creditUtilization: ICreditUtilization | undefined;
 
   @Input() creditUtilizationType: "credit" | "credit-utilization" | "loan" =
     "credit";
@@ -42,8 +42,8 @@ export class CreditUtilizationCardComponent implements AfterViewInit {
       this.open$ = this.viewDetail.open$.asObservable();
     }
     this.percetangeUtilization = this.calculatePercentageUtilization(
-      this.tradeLineDetails!.currentBalance,
-      this.tradeLineDetails!.creditLimit
+      this.creditUtilization!.currentBalance,
+      this.creditUtilization!.creditLimit
     );
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);

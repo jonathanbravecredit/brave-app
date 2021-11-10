@@ -13,14 +13,14 @@
       <!--  right column section 2 -->
       <div class="flex justify-between p-0 -mt-1 mb-1">
         <!-- header  -->
-        <p class="brave-body1-semibold">{{ tradeLineDetails!.creditorName }} {{ tradeLineDetails!.openClosed!.toLowerCase() === 'c' ? '(Closed)' : tradeLineDetails!.openClosed!.toLowerCase() === 'o' ? '(Open)' : '' }}</p>
+        <p class="brave-body1-semibold">{{ creditUtilization!.creditorName }} {{ creditUtilization!.openClosed!.toLowerCase() === 'c' ? '(Closed)' : creditUtilization!.openClosed!.toLowerCase() === 'o' ? '(Open)' : '' }}</p>
         <p class="brave-body1-semibold">{{ percetangeUtilization }}%</p>
       </div>
 
       <div class="flex flex-row">
         <!-- credit balance  -->
         <span><p class="brave-body1">Card Balance:&nbsp;</p></span>
-        <span><p class="brave-body1">{{ tradeLineDetails!.currentBalance | currency }}</p></span>
+        <span><p class="brave-body1">{{ creditUtilization!.currentBalance | currency }}</p></span>
       </div>
 
       <div class="flex flex-row">
@@ -28,7 +28,7 @@
         <span><p class="brave-body1">Credit Limit:&nbsp;</p></span>
 
         <span>
-          <p class="brave-body1">{{tradeLineDetails!.creditLimit | currency}}</p>
+          <p class="brave-body1">{{creditUtilization!.creditLimit | currency}}</p>
         </span>
       </div>
 
@@ -43,10 +43,10 @@
     <div class="border-t border-blueGray-300"></div>
   </div>
 
-  <div *ngIf="open$ | async as open" class="flex flex-row pr-5">
+  <div *ngIf="open$ | async as open" class="flex flex-row justify-center align-center">
     <brave-basic-carousel
     [pages]="tradelinepages"
-    [data]="tradeLineDetails | tradelineToPages"
+    [data]="creditUtilization?.config?.tradeline| tradelineToPages"
   ></brave-basic-carousel>
   </div>
 
