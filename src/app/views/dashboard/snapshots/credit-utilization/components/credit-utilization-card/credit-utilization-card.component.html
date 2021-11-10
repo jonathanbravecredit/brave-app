@@ -44,10 +44,10 @@
   </div>
 
   <div *ngIf="open$ | async as open" class="flex flex-row pr-5">
-    <brave-disputes-detail
+    <brave-basic-carousel
     [pages]="tradelinepages"
-    [data]="tradeLineDetails!.tradeline | tradelineToPages"
-  ></brave-disputes-detail>
+    [data]="tradeLineDetails | tradelineToPages"
+  ></brave-basic-carousel>
   </div>
 
 </div>

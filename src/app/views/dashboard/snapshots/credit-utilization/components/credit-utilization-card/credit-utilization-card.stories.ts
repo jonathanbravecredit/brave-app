@@ -36,7 +36,7 @@ tradeline: {} as ITradeLinePartition,
 creditorName: 'CITI',
 creditLimit: 10000,
 currentBalance: 5000,
-openClosed: 'O'
+openClosed: 'O',
 }
 
 export const CreditUtilizationCard = Template.bind({});
