@@ -8,9 +8,15 @@ import { ICreditUtilization } from "../components/credit-utilization-card/interf
   styleUrls: ["./credit-utilization-pure.view.css"],
 })
 export class CreditUtilizationPureView implements OnInit {
-  @Input() creditAcounts: ITradeLinePartition[] = []
+  @Input() creditAcounts: ITradeLinePartition[] = [];
+
+  hasCards: boolean = false;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.creditAcounts.length) {
+      this.hasCards = true;
+    }
+  }
 }

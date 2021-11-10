@@ -1,6 +1,14 @@
 <brave-credit-utilization-header></brave-credit-utilization-header>
 <brave-credit-utilization-info></brave-credit-utilization-info>
-<brave-credit-utilization-total usePercentage='50' ></brave-credit-utilization-total>
-<brave-credit-utilization-percentages></brave-credit-utilization-percentages>
-<brave-credit-utilization-available debtAmount='1000' totalAmount='2000'></brave-credit-utilization-available>
-<brave-credit-utilization-card [tradeLineDetails]='creditAcount | tradelineToDetails' *ngFor="let creditAcount of creditAcounts"></brave-credit-utilization-card>
+
+<div *ngIf="!hasCards" >
+
+</div>
+
+
+<div *ngIf="hasCards">
+    <brave-credit-utilization-total  usePercentage='50' ></brave-credit-utilization-total>
+    <brave-credit-utilization-percentages ></brave-credit-utilization-percentages>
+    <brave-credit-utilization-available debtAmount='1000' totalAmount='2000'></brave-credit-utilization-available>
+    <brave-credit-utilization-card [tradeLineDetails]='creditAcount | tradelineToDetails' *ngFor="let creditAcount of creditAcounts"></brave-credit-utilization-card>
+</div>
