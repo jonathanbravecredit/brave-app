@@ -1,0 +1,14 @@
+<div class="flex items-center mb-3">
+  <span>Account Details</span>
+</div>
+<ng-container *ngIf="tradeline | tradelineToFindings as config">
+  <!-- ======= AccountDetails Comp ======== -->
+  <brave-tradeline-details-table [config]="config" [isFindings]="true"></brave-tradeline-details-table>
+  <!-- ======= Payment History and Remarks ======== -->
+  <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
+
+  <!-- Remarks -->
+  <div class="py-2 px-1">
+    <brave-base-table-row [label]="'Consumer Statement'" [value]="config.customerStatement"></brave-base-table-row>
+  </div>
+</ng-container>
