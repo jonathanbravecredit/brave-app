@@ -11,21 +11,21 @@ import { CreditBureauFindingsType } from '@shared/utils/transunion/constants';
 export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
   transform(
     creditBureau: ICreditBureau | undefined,
-    mergeReport: ITrueLinkCreditReportType | undefined,
+    investigationReport: ITrueLinkCreditReportType | undefined,
   ): ITradelineCreditBureauConfig[] | [] {
-    if (!creditBureau || !mergeReport) return [];
+    if (!creditBureau || !investigationReport) return [];
     const type = CreditBureauFindingsType.Trade;
     const tradelineFindings: ILineItem[] = tu.queries.dispute.listFindingsByType(creditBureau, type);
     const tradelineResult: ITrade[] = tu.queries.dispute.listTrades(creditBureau);
-    const tradelineUpdates = tu.queries.dispute.listUpdatedTradelines(mergeReport);
+    const tradelineUpdates = tu.queries.dispute.listUpdatedTradelines(investigationReport);
     if (!tradelineFindings.length) return [];
     return tradelineFindings.map((finding: ILineItem) => {
       if (finding.credit.result.toLowerCase() === 'deleted') {
-        const result = tradelineResult.find((rec) => rec.itemKey == finding.itemKey); //
         const subscriber = tu.parsers.dispute.unparseSubscriber(finding?.credit?.item?.subscriber);
         // use the updated True link report to grab the subscribe and tradeline data
         return {
           tradeline: {} as ITradeLinePartition,
+          trade: {} as ITrade,
           subscriber: subscriber,
           summaryItemKey: finding.itemKey,
           summaryItemType: CreditBureauFindingsType.Trade,
@@ -44,6 +44,7 @@ export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
 
         return {
           tradeline: tradeline,
+          trade: result,
           subscriber: reportSubscriber,
           summaryItemKey: finding.itemKey,
           summaryItemType: CreditBureauFindingsType.Trade,

@@ -41,16 +41,12 @@
       [deletion]="tradeline | findingsTransformer: findingsConfig.ShowOnDeleted"
     >
       <div class="mt-4">
-        <p *ngFor="let value of tradeline?.contactDetails">{{value}}</p>
+        <p *ngFor="let value of tradeline?.contactDetails" class="whitespace-pre-wrap">{{value}}</p>
       </div>
 
       <ng-container *ngIf="tradeline | findingsTransformer: findingsConfig.ShowDetail">
         <div *ngIf="tradeline?.tradeline" class="mt-4">
-          <brave-tradeline-details
-            [disableDispute]="true"
-            [tradeline]="tradeline.tradeline"
-            [subscriber]="tradeline.subscriber"
-          ></brave-tradeline-details>
+          <brave-dispute-findings-tradeline-details [tradeline]="tradeline"> </brave-dispute-findings-tradeline-details>
         </div>
       </ng-container>
     </brave-dispute-findings-results-details>
@@ -63,7 +59,7 @@
       [updatedValues]="[publicItem.summaryReason || '']"
     >
       <div class="mt-4">
-        <p *ngFor="let value of publicItem.courtNameArray">{{value}}</p>
+        <p *ngFor="let value of publicItem.courtNameArray" class="whitespace-pre-wrap">{{value}}</p>
       </div>
 
       <ng-container *ngIf="publicItem | findingsTransformer: findingsConfig.ShowDetail">
