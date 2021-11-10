@@ -17,10 +17,9 @@ export class PublicitemsDetailsTableComponent implements OnInit {
   @Input() isDisputePageTwo: boolean = false;
   mapper: Record<string, any>;
   bcMissing = tu.bcMissing;
-  /**
-   * Revolving account display mapping
-   * @property {Record<string, any>} revolvingAccountMapping
-   */
+
+  mapperType!: 'default' | 'findings';
+
   private publicItemsMapping: Record<string, any> = {
     docketNumber: 'Docket Number',
     courtName: 'Name',
