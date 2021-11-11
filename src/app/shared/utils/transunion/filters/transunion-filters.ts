@@ -36,6 +36,19 @@ export class TransunionFilters extends TransunionBase {
     });
   }
 
+  /**
+   * Filter by an account type symbol TradeLinePartition.accountTypeSymbol
+   * @param tradelines
+   * @param type
+   * @returns
+   */
+  static filterTrdelinesByType(tradelines: ITradeLinePartition[], type: string): ITradeLinePartition[] | [] {
+    return tradelines.filter((item) => {
+      let result = `${item?.accountTypeSymbol || ''}`.toLowerCase() === type;
+      return result;
+    });
+  }
+
   /*=====================================*/
   //         CREDIT REPORT GROUPS
   /*=====================================*/

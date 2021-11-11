@@ -1,31 +1,34 @@
-import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
-import { CreditUtilizationOwnership, CreditUtilizationStatus } from "./enums";
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
+import { CreditUtilizationOwnership, CreditUtilizationStatus } from './enums';
 
 export type TCreditUtilizationStatus = 'excellent' | 'good' | 'okay' | 'poor';
-export type TCreditUtilizationEntity = IBaseCreditUtilization & Partial<ICreditCard> & Partial<ICreditUtilization> & Partial<ILoan>;
+export type TCreditUtilizationEntity = IBaseCreditUtilization &
+  Partial<ICreditCard> &
+  Partial<ICreditUtilization> &
+  Partial<ILoan>;
 
 export interface IBaseCreditUtilization {
   accountName: string;
   minimumPayment: number;
   dateOpened: string;
-  accountStatus: CreditUtilizationStatus
+  accountStatus: CreditUtilizationStatus;
   ownershipOfAccount: CreditUtilizationOwnership;
   daysLateStr: string;
 }
 
 export interface ICreditCard extends IBaseCreditUtilization {
-  cardBalance: number
+  cardBalance: number;
   creditLimit: number;
 }
 
 export interface ICreditUtilization {
   config: ITradelineDetailsConfig;
-  creditorName: string;
+  creditorName?: string;
   accountName?: string;
-  currentBalance: number;
-  creditLimit: number;
-  percetangeUtilization?: number;
-  openClosed: string;
+  currentBalance?: string | number;
+  creditLimit?: string | number;
+  percetangeUtilization?: string | number;
+  openClosed?: string;
   status?: string;
 }
 

@@ -73,4 +73,8 @@ export class DashboardEnrolledComponent implements OnInit {
   onDisputesClicked() {
     this.router.navigate(['../disputes'], { relativeTo: this.route });
   }
+
+  onCreditUtilizationClicked() {
+    this.router.navigate(['../report/snapshot/creditutilization'], { relativeTo: this.route });
+  }
 }
