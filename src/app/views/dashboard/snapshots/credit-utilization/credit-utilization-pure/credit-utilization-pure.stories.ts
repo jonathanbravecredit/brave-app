@@ -19,6 +19,7 @@ import { CreditUtilizationNoCardsTextComponent } from "../components/credit-util
 import { ITradeLinePartition } from "@shared/interfaces";
 import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
 import { ICreditUtilization } from "../components/credit-utilization-card/interfaces";
+import { CreditBuilderCardComponent } from "@shared/components/cards/credit-builder-card/credit-builder-card.component";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
@@ -38,6 +39,7 @@ export default {
         TradelineToDetailsPipe,
         CreditUtilizationNoCardsHeaderComponent,
         CreditUtilizationNoCardsTextComponent,
+        CreditBuilderCardComponent,
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
