@@ -4,7 +4,7 @@ import { ITrade } from '@shared/interfaces/credit-bureau.interface';
 export interface ITradelineDetailsConfig {
   tradeline: ITradeLinePartition;
   trade?: ITrade;
-  accountNumber?: string;
+  accountNumber?: string | number;
   accountTypeSymbol?: string;
   accountTypeDescription?: string;
   accountTypeDescriptionValue?: string;

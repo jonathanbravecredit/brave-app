@@ -66,6 +66,6 @@ export class CreditUtilizationService {
    */
   getRevolvingAccounts(tradelines: ITradeLinePartition[]): ITradeLinePartition[] | [] {
     if (!tradelines.length) return [];
-    return tu.filters.filterTrdelinesByType(tradelines, "r");
+    return tu.filters.filterTradelinesByType(tradelines, "r");
   }
 }
