@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditCard, ILoan, TFinantialMechanismEntity } from '@shared/components/cards/finantial-mechanism-card/interfaces';
+import { ICreditCard, ILoan, IBaseCreditUtilization } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -12,8 +12,8 @@ export class CreditMixPureView implements OnInit {
   isRecommendationOpen$ = this.isRecommendationOpen.asObservable();
   @Input() creditCards: ICreditCard[] = [];
   @Input() loans: ILoan[] = [];
-  @Input() closedAccounts: TFinantialMechanismEntity[] = [];
-  
+  @Input() closedAccounts: IBaseCreditUtilization[] = [];
+
   constructor() { }
 
   ngOnInit(): void {

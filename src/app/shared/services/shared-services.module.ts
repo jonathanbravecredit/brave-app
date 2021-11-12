@@ -14,6 +14,7 @@ import { NavigationService } from '@shared/services/navigation/navigation.servic
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { InitService } from '@shared/services/init/init.service';
+import { CreditUtilizationService } from './credit-utilization/credit-utilization.service';
 
 const services = [
   InitService,
@@ -30,6 +31,7 @@ const services = [
   NavigationService,
   FeatureFlagsService,
   GoogleService,
+  CreditUtilizationService
 ];
 
 @NgModule({
