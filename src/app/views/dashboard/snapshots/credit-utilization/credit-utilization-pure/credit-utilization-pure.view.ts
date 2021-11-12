@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ITradeLinePartition } from "@shared/interfaces/merge-report.interface";
-import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
-import { ICreditUtilization } from "@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces";
 
 @Component({
   selector: "brave-credit-utilization-pure",

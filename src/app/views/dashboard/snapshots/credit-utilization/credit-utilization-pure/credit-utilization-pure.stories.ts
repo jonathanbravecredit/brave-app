@@ -20,6 +20,7 @@ import { ITradeLinePartition } from "@shared/interfaces";
 import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
 import { ICreditUtilization } from "../components/credit-utilization-card/interfaces";
 import { CreditBuilderCardComponent } from "@shared/components/cards/credit-builder-card/credit-builder-card.component";
+import { CreditUtilizationColorPercentComponent } from "../components/credit-utilization-color-percent/credit-utilization-color-percent.component";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
@@ -40,6 +41,7 @@ export default {
         CreditUtilizationNoCardsHeaderComponent,
         CreditUtilizationNoCardsTextComponent,
         CreditBuilderCardComponent,
+        CreditUtilizationColorPercentComponent,
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
@@ -192,7 +194,7 @@ const testPartition = {
         startDate: "1999-07-01",
         status: "1C1CC1CCCCCCCCCCCC1CC",
       },
-      CreditLimit: 110,
+      CreditLimit: 5000,
       worstPatStatusCount: 23,
       PaymentFrequency: {
         symbol: "",
@@ -234,7 +236,7 @@ const testPartition = {
       },
       late30Count: 4,
     },
-    currentBalance: 276,
+    currentBalance: 500,
     subscriberCode: "0235197E",
     handle: "TR01_-451755518_691610874_82",
     dateAccountStatus: "1999-07-01",
@@ -289,37 +291,14 @@ const testPartition = {
   },
 } as ITradeLinePartition;
 
-const config =
-  new TradelineToDetailsPipe().transform(testPartition) ||
-  ({} as ITradelineDetailsConfig);
-
-const tradeLineParseMock: ICreditUtilization = {
-  config: config,
-  creditorName: "CITI",
-  creditLimit: 10000,
-  currentBalance: 5000,
-  openClosed: "O",
-};
-
-const tradeLineParseMock2: ICreditUtilization = {
-  config: config,
-  creditorName: "CITI",
-  creditLimit: 5001,
-  currentBalance: 5000,
-  openClosed: "O",
-};
-
-const tradeLineParseMock3: ICreditUtilization = {
-  config: config,
-  creditorName: "CITI",
-  creditLimit: 25000,
-  currentBalance: 5000,
-  openClosed: "C",
-};
 
 export const Default = Template.bind({});
 Default.args = {
-  // creditAcounts: [tradeLineParseMock, tradeLineParseMock2, tradeLineParseMock3],
+  creditAcounts: [
+    testPartition,
+    testPartition,
+    testPartition,
+  ],
 };
 Default.parameters;
 

@@ -16,6 +16,7 @@ import { SnapshotDatabreachesResolver } from '@shared/resolvers/snapshot-databre
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { DashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { CreditUtilizationView } from '@views/dashboard/snapshots/credit-utilization/credit-utilization/credit-utilization.view';
+import { CreditUtilizationResolver } from '@shared/resolvers/credit-utilization/credit-utilization.resolver';
 
 const DashboardRoutes: Routes = [
   {
@@ -73,6 +74,7 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/snapshot/creditutilization',
         component: CreditUtilizationView,
+        resolve: { creditReports: CreditUtilizationResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
