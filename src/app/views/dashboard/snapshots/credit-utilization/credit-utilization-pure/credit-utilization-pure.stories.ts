@@ -319,7 +319,7 @@ const tradeLineParseMock3: ICreditUtilization = {
 
 export const Default = Template.bind({});
 Default.args = {
-  creditAcounts: [tradeLineParseMock, tradeLineParseMock2, tradeLineParseMock3],
+  // creditAcounts: [tradeLineParseMock, tradeLineParseMock2, tradeLineParseMock3],
 };
 Default.parameters;
 
