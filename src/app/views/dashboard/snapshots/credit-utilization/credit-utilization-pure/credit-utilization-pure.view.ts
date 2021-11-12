@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { ITradeLinePartition } from "@shared/interfaces/merge-report.interface";
 
 @Component({
