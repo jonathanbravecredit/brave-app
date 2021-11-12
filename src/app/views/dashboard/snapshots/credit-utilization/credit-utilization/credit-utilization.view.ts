@@ -8,7 +8,10 @@ import { ITradeLinePartition } from '@shared/interfaces';
 })
 export class CreditUtilizationView implements OnInit {
   creditReports: ITradeLinePartition[] = [];
-  // creditAccounts: ICreditUtilization[] = []
+  debtAmount: number = 0;
+  totalAmount: number = 0;
+  utilizationPerc: number = 0;
+  hasCards: boolean = false;
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((resp: any) => {
@@ -16,5 +19,40 @@ export class CreditUtilizationView implements OnInit {
     })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.debtAmount = this.sumDebtAmount(this.creditReports);
+    this.totalAmount = this.sumTotalAmount(this.creditReports);
+    this.utilizationPerc = this.calcUtilzationPerc(
+      this.debtAmount,
+      this.totalAmount
+    );
+    if (this.creditReports.length) {
+      this.hasCards = true;
+    }
+  }
+
+  sumDebtAmount(account: ITradeLinePartition[]): number {
+    return account.reduce<number>(
+      (acc: number, tradePart: ITradeLinePartition) => {
+        return acc + +tradePart.Tradeline?.currentBalance!;
+      },
+      0
+    );
+  }
+
+  sumTotalAmount(account: ITradeLinePartition[]): number {
+    return account.reduce<number>(
+      (acc: number, tradePart: ITradeLinePartition) => {
+        return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;
+      },
+      0
+    );
+  }
+
+  calcUtilzationPerc(debt: number, total: number): number {
+    if (total === 0) return 0;
+    return Math.floor((debt / total) * 100);
+  }
+
+
 }
