@@ -17,10 +17,14 @@ import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/trade
 import { CreditUtilizationNoCardsHeaderComponent } from "../components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component";
 import { CreditUtilizationNoCardsTextComponent } from "../components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component";
 import { ITradeLinePartition } from "@shared/interfaces";
-import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
-import { ICreditUtilization } from "../components/credit-utilization-card/interfaces";
 import { CreditBuilderCardComponent } from "@shared/components/cards/credit-builder-card/credit-builder-card.component";
 import { CreditUtilizationColorPercentComponent } from "../components/credit-utilization-color-percent/credit-utilization-color-percent.component";
+import { ConfigToUtilizationPipe } from "@shared/pipes/config-to-utilization/config-to-utilization.pipe";
+import { BasicCarouselComponent } from "@shared/components/carousels/basic-carousel/basic-carousel.component";
+import { TradelineToPagesPipe } from "@shared/pipes/tradeline-to-pages/tradeline-to-pages.pipe";
+import { BasicCarouselLoaderComponent } from "@shared/components/carousels/basic-carousel-loader/basic-carousel-loader.component";
+import { BasePaginationComponent } from "@shared/components/paginations/base-pagination/base-pagination.component";
+import { BasePaginationPipe } from "@shared/components/paginations/base-pagination/base-pagination.pipe";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
@@ -42,6 +46,12 @@ export default {
         CreditUtilizationNoCardsTextComponent,
         CreditBuilderCardComponent,
         CreditUtilizationColorPercentComponent,
+        ConfigToUtilizationPipe,
+        BasicCarouselComponent,
+        TradelineToPagesPipe,
+        BasicCarouselLoaderComponent,
+        BasePaginationComponent,
+        BasePaginationPipe
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
@@ -299,6 +309,10 @@ Default.args = {
     testPartition,
     testPartition,
   ],
+  hasCards: true,
+  debtAmount: 5000,
+  totalAmount: 15000,
+  utilizationPerc: 33,
 };
 Default.parameters;
 

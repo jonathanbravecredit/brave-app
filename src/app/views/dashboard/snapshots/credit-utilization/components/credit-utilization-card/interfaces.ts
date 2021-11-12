@@ -1,5 +1,5 @@
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
-import { CreditUtilizationOwnership, CreditUtilizationStatus } from './enums';
+import { CreditUtilizationOwnership, CreditUtilizationStatus } from "./enums";
 
 export type TCreditUtilizationStatus = 'excellent' | 'good' | 'okay' | 'poor';
 export type TCreditUtilizationEntity = IBaseCreditUtilization &

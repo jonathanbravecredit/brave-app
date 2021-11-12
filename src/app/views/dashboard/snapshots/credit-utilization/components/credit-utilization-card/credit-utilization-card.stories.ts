@@ -255,7 +255,7 @@ const config =
   ({} as ITradelineDetailsConfig);
 
 const tradeLineParseMock: ICreditUtilization = {
-  config: config,
+  config,
   creditorName: "CITI",
   creditLimit: 10000,
   currentBalance: 5000,

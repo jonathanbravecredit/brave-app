@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'brave-credit-utilization-available',
-  templateUrl: './credit-utilization-available.component.html'
+  selector: "brave-credit-utilization-available",
+  templateUrl: "./credit-utilization-available.component.html"
 })
 export class CreditUtilizationAvailableComponent implements OnInit {
   @Input() debtAmount : string | undefined;

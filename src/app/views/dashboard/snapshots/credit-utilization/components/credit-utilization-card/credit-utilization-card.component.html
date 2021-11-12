@@ -19,17 +19,17 @@
 
       <div class="flex flex-row">
         <!-- credit balance  -->
-        <span><p class="brave-body1">Card Balance:&nbsp;</p></span>
-        <span><p class="brave-body1">{{ creditUtilization!.currentBalance | currency }}</p></span>
+        <span class="brave-body1">Card Balance:&nbsp;</span>
+        <span class="brave-body1">{{ creditUtilization!.currentBalance | currency }}</span>
       </div>
 
       <div class="flex flex-row">
         <!-- credit limit  -->
-        <span><p class="brave-body1">Credit Limit:&nbsp;</p></span>
+        <span class="brave-body1">Credit Limit:&nbsp;</span>
 
-        <span>
-          <p class="brave-body1">{{creditUtilization!.creditLimit | currency}}</p>
-        </span>
+
+        <span class="brave-body1">{{creditUtilization!.creditLimit | currency}}</span>
+
       </div>
 
       <div class="mt-1">
@@ -39,15 +39,19 @@
     </div>
   </div>
 
-  <div *ngIf="open$ | async as open" class="flex flex-col w-full py-5 px-4">
-    <div class="border-t border-blueGray-300"></div>
-  </div>
+  <div *ngIf="open$ | async as openCarousel">
+    <div class="flex flex-col w-full py-5 px-4">
+      <div class="border-t border-blueGray-300"></div>
+    </div>
 
-  <div *ngIf="open$ | async as open" class="flex flex-row justify-center align-center">
-    <brave-basic-carousel
-    [pages]="tradelinepages"
-    [data]="creditUtilization?.config?.tradeline| tradelineToPages"
-  ></brave-basic-carousel>
+    <div class="flex flex-row justify-center align-center">
+      <ng-container *ngIf="creditUtilization?.config?.tradeline| tradelineToPages as data">
+        <brave-basic-carousel
+        [pages]="tradelinepages"
+        [data]="data"
+      ></brave-basic-carousel>
+      </ng-container>
+    </div>
   </div>
 
 </div>

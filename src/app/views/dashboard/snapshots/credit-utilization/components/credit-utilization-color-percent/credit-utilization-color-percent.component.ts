@@ -15,7 +15,6 @@ export class CreditUtilizationColorPercentComponent implements OnInit {
   }
 
   calculateColor(percent: number): string {
-    console.log(percent)
     switch (true) {
       case percent <= 9:
         return "#4BD269";

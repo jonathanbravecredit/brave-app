@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
-import { AgenciesState, AgenciesStateModel } from '@store/agencies';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { TransunionInput } from '@shared/services/aws/api.service';
-import { BraveUtil } from '@shared/utils/brave/brave';
+import { Injectable } from "@angular/core";
+import { Select } from "@ngxs/store";
+import { IMergeReport, ITradeLinePartition } from "@shared/interfaces";
+import { AgenciesState, AgenciesStateModel } from "@store/agencies";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
+import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
+import { TransunionInput } from "@shared/services/aws/api.service";
+import { BraveUtil } from "@shared/utils/brave/brave";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CreditUtilizationService {
   // easy access to the Transunion merge report
@@ -66,6 +66,6 @@ export class CreditUtilizationService {
    */
   getRevolvingAccounts(tradelines: ITradeLinePartition[]): ITradeLinePartition[] | [] {
     if (!tradelines.length) return [];
-    return tu.filters.filterTrdelinesByType(tradelines, 'r');
+    return tu.filters.filterTrdelinesByType(tradelines, "r");
   }
 }

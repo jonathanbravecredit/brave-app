@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreditUtilizationView } from './credit-utilization.view';
+import { CreditUtilizationView } from "./credit-utilization.view";
 
-describe('CreditUtilizationView', () => {
+describe("CreditUtilizationView", () => {
   let component: CreditUtilizationView;
   let fixture: ComponentFixture<CreditUtilizationView>;
 
@@ -19,7 +19,7 @@ describe('CreditUtilizationView', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
