@@ -2,7 +2,14 @@
   <div class="flex justify-start items-start content-start">
     <div class="mb-4">
       <p class="text-sm font-semibold">
-        {{ details.creditorName }} {{ details.openClosed?.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}
+        {{ details.creditorName }}
+        {{
+          details.openClosed?.toLowerCase() === 'c'
+            ? '(Closed)'
+            : details.openClosed?.toLowerCase() === 'o'
+            ? '(Open)'
+            : ''
+        }}
       </p>
       <p class="text-sm font-semibold">{{ details.accountTypeDescription || '' }}</p>
     </div>
