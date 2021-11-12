@@ -54,6 +54,16 @@
       (click)="disputesClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
+  <div class="mt-6 hover:cursor-pointer">
+    <brave-snapshot-display-card
+      tendency="no-tendency"
+      label="preview"
+      status="danger"
+      title="Credit Utilization"
+      [preview]="false"
+      (click)="creditUtilizationClicked.emit()"
+    ></brave-snapshot-display-card>
+  </div>
 </div>
 
 <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{

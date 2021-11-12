@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreditcardCardComponent } from './creditcard-card.component';
+import { CreditUtilizationPureView } from './credit-utilization-pure.view';
 
-describe('CreditcardCardComponent', () => {
-  let component: CreditcardCardComponent;
-  let fixture: ComponentFixture<CreditcardCardComponent>;
+describe('CreditUtilizationPureView', () => {
+  let component: CreditUtilizationPureView;
+  let fixture: ComponentFixture<CreditUtilizationPureView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreditcardCardComponent ]
+      declarations: [ CreditUtilizationPureView ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreditcardCardComponent);
+    fixture = TestBed.createComponent(CreditUtilizationPureView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

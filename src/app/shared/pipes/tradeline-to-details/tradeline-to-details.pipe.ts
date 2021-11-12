@@ -13,7 +13,7 @@ export class TradelineToDetailsPipe implements PipeTransform {
     const originalCreditor = tu.queries.report.getOriginalCreditor(tradeline);
     const mapped = {
       tradeline: tradeline,
-      accountNumber: tradeline?.Tradeline?.accountNumber,
+      accountNumber: tradeline?.Tradeline?.accountNumber?.toString(),
       accountTypeSymbol: tradeline?.accountTypeSymbol,
       creditorName: tradeline?.Tradeline?.creditorName,
       lastReported: tradeline?.Tradeline?.dateReported,

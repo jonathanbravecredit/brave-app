@@ -15,7 +15,6 @@ import { OutlineSelectInputPipe } from '@shared/components/inputs/outline-select
 import { FilledClosingAlertPipe } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.pipe';
 import { FilledOnlytextBadgeComponent } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.component';
 import { FilledOnlytextBadgePipe } from '@shared/components/badges/filled-onlytext-badge/filled-onlytext-badge.pipe';
-import { AccountStatusPipe } from './cards/finantial-mechanism-card/account-status.pipe';
 import { SnapshotLabelPipe } from './cards/snapshot-display-card/snapshot-label.pipe';
 import { SnapshotStatusPipe } from './cards/snapshot-display-card/snapshot-status.pipe';
 import { BasePaginationPipe } from './paginations/base-pagination/base-pagination.pipe';
@@ -93,7 +92,6 @@ import { BaseExceptionComponent } from './exceptions/base-exception/base-excepti
 import { BasicCarouselComponent } from './carousels/basic-carousel/basic-carousel.component';
 import { BasicCarouselLoaderComponent } from './carousels/basic-carousel-loader/basic-carousel-loader.component';
 import { CollectionCreditMixAccountsComponent } from './collections/collection-credit-mix-accounts/collection-credit-mix-accounts.component';
-import { FinantialMechanismCardComponent } from './cards/finantial-mechanism-card/finantial-mechanism-card.component';
 import { BottomNavbarComponent } from './navbars/bottom-navbar/bottom-navbar.component';
 import { OutlineInputPhoneComponent } from './inputs/outline-input-phone/outline-input-phone.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -116,6 +114,7 @@ import { HorizontalCreditscoreInvisiblebarComponent } from './graphics/horizonta
 import { OutlineInputHiddenComponent } from './inputs/outline-input-hidden/outline-input-hidden.component';
 import { PlacesAutocompleteInputComponent } from './inputs/places-autocomplete-input/places-autocomplete-input.component';
 import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-form/autocomplete-address-form.component';
+import { PercentageBadgeComponent } from './badges/percentage-badge/percentage-badge.component';
 
 const components = [
   BaseFormComponent,
@@ -166,7 +165,6 @@ const components = [
   OutlineNamedobFormComponent,
   SelectDobFormComponent,
   OutlineNameFormComponent,
-  FinantialMechanismCardComponent,
   ViewdetailButtonComponent,
   SnapshotDisplayCardComponent,
   CreditBuilderCardComponent,
@@ -187,7 +185,6 @@ const components = [
   BaseExceptionComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
-
   CollectionCreditMixAccountsComponent,
   BottomNavbarComponent,
   OutlineInputPhoneComponent,
@@ -208,6 +205,8 @@ const components = [
   OutlineInputHiddenComponent,
   PlacesAutocompleteInputComponent,
   AutocompleteAddressFormComponent,
+  PercentageBadgeComponent,
+  PercentageBadgeComponent
 ];
 
 // component specific pipes only
@@ -220,7 +219,6 @@ const pipes = [
   FilledClosingAlertPipe,
   FilledOnlytextBadgePipe,
   FilledChecktextProgressbarPipe,
-  AccountStatusPipe,
   SnapshotLabelPipe,
   SnapshotStatusPipe,
   CreditReportGraphicPipe,

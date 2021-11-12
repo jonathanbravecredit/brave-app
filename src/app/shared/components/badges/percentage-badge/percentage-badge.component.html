@@ -1,0 +1,19 @@
+<div [ngStyle]="{'max-width': 'max-content'}">
+    <div
+
+    [ngClass]="size === 'small' ? 'text-xs' : size === 'base' ? 'text-sm' : 'text-lg'"
+
+    class=" text-white mb-2 text-center whitespace-nowrap"
+
+    [ngStyle]="{
+        'border-radius': '2px',
+        'background-color': color,
+        'max-width': '5rem',
+        'min-width': '5rem'
+    }"
+
+    >
+        <p class="">{{text}}</p>
+    </div>
+    <p class="brave-body3 text-center" >{{label}}</p>
+</div>
