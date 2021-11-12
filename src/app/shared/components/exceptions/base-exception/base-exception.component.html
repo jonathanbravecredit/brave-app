@@ -3,7 +3,8 @@
     <img class="h-32 w-32" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_access_denied_re_awnf.svg" />
   </div>
   <h1 class="text-lg text-center font-semibold">{{ exceptionCategory.message }}</h1>
-  <div class="text-sm text-center mt-4 mb-4" style="white-space: pre-line">{{ exceptionCategory.description }}</div>
+  <p class="brave-body2-semibold text-center my-4" >{{ exceptionCategory.subheader }}</p>
+  <p class="brave-body2 text-center my-4" >{{ exceptionCategory.description }}</p>
   <div class="flex justify-center">
     <brave-filled-onlytext-button (click)="actionButtonClicked.emit(exceptionCategory.route)">{{
       exceptionCategory.actionText

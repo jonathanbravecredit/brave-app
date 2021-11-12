@@ -56,10 +56,11 @@ import { CreditUtilizationCardComponent } from "./snapshots/credit-utilization/c
 import { CreditUtilizationHeaderComponent } from "./snapshots/credit-utilization/components/credit-utilization-header/credit-utilization-header.component";
 import { CreditUtilizationInfoComponent } from "./snapshots/credit-utilization/components/credit-utilization-info/credit-utilization-info.component";
 import { CreditUtilizationTotalComponent } from "./snapshots/credit-utilization/components/credit-utilization-total/credit-utilization-total.component";
-import { CreditUtilizationPercentagesComponent } from './snapshots/credit-utilization/components/credit-utilization-percentages/credit-utilization-percentages.component';
-import { CreditUtilizationAvailableComponent } from './snapshots/credit-utilization/components/credit-utilization-available/credit-utilization-available.component';
-import { CreditUtilizationNoCardsHeaderComponent } from './snapshots/credit-utilization/components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component';
-import { CreditUtilizationNoCardsTextComponent } from './snapshots/credit-utilization/components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component';
+import { CreditUtilizationPercentagesComponent } from "./snapshots/credit-utilization/components/credit-utilization-percentages/credit-utilization-percentages.component";
+import { CreditUtilizationAvailableComponent } from "./snapshots/credit-utilization/components/credit-utilization-available/credit-utilization-available.component";
+import { CreditUtilizationNoCardsHeaderComponent } from "./snapshots/credit-utilization/components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component";
+import { CreditUtilizationNoCardsTextComponent } from "./snapshots/credit-utilization/components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component";
+import { CreditUtilizationColorPercentComponent } from "./snapshots/credit-utilization/components/credit-utilization-color-percent/credit-utilization-color-percent.component";
 
 
 
@@ -114,7 +115,8 @@ const components = [
   CreditUtilizationPercentagesComponent,
   CreditUtilizationAvailableComponent,
   CreditUtilizationNoCardsHeaderComponent,
-  CreditUtilizationNoCardsTextComponent
+  CreditUtilizationNoCardsTextComponent,
+  CreditUtilizationColorPercentComponent
 ];
 
 const pipes = [

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'brave-credit-utilization-percentages',
-  templateUrl: './credit-utilization-percentages.component.html',
+  selector: "brave-credit-utilization-percentages",
+  templateUrl: "./credit-utilization-percentages.component.html",
 })
 export class CreditUtilizationPercentagesComponent implements OnInit {
 

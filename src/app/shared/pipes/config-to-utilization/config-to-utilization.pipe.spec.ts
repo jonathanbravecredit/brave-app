@@ -1,7 +1,7 @@
-import { ConfigToUtilizationPipe } from './config-to-utilization.pipe';
+import { ConfigToUtilizationPipe } from "./config-to-utilization.pipe";
 
-describe('ConfigToUtilizationPipe', () => {
-  it('create an instance', () => {
+describe("ConfigToUtilizationPipe", () => {
+  it("create an instance", () => {
     const pipe = new ConfigToUtilizationPipe();
     expect(pipe).toBeTruthy();
   });

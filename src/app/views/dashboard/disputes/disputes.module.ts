@@ -63,6 +63,7 @@ import { DisputePublicCardComponent } from './components/cards/dispute-public-ca
 import { DisputeOverviewCardComponent } from './components/cards/dispute-overview-card/dispute-overview-card.component';
 import { DisputesHistoricalView } from './disputes-historical/disputes-historical/disputes-historical.view';
 import { DisputesHistoricalPureView } from './disputes-historical/disputes-historical-pure/disputes-historical-pure.view';
+import { DisputeFindingsTradelineDetailsComponent } from './components/findings/dispute-findings-tradeline-details/dispute-findings-tradeline-details.component';
 
 const modules = [
   CommonModule,
@@ -131,7 +132,7 @@ const components = [
 const pipes = [DisputeCardStatusPipe];
 
 @NgModule({
-  declarations: [...components, pipes],
+  declarations: [...components, pipes, DisputeFindingsTradelineDetailsComponent],
   imports: [...modules],
   exports: [...components, pipes],
 })

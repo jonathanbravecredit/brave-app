@@ -1,23 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
-import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ITradeLinePartition } from "@shared/interfaces";
 
 @Component({
-  selector: 'brave-credit-utilization',
-  templateUrl: './credit-utilization.view.html',
+  selector: "brave-credit-utilization",
+  templateUrl: "./credit-utilization.view.html",
 })
 export class CreditUtilizationView implements OnInit {
-  creditReport$: Observable<IMergeReport> | undefined;
   creditReports: ITradeLinePartition[] = [];
-  // creditAccounts: ICreditUtilization[] = []
+  debtAmount: number = 0;
+  totalAmount: number = 0;
+  utilizationPerc: number = 0;
+  hasCards: boolean = false;
 
-  constructor(private creditUtilizationService: CreditUtilizationService) {
-    this.creditUtilizationService.tuReport$.subscribe((report: IMergeReport) => {
-      const partitions = this.creditUtilizationService.getTradeLinePartitions();
-      this.creditReports = this.creditUtilizationService.getRevolvingAccounts(partitions);
-    });
+  constructor(private route: ActivatedRoute) {
+    this.route.data.subscribe((resp: any) => {
+      this.creditReports = resp.creditReports
+    })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.debtAmount = this.sumDebtAmount(this.creditReports);
+    this.totalAmount = this.sumTotalAmount(this.creditReports);
+    this.utilizationPerc = this.calcUtilzationPerc(
+      this.debtAmount,
+      this.totalAmount
+    );
+    if (this.creditReports.length) {
+      this.hasCards = true;
+    }
+  }
+
+  sumDebtAmount(account: ITradeLinePartition[]): number {
+    return account.reduce<number>(
+      (acc: number, tradePart: ITradeLinePartition) => {
+        return acc + +tradePart.Tradeline?.currentBalance!;
+      },
+      0
+    );
+  }
+
+  sumTotalAmount(account: ITradeLinePartition[]): number {
+    return account.reduce<number>(
+      (acc: number, tradePart: ITradeLinePartition) => {
+        return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;
+      },
+      0
+    );
+  }
+
+  calcUtilzationPerc(debt: number, total: number): number {
+    if (total === 0) return 0;
+    return Math.floor((debt / total) * 100);
+  }
+
+
 }

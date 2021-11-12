@@ -42,7 +42,7 @@ export class TransunionFilters extends TransunionBase {
    * @param type
    * @returns
    */
-  static filterTrdelinesByType(tradelines: ITradeLinePartition[], type: string): ITradeLinePartition[] | [] {
+  static filterTradelinesByType(tradelines: ITradeLinePartition[], type: string): ITradeLinePartition[] | [] {
     return tradelines.filter((item) => {
       let result = `${item?.accountTypeSymbol || ''}`.toLowerCase() === type;
       return result;

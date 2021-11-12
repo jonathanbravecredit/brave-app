@@ -5,9 +5,11 @@ import {
 } from '@views/dashboard/disputes/disputes-findings/dispute-findings-pure/interfaces';
 
 export enum FindingsConfigurations {
-  ShowDefinitions = 'showDefinitions',
+  ShowOnUpdated = 'showOnUpdated',
+  ShowOnDeleted = 'showOnDeleted',
   ShowRatingsKey = 'showRatingsKey',
   ShowDetail = 'showDetail',
+  IsPopulated = 'isPopulated',
 }
 
 @Pipe({
@@ -15,16 +17,23 @@ export enum FindingsConfigurations {
 })
 export class FindingsTransformerPipe implements PipeTransform {
   cases = {
-    [FindingsConfigurations.ShowDefinitions]: this.showDefinitions,
+    [FindingsConfigurations.ShowOnUpdated]: this.showOnUpdated,
+    [FindingsConfigurations.ShowOnDeleted]: this.showOnDeleted,
     [FindingsConfigurations.ShowRatingsKey]: this.showRatingsKey,
     [FindingsConfigurations.ShowDetail]: this.showDetail,
+    [FindingsConfigurations.IsPopulated]: this.isPopulated,
   };
 
   transform(value: unknown | unknown[], condition: FindingsConfigurations): boolean {
     return this.cases[condition](value);
   }
 
-  showDefinitions(config: unknown | unknown[]): boolean {
+  isPopulated(config: unknown | unknown[]): boolean {
+    if (!(config instanceof Array)) return false;
+    return config.length > 0;
+  }
+
+  showOnUpdated(config: unknown | unknown[]): boolean {
     if (config instanceof Array) {
       const accounts = config as ICreditBureauConfig[];
       return !!accounts.find((a) => {
@@ -32,7 +41,19 @@ export class FindingsTransformerPipe implements PipeTransform {
       });
     } else {
       const account = config as ICreditBureauConfig;
-      return account.summaryResultCode !== 'deleted';
+      return account.summaryResultCode?.toLowerCase() !== 'deleted';
+    }
+  }
+
+  showOnDeleted(config: unknown | unknown[]): boolean {
+    if (config instanceof Array) {
+      const accounts = config as ICreditBureauConfig[];
+      return !!accounts.find((a) => {
+        return a.summaryResultCode?.toLowerCase() === 'deleted';
+      });
+    } else {
+      const account = config as ICreditBureauConfig;
+      return account.summaryResultCode === 'deleted';
     }
   }
 

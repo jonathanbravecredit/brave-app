@@ -11,13 +11,13 @@ import { CreditBureauFindingsType } from '@shared/utils/transunion/constants';
 export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
   transform(
     creditBureau: ICreditBureau | undefined,
-    mergeReport: ITrueLinkCreditReportType | undefined,
+    investigationReport: ITrueLinkCreditReportType | undefined,
   ): IPublicRecordCreditBureauConfig[] | [] {
-    if (!creditBureau || !mergeReport) return [];
+    if (!creditBureau || !investigationReport) return [];
     const type = CreditBureauFindingsType.PublicRecord;
     const publicRecordFindings: ILineItem[] = tu.queries.dispute.listFindingsByType(creditBureau, type);
     const publicRecordResult: IPublicRecord[] = tu.queries.dispute.listPublicRecords(creditBureau);
-    const publicRecordUpdates = tu.queries.dispute.listUpdatedPublicRecords(mergeReport);
+    const publicRecordUpdates = tu.queries.dispute.listUpdatedPublicRecords(investigationReport);
 
     if (!publicRecordFindings.length) return []; // deleted record so need to return the line item summary section
     return publicRecordFindings.map((finding: ILineItem) => {

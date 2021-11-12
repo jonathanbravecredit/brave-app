@@ -1,5 +1,5 @@
 <brave-credit-utilization-header></brave-credit-utilization-header>
-<brave-credit-utilization-info></brave-credit-utilization-info>
+<brave-credit-utilization-info *ngIf="false" ></brave-credit-utilization-info>
 
 <div *ngIf="!hasCards">
   <brave-credit-utilization-no-cards-header></brave-credit-utilization-no-cards-header>
@@ -7,6 +7,7 @@
 </div>
 
 <div *ngIf="hasCards">
+  <brave-credit-utilization-color-percent [utilPercent]="utilizationPerc" ></brave-credit-utilization-color-percent>
   <brave-credit-utilization-total [usePercentage]="utilizationPerc.toString()"></brave-credit-utilization-total>
   <brave-credit-utilization-percentages></brave-credit-utilization-percentages>
   <brave-credit-utilization-available
