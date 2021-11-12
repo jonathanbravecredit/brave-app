@@ -8,7 +8,7 @@ import {
   ReportCardFieldTypes,
 } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { CREDIT_REPORT_GROUPS, CreditReportGroups } from '@shared/constants/credit-report';
-import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
+import { PAY_STATUS_WARNINGS, POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
 import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IDisputeCurrent, IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
@@ -101,6 +101,7 @@ export class TransunionMappers extends TransunionBase {
       const firstField = this.getFirstFields(item);
       const secondField = this.getSecondFields(item);
       const { accountTypeSymbol, Tradeline: { creditorName, OpenClosed, PayStatus } = {} } = item;
+      const status = PAY_STATUS_WARNINGS[`${PayStatus?.symbol}`] || 'brave-unknown';
       return {
         type: accountTypeSymbol,
         creditorName: creditorName,
@@ -113,7 +114,7 @@ export class TransunionMappers extends TransunionBase {
         secondFieldType: secondField.secondFieldType,
         thirdFieldName: 'Payment Status',
         thirdFieldValue: PayStatus?.description,
-        status: PayStatus?.symbol,
+        status: status,
         positive: POSITIVE_PAY_STATUS_CODES[`${PayStatus?.symbol}`] || false,
         tradeline: item,
       } as ICreditReportCardInputs;

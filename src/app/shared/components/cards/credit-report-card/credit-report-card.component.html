@@ -2,7 +2,12 @@
 <div class="flex items-center">
   <div
     class="ml-3 h-4 w-4 bg-blue-500 rounded-full border-none"
-    [ngClass]="status | snapshotStatus: 'background'"
+    [ngClass]="{
+      'bg-brave-danger': status === 'brave-danger',
+      'bg-brave-critical': status === 'brave-critical',
+      'bg-brave-safe': status === 'brave-safe',
+      'bg-gray-400': status === 'brave-unknown'
+    }"
   ></div>
   <span class="ml-3">{{ creditorName | decode }} ({{ isOpen ? 'Open' : 'Closed' }})</span>
 </div>
