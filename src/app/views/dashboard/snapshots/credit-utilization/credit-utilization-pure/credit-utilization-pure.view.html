@@ -7,7 +7,12 @@
 </div>
 
 <div *ngIf="hasCards">
-  <brave-credit-utilization-color-percent [utilPercent]="utilizationPerc" ></brave-credit-utilization-color-percent>
+  <div class="min-w-full flex justify-center items-center">
+    <div class="absolute min-w-full min-h-full flex justify-center items-center">
+      <brave-credit-utilization-color-percent [utilPercent]="utilizationPerc" ></brave-credit-utilization-color-percent>
+    </div>
+    <brave-percentage-gauge [percentageNumber]='[{ name: "name", value: utilizationPerc }]'></brave-percentage-gauge>
+  </div>
   <brave-credit-utilization-total [usePercentage]="utilizationPerc.toString()"></brave-credit-utilization-total>
   <brave-credit-utilization-percentages></brave-credit-utilization-percentages>
   <brave-credit-utilization-available

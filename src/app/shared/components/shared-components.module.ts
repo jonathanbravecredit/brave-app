@@ -115,6 +115,7 @@ import { OutlineInputHiddenComponent } from './inputs/outline-input-hidden/outli
 import { PlacesAutocompleteInputComponent } from './inputs/places-autocomplete-input/places-autocomplete-input.component';
 import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-form/autocomplete-address-form.component';
 import { PercentageBadgeComponent } from './badges/percentage-badge/percentage-badge.component';
+import { PercentageGaugeComponent } from './charts/percentage-gauge/percentage-gauge.component';
 
 const components = [
   BaseFormComponent,
@@ -206,7 +207,8 @@ const components = [
   PlacesAutocompleteInputComponent,
   AutocompleteAddressFormComponent,
   PercentageBadgeComponent,
-  PercentageBadgeComponent
+  PercentageBadgeComponent,
+  PercentageGaugeComponent
 ];
 
 // component specific pipes only

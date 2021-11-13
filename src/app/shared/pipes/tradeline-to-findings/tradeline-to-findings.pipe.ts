@@ -16,7 +16,7 @@ export class TradelineToFindingsPipe implements PipeTransform {
     const mapped = {
       tradeline: tradeline.tradeline,
       trade: tradeline.trade,
-      accountNumber: tradeline.tradeline?.Tradeline?.accountNumber,
+      accountNumber: tradeline.tradeline?.Tradeline?.accountNumber?.toString(),
       accountName: tradeline.contactDetails,
       dateOpened: tradeline.tradeline?.Tradeline?.dateOpened?.substring(0, 10),
       accountDesignator: tradeline.tradeline?.Tradeline?.AccountDesignator?.description,
@@ -38,3 +38,4 @@ export class TradelineToFindingsPipe implements PipeTransform {
     return mapped;
   }
 }
+

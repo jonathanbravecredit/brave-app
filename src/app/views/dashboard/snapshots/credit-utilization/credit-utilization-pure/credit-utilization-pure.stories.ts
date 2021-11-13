@@ -25,6 +25,8 @@ import { TradelineToPagesPipe } from "@shared/pipes/tradeline-to-pages/tradeline
 import { BasicCarouselLoaderComponent } from "@shared/components/carousels/basic-carousel-loader/basic-carousel-loader.component";
 import { BasePaginationComponent } from "@shared/components/paginations/base-pagination/base-pagination.component";
 import { BasePaginationPipe } from "@shared/components/paginations/base-pagination/base-pagination.pipe";
+import { PercentageGaugeComponent } from "@shared/components/charts/percentage-gauge/percentage-gauge.component";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
@@ -51,9 +53,10 @@ export default {
         TradelineToPagesPipe,
         BasicCarouselLoaderComponent,
         BasePaginationComponent,
-        BasePaginationPipe
+        BasePaginationPipe,
+        PercentageGaugeComponent,
       ],
-      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
+      imports: [HttpClientModule, NgxChartsModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
     }),
     componentWrapperDecorator((story) => {
@@ -312,7 +315,7 @@ Default.args = {
   hasCards: true,
   debtAmount: 5000,
   totalAmount: 15000,
-  utilizationPerc: 33,
+  utilizationPerc: 25,
 };
 Default.parameters;
 
