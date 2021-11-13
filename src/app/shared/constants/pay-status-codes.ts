@@ -13,6 +13,19 @@ export const PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff`,
 };
 
+export const PAY_STATUS_WARNINGS: Record<string, string> = {
+  '1': `brave-danger`,
+  '2': `brave-danger`,
+  '3': `brave-critical`,
+  '4': `brave-critical`,
+  '8R': `brave-critical`,
+  '9': `brave-critical`,
+  U: `brave-unknown`,
+  C: `brave-safe`,
+  '0': `brave-safe`,
+  '7': `brave-safe`,
+};
+
 export const NEGATIVE_PAY_STATUS_CODES: Record<string, string> = {
   '1': `Late 30 Days`,
   '2': `Late 60 Days`,
