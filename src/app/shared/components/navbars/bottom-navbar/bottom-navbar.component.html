@@ -11,8 +11,8 @@
         *ngFor="let item of navigationItems"
         (click)="navigate(item.id)"
       >
-        <span class="material-icons-outlined">{{ item.iconName }}</span>
-        <span class="text-xs">{{ item.name }}</span>
+        <span class="material-icons-outlined" [ngClass]="{'text-brave-blurple': currentActiveItemId === item.id}">{{ item.iconName }}</span>
+        <span class="text-xs" [ngClass]="{'text-brave-blurple': currentActiveItemId === item.id}" >{{ item.name }}</span>
       </div>
     </div>
   </nav>

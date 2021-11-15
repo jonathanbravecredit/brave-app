@@ -9,14 +9,16 @@ import { IBottomNavbarItem } from './interfaces';
 })
 export class BottomNavbarComponent implements OnInit {
   navigationItems: IBottomNavbarItem[] = navigationItems;
-  currentActiveItemId: string = 'home';
+  currentActiveItemId: string = 'init';
   disableLocalNavigationHandler: boolean = false;
   disableEventEmitter: boolean = false;
   @Output() navigationTo: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(navigationItems)
+  }
 
   navigate(navigationItemName: string): void {
     if (!this.disableLocalNavigationHandler) {
@@ -28,6 +30,7 @@ export class BottomNavbarComponent implements OnInit {
   }
 
   setActiveNavigationItem(navigationItemName: string): void {
+    console.log(navigationItemName)
     this.currentActiveItemId = navigationItemName;
   }
 }

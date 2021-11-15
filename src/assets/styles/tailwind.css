@@ -1466,6 +1466,10 @@ select {
   margin-bottom: 2.5rem;
 }
 
+.mb-11 {
+  margin-bottom: 2.75rem;
+}
+
 .mb-12 {
   margin-bottom: 3rem;
 }
@@ -1656,6 +1660,10 @@ select {
 
 .max-h-56 {
   max-height: 14rem;
+}
+
+.min-h-full {
+  min-height: 100%;
 }
 
 .min-h-screen {
@@ -2846,6 +2854,11 @@ select {
 .text-indigo-900 {
   --tw-text-opacity: 1;
   color: rgba(49, 46, 129, var(--tw-text-opacity));
+}
+
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgba(96, 165, 250, var(--tw-text-opacity));
 }
 
 .text-blue-500 {
