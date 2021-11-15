@@ -4,7 +4,7 @@
     class="ml-3 h-4 w-4 bg-blue-500 rounded-full border-none"
     [ngClass]="{
       'bg-gray-400': isOpen == false,
-      'bg-brave-safe': isOpen && payStatusSymbol === 'C',
+      'bg-brave-safe': isOpen && payStatusSymbol?.toLowerCase() === 'c',
       'bg-brave-danger': payStatusSymbol === '1' ||
       payStatusSymbol === '2' ||
       payStatusSymbol === '3' ||

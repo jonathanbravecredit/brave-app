@@ -28,6 +28,6 @@ const Template: Story<CreditReportCardComponent> = (args: any) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  isOpen: false,
-  payStatusSymbol: 3,
+  isOpen: true,
+  payStatusSymbol: '9',
 };
