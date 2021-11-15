@@ -266,5 +266,5 @@ export const CreditUtilizationCard = Template.bind({});
 CreditUtilizationCard.args = {
   creditUtilizationType: "credit-utilization",
   creditUtilization: tradeLineParseMock,
-  open: true,
+  open: false,
 };

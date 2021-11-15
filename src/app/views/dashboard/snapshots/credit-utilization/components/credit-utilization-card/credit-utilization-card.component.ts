@@ -30,7 +30,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
 
   @Input() open : boolean = false
 
-  percetangeUtilization: number | undefined;
+  percetangeUtilization: number | string | undefined;
 
   creditStatus: string | undefined;
 
@@ -61,9 +61,13 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   calculatePercentageUtilization(
     currentBalence: string | number | undefined,
     creditLimit: string | number | undefined
-  ): number | undefined {
+  ): number | string | undefined {
     if (currentBalence === undefined || creditLimit === undefined) {
       return undefined;
+    }
+
+    if (!this.open) {
+      return '-'
     }
 
     if (currentBalence >= 0 && creditLimit !== 0) {
@@ -73,7 +77,12 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
     return undefined;
   }
 
-  calculateCreditStatus(percetangeUtilization: number | undefined): string {
+  calculateCreditStatus(percetangeUtilization: number | string | undefined): string {
+
+    if (!this.open) {
+      return "closed";
+    }
+
     switch (true) {
       case percetangeUtilization! <= 9:
         return "excellent";
