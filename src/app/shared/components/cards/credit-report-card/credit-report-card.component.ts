@@ -41,9 +41,14 @@ export class CreditReportCardComponent implements OnInit {
   @Input() thirdFieldType: ReportCardFieldTypes = 'string';
   @Input() status: string = '';
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
+  @Input() payStatusSymbol: string | number | undefined;
   @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (typeof this.payStatusSymbol === 'number') {
+      this.payStatusSymbol = this.payStatusSymbol.toString()
+    }
+  }
 }

@@ -3,10 +3,15 @@
   <div
     class="ml-3 h-4 w-4 bg-blue-500 rounded-full border-none"
     [ngClass]="{
-      'bg-brave-danger': status === 'brave-danger',
-      'bg-brave-critical': status === 'brave-critical',
-      'bg-brave-safe': status === 'brave-safe',
-      'bg-gray-400': status === 'brave-unknown'
+      'bg-gray-400': isOpen == false,
+      'bg-brave-safe': isOpen && payStatusSymbol === 'C',
+      'bg-brave-danger': payStatusSymbol === '1' ||
+      payStatusSymbol === '2' ||
+      payStatusSymbol === '3' ||
+      payStatusSymbol === '4' ||
+      payStatusSymbol === '7' ||
+      payStatusSymbol === '8R',
+      'bg-brave-critical': payStatusSymbol === '9'
     }"
   ></div>
   <span class="ml-3">{{ creditorName | decode }} ({{ isOpen ? 'Open' : 'Closed' }})</span>
@@ -49,3 +54,12 @@
     >View Detail</brave-viewdetail-button
   >
 </div>
+
+<!--
+  [ngClass]="{
+      'bg-gray-400': status === 'brave-unknown' || isOpen == false,
+      'bg-brave-danger': status === 'brave-danger',
+      'bg-brave-critical': status === 'brave-critical',
+      'bg-brave-safe': status === 'brave-safe'
+    }"
+ -->
