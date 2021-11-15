@@ -14,7 +14,7 @@
         </p>
         <button
           class="ml-auto bg-transparent border-0 brave-primary-text-color float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-          (click)="toggleModal()"
+          (click)="toggleModal(); closeModalClick.emit()"
         >
           <span class="material-icons-outlined"> close </span>
         </button>
