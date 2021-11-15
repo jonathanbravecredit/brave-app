@@ -28,6 +28,8 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   @Input() creditUtilizationType: "credit" | "credit-utilization" | "loan" =
     "credit";
 
+  @Input() open : boolean = false
+
   percetangeUtilization: number | undefined;
 
   creditStatus: string | undefined;
