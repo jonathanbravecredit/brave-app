@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ComponentRef } from '@angular/core';
 import { IMonthyPayStatusItem, IPayStatusHistory } from '@shared/interfaces/merge-report.interface';
+import { ModalService } from '@shared/services/modal/modal.service';
 import {
   MONTH_ABBREVIATIONS,
   MONTH_DEFAULTS,
@@ -13,7 +14,6 @@ import * as moment from 'moment';
   templateUrl: './tradeline-payment-history.component.html',
 })
 export class TradelinePaymentHistoryComponent implements OnInit {
-  @ViewChild(TradelinePaymentIconKeyComponent) modal: TradelinePaymentIconKeyComponent | undefined;
   /**
    * Payment status history mapped directly from Merge Report
    * @property {IPayStatusHistory | undefined} paymentHistory
@@ -42,11 +42,16 @@ export class TradelinePaymentHistoryComponent implements OnInit {
    * @property {ITradelinePaymentHistory} history
    */
   history!: ITradelinePaymentHistory;
+  modal: ComponentRef<unknown> | undefined;
 
-  constructor() {}
+  constructor(private modalService: ModalService) {}
 
   ngOnInit() {
     this.history = this.parsePaymentHistory(this.paymentHistory);
+  }
+
+  showModal(): void {
+    this.modal = this.modalService.appendModalToBody(TradelinePaymentIconKeyComponent, { showModal: true });
   }
 
   /**
