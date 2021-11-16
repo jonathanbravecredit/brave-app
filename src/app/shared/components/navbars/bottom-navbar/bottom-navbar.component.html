@@ -4,15 +4,19 @@
     class="fixed left-0 bottom-0 w-full z-40 h-16 py-3 flex bg-white"
     style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1.25)"
   >
-    <div class="flex text-gray-700 w-full justify-around max-w-lg mx-auto">
-      <div
-        class="hover:cursor-pointer flex flex-col text-center"
-        [ngClass]="currentActiveItemId === item.id ? 'text-gray-900' : ''"
-        *ngFor="let item of navigationItems"
-        (click)="navigate(item.id)"
-      >
-        <span class="material-icons-outlined" [ngClass]="{'text-brave-blurple': currentActiveItemId === item.id}">{{ item.iconName }}</span>
-        <span class="text-xs" [ngClass]="{'text-brave-blurple': currentActiveItemId === item.id}" >{{ item.name }}</span>
+
+
+  <div class="flex text-gray-700 w-full justify-around max-w-lg mx-auto">
+    <div
+    (pointerdown)="pointerDownHandler(item.id)" (pointerup)="pointerUpHandler()"
+      class="hover:cursor-pointer flex flex-col text-center"
+      [ngClass]="currentActiveItemId === item.id ? 'text-gray-900' : ''"
+      *ngFor="let item of navigationItems"
+      (click)="navigate(item.id)"
+      [ngStyle]="{'min-width': '24.9%', 'max-width': '24.9%'}"
+    >
+      <span class="material-icons-outlined" [ngClass]="{'text-brave-blurple': currentActiveItemId === item.id}">{{ item.iconName }}</span>
+      <span class="text-xs" [ngClass]="{'text-brave-blurple': currentActiveItemId === item.id, 'font-bold': clicked === item.id}" >{{ item.name }}</span>
       </div>
     </div>
   </nav>
