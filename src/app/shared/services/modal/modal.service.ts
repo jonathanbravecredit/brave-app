@@ -19,6 +19,7 @@ export class ModalService {
   ) {}
 
   appendModalToBody(component: any, componentProps?: object): ComponentRef<unknown> {
+    debugger
     const componentRef = this.componentFactoryResolver.resolveComponentFactory(component).create(this.injector);
     if (componentProps && typeof componentRef.instance === 'object') {
       Object.assign(componentRef.instance as object, componentProps);
