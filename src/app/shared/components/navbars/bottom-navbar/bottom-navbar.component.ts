@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { PartialObserver } from 'rxjs';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
 
@@ -9,25 +11,33 @@ import { IBottomNavbarItem } from './interfaces';
 })
 export class BottomNavbarComponent implements OnInit {
   navigationItems: IBottomNavbarItem[] = navigationItems;
-  currentActiveItemId: string = 'home';
+  currentActiveItemId: string = 'init';
   disableLocalNavigationHandler: boolean = false;
   disableEventEmitter: boolean = false;
   @Output() navigationTo: EventEmitter<string> = new EventEmitter();
+  clicked: string = ''
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   navigate(navigationItemName: string): void {
     if (!this.disableLocalNavigationHandler) {
-      this.setActiveNavigationItem(navigationItemName);
       if (!this.disableEventEmitter) {
         this.navigationTo.emit(navigationItemName);
       }
     }
   }
 
-  setActiveNavigationItem(navigationItemName: string): void {
-    this.currentActiveItemId = navigationItemName;
+  pointerDownHandler(id: string) {
+    this.clicked = id,
+    this.currentActiveItemId = id
   }
+
+  pointerUpHandler() {
+    this.clicked = ''
+  }
+
+
 }
