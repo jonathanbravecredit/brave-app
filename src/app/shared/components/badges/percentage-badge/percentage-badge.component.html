@@ -3,17 +3,15 @@
 
     [ngClass]="size === 'small' ? 'text-xs' : size === 'base' ? 'text-sm' : 'text-lg'"
 
-    class=" text-white mb-2 text-center whitespace-nowrap"
+    class=" text-white mb-2 text-center whitespace-nowrap w-16"
 
     [ngStyle]="{
         'border-radius': '2px',
-        'background-color': color,
-        'max-width': '5rem',
-        'min-width': '5rem'
+        'background-color': color
     }"
 
     >
-        <p class="">{{text}}</p>
+        <span class="">{{text}}</span>
     </div>
     <p class="brave-body3 text-center" >{{label}}</p>
 </div>
