@@ -1238,6 +1238,11 @@ select {
   margin: auto;
 }
 
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -1273,6 +1278,11 @@ select {
   margin-right: auto;
 }
 
+.mx-0\.5 {
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
+}
+
 .-mx-2 {
   margin-left: -0.5rem;
   margin-right: -0.5rem;
@@ -1291,6 +1301,11 @@ select {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .my-6 {
@@ -1464,6 +1479,10 @@ select {
 
 .mb-10 {
   margin-bottom: 2.5rem;
+}
+
+.mb-11 {
+  margin-bottom: 2.75rem;
 }
 
 .mb-12 {
@@ -1656,6 +1675,10 @@ select {
 
 .max-h-56 {
   max-height: 14rem;
+}
+
+.min-h-full {
+  min-height: 100%;
 }
 
 .min-h-screen {
@@ -3264,6 +3287,11 @@ select {
 }
 
 @media (min-width: 640px) {
+  .sm\:mx-1 {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+
   .sm\:block {
     display: block;
   }

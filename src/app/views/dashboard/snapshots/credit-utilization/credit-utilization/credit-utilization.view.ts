@@ -15,8 +15,8 @@ export class CreditUtilizationView implements OnInit {
 
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((resp: any) => {
-      this.creditReports = resp.creditReports
-    })
+      this.creditReports = resp.creditReports;
+    });
   }
 
   ngOnInit(): void {
@@ -34,6 +34,9 @@ export class CreditUtilizationView implements OnInit {
   sumDebtAmount(account: ITradeLinePartition[]): number {
     return account.reduce<number>(
       (acc: number, tradePart: ITradeLinePartition) => {
+        if (tradePart.Tradeline?.OpenClosed?.symbol === "C") {
+          return acc;
+        }
         return acc + +tradePart.Tradeline?.currentBalance!;
       },
       0
@@ -43,6 +46,9 @@ export class CreditUtilizationView implements OnInit {
   sumTotalAmount(account: ITradeLinePartition[]): number {
     return account.reduce<number>(
       (acc: number, tradePart: ITradeLinePartition) => {
+        if (tradePart.Tradeline?.OpenClosed?.symbol === "C") {
+          return acc;
+        }
         return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;
       },
       0
@@ -53,6 +59,4 @@ export class CreditUtilizationView implements OnInit {
     if (total === 0) return 0;
     return Math.floor((debt / total) * 100);
   }
-
-
 }
