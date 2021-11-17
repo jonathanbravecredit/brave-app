@@ -6,6 +6,9 @@ import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
+import { CreditScoreHistoryNgxChartComponent } from '@shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -17,6 +20,8 @@ export class DashboardEnrolledComponent implements OnInit {
   lastUpdated: number | string | Date | undefined;
   report: IMergeReport | undefined;
   snapshots: DashboardStateModel | undefined;
+  pages: any[] = [];
+  data: {}[] = [];
 
   constructor(
     private store: Store,
@@ -38,6 +43,51 @@ export class DashboardEnrolledComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
+
+    this.pages = [
+      CreditReportGraphicComponent,
+      CreditScoreHistoryNgxChartComponent,
+    ];
+
+    this.data = [
+      {
+        currentValue: new ParseRiskScorePipe().transform(this.report),
+      },
+      {
+        multi: [
+          {
+            name: "CreditScore",
+            series: [
+              {
+                name: "Jan",
+                value: 350,
+              },
+              {
+                name: "Feb",
+                value: 450,
+              },
+              {
+                name: "Mar",
+                value: 500,
+              },
+              {
+                name: "Apr",
+                value: 600,
+              },
+              {
+                name: "May",
+                value: 680,
+              },
+              {
+                name: "Jun",
+                value: 720,
+              },
+            ],
+          },
+        ],
+        view: [300, 140]
+      },
+    ];
   }
 
   onNegativeItemsClicked() {

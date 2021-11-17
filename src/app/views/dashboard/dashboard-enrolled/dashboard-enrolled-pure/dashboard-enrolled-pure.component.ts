@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { CreditScoreHistoryNgxChartComponent } from "@shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component";
-import { CreditReportGraphicComponent } from "@shared/components/graphics/credit-report-graphic/credit-report-graphic.component";
 import { IMergeReport } from "@shared/interfaces";
-import { ParseRiskScorePipe } from "@shared/pipes/parse-risk-score/parse-risk-score.pipe";
 import { DashboardStateModel } from "@store/dashboard/dashboard.model";
 import { dashboardEnrolledContent } from "@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content";
 
@@ -25,54 +22,11 @@ export class DashboardEnrolledPureComponent implements OnInit {
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
   constructor() {}
-  pages: any[] = [];
-  data: {}[] = [];
+  @Input() pages: any[] = [];
+  @Input() data: {}[] = [];
 
   ngOnInit(): void {
-    this.pages = [
-      CreditReportGraphicComponent,
-      CreditScoreHistoryNgxChartComponent,
-    ];
 
-    this.data = [
-      {
-        currentValue: new ParseRiskScorePipe().transform(this.report),
-      },
-      {
-        multi: [
-          {
-            name: "CreditScore",
-            series: [
-              {
-                name: "Jan",
-                value: 350,
-              },
-              {
-                name: "Feb",
-                value: 450,
-              },
-              {
-                name: "Mar",
-                value: 500,
-              },
-              {
-                name: "Apr",
-                value: 600,
-              },
-              {
-                name: "May",
-                value: 680,
-              },
-              {
-                name: "Jun",
-                value: 720,
-              },
-            ],
-          },
-        ],
-        view: [300, 140]
-      },
-    ];
   }
 
   get score(): number | undefined {
