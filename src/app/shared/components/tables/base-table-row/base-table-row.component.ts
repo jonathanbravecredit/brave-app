@@ -66,7 +66,5 @@ export class BaseTableRowComponent {
     if (this.nowrapLabel) {
       this.dynamicClass.add('whitespace-nowrap');
     }
-
-    console.log(this.tooltipAction)
   }
 }
