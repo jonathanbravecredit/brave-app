@@ -3,6 +3,7 @@ import {
   BaseModalSmallComponent,
   IBaseModalSmallConfig,
 } from '@shared/components/modals/base-modal-small/base-modal-small.component';
+import { ModalService } from '@shared/services/modal/modal.service';
 import { ICON_KEY_DESCRIPTIONS } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon-key/constants';
 
 @Component({
@@ -11,11 +12,11 @@ import { ICON_KEY_DESCRIPTIONS } from '@views/dashboard/reports/credit-report/tr
 })
 export class TradelinePaymentIconKeyComponent implements OnInit {
   @ViewChild(BaseModalSmallComponent) modal: BaseModalSmallComponent | undefined;
-  @Input() showModal: boolean = false;
+  @Input() showModal: boolean = true;
   descriptions = ICON_KEY_DESCRIPTIONS;
   config: IBaseModalSmallConfig;
 
-  constructor() {
+  constructor(private modalService: ModalService) {
     this.config = {
       title: 'Payment/Remarks Key',
       enableButtonOne: false,
@@ -24,18 +25,22 @@ export class TradelinePaymentIconKeyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initiateModal(this.showModal);
+    // this.initiateModal(this.showModal);
   }
 
-  initiateModal(showModal: boolean): void {
-    if (this.modal) {
-      this.modal.showModal = showModal;
-    }
-  }
+  // initiateModal(showModal: boolean): void {
+  //   if (this.modal) {
+  //     this.modal.showModal = showModal;
+  //   }
+  // }
 
-  toggleShowModal(): void {
-    if (this.modal) {
-      this.modal.showModal = !this.modal.showModal;
-    }
+  closeModal(): void {
+    this.modalService.removeModalFromBody();
+
+    // if (this.modal) {
+    //   this.modal.showModal = !this.modal.showModal;
+    //   if (!this.modal.showModal) {
+    //   }
+    // }
   }
 }

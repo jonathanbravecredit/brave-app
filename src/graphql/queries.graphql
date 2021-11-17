@@ -160,48 +160,6 @@ query GetAppData($id: ID!) {
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -415,48 +373,6 @@ query ListAppDatas(
           disputeEnrollmentKey
           disputeEnrolled
           disputeEnrolledOn
-          disputeStatus
-          disputes {
-            id
-            appDataId
-            disputeId
-            disputeStatus
-            disputeLetterCode
-            disputeLetterContent
-            openDisputes {
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            closedDisputes {
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            pvDisputedItems {
-              pvTradelines
-              pvPublicRecords
-            }
-            agencyName
-            openedOn
-            closedOn
-            disputeItems
-            disputeInvestigationResults
-            disputeCreditBureau
-            notificationStatus
-            notificationMessage
-            notificationSentOn
-          }
         }
         equifax {
           authenticated

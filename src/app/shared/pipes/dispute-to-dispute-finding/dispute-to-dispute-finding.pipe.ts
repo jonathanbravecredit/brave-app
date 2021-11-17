@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ICreditBureau, IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { IDispute } from '@shared/interfaces/disputes';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
-import { DisputeInput } from '@shared/services/aws/api.service';
-import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
 
 export interface IDisputeToDisputeFindingOutput {
   status: string;
@@ -18,29 +17,18 @@ export interface IDisputeToDisputeFindingOutput {
   name: 'disputeToDisputeFinding',
 })
 export class DisputeToDisputeFindingPipe implements PipeTransform {
-  transform(dispute: DisputeInput): IDisputeToDisputeFindingOutput | undefined {
+  transform(
+    dispute: IDispute | null,
+    creditBureau: ICreditBureau | undefined,
+  ): IDisputeToDisputeFindingOutput | undefined {
+    if (!dispute) return;
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    // get and parse the credit bureau data
-    const creditBureau: IDisputeCreditBureau = dispute.disputeCreditBureau
-      ? JSON.parse(dispute.disputeCreditBureau)
-      : undefined;
-    // get and parse the investigation results data
-    const tempReport: {
-      TrueLinkCreditReportType?: any;
-      trueLinkCreditReportType?: any;
-    } = dispute.disputeInvestigationResults ? JSON.parse(dispute.disputeInvestigationResults) : undefined;
-    const investigationResults: ITrueLinkCreditReportType = tempReport?.TrueLinkCreditReportType
-      ? tempReport?.TrueLinkCreditReportType
-      : tempReport?.trueLinkCreditReportType;
-
-    const disputeItems: IDisputeTradelineItem = dispute.disputeItems ? JSON.parse(dispute.disputeItems) : null;
-    if (!creditBureau || !disputeItems) return;
-    return this.mapClosedDispute(disputeItems, dispute, creditBureau, investigationResults);
+    return this.mapClosedDispute(dispute, creditBureau);
   }
 
-  mapOpenDispute(dispute: DisputeInput): IDisputeToDisputeFindingOutput {
+  mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {
     return {
       status: 'open',
       reportCreatedAt: dispute.openDisputes?.openDate || '--',
@@ -50,18 +38,11 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     } as IDisputeToDisputeFindingOutput;
   }
 
-  mapClosedDispute(
-    disputeItems: IDisputeTradelineItem,
-    dispute: DisputeInput,
-    creditBureau: IDisputeCreditBureau,
-    investigationResults: ITrueLinkCreditReportType,
-  ): IDisputeToDisputeFindingOutput {
+  mapClosedDispute(dispute: IDispute, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
     return {
       status: 'closed',
       reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
-      fileIdentificationNumber: `${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
-      creditBureau: creditBureau.creditBureau,
-      investigationResults: investigationResults,
+      fileIdentificationNumber: `${creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
     };
   }
 }

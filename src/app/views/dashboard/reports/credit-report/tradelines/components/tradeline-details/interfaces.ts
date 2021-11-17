@@ -1,8 +1,10 @@
 import { IPayStatusHistory, ITradeLinePartition } from '@shared/interfaces';
+import { ITrade } from '@shared/interfaces/credit-bureau.interface';
 
 export interface ITradelineDetailsConfig {
   tradeline: ITradeLinePartition;
-  accountNumber?: string;
+  trade?: ITrade;
+  accountNumber?: string | number;
   accountTypeSymbol?: string;
   accountTypeDescription?: string;
   accountTypeDescriptionValue?: string;
@@ -31,4 +33,9 @@ export interface ITradelineDetailsConfig {
   status?: string;
   openClosed?: string;
   remarks?: string;
+  accountName?: [string?, string?, string?];
+  accountCodeDescription?: string;
+  scheduledPayments?: string;
+  highCredit?: string | number;
+  mostRecentPayment?: string;
 }

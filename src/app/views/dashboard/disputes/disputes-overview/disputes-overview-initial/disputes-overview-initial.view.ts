@@ -1,30 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TDisputeEntity } from '@shared/components/cards/dispute-cards';
 import { DisputeStatus } from '@shared/constants/disputes.interface';
-import { ITUServiceResponse } from '@shared/interfaces';
-import { DisputeInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { Observable, Subscription } from 'rxjs';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { TDisputeEntity } from '@views/dashboard/disputes/components/cards/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-disputes-overview-initial',
   templateUrl: './disputes-overview-initial.view.html',
 })
-export class DisputesOverviewInitialView implements OnInit {
-  disputes$: Observable<(DisputeInput | null | undefined)[] | null | undefined>;
-
+export class DisputesOverviewInitialView implements OnInit, OnDestroy {
+  routeSub$: Subscription | undefined;
+  allDisputes: IDispute[] | undefined;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private interstitial: InterstitialService,
     private disputeService: DisputeService,
+    private transunion: TransunionService,
   ) {
-    this.disputes$ = this.disputeService.disputes$.asObservable();
+    this.routeSub$ = this.route.data.subscribe((resp) => {
+      const { allDisputes, currDispute } = resp.disputes;
+      this.allDisputes = allDisputes;
+    });
   }
 
   ngOnInit(): void {}
+  ngOnDestroy(): void {
+    if (this.routeSub$) this.routeSub$.unsubscribe();
+  }
 
   /**
    * Method to check the status of the results
@@ -34,45 +41,36 @@ export class DisputesOverviewInitialView implements OnInit {
    */
   async onViewDetailsClick(entity: TDisputeEntity): Promise<void> {
     if (!entity.dispute) throw `dispute missing`;
-    if (!entity.dispute) return;
-    const dispute: DisputeInput = entity.dispute;
-    if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && !dispute.disputeInvestigationResults) {
-      this.interstitial.openInterstitial();
-      this.interstitial.changeMessage('gathering results');
-      const res = await this.getInvestigationResults(dispute.disputeId);
-      if (!res.success) {
-        setTimeout(() => {
-          this.interstitial.closeInterstitial();
-        }, 2000);
-      } else {
-        this.router.navigate(['./findings'], {
+    const dispute: IDispute = entity.dispute;
+    const { disputeId } = dispute;
+    this.disputeService.currentDispute$.next(dispute);
+    const { disputeInvestigationResults: irID, disputeCreditBureau: cbID } = dispute;
+    if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && (!irID || !cbID)) {
+      // the results are not saved...can attempt to gather them again
+      // TODO need to handle this case...complete but no id's
+      const resp = await this.transunion.getInvestigationResults(disputeId);
+      const { success, error, data } = resp;
+      if (!success) {
+        this.router.navigate(['../error'], {
           relativeTo: this.route,
           queryParams: {
-            id: dispute.disputeId,
+            code: error?.Code,
           },
         });
       }
     } else {
-      this.router.navigate(['./findings'], {
+      // do I need to set the current dispute
+      this.interstitial.openInterstitial();
+      this.interstitial.changeMessage('gathering results');
+      this.router.navigate(['../findings', irID, cbID], {
         relativeTo: this.route,
-        queryParams: {
-          id: dispute.disputeId,
-        },
       });
     }
   }
 
-  /**
-   * Query the TU service for any investigation results
-   * @param disputeId - unique id sent back by TU
-   */
-  async getInvestigationResults(disputeId: string | null | undefined): Promise<ITUServiceResponse<any>> {
-    try {
-      if (!disputeId) throw `Missing dispute Id=${disputeId}`;
-      return await this.disputeService.getInvestigationResults(disputeId);
-    } catch (err) {
-      this.interstitial.changeMessage('Error fetching results');
-      return { success: false, error: err };
-    }
+  onViewHistoricalClick(): void {
+    this.router.navigate(['../historical'], {
+      relativeTo: this.route,
+    });
   }
 }

@@ -1,0 +1,12 @@
+<div class="mt-4" *ngFor="let card of reasonCards; index as itemIndex">
+  <brave-reason-card
+    #reasonCard
+    [label]="card.reason.text"
+    [allowInput]="card.allowInput || false"
+    [selected]="card.selected || false"
+    (toggleClick)="selectCard(card)"
+  >
+  </brave-reason-card>
+</div>
+
+<!-- addSelection(card) -->

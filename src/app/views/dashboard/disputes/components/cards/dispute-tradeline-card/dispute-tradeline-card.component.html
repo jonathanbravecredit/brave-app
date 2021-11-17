@@ -1,0 +1,28 @@
+<div class="border-t border-blueGray-300 py-2"></div>
+<!-- ======= Tradeline header ======== -->
+<brave-dispute-header-tradeline [dispute]="tradeline | tradelineToDetails"> </brave-dispute-header-tradeline>
+
+<!-- ======= Confirmation button ======== -->
+<div *ngIf="!hideConfirm" class="flex justify-center my-4">
+  <brave-filled-onlytext-button (click)="disputeClick.emit()"
+    >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
+  >
+</div>
+
+<!-- ======= Payment History and Remarks ======== -->
+<div *ngIf="viewDetail.open$ | async as open" class="mt-4">
+  <!-- ======= AccountDetails Comp ======== -->
+  <div *ngIf="tradeline" class="flex flex-col w-full my-4">
+    <brave-tradeline-details
+      [tradeline]="tradeline"
+      [subscriber]="subscriber"
+      [overrideOpen]="true"
+      [disableDispute]="!enableDispute"
+      (disputeClick)="disputeClick.emit()"
+    ></brave-tradeline-details>
+  </div>
+</div>
+
+<div class="flex justify-center my-6">
+  <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
+</div>

@@ -1,0 +1,29 @@
+<div class="w-full p-2">
+  <brave-credit-utilization-header></brave-credit-utilization-header>
+  <brave-credit-utilization-info *ngIf="false" ></brave-credit-utilization-info>
+
+  <div *ngIf="!hasCards">
+    <brave-credit-utilization-no-cards-header></brave-credit-utilization-no-cards-header>
+    <brave-credit-utilization-no-cards-text></brave-credit-utilization-no-cards-text>
+  </div>
+
+  <div *ngIf="hasCards">
+    <div class="min-w-full flex justify-center items-center">
+      <div class="absolute min-w-full flex justify-center items-center">
+        <brave-credit-utilization-color-percent [utilPercent]="utilizationPerc" ></brave-credit-utilization-color-percent>
+      </div>
+      <brave-percentage-gauge [percentageNumber]='[{ name: "name", value: utilizationPerc }]'></brave-percentage-gauge>
+    </div>
+    <brave-credit-utilization-total [usePercentage]="utilizationPerc.toString()"></brave-credit-utilization-total>
+    <brave-credit-utilization-percentages></brave-credit-utilization-percentages>
+    <brave-credit-utilization-available
+      [debtAmount]="debtAmount.toString()"
+      [totalAmount]="totalAmount.toString()"
+    ></brave-credit-utilization-available>
+    <brave-credit-utilization-card
+      [open]="creditAcount.Tradeline?.OpenClosed?.symbol === 'O'"
+      [creditUtilization]="creditAcount | tradelineToDetails | configToUtilization"
+      *ngFor="let creditAcount of creditAcounts"
+    ></brave-credit-utilization-card>
+  </div>
+</div>

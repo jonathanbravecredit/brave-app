@@ -10,18 +10,19 @@ export class TradelineToDetailsPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | undefined {
     if (!tradeline) return;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
-    return {
+    const originalCreditor = tu.queries.report.getOriginalCreditor(tradeline);
+    const mapped = {
       tradeline: tradeline,
-      accountNumber: tradeline?.Tradeline?.accountNumber,
+      accountNumber: tradeline?.Tradeline?.accountNumber?.toString(),
       accountTypeSymbol: tradeline?.accountTypeSymbol,
       creditorName: tradeline?.Tradeline?.creditorName,
       lastReported: tradeline?.Tradeline?.dateReported,
       accountTypeDescription: tu.queries.report.getAccountType(tradeline),
       accountTypeDescriptionValue: tradeline?.Tradeline?.OpenClosed?.description || '',
-      originalCreditor: tradeline?.Tradeline?.CollectionTrade?.originalCreditor,
+      originalCreditor: originalCreditor,
       creditType: tradeline?.Tradeline?.CollectionTrade?.creditType?.abbreviation,
-      dateOpened: tradeline?.Tradeline?.dateOpened,
-      dateClosed: tradeline?.Tradeline?.dateClosed,
+      dateOpened: tradeline?.Tradeline?.dateOpened?.substring(0, 10),
+      dateClosed: tradeline?.Tradeline?.dateClosed?.substring(0, 10),
       dateReported: tradeline?.Tradeline?.dateReported,
       accountDesignator: tradeline?.Tradeline?.AccountDesignator?.description,
       termMonths: tradeline?.Tradeline?.GrantedTrade?.termMonths,
@@ -41,5 +42,6 @@ export class TradelineToDetailsPipe implements PipeTransform {
       openClosed: tradeline?.Tradeline?.OpenClosed?.symbol,
       remarks: remarks,
     } as ITradelineDetailsConfig;
+    return mapped;
   }
 }

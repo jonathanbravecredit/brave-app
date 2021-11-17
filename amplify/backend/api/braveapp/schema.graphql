@@ -145,8 +145,6 @@ type Transunion {
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
-  disputeStatus: String
-  disputes: [Dispute]
 }
 type Equifax {
   authenticated: Boolean
@@ -170,40 +168,4 @@ type TUReportResponse {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-type Dispute {
-  id: ID!
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: DisputeSummary
-  closedDisputes: DisputeSummary
-  pvDisputedItems: PVDisputedItems
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeInvestigationResults: AWSJSON
-  disputeCreditBureau: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-type DisputeSummary {
-  estimatedCompletionDate: String
-  lastUpdatedDate: String
-  openDate: String
-  requestedDate: String
-  totalClosedDisputedItems: String
-  totalDisputedItems: String
-  totalOpenDisputedItems: String
-  totalPVDisputedItemCount: String
-}
-
-type PVDisputedItems {
-  pvTradelines: AWSJSON
-  pvPublicRecords: AWSJSON
 }

@@ -50,7 +50,7 @@ export class PersonalitemsView {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = 'personal';
-          this.router.navigate(['../dispute'], {
+          this.router.navigate(['/disputes/reconfirm'], {
             relativeTo: this.route,
             queryParams: {
               type: filter,

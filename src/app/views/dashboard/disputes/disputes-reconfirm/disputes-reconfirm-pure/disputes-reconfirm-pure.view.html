@@ -6,11 +6,13 @@
 
 <!-- tradeline accounts -->
 <div *ngFor="let tradeline of tradelines">
-  <brave-tradeline-dispute-card
-    [tradeline]="tradeline"
-    [subscriber]="tu.queries.report.getTradelineSubscriberByKey(tradeline) || {}"
-    (disputeClick)="disputeTradelineClick.emit(tradeline)"
-  ></brave-tradeline-dispute-card>
+  <div class="border-t border-blueGray-300 py-2"></div>
+  <brave-dispute-header
+    [showConfirmButton]="true"
+    [tradelinedispute]="tradeline | tradelineToDetails"
+    (confirmed)="disputeTradelineClick.emit(tradeline)"
+  >
+  </brave-dispute-header>
 </div>
 
 <!-- personal items -->
@@ -19,11 +21,9 @@
   <span>Personal Information</span>
 </div>
 
-<div *ngFor="let item of personalItems; index as idx">
-  <brave-personalitem-dispute-card
-    [personalItem]="item"
-    (disputeClick)="disputePersonalClick.emit(item)"
-  ></brave-personalitem-dispute-card>
+<div *ngFor="let item of personalItems | filterPersonal: tu.queries.dispute.isDisputeable; index as idx">
+  <brave-dispute-personal-card [personalItem]="item" (disputeClick)="disputePersonalClick.emit(item)">
+  </brave-dispute-personal-card>
 </div>
 
 <!-- public items -->
@@ -33,8 +33,8 @@
 </div>
 
 <div *ngFor="let publicItem of publicItems">
-  <brave-publicitem-dispute-card
+  <brave-dispute-public-card
     [publicItem]="publicItem"
     (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
-  ></brave-publicitem-dispute-card>
+  ></brave-dispute-public-card>
 </div>

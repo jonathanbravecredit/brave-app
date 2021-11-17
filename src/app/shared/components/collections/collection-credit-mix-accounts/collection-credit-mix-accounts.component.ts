@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditCard, ILoan, TFinantialMechanismEntity } from '@shared/components/cards/finantial-mechanism-card/interfaces';
+import { ICreditCard, ILoan, IBaseCreditUtilization } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 type TFinantialMechanismCollectionType = 'credit' | 'loan' | 'closed';
@@ -12,7 +12,7 @@ type TFinantialMechanismCollectionType = 'credit' | 'loan' | 'closed';
 export class CollectionCreditMixAccountsComponent implements OnInit {
   @Input() creditCards: ICreditCard[] = [];
   @Input() loans: ILoan[] = [];
-  @Input() closedAccounts: TFinantialMechanismEntity[] = [];
+  @Input() closedAccounts: IBaseCreditUtilization[] = [];
   private isCreditCardCollectionOpen = new BehaviorSubject(false);
   private isClosedAccountsCollectionOpen = new BehaviorSubject(false);
   private isLoanCollectionOpen = new BehaviorSubject(false);
@@ -44,5 +44,5 @@ export class CollectionCreditMixAccountsComponent implements OnInit {
     return this.getCollectionByType(collectionType).value;
   }
 
-  
+
 }

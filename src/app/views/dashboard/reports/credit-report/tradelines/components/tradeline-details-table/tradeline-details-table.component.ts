@@ -16,6 +16,7 @@ export class TradelineDetailsTableComponent implements OnInit {
   @Input() typeOverride: string | undefined;
   @Input() isDisputePageOne: boolean = false;
   @Input() isDisputePageTwo: boolean = false;
+  @Input() isFindings: boolean = false;
   accountTypeMap = ACCOUNT_TYPES;
   /**
    * One of three different display configs presented as a map
@@ -24,12 +25,9 @@ export class TradelineDetailsTableComponent implements OnInit {
   mapper!: Record<string, any>;
   /**
    * Textual key of display config
-   * @property {'revolving' | 'installment' | 'collections' | 'disputeOne' | 'disputeTwo' | 'all'} mapperType
-   * @example
-   *
    * mapperType: 'revolving' | 'installment' | 'collections'
    */
-  mapperType!: 'revolving' | 'installment' | 'collections' | 'disputeOne' | 'disputeTwo' | 'all';
+  mapperType!: 'revolving' | 'installment' | 'collections' | 'disputeOne' | 'disputeTwo' | 'findings' | 'all';
   /**
    * Revolving account display mapping
    * @property {Record<string, any>} revolvingAccountMapping
@@ -118,6 +116,29 @@ export class TradelineDetailsTableComponent implements OnInit {
     disputeFlag: 'Previously Disputed?',
   };
 
+  /**
+   * Dispute page two mapping
+   * @property {Record<string, any>} findingsMapping
+   */
+  private findingsMapping: Record<string, any> = {
+    accountNumber: 'Account Number',
+    accountName: 'Account Name',
+    dateOpened: 'Date Opened',
+    accountDesignator: 'Responsibility',
+    accountTypeSymbol: 'Account Type',
+    accountCodeDescription: 'Loan Type',
+    currentBalance: 'Balance',
+    highestBalance: 'Highest Balance',
+    creditLimit: 'Credit Limit',
+    payStatus: 'Pay Status',
+    scheduledPayments: 'Terms',
+    mostRecentPayment: 'Last Payment Date',
+    amountPastDue: 'Past Due',
+    maxDelinquency: 'Maximum Delinquency',
+    highCredit: 'Original Charge Off',
+    remarks: 'Remarks',
+  };
+
   constructor() {}
 
   ngOnInit(): void {
@@ -127,6 +148,9 @@ export class TradelineDetailsTableComponent implements OnInit {
     } else if (this.isDisputePageTwo) {
       this.mapper = this.disputeTwoMapping;
       this.mapperType = 'disputeTwo';
+    } else if (this.isFindings) {
+      this.mapper = this.findingsMapping;
+      this.mapperType = 'findings';
     } else {
       const symbol = this.typeOverride ? this.typeOverride.toLowerCase() : this.config.accountTypeSymbol?.toLowerCase();
       switch (symbol) {

@@ -19,4 +19,18 @@ export class TransunionScrubbers extends TransunionBase {
     delete clean.owner; // this is a graphql managed field
     return clean;
   }
+
+  static scrubAddressStreets(str: string): string {
+    return str.replace(/[^a-zA-Z0-9\@\' \.\,\#\-\:\;]/gim, '');
+  }
+
+  static scrubCities(str: string): string {
+    const scrubbed = str.replace(/[^A-Za-z ]/gm, '');
+    return `${scrubbed[0].toUpperCase()}${scrubbed.substring(1).toLowerCase()}`;
+  }
+
+  static scrubName(str: string): string {
+    const scrubbed = str.replace(/[A-Za-z' -]/gm, '');
+    return `${scrubbed[0].toUpperCase()}${scrubbed.substring(1).toLowerCase()}`;
+  }
 }

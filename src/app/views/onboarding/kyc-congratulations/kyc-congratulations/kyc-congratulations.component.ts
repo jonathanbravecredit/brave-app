@@ -21,6 +21,6 @@ export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   }
 
   goToNext(): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard/init']);
   }
 }

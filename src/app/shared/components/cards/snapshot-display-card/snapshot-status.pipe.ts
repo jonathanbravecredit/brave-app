@@ -5,7 +5,7 @@ const enumStrColorCLassIndicator = {
   [SnapshotStatus.Danger]: 'brave-danger',
   [SnapshotStatus.Safe]: 'brave-safe',
   [SnapshotStatus.Critical]: 'brave-critical',
-  [SnapshotStatus.Default]: 'lt-gray',
+  [SnapshotStatus.Default]: 'brave-unknown',
 };
 
 @Pipe({
