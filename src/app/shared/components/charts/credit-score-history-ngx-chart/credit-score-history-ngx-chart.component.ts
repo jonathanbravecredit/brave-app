@@ -8,14 +8,13 @@ import { CustomLineChartService } from "@shared/services/charts/custom-line-char
 })
 export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   @ViewChild("chart") chart: any;
-  @Input() multi:
-    | {
+  @Input() multi: {
         name: string;
         series: { name: string; value: number }[];
       }[]
     | undefined;
   // options
-  @Input() view: [number, number] = [300, 212];
+  @Input() view: [number, number] = [300, 300];
   legend: boolean = false;
   showLabels: boolean = false;
   xAxis: boolean = true;
@@ -31,7 +30,7 @@ export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   timeline: boolean = false;
   showRefLines: boolean = true;
   referenceLines: object[] = [];
-  showGridLines: boolean = false
+  showGridLines: boolean = false;
 
   colorScheme = {
     domain: ["#222C9D"],
