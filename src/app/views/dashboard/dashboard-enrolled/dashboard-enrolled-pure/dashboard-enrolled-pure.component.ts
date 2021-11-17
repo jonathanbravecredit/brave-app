@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CreditScoreHistoryNgxChartComponent } from '@shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component';
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 
@@ -23,16 +25,22 @@ export class DashboardEnrolledPureComponent implements OnInit {
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
   constructor() {}
+  pages: any[] = []
+  data: {}[] = []
 
-  pages = [
-    CreditReportGraphicComponent
-  ]
 
-  data = [
-    {currentValue: "report | parseRiskScore"}
-  ]
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pages = [
+      CreditReportGraphicComponent,
+      CreditScoreHistoryNgxChartComponent
+    ]
+
+    this.data = [
+      {currentValue: new ParseRiskScorePipe().transform(this.report),
+      multi: [350, 850, 700, 600], view : [300, 212]}
+    ]
+  }
 
   get score(): number | undefined {
     const creditScore = this.report?.TrueLinkCreditReportType?.Borrower?.CreditScore;
