@@ -47,6 +47,15 @@ export class BaseTableRowComponent {
   /**
    * The global missing value placeholder
    */
+
+  @Input() tooltip: boolean = false;
+
+  @Input() tooltipAction: Function | undefined;
+
+  @Input() icon: string = '';
+
+  @Input() iconStyle: object = {};
+
   missing = TransunionUtil.bcMissing;
 
   dynamicClass = new Set<string>();

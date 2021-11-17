@@ -8,14 +8,14 @@
       class="border-0 rounded-lg shadow-lg relative flex flex-col w-full px-2 bg-white outline-none focus:outline-none"
     >
       <!--header-->
-      <ng-container *ngIf="!config.title">
+      <ng-container *ngIf="config.title">
         <div class="flex items-center justify-between pt-3 rounded-t">
           <h5 class="brave-h5-semibold">{{ config.title }}</h5>
           <span class="material-icons text-3xl" (click)="toggleModal()">close</span>
         </div>
       </ng-container>
       <!--body-->
-      <ng-container *ngIf="!config.body">
+      <ng-container *ngIf="config.body">
         <p class="font-sans text-sm">{{ config.body }}</p>
       </ng-container>
       <!--footer-->
