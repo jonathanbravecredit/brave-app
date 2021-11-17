@@ -1,6 +1,6 @@
 <div class="flex items-center">
   <h2 class="text-xl">Open Accounts:</h2>
-  <span class="text-xl ml-auto">{{ creditCards.length + loans.length  }}</span>
+  <span class="text-xl ml-auto">{{ creditCards.length + loans.length }}</span>
 </div>
 <div class="flex items-center">
   <h3>Credit Cards ({{ creditCards.length }})</h3>
@@ -9,7 +9,7 @@
   </div>
 </div>
 <div *ngIf="isCollectionOpen('credit')">
-  <brave-finantial-mechanism-card finantialMechanismType="credit" *ngFor="let creditCard of creditCards" [finantialMechanism]="creditCard"></brave-finantial-mechanism-card>
+  <!-- <brave-finantial-mechanism-card finantialMechanismType="credit" *ngFor="let creditCard of creditCards" [finantialMechanism]="creditCard"></brave-finantial-mechanism-card> -->
 </div>
 
 <div class="mt-4 flex items-center">
@@ -19,7 +19,7 @@
   </div>
 </div>
 <div *ngIf="isCollectionOpen('loan')">
-  <brave-finantial-mechanism-card finantialMechanismType="loan" *ngFor="let creditCard of creditCards" [finantialMechanism]="creditCard"></brave-finantial-mechanism-card>
+  <!-- <brave-finantial-mechanism-card finantialMechanismType="loan" *ngFor="let creditCard of creditCards" [finantialMechanism]="creditCard"></brave-finantial-mechanism-card> -->
   <div class="w-full py-5 text-center rounded-lg border border-blueGray-300">
     <p class="font-semibold">Personalized Product Offering</p>
     <p class="mt-2">You may qualify for this product. Doing so may improve your credit score.</p>
@@ -38,5 +38,5 @@
   </div>
 </div>
 <div *ngIf="isCollectionOpen('loan')">
-  <brave-finantial-mechanism-card finantialMechanismType="loan" *ngFor="let creditCard of creditCards" [finantialMechanism]="creditCard"></brave-finantial-mechanism-card>
+  <!-- <brave-finantial-mechanism-card finantialMechanismType="loan" *ngFor="let creditCard of creditCards" [finantialMechanism]="creditCard"></brave-finantial-mechanism-card> -->
 </div>

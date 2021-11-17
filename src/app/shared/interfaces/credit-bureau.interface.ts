@@ -117,6 +117,7 @@ export interface ISummarySection {
 }
 
 export interface ILineItem {
+  handle: string;
   itemKey: string;
   itemType: number | string;
   credit: ICredit;
@@ -209,7 +210,7 @@ export interface ITrade extends IRecordBase {
   terms: ITerms;
   account?: IAccount;
   paymentHistory?: IPaymentHistory;
-  mostRecentPayments: IMostRecentPayments;
+  mostRecentPayment: IMostRecentPayments;
   additionalTradeAccount: IAdditionalTradeAccount;
   suppressionFlag: boolean;
   adverseFlag: boolean;
@@ -277,6 +278,7 @@ export interface IPublicRecord extends IRecordBase {
   suppressionIndicator: boolean;
   publicRecordTypeDescription: string;
   order: number | string;
+  originalBalance?: number | string;
 }
 
 export interface IAddOnProduct {

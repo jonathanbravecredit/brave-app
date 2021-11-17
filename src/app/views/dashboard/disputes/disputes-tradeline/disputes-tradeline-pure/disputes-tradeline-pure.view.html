@@ -1,13 +1,16 @@
-<div *ngIf="!isDisputeSent">
-  <p class="text-lg mt-4 mb-4">New Dispute</p>
+<div *ngIf="viewDisplay === 'not-sent'">
+  <p class="text-lg font-bold mt-4 mb-4">New Dispute</p>
   <brave-dispute-header class="mt-4" [tradelinedispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
-  <brave-disputes-tradeline
-    [disputeType]="initialDisputeType"
-    [initialStepId]="initialStepId"
+  <brave-dispute-base
+    [initialStepId]="'select'"
+    [disputeViewState]="disputeViewState"
     (disputeProcessResult)="processResult.emit({ result: $event, tradeline: dispute?.tradeline })"
-    *ngIf="isDisputeProcessInProgress"
-  ></brave-disputes-tradeline>
+    [firstOptionReasonPages]="pageOne"
+    [secondOptionReasonPages]="pageTwo"
+    [processReasons]="reasons"
+  >
+  </brave-dispute-base>
 </div>
-<div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
+<div *ngIf="viewDisplay === 'sent'">
   <brave-disputes-success></brave-disputes-success>
 </div>

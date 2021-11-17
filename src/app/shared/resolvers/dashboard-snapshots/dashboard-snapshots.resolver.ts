@@ -24,11 +24,11 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
     if (!Object.keys(transunion).length || !Object.keys(report).length) {
       return new Promise((resolve) => resolve(null));
     } else if (dashboard?.isLoaded && dashboard?.databreachCards && dashboard?.databreachCards?.length > 0) {
-      // loaded and cards already loaded
+      // loaded and databreach cards already loaded
       // TODO...check if there are any new one
       return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     } else if (dashboard?.isLoaded) {
-      // loaded but cards not loaded...need to load them up
+      // loaded but databreach cards not loaded...need to load them up
       this.flagDatabreaches(report);
       this.store
         .dispatch(new DashboardActions.Edit({ isLoaded: true }))

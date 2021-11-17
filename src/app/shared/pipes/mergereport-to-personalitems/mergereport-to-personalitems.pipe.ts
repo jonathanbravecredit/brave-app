@@ -1,12 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
 import { IBorrower, IBorrowerAddress, IBorrowerName, IEmployer, IMergeReport } from '@shared/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { PersonalDisputeTypes } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import {
   IPersonalItemsDetailsConfig,
   IPersonalItemsDetailsTable,
-} from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
+} from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 
 @Pipe({
   name: 'mergereportToPersonalitems',
@@ -27,9 +26,10 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.borrowersNamesRaw
       ? [
           ...mapped,
-          ...transformed.borrowersNamesRaw.map((name) => {
+          ...transformed.borrowersNamesRaw.map((name: IBorrowerName) => {
+            const nameType = name.NameType?.description?.toLowerCase() === 'primary' ? 'name' : 'aka';
             return this.mapSubitem(
-              'name',
+              nameType,
               name,
               tu.parsers.report.unparseName(name),
               name.dateUpdated || '',
@@ -42,7 +42,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.employersRaw
       ? [
           ...mapped,
-          ...transformed.employersRaw.map((employer) => {
+          ...transformed.employersRaw.map((employer: IEmployer) => {
             return this.mapSubitem(
               'employer',
               employer,
@@ -57,9 +57,9 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
     mapped = transformed.previousAddressesRaw
       ? [
           ...mapped,
-          ...transformed.previousAddressesRaw.map((address) => {
+          ...transformed.previousAddressesRaw.map((address: IBorrowerAddress) => {
             return this.mapSubitem(
-              'address',
+              'prevaddress',
               address,
               tu.parsers.report.unparseAddress(address?.CreditAddress),
               '',
@@ -73,7 +73,7 @@ export class MergereportToPersonalitemsPipe implements PipeTransform {
       ? [
           ...mapped,
           this.mapSubitem(
-            'address',
+            'curraddress',
             transformed.currentAddressRaw,
             tu.parsers.report.unparseAddress(transformed.currentAddressRaw?.CreditAddress),
             '',

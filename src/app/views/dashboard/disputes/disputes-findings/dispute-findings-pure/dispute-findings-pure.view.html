@@ -2,22 +2,30 @@
   [reportCreatedAt]="reportCreatedAt"
   [fileIdentificationNumber]="fileIdentificationNumber"
 ></brave-dispute-findings-header>
+
 <brave-dispute-findings-results></brave-dispute-findings-results>
 <div class="h-1 border-t my-3 border-black opacity-50"></div>
 <brave-dispute-findings-how-to-read></brave-dispute-findings-how-to-read>
-<div class="h-1 border-t my-3 border-black opacity-50"></div>
-<brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
+
+<ng-container
+  *ngIf="(publicRecordConfig | findingsTransformer: findingsConfig.ShowOnUpdated) || (tradelineAccountConfig | findingsTransformer: findingsConfig.ShowOnUpdated)"
+>
+  <div class="h-1 border-t my-3 border-black opacity-50"></div>
+  <brave-dispute-findings-note-credit-report></brave-dispute-findings-note-credit-report>
+</ng-container>
 
 <!-- SPECIFIC DEFINITIONS FOR TRADELINES AND PUBLIC RECORDS -->
-<ng-container *ngIf="tradelineAccountConfig.length > 0">
+<ng-container *ngIf="tradelineAccountConfig | findingsTransformer: findingsConfig.ShowOnUpdated">
   <brave-dispute-findings-definitions [type]="'accounts'"></brave-dispute-findings-definitions>
 </ng-container>
-<ng-container *ngIf="publicRecordConfig.length > 0">
+<ng-container *ngIf="publicRecordConfig | findingsTransformer: findingsConfig.ShowOnUpdated">
   <brave-dispute-findings-definitions [type]="'public-records'"></brave-dispute-findings-definitions>
 </ng-container>
 
 <!-- // IS NOT DELETED = SHOW -->
-<brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
+<ng-container *ngIf="tradelineAccountConfig | findingsTransformer: findingsConfig.ShowRatingsKey">
+  <brave-dispute-findings-rating-key></brave-dispute-findings-rating-key>
+</ng-container>
 
 <div class="mx-3 my-4">
   <div class="flex items-center py-3">
@@ -29,19 +37,17 @@
   <ng-container *ngFor="let tradeline of tradelineAccountConfig">
     <brave-dispute-findings-results-details
       [resultCode]="tradeline.summaryResultCode"
-      [updatedValues]="[tradeline.summaryReason || 'Not Specified']"
+      [updatedValues]="[tradeline.summaryReason || '']"
+      [deletion]="tradeline | findingsTransformer: findingsConfig.ShowOnDeleted"
     >
       <div class="mt-4">
-        <p *ngFor="let value of tradeline.contactDetails">{{value}}</p>
+        <p *ngFor="let value of tradeline?.contactDetails" class="whitespace-pre-wrap">{{value}}</p>
       </div>
-      <div class="flex items-center mt-4 mb-3">
-        <span>Account Details</span>
-      </div>
-      <ng-container *ngIf="tradeline.tradeline">
-        <brave-tradeline-details
-          [tradeline]="tradeline.tradeline"
-          [subscriber]="tradeline.subscriber"
-        ></brave-tradeline-details>
+
+      <ng-container *ngIf="tradeline | findingsTransformer: findingsConfig.ShowDetail">
+        <div *ngIf="tradeline?.tradeline" class="mt-4">
+          <brave-dispute-findings-tradeline-details [tradeline]="tradeline"> </brave-dispute-findings-tradeline-details>
+        </div>
       </ng-container>
     </brave-dispute-findings-results-details>
   </ng-container>
@@ -50,23 +56,37 @@
   <ng-container *ngFor="let publicItem of publicRecordConfig">
     <brave-dispute-findings-results-details
       [resultCode]="publicItem.summaryResultCode"
-      [updatedValues]="[publicItem.summaryReason || 'Not Specified']"
+      [updatedValues]="[publicItem.summaryReason || '']"
     >
-      <div class="flex items-center mt-4 mb-3">
-        <span>Account Details</span>
+      <div class="mt-4">
+        <p *ngFor="let value of publicItem.courtNameArray" class="whitespace-pre-wrap">{{value}}</p>
       </div>
-      <brave-publicitems-details-table [config]="publicItem"></brave-publicitems-details-table>
+
+      <ng-container *ngIf="publicItem | findingsTransformer: findingsConfig.ShowDetail">
+        <div class="flex items-center mt-4 mb-3">
+          <span>Account Details</span>
+        </div>
+        <brave-publicitems-details
+          [config]="publicItem.publicPartition | publicitemToDetails: true"
+        ></brave-publicitems-details>
+      </ng-container>
+      <!-- <brave-publicitems-details-table [config]="publicItem"></brave-publicitems-details-table> -->
     </brave-dispute-findings-results-details>
   </ng-container>
 
   <!-- PERSONAL ITEMS -->
-  <ng-container *ngIf="!!personalInfoConfig">
-    <div class="flex items-center mt-4 mb-3">
-      <span>Personal Information Details</span>
-    </div>
-    <brave-personalitems-details-table
-      [config]="personalInfoConfig.personalItem | personalitemsToDetails"
-    ></brave-personalitems-details-table>
+  <ng-container *ngFor="let personalItem of personalInfoConfig">
+    <brave-dispute-findings-results-details
+      [resultCode]="personalItem.summaryResultCode"
+      [updatedValues]="[personalItem.summaryReason || '']"
+    >
+      <div class="flex items-center mt-4 mb-3">
+        <span>Personal Information Details</span>
+      </div>
+      <brave-personalitems-details-table
+        [config]="personalItem.personalItem | personalitemsToDetails"
+      ></brave-personalitems-details-table>
+    </brave-dispute-findings-results-details>
   </ng-container>
 </div>
 
@@ -76,3 +96,5 @@
 <brave-dispute-findings-contact-info
   [fileIdentificationNumber]="fileIdentificationNumber"
 ></brave-dispute-findings-contact-info>
+<div class="h-1 border-t my-3 border-black opacity-50"></div>
+<brave-dispute-findings-your-rights [stateOfResidence]="stateOfResidence"></brave-dispute-findings-your-rights>

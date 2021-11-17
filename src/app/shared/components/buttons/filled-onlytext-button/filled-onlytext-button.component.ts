@@ -25,7 +25,7 @@ export class FilledOnlytextButtonComponent {
     backgroundColor: 'bg-indigo-800',
     activeColor: 'bg-indigo-900',
     color: 'text-white',
-    full: false
+    full: false,
   };
 
   @Input() disabled: boolean = false;

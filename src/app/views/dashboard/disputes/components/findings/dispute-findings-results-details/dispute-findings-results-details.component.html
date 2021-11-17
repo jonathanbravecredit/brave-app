@@ -1,0 +1,16 @@
+<div class="p-3 rounded-xs border border-blueGray-800">
+  <ng-container *ngIf="resultCode">
+    <span class="text-sm font-semibold" [innerHTML]="resultTypes[resultCode]?.title || ''"></span>
+    <span [innerHTML]="resultTypes[resultCode]?.subtitle || ''"></span>
+    <p class="mt-4">
+      <span class="mt-4" [innerHTML]="resultTypes[resultCode]?.description || ''"></span>
+      <ng-container *ngIf="!deletion">
+        <span class="text-sm font-semibold mx-3" *ngFor="let val of updatedValues" [innerHTML]="val || ''"></span>
+      </ng-container>
+      <span [innerHTML]="resultTypes[resultCode]?.detailDescription || ''"></span>
+    </p>
+  </ng-container>
+  <div>
+    <ng-content></ng-content>
+  </div>
+</div>

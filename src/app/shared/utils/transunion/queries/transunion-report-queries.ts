@@ -232,7 +232,7 @@ export class TransunionReportQueries extends TransunionBase {
     if (!partition) return false;
     const symbol = partition.Tradeline?.PayStatus?.symbol;
     if (!symbol) return false;
-    return !!NEGATIVE_PAY_STATUS_CODES[`${symbol}`];
+    return !!NEGATIVE_PAY_STATUS_CODES[`${symbol}`] || false;
   }
 
   /**
@@ -244,7 +244,7 @@ export class TransunionReportQueries extends TransunionBase {
     if (!partition) return false;
     const symbol = partition.Tradeline?.PayStatus?.symbol;
     if (!symbol) return false;
-    return POSITIVE_PAY_STATUS_CODES[`${symbol}`] || false;
+    return !!POSITIVE_PAY_STATUS_CODES[`${symbol}`] || false;
   }
 
   /**

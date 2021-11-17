@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
-import { TradelineToDisputePipe } from '@shared/pipes/tradeline-to-dispute/tradeline-to-dispute.pipe';
 import { MergereportToCreditreportPipe } from '@shared/pipes/mergereport-to-creditreport/mergereport-to-creditreport.pipe';
 import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
 import { TradelineToPagesPipe } from './tradeline-to-pages/tradeline-to-pages.pipe';
 import { DisputesToDisputesOverviewPipe } from './disputes-to-disputes-overview/disputes-to-disputes-overview.pipe';
+import { DisputesToDisputesHistoricalPipe } from '@shared/pipes/disputes-to-disputes-historical/disputes-to-disputes-historical.pipe';
 import { DisputeToDisputeFindingPipe } from './dispute-to-dispute-finding/dispute-to-dispute-finding.pipe';
 import { MergereportToDashboardPipe } from '@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe';
 import { PublicitemToDisputePipe } from './publicitem-to-dispute/publicitem-to-dispute.pipe';
@@ -27,15 +27,24 @@ import { MergereportToSubscribersPipe } from './mergereport-to-subscribers/merge
 import { MergereportToBreachitemsPipe } from './mergereport-to-breachitems/mergereport-to-breachitems.pipe';
 import { LinkifyPipe } from './linkify/linkify.pipe';
 import { FilterTradelinesPipe } from './filterTradelines/filter-tradelines.pipe';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { ReasonsToPagesPipe } from './reasons-to-pages/reasons-to-pages.pipe';
+import { FilterSubscribersPipe } from './filterSubscribers/filter-subscribers.pipe';
+import { CreditbureauToPersonalitemdetailsPipe } from './creditbureau-to-personalitemdetails/creditbureau-to-personalitemdetails.pipe';
+import { DecodePipe } from './decode/decode.pipe';
+import { FilterPersonalPipe } from './filterPersonal/filter-personal.pipe';
+import { FindingsTransformerPipe } from './findingsTransformer/findings-transformer.pipe';
+import { ConfigToUtilizationPipe } from './config-to-utilization/config-to-utilization.pipe';
+import { TradelineToFindingsPipe } from './tradeline-to-findings/tradeline-to-findings.pipe';
 
 const pipes = [
-  TradelineToDisputePipe,
   TradelineToDetailsPipe,
   TradelineToPagesPipe,
   MergereportToNegativeTradelinesPipe,
   MergereportToCreditreportPipe,
   DisputesToDisputePipe,
   DisputesToDisputesOverviewPipe,
+  DisputesToDisputesHistoricalPipe,
   DisputeToDisputeFindingPipe,
   MergereportToDashboardPipe,
   PublicitemToDisputePipe,
@@ -49,13 +58,22 @@ const pipes = [
   MergereportToBreachitemsPipe,
   CreditbureauToTradelinedetailsPipe,
   CreditbureauToPublicitemdetailsPipe,
+  CreditbureauToPersonalitemdetailsPipe,
   InvestigationresultsToPersonalitemdetailsPipe,
   TradelineToAccountgroupPipe,
   TradelineToForbearancePipe,
+  TradelineToFindingsPipe,
   AccountNumberMaskPipe,
   SsnMaskPipe,
   LinkifyPipe,
+  DecodePipe,
   FilterTradelinesPipe,
+  FilterSubscribersPipe,
+  FilterPersonalPipe,
+  ParseRiskScorePipe,
+  ReasonsToPagesPipe,
+  FindingsTransformerPipe,
+  ConfigToUtilizationPipe,
 ];
 
 @NgModule({

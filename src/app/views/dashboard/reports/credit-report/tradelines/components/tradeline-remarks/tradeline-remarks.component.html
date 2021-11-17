@@ -1,4 +1,4 @@
-<div class="my-8 divide-y divide-blueGray-300">
+<div class="my-8 -mx-2 p-2 divide-y divide-blueGray-300">
   <!-- Remarks -->
   <div class="py-2 px-1">
     <brave-base-table-row [label]="'Remarks'" [value]="remarks"></brave-base-table-row>
@@ -11,7 +11,7 @@
         <ng-container *ngIf="contactDetails?.length; else noContact">
           <ng-container *ngFor="let detail of contactDetails">
             <p *ngIf="detail && detail.length > 0" class="text-xs text-dk-gray text-opacity-75 text-right mb-1">
-              {{ detail }}
+              {{ detail | decode }}
             </p>
           </ng-container>
         </ng-container>
@@ -30,7 +30,7 @@
   </div>
 
   <ng-container *ngIf="featureFlags.disputes$ | async">
-    <div *ngIf="showFooter" class="mb-4">
+    <div *ngIf="showFooter" class="py-2 px-1 mb-4">
       <div><p class="text-s text-dk-gray mb-4">See an error?</p></div>
       <div>
         <p class="text-xs text-dk-gray">

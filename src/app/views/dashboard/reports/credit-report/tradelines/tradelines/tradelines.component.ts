@@ -70,16 +70,15 @@ export class TradelinesComponent {
       .then((resp) => {
         const { success, error } = resp;
         if (success) {
-          this.interstitial.closeInterstitial();
           const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate(['../dispute'], {
-            relativeTo: this.route,
+          this.router.navigate(['/disputes/reconfirm'], {
             queryParams: {
               type: filter,
             },
           });
         } else {
-          this.handleError();
+          const code = `${error?.Code}`;
+          this.handleError(code);
         }
       })
       .catch((err) => {
@@ -87,12 +86,12 @@ export class TradelinesComponent {
       });
   }
 
-  handleError(): void {
+  handleError(code: string = '197'): void {
     this.interstitial.closeInterstitial();
-    this.router.navigate(['../error'], {
+    this.router.navigate(['/disputes/error'], {
       relativeTo: this.route,
       queryParams: {
-        code: '197',
+        code: code,
       },
     });
   }

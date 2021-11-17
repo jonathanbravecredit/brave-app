@@ -24,6 +24,7 @@ export type TExceptionCategoryType = 'open_exists' | 'try_later_s' | 'try_later_
 export interface IBaseExceptionCategory {
   type: TExceptionCategoryType;
   message: string;
+  subheader?: string;
   description: string;
   actionText: string;
   route: string;

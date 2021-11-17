@@ -1,0 +1,11 @@
+<div class="mx-3 my-4">
+  <p class="text-sm" [innerHTML]="content.p1 | linkify"></p>
+  <ul class="mt-4 p-3 list-disc">
+    <li *ngFor="let item of content.list1" class="text-sm mt-2" [innerHTML]="item | linkify"></li>
+  </ul>
+  <p class="text-sm mt-4" [innerHTML]="content.p4 | linkify"></p>
+  <p class="text-sm mt-4">
+    <b>{{ content.p2 }}</b>
+  </p>
+  <p class="text-sm mt-4">{{ content.p3 }}</p>
+</div>

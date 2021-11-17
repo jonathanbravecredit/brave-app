@@ -67,6 +67,7 @@ export class AppComponent implements OnInit {
         this.analytics.fireTimeTracking(event.url);
         this.analytics.incrementUserPageView(event.url);
         this.interstitial.fetching$.next(false);
+        this.interstitial.closeInterstitial();
       }
     });
   }

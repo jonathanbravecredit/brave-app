@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { DisputeInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { AgenciesStateModel } from '@store/agencies';
@@ -10,9 +9,10 @@ import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
+import { IDispute } from '@shared/interfaces/disputes';
 
 @Injectable({
   providedIn: 'root',
@@ -49,11 +49,8 @@ export class DisputeService implements OnDestroy {
   /*===========================================================================*/
   // These help track the responses
   /*===========================================================================*/
-  currentDispute$: BehaviorSubject<DisputeInput> = new BehaviorSubject<DisputeInput>({} as DisputeInput);
+  currentDispute$: BehaviorSubject<IDispute> = new BehaviorSubject<IDispute>({} as IDispute);
   disputeStack: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[] = [];
-  disputes$: BehaviorSubject<(DisputeInput | null)[] | null | undefined> = new BehaviorSubject<
-    (DisputeInput | null)[] | null | undefined
-  >([{} as DisputeInput]);
 
   _acknowledged: boolean = false;
   stateSub$: Subscription;
@@ -71,7 +68,6 @@ export class DisputeService implements OnDestroy {
     });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state.appData;
-      this.disputes$.next(state.appData.agencies?.transunion?.disputes);
       this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     });
   }
@@ -95,6 +91,10 @@ export class DisputeService implements OnDestroy {
     if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
     if (this.personalItemSub$) this.personalItemSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
+  }
+
+  getUserStateOfResidence(): string {
+    return this.statesvc.state?.appData.user?.userAttributes?.address?.state || '';
   }
 
   setTradelineItem(tradeline: ITradeLinePartition): void {
@@ -188,14 +188,37 @@ export class DisputeService implements OnDestroy {
     }
   }
 
+  // /**
+  //  * Query the TU service for any investigation results
+  //  * @returns
+  //  */
+  // async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+  //   try {
+  //     return await this.transunion.getInvestigationResults(disputeId);
+  //   } catch (err) {
+  //     throw `disputeService:getInvestigationResults=${err}`;
+  //   }
+  // }
+
   /**
-   * Query the TU service for any investigation results
+   * Query the TU service for any investigation results by report id
    * @returns
    */
-  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
-    const data: AppDataStateModel = this.store.snapshot()?.appData;
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
     try {
-      return await this.transunion.getInvestigationResults(disputeId);
+      return await this.transunion.getInvestigationResultsById(id);
+    } catch (err) {
+      throw `disputeService:getInvestigationResults=${err}`;
+    }
+  }
+
+  /**
+   * Query the TU service for any investigation results by report id
+   * @returns
+   */
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
+    try {
+      return await this.transunion.getCreditBureauResultsById(id);
     } catch (err) {
       throw `disputeService:getInvestigationResults=${err}`;
     }

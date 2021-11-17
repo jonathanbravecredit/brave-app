@@ -1,0 +1,26 @@
+<div class="mx-3 my-4">
+  <div class="flex items-center">
+    <div class="w-1 h-10 bg-purple-800 mr-4"></div>
+    <p class="font-semibold">{{ content.p1 }}</p>
+  </div>
+  <p class="text-sm mt-4">{{ content.p2 }}</p>
+  <p class="text-sm mt-4">{{ content.p3 }}</p>
+  <ul class="list-decimal mx-2 text-sm mt-4">
+    <li *ngFor="let item of content.list1">
+      {{ item.p }}
+      <ul *ngIf="item.sublist" class="list-disc mx-4 text-sm mt-4">
+        <li *ngFor="let subitem of item.sublist">
+          {{ subitem.p }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p class="text-sm mt-4">{{ content.p4 }}</p>
+  <p class="text-sm mt-4">{{ content.p5 }}</p>
+  <!-- <p class="text-sm mt-4" [innerHTML]="content.p6 | linkify"></p> -->
+  <p class="text-sm mt-4">
+    <span>{{ content.p6 }}</span
+    ><a [routerLink]="[content.link1.link]" class="text-indigo-800">&nbsp;{{ content.link1.text }}&nbsp;</a
+    ><span>{{ content.p7 }}</span>
+  </p>
+</div>

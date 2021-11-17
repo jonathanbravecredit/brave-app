@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 
 @Component({
@@ -11,6 +12,8 @@ export class ConfirmationModalComponent extends BaseModalComponent implements On
   @Input() btnTextCancel: string = 'Cancel';
   @ViewChild(BaseModalComponent) baseModal: BaseModalComponent | undefined;
 
+  confirmed$ = new BehaviorSubject<boolean>(false);
+
   constructor() {
     super();
   }
@@ -18,6 +21,7 @@ export class ConfirmationModalComponent extends BaseModalComponent implements On
   ngOnInit(): void {}
 
   confirm(val: boolean): void {
+    this.confirmed$.next(val);
     this.confirmed.emit(val);
     this.baseModal?.close();
   }

@@ -13,7 +13,8 @@ import {
   IVerifyAuthenticationQuestionsMsg,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces';
-import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { IDispute } from '@shared/interfaces/disputes';
+import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
@@ -207,7 +208,6 @@ export class TransunionService {
   /**
    * Call the backend to query TU for investigation results
    * - occurs if a dispute is closed, but the results not returned
-   * - this happens when results are auto closed
    * @param disputeId
    * @returns
    */
@@ -215,6 +215,62 @@ export class TransunionService {
     try {
       const msg = { disputeId };
       const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Get the investigation results data from IR table.
+   * @param id
+   * @returns
+   */
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetInvestigationResultsByID', JSON.stringify({ id }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Call the backend to query TU for investigation results
+   * - occurs if a dispute is closed, but the results not returned
+   * - this happens when results are auto closed
+   * @param disputeId
+   * @returns
+   */
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetCreditBureauResultsByID', JSON.stringify({ id }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * List all disputes by user
+   * @returns
+   */
+  async listAllDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetAllDisputesByUser', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Gets only the latest and current dispute by user
+   * @returns
+   */
+  async getCurrentDisputeByUser(): Promise<ITUServiceResponse<IDispute | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetCurrentDisputeByUser', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };
@@ -298,18 +354,3 @@ export class TransunionService {
     };
   }
 }
-
-// TODO use a pascal to camel converter
-const mapReportResponse = (res: IEnrollServiceProductResponse | undefined): TUReportResponseInput | null => {
-  if (res === undefined) return null;
-  return {
-    bureau: res['Bureau'],
-    errorResponse: res['ErrorResponse'],
-    serviceProduct: res['ServiceProduct'],
-    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
-    serviceProductObject: JSON.stringify(res['ServiceProductObject']),
-    serviceProductTypeId: res['ServiceProductTypeId'],
-    serviceProductValue: res['ServiceProductValue'],
-    status: res['Status'],
-  } as TUReportResponseInput;
-};

@@ -13,7 +13,20 @@ export const PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff`,
 };
 
-export const NEGATIVE_PAY_STATUS_CODES: Record<string, any> = {
+export const PAY_STATUS_WARNINGS: Record<string, string> = {
+  '1': `brave-danger`,
+  '2': `brave-danger`,
+  '3': `brave-critical`,
+  '4': `brave-critical`,
+  '8R': `brave-critical`,
+  '9': `brave-critical`,
+  U: `brave-unknown`,
+  C: `brave-safe`,
+  '0': `brave-safe`,
+  '7': `brave-safe`,
+};
+
+export const NEGATIVE_PAY_STATUS_CODES: Record<string, string> = {
   '1': `Late 30 Days`,
   '2': `Late 60 Days`,
   '3': `Late 90 Days`,
@@ -22,7 +35,7 @@ export const NEGATIVE_PAY_STATUS_CODES: Record<string, any> = {
   '9': `Collection Chargeoff`,
 };
 
-export const POSITIVE_PAY_STATUS_CODES: Record<string, any> = {
+export const POSITIVE_PAY_STATUS_CODES: Record<string, string> = {
   U: `No Data / Unknown`,
   C: `Current`,
   '0': `Too New to Rate`,
@@ -30,6 +43,7 @@ export const POSITIVE_PAY_STATUS_CODES: Record<string, any> = {
 };
 
 export const BRAVE_ACCOUNT_TYPE: Record<string, any> = {
+  '0': `Too New to Rate`,
   '1': `30-Day Late Payment`,
   '2': `60-Day Late Payment`,
   '3': `90-Day Late Payment`,
@@ -37,6 +51,8 @@ export const BRAVE_ACCOUNT_TYPE: Record<string, any> = {
   '7': `Wage Earner Plan`,
   '8R': `Repossesion Account`,
   '9': `Collection Chargeoff Account`,
+  U: `No Data / Unknown`,
+  C: `Current`,
 };
 
 export const LATE_PAY_STATUS_CODES: Record<string, any> = {

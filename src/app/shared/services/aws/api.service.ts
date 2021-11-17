@@ -45,8 +45,6 @@ export type Transunion = {
   disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
-  disputeStatus?: string | null;
-  disputes?: Array<Dispute | null> | null;
 };
 
 export type TUStatusRef = {
@@ -68,46 +66,6 @@ export type TUReportResponse = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
-};
-
-export type Dispute = {
-  __typename: "Dispute";
-  id?: string;
-  appDataId?: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: DisputeSummary;
-  closedDisputes?: DisputeSummary;
-  pvDisputedItems?: PVDisputedItems;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeInvestigationResults?: string | null;
-  disputeCreditBureau?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type DisputeSummary = {
-  __typename: "DisputeSummary";
-  estimatedCompletionDate?: string | null;
-  lastUpdatedDate?: string | null;
-  openDate?: string | null;
-  requestedDate?: string | null;
-  totalClosedDisputedItems?: string | null;
-  totalDisputedItems?: string | null;
-  totalOpenDisputedItems?: string | null;
-  totalPVDisputedItemCount?: string | null;
-};
-
-export type PVDisputedItems = {
-  __typename: "PVDisputedItems";
-  pvTradelines?: string | null;
-  pvPublicRecords?: string | null;
 };
 
 export type CreateAppDataInput = {
@@ -223,8 +181,6 @@ export type TransunionInput = {
   disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
-  disputeStatus?: string | null;
-  disputes?: Array<DisputeInput | null> | null;
 };
 
 export type TUStatusRefInput = {
@@ -244,43 +200,6 @@ export type TUReportResponseInput = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
-};
-
-export type DisputeInput = {
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: DisputeSummaryInput | null;
-  closedDisputes?: DisputeSummaryInput | null;
-  pvDisputedItems?: PVDisputedItemsInput | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeInvestigationResults?: string | null;
-  disputeCreditBureau?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type DisputeSummaryInput = {
-  estimatedCompletionDate?: string | null;
-  lastUpdatedDate?: string | null;
-  openDate?: string | null;
-  requestedDate?: string | null;
-  totalClosedDisputedItems?: string | null;
-  totalDisputedItems?: string | null;
-  totalOpenDisputedItems?: string | null;
-  totalPVDisputedItemCount?: string | null;
-};
-
-export type PVDisputedItemsInput = {
-  pvTradelines?: string | null;
-  pvPublicRecords?: string | null;
 };
 
 export type EquifaxInput = {
@@ -706,52 +625,6 @@ export type PatchTransunionMutation = {
   disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
-  disputeStatus?: string | null;
-  disputes?: Array<{
-    __typename: "Dispute";
-    id: string;
-    appDataId: string;
-    disputeId?: string | null;
-    disputeStatus?: string | null;
-    disputeLetterCode?: string | null;
-    disputeLetterContent?: string | null;
-    openDisputes?: {
-      __typename: "DisputeSummary";
-      estimatedCompletionDate?: string | null;
-      lastUpdatedDate?: string | null;
-      openDate?: string | null;
-      requestedDate?: string | null;
-      totalClosedDisputedItems?: string | null;
-      totalDisputedItems?: string | null;
-      totalOpenDisputedItems?: string | null;
-      totalPVDisputedItemCount?: string | null;
-    } | null;
-    closedDisputes?: {
-      __typename: "DisputeSummary";
-      estimatedCompletionDate?: string | null;
-      lastUpdatedDate?: string | null;
-      openDate?: string | null;
-      requestedDate?: string | null;
-      totalClosedDisputedItems?: string | null;
-      totalDisputedItems?: string | null;
-      totalOpenDisputedItems?: string | null;
-      totalPVDisputedItemCount?: string | null;
-    } | null;
-    pvDisputedItems?: {
-      __typename: "PVDisputedItems";
-      pvTradelines?: string | null;
-      pvPublicRecords?: string | null;
-    } | null;
-    agencyName?: string | null;
-    openedOn?: string | null;
-    closedOn?: string | null;
-    disputeItems?: string | null;
-    disputeInvestigationResults?: string | null;
-    disputeCreditBureau?: string | null;
-    notificationStatus?: string | null;
-    notificationMessage?: string | null;
-    notificationSentOn?: string | null;
-  } | null> | null;
 };
 
 export type CreateAppDataMutation = {
@@ -933,52 +806,6 @@ export type CreateAppDataMutation = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1214,52 +1041,6 @@ export type UpdateAppDataMutation = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1495,52 +1276,6 @@ export type DeleteAppDataMutation = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1776,52 +1511,6 @@ export type GetAppDataQuery = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -2059,52 +1748,6 @@ export type ListAppDatasQuery = {
         disputeEnrollmentKey?: string | null;
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
-        disputeStatus?: string | null;
-        disputes?: Array<{
-          __typename: "Dispute";
-          id: string;
-          appDataId: string;
-          disputeId?: string | null;
-          disputeStatus?: string | null;
-          disputeLetterCode?: string | null;
-          disputeLetterContent?: string | null;
-          openDisputes?: {
-            __typename: "DisputeSummary";
-            estimatedCompletionDate?: string | null;
-            lastUpdatedDate?: string | null;
-            openDate?: string | null;
-            requestedDate?: string | null;
-            totalClosedDisputedItems?: string | null;
-            totalDisputedItems?: string | null;
-            totalOpenDisputedItems?: string | null;
-            totalPVDisputedItemCount?: string | null;
-          } | null;
-          closedDisputes?: {
-            __typename: "DisputeSummary";
-            estimatedCompletionDate?: string | null;
-            lastUpdatedDate?: string | null;
-            openDate?: string | null;
-            requestedDate?: string | null;
-            totalClosedDisputedItems?: string | null;
-            totalDisputedItems?: string | null;
-            totalOpenDisputedItems?: string | null;
-            totalPVDisputedItemCount?: string | null;
-          } | null;
-          pvDisputedItems?: {
-            __typename: "PVDisputedItems";
-            pvTradelines?: string | null;
-            pvPublicRecords?: string | null;
-          } | null;
-          agencyName?: string | null;
-          openedOn?: string | null;
-          closedOn?: string | null;
-          disputeItems?: string | null;
-          disputeInvestigationResults?: string | null;
-          disputeCreditBureau?: string | null;
-          notificationStatus?: string | null;
-          notificationMessage?: string | null;
-          notificationSentOn?: string | null;
-        } | null> | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -2342,52 +1985,6 @@ export type OnCreateAppDataSubscription = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -2623,52 +2220,6 @@ export type OnUpdateAppDataSubscription = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -2904,52 +2455,6 @@ export type OnDeleteAppDataSubscription = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -3139,52 +2644,6 @@ export class APIService {
           disputeEnrollmentKey
           disputeEnrolled
           disputeEnrolledOn
-          disputeStatus
-          disputes {
-            __typename
-            id
-            appDataId
-            disputeId
-            disputeStatus
-            disputeLetterCode
-            disputeLetterContent
-            openDisputes {
-              __typename
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            closedDisputes {
-              __typename
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            pvDisputedItems {
-              __typename
-              pvTradelines
-              pvPublicRecords
-            }
-            agencyName
-            openedOn
-            closedOn
-            disputeItems
-            disputeInvestigationResults
-            disputeCreditBureau
-            notificationStatus
-            notificationMessage
-            notificationSentOn
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -3382,52 +2841,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -3679,52 +3092,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -3976,52 +3343,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -4283,52 +3604,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -4580,52 +3855,6 @@ export class APIService {
                 disputeEnrollmentKey
                 disputeEnrolled
                 disputeEnrolledOn
-                disputeStatus
-                disputes {
-                  __typename
-                  id
-                  appDataId
-                  disputeId
-                  disputeStatus
-                  disputeLetterCode
-                  disputeLetterContent
-                  openDisputes {
-                    __typename
-                    estimatedCompletionDate
-                    lastUpdatedDate
-                    openDate
-                    requestedDate
-                    totalClosedDisputedItems
-                    totalDisputedItems
-                    totalOpenDisputedItems
-                    totalPVDisputedItemCount
-                  }
-                  closedDisputes {
-                    __typename
-                    estimatedCompletionDate
-                    lastUpdatedDate
-                    openDate
-                    requestedDate
-                    totalClosedDisputedItems
-                    totalDisputedItems
-                    totalOpenDisputedItems
-                    totalPVDisputedItemCount
-                  }
-                  pvDisputedItems {
-                    __typename
-                    pvTradelines
-                    pvPublicRecords
-                  }
-                  agencyName
-                  openedOn
-                  closedOn
-                  disputeItems
-                  disputeInvestigationResults
-                  disputeCreditBureau
-                  notificationStatus
-                  notificationMessage
-                  notificationSentOn
-                }
               }
               equifax {
                 __typename
@@ -4882,52 +4111,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -5176,52 +4359,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -5470,52 +4607,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
