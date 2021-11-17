@@ -17,8 +17,8 @@ export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   animations: boolean = false;
   xAxis: boolean = true;
   yAxis: boolean = true;
-  yAxisTicks = [300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850];
-  yScaleMin = 300;
+  yAxisTicks = [350, 600, 850];
+  yScaleMin = 350;
   yScaleMax = 850;
   showYAxisLabel: boolean = false;
   showXAxisLabel: boolean = false;
@@ -28,11 +28,11 @@ export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   timeline: boolean = false;
 
   colorScheme = {
-    domain: ['#D946EF'],
+    domain: ['#222C9D'],
   };
 
   constructor(private customLineChartService: CustomLineChartService) {
-    this.customLineChartService.dotColor = '#3730A3';
+    this.customLineChartService.dotColor = '#222C9D';
     Object.assign(this, { multi });
   }
 
