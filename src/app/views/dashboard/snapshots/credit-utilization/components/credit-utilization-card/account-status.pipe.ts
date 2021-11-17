@@ -16,4 +16,5 @@ const statuses: Record<string, any> = {
   fair: "#F59300",
   poor: "#F56700",
   verypoor: '#E93C25',
+  closed: '#DADADA',
 };

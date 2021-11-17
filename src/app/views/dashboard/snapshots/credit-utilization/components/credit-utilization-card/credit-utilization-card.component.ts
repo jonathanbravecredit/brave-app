@@ -6,6 +6,7 @@ import {
   OnInit,
 } from "@angular/core";
 import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
+import { TransunionUtil } from "@shared/utils/transunion/transunion";
 import { TradelineDetailsTableComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component";
 import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
 import { TradelineRemarksComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component";
@@ -28,7 +29,9 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   @Input() creditUtilizationType: "credit" | "credit-utilization" | "loan" =
     "credit";
 
-  percetangeUtilization: number | undefined;
+  @Input() open : boolean = false
+
+  percetangeUtilization: number | string | undefined;
 
   creditStatus: string | undefined;
 
@@ -48,6 +51,8 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
     );
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
+
+
   }
 
   ngAfterViewInit(): void {
@@ -59,9 +64,13 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   calculatePercentageUtilization(
     currentBalence: string | number | undefined,
     creditLimit: string | number | undefined
-  ): number | undefined {
+  ): number | string | undefined {
     if (currentBalence === undefined || creditLimit === undefined) {
       return undefined;
+    }
+
+    if (!this.open) {
+      return TransunionUtil.bcMissing
     }
 
     if (currentBalence >= 0 && creditLimit !== 0) {
@@ -71,7 +80,12 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
     return undefined;
   }
 
-  calculateCreditStatus(percetangeUtilization: number | undefined): string {
+  calculateCreditStatus(percetangeUtilization: number | string | undefined): string {
+
+    if (!this.open) {
+      return "closed";
+    }
+
     switch (true) {
       case percetangeUtilization! <= 9:
         return "excellent";
