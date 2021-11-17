@@ -5,16 +5,16 @@
   </div>
   <ng-container *ngIf="!injected">
     <p *ngIf="valueType === 'account'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
-      {{ !value ? missing : value === '--' ? value : (value | accountNumberMask) }}
+      {{ value === undefined ? missing : value === '--' ? value : (value | accountNumberMask) }}
     </p>
     <p *ngIf="valueType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
-      {{ !value? missing : value === '--' ? value : (value | currency: 'USD':'symbol':'1.0-0') }}
+      {{ value === undefined ? missing : value === '--' ? value : (value | currency: 'USD':'symbol':'1.0-0') }}
     </p>
     <p *ngIf="valueType === 'date'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
-      {{ !value ? missing : value === '--' ? value : (value | date: 'shortDate') }}
+      {{ value === undefined ? missing : value === '--' ? value : (value | date: 'shortDate') }}
     </p>
     <p *ngIf="valueType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
-      {{ !value ? missing : value === '--' ? value : (value.toString() | decode) }}
+      {{ value === undefined ? missing : value === '--' ? value : (value.toString() | decode) }}
     </p>
   </ng-container>
   <ng-container *ngIf="injected">
