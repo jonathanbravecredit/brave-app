@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
@@ -22,6 +23,14 @@ export class DashboardEnrolledPureComponent implements OnInit {
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
   constructor() {}
+
+  pages = [
+    CreditReportGraphicComponent
+  ]
+
+  data = [
+    {currentValue: "report | parseRiskScore"}
+  ]
 
   ngOnInit(): void {}
 
