@@ -18,10 +18,6 @@ export class DisputeHeaderTradelineComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  originalCreditorTooltipFunc = () => {
-    this.openModal()
-  };
-
   openModal = () => {
     return this.modalService.appendModalToBody(BaseModalSmallComponent, {'config': {
       openButtonText: '',

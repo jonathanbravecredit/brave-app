@@ -28,7 +28,6 @@ export class BaseModalRegularComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.config)
   }
 
   toggleModal() {
