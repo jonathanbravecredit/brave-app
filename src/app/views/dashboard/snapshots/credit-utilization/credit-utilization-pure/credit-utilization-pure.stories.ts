@@ -304,13 +304,230 @@ const testPartition = {
   },
 } as ITradeLinePartition;
 
+const testPartitionTwo = {
+  accountTypeAbbreviation: "Revolving",
+  accountTypeDescription: "Revolving Account",
+  accountTypeSymbol: "R",
+  Tradeline: {
+    PayStatus: {
+      symbol: 1,
+      description: "Late 30 Days",
+      rank: 105,
+      abbreviation: "30 Delinq",
+    },
+    creditorName: "HRSI BANK-WHIRL",
+    IndustryCode: {
+      symbol: "B",
+      description: "Bank",
+      rank: 199,
+      abbreviation: "Bank",
+    },
+    GrantedTrade: {
+      PayStatusHistory: {
+        MonthlyPayStatus: [
+          {
+            date: "1999-07-01",
+            status: 1,
+          },
+          {
+            date: "1999-06-01",
+            status: "C",
+          },
+          {
+            date: "1999-05-01",
+            status: 1,
+          },
+          {
+            date: "1999-03-31",
+            status: "C",
+          },
+          {
+            date: "1999-02-28",
+            status: "C",
+          },
+          {
+            date: "1999-01-31",
+            status: 1,
+          },
+          {
+            date: "1998-12-31",
+            status: "C",
+          },
+          {
+            date: "1998-11-30",
+            status: "C",
+          },
+          {
+            date: "1998-10-31",
+            status: "C",
+          },
+          {
+            date: "1998-10-01",
+            status: "C",
+          },
+          {
+            date: "1998-09-01",
+            status: "C",
+          },
+          {
+            date: "1998-08-01",
+            status: "C",
+          },
+          {
+            date: "1998-07-01",
+            status: "C",
+          },
+          {
+            date: "1998-06-01",
+            status: "C",
+          },
+          {
+            date: "1998-05-01",
+            status: "C",
+          },
+          {
+            date: "1998-03-31",
+            status: "C",
+          },
+          {
+            date: "1998-02-28",
+            status: "C",
+          },
+          {
+            date: "1998-01-31",
+            status: "C",
+          },
+          {
+            date: "1997-12-31",
+            status: 1,
+          },
+          {
+            date: "1997-11-30",
+            status: "C",
+          },
+          {
+            date: "1997-10-31",
+            status: "C",
+          },
+          {
+            date: "1997-10-01",
+            status: "",
+          },
+          {
+            date: "1997-09-01",
+            status: "",
+          },
+          {
+            date: "1997-08-01",
+            status: "",
+          },
+        ],
+        startDate: "1999-07-01",
+        status: "1C1CC1CCCCCCCCCCCC1CC",
+      },
+      CreditLimit: 5000,
+      worstPatStatusCount: 23,
+      PaymentFrequency: {
+        symbol: "",
+        description: "",
+        rank: 100000,
+        abbreviation: "",
+      },
+      late90Count: 0,
+      late60Count: 0,
+      dateLastPayment: "1999-05-01",
+      AccountType: {
+        symbol: "CH",
+        description: "Charge account",
+        rank: 50,
+        abbreviation: "Charge account",
+      },
+      TermType: {
+        symbol: "P",
+        description: "Provided",
+        rank: 199,
+        abbreviation: "Provided",
+      },
+      monthlyPayment: 20,
+      termMonths: 0,
+      WorstPayStatus: {
+        symbol: 1,
+        description: "Late 30 Days",
+        rank: 105,
+        abbreviation: "30 Delinq",
+      },
+      monthsReviewed: 23,
+      collateral: "",
+      amountPastDue: 20,
+      CreditType: {
+        symbol: "R",
+        description: "Revolving Account",
+        rank: 50,
+        abbreviation: "Revolving",
+      },
+      late30Count: 4,
+    },
+    currentBalance: 500,
+    subscriberCode: "0235197E",
+    handle: "TR01_-451755518_691610874_82",
+    dateAccountStatus: "1999-07-01",
+    accountNumber: 15905771999,
+    DisputeFlag: {
+      symbol: "F",
+      description: "Account not disputed",
+      rank: 199,
+      abbreviation: "Account not disputed",
+    },
+    Source: {
+      InquiryDate: "1999-07-28",
+      Reference: "bdd1b720-0ccc-4562-8a5",
+      BorrowerKey: "",
+      Bureau: {
+        symbol: "TUC",
+        description: "TransUnion",
+        rank: 1,
+        abbreviation: "TransUnion",
+      },
+    },
+    OpenClosed: {
+      symbol: "C",
+      description: "Open",
+      rank: 199,
+      abbreviation: "Open",
+    },
+    highBalance: 364,
+    dateOpened: "1997-08-01",
+    dateReported: "1999-07-01",
+    VerificationIndicator: {
+      symbol: "F",
+      description: "Account not disputed",
+      rank: 199,
+      abbreviation: "Account not disputed",
+    },
+    position: 0,
+    dateVerified: "1999-07-01",
+    bureau: "TransUnion",
+    AccountDesignator: {
+      symbol: "I",
+      description: "Individual",
+      rank: 199,
+      abbreviation: "Individual",
+    },
+    AccountCondition: {
+      symbol: "O",
+      description: "Open",
+      rank: 60,
+      abbreviation: "Open",
+    },
+  },
+} as ITradeLinePartition;
 
 export const Default = Template.bind({});
 Default.args = {
   creditAcounts: [
     testPartition,
     testPartition,
-    testPartition,
+    testPartitionTwo,
   ],
   hasCards: true,
   debtAmount: 5000,
