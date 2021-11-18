@@ -16,6 +16,7 @@ import { TradelineSummaryComponent } from '@views/dashboard/reports/credit-repor
 import { TradelinesPureComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines-pure/tradelines-pure.component';
 import { TradelinesComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines/tradelines.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { CreditUtilizationFillBarComponent } from '@shared/components/charts/credit-utilization-fill-bar/credit-utilization-fill-bar.component';
 
 const components = [
   TradelinesComponent,
