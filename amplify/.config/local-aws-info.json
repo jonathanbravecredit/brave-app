@@ -2,7 +2,7 @@
   "dev": {
     "configLevel": "project",
     "useProfile": true,
-    "profileName": "amplify-development-v1"
+    "profileName": "amplify-development-v2"
   },
   "qa": {
     "configLevel": "project",
