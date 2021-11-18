@@ -128,7 +128,7 @@ export class DashboardEnrolledComponent implements OnInit {
       getTrendingData.ProductAttributes.ProductTrendingAttribute
         .ProductAttributeData;
     let creditScoreDataObj: IResultsData = {
-      name: "Credit Scores",
+      name: "Credit Score",
       series: [],
     };
     if (dataArray instanceof Array) {
