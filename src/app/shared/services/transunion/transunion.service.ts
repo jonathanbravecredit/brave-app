@@ -13,6 +13,7 @@ import {
   IVerifyAuthenticationQuestionsMsg,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IDispute } from '@shared/interfaces/disputes';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
@@ -159,6 +160,18 @@ export class TransunionService {
   }
 
   /**
+   * Send request to backend to get their credit score snapshots
+   */
+  async getCreditScores(): Promise<ITUServiceResponse<ICreditScoreTracking | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetCreditScoreTracking', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
    * Send the preflight check which performs the following:
    *  - Checks if the user is enrolled in disputes, if not, enrolls them
    *  - Checks when the user last refreshed their report, if < 24hrs, refreshes
@@ -181,6 +194,20 @@ export class TransunionService {
   async getDisputeStatus(): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
     try {
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Request the trending data by user from a given date
+   * @param fromDate ISO string date format
+   * @returns
+   */
+  async getTrendingData(fromDate: string): Promise<ITUServiceResponse<any | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetTrendingData', JSON.stringify({ param: { fromDate } }));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };

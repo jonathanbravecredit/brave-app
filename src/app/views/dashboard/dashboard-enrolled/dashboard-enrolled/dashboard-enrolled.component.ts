@@ -6,6 +6,7 @@ import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -17,6 +18,7 @@ export class DashboardEnrolledComponent implements OnInit {
   lastUpdated: number | string | Date | undefined;
   report: IMergeReport | undefined;
   snapshots: DashboardStateModel | undefined;
+  scores!: ICreditScoreTracking | null;
 
   constructor(
     private store: Store,
@@ -28,6 +30,7 @@ export class DashboardEnrolledComponent implements OnInit {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
       this.snapshots = resp.dashboard.snapshots;
+      this.scores = resp.dashboard.scores || null;
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
