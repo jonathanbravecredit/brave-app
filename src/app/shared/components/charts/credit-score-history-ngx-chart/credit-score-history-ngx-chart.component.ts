@@ -1,4 +1,5 @@
 import { Component, ViewChild, AfterViewInit, Input } from "@angular/core";
+import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
 import { CustomLineChartService } from "@shared/services/charts/custom-line-chart.service";
 
 @Component({
@@ -8,10 +9,7 @@ import { CustomLineChartService } from "@shared/services/charts/custom-line-char
 })
 export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   @ViewChild("chart") chart: any;
-  @Input() multi: {
-        name: string;
-        series: { name: string; value: number }[];
-      }[]
+  @Input() multi: IResultsData[]
     | undefined;
   // options
   @Input() view: [number, number] = [300, 300];
@@ -31,6 +29,7 @@ export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   showRefLines: boolean = true;
   referenceLines: object[] = [];
   showGridLines: boolean = false;
+  trimXAxisTicks: boolean = false;
 
   colorScheme = {
     domain: ["#222C9D"],
