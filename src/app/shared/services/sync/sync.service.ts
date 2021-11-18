@@ -100,7 +100,6 @@ export class SyncService implements OnDestroy {
       this.data$.next(clean);
       return !data.id;
     } catch (err) {
-      console.log('isUserBrandNew ==> ', err);
       return true;
     }
   }
