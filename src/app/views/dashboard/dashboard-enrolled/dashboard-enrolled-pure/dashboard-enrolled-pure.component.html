@@ -4,6 +4,7 @@
   <a [routerLink]="['/dashboard/report']">
     <brave-credit-report-graphic-no-graph
       [currentValue]="report | parseRiskScore"
+      [ptsChange]="scores?.delta || 0"
     ></brave-credit-report-graphic-no-graph>
   </a>
 </div>
