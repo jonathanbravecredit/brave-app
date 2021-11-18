@@ -12,6 +12,8 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() cards: DashboardStateModel | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
+  @Input() pages: any[] = [];
+  @Input() data: {}[] = [];
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
@@ -22,8 +24,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
   constructor() {}
-  @Input() pages: any[] = [];
-  @Input() data: {}[] = [];
+
 
   ngOnInit(): void {
 
