@@ -2,14 +2,14 @@
     <div class="mb-2 font-bold text-xs">{{isLoan ? "Percent of Loan Remaining" : 'Credit Utilization'}}</div>
     <div class="mb-2.5">
         <div class="mb-2" style="min-width: 300px; min-height: 1rem; border: 1px solid black; border-radius: 0.5rem;">
-            <div class="m-1" style="background-color: #222C9D; min-height: 1rem; border-radius: 0.25rem" [ngStyle]="{'width': utilPercentage}">
+            <div *ngIf="isOpen" class="m-1" style="background-color: #222C9D; min-height: 1rem; border-radius: 0.25rem" [ngStyle]="{'width': utilPercentage}">
                 <span class="text-white min-w-full flex justify-center items-center font-light" style="font-size: 0.5rem; min-height: 1rem">{{utilPercentage}}</span>
             </div>
         </div>
         <div class="min-w-full flex justify-between" style="font-size: 0.5rem;">
             <span>$0</span>
-            <span>${{maxCreditAmount}}</span>
+            <span>{{isLoan ? (highestBalance | currency) : maxCreditAmount | currency}}</span>
         </div>
     </div>
-    <div class="text-sm">{{isLoan ? "You have paid down" : "You're using"}} <span class="text-sm font-bold">{{utilPercentage}}</span> of your {{isLoan ? "loan" : "credit limit"}}</div>
+    <div class="text-sm">{{isLoan ? "You have paid down" : "You're using"}} <span class="text-sm font-bold">{{isOpen ? utilPercentage : '--' }}</span> of your {{isLoan ? "loan" : "credit limit"}}</div>
 </div>
