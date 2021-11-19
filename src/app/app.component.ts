@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Hub } from '@aws-amplify/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Observable } from 'rxjs';
@@ -15,10 +15,10 @@ export class AppComponent implements OnInit {
   title = 'brave-app';
   spinner$: Observable<boolean>;
   message$: Observable<string>;
-
   // inject app monitoring services and auth service
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private analytics: AnalyticsService,
     private init: InitService,
     private interstitial: InterstitialService,

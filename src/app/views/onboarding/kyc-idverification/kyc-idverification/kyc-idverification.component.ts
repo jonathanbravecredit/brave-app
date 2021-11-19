@@ -19,6 +19,7 @@ import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatusReason } from '@shared/utils/brave/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -37,6 +38,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     private kycService: KycService,
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
+    private referral: ReferralsService,
   ) {
     super();
   }
@@ -145,6 +147,8 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
+      const email = await this.kycService.getUserEmail();
+
       success
         ? this.router.navigate(['../congratulations'], {
             relativeTo: this.route,
