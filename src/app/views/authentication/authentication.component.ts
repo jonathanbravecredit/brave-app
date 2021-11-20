@@ -13,6 +13,7 @@ export class AuthenticationComponent implements OnDestroy {
     //referral code
     this.routeSub$ = this.route.queryParams.subscribe((params) => {
       const { referralCode } = params;
+      console.log('referralCode ==> ', referralCode);
       if (!referralCode) return;
       this.referrals.referredByCode$.next(referralCode);
     });
