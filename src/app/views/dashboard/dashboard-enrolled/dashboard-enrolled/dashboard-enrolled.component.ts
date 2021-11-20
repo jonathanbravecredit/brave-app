@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
@@ -7,6 +7,8 @@ import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 @Component({
   selector: 'brave-dashboard-enrolled',

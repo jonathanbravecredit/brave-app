@@ -6,6 +6,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/signup/signup/content';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -22,6 +23,7 @@ export class SignupComponent implements OnInit {
     private auth: AuthService,
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
+    private referral: ReferralsService,
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +46,8 @@ export class SignupComponent implements OnInit {
           this.analytics.fireCompleteRegistration(0.0, 'USD');
           this.analytics.fireUserTrackingEvent(sub);
           this.analytics.addToCohort();
+          const code = this.referral.referredByCode$.value;
+          this.referral.createReferral(sub, code);
         });
         this.interstitial.fetching$.next(false);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
