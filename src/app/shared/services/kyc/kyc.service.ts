@@ -129,6 +129,14 @@ export class KycService {
     return await this.auth.getUserEmail();
   }
 
+  /**
+   * Invokes the auth service method to return the current user sub
+   * @returns
+   */
+  async getUserSub(): Promise<string> {
+    return await this.auth.getUserSub();
+  }
+
   /*=====================================*/
   /*
   /*              AGENCY

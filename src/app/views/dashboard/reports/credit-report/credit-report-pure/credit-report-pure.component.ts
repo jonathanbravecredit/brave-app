@@ -7,6 +7,7 @@ import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 
 export interface ICreditReportTradelinesCardGroup {
   title: string;
@@ -21,6 +22,7 @@ export interface ICreditReportTradelinesCardGroup {
   templateUrl: './credit-report-pure.component.html',
 })
 export class CreditReportPureComponent implements OnInit {
+  @Input() scores: ICreditScoreTracking | undefined;
   @Input() tradelines: ICreditReportTradelinesCardGroup[] = [];
   @Input() publicItems: IPublicItemsDetailsConfig[] = [];
   @Input() personalItems: IPersonalItemsDetailsConfig[] = [];
