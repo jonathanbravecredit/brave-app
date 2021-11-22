@@ -23,6 +23,7 @@ export class TradelinesPureComponent {
    * Flag to indicate they need to still acknowledge dispute terms
    */
   @Input() acknowledged: boolean = false;
+
   /**
    * Event emitter when dispute button clicked on tradeline detail
    * - Pass up the tradlinePartition clicked on from here
