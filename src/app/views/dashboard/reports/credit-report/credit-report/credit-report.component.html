@@ -8,6 +8,7 @@
           (viewPublicItemDetailClick)="onViewPublicItemDetailClick($event)"
           (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.borrower)"
           [preferences]="preferences"
+          [scores]="scores"
           [publicItems]="(creditReports | mergereportToPublicitems) || []"
           [personalItems]="(creditReports | mergereportToPersonalitems) || []"
           [tradelines]="creditReports | mergereportToCreditreport: preferences"

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from '@environments/environment';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { AuthGuard } from '@shared/guards/auth.guard';
 
@@ -36,6 +37,7 @@ const routes: Routes = [
       useHash: false,
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'enabled',
+      enableTracing: !environment.production,
     }),
   ],
   exports: [RouterModule],

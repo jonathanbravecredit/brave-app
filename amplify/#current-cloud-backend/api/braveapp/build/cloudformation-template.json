@@ -138,7 +138,7 @@
                         {
                             "Ref": "APIKeyExpirationEpoch"
                         },
-                        1634615941
+                        1637783243
                     ]
                 }
             },
@@ -353,48 +353,6 @@
                                                 ]
                                             },
                                             "typeName": "TUReportResponse"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "Fn::Sub": [
-                                        "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${apiId}/types/${typeName}/*",
-                                        {
-                                            "apiId": {
-                                                "Fn::GetAtt": [
-                                                    "GraphQLAPI",
-                                                    "ApiId"
-                                                ]
-                                            },
-                                            "typeName": "Dispute"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "Fn::Sub": [
-                                        "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${apiId}/types/${typeName}/*",
-                                        {
-                                            "apiId": {
-                                                "Fn::GetAtt": [
-                                                    "GraphQLAPI",
-                                                    "ApiId"
-                                                ]
-                                            },
-                                            "typeName": "DisputeSummary"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "Fn::Sub": [
-                                        "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${apiId}/types/${typeName}/*",
-                                        {
-                                            "apiId": {
-                                                "Fn::GetAtt": [
-                                                    "GraphQLAPI",
-                                                    "ApiId"
-                                                ]
-                                            },
-                                            "typeName": "PVDisputedItems"
                                         }
                                     ]
                                 },
