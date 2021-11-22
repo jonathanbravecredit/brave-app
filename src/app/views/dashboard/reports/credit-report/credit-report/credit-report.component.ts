@@ -12,6 +12,10 @@ import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { Observable } from 'rxjs';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 
 @Component({
   selector: 'brave-credit-report',
@@ -20,18 +24,26 @@ import { Observable } from 'rxjs';
 export class CreditReportComponent implements OnInit, AfterViewInit {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
+  scores: ICreditScoreTracking | undefined;
 
   constructor(
     private creditReportService: CreditreportService,
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
+    private analytics: AnalyticsService,
+    private transunion: TransunionService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReport);
+    this.transunion.getCreditScores().then((scores) => {
+      this.scores = scores.data;
+    });
+  }
 
   ngAfterViewInit(): void {}
 

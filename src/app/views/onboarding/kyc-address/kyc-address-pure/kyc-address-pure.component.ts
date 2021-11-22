@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { OutlineAddressFormComponent } from '@shared/components/forms/outline-address-form/outline-address-form.component';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 
 @Component({
@@ -6,6 +7,7 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
   templateUrl: './kyc-address-pure.component.html',
 })
 export class KycAddressPureComponent extends KycBaseComponent {
+  @ViewChild('form') formComponent: OutlineAddressFormComponent | undefined;
   constructor() {
     super();
   }

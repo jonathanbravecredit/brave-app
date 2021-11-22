@@ -161,7 +161,7 @@ export interface ITradeline {
   PayStatus?: ICodeRef;
   VerificationIndicator?: ICodeRef;
   Remark?: IRemark | IRemark[];
-  WatchTrade: IWatchTrade;
+  WatchTrade?: IWatchTrade;
   GrantedTrade: IGrantedTrade;
   CollectionTrade?: ICollectionTrade;
   Source?: ISource;
@@ -174,7 +174,7 @@ export interface ITradeline {
   dateReported?: string;
   currentBalance?: number | string;
   creditorName?: string;
-  accountNumber?: string;
+  accountNumber?: string | number;
   dateOpened?: string;
   dateClosed?: string;
   dateAccountStatus?: string;

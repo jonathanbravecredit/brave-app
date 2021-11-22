@@ -57,7 +57,7 @@ const putDisputesInDB = (id, msg) => {
         Key: {
             id: id,
         },
-        UpdateExpression: 'set #ag.#tu#.#di = :di, #ua = :ua',
+        UpdateExpression: 'set #ag.#tu.#di = :di, #ua = :ua',
         ExpressionAttributeNames: {
             '#ag': 'agencies',
             '#tu': 'transunion',

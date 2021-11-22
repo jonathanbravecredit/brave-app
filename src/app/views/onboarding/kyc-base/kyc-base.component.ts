@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 export interface FlatForm {
@@ -18,8 +18,16 @@ export class KycBaseComponent {
   formError: EventEmitter<{
     [key: string]: AbstractControl;
   }> = new EventEmitter();
-
+  submitted: boolean = false;
+  form: FormGroup | undefined;
   constructor() {}
+
+  canDeactivate(form: FormGroup | undefined): boolean {
+    if (form === undefined) return true;
+    if (!form?.valid && !form?.touched) return true;
+    if (!!form?.valid && !!form?.touched) return true;
+    return false;
+  }
 
   formatAttributes(form: FormGroup, mapObj: Record<string, any>, inputType: string = 'input'): FlatForm {
     return this.flattenAttributes(form.value, mapObj, inputType);

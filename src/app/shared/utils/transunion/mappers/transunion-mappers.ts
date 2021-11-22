@@ -3,13 +3,25 @@ import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces'
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
 import { TransunionQueries } from '@shared/utils/transunion/queries/transunion-queries';
-import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
 import {
   ICreditReportCardInputs,
   ReportCardFieldTypes,
 } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { CREDIT_REPORT_GROUPS, CreditReportGroups } from '@shared/constants/credit-report';
-import { POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
+import { PAY_STATUS_WARNINGS, POSITIVE_PAY_STATUS_CODES } from '@shared/constants/pay-status-codes';
+import { IPersonalItemsDetailsTable } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
+import { IDisputeCurrent, IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
+import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
+import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
+import { IDispute } from '@shared/interfaces/disputes';
+
+export const TUStatusMapping: Record<string, any> = {
+  opendispute: 'processing',
+  completedispute: 'decision',
+  cancelleddispute: 'cancelled',
+  pendingdispute: 'pending',
+};
 
 export class TransunionMappers extends TransunionBase {
   static parser = TransunionParsers;
@@ -88,10 +100,12 @@ export class TransunionMappers extends TransunionBase {
     return tradeLines.map((item) => {
       const firstField = this.getFirstFields(item);
       const secondField = this.getSecondFields(item);
+      const { accountTypeSymbol, Tradeline: { creditorName, OpenClosed, PayStatus } = {} } = item;
+      const status = PAY_STATUS_WARNINGS[`${PayStatus?.symbol}`] || 'brave-unknown';
       return {
-        type: item.accountTypeSymbol,
-        creditorName: item.Tradeline?.creditorName,
-        isOpen: item.Tradeline?.OpenClosed,
+        type: accountTypeSymbol,
+        creditorName: creditorName,
+        isOpen: `${OpenClosed?.symbol}`.toLowerCase() !== 'c',
         firstFieldName: firstField.firstFieldName,
         firstFieldValue: firstField.firstFieldValue,
         firstFieldType: firstField.firstFieldType,
@@ -99,9 +113,9 @@ export class TransunionMappers extends TransunionBase {
         secondFieldValue: secondField.secondFieldValue,
         secondFieldType: secondField.secondFieldType,
         thirdFieldName: 'Payment Status',
-        thirdFieldValue: item.Tradeline?.PayStatus?.description,
-        status: item.Tradeline?.PayStatus?.symbol,
-        positive: POSITIVE_PAY_STATUS_CODES[`${item.Tradeline?.PayStatus?.symbol}`] || false,
+        thirdFieldValue: PayStatus?.description,
+        status: status,
+        positive: POSITIVE_PAY_STATUS_CODES[`${PayStatus?.symbol}`] || false,
         tradeline: item,
       } as ICreditReportCardInputs;
     });
@@ -177,5 +191,83 @@ export class TransunionMappers extends TransunionBase {
       default:
         return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown', secondFieldType: 'string' };
     }
+  }
+
+  static mapTradelineDispute(
+    item: IProcessDisputeTradelineResult | undefined | null,
+    dispute: IDispute | undefined | null,
+  ): IDisputeCurrent {
+    return {
+      dispute: dispute,
+      creditorName: item?.tradeline?.Tradeline?.creditorName || '--',
+      status: dispute?.disputeStatus ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '--' : '--',
+      accountType: item?.tradeline?.accountTypeDescription || '--',
+      dateSubmitted: dispute?.openedOn || '--',
+      estCompletionDate:
+        dispute?.openDisputes?.estimatedCompletionDate || dispute?.closedDisputes?.estimatedCompletionDate || '--',
+    };
+  }
+
+  static mapHistoricalTradelineDispute(
+    item: IProcessDisputeTradelineResult | undefined | null,
+    dispute: IDispute | undefined | null,
+  ): IDisputeHistorical {
+    return {
+      dispute: dispute,
+      creditorName: item?.tradeline?.Tradeline?.creditorName || '--',
+      resultReceived: dispute?.closedOn || '--', // TODO need to get this from the actual results
+    };
+  }
+
+  static mapPersonalDispute(
+    item: IProcessDisputePersonalResult | undefined | null,
+    dispute: IDispute | undefined | null,
+  ): IDisputeCurrent {
+    return {
+      dispute: dispute,
+      creditorName: item?.personalItem?.key || '--',
+      status: dispute?.disputeStatus ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '--' : '--',
+      accountType: item?.personalItem?.parsedValue || '--', //?.accountTypeDescription || '--',
+      dateSubmitted: dispute?.openedOn || '--',
+      estCompletionDate:
+        dispute?.openDisputes?.estimatedCompletionDate || dispute?.closedDisputes?.estimatedCompletionDate || '--',
+    };
+  }
+
+  static mapHistoricalPersonalDispute(
+    item: IProcessDisputePersonalResult | undefined | null,
+    dispute: IDispute | undefined | null,
+  ): IDisputeHistorical {
+    return {
+      dispute: dispute,
+      creditorName: item?.personalItem?.key || '--',
+      resultReceived: dispute?.closedOn || '--', // TODO need to get this from the actual results
+    };
+  }
+
+  static mapPublicDispute(
+    item: IProcessDisputePublicResult | undefined | null,
+    dispute: IDispute | undefined | null,
+  ): IDisputeCurrent {
+    return {
+      dispute: dispute,
+      creditorName: item?.publicItem?.PublicRecord?.Classification?.description || '--',
+      status: dispute?.disputeStatus ? TUStatusMapping[`${dispute?.disputeStatus?.toLowerCase()}`] || '--' : '--',
+      accountType: item?.publicItem?.PublicRecord?.Type?.description || '--', //?.accountTypeDescription || '--',
+      dateSubmitted: dispute?.openedOn || '--',
+      estCompletionDate:
+        dispute?.openDisputes?.estimatedCompletionDate || dispute?.closedDisputes?.estimatedCompletionDate || '--',
+    };
+  }
+
+  static mapHistoricalPublicDispute(
+    item: IProcessDisputePublicResult | undefined | null,
+    dispute: IDispute | undefined | null,
+  ): IDisputeHistorical {
+    return {
+      dispute: dispute,
+      creditorName: item?.publicItem?.PublicRecord?.Classification?.description || '--',
+      resultReceived: dispute?.closedOn || '--', // TODO need to get this from the actual results
+    };
   }
 }

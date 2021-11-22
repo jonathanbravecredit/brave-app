@@ -4,7 +4,6 @@ import { OnboardingComponent } from './onboarding.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { KycAddressComponent } from '@views/onboarding/kyc-address/kyc-address/kyc-address.component';
 import { KycCongratulationsComponent } from '@views/onboarding/kyc-congratulations/kyc-congratulations/kyc-congratulations.component';
-import { KycErrorComponent } from '@views/onboarding/kyc-error/kyc-error.component';
 import { KycIdverificationComponent } from '@views/onboarding/kyc-idverification/kyc-idverification/kyc-idverification.component';
 import { KycKbaquestionsComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.component';
 import { KycPhonenumberComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber/kyc-phonenumber.component';
@@ -12,13 +11,17 @@ import { KycSsnFullComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full
 import { KycSsnComponent } from '@views/onboarding/kyc-ssn/kyc-ssn/kyc-ssn.component';
 import { KycWelcomeComponent } from '@views/onboarding/kyc-welcome/kyc-welcome/kyc-welcome.component';
 import { KycWelcomebackComponent } from '@views/onboarding/kyc-welcomeback/kyc-welcomeback/kyc-welcomeback.component';
+import { KycDeactivateGuard } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
+import { KycExceptionsView } from '@views/onboarding/kyc-exceptions/kyc-exceptions/kyc-exceptions.view';
+import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-retry.component';
+import { ActiveGuard } from '@shared/guards/active.guard';
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [
   {
     path: '',
     component: OnboardingComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: '',
@@ -28,52 +31,61 @@ const OnboardingRoutes: Routes = [
       {
         path: 'name',
         component: KycWelcomeComponent,
-        canActivate: [AuthGuard],
+        canDeactivate: [KycDeactivateGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'address',
         component: KycAddressComponent,
-        canActivate: [AuthGuard],
+        canDeactivate: [KycDeactivateGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'identity',
         component: KycSsnComponent,
-        canActivate: [AuthGuard],
+        canDeactivate: [KycDeactivateGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'identityfull',
         component: KycSsnFullComponent,
-        canActivate: [AuthGuard],
+        canDeactivate: [KycDeactivateGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'verify',
         component: KycPhonenumberComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'code',
         component: KycIdverificationComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'kba',
         component: KycKbaquestionsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'congratulations',
         component: KycCongratulationsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'returning',
         component: KycWelcomebackComponent,
-        canActivate: [AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: 'error',
-        component: KycErrorComponent,
-        canActivate: [AuthGuard],
+        component: KycExceptionsView,
+        canActivate: [ActiveGuard, AuthGuard],
+      },
+      {
+        path: 'retry',
+        component: KycRetryComponent,
+        canActivate: [ActiveGuard, AuthGuard],
       },
     ],
   },
@@ -82,5 +94,6 @@ const OnboardingRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(OnboardingRoutes)],
   exports: [RouterModule],
+  providers: [],
 })
 export class OnboardingRoutingModule {}

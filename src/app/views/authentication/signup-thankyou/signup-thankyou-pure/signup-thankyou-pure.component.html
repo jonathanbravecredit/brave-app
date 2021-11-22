@@ -4,19 +4,19 @@
       <div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
         <!-- image -->
         <div class="flex justify-center mb-6">
-          <img class="w-full" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_mail_sent_re_0ofv.svg" />
+          <img class="h-64 w-64" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_mail_sent_re_0ofv.svg" />
         </div>
 
         <!-- header -->
         <div class="py-3">
-          <h4 class="brave-h4">Thanks for signing up!</h4>
+          <h4 class="brave-h4">{{ content.p1 }}</h4>
         </div>
 
         <!-- message -->
         <div class="py-3">
           <div class="text-base text-blueGray-600">
-            <p class="mb-0">Check your email for a verification link.</p>
-            <p>Click on it to continue.</p>
+            <p class="mb-4">{{ content.p2 }}</p>
+            <p>{{ content.p3 }}</p>
           </div>
         </div>
 
@@ -24,8 +24,8 @@
         <div class="mt-10 py-3">
           <div class="text-sm text-blueGray-600">
             <p>
-              Didn't receive an email?&nbsp;<span
-                ><a class="font-bold hover:cursor-pointer" (click)="resendClick.emit()">Click here to resend.</a></span
+              {{ content.p4 }}&nbsp;<span
+                ><a class="font-bold hover:cursor-pointer" (click)="resendClick.emit()">{{ content.link1 }}</a></span
               >
             </p>
           </div>

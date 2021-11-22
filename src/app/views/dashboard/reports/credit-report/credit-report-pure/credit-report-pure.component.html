@@ -1,14 +1,17 @@
-<p class="mt-4 text-lg">Your TransUnion Credit Report</p>
+<p class="mt-4 text-lg">Your TransUnion&#174; Credit Report</p>
 <!-- <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p> -->
 <div class="mt-4 flex justify-center">
-  <brave-credit-report-graphic-no-graph [currentValue]="creditReportScore"></brave-credit-report-graphic-no-graph>
+  <brave-credit-report-graphic-no-graph
+    [currentValue]="creditReportScore"
+    [ptsChange]="scores?.delta || 0"
+  ></brave-credit-report-graphic-no-graph>
 </div>
 
 <div class="py-4" *ngFor="let report of tradelines">
   <h6 class="text-lg">{{ report.title }}</h6>
   <div>
     <input type="checkbox" name="dont-show-hide" [checked]="report.hidden" (change)="report.hidden = !report.hidden" />
-    <label for="dont-show-hide" class="ml-2 mr-auto">Only Show me delinquent accounts</label>
+    <label for="dont-show-hide" class="ml-2 mr-auto">Only show me delinquent accounts</label>
   </div>
   <div *ngFor="let card of report.cards; last as isLast">
     <div *ngIf="report.hidden && card.positive; else showCard"></div>
@@ -25,10 +28,22 @@
         [thirdFieldName]="card.thirdFieldName"
         [thirdFieldValue]="card.thirdFieldValue.toString()"
         [status]="card.status"
+        [payStatusSymbol]="card.tradeline?.Tradeline?.PayStatus?.symbol?.toString()"
+        [tradeline]="card.tradeline!"
         (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
       ></brave-credit-report-card>
     </ng-template>
     <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
+    <div
+      *ngIf="
+        report.hidden &&
+        isLast &&
+        (report.tradelines | filterTradelines: tu.queries.report.isNegativeAccount).length === 0
+      "
+      class="my-8"
+    >
+      <p class="brave-body2 text-center">We don’t see any delinquent accounts here!</p>
+    </div>
   </div>
 </div>
 

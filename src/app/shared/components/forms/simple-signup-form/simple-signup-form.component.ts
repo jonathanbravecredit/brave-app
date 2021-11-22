@@ -17,16 +17,16 @@ export class SimpleSignupFormComponent {
   parentForm: FormGroup;
   emailConfig: IOutlineInputeConfig = {
     size: 'sm',
-    label: 'Email',
+    label: 'Enter the email you want to register',
     type: 'email',
     placeholder: 'Email address',
     autocomplete: 'email',
   };
   passwordConfig: IOutlineInputeConfig = {
     size: 'sm',
-    label: 'Password',
+    label: 'Create a strong password',
     type: 'password',
-    placeholder: 'Password',
+    placeholder: 'Your new pasword',
     autocomplete: 'off',
   };
 

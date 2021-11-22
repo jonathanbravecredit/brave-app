@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -8,22 +7,22 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { Observable } from 'rxjs';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-negative-account-initial',
   templateUrl: './negative-account-initial.component.html',
 })
-export class NegativeAccountInitialComponent {
+export class NegativeAccountInitialComponent implements OnInit {
   creditReport$: Observable<IMergeReport>;
-  /**
-   * Flag to indicate that dispute terms have been acknowledged
-   */
   _acknowledged: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private statesvc: StateService,
+    private analytics: AnalyticsService,
     private creditReportService: CreditreportService,
     private disputeService: DisputeService,
   ) {
@@ -38,6 +37,10 @@ export class NegativeAccountInitialComponent {
     return this._acknowledged;
   }
 
+  ngOnInit(): void {
+    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotNegative);
+  }
+
   /**
    * Listens for the Dispute confirmation and refreshes the report
    * @param card
@@ -50,14 +53,14 @@ export class NegativeAccountInitialComponent {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate(['../../dispute'], {
+          this.router.navigate(['/disputes/reconfirm'], {
             relativeTo: this.route,
             queryParams: {
               type: filter,
             },
           });
         } else {
-          this.router.navigate(['../../error'], {
+          this.router.navigate(['/disputes/error'], {
             relativeTo: this.route,
             queryParams: {
               code: error?.Code || '197',
@@ -66,7 +69,7 @@ export class NegativeAccountInitialComponent {
         }
       })
       .catch((err) => {
-        this.router.navigate(['../../error'], {
+        this.router.navigate(['/disputes/error'], {
           relativeTo: this.route,
           queryParams: {
             code: '197',
@@ -81,5 +84,9 @@ export class NegativeAccountInitialComponent {
 
   onGoToReportClick(): void {
     this.router.navigate(['/dashboard/report']);
+  }
+
+  onDisputeClick(tradeline: ITradeLinePartition): void {
+    this.disputeService;
   }
 }

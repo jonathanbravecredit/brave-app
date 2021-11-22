@@ -10,7 +10,6 @@ import {
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
 import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { INIT_DATA } from '@shared/services/sync/constants';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
@@ -18,6 +17,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { BraveUtil } from '@shared/utils/brave/brave';
 
 @Injectable({
   providedIn: 'root',
@@ -26,15 +26,14 @@ export class SyncService implements OnDestroy {
   data$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
   fetching$ = new BehaviorSubject<boolean>(false);
   apiUpdateListener$: ZenObservable.Subscription | undefined;
-
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
   constructor(private api: APIService, private store: Store, private router: Router, private statesvc: StateService) {}
 
   ngOnDestroy(): void {
-    // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
     if (this.apiUpdateListener$) this.apiUpdateListener$.unsubscribe();
+    // if (this.apiCreateListener$) this.apiCreateListener$.unsubscribe();
     // if (this.apiDeleteListener$) this.apiDeleteListener$.unsubscribe();
   }
 
@@ -94,11 +93,15 @@ export class SyncService implements OnDestroy {
    */
   async isUserBrandNew(id: string): Promise<boolean | undefined> {
     if (!id) return;
-    const data = await this.api.GetAppData(id);
-    if (!data) return true;
-    const clean = this.cleanBackendData(data);
-    this.data$.next(clean);
-    return !data.id;
+    try {
+      const data = await this.api.GetAppData(id);
+      if (!data) return true;
+      const clean = this.cleanBackendData(data);
+      this.data$.next(clean);
+      return !data.id;
+    } catch (err) {
+      return true;
+    }
   }
 
   /**
@@ -109,11 +112,16 @@ export class SyncService implements OnDestroy {
    */
   async isUserOnboarded(id: string): Promise<boolean | undefined> {
     if (!id) return;
-    const data = await this.api.GetAppData(id);
-    if (!data) return false;
-    const clean = this.cleanBackendData(data);
-    this.data$.next(clean);
-    return data.user?.onboarding?.lastComplete === 3;
+    try {
+      const data = await this.api.GetAppData(id);
+      if (!data) return false;
+      const clean = this.cleanBackendData(data);
+      this.data$.next(clean);
+      return data.user?.onboarding?.lastComplete === 3;
+    } catch (err) {
+      console.log('isUserOnboarded ==> ', err);
+      return false;
+    }
   }
 
   /**
@@ -151,25 +159,18 @@ export class SyncService implements OnDestroy {
    * Seed the database with the basic credentials when the user signs up
    * @param {ICredentials} creds
    */
-  async initAppData(id: string): Promise<void> {
+  async initAppData(id: string): Promise<AppDataStateModel | undefined> {
     if (!id) return;
     try {
-      const input: CreateAppDataInput = {
-        ...INIT_DATA,
-        id: id,
-        user: {
-          ...INIT_DATA.user,
-          id: id,
-        },
-      };
+      const input: CreateAppDataInput | undefined = BraveUtil.generators.createNewUserData(id);
+      if (input === undefined) return;
       const data = await this.api.CreateAppData(input);
       const clean = this.cleanBackendData(data);
 
-      await new Promise((resolve, reject) => {
-        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((_) => {
+      return await new Promise((resolve, reject) => {
+        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((appData) => {
           this.data$.next(clean);
-          this.routeUser(-1);
-          return resolve(true);
+          return resolve(clean);
         });
       });
     } catch (err) {
@@ -213,7 +214,7 @@ export class SyncService implements OnDestroy {
   async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
     let userId: string;
     if (id === '') {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const attrs = await Auth.userAttributes(creds);
       userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     } else {
@@ -244,10 +245,7 @@ export class SyncService implements OnDestroy {
    * @returns
    */
   cleanBackendData(data: GetAppDataQuery | OnUpdateAppDataSubscription): AppDataStateModel {
-    let clean = deleteKeyNestedObject(data, '__typename');
-    delete clean.createdAt; // this is a graphql managed field
-    delete clean.updatedAt; // this is a graphql managed field
-    delete clean.owner; // this is a graphql managed field
+    let clean = BraveUtil.scrubbers.scrubBackendData(data);
     return clean;
   }
 }

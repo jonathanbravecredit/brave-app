@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { SignInErrorDescriptions, SignInErrors } from '@views/authentication/signin/signin/content';
 
 export type SigninState = 'init' | 'invalid';
 
@@ -35,18 +36,18 @@ export class SigninComponent {
           const { requiredAttributes } = cognitorUser?.challengeParam;
         } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
         }
+        // this.interstitial.fetching$.next(false);
+      } catch (err: any) {
         this.interstitial.fetching$.next(false);
-      } catch (err) {
-        this.interstitial.fetching$.next(false);
-        if (err.code === 'UserNotConfirmedException') {
+        if (err.code === SignInErrors.UserNotConfirmedException) {
           const unconfirmedUserState = {};
-          this.handleSigninError('invalid', 'User is not confirmed');
-        } else if (err.code === 'PasswordResetRequiredException') {
-          this.handleSigninError('invalid', 'Password reset required');
-        } else if (err.code === 'NotAuthorizedException') {
+          this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotConfirmedException]);
+        } else if (err.code === SignInErrors.PasswordResetRequiredException) {
+          this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.PasswordResetRequiredException]);
+        } else if (err.code === SignInErrors.NotAuthorizedException) {
           this.handleSigninError('invalid', err.message);
-        } else if (err.code === 'UserNotFoundException') {
-          this.handleSigninError('invalid', 'Please use a registered email');
+        } else if (err.code === SignInErrors.UserNotFoundException) {
+          this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotFoundException]);
         } else {
           this.handleSigninError('invalid', err.message);
         }
@@ -61,12 +62,14 @@ export class SigninComponent {
   }
 
   /**
-   *
+   * Passes error message to form
+   * - excepts simple strings or html
    * @param viewState
    */
   handleSigninError(viewState: SigninState, message: string): void {
     this.viewState = viewState;
-    this.message = message;
+    this.message =
+      message || `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`;
   }
 
   /**

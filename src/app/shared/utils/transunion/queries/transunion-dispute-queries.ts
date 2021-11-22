@@ -13,11 +13,24 @@ import {
 } from '@shared/interfaces/merge-report.interface';
 import { CreditBureauFindingsType, INVESTIGATION_RESULTS_CODE_MAPPING } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 
 export class TransunionDisputeQueries extends TransunionBase {
   static resultCodeMap = INVESTIGATION_RESULTS_CODE_MAPPING;
   constructor() {
     super();
+  }
+
+  /*===================================*/
+  //           SUBJECT RECORDS
+  /*===================================*/
+  static getLineItems(credit: ICreditBureau): ILineItem[] {
+    if (!credit) return [];
+    const prodArr = credit?.productArray;
+    const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
+    const subjectRecord = product.subject.subjectRecord;
+    const lineItems = subjectRecord.fileSummary.disclosureCoverInfo.summarySection.lineItem;
+    return lineItems instanceof Array ? lineItems : [lineItems];
   }
 
   /*===================================*/
@@ -119,7 +132,7 @@ export class TransunionDisputeQueries extends TransunionBase {
     if (!credit) return [];
     const prodArr = credit?.productArray;
     const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
-    const subjectRecord = product.subject.subjectRecord;
+    const subjectRecord = product?.subject?.subjectRecord;
 
     const trade = subjectRecord?.custom?.credit?.trade;
     if (trade instanceof Array) {
@@ -129,6 +142,31 @@ export class TransunionDisputeQueries extends TransunionBase {
     }
   }
 
+  /*===================================*/
+  //           PERSONAL RECORDS
+  /*===================================*/
+  /**
+   * List the results for personal dispute
+   * @param credit
+   * @returns
+   */
+  static listPersonalItems(credit: ICreditBureau | undefined): ILineItem[] | [] {
+    if (!credit) return [];
+    const prodArr = credit?.productArray;
+    const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
+    const subjectRecord = product?.subject?.subjectRecord;
+
+    const personal = subjectRecord?.fileSummary.disclosureCoverInfo.summarySection.lineItem; //.custom?.credit?.trade;
+    if (personal instanceof Array) {
+      return personal;
+    } else {
+      return personal ? [personal] : [];
+    }
+  }
+
+  static isDisputeable(personal: IPersonalItemsDetailsConfig): boolean {
+    return personal.key !== 'curraddress' && personal.key !== 'name';
+  }
   /*===================================*/
   //          FINDINGS RECORDS
   /*===================================*/
@@ -155,7 +193,7 @@ export class TransunionDisputeQueries extends TransunionBase {
     if (!credit) return [];
     const prodArr = credit?.productArray;
     const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
-    const subjectRecord = product.subject.subjectRecord;
+    const subjectRecord = product?.subject?.subjectRecord;
 
     const lineItems = subjectRecord?.fileSummary?.disclosureCoverInfo?.summarySection?.lineItem;
     if (lineItems instanceof Array) {
@@ -174,18 +212,25 @@ export class TransunionDisputeQueries extends TransunionBase {
     if (!credit) return [];
     const prodArr = credit?.productArray;
     const product = (prodArr instanceof Array ? prodArr[0] : prodArr?.product) as IProduct;
-    const subjectRecord = product.subject.subjectRecord;
+    const subjectRecord = product?.subject?.subjectRecord;
 
     const findings = subjectRecord?.fileSummary?.disclosureCoverInfo?.summarySection?.lineItem;
     let findingsArr = findings instanceof Array ? findings : findings ? [findings] : [];
 
-    const query = type === CreditBureauFindingsType.PublicRecord ? this.listPublicRecords : this.listTrades;
-    const creditItems = query(credit); // public or trade items
-
+    const filter = type === CreditBureauFindingsType.PublicRecord ? 'pr' : 'tr';
     return findingsArr.filter((item) => {
-      const key = item.itemKey;
-      return creditItems.findIndex((item: ITrade | IPublicRecord) => item.itemKey == key) >= 0;
+      return item.handle.substring(0, 2).toLowerCase() == filter;
     });
+
+    // removing as I don't need to align to the credit items
+    // breaks if the item is deleted
+    // const query = type === CreditBureauFindingsType.PublicRecord ? this.listPublicRecords : this.listTrades;
+    // const creditItems = query(credit);
+
+    // return findingsArr.filter((item) => {
+    //   const key = item.itemKey;
+    //   return creditItems.findIndex((item: ITrade | IPublicRecord) => item.itemKey == key) >= 0;
+    // });
   }
 
   /*===================================*/

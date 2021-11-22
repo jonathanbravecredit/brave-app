@@ -1,7 +1,4 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/personalitems-details/interfaces';
-import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/publicitems-details/interfaces';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { ITradeLinePartition, IPublicPartition, IMergeReport } from '@shared/interfaces';
 import {
   PARAGRAPH_1,
@@ -9,6 +6,8 @@ import {
 } from '@views/dashboard/disputes/disputes-reconfirm/disputes-reconfirm-pure/constants';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 
 @Component({
   selector: 'brave-disputes-reconfirm-pure',

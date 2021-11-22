@@ -1,0 +1,41 @@
+<form [formGroup]="parentForm">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="col-span-3">
+      <brave-places-autocomplete-input
+        [config]="addressOneConfig"
+        (onComponentReady)="addChild('addressOne', $event)"
+        (addressClick)="onAddressClick($event)"
+        [required]="true"
+      >
+      </brave-places-autocomplete-input>
+      <brave-outline-input
+        #addressTwo
+        [config]="addressTwoConfig"
+        (onComponentReady)="addChild('addressTwo', $event)"
+        [required]="false"
+      >
+      </brave-outline-input>
+    </div>
+    <div class="col-span-1">
+      <brave-outline-input [config]="cityConfig" (onComponentReady)="addChild('city', $event)" [required]="true">
+      </brave-outline-input>
+      <div class="-mt-2">
+        <div class="flex justify-start items-start text-xs text-blueGray-600">
+          <span class="-mt-1">&#42;</span>&nbsp;Required
+        </div>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <brave-outline-select-input
+        [config]="stateConfig"
+        (onComponentReady)="addChild('state', $event)"
+        [required]="true"
+      >
+      </brave-outline-select-input>
+    </div>
+    <div class="col-span-1">
+      <brave-outline-input [config]="zipConfig" (onComponentReady)="addChild('zip', $event)" [required]="true">
+      </brave-outline-input>
+    </div>
+  </div>
+</form>

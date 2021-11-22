@@ -12,8 +12,15 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
 import { NavigationService } from '@shared/services/navigation/navigation.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import { GoogleService } from '@shared/services/analytics/google/google.service';
+import { InitService } from '@shared/services/init/init.service';
+import { CreditUtilizationService } from './credit-utilization/credit-utilization.service';
+import { ModalService } from '@shared/services/modal/modal.service';
+import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 const services = [
+  InitService,
   AuthService,
   APIService,
   SyncService,
@@ -26,6 +33,11 @@ const services = [
   CustomLineChartService,
   NavigationService,
   FeatureFlagsService,
+  GoogleService,
+  CreditUtilizationService,
+  ModalService,
+  NeverbounceService,
+  ReferralsService,
 ];
 
 @NgModule({

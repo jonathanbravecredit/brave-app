@@ -1,9 +1,4 @@
 <div class="p-2">
-  <ng-container *ngIf="report; else noReport">
-    <brave-data-breaches-pure [breachCards]="report | mergereportToBreachitems"> </brave-data-breaches-pure>
-  </ng-container>
+  <brave-data-breaches-pure [breachCards]="breaches || []" (cardClick)="onCardClick($event)">
+  </brave-data-breaches-pure>
 </div>
-
-<ng-template #noReport>
-  <brave-base-exception-view></brave-base-exception-view>
-</ng-template>

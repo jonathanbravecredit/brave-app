@@ -1,0 +1,29 @@
+<div class="mx-3 my-4">
+  <div class="flex items-center">
+    <div class="w-1 h-10 bg-purple-800 mr-4"></div>
+    <p class="font-semibold">{{ content.p1 }}</p>
+  </div>
+  <div>
+    <p class="text-sm">
+      <span>{{ content.span1 }}</span>
+      <span>&nbsp;{{ fileIdentificationNumber }}&nbsp;</span>
+      <span>{{ content.span2 }}</span>
+    </p>
+    <p class="text-sm mt-4 font-semibold">{{ content.p2 }}</p>
+    <p class="text-sm" [innerHTML]="content.p3 | linkify"></p>
+    <p class="text-sm mt-2" [innerHTML]="content.p4 | linkify"></p>
+    <p class="text-sm mt-4 font-semibold">{{ content.p5 }}</p>
+    <p class="text-sm">{{ content.p6 }}</p>
+    <p class="text-sm">{{ content.p10 }}</p>
+    <p class="text-sm mt-4 font-semibold">{{ content.p7 }}</p>
+    <p class="text-sm">{{ content.p8 }}</p>
+    <p class="text-sm mt-4">{{ content.p9 }}</p>
+    <p class="text-sm mt-4">
+      <span>{{ content.span3 }}</span>
+      <span>
+        <a [routerLink]="['/dashboard/report']" class="text-indigo-800">&nbsp;{{ content.link1 }}&nbsp;</a>
+      </span>
+      <span [innerHTML]="content.span4 | linkify"></span>
+    </p>
+  </div>
+</div>

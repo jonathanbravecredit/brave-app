@@ -16,6 +16,13 @@ type AppData @aws_iam @aws_cognito_user_pools {
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  dashboard: Dashboard
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
@@ -64,13 +71,41 @@ type Ssn @aws_iam @aws_cognito_user_pools {
   full: String
 }
 
+type Dashboard @aws_iam @aws_cognito_user_pools {
+  isLoaded: Boolean
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCards: [DataBreachCard]
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
+type DataBreachCard @aws_iam @aws_cognito_user_pools {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: [String]
+}
+
 type Onboarding @aws_iam @aws_cognito_user_pools {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
+  abandoned: Boolean
+  display: [OnboardingStep]
 }
 
-type OnboardingStep {
+type OnboardingStep @aws_iam @aws_cognito_user_pools {
   id: Int
   active: Boolean
   complete: Boolean
@@ -97,10 +132,22 @@ type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
 type Transunion @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
+  indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
+  getAuthenticationQuestionsStatus: TUStatusRef
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRef
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRef
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
+  authAttempt: Int
+  pinRequests: Int
+  pinAttempts: Int
+  pinCurrentAge: Float
+  kbaAttempts: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
@@ -117,8 +164,6 @@ type Transunion @aws_iam @aws_cognito_user_pools {
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
-  disputeStatus: String
-  disputes: [Dispute]
 }
 
 type Equifax @aws_iam @aws_cognito_user_pools {
@@ -127,6 +172,14 @@ type Equifax @aws_iam @aws_cognito_user_pools {
 
 type Experian @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
+}
+
+type TUStatusRef @aws_iam @aws_cognito_user_pools {
+  id: ID
+  status: String
+  statusDescription: String
+  statusModifiedOn: String
+  statusCode: String
 }
 
 type TUReportResponse @aws_iam @aws_cognito_user_pools {
@@ -138,43 +191,6 @@ type TUReportResponse @aws_iam @aws_cognito_user_pools {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-
-type Dispute @aws_iam @aws_cognito_user_pools {
-  id: ID!
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: DisputeSummary
-  closedDisputes: DisputeSummary
-  pvDisputedItems: PVDisputedItems
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeInvestigationResults: AWSJSON
-  disputeCreditBureau: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-type DisputeSummary @aws_iam @aws_cognito_user_pools {
-  estimatedCompletionDate: String
-  lastUpdatedDate: String
-  openDate: String
-  requestedDate: String
-  totalClosedDisputedItems: String
-  totalDisputedItems: String
-  totalOpenDisputedItems: String
-  totalPVDisputedItemCount: String
-}
-
-type PVDisputedItems @aws_iam @aws_cognito_user_pools {
-  pvTradelines: AWSJSON
-  pvPublicRecords: AWSJSON
 }
 
 input UserInput {
@@ -224,6 +240,15 @@ input OnboardingInput {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
+  abandoned: Boolean
+  display: [OnboardingStepInput]
+}
+
+input OnboardingStepInput {
+  id: Int
+  active: Boolean
+  complete: Boolean
+  name: String
 }
 
 input AgenciesInput {
@@ -235,10 +260,22 @@ input AgenciesInput {
 input TransunionInput {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
+  indicativeEnrichmentStatus: TUStatusRefInput
   getAuthenticationQuestionsSuccess: Boolean
+  getAuthenticationQuestionsStatus: TUStatusRefInput
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRefInput
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRefInput
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
+  authAttempt: Int
+  pinRequests: Int
+  pinAttempts: Int
+  pinCurrentAge: Float
+  kbaAttempts: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponseInput
   enrollMergeReport: TUReportResponseInput
@@ -255,8 +292,14 @@ input TransunionInput {
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
-  disputeStatus: String
-  disputes: [DisputeInput]
+}
+
+input TUStatusRefInput {
+  id: ID
+  status: String
+  statusDescription: String
+  statusModifiedOn: String
+  statusCode: String
 }
 
 input TUReportResponseInput {
@@ -268,43 +311,6 @@ input TUReportResponseInput {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-
-input DisputeInput {
-  id: ID!
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: DisputeSummaryInput
-  closedDisputes: DisputeSummaryInput
-  pvDisputedItems: PVDisputedItemsInput
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeInvestigationResults: AWSJSON
-  disputeCreditBureau: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-input DisputeSummaryInput {
-  estimatedCompletionDate: String
-  lastUpdatedDate: String
-  openDate: String
-  requestedDate: String
-  totalClosedDisputedItems: String
-  totalDisputedItems: String
-  totalOpenDisputedItems: String
-  totalPVDisputedItemCount: String
-}
-
-input PVDisputedItemsInput {
-  pvTradelines: AWSJSON
-  pvPublicRecords: AWSJSON
 }
 
 input EquifaxInput {
@@ -324,6 +330,32 @@ input ShowAccountsPreferenceInput {
   collectionsAccounts: Boolean
   installmentLoans: Boolean
   mortgages: Boolean
+}
+
+input DashboardInput {
+  isLoaded: Boolean
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCards: [DataBreachCardInput]
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
+input DataBreachCardInput {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: [String]
 }
 
 enum ModelSortDirection {
@@ -411,6 +443,12 @@ input ModelSizeInput {
 
 input ModelAppDataFilterInput {
   id: ModelIDInput
+  status: ModelStringInput
+  statusReason: ModelStringInput
+  statusReasonDescription: ModelStringInput
+  lastStatusModifiedOn: ModelStringInput
+  nextStatusModifiedOn: ModelStringInput
+  isLoaded: ModelBooleanInput
   and: [ModelAppDataFilterInput]
   or: [ModelAppDataFilterInput]
   not: ModelAppDataFilterInput
@@ -434,6 +472,13 @@ input CreateAppDataInput {
   user: UserInput!
   agencies: AgenciesInput!
   preferences: PreferencesInput!
+  dashboard: DashboardInput
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 
 input UpdateAppDataInput {
@@ -441,6 +486,13 @@ input UpdateAppDataInput {
   user: UserInput
   agencies: AgenciesInput
   preferences: PreferencesInput
+  dashboard: DashboardInput
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 
 input DeleteAppDataInput {
@@ -448,6 +500,12 @@ input DeleteAppDataInput {
 }
 
 input ModelAppDataConditionInput {
+  status: ModelStringInput
+  statusReason: ModelStringInput
+  statusReasonDescription: ModelStringInput
+  lastStatusModifiedOn: ModelStringInput
+  nextStatusModifiedOn: ModelStringInput
+  isLoaded: ModelBooleanInput
   and: [ModelAppDataConditionInput]
   or: [ModelAppDataConditionInput]
   not: ModelAppDataConditionInput

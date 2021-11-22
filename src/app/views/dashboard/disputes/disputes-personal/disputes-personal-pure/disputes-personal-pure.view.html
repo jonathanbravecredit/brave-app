@@ -1,15 +1,18 @@
-<div class="container mx-auto max-w-xs h-full" *ngIf="!isDisputeSent">
+<div *ngIf="viewDisplay === 'not-sent'">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
-  <brave-dispute-header
-    class="mt-4"
-    [personaldispute]="personalDispute"
-    [showDisputeButton]="false"
-  ></brave-dispute-header>
-  <brave-disputes-personal
-    (disputeProcessResult)="processResult.emit({ result: $event, personalItem: personalDispute })"
-  ></brave-disputes-personal>
+  <brave-dispute-header class="mt-4" [personaldispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
+  <brave-dispute-base
+    [initialStepId]="'reason'"
+    [disputeType]="'not-mine'"
+    [disputeViewState]="'summary'"
+    (disputeProcessResult)="processResult.emit({ result: $event, personalItem: dispute })"
+    [firstOptionReasonPages]="pageOne"
+    [secondOptionDescription]="'Public record information is inaccurate'"
+    [processReasons]="reasons"
+    [defaultReasonCard]="defaultReasonCard"
+  >
+  </brave-dispute-base>
 </div>
-<div class="container mx-auto max-w-xs h-full" *ngIf="isDisputeSent">
-  <p class="text-lg mt-4 mb-4">New Dispute</p>
+<div *ngIf="viewDisplay === 'sent'">
   <brave-disputes-success></brave-disputes-success>
 </div>

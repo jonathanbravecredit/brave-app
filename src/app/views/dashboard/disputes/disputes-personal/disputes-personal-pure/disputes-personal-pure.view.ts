@@ -1,11 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DisputesTradelineComponent } from '@shared/components/disputes/disputes-tradeline/disputes-tradeline.component';
-import { IDisputeProcessResult } from '@shared/components/disputes/disputes-tradeline/interfaces';
 import { IDisputePersonalItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
+import { DisputeBaseComponent } from '@views/dashboard/disputes/components/dispute-base/dispute-base.component';
+import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
+import {
+  DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS,
+  DISPUTES_PERSONAL_REASONS_TOBEREMOVED,
+} from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/constants';
 
+type viewDisplay = 'sent' | 'not-sent';
 export interface IProcessDisputePersonalResult {
   result: IDisputeProcessResult;
-  personalItem: IDisputePersonalItem;
+  personalItem: IDisputePersonalItem | undefined;
 }
 
 @Component({
@@ -13,29 +19,22 @@ export interface IProcessDisputePersonalResult {
   templateUrl: './disputes-personal-pure.view.html',
 })
 export class DisputesPersonalPureView implements OnInit {
-  @ViewChild(DisputesTradelineComponent) disputeProcess: DisputesTradelineComponent | undefined;
-  isDisputeProcessInProgress = true;
-  @Input() isDisputeSent = false;
-  @Input() personalDispute: IDisputePersonalItem = {} as IDisputePersonalItem;
+  @Input() viewDisplay: viewDisplay = 'not-sent';
+  @Input() dispute: IDisputePersonalItem | undefined;
   @Output() processResult: EventEmitter<IProcessDisputePersonalResult> = new EventEmitter();
+  @ViewChild(DisputeBaseComponent) base: DisputeBaseComponent | undefined;
+
+  reasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_PERSONAL_INFO_REASONS;
+  pageOne = DISPUTES_PERSONAL_REASONS_TOBEREMOVED;
+  defaultReasonCard: IDisputeReasonCard | undefined;
+
   constructor() {}
 
-  ngOnInit(): void {}
-
-  // requestGoBack() {
-  //   const currentInnerProcessNavigationIndex = this.disputeProcess?.getCurrentNavigationIndex();
-  //   if (currentInnerProcessNavigationIndex) {
-  //     if (currentInnerProcessNavigationIndex > 0) {
-  //       this.disputeProcess?.goBack();
-  //     }
-  //   }
-  // }
-
-  // onDisputeProcessResult(result: IDisputeProcessResult): void {
-  //   // result event has a data property where the reason ids can be pull out and find them in the constants of the tradeline component
-  //   if (result.isFinished) {
-  //     this.isDisputeSent = true;
-  //     this.isDisputeProcessInProgress = false;
-  //   }
-  // }
+  ngOnInit(): void {
+    this.defaultReasonCard = {
+      ...this.pageOne[0],
+      selected: false,
+      index: 0,
+    };
+  }
 }

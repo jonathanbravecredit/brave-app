@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import { IPublicPartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
@@ -50,14 +50,14 @@ export class PublicitemsView {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = 'public';
-          this.router.navigate(['../dispute'], {
+          this.router.navigate(['/disputes/reconfirm'], {
             relativeTo: this.route,
             queryParams: {
               type: filter,
             },
           });
         } else {
-          this.router.navigate(['../error'], {
+          this.router.navigate(['/disputes/error'], {
             relativeTo: this.route,
             queryParams: {
               code: error?.Code || '197',
@@ -66,7 +66,7 @@ export class PublicitemsView {
         }
       })
       .catch((err) => {
-        this.router.navigate(['../error'], {
+        this.router.navigate(['/disputes/error'], {
           relativeTo: this.route,
           queryParams: {
             code: '197',

@@ -3,10 +3,46 @@ mutation PatchTransunion($id: ID!, $msg: String) {
   patchTransunion(id: $id, msg: $msg) {
     authenticated
     indicativeEnrichmentSuccess
+    indicativeEnrichmentStatus {
+      id
+      status
+      statusDescription
+      statusModifiedOn
+      statusCode
+    }
     getAuthenticationQuestionsSuccess
+    getAuthenticationQuestionsStatus {
+      id
+      status
+      statusDescription
+      statusModifiedOn
+      statusCode
+    }
+    verifyAuthenticationQuestionsOTPSuccess
+    verifyAuthenticationQuestionsOTPStatus {
+      id
+      status
+      statusDescription
+      statusModifiedOn
+      statusCode
+    }
+    verifyAuthenticationQuestionsKBASuccess
+    verifyAuthenticationQuestionsKBAStatus {
+      id
+      status
+      statusDescription
+      statusModifiedOn
+      statusCode
+    }
     serviceBundleFulfillmentKey
     currentRawQuestions
     currentRawAuthDetails
+    authAttempt
+    pinRequests
+    pinAttempts
+    pinCurrentAge
+    kbaAttempts
+    kbaCurrentAge
     enrollmentKey
     enrollReport {
       bureau
@@ -77,48 +113,6 @@ mutation PatchTransunion($id: ID!, $msg: String) {
     disputeEnrollmentKey
     disputeEnrolled
     disputeEnrolledOn
-    disputeStatus
-    disputes {
-      id
-      appDataId
-      disputeId
-      disputeStatus
-      disputeLetterCode
-      disputeLetterContent
-      openDisputes {
-        estimatedCompletionDate
-        lastUpdatedDate
-        openDate
-        requestedDate
-        totalClosedDisputedItems
-        totalDisputedItems
-        totalOpenDisputedItems
-        totalPVDisputedItemCount
-      }
-      closedDisputes {
-        estimatedCompletionDate
-        lastUpdatedDate
-        openDate
-        requestedDate
-        totalClosedDisputedItems
-        totalDisputedItems
-        totalOpenDisputedItems
-        totalPVDisputedItemCount
-      }
-      pvDisputedItems {
-        pvTradelines
-        pvPublicRecords
-      }
-      agencyName
-      openedOn
-      closedOn
-      disputeItems
-      disputeInvestigationResults
-      disputeCreditBureau
-      notificationStatus
-      notificationMessage
-      notificationSentOn
-    }
   }
 }
 mutation CreateAppData(
@@ -159,16 +153,59 @@ mutation CreateAppData(
         lastActive
         lastComplete
         started
+        abandoned
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -239,48 +276,6 @@ mutation CreateAppData(
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -297,6 +292,35 @@ mutation CreateAppData(
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -340,16 +364,59 @@ mutation UpdateAppData(
         lastActive
         lastComplete
         started
+        abandoned
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -420,48 +487,6 @@ mutation UpdateAppData(
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -478,6 +503,35 @@ mutation UpdateAppData(
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -521,16 +575,59 @@ mutation DeleteAppData(
         lastActive
         lastComplete
         started
+        abandoned
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -601,48 +698,6 @@ mutation DeleteAppData(
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -659,6 +714,35 @@ mutation DeleteAppData(
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner

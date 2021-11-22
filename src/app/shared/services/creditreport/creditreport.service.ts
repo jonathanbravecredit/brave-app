@@ -15,6 +15,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { BraveUtil } from '@shared/utils/brave/brave';
 
 /**
  * Service to parse and pull information from credit reports
@@ -124,14 +125,8 @@ export class CreditreportService implements OnDestroy {
    * @returns {IMergeReport}
    */
   getCreditReport(agencies: AgenciesStateModel): IMergeReport {
-    if (!agencies) return JSON.parse('{}');
-    const fulfillMergeReport = agencies.transunion?.fulfillMergeReport;
-    const enrollMergeReport = agencies.transunion?.enrollMergeReport;
-    const serviceProductString = fulfillMergeReport
-      ? fulfillMergeReport?.serviceProductObject || '{}'
-      : enrollMergeReport?.serviceProductObject || '{}';
-    const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
-    return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
+    const transunion = agencies.transunion;
+    return BraveUtil.parsers.parseTransunionMergeReport(transunion);
   }
 
   /**

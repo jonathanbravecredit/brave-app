@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QueryOne } from '@aws-amplify/datastore';
 
 export interface IOutlineInputeConfig {
   size: string;
@@ -14,6 +15,7 @@ export interface IOutlineInputeConfig {
   mask?: string;
   unmask?: string;
   maxLength?: number;
+  minLength?: number;
 }
 
 @Component({
@@ -21,6 +23,7 @@ export interface IOutlineInputeConfig {
   templateUrl: './outline-input.component.html',
 })
 export class OutlineInputComponent implements OnInit {
+  @ViewChild('inputField') input: ElementRef | undefined;
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
   private _minLength: number | undefined;
@@ -102,5 +105,10 @@ export class OutlineInputComponent implements OnInit {
       this.valueChanged.emit(value);
     });
     this.onComponentReady.emit(this.componentFormGroup);
+  }
+
+  focus(): void {
+    if (!this.input) return;
+    this.input.nativeElement.focus();
   }
 }

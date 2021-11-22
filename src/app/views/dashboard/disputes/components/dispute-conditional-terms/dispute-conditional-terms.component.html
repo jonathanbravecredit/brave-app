@@ -1,0 +1,18 @@
+<div>
+  <p class="text-lg font-bold p-4">{{ content.title }}</p>
+  <div class="overflow-y-scroll h-60 p-4 border border-blueGray-300 rounded-sm">
+    <ng-content></ng-content>
+  </div>
+  <div class="flex p-4">
+    <input #checkbox type="checkbox" name="condition-approval" (change)="setValue($event)" />
+    <label for="condition-approval" class="ml-2 text-xs">{{ content.termDescription }}</label>
+  </div>
+  <div class="flex justify-center">
+    <brave-filled-spinning-button
+      [backgroundColor]="!confirmed ? 'bg-black' : 'bg-indigo-800'"
+      [disabled]="!confirmed"
+      (click)="submitAcceptance()"
+      >Submit my dispute</brave-filled-spinning-button
+    >
+  </div>
+</div>

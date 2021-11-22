@@ -2,9 +2,19 @@
 <div class="flex items-center">
   <div
     class="ml-3 h-4 w-4 bg-blue-500 rounded-full border-none"
-    [ngClass]="status | snapshotStatus: 'background'"
+    [ngClass]="{
+      'bg-gray-400': isOpen == false,
+      'bg-brave-safe': isOpen && payStatusSymbol?.toLowerCase() === 'c',
+      'bg-brave-danger': payStatusSymbol === '1' ||
+      payStatusSymbol === '2' ||
+      payStatusSymbol === '3' ||
+      payStatusSymbol === '4' ||
+      payStatusSymbol === '7' ||
+      payStatusSymbol === '8R',
+      'bg-brave-critical': payStatusSymbol === '9'
+    }"
   ></div>
-  <span class="ml-3">{{ creditorName }} ({{ isOpen ? 'Open' : 'Closed' }})</span>
+  <span class="ml-3">{{ creditorName | decode }} ({{ isOpen ? 'Open' : 'Closed' }})</span>
 </div>
 <div class="card pl-10 pr-3 mt-1">
   <div class="grid grid-cols-2 gap-y-1.5 mb-2">
@@ -13,7 +23,7 @@
     <p *ngIf="firstFieldType === 'date'" class="text-sm font-semibold text-right">
       {{ firstFieldValue | date: 'shortDate' }}
     </p>
-    <p *ngIf="firstFieldType === 'string'" class="text-sm font-semibold text-right">{{ firstFieldValue }}</p>
+    <p *ngIf="firstFieldType === 'string'" class="text-sm font-semibold text-right">{{ firstFieldValue | decode }}</p>
     <p *ngIf="firstFieldType === 'currency'" class="text-sm font-semibold text-right">
       {{ firstFieldValue | currency: 'USD':'symbol':'1.0-0' }}
     </p>
@@ -23,7 +33,7 @@
       {{ secondFieldValue | date: 'shortDate' }}
     </p>
     <p *ngIf="secondFieldType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right">
-      {{ secondFieldValue }}
+      {{ secondFieldValue | decode }}
     </p>
     <p *ngIf="secondFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ secondFieldValue | currency: 'USD':'symbol':'1.0-0' }}
@@ -34,7 +44,7 @@
       {{ thirdFieldValue | date: 'shortDate' }}
     </p>
     <p *ngIf="thirdFieldType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right">
-      {{ thirdFieldValue }}
+      {{ thirdFieldValue | decode }}
     </p>
     <p *ngIf="thirdFieldType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right">
       {{ thirdFieldValue | currency: 'USD':'symbol':'1.0-0' }}
@@ -44,3 +54,12 @@
     >View Detail</brave-viewdetail-button
   >
 </div>
+
+<!--
+  [ngClass]="{
+      'bg-gray-400': status === 'brave-unknown' || isOpen == false,
+      'bg-brave-danger': status === 'brave-danger',
+      'bg-brave-critical': status === 'brave-critical',
+      'bg-brave-safe': status === 'brave-safe'
+    }"
+ -->

@@ -1,16 +1,17 @@
 <div class="w-full p-2">
-  <ng-container *ngIf="report | mergereportToDashboard as cards">
-    <ng-container *ngIf="cards">
-      <brave-dashboard-enrolled-pure
-        [report]="report"
-        [cards]="cards"
-        [welcomeMsg]="welcomeMsg"
-        [lastUpdated]="lastUpdated"
-        (negativeItemsClicked)="onNegativeItemsClicked()"
-        (forbearanceItemsClicked)="onForbearanceItemsClicked()"
-        (databreachItemsClicked)="onDatabreachItemsClicked()"
-        (fullReportClicked)="onFullReportClicked()"
-      ></brave-dashboard-enrolled-pure>
-    </ng-container>
+  <ng-container *ngIf="report">
+    <brave-dashboard-enrolled-pure
+      [report]="report"
+      [cards]="snapshots"
+      [scores]="scores"
+      [welcomeMsg]="welcomeMsg"
+      [lastUpdated]="lastUpdated"
+      (negativeItemsClicked)="onNegativeItemsClicked()"
+      (forbearanceItemsClicked)="onForbearanceItemsClicked()"
+      (databreachItemsClicked)="onDatabreachItemsClicked()"
+      (fullReportClicked)="onFullReportClicked()"
+      (disputesClicked)="onDisputesClicked()"
+      (creditUtilizationClicked)="onCreditUtilizationClicked()"
+    ></brave-dashboard-enrolled-pure>
   </ng-container>
 </div>

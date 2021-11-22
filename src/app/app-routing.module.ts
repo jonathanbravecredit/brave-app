@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { environment } from '@environments/environment';
+import { ActiveGuard } from '@shared/guards/active.guard';
 import { AuthGuard } from '@shared/guards/auth.guard';
 
 const routes: Routes = [
@@ -9,19 +11,22 @@ const routes: Routes = [
   },
   {
     path: 'onboarding',
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     loadChildren: () => import('./views/onboarding/onboarding.module').then((m) => m.OnboardingModule),
   },
   {
     path: 'dashboard',
-    canActivate: [AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     loadChildren: () => import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'legal',
     loadChildren: () => import('./views/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
-  // { path: '', component: IndexComponent }, // TODO: replace with better page
+  {
+    path: 'suspended',
+    loadChildren: () => import('./views/suspended/suspended.module').then((m) => m.SuspendedModule),
+  },
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' }, // TODO: replace with better page
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
@@ -32,6 +37,7 @@ const routes: Routes = [
       useHash: false,
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'enabled',
+      enableTracing: !environment.production,
     }),
   ],
   exports: [RouterModule],

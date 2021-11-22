@@ -13,7 +13,9 @@ import {
   IVerifyAuthenticationQuestionsMsg,
   IEnrollServiceProductResponse,
 } from '@shared/interfaces';
-import { APIService, TUReportResponseInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { IDispute } from '@shared/interfaces/disputes';
+import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
@@ -48,7 +50,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -70,7 +72,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('GetAuthenticationQuestions', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -92,7 +94,7 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -104,7 +106,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -116,7 +118,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('Enroll', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -128,7 +130,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('EnrollDisputes', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -140,7 +142,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -152,7 +154,19 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Send request to backend to get their credit score snapshots
+   */
+  async getCreditScores(): Promise<ITUServiceResponse<ICreditScoreTracking | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetCreditScoreTracking', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -167,7 +181,7 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify({}));
       return res ? JSON.parse(res) : false;
-    } catch (err) {
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -181,7 +195,21 @@ export class TransunionService {
     try {
       const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify({}));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Request the trending data by user from a given date
+   * @param fromDate ISO string date format
+   * @returns
+   */
+  async getTrendingData(fromDate: string): Promise<ITUServiceResponse<any | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetTrendingData', JSON.stringify({ param: { fromDate } }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -199,7 +227,37 @@ export class TransunionService {
       const clean = this.tu.scrubbers.scrubBackendData(msg);
       const res = await this.api.Transunion('StartDispute', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Call the backend to query TU for investigation results
+   * - occurs if a dispute is closed, but the results not returned
+   * @param disputeId
+   * @returns
+   */
+  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+    try {
+      const msg = { disputeId };
+      const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Get the investigation results data from IR table.
+   * @param id
+   * @returns
+   */
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetInvestigationResultsByID', JSON.stringify({ id }));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -211,12 +269,37 @@ export class TransunionService {
    * @param disputeId
    * @returns
    */
-  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
     try {
-      const msg = { disputeId };
-      const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
+      const res = await this.api.Transunion('GetCreditBureauResultsByID', JSON.stringify({ id }));
       return res ? JSON.parse(res) : undefined;
-    } catch (err) {
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * List all disputes by user
+   * @returns
+   */
+  async listAllDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetAllDisputesByUser', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
+  /**
+   * Gets only the latest and current dispute by user
+   * @returns
+   */
+  async getCurrentDisputeByUser(): Promise<ITUServiceResponse<IDispute | undefined>> {
+    try {
+      const res = await this.api.Transunion('GetCurrentDisputeByUser', JSON.stringify({}));
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
       return { success: false, error: err };
     }
   }
@@ -298,18 +381,3 @@ export class TransunionService {
     };
   }
 }
-
-// TODO use a pascal to camel converter
-const mapReportResponse = (res: IEnrollServiceProductResponse | undefined): TUReportResponseInput | null => {
-  if (res === undefined) return null;
-  return {
-    bureau: res['Bureau'],
-    errorResponse: res['ErrorResponse'],
-    serviceProduct: res['ServiceProduct'],
-    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
-    serviceProductObject: JSON.stringify(res['ServiceProductObject']),
-    serviceProductTypeId: res['ServiceProductTypeId'],
-    serviceProductValue: res['ServiceProductValue'],
-    status: res['Status'],
-  } as TUReportResponseInput;
-};

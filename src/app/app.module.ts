@@ -17,35 +17,35 @@ import awsconfig from '../aws-exports';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
 
-/* social sign in configuration */
-const isLocalhost = Boolean(
-  window.location.hostname === 'localhost' ||
-    window.location.hostname === '[::1]' ||
-    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/),
-);
+// /* social sign in configuration */
+// const isLocalhost = Boolean(
+//   window.location.hostname === 'localhost' ||
+//     window.location.hostname === '[::1]' ||
+//     window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/),
+// );
 
-// for two redirects (local host and production)
-const [localRedirectSignIn, productionRedirectSignIn] = awsconfig.oauth.redirectSignIn.split(',');
-const [localRedirectSignOut, productionRedirectSignOut] = awsconfig.oauth.redirectSignOut.split(',');
+// // for two redirects (local host and production)
+// const [localRedirectSignIn, productionRedirectSignIn] = awsconfig.oauth.redirectSignIn.split(',');
+// const [localRedirectSignOut, productionRedirectSignOut] = awsconfig.oauth.redirectSignOut.split(',');
 
-const updatedAwsConfig = {
-  ...awsconfig,
-  oauth: {
-    ...awsconfig.oauth,
-    redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,
-    redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
-  },
-};
+// const updatedAwsConfig = {
+//   ...awsconfig,
+//   oauth: {
+//     ...awsconfig.oauth,
+//     redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,
+//     redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
+//   },
+// };
 
 // declare global {
 //   interface Window {
 //     LOG_LEVEL: any;
 //   }
 // }
-// window.LOG_LEVEL = 'DEBUG';
+// window.LOG_LEVEL = 'DEBUG'; // amplify sucks
 
 /* Configure Amplify resources */
-Amplify.configure(updatedAwsConfig);
+Amplify.configure(awsconfig);
 
 /* Add HammerJs for gesture support */
 import * as Hammer from 'hammerjs';
@@ -64,7 +64,7 @@ import { braveState } from '@store/index';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerErrorInterceptor } from '@shared/interceptors/server-error.interceptor';
 import { HttpInterceptorService } from '@shared/interceptors/http-interceptor.service';
 // import { LayoutsModule } from '@layouts/layouts.module';
@@ -89,6 +89,7 @@ export class MyHammerConfig extends HammerGestureConfig {
       disabled: environment.production,
     }),
     NgxMaskModule.forRoot(),
+    HttpClientModule,
     HammerModule,
     AmplifyUIAngularModule,
     NgxChartsModule,

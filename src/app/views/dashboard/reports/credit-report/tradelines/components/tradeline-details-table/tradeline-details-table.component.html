@@ -1,7 +1,7 @@
 <!-- ============================== -->
 <!--       REV/INST ACCOUNTS        -->
 <!-- ============================== -->
-<div *ngIf="mapperType === 'revolving' || mapperType === 'installment'" class="divide-y divide-blueGray-300">
+<div *ngIf="mapperType === 'revolving' || mapperType === 'installment'" class="p-2 pb-0 divide-y divide-blueGray-300">
   <!-- Account Number -->
   <div class="py-2 px-1">
     <brave-base-table-row
@@ -66,7 +66,7 @@
   <!-- account designator -->
   <div class="py-2 px-1">
     <brave-base-table-row
-      [label]="mapper['accountDesignator'] || 'ResponResponsibilitysible'"
+      [label]="mapper['accountDesignator'] || 'Responsibility'"
       [value]="config.accountDesignator"
     ></brave-base-table-row>
   </div>
@@ -213,12 +213,16 @@
     <brave-base-table-row
       [label]="mapper['creditLimit'] || 'Credit Limit'"
       [value]="config.creditLimit"
+      [valueType]="'currency'"
     ></brave-base-table-row>
   </div>
 
   <!-- Term -->
   <div class="py-2 px-1">
-    <brave-base-table-row [label]="mapper['termMonths'] || 'Term'" [value]="config.termMonths"></brave-base-table-row>
+    <brave-base-table-row
+      [label]="mapper['termMonths'] || 'Term'"
+      [value]="config.termMonths === undefined ? undefined : config.termMonths + ' mos'"
+    ></brave-base-table-row>
   </div>
 
   <!-- spacer for bottom -->
@@ -284,6 +288,157 @@
       [value]="config.disputeFlag"
     ></brave-base-table-row>
   </div> -->
+
+  <!-- spacer for bottom -->
+  <div></div>
+</div>
+
+<!-- ============================== -->
+<!--        DISPUTE FINDINGS        -->
+<!-- ============================== -->
+<div *ngIf="mapperType === 'findings'" class="p-2 pb-0 divide-y divide-blueGray-300">
+  <!-- Account Number -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['accountNumber'] || 'Account Number'"
+      [value]="config.accountNumber"
+      [valueType]="'account'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Court Name -->
+  <div class="py-2 px-1">
+    <brave-base-table-row [label]="mapper['accountName'] || 'Account Name'" [injected]="true">
+      <div class="flex flex-col w-6/12">
+        <ng-container *ngIf="config.accountName?.length; else noName">
+          <p *ngFor="let name of config.accountName" class="text-xs text-dk-gray text-opacity-75 text-right mb-1">
+            {{ name || '' | decode }}
+          </p>
+        </ng-container>
+        <ng-template #noName>
+          <p class="text-xs text-dk-gray text-opacity-75 text-right mb-1">
+            {{ missing }}
+          </p>
+        </ng-template>
+      </div>
+    </brave-base-table-row>
+  </div>
+
+  <!-- Date Openend -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['dateOpened'] || 'Date Opened'"
+      [value]="config.dateOpened"
+      [valueType]="'date'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- account designator -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['accountDesignator'] || 'Responsibility'"
+      [value]="config.accountDesignator"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Type of account -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['accountTypeSymbol'] || 'Account Type'"
+      [value]="accountTypeMap[config.accountTypeSymbol?.toLowerCase() || '']"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Loan Type -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['accountCodeDescription'] || 'Loan Type'"
+      [value]="config.accountCodeDescription"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Balance -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['currentBalance'] || 'Balance'"
+      [value]="config.currentBalance"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- highest balance -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['highestBalance'] || 'Highest Balance'"
+      [value]="config.highestBalance"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Credit Limit -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['creditLimit'] || 'Credit Limit'"
+      [value]="config.creditLimit"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Pay status -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['payStatus'] || 'Pay Status'"
+      [value]="config.payStatus"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- NEED TERMS, DIFFERENT THAN OTHER TERMS THOUGH -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['scheduledPayments'] || 'Terms'"
+      [value]="config.scheduledPayments"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Last Payment Date -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['mostRecentPayment'] || 'Last Payment Date'"
+      [value]="config.mostRecentPayment"
+      [valueType]="'date'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Past due -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['amountPastDue'] || 'Past Due'"
+      [value]="config.amountPastDue"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- <Max Delinquency> -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['maxDelinquency'] || 'Max Delinquency'"
+      [value]="config.maxDelinquency"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Original Charge Off (high credit) -->
+  <div class="py-2 px-1">
+    <brave-base-table-row
+      [label]="mapper['highCredit'] || 'Original Charge Off'"
+      [value]="config.highCredit"
+      [valueType]="'currency'"
+    ></brave-base-table-row>
+  </div>
+
+  <!-- Remarks -->
+  <div class="py-2 px-1">
+    <brave-base-table-row [label]="mapper['remarks'] || 'Remarks'" [value]="config.remarks"></brave-base-table-row>
+  </div>
 
   <!-- spacer for bottom -->
   <div></div>

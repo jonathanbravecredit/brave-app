@@ -13,6 +13,13 @@ type AppData
   user: User!
   agencies: Agencies!
   preferences: Preferences!
+  dashboard: Dashboard
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 type User {
   id: ID!
@@ -50,10 +57,38 @@ type Ssn {
   lastfour: String!
   full: String
 }
+type Dashboard {
+  isLoaded: Boolean
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCards: [DataBreachCard]
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
+type DataBreachCard {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: [String]
+}
+
 type Onboarding {
   lastActive: Int!
   lastComplete: Int!
   started: Boolean
+  abandoned: Boolean
+  display: [OnboardingStep]
 }
 type OnboardingStep {
   id: Int
@@ -78,10 +113,22 @@ type ShowAccountsPreference {
 type Transunion {
   authenticated: Boolean
   indicativeEnrichmentSuccess: Boolean
+  indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
+  getAuthenticationQuestionsStatus: TUStatusRef
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRef
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRef
   serviceBundleFulfillmentKey: String
   currentRawQuestions: String
   currentRawAuthDetails: String
+  authAttempt: Int
+  pinRequests: Int
+  pinAttempts: Int
+  pinCurrentAge: Float
+  kbaAttempts: Int
+  kbaCurrentAge: Float
   enrollmentKey: String
   enrollReport: TUReportResponse
   enrollMergeReport: TUReportResponse
@@ -98,14 +145,19 @@ type Transunion {
   disputeEnrollmentKey: String
   disputeEnrolled: Boolean
   disputeEnrolledOn: String
-  disputeStatus: String
-  disputes: [Dispute]
 }
 type Equifax {
   authenticated: Boolean
 }
 type Experian {
   authenticated: Boolean
+}
+type TUStatusRef {
+  id: ID
+  status: String
+  statusDescription: String
+  statusModifiedOn: String
+  statusCode: String
 }
 type TUReportResponse {
   bureau: String
@@ -116,40 +168,4 @@ type TUReportResponse {
   serviceProductTypeId: String
   serviceProductValue: String
   status: String
-}
-type Dispute {
-  id: ID!
-  appDataId: ID!
-  disputeId: String
-  disputeStatus: String
-  disputeLetterCode: String
-  disputeLetterContent: String
-  openDisputes: DisputeSummary
-  closedDisputes: DisputeSummary
-  pvDisputedItems: PVDisputedItems
-  agencyName: String
-  openedOn: String
-  closedOn: String
-  disputeItems: AWSJSON
-  disputeInvestigationResults: AWSJSON
-  disputeCreditBureau: AWSJSON
-  notificationStatus: String
-  notificationMessage: AWSJSON
-  notificationSentOn: String
-}
-
-type DisputeSummary {
-  estimatedCompletionDate: String
-  lastUpdatedDate: String
-  openDate: String
-  requestedDate: String
-  totalClosedDisputedItems: String
-  totalDisputedItems: String
-  totalOpenDisputedItems: String
-  totalPVDisputedItemCount: String
-}
-
-type PVDisputedItems {
-  pvTradelines: AWSJSON
-  pvPublicRecords: AWSJSON
 }

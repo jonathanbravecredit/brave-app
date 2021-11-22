@@ -59,12 +59,12 @@
     "permissions": [],
     "dependsOn": [],
     "hostedUI": true,
-    "hostedUIDomainName": "braveappa3b93ee9-a3b93ee9",
+    "hostedUIDomainName": "braveappb029d416-b029d416",
     "authProvidersUserPool": [
         "Facebook",
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "authProviders": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://app.brave.credit/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://app.brave.credit/auth/redirect/\"],\"LogoutURLs\":[\"https://app.brave.credit/auth/signin/\"]}",
+    "authProviders": []
 }

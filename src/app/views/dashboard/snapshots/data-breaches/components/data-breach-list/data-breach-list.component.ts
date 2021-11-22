@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 import { dataBreachListContent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/content';
 
@@ -10,12 +11,32 @@ export class DataBreachListComponent implements OnInit {
   @Input() cards: IBreachCard[] = [];
   @Output() closeClick: EventEmitter<number> = new EventEmitter();
   content = dataBreachListContent;
-  constructor() {}
+  unreviewed: IBreachCard[] = [];
+  reviewed: IBreachCard[] = [];
+  isEmpty: boolean = false;
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cards.forEach((c) => {
+      if (c.reviewed) this.reviewed.push(c);
+      if (!c.reviewed) this.unreviewed.push(c);
+    });
+    this.isEmpty = this.unreviewed.length === 0;
+  }
 
   hideCard(idx: number): void {
-    this.cards.splice(idx, 1);
-    this.cards = [...this.cards];
+    this.closeClick.emit(idx);
+    if (this.unreviewed.length === 1) {
+      this.unreviewed = [];
+      this.isEmpty = true;
+    } else {
+      this.unreviewed.splice(idx, 1);
+      this.unreviewed = [...this.unreviewed];
+      this.isEmpty = this.unreviewed.length === 0;
+    }
+  }
+
+  goToReport(): void {
+    this.router.navigate(['/dashboard/report']);
   }
 }

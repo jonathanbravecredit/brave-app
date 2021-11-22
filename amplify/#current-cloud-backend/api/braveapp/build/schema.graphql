@@ -1,8 +1,361 @@
-type AppData {
+type Query @aws_cognito_user_pools {
+  transunion(action: String!, message: String!): String
+  getAppData(id: ID!): AppData @aws_iam @aws_cognito_user_pools
+  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection @aws_iam @aws_cognito_user_pools
+}
+
+type Mutation @aws_cognito_user_pools {
+  patchTransunion(id: ID!, msg: String): Transunion
+  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData @aws_iam @aws_cognito_user_pools
+}
+
+type AppData @aws_iam @aws_cognito_user_pools {
   id: ID!
-  version: String!
+  user: User!
+  agencies: Agencies!
+  preferences: Preferences!
+  dashboard: Dashboard
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
+  owner: String
+}
+
+type User @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userAttributes: UserAttributes
+  onboarding: Onboarding
+}
+
+type Name @aws_iam @aws_cognito_user_pools {
+  first: String!
+  middle: String
+  last: String!
+}
+
+type UserAttributes @aws_iam @aws_cognito_user_pools {
+  name: Name
+  address: Address
+  phone: Phone
+  dob: Dob
+  ssn: Ssn
+}
+
+type Address @aws_iam @aws_cognito_user_pools {
+  addressOne: String!
+  addressTwo: String
+  city: String!
+  state: String!
+  zip: String!
+}
+
+type Phone @aws_iam @aws_cognito_user_pools {
+  primary: String!
+}
+
+type Dob @aws_iam @aws_cognito_user_pools {
+  year: String!
+  month: String!
+  day: String!
+}
+
+type Ssn @aws_iam @aws_cognito_user_pools {
+  lastfour: String!
+  full: String
+}
+
+type Dashboard @aws_iam @aws_cognito_user_pools {
+  isLoaded: Boolean
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCards: [DataBreachCard]
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
+type DataBreachCard @aws_iam @aws_cognito_user_pools {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: [String]
+}
+
+type Onboarding @aws_iam @aws_cognito_user_pools {
+  lastActive: Int!
+  lastComplete: Int!
+  started: Boolean
+  abandoned: Boolean
+  display: [OnboardingStep]
+}
+
+type OnboardingStep @aws_iam @aws_cognito_user_pools {
+  id: Int
+  active: Boolean
+  complete: Boolean
+  name: String
+}
+
+type Agencies @aws_iam @aws_cognito_user_pools {
+  transunion: Transunion
+  equifax: Equifax
+  experian: Experian
+}
+
+type Preferences @aws_iam @aws_cognito_user_pools {
+  showAllAccounts: ShowAccountsPreference
+}
+
+type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
+  creditCards: Boolean
+  collectionsAccounts: Boolean
+  installmentLoans: Boolean
+  mortgages: Boolean
+}
+
+type Transunion @aws_iam @aws_cognito_user_pools {
+  authenticated: Boolean
+  indicativeEnrichmentSuccess: Boolean
+  indicativeEnrichmentStatus: TUStatusRef
+  getAuthenticationQuestionsSuccess: Boolean
+  getAuthenticationQuestionsStatus: TUStatusRef
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRef
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRef
+  serviceBundleFulfillmentKey: String
+  currentRawQuestions: String
+  currentRawAuthDetails: String
+  authAttempt: Int
+  pinRequests: Int
+  pinAttempts: Int
+  pinCurrentAge: Float
+  kbaAttempts: Int
+  kbaCurrentAge: Float
+  enrollmentKey: String
+  enrollReport: TUReportResponse
+  enrollMergeReport: TUReportResponse
+  enrollVantageScore: TUReportResponse
+  enrolled: Boolean
+  enrolledOn: String
+  fulfillReport: TUReportResponse
+  fulfillMergeReport: TUReportResponse
+  fulfillVantageScore: TUReportResponse
+  fulfilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
+  disputeServiceBundleFulfillmentKey: String
+  disputeEnrollmentKey: String
+  disputeEnrolled: Boolean
+  disputeEnrolledOn: String
+}
+
+type Equifax @aws_iam @aws_cognito_user_pools {
+  authenticated: Boolean
+}
+
+type Experian @aws_iam @aws_cognito_user_pools {
+  authenticated: Boolean
+}
+
+type TUStatusRef @aws_iam @aws_cognito_user_pools {
+  id: ID
+  status: String
+  statusDescription: String
+  statusModifiedOn: String
+  statusCode: String
+}
+
+type TUReportResponse @aws_iam @aws_cognito_user_pools {
+  bureau: String
+  errorResponse: String
+  serviceProduct: String
+  serviceProductFullfillmentKey: String
+  serviceProductObject: AWSJSON
+  serviceProductTypeId: String
+  serviceProductValue: String
+  status: String
+}
+
+input UserInput {
+  id: ID!
+  userAttributes: UserAttributesInput
+  onboarding: OnboardingInput
+}
+
+input UserAttributesInput {
+  name: NameInput
+  address: AddressInput
+  phone: PhoneInput
+  dob: DobInput
+  ssn: SsnInput
+}
+
+input NameInput {
+  first: String!
+  middle: String
+  last: String!
+}
+
+input AddressInput {
+  addressOne: String!
+  addressTwo: String
+  city: String!
+  state: String!
+  zip: String!
+}
+
+input PhoneInput {
+  primary: String!
+}
+
+input DobInput {
+  year: String!
+  month: String!
+  day: String!
+}
+
+input SsnInput {
+  lastfour: String!
+  full: String
+}
+
+input OnboardingInput {
+  lastActive: Int!
+  lastComplete: Int!
+  started: Boolean
+  abandoned: Boolean
+  display: [OnboardingStepInput]
+}
+
+input OnboardingStepInput {
+  id: Int
+  active: Boolean
+  complete: Boolean
+  name: String
+}
+
+input AgenciesInput {
+  transunion: TransunionInput
+  equifax: EquifaxInput
+  experian: ExperianInput
+}
+
+input TransunionInput {
+  authenticated: Boolean
+  indicativeEnrichmentSuccess: Boolean
+  indicativeEnrichmentStatus: TUStatusRefInput
+  getAuthenticationQuestionsSuccess: Boolean
+  getAuthenticationQuestionsStatus: TUStatusRefInput
+  verifyAuthenticationQuestionsOTPSuccess: Boolean
+  verifyAuthenticationQuestionsOTPStatus: TUStatusRefInput
+  verifyAuthenticationQuestionsKBASuccess: Boolean
+  verifyAuthenticationQuestionsKBAStatus: TUStatusRefInput
+  serviceBundleFulfillmentKey: String
+  currentRawQuestions: String
+  currentRawAuthDetails: String
+  authAttempt: Int
+  pinRequests: Int
+  pinAttempts: Int
+  pinCurrentAge: Float
+  kbaAttempts: Int
+  kbaCurrentAge: Float
+  enrollmentKey: String
+  enrollReport: TUReportResponseInput
+  enrollMergeReport: TUReportResponseInput
+  enrollVantageScore: TUReportResponseInput
+  enrolled: Boolean
+  enrolledOn: String
+  fulfillReport: TUReportResponseInput
+  fulfillMergeReport: TUReportResponseInput
+  fulfillVantageScore: TUReportResponseInput
+  fulfilledOn: String
+  acknowledgedDisputeTerms: Boolean
+  acknowledgedDisputeTermsOn: String
+  disputeServiceBundleFulfillmentKey: String
+  disputeEnrollmentKey: String
+  disputeEnrolled: Boolean
+  disputeEnrolledOn: String
+}
+
+input TUStatusRefInput {
+  id: ID
+  status: String
+  statusDescription: String
+  statusModifiedOn: String
+  statusCode: String
+}
+
+input TUReportResponseInput {
+  bureau: String
+  errorResponse: String
+  serviceProduct: String
+  serviceProductFullfillmentKey: String
+  serviceProductObject: AWSJSON
+  serviceProductTypeId: String
+  serviceProductValue: String
+  status: String
+}
+
+input EquifaxInput {
+  authenticated: Boolean
+}
+
+input ExperianInput {
+  authenticated: Boolean
+}
+
+input PreferencesInput {
+  showAllAccounts: ShowAccountsPreferenceInput
+}
+
+input ShowAccountsPreferenceInput {
+  creditCards: Boolean
+  collectionsAccounts: Boolean
+  installmentLoans: Boolean
+  mortgages: Boolean
+}
+
+input DashboardInput {
+  isLoaded: Boolean
+  negativeFlagged: Boolean
+  negativeCardCount: Int
+  negativeCardStatus: String
+  negativeReviewed: Boolean
+  negativeStatus: String
+  forbearanceFlagged: Boolean
+  forbearanceCardStatus: String
+  forbearanceReviewed: Boolean
+  forbearanceStatus: String
+  databreachFlagged: Boolean
+  databreachCards: [DataBreachCardInput]
+  databreachCardStatus: String
+  databreachReviewed: Boolean
+  databreachStatus: String
+}
+
+input DataBreachCardInput {
+  reason: String
+  reviewed: Boolean
+  condition: String
+  subscriber: String
+  paragraphs: [String]
 }
 
 enum ModelSortDirection {
@@ -10,7 +363,7 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelAppDataConnection {
+type ModelAppDataConnection @aws_iam @aws_cognito_user_pools {
   items: [AppData]
   nextToken: String
 }
@@ -90,7 +443,12 @@ input ModelSizeInput {
 
 input ModelAppDataFilterInput {
   id: ModelIDInput
-  version: ModelStringInput
+  status: ModelStringInput
+  statusReason: ModelStringInput
+  statusReasonDescription: ModelStringInput
+  lastStatusModifiedOn: ModelStringInput
+  nextStatusModifiedOn: ModelStringInput
+  isLoaded: ModelBooleanInput
   and: [ModelAppDataFilterInput]
   or: [ModelAppDataFilterInput]
   not: ModelAppDataFilterInput
@@ -109,40 +467,52 @@ enum ModelAttributeTypes {
   _null
 }
 
-type Query {
-  getAppData(id: ID!): AppData
-  listAppDatas(filter: ModelAppDataFilterInput, limit: Int, nextToken: String): ModelAppDataConnection
-}
-
 input CreateAppDataInput {
   id: ID
-  version: String!
+  user: UserInput!
+  agencies: AgenciesInput!
+  preferences: PreferencesInput!
+  dashboard: DashboardInput
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 
 input UpdateAppDataInput {
   id: ID!
-  version: String
+  user: UserInput
+  agencies: AgenciesInput
+  preferences: PreferencesInput
+  dashboard: DashboardInput
+  status: String
+  statusReason: String
+  statusReasonDescription: String
+  lastStatusModifiedOn: String
+  nextStatusModifiedOn: String
+  isLoaded: Boolean
 }
 
 input DeleteAppDataInput {
   id: ID
 }
 
-type Mutation {
-  createAppData(input: CreateAppDataInput!, condition: ModelAppDataConditionInput): AppData
-  updateAppData(input: UpdateAppDataInput!, condition: ModelAppDataConditionInput): AppData
-  deleteAppData(input: DeleteAppDataInput!, condition: ModelAppDataConditionInput): AppData
-}
-
 input ModelAppDataConditionInput {
-  version: ModelStringInput
+  status: ModelStringInput
+  statusReason: ModelStringInput
+  statusReasonDescription: ModelStringInput
+  lastStatusModifiedOn: ModelStringInput
+  nextStatusModifiedOn: ModelStringInput
+  isLoaded: ModelBooleanInput
   and: [ModelAppDataConditionInput]
   or: [ModelAppDataConditionInput]
   not: ModelAppDataConditionInput
 }
 
 type Subscription {
-  onCreateAppData: AppData @aws_subscribe(mutations: ["createAppData"])
-  onUpdateAppData: AppData @aws_subscribe(mutations: ["updateAppData"])
-  onDeleteAppData: AppData @aws_subscribe(mutations: ["deleteAppData"])
+  onCreateAppData(owner: String): AppData @aws_subscribe(mutations: ["createAppData"]) @aws_iam @aws_cognito_user_pools
+  onUpdateAppData(owner: String): AppData @aws_subscribe(mutations: ["updateAppData"]) @aws_iam @aws_cognito_user_pools
+  onDeleteAppData(owner: String): AppData @aws_subscribe(mutations: ["deleteAppData"]) @aws_iam @aws_cognito_user_pools
 }

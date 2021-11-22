@@ -2,6 +2,7 @@ import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import * as OnboardingActions from './onboarding.actions';
 import { OnboardingStateModel } from '@store/onboarding/onboarding.model';
+import { BraveUtil } from '@shared/utils/brave/brave';
 
 @State<OnboardingStateModel>({
   name: 'onboarding',
@@ -16,30 +17,21 @@ export class OnboardingState {
   constructor() {}
 
   @Action(OnboardingActions.Add)
-  addOnboarding(
-    ctx: StateContext<OnboardingStateModel>,
-    { payload }: OnboardingActions.Add
-  ): void {
+  addOnboarding(ctx: StateContext<OnboardingStateModel>, { payload }: OnboardingActions.Add): void {
     ctx.patchState({
       ...payload,
     });
   }
 
   @Action(OnboardingActions.Edit)
-  updateOnboaring(
-    ctx: StateContext<OnboardingStateModel>,
-    { payload }: OnboardingActions.Edit
-  ): void {
+  updateOnboaring(ctx: StateContext<OnboardingStateModel>, { payload }: OnboardingActions.Edit): void {
     ctx.patchState({
       ...payload,
     });
   }
 
   @Action(OnboardingActions.Delete)
-  deleteOnboarding(
-    ctx: StateContext<OnboardingStateModel>,
-    {}: OnboardingActions.Delete
-  ): void {
+  deleteOnboarding(ctx: StateContext<OnboardingStateModel>, {}: OnboardingActions.Delete): void {
     const payload = new OnboardingStateModel();
     ctx.patchState({
       ...payload,
@@ -47,22 +39,35 @@ export class OnboardingState {
   }
 
   @Action(OnboardingActions.UpdateLastActive)
-  updateLastActive(
-    ctx: StateContext<OnboardingStateModel>,
-    { payload }: OnboardingActions.UpdateLastActive
-  ): void {
+  updateLastActive(ctx: StateContext<OnboardingStateModel>, { payload }: OnboardingActions.UpdateLastActive): void {
     ctx.patchState({
       lastActive: payload,
     });
   }
 
   @Action(OnboardingActions.UpdateLastComplete)
-  updateLastComplete(
-    ctx: StateContext<OnboardingStateModel>,
-    { payload }: OnboardingActions.UpdateLastComplete
-  ): void {
+  updateLastComplete(ctx: StateContext<OnboardingStateModel>, { payload }: OnboardingActions.UpdateLastComplete): void {
     ctx.patchState({
       lastComplete: payload,
+    });
+  }
+
+  @Action(OnboardingActions.ResetOnboarding)
+  resetOnboarding(ctx: StateContext<OnboardingStateModel>): void {
+    const { lastComplete, lastActive, started } = BraveUtil.generators.createInitOnboardingState();
+    ctx.patchState({
+      lastComplete,
+      lastActive,
+      started,
+    });
+  }
+
+  @Action(OnboardingActions.AbandonOnboarding)
+  abandonOnboarding(ctx: StateContext<OnboardingStateModel>): void {
+    const state = ctx.getState();
+    ctx.patchState({
+      ...state,
+      abandoned: true,
     });
   }
 }

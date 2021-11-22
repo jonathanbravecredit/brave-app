@@ -1,4 +1,4 @@
-import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
+import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES, POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import {
   IBorrower,
@@ -10,9 +10,11 @@ import {
   ISubscriber,
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
-import { DataBreaches, FORBEARANCE_TYPE } from '@shared/utils/constants';
+import { DataBreaches, DateBreachCard, FORBEARANCE_TYPE } from '@shared/utils/constants';
+import { INDUSTRY_CODES } from '@shared/utils/transunion/constants';
 import { DataBreachConditions } from '@shared/utils/transunion/queries/utils';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
+import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 export class TransunionReportQueries extends TransunionBase {
   constructor() {
@@ -67,7 +69,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  static getMaxDelinquency(partition: ITradeLinePartition | undefined): number {
+  static getDelinquencyCount(partition: ITradeLinePartition | undefined): number {
     if (!partition) return 0;
     const count30 = partition.Tradeline?.GrantedTrade?.late30Count || 0;
     const count60 = partition.Tradeline?.GrantedTrade?.late60Count || 0;
@@ -193,13 +195,15 @@ export class TransunionReportQueries extends TransunionBase {
    */
   static isForbearanceAccount(partition: ITradeLinePartition | undefined): boolean {
     if (!partition) return false;
-    const symbol = partition.accountTypeSymbol?.toLowerCase();
-    if (!symbol) return false;
-    const accountType = FORBEARANCE_TYPE[symbol];
+    const { accountTypeSymbol = '' } = partition;
+    if (!accountTypeSymbol) return false;
+    const accountType = FORBEARANCE_TYPE[accountTypeSymbol.toLowerCase()];
     if (!accountType) return false;
-    if (symbol.toLowerCase() === 'm') return true; // simple mortgage
-    const industry = partition.Tradeline?.IndustryCode?.description;
-    if (industry?.toLowerCase().includes('student')) {
+    if (accountTypeSymbol.toLowerCase() === 'm') return true; // simple mortgage
+    const {
+      Tradeline: { GrantedTrade: { AccountType: { symbol = '', description = '' } = {} } = {} } = {},
+    } = partition;
+    if (`${symbol}`.toLowerCase() === 'st') {
       return true;
     }
     return false;
@@ -228,7 +232,19 @@ export class TransunionReportQueries extends TransunionBase {
     if (!partition) return false;
     const symbol = partition.Tradeline?.PayStatus?.symbol;
     if (!symbol) return false;
-    return !!NEGATIVE_PAY_STATUS_CODES[symbol];
+    return !!NEGATIVE_PAY_STATUS_CODES[`${symbol}`] || false;
+  }
+
+  /**
+   * Helper function to securely lookup the account type
+   * @param {ITradeLinePartition | undefined} partition
+   * @returns
+   */
+  static isPositiveAccount(partition: ITradeLinePartition | undefined): boolean {
+    if (!partition) return false;
+    const symbol = partition.Tradeline?.PayStatus?.symbol;
+    if (!symbol) return false;
+    return !!POSITIVE_PAY_STATUS_CODES[`${symbol}`] || false;
   }
 
   /**
@@ -284,6 +300,22 @@ export class TransunionReportQueries extends TransunionBase {
         return DataBreaches.None;
         break;
     }
+  }
+
+  /**
+   * Go through the data breaches identified and determine if the credit report matches any condtions
+   * @param report
+   * @returns
+   */
+  static listDataBreaches(report: IMergeReport): IBreachCard[] {
+    const breachCards = Object.values(DataBreaches)
+      .filter((item) => {
+        return this.isDataBreachCondition(report, item) !== DataBreaches.None;
+      })
+      .map((key) => {
+        return DateBreachCard[key];
+      });
+    return breachCards;
   }
 
   /*=====================================*/

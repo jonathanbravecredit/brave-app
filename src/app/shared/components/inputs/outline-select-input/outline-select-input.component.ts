@@ -74,6 +74,7 @@ export class OutlineSelectInputComponent implements OnInit {
       input: [this.config.label, validators], // default to first item in array
     });
     this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
+      this.selected = value;
       this.valueChanged.emit(value);
     });
     this.onComponentReady.emit(this.componentFormGroup);
@@ -94,7 +95,6 @@ export class OutlineSelectInputComponent implements OnInit {
    * @param idx index of the select option clicked on
    */
   updateForm(idx: number): void {
-    this.selected = this.config.options[idx];
     this.componentFormGroup.setValue({ input: this.config.options[idx] });
   }
 }

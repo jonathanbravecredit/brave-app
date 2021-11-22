@@ -37,16 +37,59 @@ query GetAppData($id: ID!) {
         lastActive
         lastComplete
         started
+        abandoned
+        display {
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
       transunion {
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           bureau
@@ -117,48 +160,6 @@ query GetAppData($id: ID!) {
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         authenticated
@@ -175,6 +176,35 @@ query GetAppData($id: ID!) {
         mortgages
       }
     }
+    dashboard {
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -220,16 +250,59 @@ query ListAppDatas(
           lastActive
           lastComplete
           started
+          abandoned
+          display {
+            id
+            active
+            complete
+            name
+          }
         }
       }
       agencies {
         transunion {
           authenticated
           indicativeEnrichmentSuccess
+          indicativeEnrichmentStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
           getAuthenticationQuestionsSuccess
+          getAuthenticationQuestionsStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsOTPSuccess
+          verifyAuthenticationQuestionsOTPStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsKBASuccess
+          verifyAuthenticationQuestionsKBAStatus {
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
           serviceBundleFulfillmentKey
           currentRawQuestions
           currentRawAuthDetails
+          authAttempt
+          pinRequests
+          pinAttempts
+          pinCurrentAge
+          kbaAttempts
+          kbaCurrentAge
           enrollmentKey
           enrollReport {
             bureau
@@ -300,48 +373,6 @@ query ListAppDatas(
           disputeEnrollmentKey
           disputeEnrolled
           disputeEnrolledOn
-          disputeStatus
-          disputes {
-            id
-            appDataId
-            disputeId
-            disputeStatus
-            disputeLetterCode
-            disputeLetterContent
-            openDisputes {
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            closedDisputes {
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            pvDisputedItems {
-              pvTradelines
-              pvPublicRecords
-            }
-            agencyName
-            openedOn
-            closedOn
-            disputeItems
-            disputeInvestigationResults
-            disputeCreditBureau
-            notificationStatus
-            notificationMessage
-            notificationSentOn
-          }
         }
         equifax {
           authenticated
@@ -358,6 +389,35 @@ query ListAppDatas(
           mortgages
         }
       }
+      dashboard {
+        isLoaded
+        negativeFlagged
+        negativeCardCount
+        negativeCardStatus
+        negativeReviewed
+        negativeStatus
+        forbearanceFlagged
+        forbearanceCardStatus
+        forbearanceReviewed
+        forbearanceStatus
+        databreachFlagged
+        databreachCards {
+          reason
+          reviewed
+          condition
+          subscriber
+          paragraphs
+        }
+        databreachCardStatus
+        databreachReviewed
+        databreachStatus
+      }
+      status
+      statusReason
+      statusReasonDescription
+      lastStatusModifiedOn
+      nextStatusModifiedOn
+      isLoaded
       createdAt
       updatedAt
       owner

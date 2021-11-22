@@ -13,10 +13,22 @@ export type Transunion = {
   __typename: "Transunion";
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  indicativeEnrichmentStatus?: TUStatusRef;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  getAuthenticationQuestionsStatus?: TUStatusRef;
+  verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+  verifyAuthenticationQuestionsOTPStatus?: TUStatusRef;
+  verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+  verifyAuthenticationQuestionsKBAStatus?: TUStatusRef;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  authAttempt?: number | null;
+  pinRequests?: number | null;
+  pinAttempts?: number | null;
+  pinCurrentAge?: number | null;
+  kbaAttempts?: number | null;
+  kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
   enrollReport?: TUReportResponse;
   enrollMergeReport?: TUReportResponse;
@@ -33,8 +45,15 @@ export type Transunion = {
   disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
-  disputeStatus?: string | null;
-  disputes?: Array<Dispute | null> | null;
+};
+
+export type TUStatusRef = {
+  __typename: "TUStatusRef";
+  id?: string | null;
+  status?: string | null;
+  statusDescription?: string | null;
+  statusModifiedOn?: string | null;
+  statusCode?: string | null;
 };
 
 export type TUReportResponse = {
@@ -49,51 +68,18 @@ export type TUReportResponse = {
   status?: string | null;
 };
 
-export type Dispute = {
-  __typename: "Dispute";
-  id?: string;
-  appDataId?: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: DisputeSummary;
-  closedDisputes?: DisputeSummary;
-  pvDisputedItems?: PVDisputedItems;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeInvestigationResults?: string | null;
-  disputeCreditBureau?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type DisputeSummary = {
-  __typename: "DisputeSummary";
-  estimatedCompletionDate?: string | null;
-  lastUpdatedDate?: string | null;
-  openDate?: string | null;
-  requestedDate?: string | null;
-  totalClosedDisputedItems?: string | null;
-  totalDisputedItems?: string | null;
-  totalOpenDisputedItems?: string | null;
-  totalPVDisputedItemCount?: string | null;
-};
-
-export type PVDisputedItems = {
-  __typename: "PVDisputedItems";
-  pvTradelines?: string | null;
-  pvPublicRecords?: string | null;
-};
-
 export type CreateAppDataInput = {
   id?: string | null;
   user: UserInput;
   agencies: AgenciesInput;
   preferences: PreferencesInput;
+  dashboard?: DashboardInput | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
 };
 
 export type UserInput = {
@@ -143,6 +129,15 @@ export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
   started?: boolean | null;
+  abandoned?: boolean | null;
+  display?: Array<OnboardingStepInput | null> | null;
+};
+
+export type OnboardingStepInput = {
+  id?: number | null;
+  active?: boolean | null;
+  complete?: boolean | null;
+  name?: string | null;
 };
 
 export type AgenciesInput = {
@@ -154,10 +149,22 @@ export type AgenciesInput = {
 export type TransunionInput = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  indicativeEnrichmentStatus?: TUStatusRefInput | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  getAuthenticationQuestionsStatus?: TUStatusRefInput | null;
+  verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+  verifyAuthenticationQuestionsOTPStatus?: TUStatusRefInput | null;
+  verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+  verifyAuthenticationQuestionsKBAStatus?: TUStatusRefInput | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  authAttempt?: number | null;
+  pinRequests?: number | null;
+  pinAttempts?: number | null;
+  pinCurrentAge?: number | null;
+  kbaAttempts?: number | null;
+  kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
   enrollReport?: TUReportResponseInput | null;
   enrollMergeReport?: TUReportResponseInput | null;
@@ -174,8 +181,14 @@ export type TransunionInput = {
   disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
-  disputeStatus?: string | null;
-  disputes?: Array<DisputeInput | null> | null;
+};
+
+export type TUStatusRefInput = {
+  id?: string | null;
+  status?: string | null;
+  statusDescription?: string | null;
+  statusModifiedOn?: string | null;
+  statusCode?: string | null;
 };
 
 export type TUReportResponseInput = {
@@ -187,43 +200,6 @@ export type TUReportResponseInput = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
-};
-
-export type DisputeInput = {
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: DisputeSummaryInput | null;
-  closedDisputes?: DisputeSummaryInput | null;
-  pvDisputedItems?: PVDisputedItemsInput | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeInvestigationResults?: string | null;
-  disputeCreditBureau?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type DisputeSummaryInput = {
-  estimatedCompletionDate?: string | null;
-  lastUpdatedDate?: string | null;
-  openDate?: string | null;
-  requestedDate?: string | null;
-  totalClosedDisputedItems?: string | null;
-  totalDisputedItems?: string | null;
-  totalOpenDisputedItems?: string | null;
-  totalPVDisputedItemCount?: string | null;
-};
-
-export type PVDisputedItemsInput = {
-  pvTradelines?: string | null;
-  pvPublicRecords?: string | null;
 };
 
 export type EquifaxInput = {
@@ -245,10 +221,88 @@ export type ShowAccountsPreferenceInput = {
   mortgages?: boolean | null;
 };
 
+export type DashboardInput = {
+  isLoaded?: boolean | null;
+  negativeFlagged?: boolean | null;
+  negativeCardCount?: number | null;
+  negativeCardStatus?: string | null;
+  negativeReviewed?: boolean | null;
+  negativeStatus?: string | null;
+  forbearanceFlagged?: boolean | null;
+  forbearanceCardStatus?: string | null;
+  forbearanceReviewed?: boolean | null;
+  forbearanceStatus?: string | null;
+  databreachFlagged?: boolean | null;
+  databreachCards?: Array<DataBreachCardInput | null> | null;
+  databreachCardStatus?: string | null;
+  databreachReviewed?: boolean | null;
+  databreachStatus?: string | null;
+};
+
+export type DataBreachCardInput = {
+  reason?: string | null;
+  reviewed?: boolean | null;
+  condition?: string | null;
+  subscriber?: string | null;
+  paragraphs?: Array<string | null> | null;
+};
+
 export type ModelAppDataConditionInput = {
+  status?: ModelStringInput | null;
+  statusReason?: ModelStringInput | null;
+  statusReasonDescription?: ModelStringInput | null;
+  lastStatusModifiedOn?: ModelStringInput | null;
+  nextStatusModifiedOn?: ModelStringInput | null;
+  isLoaded?: ModelBooleanInput | null;
   and?: Array<ModelAppDataConditionInput | null> | null;
   or?: Array<ModelAppDataConditionInput | null> | null;
   not?: ModelAppDataConditionInput | null;
+};
+
+export type ModelStringInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null"
+}
+
+export type ModelSizeInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
 };
 
 export type AppData = {
@@ -257,6 +311,13 @@ export type AppData = {
   user?: User;
   agencies?: Agencies;
   preferences?: Preferences;
+  dashboard?: Dashboard;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
@@ -317,6 +378,16 @@ export type Onboarding = {
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
+  abandoned?: boolean | null;
+  display?: Array<OnboardingStep | null> | null;
+};
+
+export type OnboardingStep = {
+  __typename: "OnboardingStep";
+  id?: number | null;
+  active?: boolean | null;
+  complete?: boolean | null;
+  name?: string | null;
 };
 
 export type Agencies = {
@@ -349,11 +420,46 @@ export type ShowAccountsPreference = {
   mortgages?: boolean | null;
 };
 
+export type Dashboard = {
+  __typename: "Dashboard";
+  isLoaded?: boolean | null;
+  negativeFlagged?: boolean | null;
+  negativeCardCount?: number | null;
+  negativeCardStatus?: string | null;
+  negativeReviewed?: boolean | null;
+  negativeStatus?: string | null;
+  forbearanceFlagged?: boolean | null;
+  forbearanceCardStatus?: string | null;
+  forbearanceReviewed?: boolean | null;
+  forbearanceStatus?: string | null;
+  databreachFlagged?: boolean | null;
+  databreachCards?: Array<DataBreachCard | null> | null;
+  databreachCardStatus?: string | null;
+  databreachReviewed?: boolean | null;
+  databreachStatus?: string | null;
+};
+
+export type DataBreachCard = {
+  __typename: "DataBreachCard";
+  reason?: string | null;
+  reviewed?: boolean | null;
+  condition?: string | null;
+  subscriber?: string | null;
+  paragraphs?: Array<string | null> | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
+  dashboard?: DashboardInput | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
 };
 
 export type DeleteAppDataInput = {
@@ -362,6 +468,12 @@ export type DeleteAppDataInput = {
 
 export type ModelAppDataFilterInput = {
   id?: ModelIDInput | null;
+  status?: ModelStringInput | null;
+  statusReason?: ModelStringInput | null;
+  statusReasonDescription?: ModelStringInput | null;
+  lastStatusModifiedOn?: ModelStringInput | null;
+  nextStatusModifiedOn?: ModelStringInput | null;
+  isLoaded?: ModelBooleanInput | null;
   and?: Array<ModelAppDataFilterInput | null> | null;
   or?: Array<ModelAppDataFilterInput | null> | null;
   not?: ModelAppDataFilterInput | null;
@@ -383,29 +495,6 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null"
-}
-
-export type ModelSizeInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-};
-
 export type ModelAppDataConnection = {
   __typename: "ModelAppDataConnection";
   items?: Array<AppData | null> | null;
@@ -416,10 +505,50 @@ export type PatchTransunionMutation = {
   __typename: "Transunion";
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  indicativeEnrichmentStatus?: {
+    __typename: "TUStatusRef";
+    id?: string | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  getAuthenticationQuestionsStatus?: {
+    __typename: "TUStatusRef";
+    id?: string | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
+  verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+  verifyAuthenticationQuestionsOTPStatus?: {
+    __typename: "TUStatusRef";
+    id?: string | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
+  verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+  verifyAuthenticationQuestionsKBAStatus?: {
+    __typename: "TUStatusRef";
+    id?: string | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  authAttempt?: number | null;
+  pinRequests?: number | null;
+  pinAttempts?: number | null;
+  pinCurrentAge?: number | null;
+  kbaAttempts?: number | null;
+  kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
   enrollReport?: {
     __typename: "TUReportResponse";
@@ -496,52 +625,6 @@ export type PatchTransunionMutation = {
   disputeEnrollmentKey?: string | null;
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
-  disputeStatus?: string | null;
-  disputes?: Array<{
-    __typename: "Dispute";
-    id: string;
-    appDataId: string;
-    disputeId?: string | null;
-    disputeStatus?: string | null;
-    disputeLetterCode?: string | null;
-    disputeLetterContent?: string | null;
-    openDisputes?: {
-      __typename: "DisputeSummary";
-      estimatedCompletionDate?: string | null;
-      lastUpdatedDate?: string | null;
-      openDate?: string | null;
-      requestedDate?: string | null;
-      totalClosedDisputedItems?: string | null;
-      totalDisputedItems?: string | null;
-      totalOpenDisputedItems?: string | null;
-      totalPVDisputedItemCount?: string | null;
-    } | null;
-    closedDisputes?: {
-      __typename: "DisputeSummary";
-      estimatedCompletionDate?: string | null;
-      lastUpdatedDate?: string | null;
-      openDate?: string | null;
-      requestedDate?: string | null;
-      totalClosedDisputedItems?: string | null;
-      totalDisputedItems?: string | null;
-      totalOpenDisputedItems?: string | null;
-      totalPVDisputedItemCount?: string | null;
-    } | null;
-    pvDisputedItems?: {
-      __typename: "PVDisputedItems";
-      pvTradelines?: string | null;
-      pvPublicRecords?: string | null;
-    } | null;
-    agencyName?: string | null;
-    openedOn?: string | null;
-    closedOn?: string | null;
-    disputeItems?: string | null;
-    disputeInvestigationResults?: string | null;
-    disputeCreditBureau?: string | null;
-    notificationStatus?: string | null;
-    notificationMessage?: string | null;
-    notificationSentOn?: string | null;
-  } | null> | null;
 };
 
 export type CreateAppDataMutation = {
@@ -587,6 +670,14 @@ export type CreateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -595,10 +686,50 @@ export type CreateAppDataMutation = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -675,52 +806,6 @@ export type CreateAppDataMutation = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -741,6 +826,37 @@ export type CreateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -789,6 +905,14 @@ export type UpdateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -797,10 +921,50 @@ export type UpdateAppDataMutation = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -877,52 +1041,6 @@ export type UpdateAppDataMutation = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -943,6 +1061,37 @@ export type UpdateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -991,6 +1140,14 @@ export type DeleteAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -999,10 +1156,50 @@ export type DeleteAppDataMutation = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1079,52 +1276,6 @@ export type DeleteAppDataMutation = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1145,6 +1296,37 @@ export type DeleteAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1193,6 +1375,14 @@ export type GetAppDataQuery = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -1201,10 +1391,50 @@ export type GetAppDataQuery = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1281,52 +1511,6 @@ export type GetAppDataQuery = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1347,6 +1531,37 @@ export type GetAppDataQuery = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1397,6 +1612,14 @@ export type ListAppDatasQuery = {
         lastActive: number;
         lastComplete: number;
         started?: boolean | null;
+        abandoned?: boolean | null;
+        display?: Array<{
+          __typename: "OnboardingStep";
+          id?: number | null;
+          active?: boolean | null;
+          complete?: boolean | null;
+          name?: string | null;
+        } | null> | null;
       } | null;
     };
     agencies: {
@@ -1405,10 +1628,50 @@ export type ListAppDatasQuery = {
         __typename: "Transunion";
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
+        indicativeEnrichmentStatus?: {
+          __typename: "TUStatusRef";
+          id?: string | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
+        getAuthenticationQuestionsStatus?: {
+          __typename: "TUStatusRef";
+          id?: string | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
+        verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+        verifyAuthenticationQuestionsOTPStatus?: {
+          __typename: "TUStatusRef";
+          id?: string | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
+        verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+        verifyAuthenticationQuestionsKBAStatus?: {
+          __typename: "TUStatusRef";
+          id?: string | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
         serviceBundleFulfillmentKey?: string | null;
         currentRawQuestions?: string | null;
         currentRawAuthDetails?: string | null;
+        authAttempt?: number | null;
+        pinRequests?: number | null;
+        pinAttempts?: number | null;
+        pinCurrentAge?: number | null;
+        kbaAttempts?: number | null;
+        kbaCurrentAge?: number | null;
         enrollmentKey?: string | null;
         enrollReport?: {
           __typename: "TUReportResponse";
@@ -1485,52 +1748,6 @@ export type ListAppDatasQuery = {
         disputeEnrollmentKey?: string | null;
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
-        disputeStatus?: string | null;
-        disputes?: Array<{
-          __typename: "Dispute";
-          id: string;
-          appDataId: string;
-          disputeId?: string | null;
-          disputeStatus?: string | null;
-          disputeLetterCode?: string | null;
-          disputeLetterContent?: string | null;
-          openDisputes?: {
-            __typename: "DisputeSummary";
-            estimatedCompletionDate?: string | null;
-            lastUpdatedDate?: string | null;
-            openDate?: string | null;
-            requestedDate?: string | null;
-            totalClosedDisputedItems?: string | null;
-            totalDisputedItems?: string | null;
-            totalOpenDisputedItems?: string | null;
-            totalPVDisputedItemCount?: string | null;
-          } | null;
-          closedDisputes?: {
-            __typename: "DisputeSummary";
-            estimatedCompletionDate?: string | null;
-            lastUpdatedDate?: string | null;
-            openDate?: string | null;
-            requestedDate?: string | null;
-            totalClosedDisputedItems?: string | null;
-            totalDisputedItems?: string | null;
-            totalOpenDisputedItems?: string | null;
-            totalPVDisputedItemCount?: string | null;
-          } | null;
-          pvDisputedItems?: {
-            __typename: "PVDisputedItems";
-            pvTradelines?: string | null;
-            pvPublicRecords?: string | null;
-          } | null;
-          agencyName?: string | null;
-          openedOn?: string | null;
-          closedOn?: string | null;
-          disputeItems?: string | null;
-          disputeInvestigationResults?: string | null;
-          disputeCreditBureau?: string | null;
-          notificationStatus?: string | null;
-          notificationMessage?: string | null;
-          notificationSentOn?: string | null;
-        } | null> | null;
       } | null;
       equifax?: {
         __typename: "Equifax";
@@ -1551,6 +1768,37 @@ export type ListAppDatasQuery = {
         mortgages?: boolean | null;
       } | null;
     };
+    dashboard?: {
+      __typename: "Dashboard";
+      isLoaded?: boolean | null;
+      negativeFlagged?: boolean | null;
+      negativeCardCount?: number | null;
+      negativeCardStatus?: string | null;
+      negativeReviewed?: boolean | null;
+      negativeStatus?: string | null;
+      forbearanceFlagged?: boolean | null;
+      forbearanceCardStatus?: string | null;
+      forbearanceReviewed?: boolean | null;
+      forbearanceStatus?: string | null;
+      databreachFlagged?: boolean | null;
+      databreachCards?: Array<{
+        __typename: "DataBreachCard";
+        reason?: string | null;
+        reviewed?: boolean | null;
+        condition?: string | null;
+        subscriber?: string | null;
+        paragraphs?: Array<string | null> | null;
+      } | null> | null;
+      databreachCardStatus?: string | null;
+      databreachReviewed?: boolean | null;
+      databreachStatus?: string | null;
+    } | null;
+    status?: string | null;
+    statusReason?: string | null;
+    statusReasonDescription?: string | null;
+    lastStatusModifiedOn?: string | null;
+    nextStatusModifiedOn?: string | null;
+    isLoaded?: boolean | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1601,6 +1849,14 @@ export type OnCreateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -1609,10 +1865,50 @@ export type OnCreateAppDataSubscription = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1689,52 +1985,6 @@ export type OnCreateAppDataSubscription = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1755,6 +2005,37 @@ export type OnCreateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1803,6 +2084,14 @@ export type OnUpdateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -1811,10 +2100,50 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1891,52 +2220,6 @@ export type OnUpdateAppDataSubscription = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -1957,6 +2240,37 @@ export type OnUpdateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2005,6 +2319,14 @@ export type OnDeleteAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      abandoned?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -2013,10 +2335,50 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: string | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -2093,52 +2455,6 @@ export type OnDeleteAppDataSubscription = {
       disputeEnrollmentKey?: string | null;
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
-      disputes?: Array<{
-        __typename: "Dispute";
-        id: string;
-        appDataId: string;
-        disputeId?: string | null;
-        disputeStatus?: string | null;
-        disputeLetterCode?: string | null;
-        disputeLetterContent?: string | null;
-        openDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        closedDisputes?: {
-          __typename: "DisputeSummary";
-          estimatedCompletionDate?: string | null;
-          lastUpdatedDate?: string | null;
-          openDate?: string | null;
-          requestedDate?: string | null;
-          totalClosedDisputedItems?: string | null;
-          totalDisputedItems?: string | null;
-          totalOpenDisputedItems?: string | null;
-          totalPVDisputedItemCount?: string | null;
-        } | null;
-        pvDisputedItems?: {
-          __typename: "PVDisputedItems";
-          pvTradelines?: string | null;
-          pvPublicRecords?: string | null;
-        } | null;
-        agencyName?: string | null;
-        openedOn?: string | null;
-        closedOn?: string | null;
-        disputeItems?: string | null;
-        disputeInvestigationResults?: string | null;
-        disputeCreditBureau?: string | null;
-        notificationStatus?: string | null;
-        notificationMessage?: string | null;
-        notificationSentOn?: string | null;
-      } | null> | null;
     } | null;
     equifax?: {
       __typename: "Equifax";
@@ -2159,6 +2475,37 @@ export type OnDeleteAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  dashboard?: {
+    __typename: "Dashboard";
+    isLoaded?: boolean | null;
+    negativeFlagged?: boolean | null;
+    negativeCardCount?: number | null;
+    negativeCardStatus?: string | null;
+    negativeReviewed?: boolean | null;
+    negativeStatus?: string | null;
+    forbearanceFlagged?: boolean | null;
+    forbearanceCardStatus?: string | null;
+    forbearanceReviewed?: boolean | null;
+    forbearanceStatus?: string | null;
+    databreachFlagged?: boolean | null;
+    databreachCards?: Array<{
+      __typename: "DataBreachCard";
+      reason?: string | null;
+      reviewed?: boolean | null;
+      condition?: string | null;
+      subscriber?: string | null;
+      paragraphs?: Array<string | null> | null;
+    } | null> | null;
+    databreachCardStatus?: string | null;
+    databreachReviewed?: boolean | null;
+    databreachStatus?: string | null;
+  } | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
+  isLoaded?: boolean | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -2177,10 +2524,50 @@ export class APIService {
           __typename
           authenticated
           indicativeEnrichmentSuccess
+          indicativeEnrichmentStatus {
+            __typename
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
           getAuthenticationQuestionsSuccess
+          getAuthenticationQuestionsStatus {
+            __typename
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsOTPSuccess
+          verifyAuthenticationQuestionsOTPStatus {
+            __typename
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
+          verifyAuthenticationQuestionsKBASuccess
+          verifyAuthenticationQuestionsKBAStatus {
+            __typename
+            id
+            status
+            statusDescription
+            statusModifiedOn
+            statusCode
+          }
           serviceBundleFulfillmentKey
           currentRawQuestions
           currentRawAuthDetails
+          authAttempt
+          pinRequests
+          pinAttempts
+          pinCurrentAge
+          kbaAttempts
+          kbaCurrentAge
           enrollmentKey
           enrollReport {
             __typename
@@ -2257,52 +2644,6 @@ export class APIService {
           disputeEnrollmentKey
           disputeEnrolled
           disputeEnrolledOn
-          disputeStatus
-          disputes {
-            __typename
-            id
-            appDataId
-            disputeId
-            disputeStatus
-            disputeLetterCode
-            disputeLetterContent
-            openDisputes {
-              __typename
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            closedDisputes {
-              __typename
-              estimatedCompletionDate
-              lastUpdatedDate
-              openDate
-              requestedDate
-              totalClosedDisputedItems
-              totalDisputedItems
-              totalOpenDisputedItems
-              totalPVDisputedItemCount
-            }
-            pvDisputedItems {
-              __typename
-              pvTradelines
-              pvPublicRecords
-            }
-            agencyName
-            openedOn
-            closedOn
-            disputeItems
-            disputeInvestigationResults
-            disputeCreditBureau
-            notificationStatus
-            notificationMessage
-            notificationSentOn
-          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2364,6 +2705,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -2372,10 +2721,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -2452,52 +2841,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -2518,6 +2861,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -2582,6 +2956,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -2590,10 +2972,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -2670,52 +3092,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -2736,6 +3112,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -2800,6 +3207,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -2808,10 +3223,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -2888,52 +3343,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -2954,6 +3363,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3028,6 +3468,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -3036,10 +3484,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -3116,52 +3604,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -3182,6 +3624,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3246,6 +3719,14 @@ export class APIService {
                 lastActive
                 lastComplete
                 started
+                abandoned
+                display {
+                  __typename
+                  id
+                  active
+                  complete
+                  name
+                }
               }
             }
             agencies {
@@ -3254,10 +3735,50 @@ export class APIService {
                 __typename
                 authenticated
                 indicativeEnrichmentSuccess
+                indicativeEnrichmentStatus {
+                  __typename
+                  id
+                  status
+                  statusDescription
+                  statusModifiedOn
+                  statusCode
+                }
                 getAuthenticationQuestionsSuccess
+                getAuthenticationQuestionsStatus {
+                  __typename
+                  id
+                  status
+                  statusDescription
+                  statusModifiedOn
+                  statusCode
+                }
+                verifyAuthenticationQuestionsOTPSuccess
+                verifyAuthenticationQuestionsOTPStatus {
+                  __typename
+                  id
+                  status
+                  statusDescription
+                  statusModifiedOn
+                  statusCode
+                }
+                verifyAuthenticationQuestionsKBASuccess
+                verifyAuthenticationQuestionsKBAStatus {
+                  __typename
+                  id
+                  status
+                  statusDescription
+                  statusModifiedOn
+                  statusCode
+                }
                 serviceBundleFulfillmentKey
                 currentRawQuestions
                 currentRawAuthDetails
+                authAttempt
+                pinRequests
+                pinAttempts
+                pinCurrentAge
+                kbaAttempts
+                kbaCurrentAge
                 enrollmentKey
                 enrollReport {
                   __typename
@@ -3334,52 +3855,6 @@ export class APIService {
                 disputeEnrollmentKey
                 disputeEnrolled
                 disputeEnrolledOn
-                disputeStatus
-                disputes {
-                  __typename
-                  id
-                  appDataId
-                  disputeId
-                  disputeStatus
-                  disputeLetterCode
-                  disputeLetterContent
-                  openDisputes {
-                    __typename
-                    estimatedCompletionDate
-                    lastUpdatedDate
-                    openDate
-                    requestedDate
-                    totalClosedDisputedItems
-                    totalDisputedItems
-                    totalOpenDisputedItems
-                    totalPVDisputedItemCount
-                  }
-                  closedDisputes {
-                    __typename
-                    estimatedCompletionDate
-                    lastUpdatedDate
-                    openDate
-                    requestedDate
-                    totalClosedDisputedItems
-                    totalDisputedItems
-                    totalOpenDisputedItems
-                    totalPVDisputedItemCount
-                  }
-                  pvDisputedItems {
-                    __typename
-                    pvTradelines
-                    pvPublicRecords
-                  }
-                  agencyName
-                  openedOn
-                  closedOn
-                  disputeItems
-                  disputeInvestigationResults
-                  disputeCreditBureau
-                  notificationStatus
-                  notificationMessage
-                  notificationSentOn
-                }
               }
               equifax {
                 __typename
@@ -3400,6 +3875,37 @@ export class APIService {
                 mortgages
               }
             }
+            dashboard {
+              __typename
+              isLoaded
+              negativeFlagged
+              negativeCardCount
+              negativeCardStatus
+              negativeReviewed
+              negativeStatus
+              forbearanceFlagged
+              forbearanceCardStatus
+              forbearanceReviewed
+              forbearanceStatus
+              databreachFlagged
+              databreachCards {
+                __typename
+                reason
+                reviewed
+                condition
+                subscriber
+                paragraphs
+              }
+              databreachCardStatus
+              databreachReviewed
+              databreachStatus
+            }
+            status
+            statusReason
+            statusReasonDescription
+            lastStatusModifiedOn
+            nextStatusModifiedOn
+            isLoaded
             createdAt
             updatedAt
             owner
@@ -3469,6 +3975,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -3477,10 +3991,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -3557,52 +4111,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -3623,6 +4131,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3684,6 +4223,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -3692,10 +4239,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -3772,52 +4359,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -3838,6 +4379,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner
@@ -3899,6 +4471,14 @@ export class APIService {
               lastActive
               lastComplete
               started
+              abandoned
+              display {
+                __typename
+                id
+                active
+                complete
+                name
+              }
             }
           }
           agencies {
@@ -3907,10 +4487,50 @@ export class APIService {
               __typename
               authenticated
               indicativeEnrichmentSuccess
+              indicativeEnrichmentStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               getAuthenticationQuestionsSuccess
+              getAuthenticationQuestionsStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsOTPSuccess
+              verifyAuthenticationQuestionsOTPStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
+              verifyAuthenticationQuestionsKBASuccess
+              verifyAuthenticationQuestionsKBAStatus {
+                __typename
+                id
+                status
+                statusDescription
+                statusModifiedOn
+                statusCode
+              }
               serviceBundleFulfillmentKey
               currentRawQuestions
               currentRawAuthDetails
+              authAttempt
+              pinRequests
+              pinAttempts
+              pinCurrentAge
+              kbaAttempts
+              kbaCurrentAge
               enrollmentKey
               enrollReport {
                 __typename
@@ -3987,52 +4607,6 @@ export class APIService {
               disputeEnrollmentKey
               disputeEnrolled
               disputeEnrolledOn
-              disputeStatus
-              disputes {
-                __typename
-                id
-                appDataId
-                disputeId
-                disputeStatus
-                disputeLetterCode
-                disputeLetterContent
-                openDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                closedDisputes {
-                  __typename
-                  estimatedCompletionDate
-                  lastUpdatedDate
-                  openDate
-                  requestedDate
-                  totalClosedDisputedItems
-                  totalDisputedItems
-                  totalOpenDisputedItems
-                  totalPVDisputedItemCount
-                }
-                pvDisputedItems {
-                  __typename
-                  pvTradelines
-                  pvPublicRecords
-                }
-                agencyName
-                openedOn
-                closedOn
-                disputeItems
-                disputeInvestigationResults
-                disputeCreditBureau
-                notificationStatus
-                notificationMessage
-                notificationSentOn
-              }
             }
             equifax {
               __typename
@@ -4053,6 +4627,37 @@ export class APIService {
               mortgages
             }
           }
+          dashboard {
+            __typename
+            isLoaded
+            negativeFlagged
+            negativeCardCount
+            negativeCardStatus
+            negativeReviewed
+            negativeStatus
+            forbearanceFlagged
+            forbearanceCardStatus
+            forbearanceReviewed
+            forbearanceStatus
+            databreachFlagged
+            databreachCards {
+              __typename
+              reason
+              reviewed
+              condition
+              subscriber
+              paragraphs
+            }
+            databreachCardStatus
+            databreachReviewed
+            databreachStatus
+          }
+          status
+          statusReason
+          statusReasonDescription
+          lastStatusModifiedOn
+          nextStatusModifiedOn
+          isLoaded
           createdAt
           updatedAt
           owner

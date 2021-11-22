@@ -1,6 +1,9 @@
 <div class="flex items-center">
   <div class="h-4 w-4 bg-blue-500 rounded-full border-none" [ngClass]="status | snapshotStatus: 'background'"></div>
-  <span class="ml-3">{{ creditorName }} {{ openClosed.toLowerCase() === 'c' ? '(Closed)' : '(Open)' }}</span>
+  <span class="ml-3"
+    >{{ creditorName | decode }}
+    {{ openClosed.toLowerCase() === 'c' ? '(Closed)' : openClosed.toLowerCase() === 'o' ? '(Open)' : '' }}</span
+  >
 </div>
 <div class="card pl-7 pr-3 mt-2">
   <div class="mb-2">

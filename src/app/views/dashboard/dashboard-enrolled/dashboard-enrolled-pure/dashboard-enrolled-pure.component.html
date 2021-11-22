@@ -1,7 +1,12 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
 <div class="my-4 flex justify-center">
-  <brave-credit-report-graphic-no-graph [currentValue]="report | parseRiskScore"></brave-credit-report-graphic-no-graph>
+  <a [routerLink]="['/dashboard/report']">
+    <brave-credit-report-graphic-no-graph
+      [currentValue]="report | parseRiskScore"
+      [ptsChange]="scores?.delta || 0"
+    ></brave-credit-report-graphic-no-graph>
+  </a>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
@@ -13,8 +18,8 @@
       label="update"
       [title]="content.negativeAccountsTitle"
       typeOfSnapshot="time"
-      [value]="cards.negativecard?.count || 0"
-      [status]="cards.negativecard?.status || 'safe'"
+      [value]="cards.negativeCardCount || 0"
+      [status]="cards.negativeCardStatus || 'safe'"
       (click)="negativeItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -22,7 +27,13 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.forbearanceAccountsTitle"
-      [status]="cards.forbearancecard?.status || 'safe'"
+      [status]="
+        cards.forbearanceCardStatus !== 'safe'
+          ? cards.forbearanceReviewed
+            ? 'safe'
+            : cards.forbearanceCardStatus || 'safe'
+          : cards.forbearanceCardStatus
+      "
       (click)="forbearanceItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -30,18 +41,18 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.databreachAccountsTitle"
-      [status]="cards.databreachcard?.status || 'safe'"
+      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
       (click)="databreachItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
       tendency="no-tendency"
-      label="preview"
+      label="new"
       status="danger"
-      title="Credit Card Utilization"
-      typeOfSnapshot="percentage"
-      [preview]="true"
+      title="Credit Utilization"
+      [preview]="false"
+      (click)="creditUtilizationClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
 </div>
@@ -49,8 +60,25 @@
 <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
   content.b1
 }}</brave-links-onlytext-button>
+
 <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
 <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
-<div class="mt-2 max-w-md flex justify-center">
+<div class="mt-2 flex flex-col justify-center items-center">
   <brave-credit-builder-card></brave-credit-builder-card>
+  <p
+    class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
+    (click)="showDisclaimer = !showDisclaimer"
+  >
+    {{ content.link1 }}
+  </p>
+  <ng-container *ngIf="showDisclaimer">
+    <p class="brave-body3 text-opacity-50 mb-2">{{ content.p2 }}</p>
+    <div
+      class="brave-body3 text-opacity-50 flex justify-center items-center align-center hover:cursor-pointer"
+      (click)="showDisclaimer = false"
+    >
+      <span class="material-icons" style="font-size: 12px">close</span>
+      <p>close</p>
+    </div>
+  </ng-container>
 </div>
