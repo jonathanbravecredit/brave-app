@@ -27,8 +27,7 @@ export class BaseModalSmallComponent implements OnInit {
   @Output() actionTwo: EventEmitter<any> = new EventEmitter();
   @Output() closeModalClick: EventEmitter<void> = new EventEmitter();
 
-  @Input()
-  public showModal = false;
+  @Input() public showModal = false;
   constructor() {}
 
   ngOnInit(): void {}

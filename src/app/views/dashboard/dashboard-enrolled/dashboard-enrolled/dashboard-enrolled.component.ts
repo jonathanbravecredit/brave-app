@@ -18,6 +18,9 @@ import {
 } from "@shared/interfaces/get-trending-data.interface";
 import { mockGetTrendingData } from "./mockChartData";
 import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 @Component({
   selector: "brave-dashboard-enrolled",
@@ -32,6 +35,7 @@ export class DashboardEnrolledComponent implements OnInit {
   pages: any[] = [];
   data: {}[] = [];
   creditScoreGraphData: IResultsData[] = [];
+  scores!: ICreditScoreTracking | null;
 
   constructor(
     private store: Store,
@@ -43,6 +47,7 @@ export class DashboardEnrolledComponent implements OnInit {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
       this.snapshots = resp.dashboard.snapshots;
+      this.scores = resp.dashboard.scores || null;
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { IMergeReport } from "@shared/interfaces";
-import { DashboardStateModel } from "@store/dashboard/dashboard.model";
-import { dashboardEnrolledContent } from "@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IMergeReport } from '@shared/interfaces';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { DashboardStateModel } from '@store/dashboard/dashboard.model';
+import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 
 @Component({
   selector: "brave-dashboard-enrolled-pure",
@@ -10,6 +11,7 @@ import { dashboardEnrolledContent } from "@views/dashboard/dashboard-enrolled/da
 export class DashboardEnrolledPureComponent implements OnInit {
   @Input() report: IMergeReport | undefined;
   @Input() cards: DashboardStateModel | undefined;
+  @Input() scores: ICreditScoreTracking | undefined | null;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages: any[] = [];
