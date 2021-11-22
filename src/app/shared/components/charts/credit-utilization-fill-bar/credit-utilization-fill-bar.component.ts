@@ -18,11 +18,11 @@ export class CreditUtilizationFillBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoan =
-      this.creditType === "c" ||
+      (this.creditType === "c" ||
       this.creditType === "i" ||
-      this.creditType === "m";
+      this.creditType === "m") && this.highestBalance! > 0;
 
-    this.isOpen = this.openClosed?.toLowerCase() === 'o'
+    this.isOpen = this.openClosed?.toLowerCase() === 'o' && this.maxCreditAmount! > 0;
 
     if (this.isLoan) {
       this.utilPercentage = `${Math.floor(
