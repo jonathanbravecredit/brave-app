@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { Hub, ICredentials } from '@aws-amplify/core';
-import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { CognitoUser, CognitoUserSession, CognitoUserAttribute, ISignUpResult } from 'amazon-cognito-identity-js';
-import { SyncService } from '@shared/services/sync/sync.service';
+import { ICredentials } from '@aws-amplify/core';
+import { BehaviorSubject } from 'rxjs';
+import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { Router } from '@angular/router';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';

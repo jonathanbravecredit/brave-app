@@ -1,7 +1,10 @@
 <p class="mt-4 text-lg">Your TransUnion&#174; Credit Report</p>
 <!-- <p class="text-xs mt-3 text-gray-600">As of 03/17/2021</p> -->
 <div class="mt-4 flex justify-center">
-  <brave-credit-report-graphic-no-graph [currentValue]="creditReportScore"></brave-credit-report-graphic-no-graph>
+  <brave-credit-report-graphic-no-graph
+    [currentValue]="creditReportScore"
+    [ptsChange]="scores?.delta || 0"
+  ></brave-credit-report-graphic-no-graph>
 </div>
 
 <div class="py-4" *ngFor="let report of tradelines">
