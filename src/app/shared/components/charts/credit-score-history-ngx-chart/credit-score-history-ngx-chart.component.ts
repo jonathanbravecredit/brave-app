@@ -12,7 +12,7 @@ export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   @Input() multi: IResultsData[]
     | undefined;
   // options
-  @Input() view: [number, number] = [300, 300];
+  @Input() view: [number, number] = [300, 140];
   legend: boolean = false;
   showLabels: boolean = false;
   xAxis: boolean = true;

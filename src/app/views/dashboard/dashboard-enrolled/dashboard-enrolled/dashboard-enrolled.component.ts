@@ -16,11 +16,11 @@ import {
   IGetTrendingData,
   IProductTrendingData,
 } from "@shared/interfaces/get-trending-data.interface";
-import { mockGetTrendingData } from "./mockChartData";
 import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { CreditScoreHistoryNgxChartService } from "@shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.service";
 
 @Component({
   selector: "brave-dashboard-enrolled",
@@ -34,7 +34,6 @@ export class DashboardEnrolledComponent implements OnInit {
   snapshots: DashboardStateModel | undefined;
   pages: any[] = [];
   data: {}[] = [];
-  creditScoreGraphData: IResultsData[] = [];
   scores!: ICreditScoreTracking | null;
 
   constructor(
@@ -42,7 +41,8 @@ export class DashboardEnrolledComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private analytics: AnalyticsService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService
   ) {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
@@ -57,22 +57,30 @@ export class DashboardEnrolledComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.userName) this.welcomeMsg = "Welcome back, " + this.userName;
+
+    // debugger
 
     this.pages = [
       CreditReportGraphicComponent,
       CreditScoreHistoryNgxChartComponent,
     ];
 
-    this.createChartCreditScoreData(mockGetTrendingData);
+    const dataProductAttributes = await this.creditScoreNgxChartService.getTrendingData()
+
+    console.log('Trending DATA ====>>>>>>>' , dataProductAttributes)
+
+    const chartData = this.creditScoreNgxChartService.createChartCreditScoreData({ProductAttributes: dataProductAttributes})
+
+    console.log('Chart DATA ====>>>>>>>' , chartData)
 
     this.data = [
       {
         currentValue: new ParseRiskScorePipe().transform(this.report),
       },
       {
-        multi: this.creditScoreGraphData,
+        multi: chartData,
         view: [300, 140],
       },
     ];
@@ -128,63 +136,5 @@ export class DashboardEnrolledComponent implements OnInit {
     });
   }
 
-  createChartCreditScoreData(getTrendingData: IGetTrendingData) {
-    let dataArray: IProductTrendingData[] | IProductTrendingData =
-      getTrendingData.ProductAttributes.ProductTrendingAttribute
-        .ProductAttributeData;
-    let creditScoreDataObj: IResultsData = {
-      name: "Credit Score",
-      series: [],
-    };
-    if (dataArray instanceof Array) {
-      for (let productTrendingData of dataArray) {
-        let object = {
-          name: this.returnMonthAbreviation(
-            +productTrendingData.AttributeDate.slice(5, 7)
-          ),
-          value: +productTrendingData.AttributeValue,
-        };
-        creditScoreDataObj.series.push(object);
-      }
-      if (creditScoreDataObj.series.length > 8) {
-        creditScoreDataObj.series = creditScoreDataObj.series.splice(0, 8);
-      }
-    } else {
-      let object = {
-        name: this.returnMonthAbreviation(+dataArray.AttributeDate.slice(5, 7)),
-        value: +dataArray.AttributeValue,
-      };
-      creditScoreDataObj.series.push(object);
-    }
-    this.creditScoreGraphData.push(creditScoreDataObj)
-  }
 
-  returnMonthAbreviation(monthNum: number): string {
-    switch (monthNum) {
-      case 1:
-        return "Jan";
-      case 2:
-        return "Feb";
-      case 3:
-        return "Mar";
-      case 4:
-        return "Apr";
-      case 5:
-        return "May";
-      case 6:
-        return "Jun";
-      case 7:
-        return "Jul";
-      case 8:
-        return "Aug";
-      case 9:
-        return "Sep";
-      case 10:
-        return "Oct";
-      case 11:
-        return "Nov";
-      default:
-        return "Dec";
-    }
-  }
 }
