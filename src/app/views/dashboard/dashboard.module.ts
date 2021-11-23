@@ -63,6 +63,7 @@ import { CreditUtilizationNoCardsTextComponent } from "./snapshots/credit-utiliz
 import { CreditUtilizationColorPercentComponent } from "./snapshots/credit-utilization/components/credit-utilization-color-percent/credit-utilization-color-percent.component";
 import { CreditMixComponent } from './snapshots/credit-mix/credit-mix/credit-mix.component';
 import { CreditMixPureComponent } from './snapshots/credit-mix/credit-mix-pure/credit-mix-pure.component';
+import { CreditMixHeaderComponent } from './snapshots/credit-mix/components/credit-mix-header/credit-mix-header.component';
 
 
 
@@ -126,7 +127,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes, CreditMixComponent, CreditMixPureComponent],
+  declarations: [...components, ...pipes, CreditMixComponent, CreditMixPureComponent, CreditMixHeaderComponent],
   imports: [...modules],
   exports: [...components],
 })
