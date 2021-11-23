@@ -61,9 +61,9 @@ import { CreditUtilizationAvailableComponent } from "./snapshots/credit-utilizat
 import { CreditUtilizationNoCardsHeaderComponent } from "./snapshots/credit-utilization/components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component";
 import { CreditUtilizationNoCardsTextComponent } from "./snapshots/credit-utilization/components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component";
 import { CreditUtilizationColorPercentComponent } from "./snapshots/credit-utilization/components/credit-utilization-color-percent/credit-utilization-color-percent.component";
-import { CreditMixComponent } from './snapshots/credit-mix/credit-mix/credit-mix.component';
-import { CreditMixPureComponent } from './snapshots/credit-mix/credit-mix-pure/credit-mix-pure.component';
 import { CreditMixHeaderComponent } from './snapshots/credit-mix/components/credit-mix-header/credit-mix-header.component';
+import { CreditMixRatingComponent } from './snapshots/credit-mix/components/credit-mix-rating/credit-mix-rating.component';
+
 
 
 
@@ -91,8 +91,6 @@ const components = [
   SettingsOptionListComponent,
   OptionPasswordResetComponent,
   OptionDeactivateComponent,
-  CreditMixPureView,
-  CreditMixView,
   BaseExceptionPureView,
   BaseExceptionView,
   ForbearanceView,
@@ -119,7 +117,10 @@ const components = [
   CreditUtilizationAvailableComponent,
   CreditUtilizationNoCardsHeaderComponent,
   CreditUtilizationNoCardsTextComponent,
-  CreditUtilizationColorPercentComponent
+  CreditUtilizationColorPercentComponent,
+  CreditMixHeaderComponent,
+  CreditMixView,
+  CreditMixPureView
 ];
 
 const pipes = [
@@ -127,7 +128,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes, CreditMixComponent, CreditMixPureComponent, CreditMixHeaderComponent],
+  declarations: [...components, ...pipes, CreditMixRatingComponent],
   imports: [...modules],
   exports: [...components],
 })
