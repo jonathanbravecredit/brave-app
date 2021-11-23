@@ -1,6 +1,6 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
-<div class="my-4 flex justify-center">
+<div *ngIf="data && data.length > 0" class="my-4 flex justify-center">
   <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
 </div>
 

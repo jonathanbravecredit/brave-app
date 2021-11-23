@@ -12,5 +12,8 @@ export class CreditReportGraphicComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    console.log('WHAT WE ARE GETTING', this.currentValue)
+  }
 }

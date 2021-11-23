@@ -17,9 +17,9 @@ import {
   IProductTrendingData,
 } from "@shared/interfaces/get-trending-data.interface";
 import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
-import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
-import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
-import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
+import { OutlineInputComponent } from "@shared/components/inputs/outline-input/outline-input.component";
+import { ReferralsService } from "@shared/services/referrals/referrals.service";
 import { CreditScoreHistoryNgxChartService } from "@shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.service";
 
 @Component({
@@ -32,9 +32,13 @@ export class DashboardEnrolledComponent implements OnInit {
   lastUpdated: number | string | Date | undefined;
   report: IMergeReport | undefined;
   snapshots: DashboardStateModel | undefined;
-  pages: any[] = [];
-  data: {}[] = [];
+  pages: any[] = [
+    CreditReportGraphicComponent,
+    CreditScoreHistoryNgxChartComponent,
+  ];
+  data: {}[] | undefined;
   scores!: ICreditScoreTracking | null;
+  trends!: IGetTrendingData | null;
 
   constructor(
     private store: Store,
@@ -48,6 +52,7 @@ export class DashboardEnrolledComponent implements OnInit {
       this.report = resp.dashboard.report;
       this.snapshots = resp.dashboard.snapshots;
       this.scores = resp.dashboard.scores || null;
+      this.trends = resp.dashboard.trends;
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion
@@ -60,24 +65,19 @@ export class DashboardEnrolledComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (this.userName) this.welcomeMsg = "Welcome back, " + this.userName;
 
-    // debugger
+    const currentCreditScore = new ParseRiskScorePipe().transform(this.report)
 
-    this.pages = [
-      CreditReportGraphicComponent,
-      CreditScoreHistoryNgxChartComponent,
-    ];
+    const dataProductAttributes = await this.creditScoreNgxChartService.transformTrendingData(this.trends);
 
-    const dataProductAttributes = await this.creditScoreNgxChartService.getTrendingData()
-
-    console.log('Trending DATA ====>>>>>>>' , dataProductAttributes)
-
-    const chartData = this.creditScoreNgxChartService.createChartCreditScoreData({ProductAttributes: dataProductAttributes})
-
-    console.log('Chart DATA ====>>>>>>>' , chartData)
+    const chartData = this.creditScoreNgxChartService.createChartCreditScoreData(
+      dataProductAttributes,
+      currentCreditScore,
+      this.lastUpdated
+    );
 
     this.data = [
       {
-        currentValue: new ParseRiskScorePipe().transform(this.report),
+        currentValue: currentCreditScore,
       },
       {
         multi: chartData,
@@ -135,6 +135,4 @@ export class DashboardEnrolledComponent implements OnInit {
       relativeTo: this.route,
     });
   }
-
-
 }

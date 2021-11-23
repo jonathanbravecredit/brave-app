@@ -14,8 +14,8 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() scores: ICreditScoreTracking | undefined | null;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
-  @Input() pages: any[] = [];
-  @Input() data: {}[] = [];
+  @Input() pages!: any[];
+  @Input() data: {}[] | undefined;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();

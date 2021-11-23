@@ -17,8 +17,8 @@ export class CreditScoreHistoryNgxChartComponent implements AfterViewInit {
   showLabels: boolean = false;
   xAxis: boolean = true;
   yAxis: boolean = true;
-  yAxisTicks = [350, 600, 850];
-  yScaleMin = 350;
+  yAxisTicks = [300, 600, 850];
+  yScaleMin = 300;
   yScaleMax = 850;
   showYAxisLabel: boolean = false;
   showXAxisLabel: boolean = false;

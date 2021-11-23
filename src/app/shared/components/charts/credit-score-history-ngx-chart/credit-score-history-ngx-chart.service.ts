@@ -1,93 +1,73 @@
-import { Injectable } from '@angular/core';
-import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
-import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { Injectable } from "@angular/core";
+import { ICreditScore } from "@shared/interfaces";
+import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
+import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
+import {
+  IGetTrendingData,
+  IProductAttributeData,
+  IProductTrendingData,
+} from "@shared/interfaces/get-trending-data.interface";
+import { TransunionService } from "@shared/services/transunion/transunion.service";
+import * as moment from "moment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CreditScoreHistoryNgxChartService {
-  constructor(private transunion: TransunionService) { }
+  constructor(private transunion: TransunionService) {}
 
-  async getTrendingData() {
-    const now = new Date();
-    now.setMonth(now.getMonth() - 12);
-    const { success, data: { ProductAttributes } } = await this.transunion.getTrendingData(now.toISOString())
-
-    console.log('SUCCESS =>>>>>>', success)
-
-    if (success) {
-      return ProductAttributes
-    } else {
-      return
-    }
+  transformTrendingData(trendingData: IGetTrendingData | null): IProductAttributeData | undefined {
+    console.log('TRENDING DATA', trendingData)
+    return trendingData!.ProductAttributes.ProductTrendingAttribute.ProductAttributeData;
   }
 
-  createChartCreditScoreData(getTrendingData: IGetTrendingData): IResultsData[] {
+  createChartCreditScoreData(
+    productAttributeData: IProductAttributeData | undefined,
+    currentCreditScore: number,
+    lastUpdated: string | number | Date | undefined
+  ): IResultsData[] {
+    const productAttribute =
+      productAttributeData?.ProductTrendingData instanceof Array
+        ? productAttributeData.ProductTrendingData
+        : [productAttributeData?.ProductTrendingData];
 
-    console.log('HEERERERERER', getTrendingData)
+    const filteredProductAttributeDate = productAttribute.filter((data) => {
+      return data?.AttributeStatus !== "Failure";
+    });
 
-    // debugger
-
-    let dataArray: IProductTrendingData[] | IProductTrendingData = getTrendingData.ProductAttributes.ProductTrendingAttribute.ProductAttributeData.ProductTrendingData;
-
-    console.log('DATAARRAY', dataArray)
+    if (!productAttributeData || filteredProductAttributeDate.length === 0) {
+      return [
+        {
+          name: "Credit Score",
+          series: [
+            {
+              name: moment(lastUpdated).format("MMM"),
+              value: currentCreditScore,
+            },
+          ],
+        },
+      ];
+    }
 
     let creditScoreDataObj: IResultsData = {
       name: "Credit Score",
       series: [],
     };
-    if (dataArray instanceof Array) {
-      for (let productTrendingData of dataArray) {
+
+    for (let productTrendingData of filteredProductAttributeDate) {
+      if (productTrendingData) {
         let object = {
-          name: this.returnMonthAbreviation(
-            +productTrendingData.AttributeDate.slice(5, 7)
-          ),
+          name: moment(productTrendingData.AttributeDate).format("MMM"),
           value: +productTrendingData.AttributeValue,
         };
         creditScoreDataObj.series.push(object);
       }
-      if (creditScoreDataObj.series.length > 8) {
-        creditScoreDataObj.series = creditScoreDataObj.series.splice(0, 8);
-      }
-    } else {
-      let object = {
-        name: this.returnMonthAbreviation(+dataArray.AttributeDate.slice(5, 7)),
-        value: +dataArray.AttributeValue,
-      };
-      creditScoreDataObj.series.push(object);
     }
-    return [creditScoreDataObj]
-  }
 
+    // if (creditScoreDataObj.series.length > 8) {
+    //   creditScoreDataObj.series = creditScoreDataObj.series.splice(0, 8);
+    // }
 
-
-  returnMonthAbreviation(monthNum: number): string {
-    switch (monthNum) {
-      case 1:
-        return "Jan";
-      case 2:
-        return "Feb";
-      case 3:
-        return "Mar";
-      case 4:
-        return "Apr";
-      case 5:
-        return "May";
-      case 6:
-        return "Jun";
-      case 7:
-        return "Jul";
-      case 8:
-        return "Aug";
-      case 9:
-        return "Sep";
-      case 10:
-        return "Oct";
-      case 11:
-        return "Nov";
-      default:
-        return "Dec";
-    }
+    return [creditScoreDataObj];
   }
 }

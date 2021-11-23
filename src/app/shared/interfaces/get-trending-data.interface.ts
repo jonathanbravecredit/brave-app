@@ -9,9 +9,11 @@ export interface IProductAttributes {
 export interface IProductTrendingAttribute {
   AttributeName: string;
   Bureau: string;
-  ProductAttributeData: {
-    ProductTrendingData: IProductTrendingData[] | IProductTrendingData;
-  };
+  ProductAttributeData: IProductAttributeData
+}
+
+export interface IProductAttributeData{
+  ProductTrendingData: IProductTrendingData[] | IProductTrendingData;
 }
 
 export interface IProductTrendingData {
