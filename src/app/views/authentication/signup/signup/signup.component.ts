@@ -41,14 +41,14 @@ export class SignupComponent implements OnInit {
     let isValid = true;
     if (isValid) {
       try {
-        const resp = await this.auth.signUp(user).then((value) => {
-          const sub = value.userSub;
-          this.analytics.fireCompleteRegistration(0.0, 'USD');
-          this.analytics.fireUserTrackingEvent(sub);
-          this.analytics.addToCohort();
-          const code = this.referral.referredByCode$.value;
-          this.referral.createReferral(sub, code);
-        });
+        const { userSub: sub } = await this.auth.signUp(user);
+        this.analytics.fireCompleteRegistration(0.0, 'USD');
+        this.analytics.fireUserTrackingEvent(sub);
+        this.analytics.addToCohort();
+        const code = this.referral.referredByCode$.value;
+        console.log('sub ===> ', sub);
+        console.log('code ===> ', code);
+        this.referral.createReferral(sub, code);
         this.interstitial.fetching$.next(false);
         this.router.navigate(['../thankyou'], { relativeTo: this.route });
       } catch (err: any) {
