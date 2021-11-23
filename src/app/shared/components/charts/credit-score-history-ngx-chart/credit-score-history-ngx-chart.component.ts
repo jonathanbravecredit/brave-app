@@ -1,18 +1,18 @@
-import { Component, ViewChild, AfterViewInit, Input, OnInit } from "@angular/core";
-import { IMergeReport } from "@shared/interfaces";
-import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
-import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface";
-import { ParseRiskScorePipe } from "@shared/pipes/parse-risk-score/parse-risk-score.pipe";
-import { CustomLineChartService } from "@shared/services/charts/custom-line-chart.service";
-import { CreditScoreHistoryNgxChartService } from "./credit-score-history-ngx-chart.service";
+import { Component, ViewChild, AfterViewInit, Input, OnInit } from '@angular/core';
+import { ICreditScoreHistoryNgxChart } from '@shared/components/charts/credit-score-history-ngx-chart';
+import { IMergeReport } from '@shared/interfaces';
+import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
+import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
+import { CreditScoreHistoryNgxChartService } from './credit-score-history-ngx-chart.service';
 
 @Component({
-  selector: "brave-credit-score-history-ngx-chart",
-  templateUrl: "./credit-score-history-ngx-chart.component.html",
-  styleUrls: ["./credit-score-history-ngx-chart.component.css"],
+  selector: 'brave-credit-score-history-ngx-chart',
+  templateUrl: './credit-score-history-ngx-chart.component.html',
+  styleUrls: ['./credit-score-history-ngx-chart.component.css'],
 })
-export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewInit {
-  @ViewChild("chart") chart: any;
+export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewInit, ICreditScoreHistoryNgxChart {
+  @ViewChild('chart') chart: any;
   multi: IResultsData[] | undefined;
   // options
   @Input() view: [number, number] = [300, 140];
@@ -30,28 +30,27 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
   showYAxisLabel: boolean = false;
   showXAxisLabel: boolean = false;
   tooltipDisabled: boolean = false;
-  xAxisLabel: string = "Year";
-  yAxisLabel: string = "Population";
+  xAxisLabel: string = 'Year';
+  yAxisLabel: string = 'Population';
   timeline: boolean = false;
   showRefLines: boolean = true;
   referenceLines: object[] = [];
   showGridLines: boolean = false;
   trimXAxisTicks: boolean = false;
   data: {}[] | undefined;
-
   colorScheme = {
-    domain: ["#222C9D"],
+    domain: ['#222C9D'],
   };
 
   constructor(
     private customLineChartService: CustomLineChartService,
-    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService
+    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService,
   ) {
-    this.customLineChartService.dotColor = "#222C9D";
+    this.customLineChartService.dotColor = '#222C9D';
   }
 
   ngOnInit(): void {
-    this.handleChartScoreData()
+    this.handleChartScoreData();
   }
 
   ngAfterViewInit(): void {
@@ -59,9 +58,7 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
     if (this.multi) {
       this.referenceLines = [
         {
-          name: this.multi[0]!.series[
-            this.multi[0]!.series.length - 1
-          ].value.toString(),
+          name: this.multi[0]!.series[this.multi[0]!.series.length - 1].value.toString(),
           value: this.multi[0]!.series[this.multi[0]!.series.length - 1].value,
         },
       ];
@@ -69,20 +66,21 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
   }
 
   handleChartScoreData() {
-
-    const dataProductAttributes = this.creditScoreNgxChartService.transformTrendingData(
-      this.trends
-    );
+    const dataProductAttributes = this.creditScoreNgxChartService.transformTrendingData(this.trends);
 
     const chartData = this.creditScoreNgxChartService.createChartCreditScoreData(
       dataProductAttributes,
       this.currentCreditScore,
-      this.lastUpdated
+      this.lastUpdated,
     );
 
-    this.multi = chartData
+    this.multi = chartData;
   }
 
+  /**
+   * This is an on select method....it selects things.
+   * @param data
+   */
   onSelect(data: any): void {
     // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
@@ -97,6 +95,6 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
 
   formatYTickMarks(val: any) {
     if (val === 850) return val;
-    return (val / 10) % 2 === 0 ? val : "";
+    return (val / 10) % 2 === 0 ? val : '';
   }
 }

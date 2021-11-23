@@ -1,17 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMergeReport } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 
 @Component({
-  selector: "brave-dashboard-enrolled-pure",
-  templateUrl: "./dashboard-enrolled-pure.component.html",
+  selector: 'brave-dashboard-enrolled-pure',
+  templateUrl: './dashboard-enrolled-pure.component.html',
 })
 export class DashboardEnrolledPureComponent implements OnInit {
   @Input() report: IMergeReport | undefined;
   @Input() cards: DashboardStateModel | undefined;
   @Input() scores: ICreditScoreTracking | undefined | null;
+  @Input() trends: IGetTrendingData | undefined | null;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];
@@ -27,17 +29,13 @@ export class DashboardEnrolledPureComponent implements OnInit {
   showDisclaimer: boolean = false;
   constructor() {}
 
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   get score(): number | undefined {
-    const creditScore = this.report?.TrueLinkCreditReportType?.Borrower
-      ?.CreditScore;
+    const creditScore = this.report?.TrueLinkCreditReportType?.Borrower?.CreditScore;
     if (creditScore instanceof Array) {
       const score = creditScore.find((value) => {
-        return value.scoreName.toLowerCase() === "vantagescore3";
+        return value.scoreName.toLowerCase() === 'vantagescore3';
       });
       const _score = Math.round(score?.riskScore as number);
       if (isNaN(_score)) return;

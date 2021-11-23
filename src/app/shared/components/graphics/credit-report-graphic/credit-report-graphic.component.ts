@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-graphic';
 
 @Component({
   selector: 'brave-credit-report-graphic',
   templateUrl: './credit-report-graphic.component.html',
 })
-export class CreditReportGraphicComponent implements OnInit {
+export class CreditReportGraphicComponent implements OnInit, ICreditReportGraphic {
   @Input() base: number = 300;
   @Input() limit: number = 850;
   @Input() currentValue: number | undefined;
@@ -13,7 +14,6 @@ export class CreditReportGraphicComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-
-    console.log('WHAT WE ARE GETTING', this.currentValue)
+    console.log('WHAT WE ARE GETTING', this.currentValue);
   }
 }
