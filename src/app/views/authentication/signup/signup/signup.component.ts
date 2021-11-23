@@ -47,6 +47,8 @@ export class SignupComponent implements OnInit {
           this.analytics.fireUserTrackingEvent(sub);
           this.analytics.addToCohort();
           const code = this.referral.referredByCode$.value;
+          console.log('sub ===> ', sub);
+          console.log('code ===> ', code);
           this.referral.createReferral(sub, code);
         });
         this.interstitial.fetching$.next(false);
