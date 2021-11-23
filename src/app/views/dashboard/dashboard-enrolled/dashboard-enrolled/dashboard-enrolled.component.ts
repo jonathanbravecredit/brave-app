@@ -14,13 +14,9 @@ import { CreditScoreHistoryNgxChartComponent } from "@shared/components/charts/c
 import { ParseRiskScorePipe } from "@shared/pipes/parse-risk-score/parse-risk-score.pipe";
 import {
   IGetTrendingData,
-  IProductTrendingData,
 } from "@shared/interfaces/get-trending-data.interface";
-import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
+
 import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
-import { OutlineInputComponent } from "@shared/components/inputs/outline-input/outline-input.component";
-import { ReferralsService } from "@shared/services/referrals/referrals.service";
-import { CreditScoreHistoryNgxChartService } from "@shared/components/charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.service";
 
 @Component({
   selector: "brave-dashboard-enrolled",
@@ -45,8 +41,7 @@ export class DashboardEnrolledComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private analytics: AnalyticsService,
-    private dashboardService: DashboardService,
-    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService
+    private dashboardService: DashboardService
   ) {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
@@ -62,26 +57,20 @@ export class DashboardEnrolledComponent implements OnInit {
     }
   }
 
-  async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
     if (this.userName) this.welcomeMsg = "Welcome back, " + this.userName;
 
     const currentCreditScore = new ParseRiskScorePipe().transform(this.report)
-
-    const dataProductAttributes = await this.creditScoreNgxChartService.transformTrendingData(this.trends);
-
-    const chartData = this.creditScoreNgxChartService.createChartCreditScoreData(
-      dataProductAttributes,
-      currentCreditScore,
-      this.lastUpdated
-    );
 
     this.data = [
       {
         currentValue: currentCreditScore,
       },
       {
-        multi: chartData,
-        view: [300, 140],
+        trends: this.trends,
+        report: this.report,
+        lastUpdated: this.lastUpdated,
+        currentCreditScore: currentCreditScore
       },
     ];
   }
@@ -135,4 +124,5 @@ export class DashboardEnrolledComponent implements OnInit {
       relativeTo: this.route,
     });
   }
+
 }

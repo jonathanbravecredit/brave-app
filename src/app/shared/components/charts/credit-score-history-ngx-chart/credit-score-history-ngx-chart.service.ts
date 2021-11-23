@@ -23,7 +23,7 @@ export class CreditScoreHistoryNgxChartService {
 
   createChartCreditScoreData(
     productAttributeData: IProductAttributeData | undefined,
-    currentCreditScore: number,
+    currentCreditScore: number | undefined,
     lastUpdated: string | number | Date | undefined
   ): IResultsData[] {
     const productAttribute =
@@ -42,7 +42,7 @@ export class CreditScoreHistoryNgxChartService {
           series: [
             {
               name: moment(lastUpdated).format("MMM"),
-              value: currentCreditScore,
+              value: currentCreditScore!,
             },
           ],
         },
