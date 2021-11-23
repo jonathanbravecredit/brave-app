@@ -17,7 +17,6 @@ export class CreditScoreHistoryNgxChartService {
   constructor(private transunion: TransunionService) {}
 
   transformTrendingData(trendingData: IGetTrendingData | null): IProductAttributeData | undefined {
-    console.log('TRENDING DATA', trendingData)
     return trendingData!.ProductAttributes.ProductTrendingAttribute.ProductAttributeData;
   }
 
