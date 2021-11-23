@@ -23,6 +23,7 @@ export class ReferralsService {
     const url = `${environment.marketing}/referral`;
     let body = { id: email, referredByCode };
     let headers = {};
+    await this.auth.refreshSession();
     let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
     return await fetch(signedReq);
   }
