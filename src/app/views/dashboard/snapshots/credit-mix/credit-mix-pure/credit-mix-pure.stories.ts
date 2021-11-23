@@ -7,6 +7,7 @@ import { RouterModule } from "@angular/router";
 import { CreditMixPureView } from "./credit-mix-pure.view";
 import { CreditMixHeaderComponent } from "../components/credit-mix-header/credit-mix-header.component";
 import { CreditMixRatingComponent } from "../components/credit-mix-rating/credit-mix-rating.component";
+import { CreditMixBadgesComponent } from "../components/credit-mix-badges/credit-mix-badges.component";
 
 
 export default {
@@ -16,7 +17,8 @@ export default {
     moduleMetadata({
       declarations: [
         CreditMixHeaderComponent,
-        CreditMixRatingComponent
+        CreditMixRatingComponent,
+        CreditMixBadgesComponent
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
