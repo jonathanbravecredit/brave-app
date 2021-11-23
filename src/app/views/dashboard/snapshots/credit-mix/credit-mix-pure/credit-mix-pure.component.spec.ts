@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreditMixPureView } from './credit-mix-pure.view';
+import { CreditMixPureComponent } from './credit-mix-pure.component';
 
-describe('CreditMixPureView', () => {
-  let component: CreditMixPureView;
-  let fixture: ComponentFixture<CreditMixPureView>;
+describe('CreditMixPureComponent', () => {
+  let component: CreditMixPureComponent;
+  let fixture: ComponentFixture<CreditMixPureComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreditMixPureView ]
+      declarations: [ CreditMixPureComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreditMixPureView);
+    fixture = TestBed.createComponent(CreditMixPureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
