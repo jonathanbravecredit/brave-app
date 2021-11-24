@@ -8,6 +8,7 @@ import { CreditMixPureView } from "./credit-mix-pure.view";
 import { CreditMixHeaderComponent } from "../components/credit-mix-header/credit-mix-header.component";
 import { CreditMixRatingComponent } from "../components/credit-mix-rating/credit-mix-rating.component";
 import { CreditMixBadgesComponent } from "../components/credit-mix-badges/credit-mix-badges.component";
+import { PercentageBadgeComponent } from "@shared/components/badges/percentage-badge/percentage-badge.component";
 
 
 export default {
@@ -18,7 +19,8 @@ export default {
       declarations: [
         CreditMixHeaderComponent,
         CreditMixRatingComponent,
-        CreditMixBadgesComponent
+        CreditMixBadgesComponent,
+        PercentageBadgeComponent
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
