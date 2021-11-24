@@ -257,14 +257,13 @@ const config =
 const tradeLineParseMock: ICreditUtilization = {
   config,
   creditorName: "CITI",
-  creditLimit: 10000,
+  creditLimit: '0',
   currentBalance: 5000,
-  openClosed: "O",
 };
 
 export const CreditUtilizationCard = Template.bind({});
 CreditUtilizationCard.args = {
   creditUtilizationType: "credit-utilization",
   creditUtilization: tradeLineParseMock,
-  open: false,
+  open: true,
 };
