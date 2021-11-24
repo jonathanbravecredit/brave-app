@@ -9,6 +9,7 @@ import { CreditMixHeaderComponent } from "../components/credit-mix-header/credit
 import { CreditMixRatingComponent } from "../components/credit-mix-rating/credit-mix-rating.component";
 import { CreditMixBadgesComponent } from "../components/credit-mix-badges/credit-mix-badges.component";
 import { PercentageBadgeComponent } from "@shared/components/badges/percentage-badge/percentage-badge.component";
+import { CreditMixIconsComponent } from "../components/credit-mix-icons/credit-mix-icons.component";
 
 
 export default {
@@ -20,7 +21,8 @@ export default {
         CreditMixHeaderComponent,
         CreditMixRatingComponent,
         CreditMixBadgesComponent,
-        PercentageBadgeComponent
+        PercentageBadgeComponent,
+        CreditMixIconsComponent
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],

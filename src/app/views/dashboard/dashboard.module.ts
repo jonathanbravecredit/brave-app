@@ -64,6 +64,7 @@ import { CreditUtilizationColorPercentComponent } from "./snapshots/credit-utili
 import { CreditMixHeaderComponent } from './snapshots/credit-mix/components/credit-mix-header/credit-mix-header.component';
 import { CreditMixRatingComponent } from './snapshots/credit-mix/components/credit-mix-rating/credit-mix-rating.component';
 import { CreditMixBadgesComponent } from './snapshots/credit-mix/components/credit-mix-badges/credit-mix-badges.component';
+import { CreditMixIconsComponent } from './snapshots/credit-mix/components/credit-mix-icons/credit-mix-icons.component';
 
 
 
@@ -129,7 +130,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...components, ...pipes, CreditMixRatingComponent, CreditMixBadgesComponent],
+  declarations: [...components, ...pipes, CreditMixRatingComponent, CreditMixBadgesComponent, CreditMixIconsComponent],
   imports: [...modules],
   exports: [...components],
 })
