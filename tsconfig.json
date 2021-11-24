@@ -8,8 +8,9 @@
       "@shared/*": ["src/app/shared/*"],
       "@store/*": ["src/app/store/*"],
       "@views/*": ["src/app/views/*"],
+      "@testing/*": ["src/app/testing/*"],
       "@stories/*": ["src/stories/*"],
-      "@src/*": ["src/*"],
+      "@src/*": ["src"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -21,18 +22,19 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
     "allowJs": true,
     "target": "es2015",
-    "module": "es2020",
     "lib": [
       "es2018",
       "dom"
     ],
+    "types": ["jasmine", "node"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "amplify", "storybook-static", "**/*.spec.ts"],
+  "exclude": ["node_modules", "dist", "amplify", "storybook-static"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

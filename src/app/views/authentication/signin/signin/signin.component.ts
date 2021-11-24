@@ -4,6 +4,7 @@ import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SignInErrorDescriptions, SignInErrors } from '@views/authentication/signin/signin/content';
+import { ISignInCognitoUser } from '@views/authentication/signin/signin/interfaces';
 
 export type SigninState = 'init' | 'invalid';
 
@@ -30,7 +31,7 @@ export class SigninComponent {
     let isValid = true;
     if (isValid) {
       try {
-        const cognitorUser = await this.auth.signIn(user.username, user.password);
+        const cognitorUser: ISignInCognitoUser = await this.auth.signIn(user.username, user.password);
         if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
         } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
           const { requiredAttributes } = cognitorUser?.challengeParam;

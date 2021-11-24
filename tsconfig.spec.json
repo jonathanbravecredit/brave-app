@@ -2,18 +2,20 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine"
-    ],
+    "baseUrl": "./",
     "paths": {
       "@environments/*": ["src/environments/*"],
       "@shared/*": ["src/app/shared/*"],
       "@store/*": ["src/app/store/*"],
       "@views/*": ["src/app/views/*"],
+      "@testing/*": ["src/app/testing/*"],
       "@stories/*": ["src/stories/*"],
-      "@src/*": ["src/*"]
-    }
+      "@src/*": ["src"],
+    },
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine", "node"
+    ],
   },
   "files": [
     "src/test.ts",
@@ -22,5 +24,6 @@
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-  ]
+  ],
+  // "exclude": [],
 }
