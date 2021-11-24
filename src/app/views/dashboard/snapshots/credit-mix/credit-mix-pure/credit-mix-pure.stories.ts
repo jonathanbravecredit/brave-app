@@ -10,6 +10,9 @@ import { CreditMixRatingComponent } from "../components/credit-mix-rating/credit
 import { CreditMixBadgesComponent } from "../components/credit-mix-badges/credit-mix-badges.component";
 import { PercentageBadgeComponent } from "@shared/components/badges/percentage-badge/percentage-badge.component";
 import { CreditMixIconsComponent } from "../components/credit-mix-icons/credit-mix-icons.component";
+import { CreditMixSubHeadersComponent } from "../components/credit-mix-sub-headers/credit-mix-sub-headers.component";
+import { CreditMixCardSectionComponent } from "../components/credit-mix-card-section/credit-mix-card-section.component";
+import { CreditMixRecommendationComponent } from "../components/credit-mix-recommendation/credit-mix-recommendation.component";
 
 
 export default {
@@ -22,7 +25,10 @@ export default {
         CreditMixRatingComponent,
         CreditMixBadgesComponent,
         PercentageBadgeComponent,
-        CreditMixIconsComponent
+        CreditMixIconsComponent,
+        CreditMixSubHeadersComponent,
+        CreditMixCardSectionComponent,
+        CreditMixRecommendationComponent
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
