@@ -16,6 +16,8 @@ import { GoogleService } from '@shared/services/analytics/google/google.service'
 import { InitService } from '@shared/services/init/init.service';
 import { CreditUtilizationService } from './credit-utilization/credit-utilization.service';
 import { ModalService } from '@shared/services/modal/modal.service';
+import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 const services = [
   InitService,
@@ -34,6 +36,8 @@ const services = [
   GoogleService,
   CreditUtilizationService,
   ModalService,
+  NeverbounceService,
+  ReferralsService,
 ];
 
 @NgModule({

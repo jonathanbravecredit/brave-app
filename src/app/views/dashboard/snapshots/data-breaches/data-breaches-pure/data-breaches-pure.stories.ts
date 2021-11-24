@@ -9,6 +9,7 @@ import { DataBreachCardComponent } from '@views/dashboard/snapshots/data-breache
 import { DataBreachHeaderComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-header/data-breach-header.component';
 import { DataBreachListComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/data-breach-list.component';
 import { DataBreachNoneComponent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-none/data-breach-none.component';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
 
 export default {
   title: 'app/views/snapshots/databreach',
@@ -21,7 +22,7 @@ export default {
         DataBreachListComponent,
         DataBreachNoneComponent,
       ],
-      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
+      imports: [HttpClientModule, SharedComponentsModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {

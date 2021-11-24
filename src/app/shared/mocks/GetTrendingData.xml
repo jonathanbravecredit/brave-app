@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetTrendingData>
+      <con:request>
+        <data:AccountCode>M2RVc0ZZM0Rwd2FmZA</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>CreditReportVersion</data:Name>
+            <data:Value>7.1</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>BC-3676f2f5-3f06-4fee-aa85-cea7fca4563c</data:RequestKey>
+        <data:ClientKey>9bc652cb-f045-4920-b16f-39cc39707a7d</data:ClientKey>
+        <data:FromDate>2020-11-23T17:23:58.583Z</data:FromDate>
+        <data:GetPartnerTrendingData>false</data:GetPartnerTrendingData>
+        <data:GetProductTrendingData>true</data:GetProductTrendingData>
+        <data:ProductDisplay>false</data:ProductDisplay>
+      </con:request>
+    </con:GetTrendingData>
+  </soapenv:Body>
+</soapenv:Envelope>
