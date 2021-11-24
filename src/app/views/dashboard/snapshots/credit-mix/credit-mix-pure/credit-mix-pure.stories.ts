@@ -1,4 +1,3 @@
-
 import { APP_BASE_HREF, CurrencyPipe } from "@angular/common";
 import { Story, Meta } from "@storybook/angular/types-6-0";
 import { componentWrapperDecorator, moduleMetadata } from "@storybook/angular";
@@ -13,7 +12,7 @@ import { CreditMixIconsComponent } from "../components/credit-mix-icons/credit-m
 import { CreditMixSubHeadersComponent } from "../components/credit-mix-sub-headers/credit-mix-sub-headers.component";
 import { CreditMixCardSectionComponent } from "../components/credit-mix-card-section/credit-mix-card-section.component";
 import { CreditMixRecommendationComponent } from "../components/credit-mix-recommendation/credit-mix-recommendation.component";
-
+import { BaseModalSmallComponent } from "@shared/components/modals/base-modal-small/base-modal-small.component";
 
 export default {
   title: "app/views/snapshots/credit-mix",
@@ -28,7 +27,8 @@ export default {
         CreditMixIconsComponent,
         CreditMixSubHeadersComponent,
         CreditMixCardSectionComponent,
-        CreditMixRecommendationComponent
+        CreditMixRecommendationComponent,
+        BaseModalSmallComponent,
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],

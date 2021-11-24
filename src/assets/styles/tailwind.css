@@ -2812,6 +2812,10 @@ select {
   font-weight: 800;
 }
 
+.font-black {
+  font-weight: 900;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
