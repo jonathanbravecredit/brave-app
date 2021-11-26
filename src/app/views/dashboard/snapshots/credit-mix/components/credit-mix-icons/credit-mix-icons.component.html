@@ -2,12 +2,8 @@
   <div class="flex flex-col justify-center items-center">
     <div
       class="flex justify-center items-center mb-2"
-      style="
-        background-color: #222c9d;
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
-      "
+      style="height: 40px; width: 40px; border-radius: 20px"
+      [ngStyle]="{ 'background-color': hasCreditCards ? '#222c9d' : '#c4c4c4' }"
     >
       <span
         class="material-icons-outlined"
@@ -16,17 +12,13 @@
         credit_card
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px;">Credit Cards</div>
+    <div class="font-semibold" style="font-size: 9px">Credit Cards</div>
   </div>
   <div class="flex flex-col justify-center items-center">
     <div
       class="flex justify-center items-center mb-2"
-      style="
-        background-color: #222c9d;
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
-      "
+      style="height: 40px; width: 40px; border-radius: 20px"
+      [ngStyle]="{ 'background-color': hasStudentLoans ? '#222c9d' : '#c4c4c4' }"
     >
       <span
         class="material-icons-outlined"
@@ -35,17 +27,13 @@
         paid
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px;">Student Loans</div>
+    <div class="font-semibold" style="font-size: 9px">Student Loans</div>
   </div>
   <div class="flex flex-col justify-center items-center">
     <div
       class="flex justify-center items-center mb-2"
-      style="
-        background-color: #c4c4c4;
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
-      "
+      style="height: 40px; width: 40px; border-radius: 20px"
+      [ngStyle]="{ 'background-color': hasAutoLoans ? '#222c9d' : '#c4c4c4' }"
     >
       <span
         class="material-icons-outlined"
@@ -54,25 +42,21 @@
         directions_car_filled
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px;">Auto Loans</div>
+    <div class="font-semibold" style="font-size: 9px">Auto Loans</div>
   </div>
   <div class="flex flex-col justify-center items-center">
     <div
       class="flex justify-center items-center mb-2"
-      style="
-        background-color: #c4c4c4;
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
-      "
+      style="height: 40px; width: 40px; border-radius: 20px"
+      [ngStyle]="{ 'background-color': hasMortgages ? '#222c9d' : '#c4c4c4' }"
     >
       <span
         class="material-icons-outlined"
         style="color: white; font-size: 26px"
       >
-      cottage
+        cottage
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px;">Mortgages</div>
+    <div class="font-semibold" style="font-size: 9px">Mortgages</div>
   </div>
 </div>

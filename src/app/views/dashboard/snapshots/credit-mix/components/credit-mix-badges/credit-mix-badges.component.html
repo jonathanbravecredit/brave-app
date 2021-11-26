@@ -5,7 +5,7 @@
     label="0-1"
     color="#F56700"
     class="w-full mx-0.5 sm:mx-1"
-    [selected]='false'
+    [selected]="selectedBadge.toLowerCase() === 'poor'"
   ></brave-percentage-badge>
   <brave-percentage-badge
     size="small"
@@ -13,7 +13,7 @@
     label="2-4"
     color="#F59300"
     class="w-full mx-0.5 sm:mx-1"
-    [selected]='false'
+    [selected]="selectedBadge.toLowerCase() === 'fair'"
   ></brave-percentage-badge>
   <brave-percentage-badge
     size="small"
@@ -21,7 +21,7 @@
     label="5-7"
     color="#BBD904"
     class="w-full mx-0.5 sm:mx-1"
-    [selected]='true'
+    [selected]="selectedBadge.toLowerCase() === 'good'"
   ></brave-percentage-badge>
   <brave-percentage-badge
     size="small"
@@ -29,6 +29,6 @@
     label="8+"
     color="#4BD269"
     class="w-full mx-0.5 sm:mx-1"
-    [selected]='false'
+    [selected]="selectedBadge.toLowerCase() === 'excellent'"
   ></brave-percentage-badge>
 </div>
