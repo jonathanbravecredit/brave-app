@@ -21,7 +21,7 @@ describe('SigninComponent', () => {
 
   beforeEach(async () => {
     authServiceMock = jasmine.createSpyObj('AuthService', ['signIn', 'socialSignIn']);
-    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', ['']);
+    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', ['fetching$']);
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
 
     authServiceMock.signIn.and.returnValue({} as ISignInCognitoUser);
@@ -106,6 +106,10 @@ describe('SigninComponent', () => {
     it("should call Router Navigate with '/legal/tos' route when calling goToTerms", () => {
       component.goToTerms();
       expect(routerMock.navigate).toHaveBeenCalledWith('/legal/tos');
+    });
+    it("should call Router Navigate with '/auth/signup' route when calling goToSignup", () => {
+      component.goToTerms();
+      expect(routerMock.navigate).toHaveBeenCalledWith('/auth/signup');
     });
   });
 });
