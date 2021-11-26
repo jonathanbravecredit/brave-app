@@ -1,18 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'brave-credit-mix-icons',
-  templateUrl: './credit-mix-icons.component.html'
+  selector: "brave-credit-mix-icons",
+  templateUrl: "./credit-mix-icons.component.html",
 })
 export class CreditMixIconsComponent implements OnInit {
-  @Input() hasCreditCards: boolean = false
-  @Input() hasStudentLoans: boolean = true
-  @Input() hasAutoLoans: boolean = false
-  @Input() hasMortgages: boolean = true
+  @Input() hasCreditCards: boolean | undefined = false;
+  @Input() hasStudentLoans: boolean | undefined = true;
+  @Input() hasAutoLoans: boolean | undefined = false;
+  @Input() hasMortgages: boolean | undefined = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
