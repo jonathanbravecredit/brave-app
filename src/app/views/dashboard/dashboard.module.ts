@@ -1,36 +1,36 @@
 //Pipes
-import { AccountStatusPipe } from "./snapshots/credit-utilization/components/credit-utilization-card/account-status.pipe";
+import { AccountStatusPipe } from './snapshots/credit-utilization/components/credit-utilization-card/account-status.pipe';
 
 // modules
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { SharedComponentsModule } from "@shared/components/shared-components.module";
-import { SharedPipesModule } from "@shared/pipes/shared-pipes.module";
-import { DisputesModule } from "@views/dashboard/disputes/disputes.module";
-import { CreditReportModule } from "@views/dashboard/reports/credit-report/credit-report.module";
-import { DashboardRoutingModule } from "@views/dashboard/dashboard.routing";
-import { NgxMaskModule } from "ngx-mask";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { DisputesModule } from '@views/dashboard/disputes/disputes.module';
+import { CreditReportModule } from '@views/dashboard/reports/credit-report/credit-report.module';
+import { DashboardRoutingModule } from '@views/dashboard/dashboard.routing';
+import { NgxMaskModule } from 'ngx-mask';
 
 // components
-import { DashboardComponent } from "@views/dashboard/dashboard.component";
-import { NegativeAccountInitialComponent } from "@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component";
-import { NegativeAccountInitialPureComponent } from "@views/dashboard/snapshots/negative-account/negative-account-initial-pure/negative-account-initial-pure.component";
-import { NegativeAccountCardComponent } from "@views/dashboard/snapshots/negative-account/negative-account-card/negative-account-card.component";
-import { NegativeAccountCardDetailTableComponent } from "./snapshots/negative-account/negative-account-card-detail-table/negative-account-card-detail-table.component";
-import { NegativeAccountCardHeaderComponent } from "./snapshots/negative-account/negative-account-card-header/negative-account-card-header.component";
+import { DashboardComponent } from '@views/dashboard/dashboard.component';
+import { NegativeAccountInitialComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
+import { NegativeAccountInitialPureComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
+import { NegativeAccountCardComponent } from '@views/dashboard/snapshots/negative-account/negative-account-card/negative-account-card.component';
+import { NegativeAccountCardDetailTableComponent } from './snapshots/negative-account/negative-account-card-detail-table/negative-account-card-detail-table.component';
+import { NegativeAccountCardHeaderComponent } from './snapshots/negative-account/negative-account-card-header/negative-account-card-header.component';
 
-import { CreditMixPureView } from "@views/dashboard/snapshots/credit-mix/credit-mix-pure/credit-mix-pure.view";
-import { CreditMixView } from "@views/dashboard/snapshots/credit-mix/credit-mix/credit-mix.view";
+import { CreditMixPureView } from '@views/dashboard/snapshots/credit-mix/credit-mix-pure/credit-mix-pure.view';
+import { CreditMixView } from '@views/dashboard/snapshots/credit-mix/credit-mix/credit-mix.view';
 
-import { DashboardEnrolledComponent } from "@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component";
-import { DashboardEnrolledPureComponent } from "@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/dashboard-enrolled-pure.component";
+import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
+import { DashboardEnrolledPureComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/dashboard-enrolled-pure.component';
 
-import { SettingsComponent } from "@views/dashboard/settings/settings/settings.component";
-import { OptionDeactivateComponent } from "@views/dashboard/settings/components/option-deactivate/option-deactivate.component";
-import { OptionPasswordResetComponent } from "@views/dashboard/settings/components/option-password-reset/option-password-reset.component";
-import { SettingsOptionListComponent } from "@views/dashboard/settings/components/settings-option-list/settings-option-list.component";
-import { SettingsPureComponent } from "@views/dashboard/settings/settings-pure/settings-pure.component";
-import { SettingsOptionComponent } from "./settings/components/settings-option/settings-option.component";
+import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
+import { OptionDeactivateComponent } from '@views/dashboard/settings/components/option-deactivate/option-deactivate.component';
+import { OptionPasswordResetComponent } from '@views/dashboard/settings/components/option-password-reset/option-password-reset.component';
+import { SettingsOptionListComponent } from '@views/dashboard/settings/components/settings-option-list/settings-option-list.component';
+import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
+import { SettingsOptionComponent } from './settings/components/settings-option/settings-option.component';
 
 import { BaseExceptionPureView } from "@views/dashboard/exceptions/base-exception/base-exception-pure/base-exception-pure.view";
 import { BaseExceptionView } from "@views/dashboard/exceptions/base-exception/base-exception/base-exception.view";
@@ -70,6 +70,8 @@ import { CreditMixCardSectionComponent } from "./snapshots/credit-mix/components
 import { CreditMixRecommendationComponent } from "./snapshots/credit-mix/components/credit-mix-recommendation/credit-mix-recommendation.component";
 import { CreditMixFilterPipePipe } from './snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe';
 import { CreditMixCardComponent } from './snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component';
+import { DashboardCarouselComponent } from './dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component';
+
 
 const modules = [
   CommonModule,
@@ -131,12 +133,15 @@ const components = [
   CreditMixSubHeadersComponent,
   CreditMixCardSectionComponent,
   CreditMixRecommendationComponent,
+  DashboardCarouselComponent,
+  CreditMixFilterPipePipe,
+  CreditMixCardComponent
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, CreditMixFilterPipePipe, CreditMixCardComponent],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })
