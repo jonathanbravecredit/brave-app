@@ -116,6 +116,7 @@ import { PlacesAutocompleteInputComponent } from './inputs/places-autocomplete-i
 import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-form/autocomplete-address-form.component';
 import { PercentageBadgeComponent } from './badges/percentage-badge/percentage-badge.component';
 import { PercentageGaugeComponent } from './charts/percentage-gauge/percentage-gauge.component';
+import { CreditUtilizationFillBarComponent } from './charts/credit-utilization-fill-bar/credit-utilization-fill-bar.component';
 
 const components = [
   BaseFormComponent,
@@ -208,7 +209,8 @@ const components = [
   AutocompleteAddressFormComponent,
   PercentageBadgeComponent,
   PercentageBadgeComponent,
-  PercentageGaugeComponent
+  PercentageGaugeComponent,
+  CreditUtilizationFillBarComponent
 ];
 
 // component specific pipes only
