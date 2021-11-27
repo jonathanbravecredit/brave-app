@@ -23,7 +23,7 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
   @Input() creditUtilizationType: "credit" | "credit-utilization" | "loan" =
     "credit";
 
-  @Input() open: boolean = false;
+  open: boolean = false;
 
   percetangeUtilization: number | string | undefined;
 
@@ -39,12 +39,16 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.open = this.creditUtilization?.openClosed === 'O' ? true : false
+
     this.percetangeUtilization = this.calculatePercentageUtilization(
       this.creditUtilization!.currentBalance,
       this.creditUtilization!.creditLimit
     );
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
+
+    console.log('CREDIT STATUS === >>>', this.creditStatus)
   }
 
   ngAfterViewInit(): void {

@@ -3,7 +3,6 @@ import { ITradeLinePartition } from "@shared/interfaces";
 import { ICreditMixTLSummary } from "@shared/interfaces/credit-mix-tl-summary.interface";
 import { DashboardService } from "@shared/services/dashboard/dashboard.service";
 
-
 @Injectable({
   providedIn: "root",
 })
@@ -39,17 +38,23 @@ export class CreditMixService {
     let studentLoanAmount = 0;
     let autoLoanAmount = 0;
     let mortgageAmount = 0;
+    let amountOfClosed = 0;
 
     this.tradeLinePartition.forEach((tradeline) => {
+      if (tradeline.Tradeline?.OpenClosed?.symbol === "C") {
+        amountOfClosed += 1;
+        totalLineAmount += 1;
+      } else if (tradeline.Tradeline?.OpenClosed?.symbol === "O") {
+        totalLineAmount += 1;
+      }
+
       if (tradeline.accountTypeSymbol?.toLowerCase() === "r") {
         hasCreditCards = true;
         creditCardAmount += 1;
-        totalLineAmount += 1;
         return;
       } else if (tradeline.accountTypeSymbol?.toLowerCase() === "m") {
         hasMortgages = true;
         mortgageAmount += 1;
-        totalLineAmount += 1;
       } else if (
         tradeline.Tradeline?.GrantedTrade.AccountType?.symbol
           ?.toString()
@@ -60,7 +65,6 @@ export class CreditMixService {
       ) {
         hasStudentLoans = true;
         studentLoanAmount += 1;
-        totalLineAmount += 1;
       } else if (
         tradeline.Tradeline?.GrantedTrade.AccountType?.symbol
           ?.toString()
@@ -77,7 +81,6 @@ export class CreditMixService {
       ) {
         hasAutoLoans = true;
         autoLoanAmount += 1;
-        totalLineAmount += 1;
       }
     });
 
@@ -91,6 +94,7 @@ export class CreditMixService {
       studentLoanAmount,
       autoLoanAmount,
       mortgageAmount,
+      amountOfClosed,
     };
   }
 }

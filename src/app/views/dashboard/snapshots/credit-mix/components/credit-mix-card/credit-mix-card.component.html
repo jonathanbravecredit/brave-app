@@ -14,7 +14,7 @@
       <div class="flex justify-between p-0 -mt-1 mb-1">
         <!-- header  -->
         <p class="brave-body1-semibold">{{ creditUtilization!.creditorName }} {{ open ? '(Open)' : '(Closed)'}}</p>
-        <p class="brave-body1-semibold">{{ percetangeUtilization }}%</p>
+        <p class="brave-body1-semibold">{{ percetangeUtilization || '--' }}%</p>
       </div>
 
       <div class="flex flex-row">

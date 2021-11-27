@@ -8,4 +8,5 @@ export interface ICreditMixTLSummary {
   studentLoanAmount: number;
   autoLoanAmount: number;
   mortgageAmount: number;
+  amountOfClosed: number;
 }

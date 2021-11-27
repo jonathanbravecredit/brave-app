@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { ICreditMixTLSummary } from "@shared/interfaces/credit-mix-tl-summary.interface";
+import { calculateRating } from "../../credit-mix-calculate-rating";
 
 @Component({
   selector: "brave-credit-mix-badges",
@@ -6,27 +8,11 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class CreditMixBadgesComponent implements OnInit {
   selectedBadge: string = "good";
-  @Input() totalAmountOfLines: number | undefined;
+  @Input() tradeLineSummary: ICreditMixTLSummary | undefined;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.calculateSelectedBadge()
-  }
-
-  calculateSelectedBadge(): string {
-    if (this.totalAmountOfLines) {
-      switch (true) {
-        case this.totalAmountOfLines <= 1:
-          return "poor";
-        case this.totalAmountOfLines <= 4:
-          return "fair";
-        case this.totalAmountOfLines <= 7:
-          return "good";
-        default:
-          return "excellent";
-      }
-    }
-    return ''
+    this.selectedBadge = calculateRating(this.tradeLineSummary).string;
   }
 }
