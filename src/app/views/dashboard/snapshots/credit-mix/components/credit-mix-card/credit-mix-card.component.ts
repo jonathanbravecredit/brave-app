@@ -1,10 +1,19 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
 import { TransunionUtil } from "@shared/utils/transunion/transunion";
 import { TradelineDetailsTableComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component";
 import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
 import { TradelineRemarksComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component";
-import { ICreditUtilization, TCreditUtilizationStatus } from "@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces";
+import {
+  ICreditUtilization,
+  TCreditUtilizationStatus,
+} from "@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces";
 import { Observable, of } from "rxjs";
 
 @Component({
@@ -39,7 +48,7 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.open = this.creditUtilization?.openClosed === 'O' ? true : false
+    this.open = this.creditUtilization?.openClosed === "O" ? true : false;
 
     this.percetangeUtilization = this.calculatePercentageUtilization(
       this.creditUtilization!.currentBalance,
@@ -47,8 +56,6 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
     );
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
-
-    console.log('CREDIT STATUS === >>>', this.creditStatus)
   }
 
   ngAfterViewInit(): void {

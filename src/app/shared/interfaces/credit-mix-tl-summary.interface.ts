@@ -3,6 +3,10 @@ export interface ICreditMixTLSummary {
   hasStudentLoans: boolean;
   hasAutoLoans: boolean;
   hasMortgages: boolean;
+  hasOpenCreditCards: boolean;
+  hasOpenStudentLoans: boolean;
+  hasOpenAutoLoans: boolean;
+  hasOpenMortgages: boolean;
   totalLineAmount: number;
   creditCardAmount: number;
   studentLoanAmount: number;

@@ -6,12 +6,14 @@
   [tradeLineSummary]="tradeLineSummary"
 ></brave-credit-mix-badges>
 <brave-credit-mix-icons
-  [hasCreditCards]="tradeLineSummary?.hasCreditCards"
-  [hasStudentLoans]="tradeLineSummary?.hasStudentLoans"
-  [hasAutoLoans]="tradeLineSummary?.hasAutoLoans"
-  [hasMortgages]="tradeLineSummary?.hasMortgages"
+  [hasCreditCards]="tradeLineSummary?.hasOpenCreditCards"
+  [hasStudentLoans]="tradeLineSummary?.hasOpenStudentLoans"
+  [hasAutoLoans]="tradeLineSummary?.hasOpenAutoLoans"
+  [hasMortgages]="tradeLineSummary?.hasOpenMortgages"
 ></brave-credit-mix-icons>
-<brave-credit-mix-recommendation></brave-credit-mix-recommendation>
+<brave-credit-mix-recommendation
+[tradeLineSum]="tradeLineSummary"
+></brave-credit-mix-recommendation>
 <brave-credit-mix-sub-headers></brave-credit-mix-sub-headers>
 <brave-credit-mix-card-section
   title="Credit Cards"

@@ -33,6 +33,10 @@ export class CreditMixService {
     let hasStudentLoans = false;
     let hasAutoLoans = false;
     let hasMortgages = false;
+    let hasOpenCreditCards = false;
+    let hasOpenStudentLoans = false;
+    let hasOpenAutoLoans = false;
+    let hasOpenMortgages = false;
     let totalLineAmount = 0;
     let creditCardAmount = 0;
     let studentLoanAmount = 0;
@@ -49,10 +53,16 @@ export class CreditMixService {
       }
 
       if (tradeline.accountTypeSymbol?.toLowerCase() === "r") {
+        if (tradeline.Tradeline?.OpenClosed?.symbol === "O") {
+          hasOpenCreditCards = true
+        }
         hasCreditCards = true;
         creditCardAmount += 1;
         return;
       } else if (tradeline.accountTypeSymbol?.toLowerCase() === "m") {
+        if (tradeline.Tradeline?.OpenClosed?.symbol === "O") {
+          hasOpenMortgages = true
+        }
         hasMortgages = true;
         mortgageAmount += 1;
       } else if (
@@ -63,6 +73,9 @@ export class CreditMixService {
           ?.toString()
           .toLowerCase() === "EDUC"
       ) {
+        if (tradeline.Tradeline?.OpenClosed?.symbol === "O") {
+          hasOpenStudentLoans = true
+        }
         hasStudentLoans = true;
         studentLoanAmount += 1;
       } else if (
@@ -79,6 +92,9 @@ export class CreditMixService {
           ?.toString()
           .toLowerCase() === "AU"
       ) {
+        if (tradeline.Tradeline?.OpenClosed?.symbol === "O") {
+          hasOpenAutoLoans = true
+        }
         hasAutoLoans = true;
         autoLoanAmount += 1;
       }
@@ -89,6 +105,10 @@ export class CreditMixService {
       hasStudentLoans,
       hasAutoLoans,
       hasMortgages,
+      hasOpenCreditCards,
+      hasOpenStudentLoans,
+      hasOpenAutoLoans,
+      hasOpenMortgages,
       totalLineAmount,
       creditCardAmount,
       studentLoanAmount,

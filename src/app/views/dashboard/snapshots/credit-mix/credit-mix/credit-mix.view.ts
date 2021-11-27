@@ -16,8 +16,6 @@ export class CreditMixView implements OnInit {
   ngOnInit(): void {
     this.tradeLineParition = this.creditMix.getTradelines();
     this.tradeLineSummary = this.creditMix.getTradelineSummary();
-
-    console.log(this.tradeLineParition)
   }
 
 }
