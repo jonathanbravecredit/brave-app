@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { IFilledOnlyTextButtonConfig } from "@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component";
 
 @Component({
   selector: "brave-credit-mix-card-section",
@@ -11,6 +12,12 @@ export class CreditMixCardSectionComponent implements OnInit {
   @Input() populatedText: string | undefined;
   @Input() emptyText: string | undefined;
   @Input() learnMoreLink: string | undefined;
+  buttonConfig: IFilledOnlyTextButtonConfig = {
+    buttonSize: 'lg',
+    backgroundColor: '#d9f1f5',
+    activeColor: '#d9f1f5',
+    color: '#222c9d',
+  }
 
   constructor() {}
 
