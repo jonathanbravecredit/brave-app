@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { ICreditMixTLSummary } from "@shared/interfaces/credit-mix-tl-summary.interface";
-import { calculateRating } from "../../credit-mix-calculate-rating";
+import { ICreditMixTLSummary } from "../../interfaces/credit-mix-calc-obj.interface";
 
 @Component({
   selector: "brave-credit-mix-rating",
@@ -8,15 +7,10 @@ import { calculateRating } from "../../credit-mix-calculate-rating";
 })
 export class CreditMixRatingComponent implements OnInit {
   @Input() tradeLineSummary: ICreditMixTLSummary | undefined;
-
-  rating: string = "";
-  ratingColor: string = "";
+  @Input() rating: string | undefined = '';
+  @Input() ratingColor: string | undefined = '';
 
   constructor() {}
 
-  ngOnInit(): void {
-    let returnedObj = calculateRating(this.tradeLineSummary);
-    this.rating = returnedObj.string;
-    this.ratingColor = returnedObj.color;
-  }
+  ngOnInit(): void {}
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { ICreditMixTLSummary } from "@shared/interfaces/credit-mix-tl-summary.interface";
+import { ICreditMixTLSummary } from "../../interfaces/credit-mix-calc-obj.interface";
 
 @Component({
   selector: "brave-credit-mix-recommendation",

@@ -1,9 +1,12 @@
 <brave-credit-mix-header></brave-credit-mix-header>
 <brave-credit-mix-rating
 [tradeLineSummary]="tradeLineSummary"
+[rating]="creditMixCalculationObj?.string"
+[ratingColor]="creditMixCalculationObj?.color"
 ></brave-credit-mix-rating>
 <brave-credit-mix-badges
   [tradeLineSummary]="tradeLineSummary"
+  [selectedBadge]="creditMixCalculationObj?.string"
 ></brave-credit-mix-badges>
 <brave-credit-mix-icons
   [hasCreditCards]="tradeLineSummary?.hasOpenCreditCards"

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ITradeLinePartition } from '@shared/interfaces';
-import { ICreditMixTLSummary } from '@shared/interfaces/credit-mix-tl-summary.interface';
+import { ICreditMixTLSummary, TCreditMixCalcObj } from '../interfaces/credit-mix-calc-obj.interface';
 
 @Component({
   selector: 'brave-credit-mix-pure',
@@ -10,6 +10,7 @@ import { ICreditMixTLSummary } from '@shared/interfaces/credit-mix-tl-summary.in
 export class CreditMixPureView implements OnInit {
   @Input() tradeLineParition: ITradeLinePartition[] | undefined;
   @Input() tradeLineSummary: ICreditMixTLSummary | undefined;
+  @Input() creditMixCalculationObj: TCreditMixCalcObj | undefined
 
   constructor() { }
 
