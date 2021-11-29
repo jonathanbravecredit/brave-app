@@ -34,7 +34,14 @@ export class CreditUtilizationView implements OnInit {
   sumDebtAmount(account: ITradeLinePartition[]): number {
     return account.reduce<number>(
       (acc: number, tradePart: ITradeLinePartition) => {
+        console.log(tradePart.Tradeline?.creditorName ,tradePart.accountTypeSymbol)
         if (tradePart.Tradeline?.OpenClosed?.symbol === "C") {
+          return acc;
+        }
+        if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
+          return acc;
+        }
+        if (+tradePart.Tradeline?.GrantedTrade.CreditLimit! <= 0) {
           return acc;
         }
         return acc + +tradePart.Tradeline?.currentBalance!;
@@ -47,6 +54,9 @@ export class CreditUtilizationView implements OnInit {
     return account.reduce<number>(
       (acc: number, tradePart: ITradeLinePartition) => {
         if (tradePart.Tradeline?.OpenClosed?.symbol === "C") {
+          return acc;
+        }
+        if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
           return acc;
         }
         return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;

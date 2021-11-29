@@ -45,12 +45,14 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit(): void {
+
+    this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
+
     this.percetangeUtilization = this.calculatePercentageUtilization(
       this.creditUtilization!.currentBalance,
       this.creditUtilization!.creditLimit
     );
 
-    this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
 
 
   }
@@ -69,7 +71,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
       return undefined;
     }
 
-    if (!this.open) {
+    if (!this.open || creditLimit <= 0) {
       return TransunionUtil.bcMissing
     }
 
