@@ -1,21 +1,21 @@
 <div *ngIf="label" class="flex align-center justify-between w-full">
-  <p class="text-xs text-dk-gray w-6/12" [ngClass]="dynamicClass">{{ label }}</p>
-  <div class="relative" [ngStyle]="{'left': '1px', 'top': '-4px'}">
-    <span *ngIf="tooltip" class="mr-24" (click)='tooltipAction!()' [ngClass]="icon" [ngStyle]="iconStyle">info</span>
-  </div>
+    <span class="text-xs text-dk-gray w-6/12 relative" [ngClass]="dynamicClass">{{ label }}
+      <span *ngIf="tooltip" class="absolute ml-1" style="top: -4px;" (click)='tooltipAction!()' [ngClass]="icon" [ngStyle]="iconStyle">info</span>
+    </span>
   <ng-container *ngIf="!injected">
-    <p *ngIf="valueType === 'account'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    <span *ngIf="valueType === 'account'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value | accountNumberMask) }}
-    </p>
-    <p *ngIf="valueType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    </span>
+    <span *ngIf="valueType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value | currency: 'USD':'symbol':'1.0-0') }}
-    </p>
-    <p *ngIf="valueType === 'date'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    </span>
+    <span *ngIf="valueType === 'date'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value | date: 'shortDate') }}
-    </p>
-    <p *ngIf="valueType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    </span>
+    <span *ngIf="valueType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value.toString() | decode) }}
-    </p>
+
+    </span>
   </ng-container>
   <ng-container *ngIf="injected">
     <ng-content></ng-content>

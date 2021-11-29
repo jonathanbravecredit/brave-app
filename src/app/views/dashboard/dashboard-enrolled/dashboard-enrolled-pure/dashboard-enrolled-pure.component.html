@@ -1,12 +1,7 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
-<div class="my-4 flex justify-center">
-  <a [routerLink]="['/dashboard/report']">
-    <brave-credit-report-graphic-no-graph
-      [currentValue]="report | parseRiskScore"
-      [ptsChange]="scores?.delta || 0"
-    ></brave-credit-report-graphic-no-graph>
-  </a>
+<div *ngIf="trends && report && scores" class="my-4 flex justify-center">
+  <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>

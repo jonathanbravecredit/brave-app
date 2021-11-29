@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 import { DashboardScoreTrackingResolver } from '@shared/resolvers/dashboard-score-tracking/dashboard-score-tracking.resolver';
 import { DashboardScoreTrendsResolver } from '@shared/resolvers/dashboard-score-trends/dashboard-score-trends.resolver';
@@ -13,7 +14,7 @@ export interface IDashboardResolver {
   report: IMergeReport | null;
   snapshots: DashboardStateModel | null;
   scores: ICreditScoreTracking | null;
-  trends: any[];
+  trends: IGetTrendingData | null;
 }
 
 @Injectable({
