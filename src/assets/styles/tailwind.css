@@ -1437,10 +1437,6 @@ select {
   margin-right: 2rem;
 }
 
-.mr-24 {
-  margin-right: 6rem;
-}
-
 .mr-auto {
   margin-right: auto;
 }
@@ -2077,6 +2073,10 @@ select {
 
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
 }
 
 .rounded-full {

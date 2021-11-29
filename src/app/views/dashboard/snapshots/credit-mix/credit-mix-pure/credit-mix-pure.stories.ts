@@ -37,7 +37,7 @@ export default {
       return `
       <main>
         <section class="relative flex flex-col justify-start items-center w-full h-full min-h-screen min-w-screen">
-          <div class="container max-w-xs sm:max-w-sm md:max-w-md" style="min-width: 320px">
+          <div class="container max-w-xs sm:max-w-sm md:max-w-md min-w-320-px">
             <div class="p-2">
               <div class="my-2">
               ${story}

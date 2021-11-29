@@ -1,8 +1,5 @@
 <div class="flex items-center mb-1 mt-6">
-  <span
-    class="material-icons-outlined mr-3"
-    style="color: #222c9d; font-size: 36px"
-  >
+  <span class="material-icons-outlined mr-3 text-4xl" style="color: #222c9d">
     {{ icon }}
   </span>
   <span class="brave-body1-semibold">{{ title }}</span>
@@ -15,7 +12,7 @@
 <div *ngIf="!populated" class="text-sm mb-6 text-center">{{ emptyText }}</div>
 <div class="flex justify-center">
   <button
-  *ngIf="!populated"
+    *ngIf="!populated"
     class="font-black"
     style="
       background-color: #d9f1f5;
