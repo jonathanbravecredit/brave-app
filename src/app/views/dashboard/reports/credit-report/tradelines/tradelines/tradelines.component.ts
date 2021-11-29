@@ -26,7 +26,6 @@ export class TradelinesComponent {
    * Flag to indicate that dispute terms have been acknowledged
    */
   _acknowledged: boolean = false;
-
   /**
    * Initializes tradeline property with current tradeline from CreditReportService
    * @constructor

@@ -207,7 +207,7 @@ export class TransunionService {
    */
   async getTrendingData(fromDate: string): Promise<ITUServiceResponse<any | undefined>> {
     try {
-      const res = await this.api.Transunion('GetTrendingData', JSON.stringify({ param: { fromDate } }));
+      const res = await this.api.Transunion('GetTrendingData', JSON.stringify({ fromDate }));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };
