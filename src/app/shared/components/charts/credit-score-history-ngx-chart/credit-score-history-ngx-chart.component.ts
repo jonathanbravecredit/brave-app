@@ -22,7 +22,7 @@ export class CreditScoreHistoryNgxChartComponent
   @ViewChild("chart") chart: any;
   multi: IResultsData[] | undefined;
   // options
-  @Input() view: [number, number] = [300, 140];
+  @Input() view: [number, number] = [340, 140];
   @Input() trends!: IGetTrendingData | null;
   @Input() report: IMergeReport | undefined;
   @Input() lastUpdated: number | string | Date | undefined;
