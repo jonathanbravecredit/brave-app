@@ -1,11 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
-import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
+import { Component, Input, OnInit } from "@angular/core";
+
 import { TransunionUtil } from "@shared/utils/transunion/transunion";
 import { TradelineDetailsTableComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component";
 import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
@@ -14,17 +8,12 @@ import {
   ICreditUtilization,
   TCreditUtilizationStatus,
 } from "@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces";
-import { Observable, of } from "rxjs";
 
 @Component({
   selector: "brave-credit-mix-card",
   templateUrl: "./credit-mix-card.component.html",
 })
-export class CreditMixCardComponent implements AfterViewInit, OnInit {
-  @ViewChild(ViewdetailButtonComponent)
-  viewDetail: ViewdetailButtonComponent | undefined;
-  open$: Observable<boolean> = of(false);
-
+export class CreditMixCardComponent implements OnInit {
   @Input() status: TCreditUtilizationStatus = "good";
 
   @Input() creditUtilization: ICreditUtilization | undefined;
@@ -48,7 +37,8 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.open = this.creditUtilization?.openClosed === "O" ? true : false;
+    this.open =
+      this.creditUtilization?.openClosed?.toLowerCase() === "o" ? true : false;
 
     this.percetangeUtilization = this.calculatePercentageUtilization(
       this.creditUtilization!.currentBalance,
@@ -56,12 +46,6 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
     );
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
-  }
-
-  ngAfterViewInit(): void {
-    if (this.viewDetail) {
-      this.open$ = this.viewDetail.open$.asObservable();
-    }
   }
 
   calculatePercentageUtilization(
@@ -88,6 +72,10 @@ export class CreditMixCardComponent implements AfterViewInit, OnInit {
   ): string {
     if (!this.open) {
       return "closed";
+    }
+
+    if (percetangeUtilization === undefined) {
+      return "closed"
     }
 
     switch (true) {

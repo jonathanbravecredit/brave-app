@@ -34,12 +34,12 @@
 
       <div class="mt-1">
         <!-- buttons goes here -->
-        <brave-viewdetail-button>View Details</brave-viewdetail-button>
+        <brave-viewdetail-button #viewDetails >View Details</brave-viewdetail-button>
       </div>
     </div>
   </div>
 
-  <div *ngIf="open$ | async as openCarousel">
+  <div *ngIf="viewDetails.open$ | async as openCarousel">
     <div class="flex flex-col w-full py-5 px-4">
       <div class="border-t border-blueGray-300"></div>
     </div>

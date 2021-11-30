@@ -1,6 +1,6 @@
 export interface TCreditMixCalcObj {
-  string: string;
-  color: string;
+  string?: string;
+  color?: string;
 }
 
 export interface ICreditMixTLSummary {
@@ -21,7 +21,9 @@ export interface ICreditMixTLSummary {
 }
 
 export interface IRecommendationText {
-  link: string;
-  text: string;
-  subtext: string;
+  link?: string;
+  text?: string;
+  subtext?: string;
+  rating?: string;
+  color?: string;
 }

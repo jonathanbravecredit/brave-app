@@ -13,6 +13,11 @@ import { CreditMixSubHeadersComponent } from "../components/credit-mix-sub-heade
 import { CreditMixCardSectionComponent } from "../components/credit-mix-card-section/credit-mix-card-section.component";
 import { CreditMixRecommendationComponent } from "../components/credit-mix-recommendation/credit-mix-recommendation.component";
 import { BaseModalSmallComponent } from "@shared/components/modals/base-modal-small/base-modal-small.component";
+import { DashboardService } from "@shared/services/dashboard/dashboard.service";
+import { CreditMixService } from "../credit-mix-service/credit-mix-service.service";
+import { StateStream, Store } from "@ngxs/store";
+import { SharedServicesModule } from "@shared/services/shared-services.module";
+import { CreditMixFilterPipePipe } from "../credit-mix-filter-pipe/credit-mix-filter-pipe.pipe";
 
 export default {
   title: "app/views/snapshots/credit-mix",
@@ -29,6 +34,7 @@ export default {
         CreditMixCardSectionComponent,
         CreditMixRecommendationComponent,
         BaseModalSmallComponent,
+        CreditMixFilterPipePipe,
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],

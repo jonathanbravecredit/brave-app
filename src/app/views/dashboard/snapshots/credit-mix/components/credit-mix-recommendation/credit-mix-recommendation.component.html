@@ -5,14 +5,14 @@
 >
   <h1 class="text-sm font-semibold mb-4 text-center">Your Recommendations</h1>
   <a
-    [href]="recommendationLink"
+    [href]="recommendations?.link"
     style="pointer-events: none; cursor: default"
   >
     <p class="text-center text-sm" style="min-height: 2rem">
-      {{ recommendationText }}
+      {{ recommendations?.text }}
     </p>
     <p class="text-center text-sm" style="min-height: 2rem">
-      {{ recommendationSubText }}
+      {{ recommendations?.subtext }}
     </p>
   </a>
   <div class="absolute top-1 right-1" (click)="closeBox()">

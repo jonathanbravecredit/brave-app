@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ITradeLinePartition } from "@shared/interfaces";
 import { CreditMixService } from "../credit-mix-service/credit-mix-service.service";
-import { ICreditMixTLSummary, TCreditMixCalcObj } from "../interfaces/credit-mix-calc-obj.interface";
+import {
+  ICreditMixTLSummary,
+  IRecommendationText,
+  TCreditMixCalcObj,
+} from "../interfaces/credit-mix-calc-obj.interface";
 
 @Component({
   selector: "brave-credit-mix",
@@ -10,14 +14,27 @@ import { ICreditMixTLSummary, TCreditMixCalcObj } from "../interfaces/credit-mix
 export class CreditMixView implements OnInit {
   tradeLineParition: ITradeLinePartition[] | undefined;
   tradeLineSummary: ICreditMixTLSummary | undefined;
-  creditMixCalculationObj: TCreditMixCalcObj | undefined
+  creditMixCalculationObj: IRecommendationText | undefined;
+  recommendations: IRecommendationText | undefined;
 
-  constructor(private creditMix: CreditMixService) {}
+  constructor(private creditMixService: CreditMixService) {}
 
   ngOnInit(): void {
-    this.tradeLineParition = this.creditMix.getTradelines();
-    this.tradeLineSummary = this.creditMix.getTradelineSummary();
-    this.creditMixCalculationObj = this.creditMix.calculateRating(this.tradeLineSummary)
+    this.tradeLineParition = this.creditMixService.getTradelines();
+    this.tradeLineSummary = this.creditMixService.getTradelineSummary();
+    this.creditMixCalculationObj = this.creditMixService.calculateRating(
+      this.tradeLineSummary
+    );
+    this.recommendations = this.calculateRecommendationText(
+      this.tradeLineSummary
+    );
   }
 
+  calculateRecommendationText = (
+    tradeLineSummary: ICreditMixTLSummary | undefined
+  ): IRecommendationText | undefined => {
+    const recs = this.creditMixService.getRecommendationText(tradeLineSummary);
+    if (!recs) return;
+    return recs;
+  };
 }
