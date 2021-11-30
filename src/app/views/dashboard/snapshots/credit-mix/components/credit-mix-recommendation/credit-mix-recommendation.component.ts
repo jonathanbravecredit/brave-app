@@ -18,7 +18,7 @@ export class CreditMixRecommendationComponent implements OnInit {
     this.calculateRecommendationText(this.tradeLineSum);
   }
 
-  closeBox() {
+  closeBox(): void {
     this.show = false;
   }
 
