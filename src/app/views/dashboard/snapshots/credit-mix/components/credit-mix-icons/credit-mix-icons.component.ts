@@ -6,11 +6,13 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class CreditMixIconsComponent implements OnInit {
   @Input() hasCreditCards: boolean | undefined = false;
-  @Input() hasStudentLoans: boolean | undefined = true;
+  @Input() hasStudentLoans: boolean | undefined = false;
   @Input() hasAutoLoans: boolean | undefined = false;
-  @Input() hasMortgages: boolean | undefined = true;
+  @Input() hasMortgages: boolean | undefined = false;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.hasStudentLoans)
+  }
 }

@@ -3,10 +3,10 @@
     <div
       class="flex justify-center items-center mb-2 rounded-3xl"
       style="
-        background-color: #222c9d;
         height: 40px;
         width: 40px;
       "
+      [ngStyle]="{'background-color': hasCreditCards ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -21,10 +21,10 @@
     <div
       class="flex justify-center items-center mb-2 rounded-3xl"
       style="
-        background-color: #222c9d;
         height: 40px;
         width: 40px;
       "
+      [ngStyle]="{'background-color': hasStudentLoans ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -39,10 +39,10 @@
     <div
       class="flex justify-center items-center mb-2 rounded-3xl"
       style="
-        background-color: #c4c4c4;
         height: 40px;
         width: 40px;
       "
+      [ngStyle]="{'background-color': hasAutoLoans ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -57,10 +57,10 @@
     <div
       class="flex justify-center items-center mb-2 rounded-3xl"
       style="
-        background-color: #c4c4c4;
         height: 40px;
         width: 40px;
       "
+      [ngStyle]="{'background-color': hasMortgages ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
