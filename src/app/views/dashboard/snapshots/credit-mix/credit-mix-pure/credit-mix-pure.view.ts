@@ -10,8 +10,7 @@ import { ICreditMixTLSummary, IRecommendationText, TCreditMixCalcObj } from '../
 export class CreditMixPureView implements OnInit {
   @Input() tradeLineParition: ITradeLinePartition[] | undefined;
   @Input() tradeLineSummary: ICreditMixTLSummary | undefined;
-  @Input() creditMixCalculationObj: TCreditMixCalcObj | undefined
-  @Input() recommendations : IRecommendationText | undefined
+  @Input() recommendations : IRecommendationText | undefined;
 
   constructor() { }
 

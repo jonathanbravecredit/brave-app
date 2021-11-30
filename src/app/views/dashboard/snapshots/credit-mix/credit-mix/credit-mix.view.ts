@@ -14,7 +14,6 @@ import {
 export class CreditMixView implements OnInit {
   tradeLineParition: ITradeLinePartition[] | undefined;
   tradeLineSummary: ICreditMixTLSummary | undefined;
-  creditMixCalculationObj: IRecommendationText | undefined;
   recommendations: IRecommendationText | undefined;
 
   constructor(private creditMixService: CreditMixService) {}
@@ -22,19 +21,6 @@ export class CreditMixView implements OnInit {
   ngOnInit(): void {
     this.tradeLineParition = this.creditMixService.getTradelines();
     this.tradeLineSummary = this.creditMixService.getTradelineSummary();
-    this.creditMixCalculationObj = this.creditMixService.calculateRating(
-      this.tradeLineSummary
-    );
-    this.recommendations = this.calculateRecommendationText(
-      this.tradeLineSummary
-    );
+    this.recommendations = this.creditMixService.getRecommendations(this.tradeLineSummary);
   }
-
-  calculateRecommendationText = (
-    tradeLineSummary: ICreditMixTLSummary | undefined
-  ): IRecommendationText | undefined => {
-    const recs = this.creditMixService.getRecommendationText(tradeLineSummary);
-    if (!recs) return;
-    return recs;
-  };
 }

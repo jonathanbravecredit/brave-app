@@ -1,12 +1,12 @@
 <brave-credit-mix-header></brave-credit-mix-header>
 <brave-credit-mix-rating
-[tradeLineSummary]="tradeLineSummary"
-[rating]="creditMixCalculationObj?.string"
-[ratingColor]="creditMixCalculationObj?.color"
+  [tradeLineSummary]="tradeLineSummary"
+  [rating]="recommendations?.rating"
+  [ratingColor]="recommendations?.color"
 ></brave-credit-mix-rating>
 <brave-credit-mix-badges
   [tradeLineSummary]="tradeLineSummary"
-  [selectedBadge]="creditMixCalculationObj?.string"
+  [selectedBadge]="recommendations?.rating"
 ></brave-credit-mix-badges>
 <brave-credit-mix-icons
   [hasCreditCards]="tradeLineSummary?.hasOpenCreditCards"
@@ -15,8 +15,8 @@
   [hasMortgages]="tradeLineSummary?.hasOpenMortgages"
 ></brave-credit-mix-icons>
 <brave-credit-mix-recommendation
-[tradeLineSum]="tradeLineSummary"
-[recommendations]="recommendations"
+  [tradeLineSum]="tradeLineSummary"
+  [recommendations]="recommendations"
 ></brave-credit-mix-recommendation>
 <brave-credit-mix-sub-headers></brave-credit-mix-sub-headers>
 <brave-credit-mix-card-section
