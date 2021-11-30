@@ -12,7 +12,5 @@ export class CreditMixIconsComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.hasStudentLoans)
-  }
+  ngOnInit(): void {}
 }

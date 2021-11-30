@@ -18,8 +18,6 @@ export class CreditMixView implements OnInit {
     this.tradeLineParition = this.creditMix.getTradelines();
     this.tradeLineSummary = this.creditMix.getTradelineSummary();
     this.creditMixCalculationObj = this.creditMix.calculateRating(this.tradeLineSummary)
-
-    console.log(this.tradeLineSummary)
   }
 
 }
