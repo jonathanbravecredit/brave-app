@@ -10,6 +10,7 @@ export class PercentageBadgeComponent implements OnInit {
   @Input() color: string | undefined;
   @Input() size: 'base' | 'small' | 'large' = 'base';
   @Input() position : 'bottom' | 'top' | 'left' | 'right' = 'bottom';
+  @Input() selected: boolean = false
 
   constructor() {}
 

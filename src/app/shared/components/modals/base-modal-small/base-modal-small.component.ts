@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export interface IBaseModalSmallConfig {
   title: string;
   body?: string;
+  subBody?: string;
   enableButtonOne?: boolean;
   enableButtonTwo?: boolean;
   actionButtonOneText?: string;

@@ -1,0 +1,21 @@
+<div (click)="toggleShowModal()" class="cursor-pointer">
+  <div class="brave-body2 mb-2">
+    Get more details about your accounts below. If you notice something wrong,
+    dispute it!
+  </div>
+  <div class="flex items-center">
+    <span
+      class="material-icons-outlined mr-3 text-xs"
+      style="color: #222c9d"
+      >info</span
+    >
+    <div class="text-xs" style="color: #222c9d">
+      Why could some of my accounts be missing?
+    </div>
+  </div>
+</div>
+<brave-base-modal-small
+  [config]="config"
+  [showModal]="showModal"
+  (closeModalClick)="toggleShowModal()"
+></brave-base-modal-small>
