@@ -91,6 +91,10 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
       return "closed";
     }
 
+    if (percetangeUtilization === '<1') {
+      return "excellent"
+    }
+
     switch (true) {
       case percetangeUtilization! <= 9:
         return "excellent";
