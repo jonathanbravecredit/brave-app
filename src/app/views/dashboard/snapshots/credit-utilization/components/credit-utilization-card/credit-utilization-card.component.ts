@@ -29,7 +29,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   @Input() creditUtilizationType: "credit" | "credit-utilization" | "loan" =
     "credit";
 
-  @Input() open : boolean = false
+  @Input() open: boolean = false;
 
   percetangeUtilization: number | string | undefined;
 
@@ -45,16 +45,12 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   constructor() {}
 
   ngOnInit(): void {
-
-    this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
-
     this.percetangeUtilization = this.calculatePercentageUtilization(
       this.creditUtilization!.currentBalance,
       this.creditUtilization!.creditLimit
     );
 
-
-
+    this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
   }
 
   ngAfterViewInit(): void {
@@ -72,7 +68,7 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
     }
 
     if (!this.open || creditLimit <= 0) {
-      return TransunionUtil.bcMissing
+      return TransunionUtil.bcMissing;
     }
 
     if (currentBalence >= 0 && creditLimit !== 0) {
@@ -82,8 +78,9 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
     return undefined;
   }
 
-  calculateCreditStatus(percetangeUtilization: number | string | undefined): string {
-
+  calculateCreditStatus(
+    percetangeUtilization: number | string | undefined
+  ): string {
     if (!this.open) {
       return "closed";
     }
