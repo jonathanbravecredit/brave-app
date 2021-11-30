@@ -27,7 +27,7 @@ export class BasicCarouselComponent implements AfterViewInit, OnDestroy {
   @Output() pageClicked: EventEmitter<any> = new EventEmitter();
 
   sliderWidth: number = 1200;
-  itemWidth: number = 300;
+  @Input() itemWidth: number = 300;
   carouselXAxis: number = 0;
   tracker: any[] = [];
 
