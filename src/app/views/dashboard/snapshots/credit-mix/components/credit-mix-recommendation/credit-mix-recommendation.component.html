@@ -1,29 +1,26 @@
 <div
   *ngIf="show"
-  class="p-4 mb-8 mx-2"
+  class="p-4 mb-8 mx-2 relative"
   style="background-color: #d714db; color: white; border-radius: 8px"
 >
-  <div class="flex justify-between">
-    <div style="min-width: 20%"></div>
-    <div class="text-sm font-semibold">Your Recommendations</div>
-    <div (click)="closeBox()" style="min-width: 20%; z-index: 2">
-      <span
-        style="min-width: 90%"
-        class="material-icons cursor-pointer text-right"
-      >
-        close
-      </span>
-    </div>
-  </div>
+  <h1 class="text-sm font-semibold mb-4 text-center">Your Recommendations</h1>
   <a
-    href="{{ recommendationLink }}"
-    style="pointer-events: none; cursor: default; z-index: 1"
+    [href]="recommendationLink"
+    style="pointer-events: none; cursor: default"
   >
-    <div class="text-center text-sm" style="min-height: 2rem">
+    <p class="text-center text-sm" style="min-height: 2rem">
       {{ recommendationText }}
-    </div>
-    <div class="text-center text-sm" style="min-height: 2rem">
+    </p>
+    <p class="text-center text-sm" style="min-height: 2rem">
       {{ recommendationSubText }}
-    </div>
+    </p>
   </a>
+  <div class="absolute top-1 right-1" (click)="closeBox()">
+    <span
+      style="min-width: 90%"
+      class="material-icons cursor-pointer text-right"
+    >
+      close
+    </span>
+  </div>
 </div>
