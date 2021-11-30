@@ -3,7 +3,6 @@ import { ICreditMixTLSummary } from "@views/dashboard/snapshots/credit-mix/inter
 // then I want to return if it passes or not.
 // I may want to pass back some data as well.
 const condition1 = (summary: ICreditMixTLSummary) => {
-  console.log('TESTTEST', !summary.amountOfClosed && !summary.totalLineAmount)
   return !summary.amountOfClosed && !summary.totalLineAmount;
 };
 const condition2 = (summary: ICreditMixTLSummary) => {
