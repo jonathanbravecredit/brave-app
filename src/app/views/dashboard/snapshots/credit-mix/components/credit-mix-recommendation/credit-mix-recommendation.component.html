@@ -1,10 +1,26 @@
-<div *ngIf="show" class="p-4 mb-8 mx-2" style="background-color: #d714db; color: white; border-radius: 8px;">
-  <div class="flex justify-between">
-    <div style="min-width: 20%"></div>
-    <div class="text-sm font-semibold">Your Recommendations</div>
-    <div (click)='closeBox()' style="min-width: 20%">
-      <span style="min-width: 90%" class="material-icons cursor-pointer text-right"> close </span>
-    </div>
+<div
+  *ngIf="show"
+  class="p-4 mb-8 mx-2 relative"
+  style="background-color: #d714db; color: white; border-radius: 8px"
+>
+  <h1 class="text-sm font-semibold mb-4 text-center">Your Recommendations</h1>
+  <a
+    [href]="recommendations?.link"
+    style="pointer-events: none; cursor: default"
+  >
+    <p class="text-center text-sm" style="min-height: 2rem">
+      {{ recommendations?.text }}
+    </p>
+    <p class="text-center text-sm" style="min-height: 2rem">
+      {{ recommendations?.subtext }}
+    </p>
+  </a>
+  <div class="absolute top-1 right-1" (click)="closeBox()">
+    <span
+      style="min-width: 90%"
+      class="material-icons cursor-pointer text-right"
+    >
+      close
+    </span>
   </div>
-  <div class="text-center text-sm" style="min-height: 7vh">Insert recommendation here</div>
 </div>

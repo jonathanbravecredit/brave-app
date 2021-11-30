@@ -8,7 +8,7 @@ import { IFilledOnlyTextButtonConfig } from "@shared/components/buttons/filled-o
 export class CreditMixCardSectionComponent implements OnInit {
   @Input() title: string | undefined;
   @Input() icon: string | undefined;
-  @Input() populated: boolean = false;
+  @Input() populated: boolean | undefined = false;
   @Input() populatedText: string | undefined;
   @Input() emptyText: string | undefined;
   @Input() learnMoreLink: string | undefined;

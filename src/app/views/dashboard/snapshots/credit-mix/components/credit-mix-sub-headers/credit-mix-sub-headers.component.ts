@@ -23,7 +23,7 @@ export class CreditMixSubHeadersComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleShowModal() {
+  toggleShowModal(): void {
     this.showModal = !this.showModal;
   }
 }
