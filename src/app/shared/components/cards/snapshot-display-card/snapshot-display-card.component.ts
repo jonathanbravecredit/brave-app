@@ -10,6 +10,7 @@ export enum SnapshotStatus {
   Danger = 'danger',
   Safe = 'safe',
   Default = 'default',
+  Normal = 'normal'
 }
 
 @Component({
@@ -25,8 +26,12 @@ export class SnapshotDisplayCardComponent implements OnInit {
   @Input() typeOfDate: TypeOfDate = 'Years';
   @Input() label: LabelOfSnapshot | string = LabelOfSnapshot.NoLabel;
   @Input() preview: boolean = false;
+  @Input() rating: string = ''
+  @Input() color: string | undefined
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.color)
+  }
 }

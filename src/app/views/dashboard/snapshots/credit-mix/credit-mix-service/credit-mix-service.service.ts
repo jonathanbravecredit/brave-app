@@ -77,6 +77,7 @@ export class CreditMixService implements OnDestroy {
     let autoLoanAmount = 0;
     let mortgageAmount = 0;
     let amountOfClosed = 0;
+    let amountOfOpenCreditCards = 0;
 
     if (tradeLineParition) {
       tradeLineParition.forEach((tradeline) => {
@@ -98,6 +99,7 @@ export class CreditMixService implements OnDestroy {
         if (accountTypeSymbol === "r") {
           if (openClosedSymbol === "o") {
             hasOpenCreditCards = true;
+            amountOfOpenCreditCards += 1;
           }
           hasCreditCards = true;
           creditCardAmount += 1;
@@ -143,6 +145,7 @@ export class CreditMixService implements OnDestroy {
       hasOpenMortgages,
       totalLineAmount,
       creditCardAmount,
+      amountOfOpenCreditCards,
       studentLoanAmount,
       autoLoanAmount,
       mortgageAmount,

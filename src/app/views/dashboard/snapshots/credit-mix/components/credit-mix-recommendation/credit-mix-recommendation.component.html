@@ -7,14 +7,14 @@
   <a
     [href]="recommendations?.link"
   >
-    <p class="text-center text-sm" style="min-height: 2rem">
+    <p class="text-center text-sm mb-4">
       {{ recommendations?.text }}
     </p>
-    <p class="text-center text-sm" style="min-height: 2rem">
+    <p class="text-center text-sm">
       {{ recommendations?.subtext }}
     </p>
   </a>
-  <div class="absolute top-1 right-1" (click)="closeBox()">
+  <div class="absolute top-2 right-2" (click)="closeBox()">
     <span
       style="min-width: 90%"
       class="material-icons cursor-pointer text-right"

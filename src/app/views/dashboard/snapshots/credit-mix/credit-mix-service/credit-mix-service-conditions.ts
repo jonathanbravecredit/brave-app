@@ -9,14 +9,14 @@ const condition2 = (summary: ICreditMixTLSummary) => {
   return summary.totalLineAmount - summary.amountOfClosed === 1;
 };
 const condition3 = (summary: ICreditMixTLSummary) => {
-  return summary.totalLineAmount - summary.amountOfClosed <= 4;
+  return summary.totalLineAmount - summary.amountOfClosed <= 4 && summary.totalLineAmount - summary.amountOfClosed >= 2;
 };
 const condition4 = (summary: ICreditMixTLSummary) => {
   return (
-    summary.creditCardAmount >= 5 &&
-    summary.autoLoanAmount &&
-    summary.studentLoanAmount &&
-    summary.mortgageAmount
+    summary.amountOfOpenCreditCards >= 5 &&
+    !summary.autoLoanAmount &&
+    !summary.studentLoanAmount &&
+    !summary.mortgageAmount
   );
 };
 const condition5 = (summary: ICreditMixTLSummary) => {
@@ -136,15 +136,15 @@ export const RecommendationValues = {
   },
   [CreditMixRecommendations.SevenOrLessNoMortgage]: {
     link: Recommendations.Link,
-    text: Recommendations.Fantastic,
-    subtext: Recommendations.MakeSure,
+    text: Recommendations.GreatJob,
+    subtext: Recommendations.HouseGoal,
     rating: Recommendations.ratingGood,
     color: Recommendations.goodColor,
   },
   [CreditMixRecommendations.SevenOrLess]: {
     link: Recommendations.Link,
-    text: Recommendations.GreatJob,
-    subtext: Recommendations.HouseGoal,
+    text: Recommendations.Fantastic,
+    subtext: Recommendations.MakeSure,
     rating: Recommendations.ratingGood,
     color: Recommendations.goodColor,
   },

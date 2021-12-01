@@ -21,7 +21,8 @@
   </div> -->
   <!-- CIRCLE VERSION -->
   <div class="flex items-center ml-3 mr-6">
-    <div class="rounded-full border-none w-4 h-4" [ngClass]="status | snapshotStatus: 'background'"></div>
+    <div *ngIf="!color" class="rounded-full border-none w-4 h-4" [ngClass]="status | snapshotStatus: 'background'"></div>
+    <div *ngIf="color" class="rounded-full border-none w-4 h-4" [ngStyle]="{'background-color': color}"></div>
   </div>
   <div class="flex flex-col mr-auto justify-center">
     <!--  center column section 2: Display of snapshot card information -->
@@ -34,8 +35,8 @@
     </div>
   </div>
   <!-- right column section 3: Display of values -->
-  <div class="flex flex-col items-center mr-6 text-center">
-    <span class="text-xl m-auto">
+  <div class="flex flex-col items-center mr-6 text-center justify-center">
+    <span *ngIf="!rating" class="text-xl m-auto">
       <p *ngIf="typeOfSnapshot === 'tag'" [ngClass]="status | snapshotStatus: 'text'" class="font-bold font-headings">
         {{ value }}
       </p>
@@ -46,5 +47,6 @@
     <span class="text-2.5 -mt-1" *ngIf="typeOfSnapshot === 'date'">
       <p class="font-sans text-dk-gray">{{ typeOfDate }}</p>
     </span>
+    <span class="text-base font-semibold" [ngStyle]="{'color': color}" *ngIf="rating.length > 0">{{rating}}</span>
   </div>
 </div>
