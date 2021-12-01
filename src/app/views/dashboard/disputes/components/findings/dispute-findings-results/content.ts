@@ -1,5 +1,5 @@
 export const FINDING_RESULTS_CONTENT = {
-  p1: `Investigation Results Provided by TransUnion© Consumer Relations`,
+  p1: `Investigation Results Provided by TransUnion® Consumer Relations`,
   p2: `We understand that recently something on your credit report did not seem right to you. We take this
   matter seriously, and we want to make sure your TransUnion credit report is accurate. It’s our
   commitment to you.`,
