@@ -153,7 +153,7 @@ export class CreditMixService implements OnDestroy {
   getRecommendations = (
     summary: ICreditMixTLSummary | undefined
   ): IRecommendationText | undefined => {
-    if (summary?.totalLineAmount) {
+    if (summary) {
       if (Logic[Recs.NoClosedAndNoOpen](summary)) {
         return Values[Recs.NoClosedAndNoOpen];
       } else if (Logic[Recs.OnlyOneOpen](summary)) {

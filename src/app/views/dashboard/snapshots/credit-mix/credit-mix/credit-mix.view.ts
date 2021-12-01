@@ -8,6 +8,7 @@ import {
   IRecommendationText,
   TCreditMixCalcObj,
 } from "../interfaces/credit-mix-calc-obj.interface";
+import { testSummary } from "../test-summary";
 
 @Component({
   selector: "brave-credit-mix",
@@ -28,8 +29,10 @@ export class CreditMixView {
         this.tradeLineParition
       );
       this.recommendations = this.creditMixService.getRecommendations(
-        this.tradeLineSummary
+        testSummary
       );
+
+      console.log(this.recommendations)
     });
   }
 
