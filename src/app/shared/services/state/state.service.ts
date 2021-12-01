@@ -140,8 +140,8 @@ export class StateService {
   async incrementActionAsync(Action: any): Promise<void> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new Action()).subscribe(
-        (res) => resolve(res),
-        (err) => reject(err),
+        (res: any) => resolve(res),
+        (err: any) => reject(err),
       );
     });
   }
@@ -203,7 +203,7 @@ export class StateService {
   async getTransunion(): Promise<IMergeReport> {
     return this.store
       .selectOnce(AgenciesSelectors.getAgencies)
-      .pipe(map((agencies) => BraveUtil.parsers.parseTransunionMergeReport(agencies?.transunion)))
+      .pipe(map((agencies: AgenciesStateModel) => BraveUtil.parsers.parseTransunionMergeReport(agencies?.transunion)))
       .toPromise();
   }
 
