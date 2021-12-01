@@ -73,8 +73,8 @@ export class KycService {
    * Then updates the state
    * @param {number} step the progress step ID
    */
-  completeStep(step: number): void {
-    this.statesvc.updateLastComplete(step);
+  async completeStep(step: number): Promise<void> {
+    await this.statesvc.updateLastCompleteAsync(step);
   }
 
   /**
@@ -82,8 +82,8 @@ export class KycService {
    * Then updates the state
    * @param {number} step the progress step ID
    */
-  incompleteStep(step: number): void {
-    this.statesvc.updateLastComplete(step);
+  async incompleteStep(step: number): Promise<void> {
+    await this.statesvc.updateLastCompleteAsync(step);
   }
 
   /**
