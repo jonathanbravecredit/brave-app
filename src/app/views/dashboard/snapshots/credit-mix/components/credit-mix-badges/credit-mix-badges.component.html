@@ -1,0 +1,34 @@
+<div class="flex justify-around mb-6">
+  <brave-percentage-badge
+    size="small"
+    text="Poor"
+    label="0-1"
+    color="#F56700"
+    class="w-full mx-0.5 sm:mx-1"
+    [selected]="selectedBadge === 'Poor'"
+  ></brave-percentage-badge>
+  <brave-percentage-badge
+    size="small"
+    text="Fair"
+    label="2-4"
+    color="#F59300"
+    class="w-full mx-0.5 sm:mx-1"
+    [selected]="selectedBadge === 'Fair'"
+  ></brave-percentage-badge>
+  <brave-percentage-badge
+    size="small"
+    text="Good"
+    label="5-7"
+    color="#BBD904"
+    class="w-full mx-0.5 sm:mx-1"
+    [selected]="selectedBadge === 'Good'"
+  ></brave-percentage-badge>
+  <brave-percentage-badge
+    size="small"
+    text="Excellent"
+    label="8+"
+    color="#4BD269"
+    class="w-full mx-0.5 sm:mx-1"
+    [selected]="selectedBadge === 'Excellent'"
+  ></brave-percentage-badge>
+</div>

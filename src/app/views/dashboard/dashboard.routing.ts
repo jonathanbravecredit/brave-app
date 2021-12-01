@@ -17,6 +17,8 @@ import { ActiveGuard } from "@shared/guards/active.guard";
 import { DashboardResolver } from "@shared/resolvers/dashboard/dashboard.resolver";
 import { CreditUtilizationView } from "@views/dashboard/snapshots/credit-utilization/credit-utilization/credit-utilization.view";
 import { CreditUtilizationResolver } from "@shared/resolvers/credit-utilization/credit-utilization.resolver";
+import { CreditMixView } from "./snapshots/credit-mix/credit-mix/credit-mix.view";
+import { CreditMixResolver } from "@shared/resolvers/credit-mix/credit-mix.resolver";
 
 const DashboardRoutes: Routes = [
   {
@@ -75,6 +77,12 @@ const DashboardRoutes: Routes = [
         path: "report/snapshot/creditutilization",
         component: CreditUtilizationView,
         resolve: { creditReports: CreditUtilizationResolver },
+        canActivate: [ActiveGuard, AuthGuard],
+      },
+      {
+        path: "report/snapshot/creditmix",
+        component: CreditMixView,
+        resolve: { tradeLineParition: CreditMixResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

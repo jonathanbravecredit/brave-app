@@ -91,4 +91,10 @@ export class DashboardEnrolledComponent implements OnInit {
       relativeTo: this.route,
     });
   }
+
+  onCreditMixClicked() {
+    this.router.navigate(['../report/snapshot/creditmix'], {
+      relativeTo: this.route,
+    });
+  }
 }
