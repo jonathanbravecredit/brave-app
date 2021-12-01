@@ -173,6 +173,8 @@ export class CreditMixService implements OnDestroy {
         return Values[Recs.SevenOrLess];
       } else if (Logic[Recs.EightOrMoreAtLeastOneOfAll](summary)) {
         return Values[Recs.EightOrMoreAtLeastOneOfAll];
+      }else if (Logic[Recs.EightOrMore](summary)) {
+        return Values[Recs.EightOrMore];
       }
     }
     return;

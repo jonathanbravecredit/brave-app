@@ -52,7 +52,8 @@ export class DashboardEnrolledComponent implements OnInit {
             : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         );
       }
-      this.recommendation = this.creditMixService.getRecommendations(testSummary)
+      // this.recommendation = this.creditMixService.getRecommendations(testSummary) // For Testing
+      this.recommendation = this.creditMixService.getRecommendations(this.tradelineSummary)
       this.status = this.getStatus(this.recommendation?.rating)
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;

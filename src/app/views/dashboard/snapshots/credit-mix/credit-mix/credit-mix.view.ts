@@ -28,12 +28,14 @@ export class CreditMixView {
       this.tradeLineSummary = this.creditMixService.getTradelineSummary(
         this.tradeLineParition
       );
+      // this.recommendations = this.creditMixService.getRecommendations( // For Testing
+      //   testSummary
+      // );
       this.recommendations = this.creditMixService.getRecommendations(
-        testSummary
+        this.tradeLineSummary
       );
 
-      console.log(this.recommendations)
+      console.log(this.recommendations);
     });
   }
-
 }
