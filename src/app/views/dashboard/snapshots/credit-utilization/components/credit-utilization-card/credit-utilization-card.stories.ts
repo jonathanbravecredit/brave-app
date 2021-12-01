@@ -257,8 +257,8 @@ const config =
 const tradeLineParseMock: ICreditUtilization = {
   config,
   creditorName: "CITI",
-  creditLimit: '0',
-  currentBalance: 5000,
+  creditLimit: 100000,
+  currentBalance: 1,
 };
 
 export const CreditUtilizationCard = Template.bind({});
