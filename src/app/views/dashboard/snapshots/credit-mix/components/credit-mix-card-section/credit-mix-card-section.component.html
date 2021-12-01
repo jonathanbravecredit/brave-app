@@ -1,0 +1,36 @@
+<div class="my-6">
+  <div class="flex items-center mb-1">
+    <span class="material-icons-outlined mr-3 text-4xl" style="color: #222c9d">
+      {{ icon }}
+    </span>
+    <span class="brave-body1-semibold">{{ title }}</span>
+  </div>
+  <div *ngIf="populated" class="text-sm mb-4">{{ populatedText }}</div>
+
+  <div
+    *ngIf="!populated"
+    class="text-sm mb-3 text-center"
+    style="color: #828282"
+  >
+    We don't see any on your TransUnion report!
+  </div>
+  <div *ngIf="!populated" class="text-sm mb-6 text-center">{{ emptyText }}</div>
+  <div class="flex justify-center">
+    <button
+      *ngIf="!populated"
+      class="font-black"
+      style="
+        background-color: #d9f1f5;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        border-radius: 6px;
+        color: #222c9d;
+      "
+      (click)="learnMoreButtonClick()"
+    >
+      Learn More
+    </button>
+  </div>
+</div>
