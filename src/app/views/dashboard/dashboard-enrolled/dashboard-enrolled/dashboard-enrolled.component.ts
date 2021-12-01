@@ -6,6 +6,8 @@ import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -14,9 +16,11 @@ import { AnalyticClickEvents } from '@shared/services/analytics/analytics/consta
 export class DashboardEnrolledComponent implements OnInit {
   userName: string | undefined;
   welcomeMsg: string | undefined;
-  lastUpdated: number | string | Date | undefined;
+  lastUpdated: string | undefined;
   report: IMergeReport | undefined;
   snapshots: DashboardStateModel | undefined;
+  scores!: ICreditScoreTracking | null;
+  trends!: IGetTrendingData | null;
 
   constructor(
     private store: Store,
@@ -28,6 +32,8 @@ export class DashboardEnrolledComponent implements OnInit {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
       this.snapshots = resp.dashboard.snapshots;
+      this.scores = resp.dashboard.scores || null;
+      this.trends = resp.dashboard.trends;
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
@@ -46,7 +52,9 @@ export class DashboardEnrolledComponent implements OnInit {
       negativeStatus: DashboardStatus.Stale,
     });
     this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotNegativeItemsModule);
-    this.router.navigate(['../report/snapshot/negative'], { relativeTo: this.route });
+    this.router.navigate(['../report/snapshot/negative'], {
+      relativeTo: this.route,
+    });
   }
 
   onForbearanceItemsClicked() {
@@ -55,7 +63,9 @@ export class DashboardEnrolledComponent implements OnInit {
       forbearanceStatus: DashboardStatus.Stale,
     });
     this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotForbearanceModule);
-    this.router.navigate(['../report/snapshot/forbearance'], { relativeTo: this.route });
+    this.router.navigate(['../report/snapshot/forbearance'], {
+      relativeTo: this.route,
+    });
   }
 
   onDatabreachItemsClicked() {
@@ -63,7 +73,9 @@ export class DashboardEnrolledComponent implements OnInit {
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
     this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotFraudModule);
-    this.router.navigate(['../report/snapshot/databreach'], { relativeTo: this.route });
+    this.router.navigate(['../report/snapshot/databreach'], {
+      relativeTo: this.route,
+    });
   }
 
   onFullReportClicked() {
@@ -75,6 +87,14 @@ export class DashboardEnrolledComponent implements OnInit {
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate(['../report/snapshot/creditutilization'], { relativeTo: this.route });
+    this.router.navigate(['../report/snapshot/creditutilization'], {
+      relativeTo: this.route,
+    });
+  }
+
+  onCreditMixClicked() {
+    this.router.navigate(['../report/snapshot/creditmix'], {
+      relativeTo: this.route,
+    });
   }
 }

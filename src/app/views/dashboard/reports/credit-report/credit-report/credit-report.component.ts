@@ -14,6 +14,8 @@ import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credi
 import { Observable } from 'rxjs';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 
 @Component({
   selector: 'brave-credit-report',
@@ -22,6 +24,7 @@ import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/con
 export class CreditReportComponent implements OnInit, AfterViewInit {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
+  scores: ICreditScoreTracking | undefined;
 
   constructor(
     private creditReportService: CreditreportService,
@@ -29,6 +32,7 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private analytics: AnalyticsService,
+    private transunion: TransunionService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
@@ -36,6 +40,9 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReport);
+    this.transunion.getCreditScores().then((scores) => {
+      this.scores = scores.data;
+    });
   }
 
   ngAfterViewInit(): void {}

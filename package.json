@@ -24,7 +24,8 @@
     "storybook": "npm run docs:json && start-storybook -p 6006 --no-manager-cache",
     "build-storybook": "npm run docs:json && build-storybook",
     "build-storybook-big": "node --max_old_space_size=2000 ./node_modules/@storybook/angular/bin/index.js --quiet -p 6006 -c .storybook",
-    "chromatic": "npx chromatic --project-token 897995d581ea -d storybook-static/"
+    "chromatic": "npx chromatic --project-token 897995d581ea -d storybook-static/",
+    "bundle-report": "webpack-bundle-analyzer dist/brave-app/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -49,6 +50,7 @@
     "aws-amplify": "^4.2.4",
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.935.0",
+    "aws4fetch": "^1.0.13",
     "chart.js": "^2.9.4",
     "hammerjs": "^2.0.8",
     "he": "^1.2.0",
@@ -71,6 +73,7 @@
     "@storybook/addon-links": "^6.3.0",
     "@storybook/angular": "^6.3.0",
     "@types/chart.js": "^2.9.34",
+    "@types/crypto-js": "^4.0.2",
     "@types/google.maps": "^3.45.6",
     "@types/googlemaps": "^3.43.3",
     "@types/hammerjs": "^2.0.39",
@@ -97,7 +100,7 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.1.5",
-    "webpack-bundle-analyzer": "^4.4.2"
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "browser": {
     "crypto": false

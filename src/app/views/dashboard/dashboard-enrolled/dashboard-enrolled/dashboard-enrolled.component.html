@@ -3,6 +3,8 @@
     <brave-dashboard-enrolled-pure
       [report]="report"
       [cards]="snapshots"
+      [scores]="scores"
+      [trends]="trends"
       [welcomeMsg]="welcomeMsg"
       [lastUpdated]="lastUpdated"
       (negativeItemsClicked)="onNegativeItemsClicked()"
@@ -11,6 +13,7 @@
       (fullReportClicked)="onFullReportClicked()"
       (disputesClicked)="onDisputesClicked()"
       (creditUtilizationClicked)="onCreditUtilizationClicked()"
+      (creditMixClicked)="onCreditMixClicked()"
     ></brave-dashboard-enrolled-pure>
   </ng-container>
 </div>

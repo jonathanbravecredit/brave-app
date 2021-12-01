@@ -1,11 +1,7 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
-<div class="my-4 flex justify-center">
-  <a [routerLink]="['/dashboard/report']">
-    <brave-credit-report-graphic-no-graph
-      [currentValue]="report | parseRiskScore"
-    ></brave-credit-report-graphic-no-graph>
-  </a>
+<div *ngIf="trends && report && scores" class="my-4 flex justify-center">
+  <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
@@ -47,21 +43,18 @@
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
       tendency="no-tendency"
-      label="preview"
       status="danger"
-      title="Account Disputes"
-      [preview]="false"
-      (click)="disputesClicked.emit()"
+      title="Credit Utilization"
+      (click)="creditUtilizationClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
-      tendency="no-tendency"
-      label="preview"
-      status="danger"
-      title="Credit Utilization"
-      [preview]="false"
-      (click)="creditUtilizationClicked.emit()"
+    tendency="no-tendency"
+    label="new"
+    status="danger"
+    title="Credit Mix"
+    (click)="creditMixClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
 </div>

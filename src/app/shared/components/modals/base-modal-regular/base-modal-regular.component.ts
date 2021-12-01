@@ -24,10 +24,11 @@ export class BaseModalRegularComponent implements OnInit {
   @Output() actionOne: EventEmitter<any> = new EventEmitter();
   @Output() actionTwo: EventEmitter<any> = new EventEmitter();
 
-  public showModal = false;
+  public showModal = true;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   toggleModal() {
     this.showModal = !this.showModal;

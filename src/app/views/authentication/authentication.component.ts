@@ -1,14 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@shared/services/auth/auth.service';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-authentication',
   templateUrl: './authentication.component.html',
 })
-export class AuthenticationComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+export class AuthenticationComponent implements OnDestroy {
+  routeSub$: Subscription | undefined;
+  constructor(private route: ActivatedRoute, private referrals: ReferralsService) {
+    //referral code
+    this.routeSub$ = this.route.queryParams.subscribe((params) => {
+      const { referralCode } = params;
+      if (!referralCode) return;
+      this.referrals.referredByCode$.next(referralCode);
+    });
+  }
 
-  async ngOnInit(): Promise<void> {
-    // await this.auth.reloadCredentials();
+  ngOnDestroy(): void {
+    if (this.routeSub$) this.routeSub$.unsubscribe();
   }
 }
