@@ -1,10 +1,10 @@
 <button
-  [disabled]="disabled || (spinning && clicked)"
+  [disabled]="((interstitial.fetching$ | async) && clicked) || disabled"
   spinnerButton
   class="px-6 py-3 mr-1 mb-1 text-sm font-bold rounded outline-none shadow hover:shadow-lg focus:outline-none ease-linear opacity-100"
   [ngClass]="dynamicClass"
   type="button"
-  (click)="clicked = !clicked"
+  (click)="clicked = true; onClick.emit()"
 >
   <div
     #content
