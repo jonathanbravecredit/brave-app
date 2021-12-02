@@ -101,6 +101,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.kba?.kba?.scroll(scroll, 0, max);
     } else {
       this.kba?.kba?.submitForm();
+      this.interstitial.fetching$.next(true);
     }
   }
 
