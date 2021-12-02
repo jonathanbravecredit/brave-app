@@ -77,6 +77,7 @@ export class CreditMixService implements OnDestroy {
     let autoLoanAmount = 0;
     let mortgageAmount = 0;
     let amountOfClosed = 0;
+    let amountOfOpenCreditCards = 0;
 
     if (tradeLineParition) {
       tradeLineParition.forEach((tradeline) => {
@@ -98,6 +99,7 @@ export class CreditMixService implements OnDestroy {
         if (accountTypeSymbol === "r") {
           if (openClosedSymbol === "o") {
             hasOpenCreditCards = true;
+            amountOfOpenCreditCards += 1;
           }
           hasCreditCards = true;
           creditCardAmount += 1;
@@ -143,6 +145,7 @@ export class CreditMixService implements OnDestroy {
       hasOpenMortgages,
       totalLineAmount,
       creditCardAmount,
+      amountOfOpenCreditCards,
       studentLoanAmount,
       autoLoanAmount,
       mortgageAmount,
@@ -153,7 +156,7 @@ export class CreditMixService implements OnDestroy {
   getRecommendations = (
     summary: ICreditMixTLSummary | undefined
   ): IRecommendationText | undefined => {
-    if (summary?.totalLineAmount) {
+    if (summary) {
       if (Logic[Recs.NoClosedAndNoOpen](summary)) {
         return Values[Recs.NoClosedAndNoOpen];
       } else if (Logic[Recs.OnlyOneOpen](summary)) {
@@ -170,6 +173,8 @@ export class CreditMixService implements OnDestroy {
         return Values[Recs.SevenOrLess];
       } else if (Logic[Recs.EightOrMoreAtLeastOneOfAll](summary)) {
         return Values[Recs.EightOrMoreAtLeastOneOfAll];
+      }else if (Logic[Recs.EightOrMore](summary)) {
+        return Values[Recs.EightOrMore];
       }
     }
     return;
