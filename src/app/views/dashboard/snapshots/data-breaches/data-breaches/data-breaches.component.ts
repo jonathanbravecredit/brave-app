@@ -27,7 +27,6 @@ export class DataBreachesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotDatabreach);
   }
 
   onCardClick(idx: number): void {

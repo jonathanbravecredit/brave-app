@@ -10,9 +10,12 @@ export enum AnalyticPageViewEvents {
   OnboardingCode = 'onboarding_code',
   OnboardingKba = 'onboarding_kba',
   DashboardReport = 'dashboard_report',
+  DashboardInit = 'dashboard_init',
   DashboardReportSnapshotNegative = 'dashboard_report_snapshot_negative',
   DashboardReportSnapshotForbearance = 'dashboard_report_snapshot_forbearance',
   DashboardReportSnapshotDatabreach = 'dashboard_report_snapshot_databreach',
+  DashboardReportSnapshotCreditUtilization = 'dashboard_report_snapshot_creditUtilization',
+  DashboardReportSnapshotCreditMix = 'dashboard_report_snapshot_creditMix',
 }
 
 export enum AnalyticClickEvents {
