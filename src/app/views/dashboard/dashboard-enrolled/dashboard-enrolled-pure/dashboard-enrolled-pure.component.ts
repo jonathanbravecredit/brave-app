@@ -19,7 +19,6 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];
   @Input() data: {}[] | undefined;
-  @Input() status: string | undefined
   @Input() rating: string = ''
   @Input() color: string | undefined
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();

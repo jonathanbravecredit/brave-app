@@ -13,7 +13,6 @@ import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface
 import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
 import { CreditMixService } from "@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service";
 import { ICreditMixTLSummary, IRecommendationText } from "@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface";
-import { testSummary } from "@views/dashboard/snapshots/credit-mix/test-summary";
 
 @Component({
   selector: "brave-dashboard-enrolled",
@@ -29,7 +28,6 @@ export class DashboardEnrolledComponent implements OnInit {
   trends!: IGetTrendingData | null;
   tradelineSummary: ICreditMixTLSummary | undefined;
   recommendation: IRecommendationText | undefined;
-  status: string | undefined
 
   constructor(
     private store: Store,
@@ -52,9 +50,7 @@ export class DashboardEnrolledComponent implements OnInit {
             : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         );
       }
-      // this.recommendation = this.creditMixService.getRecommendations(testSummary) // For Testing
       this.recommendation = this.creditMixService.getRecommendations(this.tradelineSummary)
-      this.status = this.getStatus(this.recommendation?.rating)
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion
@@ -122,22 +118,5 @@ export class DashboardEnrolledComponent implements OnInit {
     this.router.navigate(["../report/snapshot/creditmix"], {
       relativeTo: this.route,
     });
-  }
-
-  getStatus(rating: string | undefined): string {
-    // Critical = 'critical',
-    // Danger = 'danger',
-    // Safe = 'safe',
-    // Default = 'default',
-    switch(rating) {
-      case "Excellent":
-        return 'safe'
-      case "Good":
-        return 'normal'
-      case 'Fair':
-        return 'danger'
-      default:
-        return 'critical'
-    }
   }
 }
