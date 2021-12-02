@@ -6,21 +6,21 @@ const condition1 = (summary: ICreditMixTLSummary) => {
   return !summary.amountOfClosed && !summary.totalLineAmount;
 };
 const condition2 = (summary: ICreditMixTLSummary) => {
-  return summary.totalLineAmount - summary.amountOfClosed === 1;
+  return summary.totalLineAmount === 1;
 };
 const condition3 = (summary: ICreditMixTLSummary) => {
-  return summary.totalLineAmount - summary.amountOfClosed <= 4;
+  return summary.totalLineAmount - summary.amountOfClosed <= 4 && summary.totalLineAmount - summary.amountOfClosed >= 2;
 };
 const condition4 = (summary: ICreditMixTLSummary) => {
   return (
-    summary.creditCardAmount >= 5 &&
-    summary.autoLoanAmount &&
-    summary.studentLoanAmount &&
-    summary.mortgageAmount
+    summary.amountOfOpenCreditCards >= 5 &&
+    !summary.autoLoanAmount &&
+    !summary.studentLoanAmount &&
+    !summary.mortgageAmount
   );
 };
 const condition5 = (summary: ICreditMixTLSummary) => {
-  return summary.totalLineAmount === summary.amountOfClosed;
+  return summary.totalLineAmount === summary.amountOfClosed && summary.amountOfClosed > 2;
 };
 const condition6 = (summary: ICreditMixTLSummary) => {
   return (
@@ -45,6 +45,11 @@ const condition8 = (summary: ICreditMixTLSummary) => {
     summary.mortgageAmount
   );
 };
+const condition9 = (summary: ICreditMixTLSummary) => {
+  return (
+    summary.totalLineAmount - summary.amountOfClosed >= 8
+  );
+};
 
 export enum Recommendations {
   Link = "https://learn.self.inc/lpg/click-through/credit-builder-education-credit-card/?affiliate_partner=Bulldog%20Media%20Group&irgwc=1&irclickid=yB12CQ130xyIRHnyqjWYSydRUkG2Ph1p1VLCXg0&utm_source=impact_radius&utm_medium=affiliate&utm_campaign=Bulldog%20Media%20Group&utm_content=Self%20-%20Credit%20Card%20%2B%20Credit%20Builder%20Combo%20Page&media_partner1=&media_partner2=&media_parter3=&ad_name=Self%20-%20Credit%20Card%20%2B%20Credit%20Builder%20Combo%20Page&ad_type=TEXT_LINK&media_partner_id=70161&campaign_id=10159&media_partner_type=mediapartner&click_time_unix=1638237272355&subid1=N4P567_19805&subid2=&subid3=&sharedid=N4P567_19805&ircid=10159",
@@ -65,6 +70,7 @@ export enum Recommendations {
   MakeSure = "Make sure to keep making on-time payments and keeping your utilization low on any credit cards!",
   HouseGoal = "If your goal is to buy a house, click here for a way to continue to building a stronger credit base and score while helping you save for a down payment!",
   ToHelp = "To help your score, remember that keeping credit cards you don't use open, even if you don't use it, increases your credit age and mix!",
+  MoreVaried = "Having more varied types of credit could help you show lenders you can manage a variety of credit types. Click to learn about an easy way to do this while saving for your goals!",
 
   ratingPoor = "Poor",
   poorColor = "#F56700",
@@ -85,6 +91,7 @@ export enum CreditMixRecommendations {
   SevenOrLessNoMortgage = "seven-or-less-no-mortgage",
   SevenOrLess = "seven-or-less",
   EightOrMoreAtLeastOneOfAll = "eight-or-more-at-least-one-of-all",
+  EightOrMore = "eight-or-more",
 }
 
 export const RecommendationConditionalLogic = {
@@ -96,6 +103,7 @@ export const RecommendationConditionalLogic = {
   [CreditMixRecommendations.SevenOrLessNoMortgage]: condition6,
   [CreditMixRecommendations.SevenOrLess]: condition7,
   [CreditMixRecommendations.EightOrMoreAtLeastOneOfAll]: condition8,
+  [CreditMixRecommendations.EightOrMore]: condition9,
 };
 
 export const RecommendationValues = {
@@ -136,15 +144,15 @@ export const RecommendationValues = {
   },
   [CreditMixRecommendations.SevenOrLessNoMortgage]: {
     link: Recommendations.Link,
-    text: Recommendations.Fantastic,
-    subtext: Recommendations.MakeSure,
+    text: Recommendations.GreatJob,
+    subtext: Recommendations.HouseGoal,
     rating: Recommendations.ratingGood,
     color: Recommendations.goodColor,
   },
   [CreditMixRecommendations.SevenOrLess]: {
     link: Recommendations.Link,
-    text: Recommendations.GreatJob,
-    subtext: Recommendations.HouseGoal,
+    text: Recommendations.Fantastic,
+    subtext: Recommendations.MakeSure,
     rating: Recommendations.ratingGood,
     color: Recommendations.goodColor,
   },
@@ -152,6 +160,13 @@ export const RecommendationValues = {
     link: Recommendations.Link,
     text: Recommendations.ExceptionalJob,
     subtext: Recommendations.ToHelp,
+    rating: Recommendations.ratingExcellent,
+    color: Recommendations.excellentColor,
+  },
+  [CreditMixRecommendations.EightOrMore]: {
+    link: Recommendations.Link,
+    text: Recommendations.ExceptionalJob,
+    subtext: Recommendations.MoreVaried,
     rating: Recommendations.ratingExcellent,
     color: Recommendations.excellentColor,
   },
