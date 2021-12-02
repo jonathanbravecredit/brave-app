@@ -5,36 +5,47 @@
 </div>
 
 <!-- tradeline accounts -->
-<div *ngFor="let tradeline of tradelines">
-  <div class="border-t border-blueGray-300 py-2"></div>
-  <brave-dispute-header
-    [showConfirmButton]="true"
-    [tradelinedispute]="tradeline | tradelineToDetails"
-    (confirmed)="disputeTradelineClick.emit(tradeline)"
+<ng-container
+  *ngIf="tradelines?.length || publicItems?.length || (personalItems | filterPersonal: tu.queries.dispute.isDisputeable)?.length; else noneFound"
+>
+  <div *ngFor="let tradeline of tradelines">
+    <div class="border-t border-blueGray-300 py-2"></div>
+    <brave-dispute-header
+      [showConfirmButton]="true"
+      [tradelinedispute]="tradeline | tradelineToDetails"
+      (confirmed)="disputeTradelineClick.emit(tradeline)"
+    >
+    </brave-dispute-header>
+  </div>
+
+  <!-- personal items -->
+  <div
+    *ngIf="(personalItems | filterPersonal: tu.queries.dispute.isDisputeable)?.length"
+    class="flex items-center mb-3"
   >
-  </brave-dispute-header>
-</div>
+    <span class="material-icons-outlined">perm_identity</span>
+    <span>Personal Information</span>
+  </div>
 
-<!-- personal items -->
-<div *ngIf="personalItems?.length" class="flex items-center mb-3">
-  <span class="material-icons-outlined">perm_identity</span>
-  <span>Personal Information</span>
-</div>
+  <div *ngFor="let item of personalItems | filterPersonal: tu.queries.dispute.isDisputeable; index as idx">
+    <brave-dispute-personal-card [personalItem]="item" (disputeClick)="disputePersonalClick.emit(item)">
+    </brave-dispute-personal-card>
+  </div>
 
-<div *ngFor="let item of personalItems | filterPersonal: tu.queries.dispute.isDisputeable; index as idx">
-  <brave-dispute-personal-card [personalItem]="item" (disputeClick)="disputePersonalClick.emit(item)">
-  </brave-dispute-personal-card>
-</div>
+  <!-- public items -->
+  <div *ngIf="publicItems?.length" class="flex items-center mb-8">
+    <span class="material-icons-outlined"> description </span>
+    <span>Public Records</span>
+  </div>
 
-<!-- public items -->
-<div *ngIf="publicItems?.length" class="flex items-center mb-8">
-  <span class="material-icons-outlined"> description </span>
-  <span>Public Records</span>
-</div>
+  <div *ngFor="let publicItem of publicItems">
+    <brave-dispute-public-card
+      [publicItem]="publicItem"
+      (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
+    ></brave-dispute-public-card>
+  </div>
+</ng-container>
 
-<div *ngFor="let publicItem of publicItems">
-  <brave-dispute-public-card
-    [publicItem]="publicItem"
-    (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
-  ></brave-dispute-public-card>
-</div>
+<ng-template #noneFound>
+  <p class="text-center text-sm text-dk-gray my-10">No disputable items found.</p>
+</ng-template>
