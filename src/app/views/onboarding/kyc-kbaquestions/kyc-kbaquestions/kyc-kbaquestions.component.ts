@@ -100,6 +100,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.interstitial.fetching$.next(false);
       this.kba?.kba?.scroll(scroll, 0, max);
     } else {
+      this.interstitial.fetching$.next(true);
       this.kba?.kba?.submitForm();
     }
   }
@@ -149,7 +150,6 @@ export class KycKbaquestionsComponent implements OnInit {
               resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
             ? await this.handleSuccess()
             : await this.handleIncorrect(resp);
-          this.interstitial.fetching$.next(false);
         } catch (err) {
           console.log('error:kbaHandleSubmit ===> ', err);
           this.handleAPIError();
