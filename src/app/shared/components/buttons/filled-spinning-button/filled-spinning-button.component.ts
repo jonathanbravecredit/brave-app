@@ -25,7 +25,7 @@ export class FilledSpinningButtonComponent implements OnInit, OnChanges, OnDestr
   spinning: boolean = false;
   spinning$: Subscription | undefined;
 
-  constructor(readonly buttonService: SpinningButtonService, private renderer: Renderer2) {
+  constructor(readonly buttonService: SpinningButtonService) {
     this.spinning$ = this.buttonService.fetching$.subscribe((fetching) => {
       this.spinning = fetching;
     });
