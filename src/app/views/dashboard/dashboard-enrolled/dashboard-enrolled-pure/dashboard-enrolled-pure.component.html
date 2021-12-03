@@ -48,15 +48,16 @@
       (click)="creditUtilizationClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
-  <!-- <div class="mt-6 hover:cursor-pointer">
+  <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
-    tendency="no-tendency"
-    label="new"
-    status="danger"
-    title="Credit Mix"
-    (click)="creditMixClicked.emit()"
+      tendency="no-tendency"
+      label="new"
+      [rating]="rating"
+      [color]="color"
+      title="Credit Mix"
+      (click)="creditMixClicked.emit()"
     ></brave-snapshot-display-card>
-  </div> -->
+  </div>
 </div>
 
 <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{

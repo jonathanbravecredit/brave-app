@@ -4,6 +4,7 @@ import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.i
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
+import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled-pure',
@@ -18,6 +19,8 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];
   @Input() data: {}[] | undefined;
+  @Input() rating: string = ''
+  @Input() color: string | undefined
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
@@ -48,4 +51,5 @@ export class DashboardEnrolledPureComponent implements OnInit {
       return _score;
     }
   }
+
 }
