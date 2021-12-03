@@ -71,6 +71,9 @@ import { CreditMixRecommendationComponent } from "./snapshots/credit-mix/compone
 import { CreditMixFilterPipePipe } from './snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe';
 import { CreditMixCardComponent } from './snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component';
 import { DashboardCarouselComponent } from './dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component';
+import { ReferralView } from './snapshots/referral/referral-view/referral.view';
+import { ReferralPureView } from './snapshots/referral/referral-view-pure/referral-pure.view';
+import { ReferralDashboardView } from './snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
 
 
 const modules = [
@@ -142,7 +145,7 @@ const components = [
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, ReferralView, ReferralPureView, ReferralDashboardView],
   imports: [...modules],
   exports: [...components],
 })
