@@ -5,7 +5,6 @@ import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
@@ -14,10 +13,10 @@ import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/an
 })
 export class DataBreachesComponent implements OnInit {
   breaches: IBreachCard[] | undefined;
+  AnalyticClickEvents = AnalyticClickEvents
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private analytics: AnalyticsService,
     private store: Store,
     private api: APIService,
   ) {
@@ -30,7 +29,6 @@ export class DataBreachesComponent implements OnInit {
   }
 
   onCardClick(idx: number): void {
-    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotBreachCard);
     this.store
       .dispatch(new DashboardActions.MarkDatabreachAsReviewed(idx))
       .subscribe((state: { appData: AppDataStateModel }) => {

@@ -51,7 +51,6 @@ export class DashboardEnrolledComponent implements OnInit {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotNegativeItemsModule);
     this.router.navigate(['../report/snapshot/negative'], {
       relativeTo: this.route,
     });
@@ -62,7 +61,6 @@ export class DashboardEnrolledComponent implements OnInit {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
-    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotForbearanceModule);
     this.router.navigate(['../report/snapshot/forbearance'], {
       relativeTo: this.route,
     });
@@ -72,7 +70,6 @@ export class DashboardEnrolledComponent implements OnInit {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
-    this.analytics.fireClickEvent(AnalyticClickEvents.SnapshotFraudModule);
     this.router.navigate(['../report/snapshot/databreach'], {
       relativeTo: this.route,
     });

@@ -68,9 +68,10 @@ import { CreditMixIconsComponent } from "./snapshots/credit-mix/components/credi
 import { CreditMixSubHeadersComponent } from "./snapshots/credit-mix/components/credit-mix-sub-headers/credit-mix-sub-headers.component";
 import { CreditMixCardSectionComponent } from "./snapshots/credit-mix/components/credit-mix-card-section/credit-mix-card-section.component";
 import { CreditMixRecommendationComponent } from "./snapshots/credit-mix/components/credit-mix-recommendation/credit-mix-recommendation.component";
-import { CreditMixFilterPipePipe } from './snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe';
-import { CreditMixCardComponent } from './snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component';
-import { DashboardCarouselComponent } from './dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component';
+import { CreditMixFilterPipePipe } from "./snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe";
+import { CreditMixCardComponent } from "./snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component";
+import { DashboardCarouselComponent } from "./dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component";
+import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
 
 
 const modules = [
@@ -81,6 +82,7 @@ const modules = [
   DisputesModule,
   CreditReportModule,
   DashboardRoutingModule,
+  SharedDirectivesModule
 ];
 const components = [
   DashboardComponent,
@@ -136,7 +138,7 @@ const components = [
   CreditMixRecommendationComponent,
   DashboardCarouselComponent,
   CreditMixFilterPipePipe,
-  CreditMixCardComponent
+  CreditMixCardComponent,
 ];
 
 const pipes = [AccountStatusPipe];

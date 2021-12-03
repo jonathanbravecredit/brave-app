@@ -9,6 +9,7 @@ import {
 import { FacebookService } from "@shared/services/analytics/facebook/facebook.service";
 import { GoogleService } from "@shared/services/analytics/google/google.service";
 import { MixpanelService } from "@shared/services/analytics/mixpanel/mixpanel.service";
+import * as moment from "moment";
 import { filter, pairwise } from "rxjs/operators";
 
 @Injectable({
@@ -42,7 +43,6 @@ export class AnalyticsService {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(event.url);
         switch (event.url) {
           case "/dashboard/init":
             this.firePageViewEvent(AnalyticPageViewEvents.DashboardInit);
@@ -81,6 +81,9 @@ export class AnalyticsService {
           case "/auth/thankyou":
             this.firePageViewEvent(AnalyticPageViewEvents.AuthThankyou);
             break;
+          case "/dashboard/disputes/findings":
+            this.firePageViewEvent(AnalyticPageViewEvents.DashboardDisputeFinding);
+            break;
         }
       }
     });
@@ -110,7 +113,6 @@ export class AnalyticsService {
   }
 
   firePageViewEvent(event: AnalyticPageViewEvents) {
-    console.log("EVENTEVENTEVENT =>>>", event, this.disable);
     if (this.disable) {
       return; // don't fire on dev
     }
@@ -145,9 +147,9 @@ export class AnalyticsService {
       return;
     }
     const now = new Date();
-    const month = `0${now.getMonth() + 1}`.slice(-2);
+    const week = moment().format("ww");
     const year = now.getFullYear();
-    const cohort = `${year}${month}`;
+    const cohort = `${year}${week}`;
     this.mixpanel.addToCohort(cohort);
   }
 
