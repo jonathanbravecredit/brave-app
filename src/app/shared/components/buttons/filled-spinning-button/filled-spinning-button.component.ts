@@ -18,8 +18,8 @@ export class FilledSpinningButtonComponent implements OnInit, OnChanges, OnDestr
   spinning: boolean = false;
   spinning$: Subscription | undefined;
 
-  constructor(readonly buttonService: InterstitialService) {
-    this.spinning$ = this.buttonService.fetching$.subscribe((fetching) => {
+  constructor(readonly interstitial: InterstitialService) {
+    this.spinning$ = this.interstitial.fetching$.subscribe((fetching) => {
       this.spinning = fetching;
     });
   }
