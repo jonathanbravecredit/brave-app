@@ -1,10 +1,17 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { SpinningButtonService } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-filled-spinning-button',
   templateUrl: './filled-spinning-button.component.html',
+  providers: [
+    {
+      provide: SpinningButtonService,
+      useClass: InterstitialService,
+    },
+  ],
 })
 export class FilledSpinningButtonComponent implements OnInit, OnChanges, OnDestroy {
   @Input() disabled: boolean = false;
@@ -18,8 +25,8 @@ export class FilledSpinningButtonComponent implements OnInit, OnChanges, OnDestr
   spinning: boolean = false;
   spinning$: Subscription | undefined;
 
-  constructor(readonly interstitial: InterstitialService, private renderer: Renderer2) {
-    this.spinning$ = this.interstitial.fetching$.subscribe((fetching) => {
+  constructor(readonly buttonService: SpinningButtonService, private renderer: Renderer2) {
+    this.spinning$ = this.buttonService.fetching$.subscribe((fetching) => {
       this.spinning = fetching;
     });
   }
@@ -35,7 +42,7 @@ export class FilledSpinningButtonComponent implements OnInit, OnChanges, OnDestr
   }
 
   toggleSpinner(): void {
-    this.interstitial.fetching$.next(!this.spinning);
+    this.buttonService.fetching$.next(!this.spinning);
   }
 
   refreshClass(): void {
