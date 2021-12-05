@@ -25,7 +25,6 @@ export class ForbearanceView implements OnInit {
   }
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotForbearance);
   }
 
   /**

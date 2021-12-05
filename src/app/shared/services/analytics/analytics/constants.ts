@@ -10,9 +10,13 @@ export enum AnalyticPageViewEvents {
   OnboardingCode = 'onboarding_code',
   OnboardingKba = 'onboarding_kba',
   DashboardReport = 'dashboard_report',
+  DashboardInit = 'dashboard_init',
   DashboardReportSnapshotNegative = 'dashboard_report_snapshot_negative',
   DashboardReportSnapshotForbearance = 'dashboard_report_snapshot_forbearance',
   DashboardReportSnapshotDatabreach = 'dashboard_report_snapshot_databreach',
+  DashboardReportSnapshotCreditUtilization = 'dashboard_report_snapshot_credit_utilization',
+  DashboardReportSnapshotCreditMix = 'dashboard_report_snapshot_credit_mix',
+  DashboardDisputeFinding = 'dashboard_dispute_findings'
 }
 
 export enum AnalyticClickEvents {
@@ -27,7 +31,12 @@ export enum AnalyticClickEvents {
   SnapshotFraudModule = 'snapshot_fraud',
   SnapshotForbearanceModule = 'snapshot_forbearance',
   SnapshotNegativeItemsModule = 'snapshot_negativeitems',
+  SnapshotCreditUtilization = 'snapshot_credit_utilization',
+  SnapshotCreditMix = 'snapshot_credit_mix',
+  SnapshotBreachCardReview = 'snapshot_breachcard_review',
+  SnapshotBreachCardDelete = 'snapshot_breachcard_delete',
   NavigationFraudToCreditReport = 'navigation_fraudtocreditreport',
+  DisputeSucessfullySubmited = 'dispute_sucessfully_submited'
 }
 
 export enum AnalyticErrorEvents {

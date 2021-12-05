@@ -22,7 +22,6 @@ export class NegativeAccountInitialComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private statesvc: StateService,
-    private analytics: AnalyticsService,
     private creditReportService: CreditreportService,
     private disputeService: DisputeService,
   ) {
@@ -38,7 +37,6 @@ export class NegativeAccountInitialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotNegative);
   }
 
   /**
