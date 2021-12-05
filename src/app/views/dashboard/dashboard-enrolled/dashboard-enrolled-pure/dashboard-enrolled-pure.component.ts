@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMergeReport } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
@@ -31,6 +32,8 @@ export class DashboardEnrolledPureComponent implements OnInit {
   content = dashboardEnrolledContent;
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
+  AnalyticClickEvents = AnalyticClickEvents
+  
   constructor() {}
 
   ngOnInit(): void {}

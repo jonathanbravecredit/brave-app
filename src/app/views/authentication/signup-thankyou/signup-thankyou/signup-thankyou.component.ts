@@ -17,9 +17,7 @@ export class SignupThankyouComponent implements OnInit, OnDestroy {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }
 
-  ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.AuthThankyou);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     if (this.emailSub$) this.emailSub$.unsubscribe();
