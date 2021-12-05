@@ -16,7 +16,7 @@ export enum AnalyticPageViewEvents {
   DashboardReportSnapshotDatabreach = 'dashboard_report_snapshot_databreach',
   DashboardReportSnapshotCreditUtilization = 'dashboard_report_snapshot_credit_utilization',
   DashboardReportSnapshotCreditMix = 'dashboard_report_snapshot_credit_mix',
-  DashboardDisputeFinding = 'dashboard_dispute_findings'
+  DashboardDisputeFinding = 'dashboard_dispute_findings',
 }
 
 export enum AnalyticClickEvents {
@@ -36,7 +36,10 @@ export enum AnalyticClickEvents {
   SnapshotBreachCardReview = 'snapshot_breachcard_review',
   SnapshotBreachCardDelete = 'snapshot_breachcard_delete',
   NavigationFraudToCreditReport = 'navigation_fraudtocreditreport',
-  DisputeSucessfullySubmited = 'dispute_sucessfully_submited'
+  DashboardProduct = 'dashboard_product',
+  CreditMixProductRecommendation = 'creditmix_product_recommendation',
+  DisputeSucessfullySubmited = 'dispute_sucessfully_submited',
+  DisputeInvestigationResults = 'dispute_investigation_results',
 }
 
 export enum AnalyticErrorEvents {
