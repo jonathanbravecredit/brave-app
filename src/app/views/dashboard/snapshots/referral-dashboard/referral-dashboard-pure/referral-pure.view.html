@@ -1,5 +1,8 @@
 <brave-referral-header></brave-referral-header>
 <div style="background-color: #333333" class="py-2">
-  <brave-referral-banner></brave-referral-banner>
-  <brave-referral-earnings></brave-referral-earnings>
+  <brave-referral-banner [referredTen]="referredTen"></brave-referral-banner>
+  <brave-referral-earnings
+    [referredTen]="referredTen"
+  ></brave-referral-earnings>
+  <brave-referral-amount-link></brave-referral-amount-link>
 </div>

@@ -7,6 +7,7 @@ import { ReferralDashboardPureView } from "./referral-pure.view";
 import { ReferralBannerComponent } from "../components/referral-banner/referral-banner.component";
 import { ReferralHeaderComponent } from "../components/referral-header/referral-header.component";
 import { ReferralEarningsComponent } from "../components/referral-earnings/referral-earnings.component";
+import { ReferralAmountLinkComponent } from "../components/referral-amount-link/referral-amount-link.component";
 
 export default {
   title: "app/views/snapshots/credit-mix",
@@ -17,6 +18,7 @@ export default {
         ReferralBannerComponent,
         ReferralHeaderComponent,
         ReferralEarningsComponent,
+        ReferralAmountLinkComponent
       ],
       imports: [
         HttpClientModule,
@@ -53,5 +55,5 @@ const Template: Story<ReferralDashboardPureView> = (args: any) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = { referredTen: true };
 Default.parameters;

@@ -7,8 +7,11 @@
 </h1>
 
 <p class="text-xs text-center text-white">
-  {{ "You'll get your gift card on "
-  }}<span class="font-bold"
-    >Tuesday, {{ month.slice(0, 3) }} {{ nextGiftDate.slice(8,10) }}</span
+  {{ "You'll get your gift card on " }}
+  <span *ngIf="referredTen" class="font-bold"
+    >Tuesday, {{ month.slice(0, 3) }} {{ nextGiftDate.slice(8, 10) }}</span
+  >
+  <span *ngIf="!referredTen" class="font-bold"
+    >Monday, {{ nextMonth.slice(0, 3) }} {{ nextMonthMonday.slice(8, 10) }}</span
   >
 </p>

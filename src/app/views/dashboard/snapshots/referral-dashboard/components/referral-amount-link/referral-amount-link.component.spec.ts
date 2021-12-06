@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ReferralDashboardPureView} from './referral-pure.view'
+import { ReferralAmountLinkComponent } from './referral-amount-link.component';
 
-describe('ReferralPureView', () => {
-  let component: ReferralDashboardPureView
-  let fixture: ComponentFixture<ReferralDashboardPureView>;
+describe('ReferralAmountLinkComponent', () => {
+  let component: ReferralAmountLinkComponent;
+  let fixture: ComponentFixture<ReferralAmountLinkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReferralDashboardPureView ]
+      declarations: [ ReferralAmountLinkComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReferralDashboardPureView);
+    fixture = TestBed.createComponent(ReferralAmountLinkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
