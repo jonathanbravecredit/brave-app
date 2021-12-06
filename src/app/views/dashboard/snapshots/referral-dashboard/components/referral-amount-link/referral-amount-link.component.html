@@ -1,21 +1,35 @@
-<div class="flex justify-evenly align-center">
-  <div
-    class="flex flex-col justify-center align-center items-center"
-    style="
-      min-width: 7rem;
-      max-width: 7rem;
-      min-height: 7rem;
-      max-height: 7rem;
-      border-radius: 3.5rem;
-      background-color: white;
-    "
-  >
-    <h5 class="text-3xl font-bold mb-2">10/10</h5>
-    <p class="text-center text-xs">Friends referred</p>
-    <p class="text-center text-xs">this month</p>
+<div class="flex justify-evenly align-center mt-12">
+  <div style="width: 45%">
+    <div class="flex justify-center align-center">
+      <div
+        class="flex flex-col justify-center align-center items-center"
+        style="
+          border-radius: 4.5rem;
+          background-color: white;
+          min-width: 9rem;
+          max-width: 9rem;
+          min-height: 9rem;
+          max-height: 9rem;
+        "
+      >
+        <h5 class="text-3xl font-bold mb-2">10/10</h5>
+        <p class="text-center text-xs">Friends referred</p>
+        <p class="text-center text-xs">this month</p>
+      </div>
+    </div>
   </div>
-  <div style="min-width: 50%; max-width: 50%">
-    <p>Earn more by sharing your individual link below:</p>
-    <input [value]="usersReferralLink" />
+
+  <div
+    class="flex flex-col justify-evenly items-center text-center"
+    style="width: 45%"
+  >
+    <p class="text-white mb-7">Earn more by sharing your individual link below:</p>
+    <input class="p-1 rounded-sm mb-3" [value]="usersReferralLink" />
+    <button
+      class="text-white rounded px-6 py-1"
+      style="background-color: #f2994a;"
+    >
+      Copy Link
+    </button>
   </div>
 </div>
