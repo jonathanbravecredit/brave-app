@@ -29,6 +29,7 @@
       <brave-outline-input-ssn
         [required]="true"
         [asteriskOverride]="true"
+        [minLength]="4"
         [config]="lastfour"
         (onComponentReady)="addChild('lastfour', $event)"
         [required]="true"
