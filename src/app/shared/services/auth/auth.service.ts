@@ -162,6 +162,18 @@ export class AuthService {
   }
 
   /**
+   * Get JWT tokens for auth
+   * @returns
+   */
+  async getJwtToken(): Promise<string | null> {
+    try {
+      return (await Auth.currentSession()).getAccessToken().getJwtToken();
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /**
    *
    */
   async getAuthTokens(): Promise<string> {

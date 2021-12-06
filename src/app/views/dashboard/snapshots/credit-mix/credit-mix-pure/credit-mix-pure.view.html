@@ -17,6 +17,9 @@
 <brave-credit-mix-recommendation
   [tradeLineSum]="tradeLineSummary"
   [recommendations]="recommendations"
+  braveAnalytics
+  [analyticClickEvents]="event.CreditMixProductRecommendation"
+  [analyticConfig]="{google: false, mixpanel: false, brave: true}"
 ></brave-credit-mix-recommendation>
 <brave-credit-mix-sub-headers></brave-credit-mix-sub-headers>
 <brave-credit-mix-card-section

@@ -39,7 +39,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReport);
     this.transunion.getCreditScores().then((scores) => {
       this.scores = scores.data;
     });
