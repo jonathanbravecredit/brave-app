@@ -68,13 +68,14 @@ import { CreditMixIconsComponent } from "./snapshots/credit-mix/components/credi
 import { CreditMixSubHeadersComponent } from "./snapshots/credit-mix/components/credit-mix-sub-headers/credit-mix-sub-headers.component";
 import { CreditMixCardSectionComponent } from "./snapshots/credit-mix/components/credit-mix-card-section/credit-mix-card-section.component";
 import { CreditMixRecommendationComponent } from "./snapshots/credit-mix/components/credit-mix-recommendation/credit-mix-recommendation.component";
-import { CreditMixFilterPipePipe } from './snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe';
-import { CreditMixCardComponent } from './snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component';
-import { DashboardCarouselComponent } from './dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component';
-import { ReferralView } from './snapshots/referral/referral-view/referral.view';
-import { ReferralPureView } from './snapshots/referral/referral-view-pure/referral-pure.view';
-import { ReferralDashboardView } from './snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
-
+import { CreditMixFilterPipePipe } from "./snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe";
+import { CreditMixCardComponent } from "./snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component";
+import { DashboardCarouselComponent } from "./dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component";
+import { ReferralDashboardView } from "./snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view";
+import { ReferralDashboardPureView } from "./snapshots/referral-dashboard/referral-dashboard-pure/referral-pure.view";
+import { ReferralHeaderComponent } from "./snapshots/referral-dashboard/components/referral-header/referral-header.component";
+import { ReferralBannerComponent } from "./snapshots/referral-dashboard/components/referral-banner/referral-banner.component";
+import { ReferralEarningsComponent } from './snapshots/referral-dashboard/components/referral-earnings/referral-earnings.component';
 
 const modules = [
   CommonModule,
@@ -139,13 +140,17 @@ const components = [
   CreditMixRecommendationComponent,
   DashboardCarouselComponent,
   CreditMixFilterPipePipe,
-  CreditMixCardComponent
+  CreditMixCardComponent,
+  ReferralDashboardPureView,
+  ReferralDashboardView,
+  ReferralHeaderComponent,
+  ReferralBannerComponent,
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, ReferralView, ReferralPureView, ReferralDashboardView],
+  declarations: [...components, ...pipes, ReferralEarningsComponent],
   imports: [...modules],
   exports: [...components],
 })

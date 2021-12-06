@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'brave-referral-pure',
   templateUrl: './referral-pure.view.html'
 })
-export class ReferralPureView implements OnInit {
+export class ReferralDashboardPureView implements OnInit {
 
   constructor() { }
 
