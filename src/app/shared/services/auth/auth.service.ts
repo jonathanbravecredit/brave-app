@@ -22,7 +22,7 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private router: Router, private analytics: AnalyticsService, private interstitial: InterstitialService) {}
+  constructor(private router: Router, private interstitial: InterstitialService) {}
 
   /**
    * This method is designed to help reload the user if the ID ever goes null
