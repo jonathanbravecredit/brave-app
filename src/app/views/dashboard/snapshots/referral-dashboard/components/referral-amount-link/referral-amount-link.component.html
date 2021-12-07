@@ -12,24 +12,16 @@
           max-height: 9rem;
         "
       >
-        <h5 class="text-3xl font-bold mb-2">10/10</h5>
+        <h5 class="text-3xl font-bold mb-2">{{ referrals }}/10</h5>
         <p class="text-center text-xs">Friends referred</p>
         <p class="text-center text-xs">this month</p>
       </div>
     </div>
   </div>
 
-  <div
-    class="flex flex-col justify-evenly items-center text-center"
-    style="width: 45%"
-  >
+  <div class="flex flex-col justify-evenly items-center text-center" style="width: 45%">
     <p class="text-white mb-7">Earn more by sharing your individual link below:</p>
     <input class="p-1 rounded-sm mb-3" [value]="usersReferralLink" />
-    <button
-      class="text-white rounded px-6 py-1"
-      style="background-color: #f2994a;"
-    >
-      Copy Link
-    </button>
+    <button class="text-white rounded px-6 py-1" style="background-color: #f2994a">Copy Link</button>
   </div>
 </div>

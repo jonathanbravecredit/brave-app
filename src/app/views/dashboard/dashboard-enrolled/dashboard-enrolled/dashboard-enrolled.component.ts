@@ -113,4 +113,10 @@ export class DashboardEnrolledComponent implements OnInit {
       relativeTo: this.route,
     });
   }
+
+  onReferralsClicked() {
+    this.router.navigate(['../report/snapshot/referrals'], {
+      relativeTo: this.route,
+    });
+  }
 }

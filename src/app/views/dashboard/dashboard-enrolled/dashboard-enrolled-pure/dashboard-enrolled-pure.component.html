@@ -67,6 +67,15 @@
       (click)="creditMixClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
+  <div class="mt-6 hover:cursor-pointer">
+    <brave-snapshot-display-card
+      tendency="no-tendency"
+      label="new"
+      status="safe"
+      title="Referrals"
+      (click)="referralsClicked.emit()"
+    ></brave-snapshot-display-card>
+  </div>
 </div>
 
 <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{

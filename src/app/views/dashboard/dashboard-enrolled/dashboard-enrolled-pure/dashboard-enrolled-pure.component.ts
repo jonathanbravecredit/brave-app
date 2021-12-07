@@ -20,20 +20,21 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];
   @Input() data: {}[] | undefined;
-  @Input() rating: string = ''
-  @Input() color: string | undefined
+  @Input() rating: string = '';
+  @Input() color: string | undefined;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() fullReportClicked: EventEmitter<void> = new EventEmitter();
   @Output() disputesClicked: EventEmitter<void> = new EventEmitter();
   @Output() creditUtilizationClicked: EventEmitter<void> = new EventEmitter();
-  @Output() creditMixClicked: EventEmitter<void> = new EventEmitter()
+  @Output() creditMixClicked: EventEmitter<void> = new EventEmitter();
+  @Output() referralsClicked: EventEmitter<void> = new EventEmitter();
   content = dashboardEnrolledContent;
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
-  AnalyticClickEvents = AnalyticClickEvents
-  
+  AnalyticClickEvents = AnalyticClickEvents;
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -54,5 +55,4 @@ export class DashboardEnrolledPureComponent implements OnInit {
       return _score;
     }
   }
-
 }
