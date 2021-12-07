@@ -7,7 +7,7 @@ import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interfac
 })
 export class ReferralDashboardPureView implements OnInit {
   @Input() referredTen: boolean = false;
-  @Input() metrics: IGroupedYearMonthReferral | undefined;
+  @Input() metrics: IGroupedYearMonthReferral[] = [];
 
   constructor() {}
 

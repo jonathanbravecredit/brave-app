@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { ScaleType } from "@swimlane/ngx-charts";
 
 @Component({
   selector: "brave-percentage-gauge",
@@ -7,8 +6,10 @@ import { ScaleType } from "@swimlane/ngx-charts";
 })
 export class PercentageGaugeComponent implements OnInit {
   @Input() percentageNumber: any[] = [];
+  @Input() startAngle: number = 0;
+  @Input() runCalcColor: boolean = true;
   view: [number, number] = [250, 175];
-  colorScheme: {domain: string[]} = {
+  colorScheme: { domain: string[] } = {
     domain: [],
   };
 
@@ -17,7 +18,13 @@ export class PercentageGaugeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.colorScheme.domain.push(this.calcColor(this.percentageNumber[0].value))
+    if (this.runCalcColor) {
+      this.colorScheme.domain.push(
+        this.calcColor(this.percentageNumber[0].value)
+      );
+    } else {
+      this.colorScheme.domain.push("#4BD269");
+    }
   }
 
   calcColor(percentage: number): string {

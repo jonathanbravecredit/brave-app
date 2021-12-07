@@ -7,11 +7,10 @@ import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interfac
   templateUrl: './referral-dashboard.view.html',
 })
 export class ReferralDashboardView implements OnInit {
-  metrics: IGroupedYearMonthReferral | undefined;
+  metrics: IGroupedYearMonthReferral[] = [];
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((resp: any) => {
       this.metrics = resp.metrics;
-      console.log('metrics ==> ', this.metrics);
     });
   }
 

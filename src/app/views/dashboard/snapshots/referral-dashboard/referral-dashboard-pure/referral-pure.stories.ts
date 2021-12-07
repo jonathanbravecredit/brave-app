@@ -9,9 +9,10 @@ import { ReferralHeaderComponent } from "../components/referral-header/referral-
 import { ReferralEarningsComponent } from "../components/referral-earnings/referral-earnings.component";
 import { ReferralAmountLinkComponent } from "../components/referral-amount-link/referral-amount-link.component";
 import { ReferralBodyTextComponent } from "../components/referral-body-text/referral-body-text.component";
+import { SharedComponentsModule } from "@shared/components/shared-components.module";
 
 export default {
-  title: "app/views/snapshots/credit-mix",
+  title: "app/views/snapshots/referralDashboard",
   component: ReferralDashboardPureView,
   decorators: [
     moduleMetadata({
@@ -20,12 +21,13 @@ export default {
         ReferralHeaderComponent,
         ReferralEarningsComponent,
         ReferralAmountLinkComponent,
-        ReferralBodyTextComponent
+        ReferralBodyTextComponent,
       ],
       imports: [
         HttpClientModule,
         RouterModule.forRoot([], { useHash: true }),
         CommonModule,
+        SharedComponentsModule,
       ],
       providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
     }),
@@ -57,5 +59,8 @@ const Template: Story<ReferralDashboardPureView> = (args: any) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = { referredTen: true };
+Default.args = {
+  referredTen: true,
+  metrics: [{ yearMonth: 202112, referrals: 7, earnings: 35, currency: "USD" }],
+};
 Default.parameters;
