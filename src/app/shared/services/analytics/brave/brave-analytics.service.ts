@@ -18,8 +18,8 @@ export class BraveAnalyticsService {
       return; // don't fire on dev
     }
     const url = `${environment.analytics}/tracking`;
-    const accessToken = await this.auth.getJwtToken();
     const sub = await this.auth.getUserSub();
+    const token = await this.auth.getIdTokenJwtTokens();
     const session = sessionStorage.getItem('sessionId') || '';
     const payload: ICreateAnalytic = {
       id: v4(),
@@ -31,7 +31,7 @@ export class BraveAnalyticsService {
     };
     const body = JSON.stringify(payload);
     const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + accessToken,
+      Authorization: `${token}`,
     });
     return await this.http
       .post<any>(url, body, { headers })
