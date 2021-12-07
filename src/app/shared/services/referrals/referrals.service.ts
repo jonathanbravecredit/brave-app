@@ -35,13 +35,13 @@ export class ReferralsService {
    */
   async updateReferral(id: string, enrollmentStatus?: 'pending' | 'enrolled'): Promise<any> {
     const url = `${environment.marketing}/referral`;
-    const accessToken = await this.auth.getAuthTokens();
+    const idToken = await this.auth.getIdTokenJwtTokens();
     const body = JSON.stringify({
       id,
       enrollmentStatus,
     });
     const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + accessToken,
+      Authorization: `${idToken}`,
     });
     return await this.http
       .put<any>(url, body, { headers })

@@ -78,6 +78,7 @@ import { ReferralBannerComponent } from "./snapshots/referral-dashboard/componen
 import { ReferralEarningsComponent } from './snapshots/referral-dashboard/components/referral-earnings/referral-earnings.component';
 import { ReferralAmountLinkComponent } from './snapshots/referral-dashboard/components/referral-amount-link/referral-amount-link.component';
 import { ReferralBodyTextComponent } from './snapshots/referral-dashboard/components/referral-body-text/referral-body-text.component';
+import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
 
 const modules = [
   CommonModule,
@@ -87,6 +88,7 @@ const modules = [
   DisputesModule,
   CreditReportModule,
   DashboardRoutingModule,
+  SharedDirectivesModule
 ];
 const components = [
   DashboardComponent,

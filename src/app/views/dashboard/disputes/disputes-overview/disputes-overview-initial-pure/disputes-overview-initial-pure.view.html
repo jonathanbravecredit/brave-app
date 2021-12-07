@@ -19,6 +19,9 @@
       [estCompletionDate]="dispute.estCompletionDate"
       [accountType]="dispute.accountType"
       (viewDetailsClick)="viewDetailsClick.emit(dispute)"
+      braveAnalytics
+      [analyticClickEvents]="events.DisputeInvestigationResults"
+      [analyticConfig]="{google: false, mixpanel: false, brave: true}"
     ></brave-dispute-current-card>
   </ng-container>
 
