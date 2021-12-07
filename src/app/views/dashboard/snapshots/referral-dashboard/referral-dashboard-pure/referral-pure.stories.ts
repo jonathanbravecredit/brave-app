@@ -8,6 +8,7 @@ import { ReferralBannerComponent } from "../components/referral-banner/referral-
 import { ReferralHeaderComponent } from "../components/referral-header/referral-header.component";
 import { ReferralEarningsComponent } from "../components/referral-earnings/referral-earnings.component";
 import { ReferralAmountLinkComponent } from "../components/referral-amount-link/referral-amount-link.component";
+import { ReferralBodyTextComponent } from "../components/referral-body-text/referral-body-text.component";
 
 export default {
   title: "app/views/snapshots/credit-mix",
@@ -18,7 +19,8 @@ export default {
         ReferralBannerComponent,
         ReferralHeaderComponent,
         ReferralEarningsComponent,
-        ReferralAmountLinkComponent
+        ReferralAmountLinkComponent,
+        ReferralBodyTextComponent
       ],
       imports: [
         HttpClientModule,

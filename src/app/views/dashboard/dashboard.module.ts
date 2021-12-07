@@ -77,6 +77,7 @@ import { ReferralHeaderComponent } from "./snapshots/referral-dashboard/componen
 import { ReferralBannerComponent } from "./snapshots/referral-dashboard/components/referral-banner/referral-banner.component";
 import { ReferralEarningsComponent } from './snapshots/referral-dashboard/components/referral-earnings/referral-earnings.component';
 import { ReferralAmountLinkComponent } from './snapshots/referral-dashboard/components/referral-amount-link/referral-amount-link.component';
+import { ReferralBodyTextComponent } from './snapshots/referral-dashboard/components/referral-body-text/referral-body-text.component';
 
 const modules = [
   CommonModule,
@@ -151,7 +152,7 @@ const components = [
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, ReferralEarningsComponent, ReferralAmountLinkComponent],
+  declarations: [...components, ...pipes, ReferralEarningsComponent, ReferralAmountLinkComponent, ReferralBodyTextComponent],
   imports: [...modules],
   exports: [...components],
 })
