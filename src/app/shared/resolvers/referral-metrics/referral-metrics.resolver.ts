@@ -11,8 +11,9 @@ import * as moment from 'moment';
 export class ReferralMetricsResolver implements Resolve<any> {
   constructor(private http: HttpClient, private auth: AuthService) {}
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
-    const url = `${environment.marketing}/earnings/monthly`;
+    const url = `${environment.marketing}/campaign/earnings`;
     const token = await this.auth.getIdTokenJwtTokens();
+    console.log('token ===>', token);
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
