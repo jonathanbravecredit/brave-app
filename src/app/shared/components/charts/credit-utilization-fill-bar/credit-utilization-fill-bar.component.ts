@@ -22,12 +22,13 @@ export class CreditUtilizationFillBarComponent implements OnInit {
       this.creditType === "i" ||
       this.creditType === "m";
 
-    this.isOpen =
-      this.openClosed?.toLowerCase() === "o";
+    this.isOpen = this.openClosed?.toLowerCase() === "o";
 
     if (this.isLoan) {
       this.utilPercentage = `${Math.floor(
-        (+this.currentBalance! / +this.highestBalance!) * 100
+        ((+this.highestBalance! - +this.currentBalance!) /
+          +this.highestBalance!) *
+          100
       )}%`;
     } else {
       this.utilPercentage = `${Math.floor(
