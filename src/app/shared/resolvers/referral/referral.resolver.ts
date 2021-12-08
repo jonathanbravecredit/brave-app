@@ -39,7 +39,13 @@ export class ReferralResolver implements Resolve<IReferralResolver> {
     this.interstitial.openInterstitial();
     const metrics = await this.referralMetrics.resolve(route, state);
     const referral = await this.referralRecord.resolve(route, state);
-    const payments = await this.referralPayments.resolve(route, state);
+    let payments;
+    try {
+      payments = await this.referralPayments.resolve(route, state);
+    } catch {
+      payments = null
+    }
+
     return {
       metrics,
       referral,
