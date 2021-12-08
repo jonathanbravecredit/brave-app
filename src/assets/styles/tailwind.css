@@ -3076,6 +3076,11 @@ select {
   color: rgba(51, 51, 51, var(--tw-text-opacity));
 }
 
+.text-link-blue {
+  --tw-text-opacity: 1;
+  color: rgba(6, 69, 173, var(--tw-text-opacity));
+}
+
 .hover\:text-red-700:hover {
   --tw-text-opacity: 1;
   color: rgba(185, 28, 28, var(--tw-text-opacity));
