@@ -37,7 +37,7 @@ const routes: Routes = [
       useHash: false,
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'enabled',
-      enableTracing: !environment.production,
+      enableTracing: false, //!environment.production,
     }),
   ],
   exports: [RouterModule],

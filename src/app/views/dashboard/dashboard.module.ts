@@ -71,8 +71,14 @@ import { CreditMixRecommendationComponent } from "./snapshots/credit-mix/compone
 import { CreditMixFilterPipePipe } from "./snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe";
 import { CreditMixCardComponent } from "./snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component";
 import { DashboardCarouselComponent } from "./dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component";
+import { ReferralDashboardView } from "./snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view";
+import { ReferralDashboardPureView } from "./snapshots/referral-dashboard/referral-dashboard-pure/referral-pure.view";
+import { ReferralHeaderComponent } from "./snapshots/referral-dashboard/components/referral-header/referral-header.component";
+import { ReferralBannerComponent } from "./snapshots/referral-dashboard/components/referral-banner/referral-banner.component";
+import { ReferralEarningsComponent } from './snapshots/referral-dashboard/components/referral-earnings/referral-earnings.component';
+import { ReferralAmountLinkComponent } from './snapshots/referral-dashboard/components/referral-amount-link/referral-amount-link.component';
+import { ReferralBodyTextComponent } from './snapshots/referral-dashboard/components/referral-body-text/referral-body-text.component';
 import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
-
 
 const modules = [
   CommonModule,
@@ -139,12 +145,16 @@ const components = [
   DashboardCarouselComponent,
   CreditMixFilterPipePipe,
   CreditMixCardComponent,
+  ReferralDashboardPureView,
+  ReferralDashboardView,
+  ReferralHeaderComponent,
+  ReferralBannerComponent,
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, ReferralEarningsComponent, ReferralAmountLinkComponent, ReferralBodyTextComponent],
   imports: [...modules],
   exports: [...components],
 })

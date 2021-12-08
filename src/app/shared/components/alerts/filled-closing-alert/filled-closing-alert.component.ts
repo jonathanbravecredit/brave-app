@@ -21,7 +21,7 @@ export class FilledClosingAlertComponent implements OnInit {
     alertTitle: 'Alert!',
     alertBody: 'Something went wrong. Please try again.',
   };
+  @Input() showAlert: boolean = false;
   constructor() {}
-  public showAlert: boolean = false;
   ngOnInit(): void {}
 }
