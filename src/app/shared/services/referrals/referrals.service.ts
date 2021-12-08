@@ -1,17 +1,33 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
-import { BehaviorSubject } from 'rxjs';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ReferralsService {
+export class ReferralsService implements OnDestroy {
   referredByCode$ = new BehaviorSubject<string | null>(null);
+  isActive: boolean = false;
+  isActiveSub$: Subscription | undefined;
 
-  constructor(private http: HttpClient, private auth: AuthService, private iam: IamService) {}
+  constructor(
+    private feature: FeatureFlagsService,
+    private http: HttpClient,
+    private auth: AuthService,
+    private iam: IamService,
+  ) {
+    this.isActiveSub$ = this.feature.referrals$.subscribe((isActive) => {
+      this.isActive = isActive;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.isActiveSub$?.unsubscribe();
+  }
 
   /**
    * HTTP Requests to create referral in referral service backend
@@ -20,6 +36,7 @@ export class ReferralsService {
    * @returns
    */
   async createReferral(email: string, referredByCode?: string | null): Promise<any> {
+    if (!this.isActive) return;
     const url = `${environment.marketing}/referral`;
     let body = { id: email, referredByCode };
     let headers = {};
@@ -34,6 +51,7 @@ export class ReferralsService {
    * @returns
    */
   async updateReferral(id: string, enrollmentStatus?: 'pending' | 'enrolled'): Promise<any> {
+    if (!this.isActive) return;
     const url = `${environment.marketing}/referral`;
     const accessToken = await this.auth.getAuthTokens();
     const body = JSON.stringify({
