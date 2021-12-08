@@ -23,7 +23,7 @@
       (click)="copyUrl(urlInput)"
       class="p-1 rounded-sm mb-3 cursor-pointer"
       style="max-width: 25vw"
-      [value]="usersReferralLink"
+      [value]="referralLink"
       readonly
     />
     <button (click)="copyUrl(urlInput)" class="text-white rounded px-6 py-1" style="background-color: #f2994a">
@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<div class="fixed" style="bottom: 70px">
+<div class="fixed w-full" style="bottom: 70px">
   <div class="flex justify-center">
     <brave-filled-closing-alert [config]="alertConfig" [showAlert]="showAlert"></brave-filled-closing-alert>
   </div>

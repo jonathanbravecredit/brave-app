@@ -21,6 +21,7 @@ import { CreditMixView } from './snapshots/credit-mix/credit-mix/credit-mix.view
 import { CreditMixResolver } from '@shared/resolvers/credit-mix/credit-mix.resolver';
 import { ReferralDashboardView } from '@views/dashboard/snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
 import { ReferralMetricsResolver } from '@shared/resolvers/referral-metrics/referral-metrics.resolver';
+import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 
 const DashboardRoutes: Routes = [
   {
@@ -90,7 +91,7 @@ const DashboardRoutes: Routes = [
       {
         path: 'report/snapshot/referrals',
         component: ReferralDashboardView,
-        resolve: { metrics: ReferralMetricsResolver },
+        resolve: { referral: ReferralResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

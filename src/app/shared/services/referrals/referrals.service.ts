@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
+import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
@@ -71,7 +72,7 @@ export class ReferralsService {
    * @param year
    * @returns
    */
-  async getReferralMonthlyCampaignEarnings(month?: string, year?: string): Promise<any> {
+  async getReferralMonthlyCampaignEarnings(month?: string, year?: string): Promise<IGroupedYearMonthReferral[]> {
     const url = `${environment.marketing}/referral/campaign/earnings/monthly`;
     const token = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({

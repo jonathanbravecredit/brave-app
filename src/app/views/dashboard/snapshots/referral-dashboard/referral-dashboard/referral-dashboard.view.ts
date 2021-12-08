@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-referral-dashboard',
@@ -8,10 +9,12 @@ import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interfac
 })
 export class ReferralDashboardView implements OnInit {
   metrics: IGroupedYearMonthReferral[] = [];
-  constructor(private route: ActivatedRoute) {
+  referral: IReferral | undefined;
+  constructor(private interstitial: InterstitialService, private route: ActivatedRoute) {
     this.route.data.subscribe((resp: any) => {
-      this.metrics = resp.metrics;
-      console.log('metrics ==> ', this.metrics);
+      this.metrics = resp.referral.metrics;
+      this.referral = resp.referral.referral;
+      this.interstitial.closeInterstitial();
     });
   }
 

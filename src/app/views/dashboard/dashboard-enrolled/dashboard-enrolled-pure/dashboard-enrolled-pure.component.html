@@ -1,17 +1,11 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
 <div *ngIf="trends && report && scores" class="my-4 flex justify-center">
-  <brave-dashboard-carousel
-    [trends]="trends"
-    [report]="report"
-    [scores]="scores"
-  ></brave-dashboard-carousel>
+  <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
-<p *ngIf="lastUpdated" class="text-xs mb-1">
-  {{ content.p1 }}: {{ lastUpdated | date: "shortDate" }}
-</p>
+<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }}: {{ lastUpdated | date: 'shortDate' }}</p>
 <div *ngIf="cards" class="mb-4">
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
@@ -46,9 +40,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.databreachAccountsTitle"
-      [status]="
-        cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'
-      "
+      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCard"
       (click)="databreachItemsClicked.emit()"
@@ -75,51 +67,35 @@
       (click)="creditMixClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
-  <div class="mt-6 hover:cursor-pointer">
-    <brave-snapshot-display-card
-      tendency="no-tendency"
-      label="new"
-      status="safe"
-      title="Referrals"
-      (click)="referralsClicked.emit()"
-    ></brave-snapshot-display-card>
-  </div>
 </div>
 
-<brave-links-onlytext-button
-  class="w-full"
-  (click)="fullReportClicked.emit()"
-  >{{ content.b1 }}</brave-links-onlytext-button
->
+<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
+  content.b1
+}}</brave-links-onlytext-button>
 
 <!-- Referral Gauge -->
 
 <div
-  class="flex flex-col justify-evenly items-center align-center py-6 my-4 cursor-pointer"
-  style="border-top: 1px solid gray; border-bottom: 1px solid gray"
+  class="flex flex-col justify-evenly items-center align-center py-6 my-4 cursor-pointer shadow rounded-sm border border-blueGray-300 bg-indigo-800 text-white"
   (click)="referralsClicked.emit()"
 >
   <h3>Your Referral Progress This Month:</h3>
 
   <div class="relative">
-    <div
-      class="absolute min-w-full min-h-full flex flex-col justify-center items-center"
-    >
-      <h1 class="font-semibold text-center text-3xl">{{ referrals }}/10</h1>
+    <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
+      <h1 class="font-semibold text-center text-3xl">{{ referredAmount }}/10</h1>
       <p class="text-center text-sm" style="max-width: 50%">Referrals</p>
     </div>
 
     <brave-percentage-gauge
-      [percentageNumber]="[{ name: 'name', value: referrals * 10 }]"
+      [percentageNumber]="[{ name: 'name', value: referredAmount * 10 }]"
       [startAngle]="180"
       [runCalcColor]="false"
       [view]="[150, 125]"
     ></brave-percentage-gauge>
   </div>
 
-  <p
-    class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
-  >
+  <p class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic text-white">
     Click To See Details
   </p>
 </div>

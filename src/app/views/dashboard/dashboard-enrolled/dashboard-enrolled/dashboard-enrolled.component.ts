@@ -13,6 +13,7 @@ import {
   ICreditMixTLSummary,
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
+import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -26,6 +27,7 @@ export class DashboardEnrolledComponent implements OnInit {
   snapshots: DashboardStateModel | undefined;
   scores!: ICreditScoreTracking | null;
   trends!: IGetTrendingData | null;
+  metrics!: IGroupedYearMonthReferral[] | null;
   tradelineSummary: ICreditMixTLSummary | undefined;
   recommendation: IRecommendationText | undefined;
 
@@ -42,6 +44,7 @@ export class DashboardEnrolledComponent implements OnInit {
       this.snapshots = resp.dashboard.snapshots;
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
+      this.metrics = resp.dashboard.referrals;
       if (this.report?.TrueLinkCreditReportType.TradeLinePartition) {
         this.tradelineSummary = this.creditMixService.getTradelineSummary(
           this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
