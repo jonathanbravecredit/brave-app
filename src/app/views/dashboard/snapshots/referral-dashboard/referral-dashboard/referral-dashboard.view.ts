@@ -11,6 +11,7 @@ export class ReferralDashboardView implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((resp: any) => {
       this.metrics = resp.metrics;
+      console.log('metrics ==> ', this.metrics);
     });
   }
 
