@@ -83,12 +83,12 @@
 
   <div class="relative">
     <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
-      <h1 class="font-semibold text-center text-3xl">{{ referredAmount }}/10</h1>
+      <h1 class="font-semibold text-center text-3xl">{{ totalReferredAmount }}</h1>
       <p class="text-center text-sm" style="max-width: 50%">Referrals</p>
     </div>
 
     <brave-percentage-gauge
-      [percentageNumber]="[{ name: 'name', value: referredAmount * 10 }]"
+      [percentageNumber]="[{ name: 'name', value: totalReferredAmount * 10 }]"
       [startAngle]="180"
       [runCalcColor]="false"
       [view]="[150, 125]"

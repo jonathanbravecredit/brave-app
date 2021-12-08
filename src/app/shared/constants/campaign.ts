@@ -1,1 +1,1 @@
-export const CURRENT_CAMPAIGN = 'thxgvng';
+export const CURRENT_CAMPAIGN = 'dec2020';
