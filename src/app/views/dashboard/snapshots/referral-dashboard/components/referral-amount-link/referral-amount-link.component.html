@@ -1,0 +1,39 @@
+<div class="flex justify-evenly align-center mt-12">
+  <div style="width: 45%">
+    <div class="flex justify-center align-center">
+      <div class="relative">
+        <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
+          <h1 class="text-white font-semibold text-center" style="font-size: 2.5rem">{{ referrals }}/10</h1>
+          <p class="text-white text-sm text-center" style="max-width: 50%">Friends referred this month</p>
+        </div>
+
+        <brave-percentage-gauge
+          [percentageNumber]="[{ name: 'name', value: referrals * 10 }]"
+          [startAngle]="180"
+          [runCalcColor]="false"
+        ></brave-percentage-gauge>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col justify-evenly items-center text-center" style="width: 45%">
+    <p class="text-white mb-7">Earn more by sharing your individual link below:</p>
+    <input
+      #urlInput
+      (click)="copyUrl(urlInput)"
+      class="p-1 rounded-sm mb-3 cursor-pointer"
+      style="max-width: 25vw"
+      [value]="referralLink"
+      readonly
+    />
+    <button (click)="copyUrl(urlInput)" class="text-white rounded px-6 py-1" style="background-color: #f2994a">
+      Copy Link
+    </button>
+  </div>
+</div>
+
+<div class="fixed w-full" style="bottom: 70px">
+  <div class="flex justify-center">
+    <brave-filled-closing-alert [config]="alertConfig" [showAlert]="showAlert"></brave-filled-closing-alert>
+  </div>
+</div>

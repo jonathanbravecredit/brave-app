@@ -1,6 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
+import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
+import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
 import { BehaviorSubject } from 'rxjs';
@@ -9,6 +11,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ReferralsService {
+  campaign = CURRENT_CAMPAIGN;
   referredByCode$ = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient, private auth: AuthService, private iam: IamService) {}
@@ -35,16 +38,53 @@ export class ReferralsService {
    */
   async updateReferral(id: string, enrollmentStatus?: 'pending' | 'enrolled'): Promise<any> {
     const url = `${environment.marketing}/referral`;
-    const accessToken = await this.auth.getJwtToken();
+    const idToken = await this.auth.getIdTokenJwtTokens();
     const body = JSON.stringify({
       id,
       enrollmentStatus,
     });
     const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + accessToken,
+      Authorization: `${idToken}`,
     });
     return await this.http
       .put<any>(url, body, { headers })
+      .toPromise();
+  }
+
+  /**
+   * Returns the current users referral record
+   * @returns
+   */
+  async getReferral(): Promise<any> {
+    const url = `${environment.marketing}/referral`;
+    const idToken = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
+      Authorization: `${idToken}`,
+    });
+    return await this.http
+      .get<any>(url, { headers })
+      .toPromise();
+  }
+
+  /**
+   * HTTP Requests to get the referral earnings by campaign and grouped monthly
+   * @param month
+   * @param year
+   * @returns
+   */
+  async getReferralMonthlyCampaignEarnings(month?: string, year?: string): Promise<IGroupedYearMonthReferral[]> {
+    const url = `${environment.marketing}/referral/campaign/earnings/monthly`;
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+
+    let params = new HttpParams();
+    params = params.append('campaign', this.campaign);
+    if (month) params = params.append('month', month);
+    if (year) params = params.append('year', year);
+    return this.http
+      .get<any>(url, { headers, params })
       .toPromise();
   }
 }
