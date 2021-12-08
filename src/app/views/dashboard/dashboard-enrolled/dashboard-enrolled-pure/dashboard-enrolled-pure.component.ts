@@ -34,6 +34,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
   AnalyticClickEvents = AnalyticClickEvents;
+  referrals: number = 4;
 
   constructor() {}
 

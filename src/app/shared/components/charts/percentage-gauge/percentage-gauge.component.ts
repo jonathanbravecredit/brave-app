@@ -8,7 +8,7 @@ export class PercentageGaugeComponent implements OnInit {
   @Input() percentageNumber: any[] = [];
   @Input() startAngle: number = 0;
   @Input() runCalcColor: boolean = true;
-  view: [number, number] = [250, 175];
+  @Input() view: [number, number] = [250, 175];
   colorScheme: { domain: string[] } = {
     domain: [],
   };
