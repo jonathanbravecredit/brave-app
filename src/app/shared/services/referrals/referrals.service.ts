@@ -66,6 +66,8 @@ export class ReferralsService {
       .toPromise();
   }
 
+
+
   /**
    * HTTP Requests to get the referral earnings by campaign and grouped monthly
    * @param month

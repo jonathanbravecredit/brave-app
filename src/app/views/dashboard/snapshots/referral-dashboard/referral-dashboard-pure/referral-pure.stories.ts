@@ -60,6 +60,6 @@ const Template: Story<ReferralDashboardPureView> = (args: any) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  metrics: [{ yearMonth: 202112, referrals: 0, earnings: 0, currency: "USD" }],
+  metrics: [{ yearMonth: 202112, referrals: 1, earnings: 0, currency: "USD" }],
 };
 Default.parameters;
