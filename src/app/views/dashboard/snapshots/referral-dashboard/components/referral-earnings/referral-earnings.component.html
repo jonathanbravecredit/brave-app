@@ -1,13 +1,18 @@
-<h6 class="text-base text-white mb-4 mt-6 text-center">Your {{ month }} Earnings</h6>
+<h6 class="text-base text-white mb-4 mt-6 text-center">
+  Your {{ month }} Earnings
+</h6>
 
 <h1 class="text-5xl text-white font-semibold text-center mb-3">
-  {{ earningsAmount | currency: currencyType:'symbol':'1.0-0' }}
+  {{ earningsAmount | currency: currencyType:"symbol":"1.0-0" }}
 </h1>
 
 <p class="text-xs text-center text-white">
   {{ "You'll get your gift card on " }}
-  <span *ngIf="referredTen" class="font-bold">Tuesday, {{ month.slice(0, 3) }} {{ nextGiftDate.slice(8, 10) }}</span>
+  <span *ngIf="referredTen" class="font-bold"
+    >Tuesday, {{ month.slice(0, 3) }} {{ nextGiftDate.slice(8, 10) }}</span
+  >
   <span *ngIf="!referredTen" class="font-bold"
-    >Monday, {{ nextMonth.slice(0, 3) }} {{ nextMonthMonday.slice(8, 10) }}</span
+    >Tuesday, {{ nextMonth.slice(0, 3) }}
+    {{ nextMonthTuesday.slice(8, 10) }}</span
   >
 </p>

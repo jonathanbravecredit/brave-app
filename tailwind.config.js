@@ -43,6 +43,7 @@ module.exports = {
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
       'dk-gray': '#333333',
+      'link-blue': '#0645AD',
     },
     extend: {
       rotate: {
