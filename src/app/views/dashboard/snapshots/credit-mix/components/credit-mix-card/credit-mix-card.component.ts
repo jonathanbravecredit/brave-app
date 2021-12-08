@@ -27,6 +27,10 @@ export class CreditMixCardComponent implements OnInit {
 
   creditStatus: string | undefined;
 
+  creditLimitNum: number | undefined;
+
+  isCreditCard: boolean = false;
+
   tradelinepages = [
     TradelineDetailsTableComponent,
     TradelineDetailsTableComponent,
@@ -37,13 +41,23 @@ export class CreditMixCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.isCreditCard =
+      this.creditUtilization?.config?.accountTypeSymbol?.toLowerCase() === "r";
+
     this.open =
       this.creditUtilization?.openClosed?.toLowerCase() === "o" ? true : false;
 
-    this.percetangeUtilization = this.calculatePercentageUtilization(
-      this.creditUtilization!.currentBalance,
-      this.creditUtilization!.creditLimit
-    );
+    if (this.isCreditCard) {
+      this.percetangeUtilization = this.calculatePercentageUtilization(
+        this.creditUtilization!.currentBalance,
+        this.creditUtilization!.creditLimit
+      );
+    } else {
+      this.percetangeUtilization = this.calculatePercentageUtilization(
+        this.creditUtilization!.currentBalance,
+        this.creditUtilization!.config.highestBalance
+      );
+    }
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
   }
@@ -75,7 +89,7 @@ export class CreditMixCardComponent implements OnInit {
     }
 
     if (percetangeUtilization === undefined) {
-      return "closed"
+      return "closed";
     }
 
     switch (true) {
