@@ -37,7 +37,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   forbearanceClicked: boolean = false;
   showDisclaimer: boolean = false;
   AnalyticClickEvents = AnalyticClickEvents;
-  referredAmount: number = 0;
+  totalReferredAmount: number = 0;
 
   constructor() {}
 
@@ -46,7 +46,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
     const currYearMonth = +moment(now).format('YYYYMM');
     if (this.metrics?.length) {
       const metric = this.metrics.find((m) => m.yearMonth == currYearMonth);
-      this.referredAmount = metric?.referrals || 0;
+      this.totalReferredAmount = metric?.referrals || 0;
     }
   }
 

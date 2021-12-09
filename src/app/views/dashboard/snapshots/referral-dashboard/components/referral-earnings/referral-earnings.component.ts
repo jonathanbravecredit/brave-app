@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { IGroupedYearMonthReferral } from "@shared/interfaces/referrals.interface";
+import { IGroupedYearMonthReferral, IPayments } from "@shared/interfaces/referrals.interface";
 import * as moment from "moment";
 
 @Component({
@@ -8,27 +8,24 @@ import * as moment from "moment";
 })
 export class ReferralEarningsComponent implements OnInit {
   @Input() metrics: IGroupedYearMonthReferral[] = [];
+  @Input() payments: IPayments | undefined
   earningsAmount: number = 0;
   currencyType: string = "USD";
   referredAmount: number = 0;
   referredTen: boolean = false;
-  month: string = moment(new Date().getMonth() + 1, "M").format("MMMM");
-  nextMonth: string = moment().add(1, "month").format("MMMM");
-  nextGiftDate: string = moment().add(1, "week").isoWeekday(2).toISOString()
-
-  nextMonthTuesday: string = moment()
-    .add(1, "month")
-    .startOf("month")
-    .add(6 - moment().day("Tuesday").day(), "days")
-    .startOf("week")
-    .day(2)
-    .toISOString();
+  paymentMonth: string = '';
+  paymentDay: string = '';
+  month: string = moment().format("MMMM");
 
   constructor() {}
 
   ngOnInit(): void {
     const now = new Date();
     const currYearMonth = +moment(now).format("YYYYMM");
+
+    this.paymentMonth = moment(this.payments?.paymentScheduledDate).format('MMM')
+    this.paymentDay = moment(this.payments?.paymentScheduledDate).format('DD')
+
     if (this.metrics.length) {
       const metric = this.metrics.find((m) => m.yearMonth == currYearMonth);
       if (metric) {

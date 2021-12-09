@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
+import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfaces/referrals.interface';
 
 @Component({
   selector: 'brave-referral-pure',
@@ -8,6 +8,7 @@ import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referra
 export class ReferralDashboardPureView implements OnInit {
   @Input() referral: IReferral | undefined;
   @Input() metrics: IGroupedYearMonthReferral[] = [];
+  @Input() payments: IPayments | undefined;
 
   constructor() {}
 
