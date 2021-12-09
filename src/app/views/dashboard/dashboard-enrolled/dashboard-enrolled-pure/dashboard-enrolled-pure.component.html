@@ -1,11 +1,17 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
 <div *ngIf="trends && report && scores" class="my-4 flex justify-center">
-  <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
+  <brave-dashboard-carousel
+    [trends]="trends"
+    [report]="report"
+    [scores]="scores"
+  ></brave-dashboard-carousel>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
-<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }}: {{ lastUpdated | date: 'shortDate' }}</p>
+<p *ngIf="lastUpdated" class="text-xs mb-1">
+  {{ content.p1 }}: {{ lastUpdated | date: "shortDate" }}
+</p>
 <div *ngIf="cards" class="mb-4">
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
@@ -40,7 +46,9 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.databreachAccountsTitle"
-      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
+      [status]="
+        cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'
+      "
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCard"
       (click)="databreachItemsClicked.emit()"
@@ -69,38 +77,11 @@
   </div>
 </div>
 
-<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
-  content.b1
-}}</brave-links-onlytext-button>
-
-<!-- Referral Gauge -->
-
-<div
-  class="flex flex-col justify-evenly items-center align-center py-6 my-4 cursor-pointer shadow rounded-sm border border-blueGray-300 bg-indigo-800 text-white"
-  (click)="referralsClicked.emit()"
+<brave-links-onlytext-button
+  class="w-full"
+  (click)="fullReportClicked.emit()"
+  >{{ content.b1 }}</brave-links-onlytext-button
 >
-  <h3>Your Referral Progress This Month:</h3>
-
-  <div class="relative">
-    <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
-      <h1 class="font-semibold text-center text-3xl">{{ totalReferredAmount }}</h1>
-      <p class="text-center text-sm" style="max-width: 50%">Referrals</p>
-    </div>
-
-    <brave-percentage-gauge
-      [percentageNumber]="[{ name: 'name', value: totalReferredAmount * 10 }]"
-      [startAngle]="180"
-      [runCalcColor]="false"
-      [view]="[150, 125]"
-    ></brave-percentage-gauge>
-  </div>
-
-  <p class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic text-white">
-    Click To See Details
-  </p>
-</div>
-
-<!--  -->
 
 <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
 <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
@@ -127,3 +108,44 @@
     </div>
   </ng-container>
 </div>
+
+
+<!-- Referral Gauge -->
+
+<h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
+<p class="text-sm mb-4">
+  Refer your friends to Brave Credit so you both earn rewards on your credit
+  journey
+</p>
+
+<div
+  class="flex flex-col justify-evenly items-center align-center py-6 mb-4 cursor-pointer shadow rounded-lg border border-blueGray-300 bg-indigo-800 text-white"
+  (click)="referralsClicked.emit()"
+>
+  <h3 class="mb-5">Friends referred this month:</h3>
+
+  <div class="relative">
+    <div
+      class="absolute min-w-full min-h-full flex flex-col justify-center items-center"
+    >
+      <h1 class="text-white font-semibold text-center text-7xl mb-2">
+        {{ totalReferredAmount }}/10
+      </h1>
+      <p class="text-center text-2xl" style="max-width: 50%">Referrals</p>
+    </div>
+
+    <brave-percentage-gauge
+      [percentageNumber]="[{ name: 'name', value: totalReferredAmount * 10 }]"
+      [startAngle]="180"
+      [runCalcColor]="false"
+      [view]="[350, 250]"
+    ></brave-percentage-gauge>
+  </div>
+
+  <div class="flex justify-center items-center mt-5 mb-5">
+    <p class="text-lg font-bold">Learn More</p>
+    <span class="material-icons-outlined"> chevron_right </span>
+  </div>
+</div>
+
+<!--  -->
