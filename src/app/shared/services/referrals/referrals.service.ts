@@ -5,7 +5,7 @@ import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class ReferralsService {
    */
   async createReferral(email: string, referredByCode?: string | null): Promise<any> {
     const url = `${environment.marketing}/referral`;
-    let body = { id: email, referredByCode };
+    let body = { id: email, campaign: this.campaign, referredByCode };
     let headers = {};
     let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
     return await fetch(signedReq);
@@ -65,8 +65,6 @@ export class ReferralsService {
       .get<any>(url, { headers })
       .toPromise();
   }
-
-
 
   /**
    * HTTP Requests to get the referral earnings by campaign and grouped monthly
