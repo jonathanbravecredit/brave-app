@@ -22,9 +22,9 @@ export class CreditUtilizationFillBarComponent implements OnInit {
     this.isOpen = this.openClosed?.toLowerCase() === 'o';
 
     if (this.isLoan) {
-      this.utilPercentage = Math.floor((+this.highestBalance! - +this.currentBalance!) / +this.highestBalance!);
+      this.utilPercentage = (+this.highestBalance! - +this.currentBalance!) / +this.highestBalance!;
     } else {
-      this.utilPercentage = Math.floor((+this.currentBalance! / +this.maxCreditAmount!) * 100);
+      this.utilPercentage = +this.currentBalance! / +this.maxCreditAmount!;
     }
   }
 
