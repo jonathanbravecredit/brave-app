@@ -14,6 +14,7 @@ import {
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
