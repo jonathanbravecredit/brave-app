@@ -4,9 +4,9 @@ import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.i
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
-import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import * as moment from 'moment';
 
 @Component({
@@ -40,7 +40,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   AnalyticClickEvents = AnalyticClickEvents;
   totalReferredAmount: number = 0;
 
-  constructor() {}
+  constructor(public featureflags: FeatureFlagsService) {}
 
   ngOnInit(): void {
     const now = new Date();
