@@ -18,13 +18,13 @@ export class ReferralsService {
 
   /**
    * HTTP Requests to create referral in referral service backend
-   * @param email
+   * @param sub
    * @param referredByCode
    * @returns
    */
-  async createReferral(email: string, referredByCode?: string | null): Promise<any> {
+  async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
     const url = `${environment.marketing}/referral`;
-    let body = { id: email, campaign: this.campaign, referredByCode };
+    let body = { id: sub, campaign: this.campaign, referredByCode };
     let headers = {};
     let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
     return await fetch(signedReq);

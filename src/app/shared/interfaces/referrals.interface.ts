@@ -2,10 +2,11 @@ export interface IReferral {
   id: string;
   createdOn: string;
   modifiedOn: string;
-  processingStatus: "pending" | "paid";
-  enrollmentStatus: "pending" | "enrolled";
+  processingStatus: 'pending' | 'paid';
+  enrollmentStatus: 'pending' | 'enrolled';
   referralCode: string;
   referredByCode: string;
+  campaign?: string;
 }
 
 export interface IGetReferral {
@@ -14,10 +15,11 @@ export interface IGetReferral {
 
 export interface IUpdateReferral {
   id: string;
+  campaign?: string;
   referralCode?: string;
   referredByCode?: string;
-  enrollmentStatus?: "pending" | "enrolled";
-  processingStatus?: "pending" | "paid";
+  enrollmentStatus?: 'pending' | 'enrolled';
+  processingStatus?: 'pending' | 'paid';
 }
 
 export interface IDeleteReferral {
@@ -26,6 +28,7 @@ export interface IDeleteReferral {
 
 export interface ICreateReferral {
   id: string;
+  campaign?: string;
   referredByCode?: string;
 }
 
