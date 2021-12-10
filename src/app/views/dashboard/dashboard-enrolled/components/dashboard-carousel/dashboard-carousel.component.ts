@@ -13,9 +13,9 @@ import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-sc
   templateUrl: './dashboard-carousel.component.html',
 })
 export class DashboardCarouselComponent implements OnInit {
-  @Input() trends!: IGetTrendingData;
-  @Input() report!: IMergeReport;
-  @Input() scores: ICreditScoreTracking | undefined;
+  @Input() trends: IGetTrendingData | null | undefined;
+  @Input() report: IMergeReport | null | undefined;
+  @Input() scores: ICreditScoreTracking | null | undefined;
   @Input() lastUpdated!: string;
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
@@ -23,7 +23,9 @@ export class DashboardCarouselComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const currentScore = new ParseRiskScorePipe().transform(this.report);
+    const currentScore = this.report
+      ? new ParseRiskScorePipe().transform(this.report)
+      : null;
     const graphic: ICreditReportGraphic = !this.scores
       ? { currentValue: currentScore, ptsChange: 0 }
       : { currentValue: this.scores.currentScore, ptsChange: this.scores.delta };

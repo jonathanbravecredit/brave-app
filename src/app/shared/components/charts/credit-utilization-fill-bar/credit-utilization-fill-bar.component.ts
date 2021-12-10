@@ -10,7 +10,8 @@ export class CreditUtilizationFillBarComponent implements OnInit {
   @Input() currentBalance: string | number | undefined;
   @Input() highestBalance: string | number | undefined;
   @Input() openClosed: string | undefined;
-  utilPercentage: string | undefined;
+  @Input() creditLimit: string | number | undefined;
+  utilPercentage: number | undefined;
   isLoan: boolean = false;
   isOpen: boolean = false;
 
@@ -18,22 +19,43 @@ export class CreditUtilizationFillBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoan =
-      this.creditType === "c" ||
-      this.creditType === "i" ||
-      this.creditType === "m";
+      this.creditType?.toLowerCase() === "c" ||
+      this.creditType?.toLowerCase() === "i" ||
+      this.creditType?.toLowerCase() === "m";
 
     this.isOpen = this.openClosed?.toLowerCase() === "o";
 
     if (this.isLoan) {
-      this.utilPercentage = `${Math.floor(
-        ((+this.highestBalance! - +this.currentBalance!) /
-          +this.highestBalance!) *
-          100
-      )}%`;
+      if (this.highestBalance === 0) {
+        this.utilPercentage = 0;
+      } else {
+        this.utilPercentage =
+          (+this.highestBalance! - +this.currentBalance!) /
+          +this.highestBalance!;
+      }
     } else {
-      this.utilPercentage = `${Math.floor(
-        (+this.currentBalance! / +this.maxCreditAmount!) * 100
-      )}%`;
+      const creditLimit = +(this.creditLimit || 0);
+      if (!creditLimit || `${creditLimit}` === "NaN") {
+        this.utilPercentage = 0;
+      } else {
+        this.utilPercentage = +this.currentBalance! / +this.creditLimit!;
+      }
+    }
+  }
+
+  get barWidth(): string {
+    if (this.isLoan) {
+      return `${(1 - (this.utilPercentage || 0)) * 100}%`;
+    } else {
+      return `${(this.utilPercentage || 0) * 100}%`;
+    }
+  }
+
+  get barPercent(): number {
+    if (this.isLoan) {
+      return 1 - (this.utilPercentage || 0);
+    } else {
+      return this.utilPercentage || 0;
     }
   }
 }
