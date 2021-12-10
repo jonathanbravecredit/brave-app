@@ -76,9 +76,9 @@ export class CreditUtilizationService {
     return utilizationPerc;
   }
 
-  getCreditUtilizationStatus(tradelines: ITradeLinePartition[]): string {
+  getCreditUtilizationSnapshotStatus(tradelines: ITradeLinePartition[]): string {
     const perc = this.calculateCreditUtilization(tradelines);
-    return this.calculateCreditStatus(perc);
+    return this.mapUtilizationStatusToSnapshot(this.calculateCreditStatus(perc));
   }
 
   sumDebtAmount(account: ITradeLinePartition[]): number {
@@ -134,5 +134,16 @@ export class CreditUtilizationService {
       default:
         return 'verypoor';
     }
+  }
+
+  mapUtilizationStatusToSnapshot(status: string): string {
+    const mapper: Record<string, string> = {
+      verypoor: 'critical',
+      poor: 'semicritical',
+      fair: 'danger',
+      good: 'normal',
+      excellent: 'safe',
+    };
+    return mapper[status.toLowerCase()];
   }
 }

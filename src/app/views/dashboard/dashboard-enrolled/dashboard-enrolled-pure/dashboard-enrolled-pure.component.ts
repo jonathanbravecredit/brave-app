@@ -20,7 +20,8 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() trends: IGetTrendingData | undefined | null;
   @Input() metrics!: IGroupedYearMonthReferral[] | null;
   @Input() creditMix: IRecommendationText | undefined;
-  @Input() creditUtilization: string | undefined;
+  @Input() creditMixStatus: string | undefined;
+  @Input() creditUtilizationStatus: string | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];

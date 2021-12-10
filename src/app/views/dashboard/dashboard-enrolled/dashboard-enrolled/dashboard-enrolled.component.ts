@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
@@ -30,14 +27,13 @@ export class DashboardEnrolledComponent implements OnInit {
   trends!: IGetTrendingData | null;
   metrics!: IGroupedYearMonthReferral[] | null;
   creditMix: IRecommendationText | undefined;
-  creditUtilization: string | undefined;
+  creditMixStatus: string | undefined;
+  creditUtilizationStatus: string | undefined;
   tradelineSummary: ICreditMixTLSummary | undefined;
 
   constructor(
-    private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private analytics: AnalyticsService,
     private dashboardService: DashboardService,
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
@@ -56,7 +52,8 @@ export class DashboardEnrolledComponent implements OnInit {
 
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
-      this.creditUtilization = this.creditUtilizationService.getCreditUtilizationStatus(tradelines);
+      this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
+      this.creditUtilizationStatus = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
