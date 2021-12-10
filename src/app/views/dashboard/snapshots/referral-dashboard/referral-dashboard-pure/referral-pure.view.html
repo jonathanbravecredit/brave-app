@@ -14,8 +14,9 @@
     [metrics]="metrics"
     [referral]="referral"
   ></brave-referral-amount-link>
-  <div>
-    <brave-facebook-share></brave-facebook-share>
+  <div class="min-w-full flex justify-evenly">
+    <brave-facebook-share [referralCode]="referral?.referralCode"></brave-facebook-share>
+    <brave-twitter-share [referralCode]="referral?.referralCode"></brave-twitter-share>
   </div>
   <brave-referral-body-text></brave-referral-body-text>
 </div>

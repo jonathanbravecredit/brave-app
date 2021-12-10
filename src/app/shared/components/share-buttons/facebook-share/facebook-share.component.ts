@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from "@angular/core";
   templateUrl: "./facebook-share.component.html",
 })
 export class FacebookShareComponent implements OnInit {
-  @Input() userReferralLink: string | undefined;
+  @Input() referralCode: string | undefined;
   fullReferralLink: string | undefined;
 
   constructor() {}
@@ -13,7 +13,7 @@ export class FacebookShareComponent implements OnInit {
   ngOnInit(): void {
     this.fullReferralLink =
       "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fapp.brave.credit%2Fauth%2Fsignup%3FreferralCode%3D" +
-      this.userReferralLink +
+      this.referralCode +
       "&amp;src=sdkpreparse";
   }
 }

@@ -118,6 +118,7 @@ import { PercentageBadgeComponent } from "./badges/percentage-badge/percentage-b
 import { PercentageGaugeComponent } from "./charts/percentage-gauge/percentage-gauge.component";
 import { CreditUtilizationFillBarComponent } from "./charts/credit-utilization-fill-bar/credit-utilization-fill-bar.component";
 import { FacebookShareComponent } from "./share-buttons/facebook-share/facebook-share.component";
+import { TwitterShareComponent } from "./share-buttons/twitter-share/twitter-share.component";
 
 const components = [
   BaseFormComponent,
@@ -230,6 +231,7 @@ const pipes = [
   BasePaginationPipe,
   BaseModalPipe,
   FacebookShareComponent,
+  TwitterShareComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
