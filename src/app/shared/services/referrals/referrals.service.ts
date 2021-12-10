@@ -39,8 +39,7 @@ export class ReferralsService implements OnDestroy {
    * @returns
    */
 
-  async createReferral(email: string, referredByCode?: string | null): Promise<any> {
-    if (!this.isActive) return;
+  async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
     const url = `${environment.marketing}/referral`;
     let body = { id: sub, campaign: this.campaign, referredByCode };
     let headers = {};
@@ -55,7 +54,6 @@ export class ReferralsService implements OnDestroy {
    * @returns
    */
   async updateReferral(id: string, enrollmentStatus?: 'pending' | 'enrolled'): Promise<any> {
-    if (!this.isActive) return;
     const url = `${environment.marketing}/referral`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const body = JSON.stringify({

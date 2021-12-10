@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
@@ -32,10 +29,8 @@ export class DashboardEnrolledComponent implements OnInit {
   recommendation: IRecommendationText | undefined;
 
   constructor(
-    private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private analytics: AnalyticsService,
     private dashboardService: DashboardService,
     private creditMixService: CreditMixService,
   ) {
