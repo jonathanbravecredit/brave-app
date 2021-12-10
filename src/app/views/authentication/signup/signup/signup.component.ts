@@ -27,7 +27,6 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.AuthSignup);
   }
 
   /**

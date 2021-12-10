@@ -22,7 +22,7 @@ export class AuthService {
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private router: Router, private analytics: AnalyticsService, private interstitial: InterstitialService) {}
+  constructor(private router: Router, private interstitial: InterstitialService) {}
 
   /**
    * This method is designed to help reload the user if the ID ever goes null
@@ -162,9 +162,21 @@ export class AuthService {
   }
 
   /**
+   * Get JWT tokens for auth
+   * @returns
+   */
+  async getAccessTokenJwtToken(): Promise<string | null> {
+    try {
+      return (await Auth.currentSession()).getAccessToken().getJwtToken();
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /**
    *
    */
-  async getAuthTokens(): Promise<string> {
+  async getIdTokenJwtTokens(): Promise<string> {
     try {
       const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       let session = user.getSignInUserSession();

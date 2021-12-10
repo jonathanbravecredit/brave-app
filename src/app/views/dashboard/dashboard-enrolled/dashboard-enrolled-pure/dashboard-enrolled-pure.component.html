@@ -15,6 +15,8 @@
       typeOfSnapshot="time"
       [value]="cards.negativeCardCount || 0"
       [status]="cards.negativeCardStatus || 'safe'"
+      braveAnalytics
+      [analyticClickEvents]="AnalyticClickEvents.SnapshotNegativeItemsModule"
       (click)="negativeItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -29,6 +31,8 @@
             : cards.forbearanceCardStatus || 'safe'
           : cards.forbearanceCardStatus
       "
+      braveAnalytics
+      [analyticClickEvents]="AnalyticClickEvents.SnapshotForbearanceModule"
       (click)="forbearanceItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -36,7 +40,11 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [title]="content.databreachAccountsTitle"
-      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
+      [status]="
+        cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'
+      "
+      braveAnalytics
+      [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCard"
       (click)="databreachItemsClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -45,6 +53,8 @@
       tendency="no-tendency"
       status="danger"
       title="Credit Utilization"
+      braveAnalytics
+      [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
       (click)="creditUtilizationClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -52,9 +62,10 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       label="new"
-      [rating]="rating"
-      [color]="color"
+      status="danger"
       title="Credit Mix"
+      braveAnalytics
+      [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
       (click)="creditMixClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
@@ -67,7 +78,11 @@
 <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
 <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
 <div class="mt-2 flex flex-col justify-center items-center">
-  <brave-credit-builder-card></brave-credit-builder-card>
+  <brave-credit-builder-card
+    braveAnalytics
+    [analyticClickEvents]="AnalyticClickEvents.DashboardProduct"
+    [analyticConfig]="{ google: false, mixpanel: false, brave: true }"
+  ></brave-credit-builder-card>
   <p
     class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
     (click)="showDisclaimer = !showDisclaimer"
@@ -85,3 +100,44 @@
     </div>
   </ng-container>
 </div>
+
+
+<!-- Referral Gauge -->
+
+<h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
+<p class="text-sm mb-4">
+  Refer your friends to Brave Credit so you both earn rewards on your credit
+  journey
+</p>
+
+<div
+  class="flex flex-col justify-evenly items-center align-center py-6 mb-4 cursor-pointer shadow rounded-lg border border-blueGray-300 bg-indigo-800 text-white"
+  (click)="referralsClicked.emit()"
+>
+  <h3 class="mb-5">Friends referred this month:</h3>
+
+  <div class="relative">
+    <div
+      class="absolute min-w-full min-h-full flex flex-col justify-center items-center"
+    >
+      <h1 class="text-white font-semibold text-center text-7xl mb-2">
+        {{ totalReferredAmount }}/10
+      </h1>
+      <p class="text-center text-2xl" style="max-width: 50%">Referrals</p>
+    </div>
+
+    <brave-percentage-gauge
+      [percentageNumber]="[{ name: 'name', value: totalReferredAmount * 10 }]"
+      [startAngle]="180"
+      [runCalcColor]="false"
+      [view]="[350, 250]"
+    ></brave-percentage-gauge>
+  </div>
+
+  <div class="flex justify-center items-center mt-5 mb-5">
+    <p class="text-lg font-bold">Learn More</p>
+    <span class="material-icons-outlined"> chevron_right </span>
+  </div>
+</div>
+
+<!--  -->
