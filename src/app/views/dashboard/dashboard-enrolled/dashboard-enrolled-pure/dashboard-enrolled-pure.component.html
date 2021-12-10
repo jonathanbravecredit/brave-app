@@ -1,17 +1,11 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
 <div *ngIf="trends && report && scores" class="my-4 flex justify-center">
-  <brave-dashboard-carousel
-    [trends]="trends"
-    [report]="report"
-    [scores]="scores"
-  ></brave-dashboard-carousel>
+  <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
-<p *ngIf="lastUpdated" class="text-xs mb-1">
-  {{ content.p1 }}: {{ lastUpdated | date: "shortDate" }}
-</p>
+<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }}: {{ lastUpdated | date: 'shortDate' }}</p>
 <div *ngIf="cards" class="mb-4">
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
@@ -64,7 +58,7 @@
       (click)="creditUtilizationClicked.emit()"
     ></brave-snapshot-display-card>
   </div>
-  <!-- <div class="mt-6 hover:cursor-pointer">
+  <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
       tendency="no-tendency"
       label="new"
@@ -74,14 +68,12 @@
       [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
       (click)="creditMixClicked.emit()"
     ></brave-snapshot-display-card>
-  </div> -->
+  </div>
 </div>
 
-<brave-links-onlytext-button
-  class="w-full"
-  (click)="fullReportClicked.emit()"
-  >{{ content.b1 }}</brave-links-onlytext-button
->
+<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
+  content.b1
+}}</brave-links-onlytext-button>
 
 <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
 <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
