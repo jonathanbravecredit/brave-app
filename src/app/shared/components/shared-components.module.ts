@@ -117,6 +117,7 @@ import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-f
 import { PercentageBadgeComponent } from './badges/percentage-badge/percentage-badge.component';
 import { PercentageGaugeComponent } from './charts/percentage-gauge/percentage-gauge.component';
 import { CreditUtilizationFillBarComponent } from './charts/credit-utilization-fill-bar/credit-utilization-fill-bar.component';
+import { FacebookShareComponent } from './share-buttons/facebook-share/facebook-share.component';
 
 const components = [
   BaseFormComponent,
@@ -244,7 +245,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, FacebookShareComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
