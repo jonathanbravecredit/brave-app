@@ -68,10 +68,17 @@ import { CreditMixIconsComponent } from "./snapshots/credit-mix/components/credi
 import { CreditMixSubHeadersComponent } from "./snapshots/credit-mix/components/credit-mix-sub-headers/credit-mix-sub-headers.component";
 import { CreditMixCardSectionComponent } from "./snapshots/credit-mix/components/credit-mix-card-section/credit-mix-card-section.component";
 import { CreditMixRecommendationComponent } from "./snapshots/credit-mix/components/credit-mix-recommendation/credit-mix-recommendation.component";
-import { CreditMixFilterPipePipe } from './snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe';
-import { CreditMixCardComponent } from './snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component';
-import { DashboardCarouselComponent } from './dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component';
-
+import { CreditMixFilterPipePipe } from "./snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe";
+import { CreditMixCardComponent } from "./snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component";
+import { DashboardCarouselComponent } from "./dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component";
+import { ReferralDashboardView } from "./snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view";
+import { ReferralDashboardPureView } from "./snapshots/referral-dashboard/referral-dashboard-pure/referral-pure.view";
+import { ReferralHeaderComponent } from "./snapshots/referral-dashboard/components/referral-header/referral-header.component";
+import { ReferralBannerComponent } from "./snapshots/referral-dashboard/components/referral-banner/referral-banner.component";
+import { ReferralEarningsComponent } from './snapshots/referral-dashboard/components/referral-earnings/referral-earnings.component';
+import { ReferralAmountLinkComponent } from './snapshots/referral-dashboard/components/referral-amount-link/referral-amount-link.component';
+import { ReferralBodyTextComponent } from './snapshots/referral-dashboard/components/referral-body-text/referral-body-text.component';
+import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
 
 const modules = [
   CommonModule,
@@ -81,6 +88,7 @@ const modules = [
   DisputesModule,
   CreditReportModule,
   DashboardRoutingModule,
+  SharedDirectivesModule
 ];
 const components = [
   DashboardComponent,
@@ -136,13 +144,17 @@ const components = [
   CreditMixRecommendationComponent,
   DashboardCarouselComponent,
   CreditMixFilterPipePipe,
-  CreditMixCardComponent
+  CreditMixCardComponent,
+  ReferralDashboardPureView,
+  ReferralDashboardView,
+  ReferralHeaderComponent,
+  ReferralBannerComponent,
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, ReferralEarningsComponent, ReferralAmountLinkComponent, ReferralBodyTextComponent],
   imports: [...modules],
   exports: [...components],
 })

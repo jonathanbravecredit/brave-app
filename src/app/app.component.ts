@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { v4 } from 'uuid';
 import { Hub } from '@aws-amplify/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Observable } from 'rxjs';
@@ -25,6 +26,8 @@ export class AppComponent implements OnInit {
   ) {
     this.spinner$ = this.interstitial.open$.asObservable();
     this.message$ = this.interstitial.message$.asObservable();
+    const sessionId = sessionStorage.getItem('sessionId') || v4();
+    sessionStorage.setItem('sessionId', sessionId);
 
     Hub.listen('auth', async (data) => {
       const { channel, payload } = data;

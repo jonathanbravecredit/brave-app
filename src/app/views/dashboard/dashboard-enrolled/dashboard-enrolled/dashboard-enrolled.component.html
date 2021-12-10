@@ -5,6 +5,7 @@
       [cards]="snapshots"
       [scores]="scores"
       [trends]="trends"
+      [metrics]="metrics"
       [welcomeMsg]="welcomeMsg"
       [lastUpdated]="lastUpdated"
       [rating]="recommendation?.rating!"
@@ -16,6 +17,7 @@
       (disputesClicked)="onDisputesClicked()"
       (creditUtilizationClicked)="onCreditUtilizationClicked()"
       (creditMixClicked)="onCreditMixClicked()"
+      (referralsClicked)="onReferralsClicked()"
     ></brave-dashboard-enrolled-pure>
   </ng-container>
 </div>

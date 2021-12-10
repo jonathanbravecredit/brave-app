@@ -10,6 +10,7 @@ import { ComplianceModule } from '@views/compliance/compliance.module';
 import { DashboardModule } from '@views/dashboard/dashboard.module';
 import { OnboardingModule } from '@views/onboarding/onboarding.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 @NgModule({
   declarations: [],
@@ -19,6 +20,7 @@ import { NgxMaskModule } from 'ngx-mask';
     FormsModule,
     SharedComponentsModule,
     SharedPipesModule,
+    SharedDirectivesModule,
     NgxMaskModule,
     AuthenticationModule,
     ComplianceModule,
