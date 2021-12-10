@@ -15,5 +15,14 @@
         >
       </div>
     </div>
-    <div class="text-sm">{{isLoan ? "You have paid down" : "You're using"}} <span class="text-sm font-bold">{{isOpen ? utilPercentage : '--' }}</span> of your {{isLoan ? "loan" : "credit limit"}}</div>
+    <div class="min-w-full flex justify-between" style="font-size: 0.5rem">
+      <span>$0</span>
+      <span>{{ isLoan ? (highestBalance | currency) : (maxCreditAmount | currency) }}</span>
+    </div>
+  </div>
+  <div class="text-sm">
+    {{ isLoan ? 'You have paid down' : "You're using" }}
+    <span class="text-sm font-bold">{{ isOpen ? (utilPercentage | percent) : '--' }}</span> of your
+    {{ isLoan ? 'loan' : 'credit limit' }}
+  </div>
 </div>
