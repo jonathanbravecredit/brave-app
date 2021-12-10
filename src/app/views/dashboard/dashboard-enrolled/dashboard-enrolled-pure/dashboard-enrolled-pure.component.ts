@@ -18,13 +18,13 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() cards: DashboardStateModel | undefined;
   @Input() scores: ICreditScoreTracking | undefined | null;
   @Input() trends: IGetTrendingData | undefined | null;
+  @Input() metrics!: IGroupedYearMonthReferral[] | null;
+  @Input() creditMix: IRecommendationText | undefined;
+  @Input() creditUtilization: string | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];
   @Input() data: {}[] | undefined;
-  @Input() rating: string = '';
-  @Input() color: string | undefined;
-  @Input() metrics!: IGroupedYearMonthReferral[] | null;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();

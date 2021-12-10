@@ -14,6 +14,7 @@ import {
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -28,8 +29,9 @@ export class DashboardEnrolledComponent implements OnInit {
   scores!: ICreditScoreTracking | null;
   trends!: IGetTrendingData | null;
   metrics!: IGroupedYearMonthReferral[] | null;
+  creditMix: IRecommendationText | undefined;
+  creditUtilization: string | undefined;
   tradelineSummary: ICreditMixTLSummary | undefined;
-  recommendation: IRecommendationText | undefined;
 
   constructor(
     private store: Store,
@@ -38,6 +40,7 @@ export class DashboardEnrolledComponent implements OnInit {
     private analytics: AnalyticsService,
     private dashboardService: DashboardService,
     private creditMixService: CreditMixService,
+    private creditUtilizationService: CreditUtilizationService,
   ) {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
@@ -45,14 +48,15 @@ export class DashboardEnrolledComponent implements OnInit {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
-      if (this.report?.TrueLinkCreditReportType.TradeLinePartition) {
-        this.tradelineSummary = this.creditMixService.getTradelineSummary(
-          this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
-            ? this.report?.TrueLinkCreditReportType.TradeLinePartition
-            : [this.report?.TrueLinkCreditReportType.TradeLinePartition],
-        );
-      }
-      this.recommendation = this.creditMixService.getRecommendations(this.tradelineSummary);
+      const tradelines = this.report?.TrueLinkCreditReportType.TradeLinePartition
+        ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
+          ? this.report?.TrueLinkCreditReportType.TradeLinePartition
+          : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
+        : [];
+
+      this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
+      this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
+      this.creditUtilization = this.creditUtilizationService.getCreditUtilizationStatus(tradelines);
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
@@ -83,9 +87,6 @@ export class DashboardEnrolledComponent implements OnInit {
     this.router.navigate(['../report/snapshot/forbearance'], {
       relativeTo: this.route,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate(['../report/snapshot/databreach'], {
-      relativeTo: this.route,
-    });
   }
 
   onDatabreachItemsClicked() {

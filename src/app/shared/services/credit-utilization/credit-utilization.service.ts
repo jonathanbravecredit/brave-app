@@ -68,4 +68,71 @@ export class CreditUtilizationService {
     if (!tradelines.length) return [];
     return tu.filters.filterTradelinesByType(tradelines, 'r');
   }
+
+  calculateCreditUtilization(tradelines: ITradeLinePartition[]): number {
+    const debtAmount = this.sumDebtAmount(tradelines);
+    const totalAmount = this.sumTotalAmount(tradelines);
+    const utilizationPerc = this.calcUtilzationPerc(debtAmount, totalAmount);
+    return utilizationPerc;
+  }
+
+  getCreditUtilizationStatus(tradelines: ITradeLinePartition[]): string {
+    const perc = this.calculateCreditUtilization(tradelines);
+    return this.calculateCreditStatus(perc);
+  }
+
+  sumDebtAmount(account: ITradeLinePartition[]): number {
+    return account.reduce<number>((acc: number, tradePart: ITradeLinePartition) => {
+      if (tradePart.Tradeline?.OpenClosed?.symbol === 'C') {
+        return acc;
+      }
+      if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
+        return acc;
+      }
+      if (+tradePart.Tradeline?.GrantedTrade.CreditLimit! <= 0) {
+        return acc;
+      }
+      return acc + +tradePart.Tradeline?.currentBalance!;
+    }, 0);
+  }
+
+  sumTotalAmount(account: ITradeLinePartition[]): number {
+    return account.reduce<number>((acc: number, tradePart: ITradeLinePartition) => {
+      if (tradePart.Tradeline?.OpenClosed?.symbol === 'C') {
+        return acc;
+      }
+      if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
+        return acc;
+      }
+      return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;
+    }, 0);
+  }
+
+  calcUtilzationPerc(debt: number, total: number): number {
+    if (total === 0) return 0;
+    return Math.floor((debt / total) * 100);
+  }
+
+  calculateCreditStatus(percetangeUtilization: number | string | undefined): string {
+    if (percetangeUtilization === undefined) {
+      return 'closed';
+    }
+
+    if (percetangeUtilization === '<1') {
+      return 'excellent';
+    }
+
+    switch (true) {
+      case percetangeUtilization! <= 9:
+        return 'excellent';
+      case percetangeUtilization! <= 29:
+        return 'good';
+      case percetangeUtilization! <= 49:
+        return 'fair';
+      case percetangeUtilization! <= 74:
+        return 'poor';
+      default:
+        return 'verypoor';
+    }
+  }
 }
