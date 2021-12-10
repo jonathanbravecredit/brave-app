@@ -27,25 +27,23 @@ const Template: Story<CreditUtilizationFillBarComponent> = (args: any) => ({
   },
 });
 
-export const Default = Template.bind({});
-Default.args = {};
-
 export const Loan = Template.bind({});
 Loan.args = {
   creditType: 'I',
-  maxCreditAmount: 1200,
-  currentBalance: 200,
-  highestBalance: 0,
-  openClosed: 'O',
+  maxCreditAmount: 0,
+  currentBalance: 0,
+  highestBalance: 100,
+  openClosed: 'c',
   creditLimit: 0
 };
 
 export const CreditCard = Template.bind({});
 CreditCard.args = {
-  creditType: 'C',
-  maxCreditAmount: 1200,
-  currentBalance: 200,
+  creditType: 'r',
+  maxCreditAmount: 0,
+  currentBalance: 1200,
   highestBalance: 0,
-  openClosed: 'O',
-  creditLimit: 0
+  openClosed: 'c',
+  creditLimit: 1000
 };
+
