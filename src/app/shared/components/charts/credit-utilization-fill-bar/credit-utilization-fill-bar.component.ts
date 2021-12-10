@@ -28,7 +28,15 @@ export class CreditUtilizationFillBarComponent implements OnInit {
     }
   }
 
-  get barWidth(): number {
+  get barWidth(): string {
+    if (this.isLoan) {
+      return `${(1 - (this.utilPercentage || 0)) * 100}%`;
+    } else {
+      return `${this.utilPercentage || 0 * 100}%`;
+    }
+  }
+
+  get barPercent(): number {
     if (this.isLoan) {
       return 1 - (this.utilPercentage || 0);
     } else {
