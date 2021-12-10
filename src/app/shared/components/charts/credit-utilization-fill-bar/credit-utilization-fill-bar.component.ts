@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'brave-credit-utilization-fill-bar',
-  templateUrl: './credit-utilization-fill-bar.component.html',
+  selector: "brave-credit-utilization-fill-bar",
+  templateUrl: "./credit-utilization-fill-bar.component.html",
 })
 export class CreditUtilizationFillBarComponent implements OnInit {
   @Input() creditType: string | undefined;
@@ -18,18 +18,27 @@ export class CreditUtilizationFillBarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.isLoan = this.creditType === 'c' || this.creditType === 'i' || this.creditType === 'm';
+    this.isLoan =
+      this.creditType?.toLowerCase() === "c" ||
+      this.creditType?.toLowerCase() === "i" ||
+      this.creditType?.toLowerCase() === "m";
 
-    this.isOpen = this.openClosed?.toLowerCase() === 'o';
+    this.isOpen = this.openClosed?.toLowerCase() === "o";
 
     if (this.isLoan) {
-      this.utilPercentage = (+this.highestBalance! - +this.currentBalance!) / +this.highestBalance!;
-    } else {
-      const creditLimit = +(this.creditLimit || 0);
-      if (!creditLimit || `${creditLimit}` === 'NaN') {
+      if (this.highestBalance === 0) {
         this.utilPercentage = 0;
       } else {
-        this.utilPercentage = +this.currentBalance! / +this.maxCreditAmount!;
+        this.utilPercentage =
+          (+this.highestBalance! - +this.currentBalance!) /
+          +this.highestBalance!;
+      }
+    } else {
+      const creditLimit = +(this.creditLimit || 0);
+      if (!creditLimit || `${creditLimit}` === "NaN") {
+        this.utilPercentage = 0;
+      } else {
+        this.utilPercentage = +this.currentBalance! / +this.creditLimit!;
       }
     }
   }
@@ -38,7 +47,7 @@ export class CreditUtilizationFillBarComponent implements OnInit {
     if (this.isLoan) {
       return `${(1 - (this.utilPercentage || 0)) * 100}%`;
     } else {
-      return `${this.utilPercentage || 0 * 100}%`;
+      return `${(this.utilPercentage || 0) * 100}%`;
     }
   }
 
