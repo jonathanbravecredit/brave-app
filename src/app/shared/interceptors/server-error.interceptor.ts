@@ -19,12 +19,12 @@ export class ServerErrorInterceptor implements HttpInterceptor {
       tap(
         (evt) => {
           if (evt instanceof HttpResponse) {
-            this.interstitial.closeInterstitial();
+            this.interstitial.fetching$.next(false)
           }
         },
         (error) => {
           if (error instanceof HttpErrorResponse) {
-            this.interstitial.closeInterstitial();
+            this.interstitial.fetching$.next(false)
           }
         },
       ),
