@@ -165,7 +165,7 @@ export class TransunionDisputeQueries extends TransunionBase {
   }
 
   static isDisputeable(personal: IPersonalItemsDetailsConfig): boolean {
-    return personal.key !== 'curraddress' && personal.key !== 'name';
+    return personal.key !== 'curraddress' && personal.key !== 'name' && personal.key !== 'employer';
   }
   /*===================================*/
   //          FINDINGS RECORDS

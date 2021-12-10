@@ -6,7 +6,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { CreditUtilizationFillBarComponent } from "./credit-utilization-fill-bar.component";
 
 export default {
-  title: "app/components/charts/Fill-Bar",
+  title: "app/components/charts/utlization-fill-bar",
   component: CreditUtilizationFillBarComponent,
   decorators: [
     moduleMetadata({
@@ -27,5 +27,23 @@ const Template: Story<CreditUtilizationFillBarComponent> = (args: any) => ({
   },
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Loan = Template.bind({});
+Loan.args = {
+  creditType: 'I',
+  maxCreditAmount: 0,
+  currentBalance: 0,
+  highestBalance: 100,
+  openClosed: 'c',
+  creditLimit: 0
+};
+
+export const CreditCard = Template.bind({});
+CreditCard.args = {
+  creditType: 'r',
+  maxCreditAmount: 0,
+  currentBalance: 1200,
+  highestBalance: 0,
+  openClosed: 'c',
+  creditLimit: 1000
+};
+

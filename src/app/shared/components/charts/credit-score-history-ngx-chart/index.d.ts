@@ -29,5 +29,5 @@ export interface ICreditScoreHistoryNgxChartInputs {
   trends: IGetTrendingData | null;
   report: IMergeReport | undefined;
   lastUpdated: number | string | Date | undefined;
-  currentCreditScore: number | undefined;
+  currentCreditScore: number | null | undefined;
 }

@@ -165,7 +165,7 @@ export class AuthService {
    * Get JWT tokens for auth
    * @returns
    */
-  async getJwtToken(): Promise<string | null> {
+  async getAccessTokenJwtToken(): Promise<string | null> {
     try {
       return (await Auth.currentSession()).getAccessToken().getJwtToken();
     } catch (err) {
@@ -176,7 +176,7 @@ export class AuthService {
   /**
    *
    */
-  async getAuthTokens(): Promise<string> {
+  async getIdTokenJwtTokens(): Promise<string> {
     try {
       const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       let session = user.getSignInUserSession();

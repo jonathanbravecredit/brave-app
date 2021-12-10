@@ -9,14 +9,12 @@ import {
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
-import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
 import { StateService } from '@shared/services/state/state.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
 
 @Injectable({
