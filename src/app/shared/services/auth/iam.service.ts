@@ -34,7 +34,6 @@ export class IamService {
         return Promise.resolve(cred);
       })
       .then((essentialCredentials) => {
-        console.log('essentialCredentials ===> ', essentialCredentials);
         let opts: IAWS4FetchOptions = {
           accessKeyId: essentialCredentials.accessKeyId,
           secretAccessKey: essentialCredentials.secretAccessKey,
