@@ -7,6 +7,7 @@ import { AnalyticClickEvents } from '@shared/services/analytics/analytics/consta
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
+import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import * as moment from 'moment';
 
 @Component({
