@@ -2803,6 +2803,11 @@ select {
   line-height: 1;
 }
 
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
 .text-2\.5 {
   font-size: 0.625rem;
 }
