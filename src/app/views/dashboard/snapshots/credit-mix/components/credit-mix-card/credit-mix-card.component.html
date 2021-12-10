@@ -20,9 +20,17 @@
         <p class="brave-body1-semibold">{{ percetangeUtilization || "--" }}%</p>
       </div>
 
-      <div class="flex flex-row">
+      <div *ngIf="isCreditCard"  class="flex flex-row">
         <!-- credit balance  -->
         <span class="brave-body1">Card Balance:&nbsp;</span>
+        <span class="brave-body1">{{
+          creditUtilization!.currentBalance | currency
+        }}</span>
+      </div>
+
+      <div *ngIf="!isCreditCard"  class="flex flex-row">
+        <!-- credit balance  -->
+        <span class="brave-body1">Current Balance:&nbsp;</span>
         <span class="brave-body1">{{
           creditUtilization!.currentBalance | currency
         }}</span>
@@ -39,7 +47,7 @@
 
       <div *ngIf="!isCreditCard" class="flex flex-row">
         <!-- credit limit  -->
-        <span class="brave-body1">Highest Avalible Balance:&nbsp;</span>
+        <span class="brave-body1">Original Balance:&nbsp;</span>
 
         <span class="brave-body1">{{
           creditUtilization!.config.highestBalance | currency
