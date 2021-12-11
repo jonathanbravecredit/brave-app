@@ -1,36 +1,52 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { LabelOfSnapshot } from './snapshot-label.pipe';
-export type Status = 'excellent' | 'good' | 'okay' | 'poor';
-export type TypeOfSnapshot = 'date' | 'percentage' | 'digit' | 'tag' | 'time';
-export type TypeOfDate = 'Years' | 'Months' | 'Days';
-export type SnapshotTendency = 'up' | 'down' | 'no-tendency';
+import { Component, Input, OnInit } from "@angular/core";
+import { LabelOfSnapshot } from "./snapshot-label.pipe";
+export type Status = "excellent" | "good" | "okay" | "poor";
+export type TypeOfSnapshot = "date" | "percentage" | "digit" | "tag" | "time";
+export type TypeOfDate = "Years" | "Months" | "Days";
+export type SnapshotTendency = "up" | "down" | "no-tendency";
 
 export enum SnapshotStatus {
-  Critical = 'critical',
-  SemiCritical = 'semicritical',
-  Danger = 'danger',
-  Safe = 'safe',
-  Default = 'default',
-  Normal = 'normal',
+  Critical = "critical",
+  SemiCritical = "semicritical",
+  Danger = "danger",
+  Safe = "safe",
+  Default = "default",
+  Normal = "normal",
 }
 
 @Component({
-  selector: 'brave-snapshot-display-card',
-  templateUrl: './snapshot-display-card.component.html',
+  selector: "brave-snapshot-display-card",
+  templateUrl: "./snapshot-display-card.component.html",
 })
 export class SnapshotDisplayCardComponent implements OnInit {
   @Input() status: SnapshotStatus | string = SnapshotStatus.Default;
-  @Input() title = '';
-  @Input() tendency: SnapshotTendency = 'no-tendency';
-  @Input() typeOfSnapshot: TypeOfSnapshot = 'tag';
-  @Input() value: string | number = '';
-  @Input() typeOfDate: TypeOfDate = 'Years';
+  @Input() title = "";
+  @Input() tendency: SnapshotTendency = "no-tendency";
+  @Input() typeOfSnapshot: TypeOfSnapshot = "tag";
+  @Input() value: string | number = "";
+  @Input() typeOfDate: TypeOfDate = "Years";
   @Input() label: LabelOfSnapshot | string = LabelOfSnapshot.NoLabel;
   @Input() preview: boolean = false;
-  @Input() rating: string = '';
+  @Input() rating: string | undefined;
   @Input() color: string | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.title === "Credit Mix") {
+      switch (this.status) {
+        case "semicritical":
+          this.color = "#F56700";
+          break;
+        case "danger":
+          this.color = "#F59300";
+          break;
+        case "safe":
+          this.color = "#4BD269";
+          break;
+        default:
+          this.color = "#BBD904";
+      }
+    }
+  }
 }
