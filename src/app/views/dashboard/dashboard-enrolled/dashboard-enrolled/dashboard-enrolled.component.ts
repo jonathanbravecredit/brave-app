@@ -83,7 +83,7 @@ export class DashboardEnrolledComponent implements OnInit {
     });
     this.router.navigate(['../report/snapshot/forbearance'], {
       relativeTo: this.route,
-    }); // not updating reviewed bc user needs to review all cards
+    });
   }
 
   onDatabreachItemsClicked() {
