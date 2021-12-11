@@ -62,6 +62,7 @@
       label="new"
       [status]="creditMixStatus || 'default'"
       title="Credit Mix"
+      [rating]="rating"
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
       (click)="creditMixClicked.emit()"
