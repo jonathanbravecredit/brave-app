@@ -7,6 +7,7 @@ import { AnalyticClickEvents } from '@shared/services/analytics/analytics/consta
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
+import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import * as moment from 'moment';
 
 @Component({
@@ -18,13 +19,14 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() cards: DashboardStateModel | undefined;
   @Input() scores: ICreditScoreTracking | undefined | null;
   @Input() trends: IGetTrendingData | undefined | null;
+  @Input() metrics!: IGroupedYearMonthReferral[] | null;
+  @Input() creditMix: IRecommendationText | undefined;
+  @Input() creditMixStatus: string | undefined;
+  @Input() creditUtilizationStatus: string | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];
   @Input() data: {}[] | undefined;
-  @Input() rating: string = '';
-  @Input() color: string | undefined;
-  @Input() metrics!: IGroupedYearMonthReferral[] | null;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();

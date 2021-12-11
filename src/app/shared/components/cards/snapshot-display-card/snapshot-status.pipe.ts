@@ -4,6 +4,7 @@ import { SnapshotStatus } from './snapshot-display-card.component';
 const enumStrColorCLassIndicator = {
   [SnapshotStatus.Danger]: 'brave-danger',
   [SnapshotStatus.Safe]: 'brave-safe',
+  [SnapshotStatus.SemiCritical]: 'brave-semicritical',
   [SnapshotStatus.Critical]: 'brave-critical',
   [SnapshotStatus.Default]: 'brave-unknown',
   [SnapshotStatus.Normal]: 'brave-normal',

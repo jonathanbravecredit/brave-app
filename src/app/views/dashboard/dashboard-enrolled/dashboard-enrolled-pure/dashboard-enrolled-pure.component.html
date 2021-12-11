@@ -49,7 +49,7 @@
   <div class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
       tendency="no-tendency"
-      status="danger"
+      [status]="creditUtilizationStatus || 'default'"
       title="Credit Utilization"
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
@@ -60,7 +60,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       label="new"
-      status="danger"
+      [status]="creditMixStatus || 'default'"
       title="Credit Mix"
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
