@@ -7,6 +7,7 @@ export type SnapshotTendency = "up" | "down" | "no-tendency";
 
 export enum SnapshotStatus {
   Critical = "critical",
+  SemiCritical = "semicritical",
   Danger = "danger",
   Safe = "safe",
   Default = "default",
@@ -26,10 +27,26 @@ export class SnapshotDisplayCardComponent implements OnInit {
   @Input() typeOfDate: TypeOfDate = "Years";
   @Input() label: LabelOfSnapshot | string = LabelOfSnapshot.NoLabel;
   @Input() preview: boolean = false;
-  @Input() rating: string = "";
+  @Input() rating: string | undefined;
   @Input() color: string | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.title === "Credit Mix") {
+      switch (this.status) {
+        case "semicritical":
+          this.color = "#F56700";
+          break;
+        case "danger":
+          this.color = "#F59300";
+          break;
+        case "safe":
+          this.color = "#4BD269";
+          break;
+        default:
+          this.color = "#BBD904";
+      }
+    }
+  }
 }

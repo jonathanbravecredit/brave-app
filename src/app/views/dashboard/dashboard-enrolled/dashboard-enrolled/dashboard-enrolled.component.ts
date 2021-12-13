@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
@@ -14,6 +11,7 @@ import {
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -28,16 +26,18 @@ export class DashboardEnrolledComponent implements OnInit {
   scores!: ICreditScoreTracking | null;
   trends!: IGetTrendingData | null;
   metrics!: IGroupedYearMonthReferral[] | null;
+  creditMix: IRecommendationText | undefined;
+  creditMixStatus: string | undefined;
+  creditUtilizationStatus: string | undefined;
   tradelineSummary: ICreditMixTLSummary | undefined;
-  recommendation: IRecommendationText | undefined;
+  rating: string | undefined;
 
   constructor(
-    private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private analytics: AnalyticsService,
     private dashboardService: DashboardService,
     private creditMixService: CreditMixService,
+    private creditUtilizationService: CreditUtilizationService,
   ) {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
@@ -45,14 +45,17 @@ export class DashboardEnrolledComponent implements OnInit {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
-      if (this.report?.TrueLinkCreditReportType.TradeLinePartition) {
-        this.tradelineSummary = this.creditMixService.getTradelineSummary(
-          this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
-            ? this.report?.TrueLinkCreditReportType.TradeLinePartition
-            : [this.report?.TrueLinkCreditReportType.TradeLinePartition],
-        );
-      }
-      this.recommendation = this.creditMixService.getRecommendations(this.tradelineSummary);
+      const tradelines = this.report?.TrueLinkCreditReportType.TradeLinePartition
+        ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
+          ? this.report?.TrueLinkCreditReportType.TradeLinePartition
+          : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
+        : [];
+
+      this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
+      this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
+      this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
+      this.creditUtilizationStatus = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
+      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
@@ -83,9 +86,6 @@ export class DashboardEnrolledComponent implements OnInit {
     this.router.navigate(['../report/snapshot/forbearance'], {
       relativeTo: this.route,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate(['../report/snapshot/databreach'], {
-      relativeTo: this.route,
-    });
   }
 
   onDatabreachItemsClicked() {

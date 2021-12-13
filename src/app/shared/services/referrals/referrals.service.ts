@@ -1,20 +1,36 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '@environments/environment';
 import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
-import { BehaviorSubject } from 'rxjs';
+import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ReferralsService {
+export class ReferralsService implements OnDestroy {
   campaign = CURRENT_CAMPAIGN;
   referredByCode$ = new BehaviorSubject<string | null>(null);
+  isActive: boolean = false;
+  isActiveSub$: Subscription | undefined;
 
-  constructor(private http: HttpClient, private auth: AuthService, private iam: IamService) {}
+  constructor(
+    private feature: FeatureFlagsService,
+    private http: HttpClient,
+    private auth: AuthService,
+    private iam: IamService,
+  ) {
+    this.isActiveSub$ = this.feature.referrals$.subscribe((isActive) => {
+      this.isActive = isActive;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.isActiveSub$?.unsubscribe();
+  }
 
   /**
    * HTTP Requests to create referral in referral service backend
@@ -22,6 +38,7 @@ export class ReferralsService {
    * @param referredByCode
    * @returns
    */
+
   async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
     const url = `${environment.marketing}/referral`;
     let body = { id: sub, campaign: this.campaign, referredByCode };

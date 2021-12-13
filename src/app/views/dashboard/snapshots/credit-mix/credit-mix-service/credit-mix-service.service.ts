@@ -1,22 +1,19 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { Select } from "@ngxs/store";
-import { IMergeReport, ITradeLinePartition } from "@shared/interfaces";
-import { DashboardService } from "@shared/services/dashboard/dashboard.service";
-import { BraveUtil } from "@shared/utils/brave/brave";
-import { AgenciesState, AgenciesStateModel } from "@store/agencies";
+import { Injectable, OnDestroy } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
+import { DashboardService } from '@shared/services/dashboard/dashboard.service';
+import { BraveUtil } from '@shared/utils/brave/brave';
+import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import {
   CreditMixRecommendations as Recs,
   RecommendationConditionalLogic as Logic,
   RecommendationValues as Values,
-} from "@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service-conditions";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
-import {
-  ICreditMixTLSummary,
-  IRecommendationText,
-} from "../interfaces/credit-mix-calc-obj.interface";
+} from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service-conditions';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ICreditMixTLSummary, IRecommendationText } from '../interfaces/credit-mix-calc-obj.interface';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CreditMixService implements OnDestroy {
   tradeLinePartition: ITradeLinePartition[] = [];
@@ -24,23 +21,19 @@ export class CreditMixService implements OnDestroy {
 
   // easy access to the Transunion merge report
   tuReport: IMergeReport = {} as IMergeReport;
-  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject(
-    {} as IMergeReport
-  );
+  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
 
   constructor() {
-    this.agenciesSub$ = this.agencies$
-      .pipe()
-      .subscribe((agencies: AgenciesStateModel) => {
-        const parsedReport = this.getCreditReport(agencies);
-        if (Object.keys(parsedReport).length) {
-          this.tuReport$.next(parsedReport);
-          this.tuReport = parsedReport;
-        }
-      });
+    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
+      const parsedReport = this.getCreditReport(agencies);
+      if (Object.keys(parsedReport).length) {
+        this.tuReport$.next(parsedReport);
+        this.tuReport = parsedReport;
+      }
+    });
   }
 
   getCreditReport(agencies: AgenciesStateModel): IMergeReport {
@@ -50,8 +43,7 @@ export class CreditMixService implements OnDestroy {
 
   getTradeLinePartitions(): ITradeLinePartition[] {
     if (!this.tuReport) return [{} as ITradeLinePartition];
-    const partitions = this.tuReport?.TrueLinkCreditReportType
-      ?.TradeLinePartition;
+    const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
   }
@@ -60,9 +52,7 @@ export class CreditMixService implements OnDestroy {
     this.tuReportSub$?.unsubscribe();
   }
 
-  getTradelineSummary(
-    tradeLineParition: ITradeLinePartition[] | undefined
-  ): ICreditMixTLSummary {
+  getTradelineSummary(tradeLineParition: ITradeLinePartition[] | undefined): ICreditMixTLSummary {
     let hasCreditCards = false;
     let hasStudentLoans = false;
     let hasAutoLoans = false;
@@ -81,51 +71,44 @@ export class CreditMixService implements OnDestroy {
 
     if (tradeLineParition) {
       tradeLineParition.forEach((tradeline) => {
-        let openClosedSymbol = tradeline.Tradeline?.OpenClosed?.symbol
-          ?.toString()
-          .toLowerCase();
+        let openClosedSymbol = tradeline.Tradeline?.OpenClosed?.symbol?.toString().toLowerCase();
         let accountTypeSymbol = tradeline.accountTypeSymbol?.toLowerCase();
-        let grantedTradeSymbol = tradeline.Tradeline?.GrantedTrade.AccountType?.symbol
-          ?.toString()
-          .toLowerCase();
+        let grantedTradeSymbol = tradeline.Tradeline?.GrantedTrade.AccountType?.symbol?.toString().toLowerCase();
 
-        if (openClosedSymbol === "c") {
+        if (openClosedSymbol === 'c') {
           amountOfClosed += 1;
           totalLineAmount += 1;
-        } else if (openClosedSymbol === "o") {
+        } else if (openClosedSymbol === 'o') {
           totalLineAmount += 1;
         }
 
-        if (accountTypeSymbol === "r") {
-          if (openClosedSymbol === "o") {
+        if (accountTypeSymbol === 'r') {
+          if (openClosedSymbol === 'o') {
             hasOpenCreditCards = true;
             amountOfOpenCreditCards += 1;
           }
           hasCreditCards = true;
           creditCardAmount += 1;
           return;
-        } else if (accountTypeSymbol === "m") {
-          if (openClosedSymbol === "o") {
+        } else if (accountTypeSymbol === 'm') {
+          if (openClosedSymbol === 'o') {
             hasOpenMortgages = true;
           }
           hasMortgages = true;
           mortgageAmount += 1;
-        } else if (
-          grantedTradeSymbol === "st" ||
-          grantedTradeSymbol === "educ"
-        ) {
-          if (openClosedSymbol === "o") {
+        } else if (grantedTradeSymbol === 'st' || grantedTradeSymbol === 'educ') {
+          if (openClosedSymbol === 'o') {
             hasOpenStudentLoans = true;
           }
           hasStudentLoans = true;
           studentLoanAmount += 1;
         } else if (
-          grantedTradeSymbol === "al" ||
-          grantedTradeSymbol === "ar" ||
-          grantedTradeSymbol === "at" ||
-          grantedTradeSymbol === "au"
+          grantedTradeSymbol === 'al' ||
+          grantedTradeSymbol === 'ar' ||
+          grantedTradeSymbol === 'at' ||
+          grantedTradeSymbol === 'au'
         ) {
-          if (openClosedSymbol === "o") {
+          if (openClosedSymbol === 'o') {
             hasOpenAutoLoans = true;
           }
           hasAutoLoans = true;
@@ -153,9 +136,7 @@ export class CreditMixService implements OnDestroy {
     };
   }
 
-  getRecommendations = (
-    summary: ICreditMixTLSummary | undefined
-  ): IRecommendationText | undefined => {
+  getRecommendations = (summary: ICreditMixTLSummary | undefined): IRecommendationText | undefined => {
     if (summary) {
       if (Logic[Recs.NoClosedAndNoOpen](summary)) {
         return Values[Recs.NoClosedAndNoOpen];
@@ -173,10 +154,20 @@ export class CreditMixService implements OnDestroy {
         return Values[Recs.SevenOrLess];
       } else if (Logic[Recs.EightOrMoreAtLeastOneOfAll](summary)) {
         return Values[Recs.EightOrMoreAtLeastOneOfAll];
-      }else if (Logic[Recs.EightOrMore](summary)) {
+      } else if (Logic[Recs.EightOrMore](summary)) {
         return Values[Recs.EightOrMore];
       }
     }
     return;
   };
+
+  mapCreditMixSnapshotStatus(status: string) {
+    const mapper: Record<string, string> = {
+      poor: 'semicritical',
+      fair: 'danger',
+      good: 'normal',
+      excellent: 'safe',
+    };
+    return mapper[status.toLowerCase()];
+  }
 }

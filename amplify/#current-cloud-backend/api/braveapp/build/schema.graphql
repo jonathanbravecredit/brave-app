@@ -364,7 +364,7 @@ enum ModelSortDirection {
 }
 
 type ModelAppDataConnection @aws_iam @aws_cognito_user_pools {
-  items: [AppData!]!
+  items: [AppData]
   nextToken: String
 }
 
@@ -496,7 +496,7 @@ input UpdateAppDataInput {
 }
 
 input DeleteAppDataInput {
-  id: ID!
+  id: ID
 }
 
 input ModelAppDataConditionInput {
