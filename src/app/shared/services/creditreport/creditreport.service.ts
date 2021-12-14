@@ -115,7 +115,7 @@ export class CreditreportService implements OnDestroy {
    * Refresh the credit report if necessary
    */
   refreshCreditReport(): void {
-    this.transunion.refreshCreditReport();
+    this.transunion.getCreditReport();
   }
 
   /**
