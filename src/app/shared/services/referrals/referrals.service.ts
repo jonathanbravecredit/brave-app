@@ -90,6 +90,7 @@ export class ReferralsService implements OnDestroy {
    * @returns
    */
   async getReferralMonthlyCampaignEarnings(month?: string, year?: string): Promise<IGroupedYearMonthReferral[]> {
+    if (!this.isActive) return [];
     const url = `${environment.marketing}/referral/campaign/earnings/monthly`;
     const token = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
