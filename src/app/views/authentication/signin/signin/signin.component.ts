@@ -4,6 +4,7 @@ import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SignInErrorDescriptions, SignInErrors } from '@views/authentication/signin/signin/content';
+import { ISignInCognitoUser } from '@views/authentication/signin/signin/interfaces';
 
 export type SigninState = 'init' | 'invalid';
 
