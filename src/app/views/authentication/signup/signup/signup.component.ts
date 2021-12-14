@@ -5,8 +5,8 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/signup/signup/content';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -24,10 +24,10 @@ export class SignupComponent implements OnInit {
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private referral: ReferralsService,
-    private neverBounce: NeverbounceService,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   /**
    * Method to sign user up
@@ -36,16 +36,8 @@ export class SignupComponent implements OnInit {
    */
   async signUpWithCognito(user: NewUser): Promise<void> {
     if (!user) return;
-
-    let isValid: boolean = false;
-    try {
-      const resp: Response = await this.neverBounce.validateEmail(user.username);
-      const body: NeverBounceResponse = await resp.json();
-      isValid = body.result === 'invalid' || body.result === 'disposable' ? false : true;
-    } catch (err) {
-      isValid = false;
-    }
-
+    // add email validation here // const isValid = await this.accountMgmtService.isEmailValid(formData.username);
+    let isValid = true;
     if (isValid) {
       try {
         const { userSub: sub } = await this.auth.signUp(user);

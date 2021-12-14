@@ -1,16 +1,17 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GuestBase } from '@shared/utils/guest/guest';
 import { GuestService } from '@shared/services/auth/guest.service';
 import { IamService } from '@shared/services/auth/iam.service';
-import { environment } from '../../../../environments/environment.dev';
 
 export interface NeverBounceResponse {
-  status: string;
-  result: string;
-  flags?: string[];
-  suggested_correction?: string;
-  execution_time?: number;
+  response: {
+    status: string;
+    result: string;
+    flags?: string[];
+    suggested_correction?: string;
+    execution_time?: number;
+  };
 }
 
 @Injectable({
@@ -21,10 +22,10 @@ export class NeverbounceService extends GuestBase {
     super(new GuestService());
   }
 
-  async validateEmail(email: string): Promise<Response> {
-    const url = `${environment.validation}/validation`;
+  async validateEmail(email: string): Promise<any> {
+    const url = `https:dummy_url/validation`;
     let body = { email };
-    let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
+    let signedReq = await this.iam.signRequest(url, 'GET', {}, JSON.stringify(body));
     return await fetch(signedReq);
   }
 }
