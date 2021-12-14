@@ -42,22 +42,16 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentityFull);
     if (form.valid) {
       const { full } = this.formatAttributes(form, ssn);
-      if (full.length < 9) {
-        this.handleError({});
-      } else {
-        const attrs = {
-          ssn: {
-            lastfour: full.slice(-4),
-            full: full,
-          },
-        } as UserAttributesInput;
-        this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
-          this.kycService.completeStep(this.stepID);
-          this.router.navigate(['../verify'], { relativeTo: this.route });
-        });
-      }
-    } else {
-      this.handleError({});
+      const attrs = {
+        ssn: {
+          lastfour: full.slice(-4),
+          full: full,
+        },
+      } as UserAttributesInput;
+      this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
+        this.kycService.completeStep(this.stepID);
+        this.router.navigate(['../verify'], { relativeTo: this.route });
+      });
     }
   }
 
@@ -70,8 +64,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    this.pure?.hasError === true;
-    this.pure?.showError === true;
+    // console.log('form errors', errors);
   }
 }
 
