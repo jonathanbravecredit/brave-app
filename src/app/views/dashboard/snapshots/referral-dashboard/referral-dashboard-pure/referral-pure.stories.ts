@@ -12,7 +12,7 @@ import { ReferralBodyTextComponent } from "../components/referral-body-text/refe
 import { SharedComponentsModule } from "@shared/components/shared-components.module";
 
 export default {
-  title: "app/views/snapshots/referralDashboard",
+  title: "app/views/snapshots/referral-dashboard",
   component: ReferralDashboardPureView,
   decorators: [
     moduleMetadata({
