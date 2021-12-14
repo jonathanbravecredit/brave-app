@@ -18,7 +18,7 @@ export class OutlineSsnFullFormComponent extends BaseFormComponent {
     mask: 'XXX-XX-XXXX',
     unmask: '000-00-0000',
     maxLength: 11,
-    minLength: 11,
+    minLength: 9,
     hidden: true,
     placeholder: 'XXX-XX-XXXX',
     autocomplete: 'off',
