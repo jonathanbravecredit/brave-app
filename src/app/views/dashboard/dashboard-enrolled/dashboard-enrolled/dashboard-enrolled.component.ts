@@ -30,6 +30,7 @@ export class DashboardEnrolledComponent implements OnInit {
   creditMixStatus: string | undefined;
   creditUtilizationStatus: string | undefined;
   tradelineSummary: ICreditMixTLSummary | undefined;
+  rating: string | undefined;
 
   constructor(
     private router: Router,
@@ -54,6 +55,7 @@ export class DashboardEnrolledComponent implements OnInit {
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
       this.creditUtilizationStatus = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
+      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
@@ -83,7 +85,7 @@ export class DashboardEnrolledComponent implements OnInit {
     });
     this.router.navigate(['../report/snapshot/forbearance'], {
       relativeTo: this.route,
-    }); // not updating reviewed bc user needs to review all cards
+    });
   }
 
   onDatabreachItemsClicked() {
