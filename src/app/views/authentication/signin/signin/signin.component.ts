@@ -26,38 +26,28 @@ export class SigninComponent {
    */
   async signInWithCognito(user: NewUser): Promise<void> {
     if (!user) return;
-    // add email validation here // const isValid = await this.accountMgmtService.isEmailValid(formData.username);
-    let isValid = true;
-    if (isValid) {
-      try {
-        const cognitorUser = await this.auth.signIn(user.username, user.password);
-        if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
-        } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
-          const { requiredAttributes } = cognitorUser?.challengeParam;
-        } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
-        }
-        // this.interstitial.fetching$.next(false);
-      } catch (err: any) {
-        this.interstitial.fetching$.next(false);
-        if (err.code === SignInErrors.UserNotConfirmedException) {
-          const unconfirmedUserState = {};
-          this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotConfirmedException]);
-        } else if (err.code === SignInErrors.PasswordResetRequiredException) {
-          this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.PasswordResetRequiredException]);
-        } else if (err.code === SignInErrors.NotAuthorizedException) {
-          this.handleSigninError('invalid', err.message);
-        } else if (err.code === SignInErrors.UserNotFoundException) {
-          this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotFoundException]);
-        } else {
-          this.handleSigninError('invalid', err.message);
-        }
+    try {
+      const cognitorUser = await this.auth.signIn(user.username, user.password);
+      if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
+      } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        const { requiredAttributes } = cognitorUser?.challengeParam;
+      } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
       }
-    } else {
+      // this.interstitial.fetching$.next(false);
+    } catch (err: any) {
       this.interstitial.fetching$.next(false);
-      this.handleSigninError(
-        'invalid',
-        `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`,
-      );
+      if (err.code === SignInErrors.UserNotConfirmedException) {
+        const unconfirmedUserState = {};
+        this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotConfirmedException]);
+      } else if (err.code === SignInErrors.PasswordResetRequiredException) {
+        this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.PasswordResetRequiredException]);
+      } else if (err.code === SignInErrors.NotAuthorizedException) {
+        this.handleSigninError('invalid', err.message);
+      } else if (err.code === SignInErrors.UserNotFoundException) {
+        this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotFoundException]);
+      } else {
+        this.handleSigninError('invalid', err.message);
+      }
     }
   }
 
