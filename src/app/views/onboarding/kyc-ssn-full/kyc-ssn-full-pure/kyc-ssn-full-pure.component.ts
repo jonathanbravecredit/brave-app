@@ -8,6 +8,8 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
 })
 export class KycSsnFullPureComponent extends KycBaseComponent {
   @ViewChild('form') formComponent: OutlineSsnFullFormComponent | undefined;
+  showError: boolean = false;
+  errorMessage: string = 'Invalid SSN. Please re-enter';
   constructor() {
     super();
   }
