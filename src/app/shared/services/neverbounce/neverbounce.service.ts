@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { GuestBase } from '@shared/utils/guest/guest';
 import { GuestService } from '@shared/services/auth/guest.service';
 import { IamService } from '@shared/services/auth/iam.service';
-import { environment } from '../../../../environments/environment';
+import { environment } from '@environments/environment';
 
 export interface NeverBounceResponse {
   status: string;
