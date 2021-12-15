@@ -18,5 +18,7 @@ export class ReferralDashboardView implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.payments)
+  }
 }
