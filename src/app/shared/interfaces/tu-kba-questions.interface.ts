@@ -9,6 +9,17 @@ export interface ITransunionKBAQuestions {
   };
 }
 
+export interface ITransunionKBAInProgressQuestions {
+  ChallengeConfiguration: {
+    RulesApp: string;
+    CorrectAnswersNeeded: string;
+    AnswerAttemptsAllowed: string;
+    MultiChoiceQuestion: ITransunionKBAQuestion[] | ITransunionKBAQuestion;
+    ApplicantChallengeId: string;
+    ApplicantId: string;
+  };
+}
+
 export interface ITransunionKBAQuestion {
   QuestionType: string;
   SequenceNumber: string;
