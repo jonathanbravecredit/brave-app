@@ -1,16 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { SelectDobFormComponent } from './select-dob-form.component';
+import { SelectDobFormComponent } from "./select-dob-form.component";
 
-describe('SelectDobFormComponent', () => {
+describe("SelectDobFormComponent", () => {
   let component: SelectDobFormComponent;
   let fixture: ComponentFixture<SelectDobFormComponent>;
+  let formBuilderMock: any;
 
   beforeEach(async () => {
+    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
-      declarations: [ SelectDobFormComponent ]
-    })
-    .compileComponents();
+      declarations: [SelectDobFormComponent],
+      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +22,7 @@ describe('SelectDobFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

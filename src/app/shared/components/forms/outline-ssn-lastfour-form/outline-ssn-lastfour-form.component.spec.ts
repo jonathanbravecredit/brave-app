@@ -1,16 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { OutlineSsnLastfourFormComponent } from './outline-ssn-lastfour-form.component';
+import { OutlineSsnLastfourFormComponent } from "./outline-ssn-lastfour-form.component";
 
-describe('OutlineSsnLastfourFormComponent', () => {
+describe("OutlineSsnLastfourFormComponent", () => {
   let component: OutlineSsnLastfourFormComponent;
   let fixture: ComponentFixture<OutlineSsnLastfourFormComponent>;
+  let formBuilderMock: any;
 
   beforeEach(async () => {
+    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
-      declarations: [ OutlineSsnLastfourFormComponent ]
-    })
-    .compileComponents();
+      declarations: [OutlineSsnLastfourFormComponent],
+      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +22,7 @@ describe('OutlineSsnLastfourFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

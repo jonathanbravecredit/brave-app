@@ -1,16 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { OutlineNamedobFormComponent } from './outline-namedob-form.component';
+import { OutlineNamedobFormComponent } from "./outline-namedob-form.component";
 
-describe('OutlineNamedobFormComponent', () => {
+describe("OutlineNamedobFormComponent", () => {
   let component: OutlineNamedobFormComponent;
   let fixture: ComponentFixture<OutlineNamedobFormComponent>;
+  let formBuilderMock: any;
 
   beforeEach(async () => {
+    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
-      declarations: [ OutlineNamedobFormComponent ]
-    })
-    .compileComponents();
+      declarations: [OutlineNamedobFormComponent],
+      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +22,7 @@ describe('OutlineNamedobFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
