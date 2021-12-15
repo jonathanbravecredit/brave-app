@@ -9,14 +9,19 @@ import {
   ITransunionKBAQuestion,
   ITransunionKBAAnswer,
   ITransunionKBAQuestions,
+  ITransunionKBAChallengeAnswer,
 } from '@shared/interfaces/tu-kba-questions.interface';
 import { filter } from 'rxjs/operators';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
-import { TransunionInput } from '@shared/services/aws/api.service';
+import {
+  IGetAuthenticationQuestionsResult,
+  ITUServiceResponse,
+  IVerifyAuthenticationQuestionsResult,
+} from '@shared/interfaces';
+import { TransunionInput, TUStatusRefInput } from '@shared/services/aws/api.service';
 import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatusReason } from '@shared/utils/brave/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
@@ -51,7 +56,11 @@ export class KycKbaquestionsComponent implements OnInit {
         const rawQuestions = agencies.transunion?.currentRawQuestions;
         if (!rawQuestions) return;
         const xml = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(rawQuestions);
-        const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
+        const challenge = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(rawQuestions);
+        const config = xml.ChallengeConfigurationType
+          ? xml.ChallengeConfigurationType
+          : challenge.VerifyChallengeAnswersResponseSuccess.ChallengeConfiguration; // challenge is in progress FLOW
+        const questions = config.MultiChoiceQuestion;
         questions instanceof Array ? (this.questions = questions) : [questions];
         this.numberOfQuestions = this.questions.length;
         // start kba questions clock
@@ -145,16 +154,34 @@ export class KycKbaquestionsComponent implements OnInit {
           const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, answers);
           !resp.success
             ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
-            : resp.success &&
-              resp.data?.ResponseType.toLowerCase() === 'success' &&
-              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
-            ? await this.handleSuccess()
-            : await this.handleIncorrect(resp);
+            : await this.handleResponse(resp);
         } catch (err) {
           console.log('error:kbaHandleSubmit ===> ', err);
           this.handleAPIError();
         }
       }
+    }
+  }
+
+  async handleResponse(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    // is success and correct
+    const { data } = resp;
+    if (!data) {
+      await this.handleIncorrect(resp);
+      return;
+    }
+    const { ResponseType, AuthenticationStatus } = data;
+    const type = ResponseType.toLowerCase();
+    const status = AuthenticationStatus.toLowerCase();
+    debugger;
+    if (type === 'success' && status === 'correct') {
+      await this.handleSuccess();
+    } else if (type === 'success' && status === 'incorrect') {
+      await this.handleIncorrect(resp);
+    } else if (type === 'success' && status === 'inprogress') {
+      await this.handleInProgress(resp);
+    } else {
+      await this.handleIncorrect(resp);
     }
   }
 
@@ -177,6 +204,36 @@ export class KycKbaquestionsComponent implements OnInit {
     await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
     await this.handleSuspension(AppStatusReason.KbaAttemptsExceeded);
     this.interstitial.fetching$.next(false);
+  }
+
+  async handleInProgress(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.handleVerificationInProgressFlow(resp);
+    this.interstitial.fetching$.next(false);
+  }
+
+  /**
+   * Method to:
+   * - Find the correct OTP answer in the response from TU
+   * - Select the answer for the user to receive a text message
+   * - Confirm answer is received
+   */
+  async sendOTPResponse(
+    otpQuestion: ITransunionKBAQuestion,
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
+    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
+    const otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion);
+    try {
+      const resp = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
+      if (!resp.success || !resp.data) {
+        return resp;
+      } else {
+        const parsed = resp.data ? resp.data : ({} as IVerifyAuthenticationQuestionsResult);
+        const success = parsed ? parsed.ResponseType.toLowerCase() === 'success' : false;
+        return { success, data: parsed };
+      }
+    } catch (err: any) {
+      return { success: false };
+    }
   }
 
   async handleAPIError(): Promise<void> {
@@ -204,5 +261,27 @@ export class KycKbaquestionsComponent implements OnInit {
   async bailOut<T>(resp?: ITUServiceResponse<T | undefined>): Promise<void> {
     const partial = this.createTuPartial<T>(resp);
     await this.kycService.bailoutFromOnboarding(partial, resp);
+  }
+
+  /**
+   * Method to route user to appropriate error screen using kyc service
+   * @param resp
+   */
+  handleBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: {
+      getAuthenticationQuestionsSuccess: boolean;
+      getAuthenticationQuestionsStatus: TUStatusRefInput;
+      serviceBundleFulfillmentKey: string | null;
+    } = {
+      getAuthenticationQuestionsSuccess: false,
+      getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
+        TUBundles.GetAuthenticationQuestions,
+        false,
+        resp,
+      ),
+      serviceBundleFulfillmentKey: '',
+    };
+    this.kycService.updateGetAuthenticationQuestions(tuPartial);
+    this.kycService.bailoutFromOnboarding(tuPartial, resp);
   }
 }
