@@ -6,14 +6,11 @@ import { AutocompleteAddressFormComponent } from "./autocomplete-address-form.co
 describe("AutocompleteAddressFormComponent", () => {
   let component: AutocompleteAddressFormComponent;
   let fixture: ComponentFixture<AutocompleteAddressFormComponent>;
-  let formBuilderMock: any;
 
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
-
     await TestBed.configureTestingModule({
       declarations: [AutocompleteAddressFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

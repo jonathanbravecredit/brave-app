@@ -6,13 +6,11 @@ import { OutlineSsnLastfourFormComponent } from "./outline-ssn-lastfour-form.com
 describe("OutlineSsnLastfourFormComponent", () => {
   let component: OutlineSsnLastfourFormComponent;
   let fixture: ComponentFixture<OutlineSsnLastfourFormComponent>;
-  let formBuilderMock: any;
 
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
       declarations: [OutlineSsnLastfourFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

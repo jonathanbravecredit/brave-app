@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PlacesAutocompleteInputComponent } from './places-autocomplete-input.component';
+import { PlacesAutocompleteInputComponent } from "./places-autocomplete-input.component";
 
-describe('PlacesAutocompleteInputComponent', () => {
+describe("PlacesAutocompleteInputComponent", () => {
   let component: PlacesAutocompleteInputComponent;
   let fixture: ComponentFixture<PlacesAutocompleteInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlacesAutocompleteInputComponent ]
-    })
-    .compileComponents();
+      declarations: [PlacesAutocompleteInputComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('PlacesAutocompleteInputComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -6,13 +6,10 @@ import { OutlineNameFormComponent } from "./outline-name-form.component";
 describe("OutlineNameFormComponent", () => {
   let component: OutlineNameFormComponent;
   let fixture: ComponentFixture<OutlineNameFormComponent>;
-  let formBuilderMock: any;
-
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
       declarations: [OutlineNameFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

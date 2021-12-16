@@ -23,7 +23,10 @@ describe("CreditScoreHistoryNgxChartComponent", () => {
       declarations: [CreditScoreHistoryNgxChartComponent],
       providers: [
         { provide: CustomLineChartService, useValue: customLineChartMock },
-        { provide: creditScoreNgxMock, useValue: CreditScoreHistoryNgxChartService },
+        {
+          provide: CreditScoreHistoryNgxChartService,
+          useValue: creditScoreNgxMock,
+        },
       ],
     }).compileComponents();
   });

@@ -6,13 +6,10 @@ import { KbaquestionsFormComponent } from "./kbaquestions-form.component";
 describe("KbaquestionsFormComponent", () => {
   let component: KbaquestionsFormComponent;
   let fixture: ComponentFixture<KbaquestionsFormComponent>;
-  let formBuilderMock: any;
-
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
       declarations: [KbaquestionsFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

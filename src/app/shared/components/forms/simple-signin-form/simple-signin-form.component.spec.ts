@@ -1,16 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { SimpleSigninFormComponent } from './simple-signin-form.component';
+import { SimpleSigninFormComponent } from "./simple-signin-form.component";
 
-describe('SimpleSigninFormComponent', () => {
+describe("SimpleSigninFormComponent", () => {
   let component: SimpleSigninFormComponent;
   let fixture: ComponentFixture<SimpleSigninFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SimpleSigninFormComponent ]
-    })
-    .compileComponents();
+      declarations: [SimpleSigninFormComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('SimpleSigninFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
