@@ -19,8 +19,10 @@ import {
   IGetAuthenticationQuestionsResult,
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
+  ITransunionKBAInProgressQuestions,
+  ITransunionKBAChallengeAnswer,
 } from '@shared/interfaces';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BraveUtil as bc, BraveUtil } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { TUBundles } from '@shared/utils/transunion/constants';
@@ -43,6 +45,7 @@ export class KycService {
     private transunion: TransunionService,
     private analytics: AnalyticsService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   /*=====================================*/
@@ -291,6 +294,80 @@ export class KycService {
       return;
     }
   }
+
+  /**
+   * - Parse the questions xml data
+   * - Resave it in the db as object
+   * - find the OTP question (if not go to KBA)
+   * - Choose send to send to cell phone (over landline)
+   * - Confirm response, save to state, and go to code input
+   * BE CAREFUL OF RACE CONDITIONS HERE!!!
+   * @param resp
+   */
+  async handleGetAuthenticationFlow(
+    resp: ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>,
+  ): Promise<void> {
+    if (!resp.success || !resp.data) {
+      // TU response or BC technical error
+      this.handleGetAuthenticationBailout<IGetAuthenticationQuestionsResult>(resp);
+    } else {
+      const questions = await this.processGetAuthenticationQuestionsResponse(resp.data);
+      const xml = tu.parsers.onboarding.parseAuthQuestions(questions);
+      if (!xml) {
+        this.handleGetAuthenticationBailout();
+      } else {
+        const kbaAppData = await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
+        const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xml); // check if OTP eligible
+        const otpQuestion = this.getOTPQuestion(authQuestions);
+        if (otpQuestion) {
+          const otpResp = await this.sendOTPResponse(otpQuestion);
+          if (!otpResp.success || !otpResp.data) {
+            this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(otpResp);
+          } else {
+            const codeQuestions = otpResp.data?.AuthenticationDetails;
+            const pinData = await this.startPinClock();
+            const questionData = await this.updateCurrentRawQuestionsAsync(codeQuestions);
+            await this.updateAgenciesAsync(questionData.agencies); // success, sync up to db
+            this.router.navigate(['../code'], { relativeTo: this.route });
+          }
+        } else {
+          // since no otp question found, they are kba based and already save...start KBA countdown
+          const kbaData = await this.startKbaClock();
+          await this.updateAgenciesAsync(kbaData.agencies);
+          this.router.navigate(['../kba'], { relativeTo: this.route });
+        }
+      }
+    }
+  }
+
+  /**
+   * - Parse the questions xml data
+   * - Resave it in the db as object
+   * - find the OTP question (if not go to KBA)
+   * - Choose send to send to cell phone (over landline)
+   * - Confirm response, save to state, and go to code input
+   * BE CAREFUL OF RACE CONDITIONS HERE!!!
+   * @param resp
+   */
+  async handleVerificationInProgressFlow(
+    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>,
+  ): Promise<void> {
+    if (!resp.success || !resp.data) {
+      // TU response or BC technical error
+      this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(resp);
+    } else {
+      const questions = resp.data; // skipping the updating of the bundle key
+      const xml = tu.parsers.onboarding.parseVerificationInProgressQuestions(questions);
+      if (!xml) {
+        this.handleGetAuthenticationBailout();
+      } else {
+        await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
+        // do not restart clock
+        this.router.navigate(['../kba'], { relativeTo: this.route });
+      }
+    }
+  }
+
   /**
    * Takes the updated indicative enrichment state and updates the state with it
    * @param param0
@@ -309,6 +386,31 @@ export class KycService {
       getAuthenticationQuestionsStatus,
       serviceBundleFulfillmentKey,
     });
+  }
+
+  /**
+   * Method to:
+   * - Find the correct OTP answer in the response from TU
+   * - Select the answer for the user to receive a text message
+   * - Confirm answer is received
+   */
+  async sendOTPResponse(
+    otpQuestion: ITransunionKBAQuestion,
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
+    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
+    const otpAnswer = this.getOTPSendTextAnswer(otpQuestion);
+    try {
+      const resp = await this.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
+      if (!resp.success || !resp.data) {
+        return resp;
+      } else {
+        const parsed = resp.data ? resp.data : ({} as IVerifyAuthenticationQuestionsResult);
+        const success = parsed ? parsed.ResponseType.toLowerCase() === 'success' : false;
+        return { success, data: parsed };
+      }
+    } catch (err: any) {
+      return { success: false };
+    }
   }
 
   //======== VERIFY AUTHENTICATION QUESTIONS ======//
@@ -499,6 +601,28 @@ export class KycService {
         this.router.navigate(['/onboarding/retry']);
       }
     }
+  }
+
+  /**
+   * Method to route user to appropriate error screen using kyc service
+   * @param resp
+   */
+  handleGetAuthenticationBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
+    const tuPartial: {
+      getAuthenticationQuestionsSuccess: boolean;
+      getAuthenticationQuestionsStatus: TUStatusRefInput;
+      serviceBundleFulfillmentKey: string | null;
+    } = {
+      getAuthenticationQuestionsSuccess: false,
+      getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
+        TUBundles.GetAuthenticationQuestions,
+        false,
+        resp,
+      ),
+      serviceBundleFulfillmentKey: '',
+    };
+    this.updateGetAuthenticationQuestions(tuPartial);
+    this.bailoutFromOnboarding(tuPartial, resp);
   }
 
   /**
