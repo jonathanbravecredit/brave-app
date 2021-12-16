@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  ITransunionKBAAnswer,
-  ITransunionKBAQuestion,
-} from '@shared/interfaces/tu-kba-questions.interface';
+import { ITransunionKBAAnswer, ITransunionKBAQuestion } from '@shared/interfaces/tu-kba-questions.interface';
 
 export interface IKbaMultipleChoiceConfig {
   size: string;
@@ -18,7 +15,7 @@ export interface IKbaMultipleChoiceConfig {
   selector: 'brave-kba-multiplechoice-input',
   templateUrl: './kba-multiplechoice-input.component.html',
 })
-export class KbaMultiplechoiceInputComponent implements OnInit {
+export class KbaMultiplechoiceInputComponent implements OnInit, OnDestroy {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
   private _question: ITransunionKBAQuestion | undefined;
@@ -74,10 +71,7 @@ export class KbaMultiplechoiceInputComponent implements OnInit {
   }
 
   get choices() {
-    const choices:
-      | ITransunionKBAAnswer
-      | ITransunionKBAAnswer[]
-      | undefined = this._question?.AnswerChoice;
+    const choices: ITransunionKBAAnswer | ITransunionKBAAnswer[] | undefined = this._question?.AnswerChoice;
     if (!choices) {
       return [];
     }
@@ -87,6 +81,7 @@ export class KbaMultiplechoiceInputComponent implements OnInit {
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
   @Output()
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() onComponentDestroy: EventEmitter<void> = new EventEmitter();
 
   public componentFormGroup: FormGroup = new FormBuilder().group({
     input: [''],
@@ -104,9 +99,11 @@ export class KbaMultiplechoiceInputComponent implements OnInit {
     this.componentFormGroup = this.fb.group({
       input: [this.config.value, validators],
     });
-    this.componentFormGroup.controls.input.valueChanges.subscribe((value) =>
-      this.valueChanged.emit(value)
-    );
+    this.componentFormGroup.controls.input.valueChanges.subscribe((value) => this.valueChanged.emit(value));
     this.onComponentReady.emit(this.componentFormGroup);
+  }
+
+  ngOnDestroy(): void {
+    this.onComponentDestroy.emit();
   }
 }

@@ -46,9 +46,9 @@ export class KbaquestionsFormComponent extends BaseFormComponent implements Afte
   }
 
   ngOnChanges(change: SimpleChanges) {
-    // this.sliderWidth = this.kbas.length ? this.kbas.length * this.itemWidth : this.sliderWidth;
-    // this.setSliderWindowWidth(this.itemWidth);
-    // this.setSliderWidth(this.sliderWidth);
+    if (this.slider && this.sliderWindow) {
+      this.resetCarousel();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -59,6 +59,14 @@ export class KbaquestionsFormComponent extends BaseFormComponent implements Afte
 
   formatChildName(childName: string, digit: number): string {
     return `${childName}-${digit}`;
+  }
+
+  resetCarousel(): void {
+    this.tracker = [0];
+    this.sliderWidth = this.kbas.length ? this.kbas.length * this.itemWidth : this.sliderWidth;
+    this.setSliderWindowWidth(this.itemWidth);
+    this.setSliderWidth(this.sliderWidth);
+    this.renderer.setStyle(this.slider.nativeElement, 'transform', `translateX(0%)`);
   }
 
   /**

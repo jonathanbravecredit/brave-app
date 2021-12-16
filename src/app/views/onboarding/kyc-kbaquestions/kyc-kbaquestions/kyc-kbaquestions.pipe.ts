@@ -1,5 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
+import {
+  ITransunionKBAChallengeAnswer,
+  ITransunionKBAQuestion,
+  ITransunionKBAQuestions,
+} from '@shared/interfaces/tu-kba-questions.interface';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
@@ -8,8 +12,13 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 export class KycKbaquestionsPipe implements PipeTransform {
   transform(xmlString: string | null | undefined, ...args: unknown[]): ITransunionKBAQuestion[] {
     if (!xmlString) return [];
-    const xml: ITransunionKBAQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML(xmlString);
-    const questions = xml.ChallengeConfigurationType.MultiChoiceQuestion;
-    return questions instanceof Array ? questions : [questions];
+    const xml = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xmlString);
+    const challenge = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(xmlString);
+    const config = xml.ChallengeConfigurationType
+      ? xml.ChallengeConfigurationType
+      : challenge.VerifyChallengeAnswersResponseSuccess.ChallengeConfiguration; // challenge is in progress FLOW
+    const questions = config.MultiChoiceQuestion;
+    const resp = questions instanceof Array ? questions : [questions];
+    return resp;
   }
 }

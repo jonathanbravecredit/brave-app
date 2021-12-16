@@ -96,11 +96,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         if (!newpin) {
           !resp.success
             ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
-            : resp.success &&
-              resp.data?.ResponseType.toLowerCase() === 'success' &&
-              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
-            ? await this.handleSuccess()
-            : await this.handleIncorrect(resp);
+            : await this.handleResponse(resp);
         } else {
           this.updateViewState('sent');
         }
@@ -131,6 +127,28 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     if (form.valid) {
       const { code } = this.formatAttributes(form, codeMap);
       await this.processRequest(code, false);
+    }
+  }
+
+  async handleResponse(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    // is success and correct
+    const { data } = resp;
+    if (!data) {
+      await this.handleIncorrect(resp);
+      return;
+    }
+
+    const { ResponseType, AuthenticationStatus } = data;
+    const type = ResponseType.toLowerCase();
+    const status = AuthenticationStatus.toLowerCase();
+    if (type === 'success' && status === 'correct') {
+      await this.handleSuccess();
+    } else if (type === 'success' && status === 'incorrect') {
+      await this.handleIncorrect(resp);
+    } else if (type === 'success' && status === 'inprogress') {
+      await this.handleInProgress(resp);
+    } else {
+      await this.handleIncorrect(resp);
     }
   }
 
@@ -167,6 +185,11 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
   async handleIncorrect(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
     await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
     this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
+    this.interstitial.fetching$.next(false);
+  }
+
+  async handleInProgress(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.handleVerificationInProgressFlow(resp);
     this.interstitial.fetching$.next(false);
   }
 

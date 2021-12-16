@@ -11,6 +11,7 @@ export interface IErrorResponse {
   Code: number | string;
   Name?: string;
   Message?: string;
+  nil?: boolean;
 }
 
 export interface IErrorCodes {
