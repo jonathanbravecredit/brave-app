@@ -3,15 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import { TUStatusRefInput, UserAttributesInput } from '@shared/services/aws/api.service';
-import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
-import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { Store } from '@ngxs/store';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
-import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import { IGetAuthenticationQuestionsResult } from '@shared/interfaces';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { TUBundles } from '@shared/utils/transunion/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 

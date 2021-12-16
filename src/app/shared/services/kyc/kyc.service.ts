@@ -354,12 +354,12 @@ export class KycService {
   ): Promise<void> {
     if (!resp.success || !resp.data) {
       // TU response or BC technical error
-      // consider converting to verification bailout if in schema this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(resp);
+      this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(resp);
     } else {
       const questions = resp.data; // skipping the updating of the bundle key
       const xml = tu.parsers.onboarding.parseVerificationInProgressQuestions(questions);
       if (!xml) {
-        // consider converting to verification bailout if in schema  this.handleGetAuthenticationBailout();
+        this.handleGetAuthenticationBailout();
       } else {
         await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
         // do not restart clock
