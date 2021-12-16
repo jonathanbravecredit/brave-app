@@ -14,9 +14,14 @@
     [metrics]="metrics"
     [referral]="referral"
   ></brave-referral-amount-link>
-  <div class="min-w-full flex justify-evenly mt-9">
-    <brave-facebook-share [referralCode]="referral?.referralCode"></brave-facebook-share>
-    <brave-twitter-share [referralCode]="referral?.referralCode"></brave-twitter-share>
+  <h3 class="text-lg mb-4 mt-10 text-white">Or, click to share your link via social media:</h3>
+  <div class="min-w-full flex justify-evenly">
+    <brave-facebook-share
+      [referralCode]="referral?.referralCode"
+    ></brave-facebook-share>
+    <brave-twitter-share
+      [referralCode]="referral?.referralCode"
+    ></brave-twitter-share>
   </div>
   <brave-referral-body-text></brave-referral-body-text>
 </div>
