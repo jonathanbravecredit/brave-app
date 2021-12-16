@@ -26,8 +26,6 @@ export class ReferralEarningsComponent implements OnInit {
     const now = new Date();
     const currYearMonth = +moment(now).format("YYYYMM");
 
-    console.log(this.payments?.paymentScheduledDate);
-
     this.paymentMonth = moment(this.payments?.paymentScheduledDate)
       .utc()
       .format("MMM");
