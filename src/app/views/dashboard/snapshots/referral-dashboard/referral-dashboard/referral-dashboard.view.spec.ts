@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IMergeReport } from '@shared/interfaces';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { StateService } from '@shared/services/state/state.service';
+import { AppDataStateModel } from '@store/app-data';
+import { BehaviorSubject, of } from 'rxjs';
 
 import { ReferralDashboardView } from './referral-dashboard.view';
 

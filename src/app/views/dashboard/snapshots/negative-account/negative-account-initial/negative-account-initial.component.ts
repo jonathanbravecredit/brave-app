@@ -7,8 +7,6 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { Observable } from 'rxjs';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 
 @Component({
   selector: 'brave-negative-account-initial',
@@ -82,9 +80,5 @@ export class NegativeAccountInitialComponent implements OnInit {
 
   onGoToReportClick(): void {
     this.router.navigate(['/dashboard/report']);
-  }
-
-  onDisputeClick(tradeline: ITradeLinePartition): void {
-    this.disputeService;
   }
 }
