@@ -1,19 +1,19 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormBuilder } from "@angular/forms";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
-import { AutocompleteAddressFormComponent } from "./autocomplete-address-form.component";
+import { AutocompleteAddressFormComponent } from './autocomplete-address-form.component';
 
-describe("AutocompleteAddressFormComponent", () => {
+describe('AutocompleteAddressFormComponent', () => {
   let component: AutocompleteAddressFormComponent;
   let fixture: ComponentFixture<AutocompleteAddressFormComponent>;
   let formBuilderMock: any;
 
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
+    formBuilderMock = jasmine.createSpyObj('FormBuilder', ['group']);
 
     await TestBed.configureTestingModule({
       declarations: [AutocompleteAddressFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 
@@ -23,7 +23,7 @@ describe("AutocompleteAddressFormComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

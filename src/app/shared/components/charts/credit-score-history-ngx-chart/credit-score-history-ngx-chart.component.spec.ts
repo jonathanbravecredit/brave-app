@@ -1,29 +1,27 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { CustomLineChartService } from "@shared/services/charts/custom-line-chart.service";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
 
-import { CreditScoreHistoryNgxChartComponent } from "./credit-score-history-ngx-chart.component";
-import { CreditScoreHistoryNgxChartService } from "./credit-score-history-ngx-chart.service";
+import { CreditScoreHistoryNgxChartComponent } from './credit-score-history-ngx-chart.component';
+import { CreditScoreHistoryNgxChartService } from './credit-score-history-ngx-chart.service';
 
-describe("CreditScoreHistoryNgxChartComponent", () => {
+describe('CreditScoreHistoryNgxChartComponent', () => {
   let component: CreditScoreHistoryNgxChartComponent;
   let fixture: ComponentFixture<CreditScoreHistoryNgxChartComponent>;
   let customLineChartMock: any;
   let creditScoreNgxMock: any;
 
   beforeEach(async () => {
-    customLineChartMock = jasmine.createSpyObj("customLineChartService", [
-      "showDots",
-    ]);
-    creditScoreNgxMock = jasmine.createSpyObj("creditScoreNgxChartService", [
-      "transformTrendingData",
-      "createChartCreditScoreData",
+    customLineChartMock = jasmine.createSpyObj('customLineChartService', ['showDots']);
+    creditScoreNgxMock = jasmine.createSpyObj('creditScoreNgxChartService', [
+      'transformTrendingData',
+      'createChartCreditScoreData',
     ]);
 
     await TestBed.configureTestingModule({
       declarations: [CreditScoreHistoryNgxChartComponent],
       providers: [
         { provide: CustomLineChartService, useValue: customLineChartMock },
-        { provide: creditScoreNgxMock, useValue: CreditScoreHistoryNgxChartService },
+        { provide: CreditScoreHistoryNgxChartService, useValue: creditScoreNgxMock },
       ],
     }).compileComponents();
   });
@@ -34,7 +32,7 @@ describe("CreditScoreHistoryNgxChartComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
