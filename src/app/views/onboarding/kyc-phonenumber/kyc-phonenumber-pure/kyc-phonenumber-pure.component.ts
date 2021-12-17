@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { OutlinePhoneFormComponent } from '@shared/components/forms/outline-phone-form/outline-phone-form.component';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 
@@ -8,6 +8,7 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
 })
 export class KycPhonenumberPureComponent extends KycBaseComponent {
   @ViewChild('form') formComponent: OutlinePhoneFormComponent | undefined;
+  @Input() phoneError = false;
   constructor() {
     super();
   }
