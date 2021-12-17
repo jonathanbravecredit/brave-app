@@ -1,25 +1,18 @@
-import {
-  Component,
-  ViewChild,
-  AfterViewInit,
-  Input,
-  OnInit,
-} from "@angular/core";
-import { ICreditScoreHistoryNgxChart } from "@shared/components/charts/credit-score-history-ngx-chart";
-import { IMergeReport } from "@shared/interfaces";
-import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
-import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface";
-import { CustomLineChartService } from "@shared/services/charts/custom-line-chart.service";
-import { CreditScoreHistoryNgxChartService } from "./credit-score-history-ngx-chart.service";
+import { Component, ViewChild, AfterViewInit, Input, OnInit } from '@angular/core';
+import { ICreditScoreHistoryNgxChart } from '@shared/components/charts/credit-score-history-ngx-chart';
+import { IMergeReport } from '@shared/interfaces';
+import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
+import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
+import { CreditScoreHistoryNgxChartService } from './credit-score-history-ngx-chart.service';
 
 @Component({
-  selector: "brave-credit-score-history-ngx-chart",
-  templateUrl: "./credit-score-history-ngx-chart.component.html",
-  styleUrls: ["./credit-score-history-ngx-chart.component.css"],
+  selector: 'brave-credit-score-history-ngx-chart',
+  templateUrl: './credit-score-history-ngx-chart.component.html',
+  styleUrls: ['./credit-score-history-ngx-chart.component.css'],
 })
-export class CreditScoreHistoryNgxChartComponent
-  implements OnInit, AfterViewInit, ICreditScoreHistoryNgxChart {
-  @ViewChild("chart") chart: any;
+export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewInit, ICreditScoreHistoryNgxChart {
+  @ViewChild('chart') chart: any;
   multi: IResultsData[] | undefined;
   // options
   @Input() view: [number, number] = [340, 140];
@@ -37,8 +30,8 @@ export class CreditScoreHistoryNgxChartComponent
   showYAxisLabel: boolean = false;
   showXAxisLabel: boolean = false;
   tooltipDisabled: boolean = false;
-  xAxisLabel: string = "Year";
-  yAxisLabel: string = "Population";
+  xAxisLabel: string = 'Year';
+  yAxisLabel: string = 'Population';
   timeline: boolean = false;
   showRefLines: boolean = true;
   referenceLines: object[] = [];
@@ -46,27 +39,30 @@ export class CreditScoreHistoryNgxChartComponent
   trimXAxisTicks: boolean = false;
   data: {}[] | undefined;
   colorScheme = {
-    domain: ["#222C9D"],
+    domain: ['#222C9D'],
   };
 
   constructor(
     private customLineChartService: CustomLineChartService,
-    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService
+    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService,
   ) {
-    this.customLineChartService.dotColor = "#222C9D";
+    this.customLineChartService.dotColor = '#222C9D';
   }
 
   ngOnInit(): void {
     this.handleChartScoreData();
     if (this.multi) {
-      this.referenceLines = [
-        {
-          name: this.multi[0]!.series[
-            this.multi[0]!.series.length - 1
-          ].value.toString(),
-          value: this.multi[0]!.series[this.multi[0]!.series.length - 1].value,
-        },
-      ];
+      const multiZero = this.multi[0];
+      const series = multiZero.series;
+      const last = series[series.length - 1];
+      this.referenceLines = last
+        ? [
+            {
+              name: last.value.toString(),
+              value: last.value,
+            },
+          ]
+        : [];
     }
   }
 
@@ -82,7 +78,7 @@ export class CreditScoreHistoryNgxChartComponent
     const chartData = this.creditScoreNgxChartService.createChartCreditScoreData(
       dataProductAttributes,
       this.currentCreditScore,
-      this.lastUpdated
+      this.lastUpdated,
     );
 
     this.multi = chartData;
@@ -106,6 +102,6 @@ export class CreditScoreHistoryNgxChartComponent
 
   formatYTickMarks(val: any) {
     if (val === 850) return val;
-    return (val / 10) % 2 === 0 ? val : "";
+    return (val / 10) % 2 === 0 ? val : '';
   }
 }

@@ -17,7 +17,7 @@
     "amplifyProd": "amplify env checkout production",
     "amplify:GraphQLResolverFunction": "cd amplify/backend/function/GraphQLResolverFunction/ts && npm install && npm run tsc && cd -",
     "amplify:PatchTransunionCustomResolver": "cd amplify/backend/function/PatchTransunionCustomResolver/ts && npm install && npm run tsc && cd -",
-    "test": "ng test",
+    "test": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",

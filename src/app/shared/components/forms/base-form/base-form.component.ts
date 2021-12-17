@@ -25,7 +25,7 @@ export class BaseFormComponent {
     return this.parentForm.value;
   }
 
-  parentForm: FormGroup;
+  parentForm: FormGroup = new FormGroup({});
   constructor(fb: FormBuilder, @Inject('name') private name: string) {
     this.parentForm = fb.group({
       name: [name],

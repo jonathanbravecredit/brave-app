@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormBuilder } from "@angular/forms";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
-import { AutocompleteAddressFormComponent } from "./autocomplete-address-form.component";
+import { AutocompleteAddressFormComponent } from './autocomplete-address-form.component';
 
-describe("AutocompleteAddressFormComponent", () => {
+describe('AutocompleteAddressFormComponent', () => {
   let component: AutocompleteAddressFormComponent;
   let fixture: ComponentFixture<AutocompleteAddressFormComponent>;
 
@@ -20,7 +20,7 @@ describe("AutocompleteAddressFormComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
