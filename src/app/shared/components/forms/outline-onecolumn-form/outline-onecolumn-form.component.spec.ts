@@ -6,13 +6,11 @@ import { OutlineOnecolumnFormComponent } from "./outline-onecolumn-form.componen
 describe("OutlineOnecolumnFormComponent", () => {
   let component: OutlineOnecolumnFormComponent;
   let fixture: ComponentFixture<OutlineOnecolumnFormComponent>;
-  let formBuilderMock: any;
 
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
       declarations: [OutlineOnecolumnFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

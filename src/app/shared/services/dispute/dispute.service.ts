@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { StateService } from '@shared/services/state/state.service';
@@ -56,7 +55,7 @@ export class DisputeService implements OnDestroy {
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
 
-  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
+  constructor(private statesvc: StateService, private transunion: TransunionService) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });

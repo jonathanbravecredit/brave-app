@@ -6,14 +6,12 @@ import { SignUpComponent } from "./sign-up.component";
 describe("SignUpComponent", () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
-  let formBuilderMock: any;
 
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
 
     await TestBed.configureTestingModule({
       declarations: [SignUpComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

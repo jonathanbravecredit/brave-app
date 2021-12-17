@@ -6,13 +6,11 @@ import { SelectDobFormComponent } from "./select-dob-form.component";
 describe("SelectDobFormComponent", () => {
   let component: SelectDobFormComponent;
   let fixture: ComponentFixture<SelectDobFormComponent>;
-  let formBuilderMock: any;
 
   beforeEach(async () => {
-    formBuilderMock = jasmine.createSpyObj("FormBuilder", ["group"]);
     await TestBed.configureTestingModule({
       declarations: [SelectDobFormComponent],
-      providers: [{ provide: FormBuilder, useValue: formBuilderMock }],
+      providers: [FormBuilder],
     }).compileComponents();
   });
 

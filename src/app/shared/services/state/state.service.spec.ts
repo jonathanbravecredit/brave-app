@@ -1,16 +1,26 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import { Store } from "@ngxs/store";
+import { of } from "rxjs";
+import { APIService } from "../aws/api.service";
 
-import { StateService } from './state.service';
+import { StateService } from "./state.service";
 
-describe('StateService', () => {
+describe("StateService", () => {
   let service: StateService;
+  let apiMock: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    apiMock = jasmine.createSpyObj("ApiService", ["UpdateAppData"]);
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: APIService, useValue: apiMock },
+        Store
+      ],
+    });
     service = TestBed.inject(StateService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
