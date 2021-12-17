@@ -13,7 +13,7 @@ describe("FindingsResolver", () => {
       "getCreditBureauResultsById",
     ]);
     TestBed.configureTestingModule({
-      providers: [{ provide: DisputeService, useVale: disputeMock }],
+      providers: [{ provide: DisputeService, useValue: disputeMock }],
     });
     resolver = TestBed.inject(FindingsResolver);
   });

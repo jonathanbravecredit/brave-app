@@ -1,4 +1,6 @@
 import { TestBed } from "@angular/core/testing";
+import { Store } from "@ngxs/store";
+import { of } from "rxjs";
 import { StateService } from "../state/state.service";
 import { TransunionService } from "../transunion/transunion.service";
 
@@ -8,15 +10,16 @@ import { DisputeService } from "./dispute.service";
 
 describe("DisputeService", () => {
   let service: DisputeService;
-  let stateMock: any;
+  class StateMock {
+    public state$ = of();
+  }
   let transunionMock: any;
 
   beforeEach(() => {
-    stateMock = jasmine.createSpyObj("StateService", ["subscribe"]);
     transunionMock = jasmine.createSpyObj("TransunionService", ["subscribe"]);
     TestBed.configureTestingModule({
       providers: [
-        { provide: StateService, useValue: stateMock },
+        { provide: StateService, useClass: StateMock },
         { provide: TransunionService, useValue: transunionMock },
       ],
     });
