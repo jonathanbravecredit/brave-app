@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
-import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { IMergeReport } from "@shared/interfaces";
+import { DashboardService } from "@shared/services/dashboard/dashboard.service";
+import {
+  DashboardStateModel,
+  DashboardStatus,
+} from "@store/dashboard/dashboard.model";
+import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface";
+import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
+import { CreditMixService } from "@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service";
 import {
   ICreditMixTLSummary,
   IRecommendationText,
-} from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
-import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
+} from "@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface";
+import { IGroupedYearMonthReferral } from "@shared/interfaces/referrals.interface";
+import { CreditUtilizationService } from "@shared/services/credit-utilization/credit-utilization.service";
 
 @Component({
-  selector: 'brave-dashboard-enrolled',
-  templateUrl: './dashboard-enrolled.component.html',
+  selector: "brave-dashboard-enrolled",
+  templateUrl: "./dashboard-enrolled.component.html",
 })
 export class DashboardEnrolledComponent implements OnInit {
   userName: string | undefined;
@@ -31,13 +34,14 @@ export class DashboardEnrolledComponent implements OnInit {
   creditUtilizationStatus: string | undefined;
   tradelineSummary: ICreditMixTLSummary | undefined;
   rating: string | undefined;
+  creditUtilizationPerc: number | undefined;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dashboardService: DashboardService,
     private creditMixService: CreditMixService,
-    private creditUtilizationService: CreditUtilizationService,
+    private creditUtilizationService: CreditUtilizationService
   ) {
     this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
@@ -45,27 +49,45 @@ export class DashboardEnrolledComponent implements OnInit {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
-      const tradelines = this.report?.TrueLinkCreditReportType.TradeLinePartition
-        ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
+      const tradelines = this.report?.TrueLinkCreditReportType
+        .TradeLinePartition
+        ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof
+          Array
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
 
-      this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
-      this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
-      this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
-      this.creditUtilizationStatus = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
-      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating
+      this.tradelineSummary = this.creditMixService.getTradelineSummary(
+        tradelines
+      );
+      this.creditMix = this.creditMixService.getRecommendations(
+        this.tradelineSummary
+      );
+      this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(
+        this.creditMix?.rating || "fair"
+      );
+      this.rating = this.creditMixService.getRecommendations(
+        this.tradelineSummary
+      )?.rating;
+
+      const creditUtilSnapshotObj = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(
+        tradelines
+      );
+
+      this.creditUtilizationStatus = creditUtilSnapshotObj.status;
+
+      this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
-    const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
+    const fullfilled = this.dashboardService.state?.agencies?.transunion
+      ?.fulfilledOn;
     if (fullfilled) {
       this.lastUpdated = new Date(fullfilled).toLocaleDateString();
     }
   }
 
   ngOnInit(): void {
-    if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
+    if (this.userName) this.welcomeMsg = "Welcome back, " + this.userName;
   }
 
   onNegativeItemsClicked() {
@@ -73,7 +95,7 @@ export class DashboardEnrolledComponent implements OnInit {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    this.router.navigate(['../report/snapshot/negative'], {
+    this.router.navigate(["../report/snapshot/negative"], {
       relativeTo: this.route,
     });
   }
@@ -83,7 +105,7 @@ export class DashboardEnrolledComponent implements OnInit {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
-    this.router.navigate(['../report/snapshot/forbearance'], {
+    this.router.navigate(["../report/snapshot/forbearance"], {
       relativeTo: this.route,
     });
   }
@@ -92,33 +114,33 @@ export class DashboardEnrolledComponent implements OnInit {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate(['../report/snapshot/databreach'], {
+    this.router.navigate(["../report/snapshot/databreach"], {
       relativeTo: this.route,
     });
   }
 
   onFullReportClicked() {
-    this.router.navigate(['../report'], { relativeTo: this.route });
+    this.router.navigate(["../report"], { relativeTo: this.route });
   }
 
   onDisputesClicked() {
-    this.router.navigate(['../disputes'], { relativeTo: this.route });
+    this.router.navigate(["../disputes"], { relativeTo: this.route });
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate(['../report/snapshot/creditutilization'], {
+    this.router.navigate(["../report/snapshot/creditutilization"], {
       relativeTo: this.route,
     });
   }
 
   onCreditMixClicked() {
-    this.router.navigate(['../report/snapshot/creditmix'], {
+    this.router.navigate(["../report/snapshot/creditmix"], {
       relativeTo: this.route,
     });
   }
 
   onReferralsClicked() {
-    this.router.navigate(['../report/snapshot/referrals'], {
+    this.router.navigate(["../report/snapshot/referrals"], {
       relativeTo: this.route,
     });
   }
