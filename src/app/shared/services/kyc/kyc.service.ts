@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { OnboardingStateModel } from '@store/onboarding';
+import { Injectable } from "@angular/core";
+import { Store } from "@ngxs/store";
+import { OnboardingStateModel } from "@store/onboarding";
 import {
   TransunionInput,
   TUStatusRefInput,
   UpdateAppDataInput,
   UserAttributesInput,
-} from '@shared/services/aws/api.service';
-import { AppDataStateModel } from '@store/app-data';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { AgenciesStateModel } from '@store/agencies';
-import { StateService } from '@shared/services/state/state.service';
+} from "@shared/services/aws/api.service";
+import { AppDataStateModel } from "@store/app-data";
+import { TransunionService } from "@shared/services/transunion/transunion.service";
+import { AgenciesStateModel } from "@store/agencies";
+import { StateService } from "@shared/services/state/state.service";
 import {
   ITransunionKBAQuestions,
   ITransunionKBAQuestion,
@@ -21,19 +21,19 @@ import {
   IVerifyAuthenticationQuestionsResult,
   ITransunionKBAInProgressQuestions,
   ITransunionKBAChallengeAnswer,
-} from '@shared/interfaces';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BraveUtil as bc, BraveUtil } from '@shared/utils/brave/brave';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { TUBundles } from '@shared/utils/transunion/constants';
-import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
-import { AnalyticErrorEvents } from '@shared/services/analytics/analytics/constants';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+} from "@shared/interfaces";
+import { ActivatedRoute, Router } from "@angular/router";
+import { BraveUtil as bc, BraveUtil } from "@shared/utils/brave/brave";
+import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
+import { TUBundles } from "@shared/utils/transunion/constants";
+import { AppStatus, AppStatusReason } from "@shared/utils/brave/constants";
+import { AnalyticErrorEvents } from "@shared/services/analytics/analytics/constants";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
 
 export enum KYCResponse {
-  Failed = 'failed',
-  Success = 'success',
+  Failed = "failed",
+  Success = "success",
 }
 
 @Injectable()
@@ -45,7 +45,7 @@ export class KycService {
     private transunion: TransunionService,
     private analytics: AnalyticsService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   /*=====================================*/
@@ -97,7 +97,7 @@ export class KycService {
   updateStep(
     lastActive: number,
     lastComplete: number,
-    started: boolean = true,
+    started: boolean = true
   ): OnboardingStateModel | undefined | void {
     const state = this.store.snapshot();
     return { ...state.user?.onboarding, lastActive, lastComplete, started };
@@ -120,7 +120,9 @@ export class KycService {
    * Takes the attributes and updates the state with them
    * @param {UserAttributesInput} attributes
    */
-  async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
+  async updateUserAttributesAsync(
+    attrs: UserAttributesInput
+  ): Promise<UpdateAppDataInput> {
     return await this.statesvc.updateUserAttributesAsync(attrs);
   }
 
@@ -151,7 +153,7 @@ export class KycService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   async updateAgenciesAsync(
-    agencies: AgenciesStateModel | null | undefined,
+    agencies: AgenciesStateModel | null | undefined
   ): Promise<UpdateAppDataInput | null | undefined> {
     if (!agencies) return;
     return await this.statesvc.updateAgenciesAsync(agencies);
@@ -163,7 +165,9 @@ export class KycService {
   /*
   /*=====================================*/
   //========== GENERAL ==================//
-  async updateTransunion(tuPartial: Partial<TransunionInput>): Promise<UpdateAppDataInput> {
+  async updateTransunion(
+    tuPartial: Partial<TransunionInput>
+  ): Promise<UpdateAppDataInput> {
     return await this.statesvc.updateTransunion(tuPartial);
   }
 
@@ -174,7 +178,7 @@ export class KycService {
    * @returns Full ssn or a failure (TODO: handle failures)
    */
   async getIndicativeEnrichmentResults(
-    appData: UpdateAppDataInput,
+    appData: UpdateAppDataInput
   ): Promise<ITUServiceResponse<IIndicativeEnrichmentResult | undefined>> {
     try {
       return await this.transunion.sendIndicativeEnrichment(appData);
@@ -190,19 +194,27 @@ export class KycService {
    */
   async processIndicativeEnrichmentResponse(
     enrichment: IIndicativeEnrichmentResult,
-    resp?: ITUServiceResponse<IIndicativeEnrichmentResult | undefined>,
+    resp?: ITUServiceResponse<IIndicativeEnrichmentResult | undefined>
   ): Promise<IIndicativeEnrichmentResult | undefined> {
     const { appData } = this.statesvc.state$.value;
     const transunion = appData.agencies?.transunion;
-    if (enrichment.ResponseType.toLowerCase() === 'success') {
-      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, true, resp);
+    if (enrichment.ResponseType.toLowerCase() === "success") {
+      const status = tu.generators.createOnboardingStatus(
+        TUBundles.IndicativeEnrichment,
+        true,
+        resp
+      );
       await this.updateIndicativeEnrichment({
         indicativeEnrichmentSuccess: true,
         indicativeEnrichmentStatus: status,
       });
       return enrichment;
     } else {
-      const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false, resp);
+      const status = tu.generators.createOnboardingStatus(
+        TUBundles.IndicativeEnrichment,
+        false,
+        resp
+      );
       await this.updateIndicativeEnrichment({
         indicativeEnrichmentSuccess: false,
         indicativeEnrichmentStatus: status,
@@ -236,8 +248,10 @@ export class KycService {
    * @returns
    */
   async getGetAuthenticationQuestionsResults(
-    appData: UpdateAppDataInput,
-  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
+    appData: UpdateAppDataInput
+  ): Promise<
+    ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>
+  > {
     const ssn = appData.user?.userAttributes?.ssn?.full;
     if (!ssn) return bc.technicalError;
     try {
@@ -254,8 +268,10 @@ export class KycService {
    */
   async sendGetAuthenticationQuestions(
     appData: UpdateAppDataInput | AppDataStateModel,
-    ssn: string = '',
-  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
+    ssn: string = ""
+  ): Promise<
+    ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>
+  > {
     if (!ssn) return bc.technicalError;
     try {
       return await this.transunion.sendGetAuthenticationQuestions(appData, ssn);
@@ -271,12 +287,15 @@ export class KycService {
    * @returns
    */
   async processGetAuthenticationQuestionsResponse(
-    questions: IGetAuthenticationQuestionsResult,
+    questions: IGetAuthenticationQuestionsResult
   ): Promise<IGetAuthenticationQuestionsResult | undefined> {
     const { appData } = this.statesvc.state$.value;
     const transunion = appData.agencies?.transunion;
-    if (questions.ResponseType.toLowerCase() === 'success') {
-      const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, true);
+    if (questions.ResponseType.toLowerCase() === "success") {
+      const status = tu.generators.createOnboardingStatus(
+        TUBundles.GetAuthenticationQuestions,
+        true
+      );
       await this.updateGetAuthenticationQuestions({
         getAuthenticationQuestionsSuccess: true,
         getAuthenticationQuestionsStatus: status,
@@ -285,7 +304,10 @@ export class KycService {
       // now do the authentication
       return questions;
     } else {
-      const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, false);
+      const status = tu.generators.createOnboardingStatus(
+        TUBundles.GetAuthenticationQuestions,
+        false
+      );
       await this.updateGetAuthenticationQuestions({
         getAuthenticationQuestionsSuccess: false,
         getAuthenticationQuestionsStatus: status,
@@ -305,36 +327,46 @@ export class KycService {
    * @param resp
    */
   async handleGetAuthenticationFlow(
-    resp: ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>,
+    resp: ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>
   ): Promise<void> {
     if (!resp.success || !resp.data) {
       // TU response or BC technical error
-      this.handleGetAuthenticationBailout<IGetAuthenticationQuestionsResult>(resp);
+      this.handleGetAuthenticationBailout<IGetAuthenticationQuestionsResult>(
+        resp
+      );
     } else {
-      const questions = await this.processGetAuthenticationQuestionsResponse(resp.data);
+      const questions = await this.processGetAuthenticationQuestionsResponse(
+        resp.data
+      );
       const xml = tu.parsers.onboarding.parseAuthQuestions(questions);
       if (!xml) {
         this.handleGetAuthenticationBailout();
       } else {
         const kbaAppData = await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
-        const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xml); // check if OTP eligible
+        const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(
+          xml
+        ); // check if OTP eligible
         const otpQuestion = this.getOTPQuestion(authQuestions);
         if (otpQuestion) {
           const otpResp = await this.sendOTPResponse(otpQuestion);
           if (!otpResp.success || !otpResp.data) {
-            this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(otpResp);
+            this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(
+              otpResp
+            );
           } else {
             const codeQuestions = otpResp.data?.AuthenticationDetails;
             const pinData = await this.startPinClock();
-            const questionData = await this.updateCurrentRawQuestionsAsync(codeQuestions);
+            const questionData = await this.updateCurrentRawQuestionsAsync(
+              codeQuestions
+            );
             await this.updateAgenciesAsync(questionData.agencies); // success, sync up to db
-            this.router.navigate(['../code'], { relativeTo: this.route });
+            this.router.navigate(["/onboarding/code"]);
           }
         } else {
           // since no otp question found, they are kba based and already save...start KBA countdown
           const kbaData = await this.startKbaClock();
           await this.updateAgenciesAsync(kbaData.agencies);
-          this.router.navigate(['../kba'], { relativeTo: this.route });
+          this.router.navigate(["/onboarding/kba"]);
         }
       }
     }
@@ -350,20 +382,24 @@ export class KycService {
    * @param resp
    */
   async handleVerificationInProgressFlow(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>,
+    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
   ): Promise<void> {
     if (!resp.success || !resp.data) {
       // TU response or BC technical error
-      this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(resp);
+      this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(
+        resp
+      );
     } else {
       const questions = resp.data; // skipping the updating of the bundle key
-      const xml = tu.parsers.onboarding.parseVerificationInProgressQuestions(questions);
+      const xml = tu.parsers.onboarding.parseVerificationInProgressQuestions(
+        questions
+      );
       if (!xml) {
         this.handleGetAuthenticationBailout();
       } else {
         await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
         // do not restart clock
-        this.router.navigate(['../kba'], { relativeTo: this.route });
+        this.router.navigate(["../kba"], { relativeTo: this.route });
       }
     }
   }
@@ -395,17 +431,25 @@ export class KycService {
    * - Confirm answer is received
    */
   async sendOTPResponse(
-    otpQuestion: ITransunionKBAQuestion,
-  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
-    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
+    otpQuestion: ITransunionKBAQuestion
+  ): Promise<
+    ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
+  > {
+    const state = this.store.snapshot()["appData"]; // refresh state for new bundle key
     const otpAnswer = this.getOTPSendTextAnswer(otpQuestion);
     try {
-      const resp = await this.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
+      const resp = await this.sendVerifyAuthenticationQuestions(state, [
+        otpAnswer,
+      ]);
       if (!resp.success || !resp.data) {
         return resp;
       } else {
-        const parsed = resp.data ? resp.data : ({} as IVerifyAuthenticationQuestionsResult);
-        const success = parsed ? parsed.ResponseType.toLowerCase() === 'success' : false;
+        const parsed = resp.data
+          ? resp.data
+          : ({} as IVerifyAuthenticationQuestionsResult);
+        const success = parsed
+          ? parsed.ResponseType.toLowerCase() === "success"
+          : false;
         return { success, data: parsed };
       }
     } catch (err: any) {
@@ -422,11 +466,16 @@ export class KycService {
    */
   async sendVerifyAuthenticationQuestions(
     appData: UpdateAppDataInput | AppDataStateModel | undefined,
-    answers: IVerifyAuthenticationAnswer[] | undefined,
-  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
+    answers: IVerifyAuthenticationAnswer[] | undefined
+  ): Promise<
+    ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
+  > {
     if (!answers?.length || !appData?.id) return bc.technicalError;
     try {
-      return await this.transunion.sendVerifyAuthenticationQuestions(appData, answers);
+      return await this.transunion.sendVerifyAuthenticationQuestions(
+        appData,
+        answers
+      );
     } catch (err) {
       return bc.technicalError;
     }
@@ -437,7 +486,9 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawQuestionsAsync(questions: string): Promise<UpdateAppDataInput> {
+  async updateCurrentRawQuestionsAsync(
+    questions: string
+  ): Promise<UpdateAppDataInput> {
     try {
       return await this.statesvc.updateTransunionQuestionsAsync(questions);
     } catch (err) {
@@ -450,7 +501,9 @@ export class KycService {
    *   - Does not store in the database as there is no need to.
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
-  async updateCurrentRawAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput> {
+  async updateCurrentRawAuthDetailsAsync(
+    questions: string
+  ): Promise<UpdateAppDataInput> {
     try {
       return this.statesvc.updateTransunionAuthDetailsAsync(questions);
     } catch (err) {
@@ -535,7 +588,9 @@ export class KycService {
    * @param {ITransunionKBAQuestions} questions
    * @returns
    */
-  getOTPQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
+  getOTPQuestion(
+    questions: ITransunionKBAQuestions
+  ): ITransunionKBAQuestion | undefined {
     return tu.parsers.onboarding.parseOTPQuestion(questions);
   }
 
@@ -544,7 +599,9 @@ export class KycService {
    * @param {ITransunionKBAQuestion} question
    * @returns
    */
-  getOTPSendTextAnswer(question: ITransunionKBAQuestion): IVerifyAuthenticationAnswer {
+  getOTPSendTextAnswer(
+    question: ITransunionKBAQuestion
+  ): IVerifyAuthenticationAnswer {
     return tu.parsers.onboarding.parseOTPSendTextAnswer(question);
   }
 
@@ -553,7 +610,9 @@ export class KycService {
    * @param {ITransunionKBAQuestions} questions
    * @returns
    */
-  getPassCodeQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
+  getPassCodeQuestion(
+    questions: ITransunionKBAQuestions
+  ): ITransunionKBAQuestion | undefined {
     return tu.parsers.onboarding.parsePassCodeQuestion(questions);
   }
 
@@ -562,7 +621,10 @@ export class KycService {
    * @param {ITransunionKBAQuestion} question
    * @returns
    */
-  getPassCodeAnswer(question: ITransunionKBAQuestion, input: string): IVerifyAuthenticationAnswer {
+  getPassCodeAnswer(
+    question: ITransunionKBAQuestion,
+    input: string
+  ): IVerifyAuthenticationAnswer {
     return tu.parsers.onboarding.parsePassCodeAnswer(question, input);
   }
 
@@ -574,7 +636,7 @@ export class KycService {
 
   async bailoutFromOnboarding(
     tuPartial: Partial<TransunionInput>,
-    resp?: ITUServiceResponse<any | undefined>,
+    resp?: ITUServiceResponse<any | undefined>
   ): Promise<void> {
     const appData = await this.incrementAuthAttempt();
     const agencies = appData.agencies;
@@ -582,7 +644,7 @@ export class KycService {
     if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
       // technical error...api did not respond and error thrown (empty resp);
       this.analytics.fireErrorEvent(AnalyticErrorEvents.ApiTechnicalIssue);
-      this.router.navigate(['/onboarding/retry']);
+      this.router.navigate(["/onboarding/retry"]);
     } else {
       const critical = tu.queries.exceptions.isErrorCritical(resp);
       const authAttempts = transunion.authAttempt || 0;
@@ -598,7 +660,7 @@ export class KycService {
       } else if (authAttempts >= 2) {
         await this.handleSuspension(AppStatusReason.AuthAttemptsExceeded);
       } else {
-        this.router.navigate(['/onboarding/retry']);
+        this.router.navigate(["/onboarding/retry"]);
       }
     }
   }
@@ -617,9 +679,9 @@ export class KycService {
       getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
         TUBundles.GetAuthenticationQuestions,
         false,
-        resp,
+        resp
       ),
-      serviceBundleFulfillmentKey: '',
+      serviceBundleFulfillmentKey: "",
     };
     this.updateGetAuthenticationQuestions(tuPartial);
     this.bailoutFromOnboarding(tuPartial, resp);
@@ -636,7 +698,7 @@ export class KycService {
       duration: 24 * 30,
     };
     await this.suspendUser(suspension);
-    this.router.navigate(['/suspended/default']);
+    this.router.navigate(["/suspended/default"]);
   }
 
   /**
