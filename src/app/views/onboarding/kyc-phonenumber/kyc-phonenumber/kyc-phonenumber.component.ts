@@ -17,6 +17,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   @ViewChild(KycPhonenumberPureComponent) pure: KycPhonenumberPureComponent | undefined;
   private stepID = 3;
   public hasError: boolean = false;
+  phoneError = false;
 
   constructor(
     private router: Router,
@@ -58,6 +59,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   async goToNext(form: FormGroup): Promise<void> {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingPhone);
     if (form.valid) {
+      this.phoneError = false;
       const { phone } = this.formatAttributes(form, phoneMap);
       const attrs = {
         phone: {
@@ -77,6 +79,11 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
+    const phoneNum = errors.phone.value.input;
+    if (phoneNum.length < 10) {
+      this.phoneError = true;
+    }
+
     this.hasError = true;
   }
 }

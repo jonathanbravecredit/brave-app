@@ -1453,6 +1453,10 @@ select {
   margin-right: auto;
 }
 
+.mr-0\.5 {
+  margin-right: 0.125rem;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -2410,9 +2414,19 @@ select {
   background-color: rgba(233, 60, 37, var(--tw-bg-opacity));
 }
 
+.bg-brave-semicritical {
+  --tw-bg-opacity: 1;
+  background-color: rgba(245, 103, 0, var(--tw-bg-opacity));
+}
+
 .bg-brave-danger {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 162, 31, var(--tw-bg-opacity));
+}
+
+.bg-brave-normal {
+  --tw-bg-opacity: 1;
+  background-color: rgba(187, 217, 4, var(--tw-bg-opacity));
 }
 
 .bg-dk-gray {
@@ -3061,9 +3075,19 @@ select {
   color: rgba(233, 60, 37, var(--tw-text-opacity));
 }
 
+.text-brave-semicritical {
+  --tw-text-opacity: 1;
+  color: rgba(245, 103, 0, var(--tw-text-opacity));
+}
+
 .text-brave-danger {
   --tw-text-opacity: 1;
   color: rgba(249, 162, 31, var(--tw-text-opacity));
+}
+
+.text-brave-normal {
+  --tw-text-opacity: 1;
+  color: rgba(187, 217, 4, var(--tw-text-opacity));
 }
 
 .text-lt-gray {
@@ -3084,6 +3108,11 @@ select {
 .text-link-blue {
   --tw-text-opacity: 1;
   color: rgba(6, 69, 173, var(--tw-text-opacity));
+}
+
+.focus-within\:text-blueGray-600:focus-within {
+  --tw-text-opacity: 1;
+  color: rgba(71, 85, 105, var(--tw-text-opacity));
 }
 
 .hover\:text-red-700:hover {
