@@ -1,39 +1,42 @@
-import { ApplicationRef } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SyncService } from '@shared/services/sync/sync.service';
+import { ApplicationRef } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { of } from "rxjs";
 
-import { SigninRedirectComponent } from './signin-redirect.component';
+import { SigninRedirectComponent } from "./signin-redirect.component";
 
-
-describe('SigninRedirectComponent', () => {
+describe("SigninRedirectComponent", () => {
   let component: SigninRedirectComponent;
   let fixture: ComponentFixture<SigninRedirectComponent>;
   let routerMock: any;
   let syncMock: any;
   let authMock: any;
-  let appRefMock: any;
+  class AppRefMock {
+    isStable = of();
+  }
   let interstitialMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', [''])
-    syncMock = jasmine.createSpyObj('SyncService', [''])
-    authMock = jasmine.createSpyObj('AuthService', [''])
-    appRefMock = jasmine.createSpyObj('ApplicationRef', [''])
-    interstitialMock = jasmine.createSpyObj('InterstitialService', [''])
+    routerMock = jasmine.createSpyObj("Router", [""]);
+    syncMock = jasmine.createSpyObj("SyncService", [""]);
+    authMock = jasmine.createSpyObj("AuthService", [""]);
+    interstitialMock = jasmine.createSpyObj("InterstitialService", [
+      "changeMessage",
+      "openInterstitial",
+    ]);
     await TestBed.configureTestingModule({
-      declarations: [ SigninRedirectComponent ],providers: [
-        {provide: Router, useValue: routerMock},
-        {provide: SyncService, useValue: syncMock},
-        {provide: AuthService, useValue: authMock},
-        {provide: ApplicationRef, useValue: appRefMock},
-        {provide: InterstitialService, useValue: interstitialMock},
-      ]
-
-    })
-    .compileComponents();
+      declarations: [SigninRedirectComponent],
+      providers: [
+        { provide: Router, useValue: routerMock },
+        { provide: SyncService, useValue: syncMock },
+        { provide: AuthService, useValue: authMock },
+        { provide: ApplicationRef, useClass: AppRefMock },
+        { provide: InterstitialService, useValue: interstitialMock },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -42,7 +45,7 @@ describe('SigninRedirectComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
