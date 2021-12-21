@@ -1,13 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
-import {
-  IGroupedYearMonthReferral,
-  IPayments,
-  IReferral,
-} from "@shared/interfaces/referrals.interface";
+import { Component, Input, OnInit } from '@angular/core';
+import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfaces/referrals.interface';
 
 @Component({
-  selector: "brave-referral-pure",
-  templateUrl: "./referral-pure.view.html",
+  selector: 'brave-referral-pure',
+  templateUrl: './referral-pure.view.html',
 })
 export class ReferralDashboardPureView implements OnInit {
   @Input() referral: IReferral | undefined;
@@ -18,14 +14,14 @@ export class ReferralDashboardPureView implements OnInit {
     this._isSuspended = value;
   }
   get isSuspended(): boolean {
-    return this._isSuspended
+    return this._isSuspended;
   }
 
   constructor() {}
 
   ngOnInit(): void {
-    if (this.referral?.status === "suspended") {
+    if (this.referral?.referralStatus === 'suspended') {
       this.isSuspended = true;
-    };
+    }
   }
 }
