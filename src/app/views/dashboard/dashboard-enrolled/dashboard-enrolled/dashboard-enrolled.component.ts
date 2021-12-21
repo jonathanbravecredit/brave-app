@@ -15,6 +15,7 @@ import {
 } from "@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface";
 import { IGroupedYearMonthReferral } from "@shared/interfaces/referrals.interface";
 import { CreditUtilizationService } from "@shared/services/credit-utilization/credit-utilization.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
   selector: "brave-dashboard-enrolled",
@@ -95,9 +96,15 @@ export class DashboardEnrolledComponent implements OnInit {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    this.router.navigate(["../report/snapshot/negative"], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(
+      [
+        routes.root.children.dashboard.children.report.children.snapshot
+          .children.negative.full,
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 
   onForbearanceItemsClicked() {
@@ -105,43 +112,79 @@ export class DashboardEnrolledComponent implements OnInit {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
-    this.router.navigate(["../report/snapshot/forbearance"], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(
+      [
+        routes.root.children.dashboard.children.report.children.snapshot
+          .children.forbearance.full,
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 
   onDatabreachItemsClicked() {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate(["../report/snapshot/databreach"], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(
+      [
+        routes.root.children.dashboard.children.report.children.snapshot
+          .children.databreach.full,
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 
   onFullReportClicked() {
-    this.router.navigate(["../report"], { relativeTo: this.route });
+    this.router.navigate(
+      [routes.root.children.dashboard.children.report.full],
+      { relativeTo: this.route }
+    );
   }
 
   onDisputesClicked() {
-    this.router.navigate(["../disputes"], { relativeTo: this.route });
+    this.router.navigate(
+      [routes.root.children.dashboard.children.disputes.full],
+      { relativeTo: this.route }
+    );
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate(["../report/snapshot/creditutilization"], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(
+      [
+        routes.root.children.dashboard.children.report.children.snapshot
+          .children.creditutilization.full,
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 
   onCreditMixClicked() {
-    this.router.navigate(["../report/snapshot/creditmix"], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(
+      [
+        routes.root.children.dashboard.children.report.children.snapshot
+          .children.creditmix.full,
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 
   onReferralsClicked() {
-    this.router.navigate(["../report/snapshot/referrals"], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(
+      [
+        routes.root.children.dashboard.children.report.children.snapshot
+          .children.referrals.full,
+      ],
+      {
+        relativeTo: this.route,
+      }
+    );
   }
 }

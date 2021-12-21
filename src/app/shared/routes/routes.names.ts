@@ -165,7 +165,66 @@ export const ROUTE_NAMES = {
           disputes: {
             segment: "disputes",
             full: "/dashboard/disputes",
-            children: {},
+            children: {
+              overview: {
+                segment: "overview",
+                full: "/dashboard/disputes/overview",
+                children: {},
+              },
+              historical: {
+                segment: "historical",
+                full: "/dashboard/disputes/historical",
+                children: {},
+              },
+              findings: {
+                segment: "findings",
+                full: "/dashboard/disputes/findings",
+                children: {},
+              },
+              reconfirm: {
+                segment: "reconfirm",
+                full: "/dashboard/disputes/reconfirm",
+                children: {},
+              },
+              tradeline: {
+                segment: "tradeline",
+                full: "/dashboard/disputes/tradeline",
+                children: {
+                  error: {
+                    segment: "error",
+                    full: "/dashboard/disputes/tradeline/error",
+                    children: {},
+                  },
+                },
+              },
+              personalitem: {
+                segment: "personalitem",
+                full: "/dashboard/disputes/personalitem",
+                children: {
+                  error: {
+                    segment: "error",
+                    full: "/dashboard/disputes/personalitem/error",
+                    children: {},
+                  },
+                },
+              },
+              publicitem: {
+                segment: "publicitem",
+                full: "/dashboard/disputes/publicitem",
+                children: {
+                  error: {
+                    segment: "error",
+                    full: "/dashboard/disputes/publicitem/error",
+                    children: {},
+                  },
+                },
+              },
+              error: {
+                segment: "error",
+                full: "/dashboard/disputes/error",
+                children: {},
+              },
+            },
           },
           error: {
             segment: "error",
@@ -249,3 +308,8 @@ export const ROUTE_NAMES = {
     },
   },
 };
+
+// const test = () => {
+//   const routes = ROUTES;
+//   this.router.navigate([`${routes.root.children.auth.children.signup}`])
+// }
