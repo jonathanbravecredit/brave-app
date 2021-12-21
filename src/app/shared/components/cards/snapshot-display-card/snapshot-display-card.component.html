@@ -48,7 +48,7 @@
     </div>
   </div>
   <!-- right column section 3: Display of values -->
-  <div class="flex flex-col items-center mr-6 text-center justify-center">
+  <div class="flex flex-col items-end mr-6 text-end justify-center">
     <span *ngIf="!rating" class="text-xl m-auto">
       <p
         *ngIf="typeOfSnapshot === 'tag'"
@@ -67,11 +67,11 @@
     <span class="text-2.5 -mt-1" *ngIf="typeOfSnapshot === 'date'">
       <p class="font-sans text-dk-gray">{{ typeOfDate }}</p>
     </span>
-    <span
-      class="text-base font-semibold"
-      [ngStyle]="{ color: color }"
-      *ngIf="rating"
-      >{{ rating }}</span
-    >
+      <span
+        [ngClass]="status | snapshotStatus: 'text'"
+        class="text-base font-semibold"
+        *ngIf="rating"
+        >{{ rating }}</span
+      >
   </div>
 </div>

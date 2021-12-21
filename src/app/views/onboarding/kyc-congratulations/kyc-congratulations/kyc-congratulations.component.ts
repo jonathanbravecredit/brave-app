@@ -1,18 +1,14 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { Component, AfterViewInit, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'brave-kyc-congratulations',
-  templateUrl: './kyc-congratulations.component.html',
+  selector: "brave-kyc-congratulations",
+  templateUrl: "./kyc-congratulations.component.html",
 })
 export class KycCongratulationsComponent implements OnInit, AfterViewInit {
-  constructor(private router: Router, private analytics: AnalyticsService) {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingCongratulations);
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -21,6 +17,6 @@ export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   }
 
   goToNext(): void {
-    this.router.navigate(['/dashboard/init']);
+    this.router.navigate(["/dashboard/init"]);
   }
 }

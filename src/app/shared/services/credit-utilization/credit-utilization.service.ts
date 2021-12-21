@@ -1,31 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
-import { AgenciesState, AgenciesStateModel } from '@store/agencies';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { TransunionInput } from '@shared/services/aws/api.service';
-import { BraveUtil } from '@shared/utils/brave/brave';
+import { Injectable } from "@angular/core";
+import { Select } from "@ngxs/store";
+import { IMergeReport, ITradeLinePartition } from "@shared/interfaces";
+import { AgenciesState, AgenciesStateModel } from "@store/agencies";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
+import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
+import { TransunionInput } from "@shared/services/aws/api.service";
+import { BraveUtil } from "@shared/utils/brave/brave";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CreditUtilizationService {
   // easy access to the Transunion merge report
   tuReport: IMergeReport = {} as IMergeReport;
-  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
+  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject(
+    {} as IMergeReport
+  );
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
   agenciesSub$: Subscription;
 
   constructor() {
-    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
-      const parsedReport = this.getCreditReport(agencies);
-      if (Object.keys(parsedReport).length) {
-        this.tuReport$.next(parsedReport);
-        this.tuReport = parsedReport;
-      }
-    });
+    this.agenciesSub$ = this.agencies$
+      .pipe()
+      .subscribe((agencies: AgenciesStateModel) => {
+        const parsedReport = this.getCreditReport(agencies);
+        if (Object.keys(parsedReport).length) {
+          this.tuReport$.next(parsedReport);
+          this.tuReport = parsedReport;
+        }
+      });
   }
 
   /**
@@ -55,7 +59,8 @@ export class CreditUtilizationService {
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
     if (!this.tuReport) return [{} as ITradeLinePartition];
-    const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
+    const partitions = this.tuReport?.TrueLinkCreditReportType
+      ?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
   }
@@ -64,9 +69,11 @@ export class CreditUtilizationService {
    * Returns the tradeline partitions from the current TU report
    * @returns {ITradeLinePartition[]}
    */
-  getRevolvingAccounts(tradelines: ITradeLinePartition[]): ITradeLinePartition[] | [] {
+  getRevolvingAccounts(
+    tradelines: ITradeLinePartition[]
+  ): ITradeLinePartition[] | [] {
     if (!tradelines.length) return [];
-    return tu.filters.filterTradelinesByType(tradelines, 'r');
+    return tu.filters.filterTradelinesByType(tradelines, "r");
   }
 
   calculateCreditUtilization(tradelines: ITradeLinePartition[]): number {
@@ -76,36 +83,49 @@ export class CreditUtilizationService {
     return utilizationPerc;
   }
 
-  getCreditUtilizationSnapshotStatus(tradelines: ITradeLinePartition[]): string {
+  getCreditUtilizationSnapshotStatus(
+    tradelines: ITradeLinePartition[]
+  ): {status: string, perc: number} {
     const perc = this.calculateCreditUtilization(tradelines);
-    return this.mapUtilizationStatusToSnapshot(this.calculateCreditStatus(perc));
+    return {
+      status: this.mapUtilizationStatusToSnapshot(
+        this.calculateCreditStatus(perc)
+      ),
+      perc
+    };
   }
 
   sumDebtAmount(account: ITradeLinePartition[]): number {
-    return account.reduce<number>((acc: number, tradePart: ITradeLinePartition) => {
-      if (tradePart.Tradeline?.OpenClosed?.symbol === 'C') {
-        return acc;
-      }
-      if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
-        return acc;
-      }
-      if (+tradePart.Tradeline?.GrantedTrade.CreditLimit! <= 0) {
-        return acc;
-      }
-      return acc + +tradePart.Tradeline?.currentBalance!;
-    }, 0);
+    return account.reduce<number>(
+      (acc: number, tradePart: ITradeLinePartition) => {
+        if (tradePart.Tradeline?.OpenClosed?.symbol === "C") {
+          return acc;
+        }
+        if (tradePart.accountTypeSymbol?.toLowerCase() !== "r") {
+          return acc;
+        }
+        if (+tradePart.Tradeline?.GrantedTrade.CreditLimit! <= 0) {
+          return acc;
+        }
+        return acc + +tradePart.Tradeline?.currentBalance!;
+      },
+      0
+    );
   }
 
   sumTotalAmount(account: ITradeLinePartition[]): number {
-    return account.reduce<number>((acc: number, tradePart: ITradeLinePartition) => {
-      if (tradePart.Tradeline?.OpenClosed?.symbol === 'C') {
-        return acc;
-      }
-      if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
-        return acc;
-      }
-      return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;
-    }, 0);
+    return account.reduce<number>(
+      (acc: number, tradePart: ITradeLinePartition) => {
+        if (tradePart.Tradeline?.OpenClosed?.symbol === "C") {
+          return acc;
+        }
+        if (tradePart.accountTypeSymbol?.toLowerCase() !== "r") {
+          return acc;
+        }
+        return acc + +tradePart.Tradeline?.GrantedTrade.CreditLimit!;
+      },
+      0
+    );
   }
 
   calcUtilzationPerc(debt: number, total: number): number {
@@ -113,36 +133,38 @@ export class CreditUtilizationService {
     return Math.floor((debt / total) * 100);
   }
 
-  calculateCreditStatus(percetangeUtilization: number | string | undefined): string {
+  calculateCreditStatus(
+    percetangeUtilization: number | string | undefined
+  ): string {
     if (percetangeUtilization === undefined) {
-      return 'closed';
+      return "closed";
     }
 
-    if (percetangeUtilization === '<1') {
-      return 'excellent';
+    if (percetangeUtilization === "<1") {
+      return "excellent";
     }
 
     switch (true) {
       case percetangeUtilization! <= 9:
-        return 'excellent';
+        return "excellent";
       case percetangeUtilization! <= 29:
-        return 'good';
+        return "good";
       case percetangeUtilization! <= 49:
-        return 'fair';
+        return "fair";
       case percetangeUtilization! <= 74:
-        return 'poor';
+        return "poor";
       default:
-        return 'verypoor';
+        return "verypoor";
     }
   }
 
   mapUtilizationStatusToSnapshot(status: string): string {
     const mapper: Record<string, string> = {
-      verypoor: 'critical',
-      poor: 'semicritical',
-      fair: 'danger',
-      good: 'normal',
-      excellent: 'safe',
+      verypoor: "critical",
+      poor: "semicritical",
+      fair: "danger",
+      good: "normal",
+      excellent: "safe",
     };
     return mapper[status.toLowerCase()];
   }
