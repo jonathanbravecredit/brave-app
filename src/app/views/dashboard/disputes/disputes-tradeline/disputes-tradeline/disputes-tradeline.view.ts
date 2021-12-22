@@ -7,6 +7,7 @@ import { DisputeService } from "@shared/services/dispute/dispute.service";
 import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
 import { IProcessDisputeTradelineResult } from "@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view";
 import { Observable } from "rxjs";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 type viewDisplay = "sent" | "not-sent";
 
@@ -55,8 +56,7 @@ export class DisputesTradelineView implements OnDestroy {
           this.viewDisplay = "sent";
         } else {
           const errorCode = error?.Code;
-          this.router.navigate([`./error`], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.children.dashboard.children.disputes.children.error.full], {
             queryParams: {
               code: errorCode,
             },
