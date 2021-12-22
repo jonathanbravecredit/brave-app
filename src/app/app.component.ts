@@ -6,7 +6,7 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { Observable } from 'rxjs';
 import { InitService } from '@shared/services/init/init.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 @Component({
   selector: 'brave-root',
   templateUrl: './app.component.html',
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
           await this.init.resolver();
           break;
         case 'signOut':
-          this.router.navigate(['/auth/signin']);
+          this.router.navigate([routes.root.children.auth.children.signin.full]);
           // handle sign out
           break;
         default:

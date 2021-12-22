@@ -1,24 +1,28 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, NewUser } from '@shared/services/auth/auth.service';
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SignInErrorDescriptions, SignInErrors } from '@views/authentication/signin/signin/content';
+import { Component, OnDestroy } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService, NewUser } from "@shared/services/auth/auth.service";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import {
+  SignInErrorDescriptions,
+  SignInErrors,
+} from "@views/authentication/signin/signin/content";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
-export type SigninState = 'init' | 'invalid';
+export type SigninState = "init" | "invalid";
 
 @Component({
-  selector: 'brave-signin',
-  templateUrl: './signin.component.html',
+  selector: "brave-signin",
+  templateUrl: "./signin.component.html",
 })
 export class SigninComponent {
-  viewState: SigninState = 'init';
-  message: string = '';
+  viewState: SigninState = "init";
+  message: string = "";
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private auth: AuthService,
-    private interstitial: InterstitialService,
+    private interstitial: InterstitialService
   ) {}
 
   /**
@@ -28,25 +32,37 @@ export class SigninComponent {
     if (!user) return;
     try {
       const cognitorUser = await this.auth.signIn(user.username, user.password);
-      if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
-      } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
+      if (
+        cognitorUser?.challengeName === "SMS_MFA" ||
+        cognitorUser.challengeName === "SOFTWARE_TOKEN_MFA"
+      ) {
+      } else if (cognitorUser?.challengeName === "NEW_PASSWORD_REQUIRED") {
         const { requiredAttributes } = cognitorUser?.challengeParam;
-      } else if (cognitorUser?.challengeName === 'MFA_SETUP') {
+      } else if (cognitorUser?.challengeName === "MFA_SETUP") {
       }
       // this.interstitial.fetching$.next(false);
     } catch (err: any) {
       this.interstitial.fetching$.next(false);
       if (err.code === SignInErrors.UserNotConfirmedException) {
         const unconfirmedUserState = {};
-        this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotConfirmedException]);
+        this.handleSigninError(
+          "invalid",
+          SignInErrorDescriptions[SignInErrors.UserNotConfirmedException]
+        );
       } else if (err.code === SignInErrors.PasswordResetRequiredException) {
-        this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.PasswordResetRequiredException]);
+        this.handleSigninError(
+          "invalid",
+          SignInErrorDescriptions[SignInErrors.PasswordResetRequiredException]
+        );
       } else if (err.code === SignInErrors.NotAuthorizedException) {
-        this.handleSigninError('invalid', err.message);
+        this.handleSigninError("invalid", err.message);
       } else if (err.code === SignInErrors.UserNotFoundException) {
-        this.handleSigninError('invalid', SignInErrorDescriptions[SignInErrors.UserNotFoundException]);
+        this.handleSigninError(
+          "invalid",
+          SignInErrorDescriptions[SignInErrors.UserNotFoundException]
+        );
       } else {
-        this.handleSigninError('invalid', err.message);
+        this.handleSigninError("invalid", err.message);
       }
     }
   }
@@ -59,7 +75,8 @@ export class SigninComponent {
   handleSigninError(viewState: SigninState, message: string): void {
     this.viewState = viewState;
     this.message =
-      message || `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`;
+      message ||
+      `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`;
   }
 
   /**
@@ -82,27 +99,29 @@ export class SigninComponent {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate(['../forgot'], { relativeTo: this.route });
+    this.router.navigate([routes.root.children.auth.children.forgot.full]);
   }
 
   /**
    * Method to route user to privacy policy
    */
   goToPrivacy(): void {
-    this.router.navigate(['/legal/privacy']);
+    this.router.navigate([
+      routes.root.children.compliance.children.privacy.full,
+    ]);
   }
 
   /**
    * Method to route user to terms of service
    */
   goToTerms(): void {
-    this.router.navigate(['/legal/tos']);
+    this.router.navigate([routes.root.children.compliance.children.tos.full]);
   }
 
   /**
    * Method to route user to signup
    */
   goToSignup(): void {
-    this.router.navigate(['/auth/signup']);
+    this.router.navigate([routes.root.children.auth.children.signup.full]);
   }
 }

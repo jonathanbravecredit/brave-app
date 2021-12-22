@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IPublicPartition } from '@shared/interfaces';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { StateService } from '@shared/services/state/state.service';
-import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { IPublicPartition } from "@shared/interfaces";
+import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { StateService } from "@shared/services/state/state.service";
+import { DisputeReconfirmFilter } from "@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters";
+import { Observable } from "rxjs";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
-  selector: 'brave-publicitems',
-  templateUrl: './publicitems.view.html',
+  selector: "brave-publicitems",
+  templateUrl: "./publicitems.view.html",
 })
 export class PublicitemsView {
   /**
@@ -26,10 +27,12 @@ export class PublicitemsView {
     private route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
-    private creditReportServices: CreditreportService,
+    private creditReportServices: CreditreportService
   ) {
     this.publicItem$ = this.creditReportServices.tuPublicItem$.asObservable();
-    this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+    this.acknowledged =
+      this.statesvc.state?.appData.agencies?.transunion
+        ?.acknowledgedDisputeTerms || false;
   }
 
   set acknowledged(value: boolean) {
@@ -49,29 +52,44 @@ export class PublicitemsView {
       .then((resp) => {
         const { success, error } = resp;
         if (success) {
-          const filter: DisputeReconfirmFilter = 'public';
-          this.router.navigate(['/disputes/reconfirm'], {
-            relativeTo: this.route,
-            queryParams: {
-              type: filter,
-            },
-          });
+          const filter: DisputeReconfirmFilter = "public";
+          this.router.navigate(
+            [
+              routes.root.children.dashboard.children.disputes.children
+                .reconfirm.full,
+            ],
+            {
+              queryParams: {
+                type: filter,
+              },
+            }
+          );
         } else {
-          this.router.navigate(['/disputes/error'], {
-            relativeTo: this.route,
-            queryParams: {
-              code: error?.Code || '197',
-            },
-          });
+          this.router.navigate(
+            [
+              routes.root.children.dashboard.children.disputes.children.error
+                .full,
+            ],
+            {
+              queryParams: {
+                code: error?.Code || "197",
+              },
+            }
+          );
         }
       })
       .catch((err) => {
-        this.router.navigate(['/disputes/error'], {
-          relativeTo: this.route,
-          queryParams: {
-            code: '197',
-          },
-        });
+        this.router.navigate(
+          [
+            routes.root.children.dashboard.children.disputes.children.error
+              .full,
+          ],
+          {
+            queryParams: {
+              code: "197",
+            },
+          }
+        );
       });
   }
 }

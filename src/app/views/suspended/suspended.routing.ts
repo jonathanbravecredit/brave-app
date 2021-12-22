@@ -1,16 +1,17 @@
-import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { SuspendedView } from '@views/suspended/suspended.view';
-import { SuspendedDefaultView } from '@views/suspended/suspended-default/suspended-default.view';
+import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { SuspendedView } from "@views/suspended/suspended.view";
+import { SuspendedDefaultView } from "@views/suspended/suspended-default/suspended-default.view";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 // our routing scheme ===> layout/view/subview/subview2...
 const SuspendedRoutes: Routes = [
   {
-    path: '',
+    path: "",
     component: SuspendedView,
     children: [
       {
-        path: 'default',
+        path: routes.root.children.suspended.children.default.segment,
         component: SuspendedDefaultView,
       },
     ],
