@@ -1,16 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/tradeline-to-details.pipe";
+import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
 
-import { TradelineDetailsComponent } from './tradeline-details.component';
+import { TradelineDetailsComponent } from "./tradeline-details.component";
 
-describe('TradelineDetailsComponent', () => {
+//public featureFlags: FeatureFlagsService
+
+describe("TradelineDetailsComponent", () => {
   let component: TradelineDetailsComponent;
   let fixture: ComponentFixture<TradelineDetailsComponent>;
+  let featureFlagsMock: any;
 
   beforeEach(async () => {
+    featureFlagsMock = jasmine.createSpyObj("FeatureFlagsService", [""]);
     await TestBed.configureTestingModule({
-      declarations: [ TradelineDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [TradelineDetailsComponent, TradelineToDetailsPipe],
+      providers: [{ provide: FeatureFlagsService, useValue: featureFlagsMock }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +25,7 @@ describe('TradelineDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

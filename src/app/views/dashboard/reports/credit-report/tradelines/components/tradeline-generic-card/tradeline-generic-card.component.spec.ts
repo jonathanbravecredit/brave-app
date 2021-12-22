@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/tradeline-to-details.pipe";
 
-import { TradelineGenericCardComponent } from './tradeline-generic-card.component';
+import { TradelineGenericCardComponent } from "./tradeline-generic-card.component";
 
-describe('TradelineGenericCardComponent', () => {
+describe("TradelineGenericCardComponent", () => {
   let component: TradelineGenericCardComponent;
   let fixture: ComponentFixture<TradelineGenericCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TradelineGenericCardComponent ]
-    })
-    .compileComponents();
+      declarations: [TradelineGenericCardComponent, TradelineToDetailsPipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('TradelineGenericCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

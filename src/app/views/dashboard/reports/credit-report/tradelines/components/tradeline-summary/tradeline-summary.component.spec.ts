@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SnapshotStatusPipe } from '@shared/components/cards/snapshot-display-card/snapshot-status.pipe';
+import { DecodePipe } from '@shared/pipes/decode/decode.pipe';
 
 import { TradelineSummaryComponent } from './tradeline-summary.component';
 
@@ -8,7 +10,7 @@ describe('TradelineSummaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TradelineSummaryComponent ]
+      declarations: [ TradelineSummaryComponent, SnapshotStatusPipe, DecodePipe ]
     })
     .compileComponents();
   });

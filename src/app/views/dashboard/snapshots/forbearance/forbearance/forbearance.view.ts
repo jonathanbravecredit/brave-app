@@ -19,7 +19,6 @@ export class ForbearanceView implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private creditReportService: CreditreportService,
-    private analytics: AnalyticsService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }

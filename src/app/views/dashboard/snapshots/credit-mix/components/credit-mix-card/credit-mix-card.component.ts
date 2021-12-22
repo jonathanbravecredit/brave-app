@@ -47,16 +47,18 @@ export class CreditMixCardComponent implements OnInit {
     this.open =
       this.creditUtilization?.openClosed?.toLowerCase() === "o" ? true : false;
 
-    if (this.isCreditCard) {
-      this.percetangeUtilization = this.calculatePercentageUtilization(
-        this.creditUtilization!.currentBalance,
-        this.creditUtilization!.creditLimit
-      );
-    } else {
-      this.percetangeUtilization = this.calculatePercentageUtilization(
-        this.creditUtilization!.currentBalance,
-        this.creditUtilization!.config.highestBalance
-      );
+    if (this.creditUtilization) {
+      if (this.isCreditCard) {
+        this.percetangeUtilization = this.calculatePercentageUtilization(
+          this.creditUtilization.currentBalance,
+          this.creditUtilization.creditLimit
+        );
+      } else {
+        this.percetangeUtilization = this.calculatePercentageUtilization(
+          this.creditUtilization.currentBalance,
+          this.creditUtilization.config.highestBalance
+        );
+      }
     }
 
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
