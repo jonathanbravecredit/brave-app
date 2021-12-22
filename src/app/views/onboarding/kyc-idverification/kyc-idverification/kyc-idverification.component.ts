@@ -63,8 +63,7 @@ export class KycIdverificationComponent
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
     this.router.navigate(
-      [routes.root.children.onboarding.children.verify.full],
-      { relativeTo: this.route }
+      [routes.root.children.onboarding.children.verify.full]
     );
   }
 

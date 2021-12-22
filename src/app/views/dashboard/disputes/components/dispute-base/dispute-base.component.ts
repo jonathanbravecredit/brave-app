@@ -176,12 +176,12 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goToReasons(): void {
-    const url = this.router.createUrlTree([], { relativeTo: this.route, queryParams: { step: 'reason' } }).toString();
+    const url = this.router.createUrlTree([], { queryParams: { step: 'reason' } }).toString();
     this.router.navigateByUrl(url);
   }
 
   goToSummary(): void {
-    const url = this.router.createUrlTree([], { relativeTo: this.route, queryParams: { step: 'summary' } }).toString();
+    const url = this.router.createUrlTree([], { queryParams: { step: 'summary' } }).toString();
     this.router.navigateByUrl(url);
   }
 

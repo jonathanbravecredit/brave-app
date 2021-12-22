@@ -80,10 +80,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
             .segment,
           irID,
           cbID,
-        ],
-        {
-          relativeTo: this.route,
-        }
+        ]
       );
     }
   }
@@ -93,10 +90,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
       [
         routes.root.children.dashboard.children.disputes.children.historical
           .segment,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 }

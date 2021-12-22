@@ -100,10 +100,7 @@ export class DashboardEnrolledComponent implements OnInit {
       [
         routes.root.children.dashboard.children.report.children.snapshot
           .children.negative.full,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 
@@ -116,10 +113,7 @@ export class DashboardEnrolledComponent implements OnInit {
       [
         routes.root.children.dashboard.children.report.children.snapshot
           .children.forbearance.full,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 
@@ -131,24 +125,19 @@ export class DashboardEnrolledComponent implements OnInit {
       [
         routes.root.children.dashboard.children.report.children.snapshot
           .children.databreach.full,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 
   onFullReportClicked() {
     this.router.navigate(
-      [routes.root.children.dashboard.children.report.full],
-      { relativeTo: this.route }
+      [routes.root.children.dashboard.children.report.full]
     );
   }
 
   onDisputesClicked() {
     this.router.navigate(
-      [routes.root.children.dashboard.children.disputes.full],
-      { relativeTo: this.route }
+      [routes.root.children.dashboard.children.disputes.full]
     );
   }
 
@@ -157,10 +146,7 @@ export class DashboardEnrolledComponent implements OnInit {
       [
         routes.root.children.dashboard.children.report.children.snapshot
           .children.creditutilization.full,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 
@@ -169,10 +155,7 @@ export class DashboardEnrolledComponent implements OnInit {
       [
         routes.root.children.dashboard.children.report.children.snapshot
           .children.creditmix.full,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 
@@ -181,10 +164,7 @@ export class DashboardEnrolledComponent implements OnInit {
       [
         routes.root.children.dashboard.children.report.children.snapshot
           .children.referrals.full,
-      ],
-      {
-        relativeTo: this.route,
-      }
+      ]
     );
   }
 }

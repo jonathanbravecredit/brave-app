@@ -76,10 +76,7 @@ export class DisputesHistoricalView implements OnInit, OnDestroy {
             .segment,
           irID,
           cbID,
-        ],
-        {
-          relativeTo: this.route,
-        }
+        ]
       );
     }
   }
