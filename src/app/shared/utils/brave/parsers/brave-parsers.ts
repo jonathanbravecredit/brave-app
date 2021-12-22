@@ -1,8 +1,6 @@
 import { IMergeReport } from '@shared/interfaces';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { BraveBase } from '@shared/utils/brave/brave-base';
-import { deleteKeyNestedObject } from '@shared/utils/utils';
-import { AppDataStateModel } from '@store/app-data';
 
 export class BraveParsers extends BraveBase {
   constructor() {
