@@ -11,16 +11,16 @@ export class BraveParsers extends BraveBase {
     if (!transunion) return JSON.parse('{}');
     const fulfillMergeReport = transunion.fulfillMergeReport;
     const enrollMergeReport = transunion.enrollMergeReport;
-    // const serviceProductString = fulfillMergeReport
-    //   ? fulfillMergeReport?.serviceProductObject || '{}'
-    //   : enrollMergeReport?.serviceProductObject || '{}';
-    // const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
-    // return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
-    //HOT FIX enroll report priotity for now
-    const serviceProductString = enrollMergeReport
-      ? enrollMergeReport?.serviceProductObject || '{}'
-      : fulfillMergeReport?.serviceProductObject || '{}';
-    const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
-    return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
+    const serviceProductString: string | IMergeReport = (fulfillMergeReport
+      ? fulfillMergeReport?.serviceProductObject || '{}'
+      : enrollMergeReport?.serviceProductObject || '{}') as string | IMergeReport;
+    const spo1: IMergeReport | string =
+      typeof serviceProductString === 'string'
+        ? JSON.parse(serviceProductString)
+        : serviceProductString.TrueLinkCreditReportType
+        ? serviceProductString
+        : {};
+    const spo2: IMergeReport = typeof spo1 === 'string' ? JSON.parse(spo1) : spo1.TrueLinkCreditReportType ? spo1 : {};
+    return spo2 ? spo2 : ({} as IMergeReport);
   }
 }
