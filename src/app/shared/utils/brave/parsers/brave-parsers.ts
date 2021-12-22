@@ -14,12 +14,13 @@ export class BraveParsers extends BraveBase {
     const serviceProductString: string | IMergeReport = (fulfillMergeReport
       ? fulfillMergeReport?.serviceProductObject || '{}'
       : enrollMergeReport?.serviceProductObject || '{}') as string | IMergeReport;
-    const serviceProductObject: IMergeReport =
+    const spo1: IMergeReport | string =
       typeof serviceProductString === 'string'
         ? JSON.parse(serviceProductString)
         : serviceProductString.TrueLinkCreditReportType
         ? serviceProductString
         : {};
-    return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
+    const spo2: IMergeReport = typeof spo1 === 'string' ? JSON.parse(spo1) : spo1.TrueLinkCreditReportType ? spo1 : {};
+    return spo2 ? spo2 : ({} as IMergeReport);
   }
 }
