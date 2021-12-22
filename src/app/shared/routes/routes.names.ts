@@ -142,7 +142,7 @@ export const ROUTE_NAMES = {
               },
               tradeline: {
                 segment: "tradeline",
-                full: "/dashboard/report/publicitem",
+                full: "/dashboard/report/tradeline",
                 children: {},
               },
               publicitem: {
