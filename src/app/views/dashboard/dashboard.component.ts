@@ -13,7 +13,6 @@ export class DashboardComponent implements OnInit {
   showBack: boolean = false;
   constructor(
     private dashboardService: DashboardService,
-    private creditReportService: CreditreportService,
     private router: Router,
     private route: ActivatedRoute,
   ) {

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LinkifyPipe } from '@shared/pipes/linkify/linkify.pipe';
 
 import { DisputeFindingsNoteCreditReportComponent } from './dispute-findings-note-credit-report.component';
 
@@ -8,7 +9,7 @@ describe('DisputeFindingsNoteCreditReportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputeFindingsNoteCreditReportComponent ]
+      declarations: [ DisputeFindingsNoteCreditReportComponent, LinkifyPipe ]
     })
     .compileComponents();
   });
