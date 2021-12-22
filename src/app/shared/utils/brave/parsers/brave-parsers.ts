@@ -15,8 +15,13 @@ export class BraveParsers extends BraveBase {
     const enrollMergeReport = transunion.enrollMergeReport;
     const serviceProductString = fulfillMergeReport
       ? fulfillMergeReport?.serviceProductObject || '{}'
-      : enrollMergeReport?.serviceProductObject || '{}';
-    const serviceProductObject: IMergeReport = JSON.parse(serviceProductString);
+      : enrollMergeReport?.serviceProductObject || '{}') as string | IMergeReport;
+    const serviceProductObject: IMergeReport =
+      typeof serviceProductString === 'string'
+        ? JSON.parse(serviceProductString)
+        : serviceProductString.TrueLinkCreditReportType
+        ? serviceProductString
+        : {};
     return serviceProductObject ? serviceProductObject : ({} as IMergeReport);
   }
 }
