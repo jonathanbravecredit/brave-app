@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
   selector: "brave-kyc-congratulations",
@@ -17,6 +18,6 @@ export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   }
 
   goToNext(): void {
-    this.router.navigate(["/dashboard/init"]);
+    this.router.navigate([routes.root.children.dashboard.children.init.full]);
   }
 }

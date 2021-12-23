@@ -30,6 +30,7 @@ import { AppStatus, AppStatusReason } from "@shared/utils/brave/constants";
 import { AnalyticErrorEvents } from "@shared/services/analytics/analytics/constants";
 import { AuthService } from "@shared/services/auth/auth.service";
 import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 export enum KYCResponse {
   Failed = "failed",
@@ -360,13 +361,17 @@ export class KycService {
               codeQuestions
             );
             await this.updateAgenciesAsync(questionData.agencies); // success, sync up to db
-            this.router.navigate(["/onboarding/code"]);
+            this.router.navigate([
+              routes.root.children.onboarding.children.code.full,
+            ]);
           }
         } else {
           // since no otp question found, they are kba based and already save...start KBA countdown
           const kbaData = await this.startKbaClock();
           await this.updateAgenciesAsync(kbaData.agencies);
-          this.router.navigate(["/onboarding/kba"]);
+          this.router.navigate([
+            routes.root.children.onboarding.children.kba.full,
+          ]);
         }
       }
     }
@@ -399,7 +404,9 @@ export class KycService {
       } else {
         await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
         // do not restart clock
-        this.router.navigate(["../kba"], { relativeTo: this.route });
+        this.router.navigate([
+          routes.root.children.onboarding.children.kba.full,
+        ]);
       }
     }
   }
@@ -644,7 +651,9 @@ export class KycService {
     if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
       // technical error...api did not respond and error thrown (empty resp);
       this.analytics.fireErrorEvent(AnalyticErrorEvents.ApiTechnicalIssue);
-      this.router.navigate(["/onboarding/retry"]);
+      this.router.navigate([
+        routes.root.children.onboarding.children.retry.full,
+      ]);
     } else {
       const critical = tu.queries.exceptions.isErrorCritical(resp);
       const authAttempts = transunion.authAttempt || 0;
@@ -660,7 +669,9 @@ export class KycService {
       } else if (authAttempts >= 2) {
         await this.handleSuspension(AppStatusReason.AuthAttemptsExceeded);
       } else {
-        this.router.navigate(["/onboarding/retry"]);
+        this.router.navigate([
+          routes.root.children.onboarding.children.retry.full,
+        ]);
       }
     }
   }
@@ -698,7 +709,9 @@ export class KycService {
       duration: 24 * 30,
     };
     await this.suspendUser(suspension);
-    this.router.navigate(["/suspended/default"]);
+    this.router.navigate([
+      routes.root.children.suspended.children.default.full,
+    ]);
   }
 
   /**

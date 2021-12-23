@@ -13,6 +13,7 @@ import {
   AnalyticPageViewEvents,
 } from "@shared/services/analytics/analytics/constants";
 import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
   selector: "brave-kyc-ssn-full",
@@ -46,7 +47,9 @@ export class KycSsnFullComponent
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(["../address"], { relativeTo: this.route });
+    this.router.navigate([
+      routes.root.children.onboarding.children.address.full,
+    ]);
   }
 
   goToNext(form: FormGroup): void {
@@ -65,7 +68,9 @@ export class KycSsnFullComponent
         } as UserAttributesInput;
         this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
           this.kycService.completeStep(this.stepID);
-          this.router.navigate(["../verify"], { relativeTo: this.route });
+          this.router.navigate([
+            routes.root.children.onboarding.children.verify.full,
+          ]);
         });
       }
     } else {
