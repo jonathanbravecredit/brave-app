@@ -8,6 +8,7 @@ import { Store } from '@ngxs/store';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -40,7 +41,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(['../identity'], { relativeTo: this.route });
+    this.router.navigate([routes.root.children.onboarding.children.identity.full]);
   }
 
   /**

@@ -1,33 +1,44 @@
-import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { OnboardingState, OnboardingStateModel } from '@store/onboarding';
-import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
-import { AppDataStateModel } from '@store/app-data/app-data.model';
-import { Router } from '@angular/router';
-import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
-import { AppStatus } from '@shared/utils/brave/constants';
+import { Injectable } from "@angular/core";
+import { Select, Store } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
+import { OnboardingState, OnboardingStateModel } from "@store/onboarding";
+import { OnboardingSelectors } from "@store/onboarding/onboarding.selectors";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { Auth } from "aws-amplify";
+import { AppDataStateModel } from "@store/app-data/app-data.model";
+import { Router } from "@angular/router";
+import { AgenciesSelectors, AgenciesStateModel } from "@store/agencies";
+import { AppStatus } from "@shared/utils/brave/constants";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class InitService {
   private data: AppDataStateModel | undefined;
   private onboarding: OnboardingStateModel = {} as OnboardingStateModel;
-  private onboarding$: Observable<OnboardingStateModel> = this.store.select(OnboardingSelectors.getOnboarding);
+  private onboarding$: Observable<OnboardingStateModel> = this.store.select(
+    OnboardingSelectors.getOnboarding
+  );
   private onboardingSub$: Subscription;
 
   private agencies: AgenciesStateModel = {} as AgenciesStateModel;
-  private agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
+  private agencies$: Observable<AgenciesStateModel> = this.store.select(
+    AgenciesSelectors.getAgencies
+  );
   private agenciesSub$: Subscription;
 
-  constructor(private store: Store, private sync: SyncService, private router: Router) {
+  constructor(
+    private store: Store,
+    private sync: SyncService,
+    private router: Router
+  ) {
     this.onboardingSub$ = this.onboarding$
-      .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
+      .pipe(
+        filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
+      )
       .subscribe((onboarding: OnboardingStateModel) => {
         this.onboarding = onboarding;
       });
@@ -48,7 +59,7 @@ export class InitService {
   async resolver(): Promise<boolean> {
     const id = await this.getUserId();
     if (!id) {
-      this.router.navigate(['/auth/thankyou']); // need a please confirm account view
+      this.router.navigate([routes.root.children.auth.children.thankyou.full]); // need a please confirm account view
       return false;
     } else {
       try {
@@ -65,8 +76,8 @@ export class InitService {
         status = await this.handleRouting(isOnboarded || false, isSuspended);
         return status;
       } catch (err) {
-        console.log('error in resolver ===> ', err);
-        this.router.navigate(['/auth/signin']); // need a please confirm account view
+        console.log("error in resolver ===> ", err);
+        this.router.navigate([routes.root.children.auth.children.signin.full]); // need a please confirm account view
         return false;
       }
     }
@@ -81,7 +92,7 @@ export class InitService {
       }
       return true;
     } catch (err) {
-      console.log('handleUser:error ===> ', err);
+      console.log("handleUser:error ===> ", err);
       return false;
     }
   }
@@ -91,14 +102,19 @@ export class InitService {
       await this.subscribeToListeners(id);
       return true;
     } catch (err) {
-      console.log('subscribeToListeners:error ==> ', err);
+      console.log("subscribeToListeners:error ==> ", err);
       return false;
     }
   }
 
-  async handleRouting(isOnboarded: boolean, status: AppStatus): Promise<boolean> {
+  async handleRouting(
+    isOnboarded: boolean,
+    status: AppStatus
+  ): Promise<boolean> {
     if (status === AppStatus.Suspended) {
-      this.router.navigate(['/suspended/default']);
+      this.router.navigate([
+        routes.root.children.suspended.children.default.full,
+      ]);
       return false;
     }
     try {
@@ -106,7 +122,9 @@ export class InitService {
         await this.goToLastOnboarded();
         return false;
       } else {
-        this.router.navigate(['/dashboard/init']);
+        this.router.navigate([
+          routes.root.children.dashboard.children.init.full,
+        ]);
         return true;
       }
     } catch (err) {
@@ -118,9 +136,11 @@ export class InitService {
    * Returns the user id from the authenticated user
    */
   async getUserId(): Promise<string | undefined> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser({
+      bypassCache: true,
+    });
     const attrs = await Auth.userAttributes(user);
-    const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    const id = attrs.filter((a) => a.Name === "sub")[0]?.Value;
     return id;
   }
 
@@ -173,21 +193,33 @@ export class InitService {
 
     switch (lastComplete) {
       case -1:
-        this.router.navigate(['/onboarding/name']);
+        this.router.navigate([
+          routes.root.children.onboarding.children.name.full,
+        ]);
         break;
       case 0:
-        this.router.navigate(['/onboarding/address']);
+        this.router.navigate([
+          routes.root.children.onboarding.children.address.full,
+        ]);
         break;
       case 1:
-        this.router.navigate(['/onboarding/identity']);
+        this.router.navigate([
+          routes.root.children.onboarding.children.identity.full,
+        ]);
         break;
       case 2:
         // if last on otp or kba go to either one.
         transunion?.kbaCurrentAge
-          ? this.router.navigate(['/onboarding/kba'])
+          ? this.router.navigate([
+              routes.root.children.onboarding.children.kba.full,
+            ])
           : transunion?.pinCurrentAge
-          ? this.router.navigate(['/onboarding/code'])
-          : this.router.navigate(['/onboarding/verify']);
+          ? this.router.navigate([
+              routes.root.children.onboarding.children.code.full,
+            ])
+          : this.router.navigate([
+              routes.root.children.onboarding.children.verify.full,
+            ]);
         break;
       default:
         // nothing to do, stay on page

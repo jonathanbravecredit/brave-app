@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { IBorrower } from '@shared/interfaces';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { StateService } from '@shared/services/state/state.service';
-import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
-import { Observable } from 'rxjs';
+import { Component } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { IBorrower } from "@shared/interfaces";
+import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { StateService } from "@shared/services/state/state.service";
+import { DisputeReconfirmFilter } from "@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters";
+import { Observable } from "rxjs";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
-  selector: 'brave-personalitems',
-  templateUrl: './personalitems.view.html',
+  selector: "brave-personalitems",
+  templateUrl: "./personalitems.view.html",
 })
 export class PersonalitemsView {
   /**
@@ -26,10 +27,12 @@ export class PersonalitemsView {
     private route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
-    private creditReportServices: CreditreportService,
+    private creditReportServices: CreditreportService
   ) {
     this.personalItem$ = this.creditReportServices.tuPersonalItem$.asObservable();
-    this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+    this.acknowledged =
+      this.statesvc.state?.appData.agencies?.transunion
+        ?.acknowledgedDisputeTerms || false;
   }
 
   set acknowledged(value: boolean) {
@@ -49,29 +52,44 @@ export class PersonalitemsView {
       .then((resp) => {
         const { success, error } = resp;
         if (success) {
-          const filter: DisputeReconfirmFilter = 'personal';
-          this.router.navigate(['/disputes/reconfirm'], {
-            relativeTo: this.route,
-            queryParams: {
-              type: filter,
-            },
-          }); // add query param to filter for only personal items
+          const filter: DisputeReconfirmFilter = "personal";
+          this.router.navigate(
+            [
+              routes.root.children.dashboard.children.disputes.children
+                .reconfirm.full,
+            ],
+            {
+              queryParams: {
+                type: filter,
+              },
+            }
+          ); // add query param to filter for only personal items
         } else {
-          this.router.navigate(['../error'], {
-            relativeTo: this.route,
-            queryParams: {
-              code: error?.Code || '197',
-            },
-          });
+          this.router.navigate(
+            [
+              routes.root.children.dashboard.children.disputes.children.error
+                .full,
+            ],
+            {
+              queryParams: {
+                code: error?.Code || "197",
+              },
+            }
+          );
         }
       })
       .catch((err) => {
-        this.router.navigate(['../error'], {
-          relativeTo: this.route,
-          queryParams: {
-            code: '197',
-          },
-        });
+        this.router.navigate(
+          [
+            routes.root.children.dashboard.children.disputes.children.error
+              .full,
+          ],
+          {
+            queryParams: {
+              code: "197",
+            },
+          }
+        );
       });
   }
 }

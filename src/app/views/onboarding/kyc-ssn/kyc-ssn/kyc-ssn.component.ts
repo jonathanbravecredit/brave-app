@@ -19,6 +19,7 @@ import {
   AnalyticClickEvents,
   AnalyticPageViewEvents,
 } from "@shared/services/analytics/analytics/constants";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
   selector: "brave-kyc-ssn",
@@ -53,7 +54,9 @@ export class KycSsnComponent
    */
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(["../address"], { relativeTo: this.route });
+    this.router.navigate([
+      routes.root.children.onboarding.children.address.full,
+    ]);
   }
 
   /**
@@ -86,7 +89,9 @@ export class KycSsnComponent
             } as UserAttributesInput;
             await this.kycService.updateUserAttributesAsync(newAttrs);
             this.kycService.completeStep(this.stepID);
-            this.router.navigate(["../verify"], { relativeTo: this.route });
+            this.router.navigate([
+              routes.root.children.onboarding.children.verify.full,
+            ]);
           }
         }
       } catch {
@@ -100,9 +105,9 @@ export class KycSsnComponent
    * @param { [key: string]: AbstractControl } errors
    */
   handleError(errors: { [key: string]: AbstractControl }): void {
-    const lastFour = errors.lastfour.value.input
+    const lastFour = errors.lastfour.value.input;
     if (lastFour.length < 4) {
-      this.ssnError = true
+      this.ssnError = true;
     }
   }
 
@@ -119,7 +124,9 @@ export class KycSsnComponent
       ),
     };
     this.kycService.updateIndicativeEnrichment(tuPartial);
-    this.router.navigate(["../identityfull"], { relativeTo: this.route });
+    this.router.navigate([
+      routes.root.children.onboarding.children.identityfull.full,
+    ]);
   }
 }
 

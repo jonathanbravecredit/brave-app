@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
-import { dataBreachListContent } from '@views/dashboard/snapshots/data-breaches/components/data-breach-list/content';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Router } from "@angular/router";
+import { IBreachCard } from "@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces";
+import { dataBreachListContent } from "@views/dashboard/snapshots/data-breaches/components/data-breach-list/content";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
-  selector: 'brave-data-breach-list',
-  templateUrl: './data-breach-list.component.html',
+  selector: "brave-data-breach-list",
+  templateUrl: "./data-breach-list.component.html",
 })
 export class DataBreachListComponent implements OnInit {
   @Input() cards: IBreachCard[] = [];
@@ -37,6 +38,6 @@ export class DataBreachListComponent implements OnInit {
   }
 
   goToReport(): void {
-    this.router.navigate(['/dashboard/report']);
+    this.router.navigate([routes.root.children.dashboard.children.report.full]);
   }
 }
