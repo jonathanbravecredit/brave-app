@@ -1,16 +1,39 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DisputesToDisputesOverviewPipe } from "@shared/pipes/disputes-to-disputes-overview/disputes-to-disputes-overview.pipe";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { TransunionService } from "@shared/services/transunion/transunion.service";
+import { of } from "rxjs";
 
-import { DisputesOverviewInitialView } from './disputes-overview-initial.view';
+import { DisputesOverviewInitialView } from "./disputes-overview-initial.view";
 
-describe('DisputesOverviewInitialView', () => {
+describe("DisputesOverviewInitialView", () => {
   let component: DisputesOverviewInitialView;
   let fixture: ComponentFixture<DisputesOverviewInitialView>;
+  let routerMock: any;
+  class RouteMock {
+    data = of();
+  }
+  let interstitialMock: any;
+  let disputeServiceMock: any;
+  let transunionMock: any;
 
   beforeEach(async () => {
+    routerMock = jasmine.createSpyObj("Router", [""]);
+    interstitialMock = jasmine.createSpyObj("InterstitialService", [""]);
+    disputeServiceMock = jasmine.createSpyObj("DisputeService", [""]);
+    transunionMock = jasmine.createSpyObj("TransunionService", [""]);
     await TestBed.configureTestingModule({
-      declarations: [ DisputesOverviewInitialView ]
-    })
-    .compileComponents();
+      declarations: [DisputesOverviewInitialView, DisputesToDisputesOverviewPipe],
+      providers: [
+        { provide: Router, useValue: routerMock },
+        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: InterstitialService, useValue: interstitialMock },
+        { provide: DisputeService, useValue: disputeServiceMock },
+        { provide: TransunionService, useValue: transunionMock },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +42,7 @@ describe('DisputesOverviewInitialView', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

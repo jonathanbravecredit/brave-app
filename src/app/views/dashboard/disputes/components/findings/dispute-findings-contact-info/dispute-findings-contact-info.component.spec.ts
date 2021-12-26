@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LinkifyPipe } from '@shared/pipes/linkify/linkify.pipe';
 
 import { DisputeFindingsContactInfoComponent } from './dispute-findings-contact-info.component';
 
@@ -8,7 +9,7 @@ describe('DisputeFindingsContactInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputeFindingsContactInfoComponent ]
+      declarations: [ DisputeFindingsContactInfoComponent, LinkifyPipe ]
     })
     .compileComponents();
   });

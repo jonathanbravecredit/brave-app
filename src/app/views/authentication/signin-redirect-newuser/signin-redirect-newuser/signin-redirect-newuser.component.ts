@@ -1,18 +1,22 @@
-import { Component, OnDestroy, ApplicationRef } from '@angular/core';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { first, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, ApplicationRef } from "@angular/core";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { Auth } from "aws-amplify";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { first, tap } from "rxjs/operators";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'brave-signin-redirect-newuser',
-  templateUrl: './signin-redirect-newuser.component.html',
+  selector: "brave-signin-redirect-newuser",
+  templateUrl: "./signin-redirect-newuser.component.html",
 })
 export class SigninRedirectNewuserComponent implements OnDestroy {
   private appSub$: Subscription;
-  constructor(private appRef: ApplicationRef, private sync: SyncService, private interstitial: InterstitialService) {
+  constructor(
+    private appRef: ApplicationRef,
+    private sync: SyncService,
+    private interstitial: InterstitialService
+  ) {
     this.appSub$ = this.appRef.isStable
       .pipe(
         first((stable) => stable),
@@ -20,7 +24,7 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
           setTimeout(async () => {
             await this.onboardUser();
           }, 4500);
-        }),
+        })
       )
       .subscribe();
   }
@@ -30,16 +34,18 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
   }
 
   async onManualRedirectClick(): Promise<void> {
-    this.interstitial.changeMessage(' ');
+    this.interstitial.changeMessage(" ");
     this.interstitial.openInterstitial();
     await this.onboardUser();
     this.interstitial.closeInterstitial();
   }
 
   async onboardUser(): Promise<void> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser({
+      bypassCache: true,
+    });
     const attrs = await Auth.userAttributes(user);
-    const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    const id = attrs.filter((a) => a.Name === "sub")[0]?.Value;
     await this.sync.initUser(id);
     await this.sync.subscribeToListeners(id);
     await this.sync.onboardUser(id, true);

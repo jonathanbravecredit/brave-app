@@ -13,7 +13,11 @@ export class ForbearanceView implements OnInit {
   creditReport$: Observable<IMergeReport>;
   accountTypes = AccountTypes;
 
-  constructor(private router: Router, private route: ActivatedRoute, private creditReportService: CreditreportService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private creditReportService: CreditreportService,
+  ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
   }
 

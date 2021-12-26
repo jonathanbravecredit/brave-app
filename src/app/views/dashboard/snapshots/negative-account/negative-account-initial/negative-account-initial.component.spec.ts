@@ -1,53 +1,42 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, ActivatedRoute } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces';
-import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { StateService } from '@shared/services/state/state.service';
-import { AppDataStateModel } from '@store/app-data';
-import { BehaviorSubject, of } from 'rxjs';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { StateService } from "@shared/services/state/state.service";
+import { of } from "rxjs";
 
-import { NegativeAccountInitialComponent } from './negative-account-initial.component';
+import { NegativeAccountInitialComponent } from "./negative-account-initial.component";
 
-class RouteMock {
-  data = of();
-}
+// private router: Router,
+// private statesvc: StateService,
+// private creditReportService: CreditreportService,
+// private disputeService: DisputeService,
+// private route: ActivatedRoute,
 
-class StateServiceMock {
-  state:
-    | {
-        appData: AppDataStateModel;
-      }
-    | undefined;
-}
-
-class CreditReportServiceMock {
-  tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
-}
-
-describe('NegativeAccountInitialComponent', () => {
+describe("NegativeAccountInitialComponent", () => {
   let component: NegativeAccountInitialComponent;
   let fixture: ComponentFixture<NegativeAccountInitialComponent>;
   let routerMock: any;
+  let statesvcMock: any;
+  let creditReportServiceMock: any;
   let disputeServiceMock: any;
+  class RouteMock {
+    data = of();
+  }
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
-    routerMock.navigate.and.returnValue(null);
-
-    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['sendDisputePreflightCheck']);
-    disputeServiceMock.sendDisputePreflightCheck.and.returnValue(of().toPromise());
-
+    routerMock = jasmine.createSpyObj("", [""]);
+    statesvcMock = jasmine.createSpyObj("", [""]);
+    creditReportServiceMock = jasmine.createSpyObj("", [""]);
+    disputeServiceMock = jasmine.createSpyObj("", [""]);
     await TestBed.configureTestingModule({
-      imports: [SharedPipesModule],
       declarations: [NegativeAccountInitialComponent],
       providers: [
         { provide: Router, useValue: routerMock },
-        { provide: ActivatedRoute, useClass: RouteMock },
-        { provide: StateService, useClass: StateServiceMock },
-        { provide: CreditreportService, useClass: CreditReportServiceMock },
+        { provide: StateService, useValue: statesvcMock },
+        { provide: CreditreportService, useValue: creditReportServiceMock },
         { provide: DisputeService, useValue: disputeServiceMock },
+        { provide: ActivatedRoute, useClass: RouteMock },
       ],
     }).compileComponents();
   });
@@ -58,7 +47,7 @@ describe('NegativeAccountInitialComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,16 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
+import { ReferralsService } from "@shared/services/referrals/referrals.service";
+import { of } from "rxjs";
 
-import { AuthenticationComponent } from './authentication.component';
+import { AuthenticationComponent } from "./authentication.component";
 
-describe('AuthenticationComponent', () => {
+describe("AuthenticationComponent", () => {
   let component: AuthenticationComponent;
   let fixture: ComponentFixture<AuthenticationComponent>;
+  class RouteMock {
+    queryParams = of();
+  }
+  let referralsMock: any;
 
   beforeEach(async () => {
+    referralsMock = jasmine.createSpyObj("ReferralsService", [""]);
     await TestBed.configureTestingModule({
-      declarations: [ AuthenticationComponent ]
-    })
-    .compileComponents();
+      declarations: [AuthenticationComponent],
+      providers: [
+        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: ReferralsService, useValue: referralsMock },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +30,7 @@ describe('AuthenticationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
