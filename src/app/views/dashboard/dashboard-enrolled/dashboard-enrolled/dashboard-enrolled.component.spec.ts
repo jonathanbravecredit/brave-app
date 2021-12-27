@@ -28,9 +28,15 @@ describe('DashboardEnrolledComponent', () => {
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj('Router', ['']);
-    dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['']);
-    creditMixServiceMock = jasmine.createSpyObj('CreditMixService', ['']);
-    creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', ['']);
+    dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['syncDashboardStateToDB']);
+    creditMixServiceMock = jasmine.createSpyObj('CreditMixService', [
+      'getTradelineSummary',
+      'getRecommendations',
+      'mapCreditMixSnapshotStatus',
+    ]);
+    creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [
+      'getCreditUtilizationSnapshotStatus',
+    ]);
     await TestBed.configureTestingModule({
       declarations: [DashboardEnrolledComponent],
       providers: [

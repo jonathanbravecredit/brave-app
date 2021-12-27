@@ -1,14 +1,14 @@
-import { ApplicationRef } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Router } from "@angular/router";
-import { AuthService } from "@shared/services/auth/auth.service";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { SyncService } from "@shared/services/sync/sync.service";
-import { of } from "rxjs";
+import { ApplicationRef } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { SyncService } from '@shared/services/sync/sync.service';
+import { of } from 'rxjs';
 
-import { SigninRedirectComponent } from "./signin-redirect.component";
+import { SigninRedirectComponent } from './signin-redirect.component';
 
-describe("SigninRedirectComponent", () => {
+describe('SigninRedirectComponent', () => {
   let component: SigninRedirectComponent;
   let fixture: ComponentFixture<SigninRedirectComponent>;
   let routerMock: any;
@@ -20,12 +20,18 @@ describe("SigninRedirectComponent", () => {
   let interstitialMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
-    syncMock = jasmine.createSpyObj("SyncService", [""]);
-    authMock = jasmine.createSpyObj("AuthService", [""]);
-    interstitialMock = jasmine.createSpyObj("InterstitialService", [
-      "changeMessage",
-      "openInterstitial",
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    syncMock = jasmine.createSpyObj('SyncService', [
+      'initUser',
+      'isUserBrandNew',
+      'subscribeToListeners',
+      'onboardUser',
+    ]);
+    authMock = jasmine.createSpyObj('AuthService', ['socialSignIn']);
+    interstitialMock = jasmine.createSpyObj('InterstitialService', [
+      'changeMessage',
+      'openInterstitial',
+      'closeInterstitial',
     ]);
     await TestBed.configureTestingModule({
       declarations: [SigninRedirectComponent],
@@ -45,7 +51,7 @@ describe("SigninRedirectComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

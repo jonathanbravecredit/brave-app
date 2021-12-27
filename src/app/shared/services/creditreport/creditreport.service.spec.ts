@@ -26,6 +26,10 @@ describe('CreditreportService', () => {
     });
     service = TestBed.inject(CreditreportService);
     h = new Helper(service);
+    // Object.defineProperty(service, 'agencies$', { writable: true });
+    // Object.defineProperty(service, 'preferences$', { writable: true });
+    // service.subscribeToAgencies();
+    // service.subscribeToPreferences();
   });
 
   it('should be created', () => {
