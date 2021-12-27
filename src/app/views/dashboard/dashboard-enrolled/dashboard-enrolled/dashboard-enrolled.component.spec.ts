@@ -19,11 +19,11 @@ describe('DashboardEnrolledComponent', () => {
   class RouteMock {
     data = of({
       dashboard: {
-        report: {},
-        snapshots: {},
-        scores: {},
-        trends: {},
-        metrics: {},
+        report: new MergeReportClass(),
+        snapshots: new DashboardStateModel(),
+        scores: new ScoresClass(),
+        trends: new TrendsClass(),
+        metrics: new MetricsClass(),
       },
     });
   }
@@ -85,7 +85,7 @@ describe('DashboardEnrolledComponent', () => {
     creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [
       'getCreditUtilizationSnapshotStatus',
     ]);
-    creditUtilizationServiceMock.creditUtilSnapshotObj.and.returnValue({ status: 'safe', perc: 0 });
+    creditUtilizationServiceMock.getCreditUtilizationSnapshotStatus.and.returnValue({ status: 'safe', perc: 0 });
 
     await TestBed.configureTestingModule({
       declarations: [DashboardEnrolledComponent],
