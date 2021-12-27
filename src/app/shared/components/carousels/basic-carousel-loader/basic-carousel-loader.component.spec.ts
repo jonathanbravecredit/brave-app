@@ -1,4 +1,4 @@
-import { ComponentFactory } from '@angular/core';
+import { Component, ComponentFactory } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DOMHelper } from '@testing/dom-helper';
 import { Helper } from '@testing/test-helper';
@@ -27,9 +27,18 @@ describe('BasicCarouselLoaderComponent', () => {
     fixture = TestBed.createComponent(BasicCarouselLoaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.component = DummyComponent;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'brave-dummy',
+  template: `<p>I exist</p>`,
+})
+class DummyComponent {
+  constructor() {}
+}

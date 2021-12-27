@@ -25,6 +25,7 @@ export class PlacesAutocompleteInputComponent extends OutlineInputComponent impl
   }
 
   getPlaceAutocomplete() {
+    if (!google || google.maps.places.Autocomplete) return;
     const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
       componentRestrictions: { country: 'US' },
       types: [this.addressType], // 'establishment' / 'address' / 'geocode'
