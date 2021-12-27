@@ -6,6 +6,7 @@ import { CreditreportService } from './creditreport.service';
 import { AgenciesStateModel } from '@store/agencies/agencies.model';
 import { of, Subscription } from 'rxjs';
 import { TransunionInput } from '@shared/services/aws/api.service';
+import { NgxsModule, Store } from '@ngxs/store';
 
 //private statesvc: StateService, private transunion: TransunionService
 
@@ -14,22 +15,22 @@ describe('CreditreportService', () => {
   let stateMock: any;
   let transunionMock: any;
   let h: Helper<CreditreportService>;
+  let store: Store;
 
   beforeEach(() => {
     stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], ['state']);
     transunionMock = jasmine.createSpyObj('TransunionService', ['refreshCreditReport']);
     TestBed.configureTestingModule({
+      imports: [NgxsModule.forRoot([])],
       providers: [
         { provide: StateService, useValue: stateMock },
         { provide: TransunionService, useValue: transunionMock },
       ],
     });
     service = TestBed.inject(CreditreportService);
+    store = TestBed.inject(Store);
     h = new Helper(service);
-    // Object.defineProperty(service, 'agencies$', { writable: true });
-    // Object.defineProperty(service, 'preferences$', { writable: true });
-    // service.subscribeToAgencies();
-    // service.subscribeToPreferences();
+    spyOn(store, 'select').and.returnValue(of(null));
   });
 
   it('should be created', () => {
@@ -46,7 +47,7 @@ describe('CreditreportService', () => {
       const agencyMock = {
         transunion: tuMock,
       };
-      service.agencies$ = of(agencyMock);
+      spyOn(store, 'select').and.returnValue(of(agencyMock));
       tick();
       const test = service.tuAgency === undefined;
       expect(test).toBeTrue();
