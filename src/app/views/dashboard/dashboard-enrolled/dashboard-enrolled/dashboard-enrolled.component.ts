@@ -50,14 +50,20 @@ export class DashboardEnrolledComponent implements OnInit {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
+<<<<<<< HEAD
       const tradelines = this.report?.TrueLinkCreditReportType
         .TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof
           Array
+=======
+      const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
+        ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
+>>>>>>> Sprint42-UnitTests
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
 
+<<<<<<< HEAD
       this.tradelineSummary = this.creditMixService.getTradelineSummary(
         tradelines
       );
@@ -78,6 +84,13 @@ export class DashboardEnrolledComponent implements OnInit {
       this.creditUtilizationStatus = creditUtilSnapshotObj.status;
 
       this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
+=======
+      this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
+      this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
+      this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
+      this.creditUtilizationStatus = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
+      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating;
+>>>>>>> Sprint42-UnitTests
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion

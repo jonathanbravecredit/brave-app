@@ -76,6 +76,6 @@ const AuthenticationRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(AuthenticationRoutes)],
   exports: [RouterModule],
-  providers: [RedirectResolver],
+  providers: [],
 })
 export class AuthenticationRoutingModule {}

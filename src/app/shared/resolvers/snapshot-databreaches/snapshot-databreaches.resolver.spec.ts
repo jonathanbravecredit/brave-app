@@ -1,16 +1,21 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import { Store } from "@ngxs/store";
 
-import { SnapshotDatabreachesResolver } from './snapshot-databreaches.resolver';
+import { SnapshotDatabreachesResolver } from "./snapshot-databreaches.resolver";
 
-describe('SnapshotDatabreachesResolver', () => {
+describe("SnapshotDatabreachesResolver", () => {
   let resolver: SnapshotDatabreachesResolver;
-
+  let storeMock: any;
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    storeMock = jasmine.createSpyObj("Store", ["selectOnce"]);
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: Store, useValue: storeMock }],
+    });
     resolver = TestBed.inject(SnapshotDatabreachesResolver);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(resolver).toBeTruthy();
   });
 });

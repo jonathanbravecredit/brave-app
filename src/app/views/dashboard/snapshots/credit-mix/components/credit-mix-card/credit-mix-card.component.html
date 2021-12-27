@@ -1,6 +1,4 @@
-<div
-  class="mb-4 relative flex flex-col break-words w-full py-5 rounded-lg border border-blueGray-300"
->
+<div class="mb-4 relative flex flex-col break-words w-full py-5 rounded-lg border border-blueGray-300">
   <div class="flex pr-5">
     <div class="px-4 w-13">
       <!-- left column  section 1 -->
@@ -14,51 +12,41 @@
       <div class="flex justify-between p-0 -mt-1 mb-1">
         <!-- header  -->
         <p class="brave-body1-semibold">
-          {{ creditUtilization!.creditorName }}
-          {{ open ? "(Open)" : "(Closed)" }}
+          {{ creditUtilization?.creditorName || '' }}
+          {{ open ? '(Open)' : '(Closed)' }}
         </p>
-        <p class="brave-body1-semibold">{{ percetangeUtilization || "--" }}%</p>
+        <p class="brave-body1-semibold">{{ percetangeUtilization || '--' }}%</p>
       </div>
 
-      <div *ngIf="isCreditCard"  class="flex flex-row">
+      <div *ngIf="isCreditCard" class="flex flex-row">
         <!-- credit balance  -->
         <span class="brave-body1">Card Balance:&nbsp;</span>
-        <span class="brave-body1">{{
-          creditUtilization!.currentBalance | currency
-        }}</span>
+        <span class="brave-body1">{{ creditUtilization?.currentBalance | currency }}</span>
       </div>
 
-      <div *ngIf="!isCreditCard"  class="flex flex-row">
+      <div *ngIf="!isCreditCard" class="flex flex-row">
         <!-- credit balance  -->
         <span class="brave-body1">Current Balance:&nbsp;</span>
-        <span class="brave-body1">{{
-          creditUtilization!.currentBalance | currency
-        }}</span>
+        <span class="brave-body1">{{ creditUtilization?.currentBalance | currency }}</span>
       </div>
 
       <div *ngIf="isCreditCard" class="flex flex-row">
         <!-- credit limit  -->
         <span class="brave-body1">Credit Limit:&nbsp;</span>
 
-        <span class="brave-body1">{{
-          creditUtilization!.creditLimit | currency
-        }}</span>
+        <span class="brave-body1">{{ creditUtilization?.creditLimit | currency }}</span>
       </div>
 
       <div *ngIf="!isCreditCard" class="flex flex-row">
         <!-- credit limit  -->
         <span class="brave-body1">Original Balance:&nbsp;</span>
 
-        <span class="brave-body1">{{
-          creditUtilization!.config.highestBalance | currency
-        }}</span>
+        <span class="brave-body1">{{ creditUtilization?.config?.highestBalance | currency }}</span>
       </div>
 
       <div class="mt-1">
         <!-- buttons goes here -->
-        <brave-viewdetail-button #viewDetails
-          >View Details</brave-viewdetail-button
-        >
+        <brave-viewdetail-button #viewDetails>View Details</brave-viewdetail-button>
       </div>
     </div>
   </div>
@@ -69,13 +57,8 @@
     </div>
 
     <div class="flex flex-row justify-center align-center">
-      <ng-container
-        *ngIf="creditUtilization?.config?.tradeline | tradelineToPages as data"
-      >
-        <brave-basic-carousel
-          [pages]="tradelinepages"
-          [data]="data"
-        ></brave-basic-carousel>
+      <ng-container *ngIf="creditUtilization?.config?.tradeline | tradelineToPages as data">
+        <brave-basic-carousel [pages]="tradelinepages" [data]="data"></brave-basic-carousel>
       </ng-container>
     </div>
   </div>

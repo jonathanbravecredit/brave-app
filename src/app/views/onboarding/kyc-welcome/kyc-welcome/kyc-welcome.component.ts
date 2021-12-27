@@ -44,7 +44,8 @@ export class KycWelcomeComponent
   }
 
   ngAfterViewInit(): void {
-    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
+    const form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component)
+    if (form) this.form = form;
   }
 
   async goToNext(form: FormGroup): Promise<void> {
