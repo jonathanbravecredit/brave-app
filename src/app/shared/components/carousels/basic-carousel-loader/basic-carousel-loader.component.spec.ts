@@ -1,5 +1,6 @@
 import { ComponentFactory } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
 import { DOMHelper } from '@testing/dom-helper';
 import { Helper } from '@testing/test-helper';
 
@@ -27,6 +28,7 @@ describe('BasicCarouselLoaderComponent', () => {
     fixture = TestBed.createComponent(BasicCarouselLoaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.component = OutlineInputComponent;
   });
 
   it('should create', () => {

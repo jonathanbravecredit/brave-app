@@ -69,13 +69,13 @@ describe('CreditreportService', () => {
       expect(transunionMock.refreshCreditReport).toHaveBeenCalled();
     });
 
-    it('Get Transunion should return return a blank object when transunion data is not populated on oagencies', () => {
+    it('Get Transunion should return a blank object when transunion data is not populated on agencies', () => {
       const tu = { agencies: { transunion: null } } as AgenciesStateModel;
       const test = service.getTransunion(tu);
       expect(test).toEqual({});
     });
 
-    it('Get Transunion should return return a blank object when transunion data is not populated on oagencies', () => {
+    it('Get Transunion should return transunion data when populated on agencies', () => {
       const tu = { agencies: { transunion: { authenticated: true } } } as AgenciesStateModel;
       const test = service.getTransunion(tu);
       expect(test.authenticated).toEqual(true);
