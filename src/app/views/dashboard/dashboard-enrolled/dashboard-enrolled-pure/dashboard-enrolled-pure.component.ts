@@ -23,6 +23,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() creditMix: IRecommendationText | undefined;
   @Input() creditMixStatus: string | undefined;
   @Input() creditUtilizationStatus: string | undefined;
+  @Input() creditUtilizationPerc: number | undefined;
   @Input() welcomeMsg: string | undefined = dashboardEnrolledContent.defaultMsg;
   @Input() lastUpdated: number | string | Date | undefined;
   @Input() pages!: any[];

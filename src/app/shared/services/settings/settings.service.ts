@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SettingsService {
-  constructor(private router: Router, private auth: AuthService, private interstitial: InterstitialService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+    private interstitial: InterstitialService
+  ) {}
 
   /**
    * Submit email to cognito for change, if accepted returns true
@@ -62,7 +67,11 @@ export class SettingsService {
    * @param password
    * @returns
    */
-  async forgotPasswordSubmit(email: string, code: string, password: string): Promise<any> {
+  async forgotPasswordSubmit(
+    email: string,
+    code: string,
+    password: string
+  ): Promise<any> {
     try {
       return await this.auth.forgotPasswordSubmit(email, code, password);
     } catch (err) {
@@ -75,7 +84,10 @@ export class SettingsService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
+  async resetPassword(
+    oldPassword: string,
+    newPassword: string
+  ): Promise<string> {
     try {
       return await this.auth.resetPassword(oldPassword, newPassword);
     } catch (err) {
@@ -103,7 +115,7 @@ export class SettingsService {
     try {
       await this.auth.signOut();
       this.interstitial.fetching$.next(false);
-      this.router.navigate(['/']);
+      this.router.navigate([routes.root.full]);
     } catch (err) {
       this.interstitial.fetching$.next(false);
       throw `settingService:signOut=${err}`;

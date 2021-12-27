@@ -1,31 +1,43 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { KycService } from '@shared/services/kyc/kyc.service';
-import { FlatForm, KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import { AbstractControl, FormGroup } from '@angular/forms';
-import { UserAttributesInput } from '@shared/services/aws/api.service';
-import { KycSsnFullPureComponent } from '@views/onboarding/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component';
-import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { KycService } from "@shared/services/kyc/kyc.service";
+import {
+  FlatForm,
+  KycBaseComponent,
+} from "@views/onboarding/kyc-base/kyc-base.component";
+import { AbstractControl, FormGroup } from "@angular/forms";
+import { UserAttributesInput } from "@shared/services/aws/api.service";
+import { KycSsnFullPureComponent } from "@views/onboarding/kyc-ssn-full/kyc-ssn-full-pure/kyc-ssn-full-pure.component";
+import {
+  AnalyticClickEvents,
+  AnalyticPageViewEvents,
+} from "@shared/services/analytics/analytics/constants";
+import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
-  selector: 'brave-kyc-ssn-full',
-  templateUrl: './kyc-ssn-full.component.html',
+  selector: "brave-kyc-ssn-full",
+  templateUrl: "./kyc-ssn-full.component.html",
 })
-export class KycSsnFullComponent extends KycBaseComponent implements OnInit, AfterViewInit {
+export class KycSsnFullComponent
+  extends KycBaseComponent
+  implements OnInit, AfterViewInit {
   @ViewChild(KycSsnFullPureComponent) pure: KycSsnFullPureComponent | undefined;
   stepID = 2;
+  ssnError = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private kycService: KycService,
-    private analytics: AnalyticsService,
+    private analytics: AnalyticsService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingIdentityFull);
+    this.analytics.firePageViewEvent(
+      AnalyticPageViewEvents.OnboardingIdentityFull
+    );
     this.kycService.activateStep(this.stepID);
   }
 
@@ -35,12 +47,15 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(['../address'], { relativeTo: this.route });
+    this.router.navigate([
+      routes.root.children.onboarding.children.address.full,
+    ]);
   }
 
   goToNext(form: FormGroup): void {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentityFull);
     if (form.valid) {
+      this.ssnError = false;
       const { full } = this.formatAttributes(form, ssn);
       if (full.length < 9) {
         this.handleError({});
@@ -53,7 +68,9 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
         } as UserAttributesInput;
         this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
           this.kycService.completeStep(this.stepID);
-          this.router.navigate(['../verify'], { relativeTo: this.route });
+          this.router.navigate([
+            routes.root.children.onboarding.children.verify.full,
+          ]);
         });
       }
     } else {
@@ -62,7 +79,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   formatCode(values: FlatForm): string {
-    let str = '';
+    let str = "";
     for (let i = 0; i < 9; i++) {
       str += values[`input-${i}`];
     }
@@ -70,6 +87,11 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
+    const fullSsn = errors.full.value.input;
+    if (fullSsn.length < 9) {
+      this.ssnError = true;
+    }
+
     this.pure?.hasError === true;
     this.pure?.showError === true;
   }

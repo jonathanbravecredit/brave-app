@@ -21,9 +21,9 @@ export class SnapshotStatusPipe implements PipeTransform {
     if (outerHeight !== undefined) {
       const prefix = outputStyle === 'text' ? 'text-' : 'bg-';
       result = prefix + enumStrColorCLassIndicator[value as SnapshotStatus];
-      if (outputStyle === 'text') {
-        result += ' text-3.5';
-      }
+      // if (outputStyle === 'text') {
+      //   result += ' text-3.5';
+      // }
     }
     return result;
   }

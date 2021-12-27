@@ -39,6 +39,10 @@ export class BaseFormComponent {
     this.parentForm.addControl(childName, childGroup);
   }
 
+  removeChild(childName: string): void {
+    this.parentForm.removeControl(childName);
+  }
+
   submitForm(): void {
     this.parentForm.markAllAsTouched();
     this.parentForm.valid ? this.onSubmit.emit(this.parentForm) : this.onSubmitError.emit(this.parentForm.controls);

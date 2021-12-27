@@ -1,22 +1,50 @@
-<brave-referral-header></brave-referral-header>
-<div
-  style="
-    background-image: linear-gradient(#222c9d, #222c9d, white, white, white);
-  "
-  class="p-2 pb-10"
->
-  <brave-referral-banner [metrics]="metrics"></brave-referral-banner>
-  <brave-referral-earnings
-    [payments]="payments"
-    [metrics]="metrics"
-  ></brave-referral-earnings>
-  <brave-referral-amount-link
-    [metrics]="metrics"
-    [referral]="referral"
-  ></brave-referral-amount-link>
-  <div class="min-w-full flex justify-evenly mt-9">
-    <brave-facebook-share [referralCode]="referral?.referralCode"></brave-facebook-share>
-    <brave-twitter-share [referralCode]="referral?.referralCode"></brave-twitter-share>
+<ng-container *ngIf="!isSuspended; else suspended">
+  <brave-referral-header></brave-referral-header>
+  <div
+    style="
+      background-image: linear-gradient(#222c9d, #222c9d, white, white, white);
+    "
+    class="p-2 pb-10"
+  >
+    <brave-referral-banner [metrics]="metrics"></brave-referral-banner>
+    <brave-referral-earnings
+      [payments]="payments"
+      [metrics]="metrics"
+    ></brave-referral-earnings>
+    <brave-referral-amount-link
+      [metrics]="metrics"
+      [referral]="referral"
+    ></brave-referral-amount-link>
+    <h3 class="text-lg mb-4 mt-10 text-white">
+      Or, click to share your link via social media:
+    </h3>
+    <div class="min-w-full flex justify-evenly">
+      <brave-facebook-share
+        [referralCode]="referral?.referralCode"
+      ></brave-facebook-share>
+      <brave-twitter-share
+        [referralCode]="referral?.referralCode"
+      ></brave-twitter-share>
+    </div>
+    <brave-referral-body-text></brave-referral-body-text>
   </div>
-  <brave-referral-body-text></brave-referral-body-text>
-</div>
+</ng-container>
+
+<ng-template #suspended>
+  <div class="flex flex-col justify-center items-center">
+    <div class="h-32 w-32 mx-4">
+      <img
+        class="h-32 w-32"
+        src="https://d3e1i93f88eoxl.cloudfront.net/undraw_access_denied_re_awnf.svg"
+      />
+    </div>
+    <h1 class="text-lg text-center font-semibold">Referring is Suspended</h1>
+    <p class="brave-body2-semibold text-center my-4">
+      Your account violated the terms of service, so you’re no longer able to
+      take part in referral programs.
+    </p>
+    <p class="brave-body2 text-center my-4">
+      You will not be eligible for payouts, and your links are no longer valid.
+    </p>
+  </div>
+</ng-template>
