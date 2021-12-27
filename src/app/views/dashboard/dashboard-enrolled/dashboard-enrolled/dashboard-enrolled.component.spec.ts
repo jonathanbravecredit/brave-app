@@ -41,9 +41,6 @@ describe('DashboardEnrolledComponent', () => {
     creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [
       'getCreditUtilizationSnapshotStatus',
     ]);
-
-    // return values
-
     creditUtilizationServiceMock.getCreditUtilizationSnapshotStatus.and.returnValue({ status: 'safe', perc: 0 });
 
     await TestBed.configureTestingModule({

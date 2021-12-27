@@ -67,7 +67,7 @@
             </span>
           </brave-links-onlytext-button>
           <brave-filled-spinning-button
-            [disabled]="!form.parentForm.valid"
+            [disabled]="!form.parentForm?.valid"
             (click)="form.submitForm()"
           >
             <span class="flex items-center"
