@@ -1,4 +1,4 @@
-import { TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { StateService } from '../state/state.service';
 import { TransunionService } from '../transunion/transunion.service';
 import { Helper } from '@testing/index';
@@ -16,6 +16,7 @@ describe('CreditreportService', () => {
   let transunionMock: any;
   let h: Helper<CreditreportService>;
   let store: Store;
+  let storeSpy: any;
 
   beforeEach(() => {
     stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], ['state']);
@@ -28,9 +29,12 @@ describe('CreditreportService', () => {
       ],
     });
     service = TestBed.inject(CreditreportService);
-    store = TestBed.inject(Store);
+    Object.defineProperty(service, 'agencies$', { writable: true });
+    service.agencies$ = of({} as AgenciesStateModel);
+    service.subscribeToAgencies();
+    // store = TestBed.inject(Store);
     h = new Helper(service);
-    spyOn(store, 'select').and.returnValue(of(null));
+    // storeSpy = spyOn(store, 'select');
   });
 
   it('should be created', () => {
@@ -42,25 +46,37 @@ describe('CreditreportService', () => {
       const test = service.agenciesSub$ instanceof Subscription;
       expect(test).toBeTrue();
     });
-    it('Should NOT set the tuAgency property when the agency tu state is empty', () => {
+    it('Should NOT set the tuAgency property and equal default when the agency tu state is empty', (done: () => void) => {
       const tuMock = {} as TransunionInput;
       const agencyMock = {
         transunion: tuMock,
       };
-      spyOn(store, 'select').and.returnValue(of(agencyMock));
-      tick();
-      const test = service.tuAgency === undefined;
-      expect(test).toBeTrue();
+      service.agencies$ = of(agencyMock);
+      service.subscribeToAgencies();
+      service.agencies$.subscribe({
+        next: () => {
+          console.log('in next service', service.tuAgency);
+          const test = service.tuAgency !== undefined && Object.keys(service.tuAgency).length === 0;
+          expect(test).toBeTrue();
+          done();
+        },
+      });
     });
-    it('Should set the tuAgency property when the agency tu state is NOT empty', (done) => {
+    it('Should set the tuAgency property when the agency tu state is NOT empty', (done: () => void) => {
       const tuMock = { authenticated: true } as TransunionInput;
       const agencyMock = {
         transunion: tuMock,
       };
       service.agencies$ = of(agencyMock);
-      tick();
-      const test = service.tuAgency !== undefined;
-      expect(test).toBeTrue();
+      service.subscribeToAgencies();
+      service.agencies$.subscribe({
+        next: () => {
+          console.log('in next service', service.tuAgency);
+          const test = service.tuAgency.authenticated;
+          expect(test).toBeTrue();
+          done();
+        },
+      });
     });
   });
 
@@ -71,13 +87,13 @@ describe('CreditreportService', () => {
     });
 
     it('Get Transunion should return a blank object when transunion data is not populated on agencies', () => {
-      const tu = { agencies: { transunion: null } } as AgenciesStateModel;
+      const tu = { transunion: null } as AgenciesStateModel;
       const test = service.getTransunion(tu);
       expect(test).toEqual({});
     });
 
     it('Get Transunion should return transunion data when populated on agencies', () => {
-      const tu = { agencies: { transunion: { authenticated: true } } } as AgenciesStateModel;
+      const tu = { transunion: { authenticated: true } } as AgenciesStateModel;
       const test = service.getTransunion(tu);
       expect(test.authenticated).toEqual(true);
     });
