@@ -12,28 +12,35 @@ describe('DashboardEnrolledComponent', () => {
   let fixture: ComponentFixture<DashboardEnrolledComponent>;
   let routerMock: any;
   class RouteMock {
-    data = of()
-  };
+    data = of({
+      dashboard: {
+        report: {},
+        snapshots: {},
+        scores: {},
+        trends: {},
+        metrics: {},
+      },
+    });
+  }
   let dashboardServiceMock: any;
   let creditMixServiceMock: any;
   let creditUtilizationServiceMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', [''])
-    dashboardServiceMock = jasmine.createSpyObj('DashboardService', [''])
-    creditMixServiceMock = jasmine.createSpyObj('CreditMixService', [''])
-    creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [''])
+    routerMock = jasmine.createSpyObj('Router', ['']);
+    dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['']);
+    creditMixServiceMock = jasmine.createSpyObj('CreditMixService', ['']);
+    creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', ['']);
     await TestBed.configureTestingModule({
-      declarations: [ DashboardEnrolledComponent ],providers: [
-        {provide: Router, useValue: routerMock},
-        {provide: ActivatedRoute, useClase: RouteMock},
-        {provide: DashboardService, useValue: dashboardServiceMock},
-        {provide: CreditMixService, useValue: creditMixServiceMock},
-        {provide: CreditUtilizationService, useValue: creditUtilizationServiceMock},
-      ]
-
-    })
-    .compileComponents();
+      declarations: [DashboardEnrolledComponent],
+      providers: [
+        { provide: Router, useValue: routerMock },
+        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: DashboardService, useValue: dashboardServiceMock },
+        { provide: CreditMixService, useValue: creditMixServiceMock },
+        { provide: CreditUtilizationService, useValue: creditUtilizationServiceMock },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -83,7 +83,7 @@ export class SigninComponent {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate(['../forgot'], { relativeTo: this.route });
+    this.router.navigate(['/auth/forgot']);
   }
 
   /**

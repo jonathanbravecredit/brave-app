@@ -1,11 +1,14 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Store } from "@ngxs/store";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
-import { TransunionService } from "@shared/services/transunion/transunion.service";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { IMergeReport } from '@shared/interfaces';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { PreferencesStateModel } from '@store/preferences';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
-import { CreditReportComponent } from "./credit-report.component";
+import { CreditReportComponent } from './credit-report.component';
 
 // private creditReportService: CreditreportService,
 // private store: Store,
@@ -14,7 +17,7 @@ import { CreditReportComponent } from "./credit-report.component";
 // private analytics: AnalyticsService,
 // private transunion: TransunionService,
 
-describe("CreditReportComponent", () => {
+describe('CreditReportComponent', () => {
   let component: CreditReportComponent;
   let fixture: ComponentFixture<CreditReportComponent>;
   let creditReportServiceMock: any;
@@ -25,12 +28,23 @@ describe("CreditReportComponent", () => {
   let transunionMock: any;
 
   beforeEach(async () => {
-    creditReportServiceMock = jasmine.createSpyObj("CreditreportService", ["setTradeline", "setPublicItem", "setPersonalItem"]);
-    storeMock = jasmine.createSpyObj("Store", ["dispatch"]);
-    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
-    routeMock = jasmine.createSpyObj("ActivatedRoute", [""]);
-    analyticsMock = jasmine.createSpyObj("AnalyticsService", [""]);
-    transunionMock = jasmine.createSpyObj("TransunionService", ["getCreditScores"]);
+    // methods
+    creditReportServiceMock = jasmine.createSpyObj('CreditreportService', [
+      'setTradeline',
+      'setPublicItem',
+      'setPersonalItem',
+    ]);
+    storeMock = jasmine.createSpyObj('Store', ['dispatch']);
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
+    analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
+    transunionMock = jasmine.createSpyObj('TransunionService', ['getCreditScores']);
+
+    // returns
+    transunionMock.getCreditScores.and.returnValue(of({ data: null }).toPromise());
+    // props
+    creditReportServiceMock.tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
+    creditReportServiceMock.preferences$ = new Observable<PreferencesStateModel>();
     await TestBed.configureTestingModule({
       declarations: [CreditReportComponent],
       providers: [
@@ -50,7 +64,7 @@ describe("CreditReportComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

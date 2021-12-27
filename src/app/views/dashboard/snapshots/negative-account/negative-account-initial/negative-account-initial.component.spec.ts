@@ -1,11 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
-import { DisputeService } from "@shared/services/dispute/dispute.service";
-import { StateService } from "@shared/services/state/state.service";
-import { of } from "rxjs";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IMergeReport } from '@shared/interfaces';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { StateService } from '@shared/services/state/state.service';
+import { BehaviorSubject, of } from 'rxjs';
 
-import { NegativeAccountInitialComponent } from "./negative-account-initial.component";
+import { NegativeAccountInitialComponent } from './negative-account-initial.component';
 
 // private router: Router,
 // private statesvc: StateService,
@@ -13,7 +15,7 @@ import { NegativeAccountInitialComponent } from "./negative-account-initial.comp
 // private disputeService: DisputeService,
 // private route: ActivatedRoute,
 
-describe("NegativeAccountInitialComponent", () => {
+describe('NegativeAccountInitialComponent', () => {
   let component: NegativeAccountInitialComponent;
   let fixture: ComponentFixture<NegativeAccountInitialComponent>;
   let routerMock: any;
@@ -25,12 +27,17 @@ describe("NegativeAccountInitialComponent", () => {
   }
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("", [""]);
-    statesvcMock = jasmine.createSpyObj("", [""]);
-    creditReportServiceMock = jasmine.createSpyObj("", [""]);
-    disputeServiceMock = jasmine.createSpyObj("", [""]);
+    routerMock = jasmine.createSpyObj('', ['']);
+    statesvcMock = jasmine.createSpyObj('', ['']);
+    creditReportServiceMock = jasmine.createSpyObj('', ['']);
+    disputeServiceMock = jasmine.createSpyObj('', ['']);
+
+    //props
+    creditReportServiceMock.tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
+
     await TestBed.configureTestingModule({
       declarations: [NegativeAccountInitialComponent],
+      imports: [SharedPipesModule],
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: StateService, useValue: statesvcMock },
@@ -47,7 +54,7 @@ describe("NegativeAccountInitialComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

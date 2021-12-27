@@ -11,7 +11,6 @@ import { SignupKnowyouComponent } from '@views/authentication/signup-knowyou/sig
 import { SignupResendComponent } from '@views/authentication/signup-resend/signup-resend.component';
 import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
-import { RedirectResolver } from '@shared/resolvers/redirect.resolver';
 import { DeactivatedComponent } from '@views/authentication/deactivated/deactivated.component';
 
 const AuthenticationRoutes: Routes = [
@@ -19,11 +18,6 @@ const AuthenticationRoutes: Routes = [
     path: '',
     component: AuthenticationComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'signin',
-        pathMatch: 'full',
-      },
       { path: 'signup', component: SignupComponent },
       { path: 'signin', component: SigninComponent },
       { path: 'forgot', component: SigninForgotComponent },
@@ -35,6 +29,11 @@ const AuthenticationRoutes: Routes = [
       { path: 'invalid', component: SignupErrorValidationComponent },
       { path: 'resend', component: SignupResendComponent },
       { path: 'deactivated', component: DeactivatedComponent },
+      {
+        path: '',
+        redirectTo: 'signin',
+        pathMatch: 'full',
+      },
     ],
   },
 ];
@@ -42,6 +41,6 @@ const AuthenticationRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(AuthenticationRoutes)],
   exports: [RouterModule],
-  providers: [RedirectResolver],
+  providers: [],
 })
 export class AuthenticationRoutingModule {}

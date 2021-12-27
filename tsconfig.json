@@ -31,7 +31,7 @@
       "es2018",
       "dom"
     ],
-    "types": ["jasmine", "node"]
+    "types": ["jasmine", "node",  "googlemaps"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "amplify", "storybook-static"],

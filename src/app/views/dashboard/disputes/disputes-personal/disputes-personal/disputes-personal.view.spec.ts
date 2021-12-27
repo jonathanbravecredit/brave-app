@@ -1,12 +1,14 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
+import { BehaviorSubject } from 'rxjs';
 
-import { DisputesPersonalView } from "./disputes-personal.view";
+import { DisputesPersonalView } from './disputes-personal.view';
 
 //private router: Router, private route: ActivatedRoute, private disputeService: DisputeService
 
-describe("DisputesPersonalView", () => {
+describe('DisputesPersonalView', () => {
   let component: DisputesPersonalView;
   let fixture: ComponentFixture<DisputesPersonalView>;
   let routerMock: any;
@@ -14,9 +16,12 @@ describe("DisputesPersonalView", () => {
   let disputeServiceMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
-    routeMock = jasmine.createSpyObj("ActivatedRoute", [""]);
-    disputeServiceMock = jasmine.createSpyObj("DisputeService", [""]);
+    routerMock = jasmine.createSpyObj('Router', ['']);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
+    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['sendStartDispute', 'clearDisputes']);
+    disputeServiceMock.personalItem$ = new BehaviorSubject<IPersonalItemsDetailsConfig>(
+      {} as IPersonalItemsDetailsConfig,
+    );
     await TestBed.configureTestingModule({
       declarations: [DisputesPersonalView],
       providers: [
@@ -33,7 +38,7 @@ describe("DisputesPersonalView", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

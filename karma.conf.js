@@ -12,6 +12,7 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
     ],
+    files: ['src/app/shared/mocks/google-maps-api.js'],
     client: {
       jasmine: {
         random: false,

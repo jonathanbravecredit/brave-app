@@ -45,7 +45,7 @@ export class DashboardEnrolledComponent implements OnInit {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
-      const tradelines = this.report?.TrueLinkCreditReportType.TradeLinePartition
+      const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
@@ -55,7 +55,7 @@ export class DashboardEnrolledComponent implements OnInit {
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
       this.creditUtilizationStatus = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
-      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating
+      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating;
     });
     this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
     const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;

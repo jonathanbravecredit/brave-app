@@ -1,11 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { StateService } from "@shared/services/state/state.service";
-import { of } from "rxjs";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IMergeReport } from '@shared/interfaces';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { StateService } from '@shared/services/state/state.service';
+import { BehaviorSubject, of } from 'rxjs';
 
-import { DisputesReconfirmView } from "./disputes-reconfirm.view";
+import { DisputesReconfirmView } from './disputes-reconfirm.view';
 
 // private router: Router,
 // private route: ActivatedRoute,
@@ -13,7 +15,7 @@ import { DisputesReconfirmView } from "./disputes-reconfirm.view";
 // private statesvc: StateService,
 // private creditReportService: CreditreportService,
 
-describe("DisputesReconfirmView", () => {
+describe('DisputesReconfirmView', () => {
   let component: DisputesReconfirmView;
   let fixture: ComponentFixture<DisputesReconfirmView>;
   let routerMock: any;
@@ -21,15 +23,21 @@ describe("DisputesReconfirmView", () => {
     data = of();
   }
   let interstitialMock: any;
+  let disputeServiceMock: any;
   let statesvcMock: any;
   class CreditReportServiceMock {
-    tuReport$ = of();
+    tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
   }
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("", [""]);
-    interstitialMock = jasmine.createSpyObj("", [""]);
-    statesvcMock = jasmine.createSpyObj("", [""]);
+    routerMock = jasmine.createSpyObj('', ['']);
+    interstitialMock = jasmine.createSpyObj('', ['']);
+    disputeServiceMock = jasmine.createSpyObj('DisputeService', [
+      'setPersonalItem',
+      'setPublicItem',
+      'setTradelineItem',
+    ]);
+    statesvcMock = jasmine.createSpyObj('', ['']);
     await TestBed.configureTestingModule({
       declarations: [DisputesReconfirmView],
       providers: [
@@ -38,6 +46,7 @@ describe("DisputesReconfirmView", () => {
         { provide: InterstitialService, useValue: interstitialMock },
         { provide: StateService, useValue: statesvcMock },
         { provide: CreditreportService, useClass: CreditReportServiceMock },
+        { provide: DisputeService, useValue: disputeServiceMock },
       ],
     }).compileComponents();
   });
@@ -48,7 +57,7 @@ describe("DisputesReconfirmView", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IBorrower } from '@shared/interfaces';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 import { PersonalitemsView } from './personalitems.view';
 
@@ -25,12 +27,17 @@ describe('PersonalitemsView', () => {
   let creditReportServicesMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
-    statesvcMock = jasmine.createSpyObj("StateService", [""]);
-    disputeServiceMock = jasmine.createSpyObj("DisputeService", [""]);
-    creditReportServicesMock = jasmine.createSpyObj("CreditreportService", [""]);
+    // methods
+    routerMock = jasmine.createSpyObj('Router', ['']);
+    statesvcMock = jasmine.createSpyObj('StateService', ['']);
+    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['']);
+    creditReportServicesMock = jasmine.createSpyObj('CreditreportService', ['']);
+
+    // props
+    creditReportServicesMock.tuPersonalItem$ = new BehaviorSubject<IBorrower>({} as IBorrower);
     await TestBed.configureTestingModule({
       declarations: [PersonalitemsView],
+      imports: [SharedPipesModule],
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useClass: RouteMock },

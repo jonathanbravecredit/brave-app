@@ -1,13 +1,15 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import { DisputeService } from "@shared/services/dispute/dispute.service";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { of } from "rxjs";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ITradeLinePartition } from '@shared/interfaces';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { BehaviorSubject, of } from 'rxjs';
 
-import { DisputesTradelineView } from "./disputes-tradeline.view";
+import { DisputesTradelineView } from './disputes-tradeline.view';
 
-describe("DisputesTradelineView", () => {
+describe('DisputesTradelineView', () => {
   let component: DisputesTradelineView;
   let fixture: ComponentFixture<DisputesTradelineView>;
   let routerMock: any;
@@ -19,12 +21,18 @@ describe("DisputesTradelineView", () => {
   let analyticsMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
-    interstitialMock = jasmine.createSpyObj("InterstitialService", [""]);
-    disputeServiceMock = jasmine.createSpyObj("DisputeService", [""]);
-    analyticsMock = jasmine.createSpyObj("AnalyticsService", [""]);
+    // build out methods
+    routerMock = jasmine.createSpyObj('Router', ['']);
+    interstitialMock = jasmine.createSpyObj('InterstitialService', ['']);
+    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['clearDisputes', 'pushDispute', 'sendStartDispute']);
+    analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
+
+    // build out props
+    disputeServiceMock.tradeline$ = new BehaviorSubject<ITradeLinePartition>({} as ITradeLinePartition);
+
     await TestBed.configureTestingModule({
       declarations: [DisputesTradelineView],
+      imports: [SharedPipesModule],
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useClass: RouteMock },
@@ -41,7 +49,7 @@ describe("DisputesTradelineView", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

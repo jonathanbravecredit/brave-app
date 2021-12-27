@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NewUser } from '@shared/services/auth/auth.service';
 import { SigninState } from '@views/authentication/signin/signin/signin.component';
 

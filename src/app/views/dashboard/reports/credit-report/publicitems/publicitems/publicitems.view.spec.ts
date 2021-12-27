@@ -1,13 +1,15 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
-import { DisputeService } from "@shared/services/dispute/dispute.service";
-import { StateService } from "@shared/services/state/state.service";
-import { of } from "rxjs";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPublicPartition } from '@shared/interfaces';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { StateService } from '@shared/services/state/state.service';
+import { BehaviorSubject, of } from 'rxjs';
 
-import { PublicitemsView } from "./publicitems.view";
+import { PublicitemsView } from './publicitems.view';
 
-describe("PublicitemsView", () => {
+describe('PublicitemsView', () => {
   let component: PublicitemsView;
   let fixture: ComponentFixture<PublicitemsView>;
   let routerMock: any;
@@ -19,14 +21,17 @@ describe("PublicitemsView", () => {
   let creditReportServicesMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
-    statesvcMock = jasmine.createSpyObj("StateService", [""]);
-    disputeServiceMock = jasmine.createSpyObj("DisputeService", [""]);
-    creditReportServicesMock = jasmine.createSpyObj("CreditreportService", [
-      "",
-    ]);
+    // methods
+    routerMock = jasmine.createSpyObj('Router', ['']);
+    statesvcMock = jasmine.createSpyObj('StateService', ['']);
+    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['']);
+    creditReportServicesMock = jasmine.createSpyObj('CreditreportService', ['']);
+
+    //props
+    creditReportServicesMock.tuPublicItem$ = new BehaviorSubject<IPublicPartition>({} as IPublicPartition);
     await TestBed.configureTestingModule({
       declarations: [PublicitemsView],
+      imports: [SharedPipesModule],
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useClass: RouteMock },
@@ -43,7 +48,7 @@ describe("PublicitemsView", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

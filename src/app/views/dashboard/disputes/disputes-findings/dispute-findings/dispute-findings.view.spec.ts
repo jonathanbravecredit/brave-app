@@ -1,29 +1,36 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute } from "@angular/router";
-import { DisputeService } from "@shared/services/dispute/dispute.service";
-import { of } from "rxjs";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { IDispute } from '@shared/interfaces/disputes';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { BehaviorSubject, of } from 'rxjs';
 
-import { DisputeFindingsView } from "./dispute-findings.view";
+import { DisputeFindingsView } from './dispute-findings.view';
 
-describe("DisputeFindingsView", () => {
+describe('DisputeFindingsView', () => {
   let component: DisputeFindingsView;
   let fixture: ComponentFixture<DisputeFindingsView>;
   class RouteMock {
-    data = of();
+    data = of({
+      reports: {
+        investigationResults: {
+          record: null,
+        },
+        creditBureauResults: {
+          record: null,
+        },
+      },
+    });
   }
-  let DisputeServiceMock: any;
+  let disputeServiceMock: any;
 
   beforeEach(async () => {
-    DisputeServiceMock = jasmine.createSpyObj(
-      "DisputeService",
-      [""],
-      ["currentDispute$"]
-    );
+    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['getUserStateOfResidence']);
+    disputeServiceMock.currentDispute$ = new BehaviorSubject<IDispute>({} as IDispute);
     await TestBed.configureTestingModule({
       declarations: [DisputeFindingsView],
       providers: [
         { provide: ActivatedRoute, useClass: RouteMock },
-        { provide: DisputeService, useValue: DisputeServiceMock },
+        { provide: DisputeService, useValue: disputeServiceMock },
       ],
     }).compileComponents();
   });
@@ -34,7 +41,7 @@ describe("DisputeFindingsView", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

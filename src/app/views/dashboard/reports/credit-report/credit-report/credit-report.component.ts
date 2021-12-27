@@ -31,7 +31,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    private analytics: AnalyticsService,
     private transunion: TransunionService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
