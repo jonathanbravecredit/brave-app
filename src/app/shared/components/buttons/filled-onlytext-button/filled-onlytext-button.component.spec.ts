@@ -1,14 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilledOnlytextButtonComponent } from './filled-onlytext-button.component';
+import { FilledOnlytextButtonPipe } from './filled-onlytext-button.pipe';
 
 describe('FilledOnlytextButtonComponent', () => {
   let component: FilledOnlytextButtonComponent;
   let fixture: ComponentFixture<FilledOnlytextButtonComponent>;
 
   beforeEach(async () => {
+
+
     await TestBed.configureTestingModule({
-      declarations: [ FilledOnlytextButtonComponent ]
+      declarations: [ FilledOnlytextButtonComponent, FilledOnlytextButtonPipe ]
     })
     .compileComponents();
   });

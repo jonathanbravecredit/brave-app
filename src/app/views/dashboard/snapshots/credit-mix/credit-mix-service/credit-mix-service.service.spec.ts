@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
-import { CreditMixServiceService } from './credit-mix-service.service';
+import { CreditMixService } from './credit-mix-service.service';
 
 describe('CreditMixServiceService', () => {
-  let service: CreditMixServiceService;
+  let service: CreditMixService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CreditMixServiceService);
+    service = TestBed.inject(CreditMixService);
   });
 
   it('should be created', () => {

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { DisputeCardStatusPipe } from "..";
 
-import { DisputeCurrentCardComponent } from './dispute-current-card.component';
+import { DisputeCurrentCardComponent } from "./dispute-current-card.component";
 
-describe('DisputeCurrentCardComponent', () => {
+describe("DisputeCurrentCardComponent", () => {
   let component: DisputeCurrentCardComponent;
   let fixture: ComponentFixture<DisputeCurrentCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputeCurrentCardComponent ]
-    })
-    .compileComponents();
+      declarations: [DisputeCurrentCardComponent, DisputeCardStatusPipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('DisputeCurrentCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

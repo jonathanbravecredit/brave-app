@@ -9,13 +9,9 @@
       <!-- subheader -->
       <div class="py-3">
         <div class="text-base">
+          <p class="mb-6 text-blueGray-600">To complete your authentication, we need to confirm your phone number.</p>
           <p class="mb-6 text-blueGray-600">
-            To complete your authentication, we need to confirm your phone
-            number.
-          </p>
-          <p class="mb-6 text-blueGray-600">
-            Please enter your cell phone number below. We will text you a
-            5-digit code.
+            Please enter your cell phone number below. We will text you a 5-digit code.
           </p>
         </div>
       </div>
@@ -23,9 +19,7 @@
       <!-- subheader -->
       <div class="py-3">
         <div class="text-sm">
-          <p class="mb-6 text-blueGray-600">
-            Standard data and messaging rates may apply.
-          </p>
+          <p class="mb-6 text-blueGray-600">Standard data and messaging rates may apply.</p>
         </div>
       </div>
 
@@ -39,15 +33,12 @@
       </div>
 
       <h3 *ngIf="phoneError" class="text-red-500">
-        Please enter your cell phone number, starting with your 3-digit area
-        code
+        Please enter your cell phone number, starting with your 3-digit area code
       </h3>
 
       <div class="mb-6">
         <p *ngIf="!hasError" class="text-sm text-transparent">&nbsp;</p>
-        <p *ngIf="hasError" class="text-sm text-red-500">
-          Missing required information
-        </p>
+        <p *ngIf="hasError" class="text-sm text-red-500">Missing required information</p>
       </div>
 
       <div>
@@ -56,19 +47,10 @@
             (click)="backClick.emit()"
             [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
           >
-            <span class="flex items-center">
-              <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-            </span>
+            <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
-          <brave-filled-spinning-button
-            [disabled]="!form.parentForm.valid"
-            (click)="form.submitForm()"
-          >
-            <span class="flex items-center"
-              >Continue<span class="material-icons px-1"
-                >arrow_forward</span
-              ></span
-            >
+          <brave-filled-spinning-button [disabled]="!form.parentForm?.valid" (click)="form.submitForm()">
+            <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
           </brave-filled-spinning-button>
         </div>
       </div>
