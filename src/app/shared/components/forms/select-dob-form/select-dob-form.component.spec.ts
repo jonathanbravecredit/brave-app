@@ -1,16 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { SelectDobFormComponent } from './select-dob-form.component';
+import { SelectDobFormComponent } from "./select-dob-form.component";
 
-describe('SelectDobFormComponent', () => {
+describe("SelectDobFormComponent", () => {
   let component: SelectDobFormComponent;
   let fixture: ComponentFixture<SelectDobFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectDobFormComponent ]
-    })
-    .compileComponents();
+      declarations: [SelectDobFormComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('SelectDobFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

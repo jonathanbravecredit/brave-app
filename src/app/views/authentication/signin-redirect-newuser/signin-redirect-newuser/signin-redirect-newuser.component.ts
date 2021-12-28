@@ -3,8 +3,8 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { SyncService } from '@shared/services/sync/sync.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
-import { first, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { catchError, first, tap } from 'rxjs/operators';
+import { of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-signin-redirect-newuser',
@@ -21,6 +21,7 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
             await this.onboardUser();
           }, 4500);
         }),
+        catchError((err) => of(err)),
       )
       .subscribe();
   }
@@ -37,7 +38,9 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
   }
 
   async onboardUser(): Promise<void> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser({
+      bypassCache: true,
+    });
     const attrs = await Auth.userAttributes(user);
     const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     await this.sync.initUser(id);

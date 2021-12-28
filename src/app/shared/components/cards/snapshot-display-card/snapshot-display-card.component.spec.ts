@@ -1,16 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SnapshotDisplayCardComponent } from './snapshot-display-card.component';
+import { SnapshotDisplayCardComponent } from "./snapshot-display-card.component";
+import { SnapshotLabelPipe } from "./snapshot-label.pipe";
+import { SnapshotStatusPipe } from "./snapshot-status.pipe";
 
-describe('SnapshotDisplayCardComponent', () => {
+describe("SnapshotDisplayCardComponent", () => {
   let component: SnapshotDisplayCardComponent;
   let fixture: ComponentFixture<SnapshotDisplayCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SnapshotDisplayCardComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        SnapshotDisplayCardComponent,
+        SnapshotLabelPipe,
+        SnapshotStatusPipe,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +24,7 @@ describe('SnapshotDisplayCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

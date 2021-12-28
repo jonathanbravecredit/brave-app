@@ -12,7 +12,7 @@ export interface IFindingsResolver {
 })
 export class FindingsResolver implements Resolve<IFindingsResolver> {
   constructor(private disputes: DisputeService) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IFindingsResolver> {
+  async resolve(route: ActivatedRouteSnapshot): Promise<IFindingsResolver> {
     const params = route.params as { investigation: string; creditbureau: string };
     const irResp = await this.disputes.getInvestigationResultsById(params.investigation);
     const cbResp = await this.disputes.getCreditBureauResultsById(params.creditbureau);

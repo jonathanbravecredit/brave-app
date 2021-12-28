@@ -1,56 +1,44 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { KycService } from "@shared/services/kyc/kyc.service";
-import { KycBaseComponent } from "@views/onboarding/kyc-base/kyc-base.component";
-import { FormGroup, AbstractControl } from "@angular/forms";
-import { Store } from "@ngxs/store";
-import {
-  TransunionInput,
-  UpdateAppDataInput,
-} from "@shared/services/aws/api.service";
-import { returnNestedObject } from "@shared/utils/utils";
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { KycService } from '@shared/services/kyc/kyc.service';
+import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
+import { FormGroup, AbstractControl } from '@angular/forms';
+import { Store } from '@ngxs/store';
+import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
   ITransunionKBAQuestion,
   ITransunionKBAQuestions,
-} from "@shared/interfaces/tu-kba-questions.interface";
-import { AppDataStateModel } from "@store/app-data";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
-import {
-  ITUServiceResponse,
-  IVerifyAuthenticationQuestionsResult,
-} from "@shared/interfaces";
-import { TUBundles } from "@shared/utils/transunion/constants";
-import { AppStatusReason } from "@shared/utils/brave/constants";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import {
-  AnalyticClickEvents,
-  AnalyticPageViewEvents,
-} from "@shared/services/analytics/analytics/constants";
-import { ReferralsService } from "@shared/services/referrals/referrals.service";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+} from '@shared/interfaces/tu-kba-questions.interface';
+import { AppDataStateModel } from '@store/app-data';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { AppStatusReason } from '@shared/utils/brave/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
-export type KycIdverificationState = "init" | "sent" | "error" | "minimum";
+export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
 @Component({
-  selector: "brave-kyc-idverification",
-  templateUrl: "./kyc-idverification.component.html",
+  selector: 'brave-kyc-idverification',
+  templateUrl: './kyc-idverification.component.html',
 })
-export class KycIdverificationComponent
-  extends KycBaseComponent
-  implements OnInit {
-  @Input() viewState: KycIdverificationState = "init";
+export class KycIdverificationComponent extends KycBaseComponent implements OnInit {
+  @Input() viewState: KycIdverificationState = 'init';
   stepID = 3;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private store: Store,
     private kycService: KycService,
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
-    private referral: ReferralsService
+    private referral: ReferralsService,
   ) {
     super();
   }
@@ -62,9 +50,7 @@ export class KycIdverificationComponent
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(
-      [routes.root.children.onboarding.children.verify.full]
-    );
+    this.router.navigate([routes.root.children.onboarding.children.verify.full]);
   }
 
   updateViewState(viewState: KycIdverificationState) {
@@ -89,7 +75,7 @@ export class KycIdverificationComponent
    * @param code
    */
   async processRequest(code: string, newpin: boolean = false): Promise<void> {
-    this.updateViewState("init");
+    this.updateViewState('init');
     const { appData } = this.store.snapshot();
     const pinAge = appData?.agencies?.transunion?.pinCurrentAge;
     const pinAttempts = appData?.agencies?.transunion?.pinAttempts || 0;
@@ -102,29 +88,21 @@ export class KycIdverificationComponent
       this.handleSuspension(AppStatusReason.PinAttemptsExceeded);
     } else {
       try {
-        newpin
-          ? await this.kycService.incrementPinRequest()
-          : await this.kycService.incrementPinAttempts();
+        newpin ? await this.kycService.incrementPinRequest() : await this.kycService.incrementPinAttempts();
         const passcodeQuestion = this.getAuthenticationQuestions(appData);
-        if (!passcodeQuestion) throw "No passcode question";
-        const answer = this.kycService.getPassCodeAnswer(
-          passcodeQuestion,
-          code
-        );
-        const resp = await this.kycService.sendVerifyAuthenticationQuestions(
-          appData,
-          [answer]
-        );
+        if (!passcodeQuestion) throw 'No passcode question';
+        const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
+        const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]);
         if (!newpin) {
           !resp.success
             ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
             : await this.handleResponse(resp);
         } else {
-          this.updateViewState("sent");
+          this.updateViewState('sent');
         }
         this.interstitial.fetching$.next(false);
       } catch (err) {
-        console.log("error:processRequest ===> ", err);
+        console.log('error:processRequest ===> ', err);
         this.handleAPIError(); // bail out on technical error...non specific api
       }
     }
@@ -135,7 +113,7 @@ export class KycIdverificationComponent
    * - sends the 'NEWPIN' answer (using the same process as the code) to resend a new code
    */
   async resendCode(): Promise<void> {
-    const code = "NEWPIN";
+    const code = 'NEWPIN';
     await this.processRequest(code, true);
   }
 
@@ -152,9 +130,7 @@ export class KycIdverificationComponent
     }
   }
 
-  async handleResponse(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  ): Promise<void> {
+  async handleResponse(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
     // is success and correct
     const { data } = resp;
     if (!data) {
@@ -165,11 +141,11 @@ export class KycIdverificationComponent
     const { ResponseType, AuthenticationStatus } = data;
     const type = ResponseType.toLowerCase();
     const status = AuthenticationStatus.toLowerCase();
-    if (type === "success" && status === "correct") {
+    if (type === 'success' && status === 'correct') {
       await this.handleSuccess();
-    } else if (type === "success" && status === "incorrect") {
+    } else if (type === 'success' && status === 'incorrect') {
       await this.handleIncorrect(resp);
-    } else if (type === "success" && status === "inprogress") {
+    } else if (type === 'success' && status === 'inprogress') {
       await this.handleInProgress(resp);
     } else {
       await this.handleIncorrect(resp);
@@ -189,36 +165,27 @@ export class KycIdverificationComponent
     try {
       await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
-      if (success) await this.handleReferrals();
       success
-        ? this.router.navigate([
-            routes.root.children.onboarding.children.congratulations.full,
-          ]) // api successful and TU successful
+        ? this.router.navigate([routes.root.children.onboarding.children.congratulations.full]) // api successful and TU successful
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
-      console.log("error:completeOnboarding ===> ", err);
+      console.log('error:completeOnboarding ===> ', err);
       this.handleAPIError(); // bail out on technical error...non specific api
     }
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    this.updateViewState("minimum");
+    this.updateViewState('minimum');
     this.interstitial.fetching$.next(false);
   }
 
-  async handleIncorrect(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  ): Promise<void> {
-    await this.kycService.updateTransunion(
-      this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp)
-    );
-    this.updateViewState("error"); // DO NOT increment up pin attempt...already handled above
+  async handleIncorrect(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
+    this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
     this.interstitial.fetching$.next(false);
   }
 
-  async handleInProgress(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  ): Promise<void> {
+  async handleInProgress(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
     await this.kycService.handleVerificationInProgressFlow(resp);
     this.interstitial.fetching$.next(false);
   }
@@ -233,20 +200,13 @@ export class KycIdverificationComponent
     this.interstitial.fetching$.next(false);
   }
 
-  async handleReferrals(): Promise<void> {
-    const sub = await this.kycService.getUserSub();
-    await this.referral.updateReferral(sub, "enrolled");
-  }
-
-  createTuPartial<T>(
-    resp?: ITUServiceResponse<T | undefined>
-  ): Partial<TransunionInput> {
+  createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
     const tuPartial: Partial<TransunionInput> = {
       verifyAuthenticationQuestionsOTPSuccess: false,
       verifyAuthenticationQuestionsOTPStatus: tu.generators.createOnboardingStatus(
         TUBundles.VerifyAuthenticationQuestionsOTP,
         false,
-        resp
+        resp,
       ),
     };
     return tuPartial;
@@ -266,17 +226,13 @@ export class KycIdverificationComponent
    * @param attrs
    */
   getAuthenticationQuestions(
-    state: UpdateAppDataInput | AppDataStateModel | undefined
+    state: UpdateAppDataInput | AppDataStateModel | undefined,
   ): ITransunionKBAQuestion | undefined {
     if (!state) return;
-    const authXML = returnNestedObject(state, "currentRawQuestions") || "";
-    const authQuestion = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(
-      authXML
-    );
+    const authXML = returnNestedObject(state, 'currentRawQuestions') || '';
+    const authQuestion = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(authXML);
     const authChallenge = this.createChallengeConfig(authQuestion);
-    return authChallenge
-      ? this.kycService.getPassCodeQuestion(authChallenge)
-      : undefined;
+    return authChallenge ? this.kycService.getPassCodeQuestion(authChallenge) : undefined;
   }
 
   /**
@@ -284,11 +240,9 @@ export class KycIdverificationComponent
    * @param questions
    * @returns
    */
-  createChallengeConfig(
-    questions: ITransunionKBAChallengeAnswer | undefined
-  ): ITransunionKBAQuestions | undefined {
+  createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): ITransunionKBAQuestions | undefined {
     if (!questions) return;
-    const config = returnNestedObject(questions, "ChallengeConfiguration");
+    const config = returnNestedObject(questions, 'ChallengeConfiguration');
     if (!config) return;
     return {
       ChallengeConfigurationType: {

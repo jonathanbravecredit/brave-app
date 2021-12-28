@@ -11,8 +11,8 @@ export class DeactivatedComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      window.location.href = 'https://brave.credit';
-    }, 6000);
+    // setTimeout(() => {
+    //   window.location.href = 'https://brave.credit';
+    // }, 6000);
   }
 }

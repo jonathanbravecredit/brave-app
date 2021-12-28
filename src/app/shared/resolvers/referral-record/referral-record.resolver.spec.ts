@@ -1,16 +1,25 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import { ReferralsService } from "@shared/services/referrals/referrals.service";
 
-import { ReferralRecordResolver } from './referral-record.resolver';
+import { ReferralRecordResolver } from "./referral-record.resolver";
 
-describe('ReferralRecordResolver', () => {
+describe("ReferralRecordResolver", () => {
   let resolver: ReferralRecordResolver;
+  let referralsServiceMock: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    referralsServiceMock = jasmine.createSpyObj("ReferralsService", [
+      "getReferral",
+    ]);
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ReferralsService, useValue: referralsServiceMock },
+      ],
+    });
     resolver = TestBed.inject(ReferralRecordResolver);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(resolver).toBeTruthy();
   });
 });

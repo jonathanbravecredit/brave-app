@@ -1,16 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
 
-import { DataBreachListComponent } from './data-breach-list.component';
+import { DataBreachListComponent } from "./data-breach-list.component";
 
-describe('DataBreachListComponent', () => {
+describe("DataBreachListComponent", () => {
   let component: DataBreachListComponent;
   let fixture: ComponentFixture<DataBreachListComponent>;
+  let routerMock: any;
 
   beforeEach(async () => {
+    routerMock = jasmine.createSpyObj("Router", [""]);
+
     await TestBed.configureTestingModule({
-      declarations: [ DataBreachListComponent ]
-    })
-    .compileComponents();
+      declarations: [DataBreachListComponent],
+      providers: [{ provide: Router, useValue: routerMock }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +23,7 @@ describe('DataBreachListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
