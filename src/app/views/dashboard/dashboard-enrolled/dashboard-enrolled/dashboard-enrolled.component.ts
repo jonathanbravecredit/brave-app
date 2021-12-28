@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
@@ -13,12 +13,13 @@ import {
 import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
   templateUrl: './dashboard-enrolled.component.html',
 })
-export class DashboardEnrolledComponent implements OnInit {
+export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   userName: string | undefined;
   welcomeMsg: string | undefined;
   lastUpdated: string | undefined;
@@ -33,6 +34,7 @@ export class DashboardEnrolledComponent implements OnInit {
   tradelineSummary: ICreditMixTLSummary | undefined;
   rating: string | undefined;
   creditUtilizationPerc: number | undefined;
+  routeSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -41,7 +43,24 @@ export class DashboardEnrolledComponent implements OnInit {
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
   ) {
-    this.route.data.subscribe((resp: any) => {
+    this.subscribeToRouteData();
+    this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
+    const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
+    if (fullfilled) {
+      this.lastUpdated = new Date(fullfilled).toLocaleDateString();
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub$?.unsubscribe();
+  }
+
+  subscribeToRouteData(): void {
+    this.routeSub$ = this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
       this.snapshots = resp.dashboard.snapshots;
       this.scores = resp.dashboard.scores || null;
@@ -61,15 +80,6 @@ export class DashboardEnrolledComponent implements OnInit {
       this.creditUtilizationStatus = creditUtilSnapshotObj.status;
       this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
     });
-    this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
-    const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
-    if (fullfilled) {
-      this.lastUpdated = new Date(fullfilled).toLocaleDateString();
-    }
-  }
-
-  ngOnInit(): void {
-    if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
   }
 
   onNegativeItemsClicked() {

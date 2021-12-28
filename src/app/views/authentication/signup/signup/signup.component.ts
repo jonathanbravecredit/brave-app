@@ -1,29 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AuthService, NewUser } from "@shared/services/auth/auth.service";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import {
-  SignUpErrorDescriptions,
-  SignUpErrors,
-} from "@views/authentication/signup/signup/content";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import { ReferralsService } from "@shared/services/referrals/referrals.service";
-import {
-  NeverBounceResponse,
-  NeverbounceService,
-} from "@shared/services/neverbounce/neverbounce.service";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService, NewUser } from '@shared/services/auth/auth.service';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/signup/signup/content';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
-export type SignupState = "init" | "invalid";
+export type SignupState = 'init' | 'invalid';
 
 @Component({
-  selector: "brave-signup",
-  templateUrl: "./signup.component.html",
+  selector: 'brave-signup',
+  templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
-  viewState: SignupState = "init";
-  message: string = "";
+  viewState: SignupState = 'init';
+  message: string = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -31,7 +25,7 @@ export class SignupComponent implements OnInit {
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private referral: ReferralsService,
-    private neverBounce: NeverbounceService
+    private neverBounce: NeverbounceService,
   ) {}
 
   ngOnInit(): void {}
@@ -46,14 +40,9 @@ export class SignupComponent implements OnInit {
 
     let isValid: boolean = false;
     try {
-      const resp: Response = await this.neverBounce.validateEmail(
-        user.username
-      );
+      const resp: Response = await this.neverBounce.validateEmail(user.username);
       const body: NeverBounceResponse = await resp.json();
-      isValid =
-        body.result === "invalid" || body.result === "disposable"
-          ? false
-          : true;
+      isValid = body.result === 'invalid' || body.result === 'disposable' ? false : true;
     } catch (err) {
       isValid = false;
     }
@@ -61,36 +50,28 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         const { userSub: sub } = await this.auth.signUp(user);
-        this.analytics.fireCompleteRegistration(0.0, "USD");
+        this.analytics.fireCompleteRegistration(0.0, 'USD');
         this.analytics.fireUserTrackingEvent(sub);
         this.analytics.addToCohort();
-        const code = this.referral.referredByCode$.value;
-        await this.referral.createReferral(sub, code);
+        // const code = this.referral.referredByCode$.value;
+        // await this.referral.createReferral(sub, code);
         this.interstitial.fetching$.next(false);
-        this.router.navigate([
-          routes.root.children.auth.children.thankyou.full,
-        ]);
+        this.router.navigate([routes.root.children.auth.children.thankyou.full]);
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
-          this.handleSignupError(
-            "invalid",
-            SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]
-          );
+          this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
         } else if (err.code === SignUpErrors.NotAuthorizedException) {
-          this.handleSignupError("invalid", err.message);
+          this.handleSignupError('invalid', err.message);
         } else if (err.code === SignUpErrors.InvalidPasswordException) {
-          this.handleSignupError(
-            "invalid",
-            SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]
-          );
+          this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]);
         } else {
-          this.handleSignupError("invalid", "Invalid sign up credentials");
+          this.handleSignupError('invalid', 'Invalid sign up credentials');
         }
       }
       this.interstitial.fetching$.next(false);
     } else {
       this.interstitial.fetching$.next(false);
-      this.handleSignupError("invalid", "Invalid sign up credentials");
+      this.handleSignupError('invalid', 'Invalid sign up credentials');
     }
   }
 
@@ -137,9 +118,7 @@ export class SignupComponent implements OnInit {
    * Method to route user to privacy policy
    */
   goToPrivacy(): void {
-    this.router.navigate([
-      routes.root.children.compliance.children.privacy.full,
-    ]);
+    this.router.navigate([routes.root.children.compliance.children.privacy.full]);
   }
 
   /**
