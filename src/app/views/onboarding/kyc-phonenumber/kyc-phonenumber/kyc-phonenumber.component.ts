@@ -1,14 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
-import { Store } from '@ngxs/store';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -20,13 +19,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   public hasError: boolean = false;
   phoneError = false;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private store: Store,
-    private analytics: AnalyticsService,
-    private kycService: KycService,
-  ) {
+  constructor(private router: Router, private analytics: AnalyticsService, private kycService: KycService) {
     super();
   }
 
