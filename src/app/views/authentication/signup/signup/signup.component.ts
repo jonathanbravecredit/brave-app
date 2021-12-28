@@ -53,8 +53,6 @@ export class SignupComponent implements OnInit {
         this.analytics.fireCompleteRegistration(0.0, 'USD');
         this.analytics.fireUserTrackingEvent(sub);
         this.analytics.addToCohort();
-        // const code = this.referral.referredByCode$.value;
-        // await this.referral.createReferral(sub, code);
         this.interstitial.fetching$.next(false);
         this.router.navigate([routes.root.children.auth.children.thankyou.full]);
       } catch (err: any) {

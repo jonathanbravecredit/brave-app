@@ -165,7 +165,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     try {
       await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
-      if (success) await this.handleReferrals();
       success
         ? this.router.navigate([routes.root.children.onboarding.children.congratulations.full]) // api successful and TU successful
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
@@ -199,11 +198,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
   async handleSuspension(reason: AppStatusReason): Promise<void> {
     await this.kycService.handleSuspension(reason);
     this.interstitial.fetching$.next(false);
-  }
-
-  async handleReferrals(): Promise<void> {
-    const sub = await this.kycService.getUserSub();
-    await this.referral.updateReferral(sub, 'enrolled');
   }
 
   createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
