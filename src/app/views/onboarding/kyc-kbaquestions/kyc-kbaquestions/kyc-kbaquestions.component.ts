@@ -1,88 +1,63 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { KycService } from "@shared/services/kyc/kyc.service";
-import { FormGroup } from "@angular/forms";
-import { Store } from "@ngxs/store";
-import { AgenciesSelectors, AgenciesStateModel } from "@store/agencies";
-import { Observable, Subscription } from "rxjs";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { KycService } from '@shared/services/kyc/kyc.service';
+import { FormGroup } from '@angular/forms';
+import { Store } from '@ngxs/store';
+import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
+import { Observable, Subscription } from 'rxjs';
 import {
   ITransunionKBAQuestion,
   ITransunionKBAAnswer,
   ITransunionKBAQuestions,
   ITransunionKBAChallengeAnswer,
-} from "@shared/interfaces/tu-kba-questions.interface";
-import { filter } from "rxjs/operators";
-import { IVerifyAuthenticationAnswer } from "@shared/interfaces/verify-authentication-answers.interface";
-import { KycKbaquestionsPureComponent } from "@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
-import {
-  ITUServiceResponse,
-  IVerifyAuthenticationQuestionsResult,
-} from "@shared/interfaces";
-import {
-  TransunionInput,
-  TUStatusRefInput,
-} from "@shared/services/aws/api.service";
-import { TUBundles } from "@shared/utils/transunion/constants";
-import { AppStatusReason } from "@shared/utils/brave/constants";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import {
-  AnalyticClickEvents,
-  AnalyticPageViewEvents,
-} from "@shared/services/analytics/analytics/constants";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+} from '@shared/interfaces/tu-kba-questions.interface';
+import { filter } from 'rxjs/operators';
+import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
+import { KycKbaquestionsPureComponent } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions-pure/kyc-kbaquestions-pure.component';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
+import { TransunionInput, TUStatusRefInput } from '@shared/services/aws/api.service';
+import { TUBundles } from '@shared/utils/transunion/constants';
+import { AppStatusReason } from '@shared/utils/brave/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
-  selector: "brave-kyc-kbaquestions",
-  templateUrl: "./kyc-kbaquestions.component.html",
+  selector: 'brave-kyc-kbaquestions',
+  templateUrl: './kyc-kbaquestions.component.html',
 })
 export class KycKbaquestionsComponent implements OnInit {
-  @ViewChild(KycKbaquestionsPureComponent) kba:
-    | KycKbaquestionsPureComponent
-    | undefined;
+  @ViewChild(KycKbaquestionsPureComponent) kba: KycKbaquestionsPureComponent | undefined;
 
   questions: (ITransunionKBAQuestion | ITransunionKBAAnswer | undefined)[] = []; // TODO replace with KBA question interface
-  answeredQuestions: (
-    | ITransunionKBAQuestion
-    | ITransunionKBAAnswer
-    | undefined
-  )[] = [];
+  answeredQuestions: (ITransunionKBAQuestion | ITransunionKBAAnswer | undefined)[] = [];
   numberOfQuestions: number = 0;
   stepID = 3;
 
-  agencies$: Observable<AgenciesStateModel> = this.store.select(
-    AgenciesSelectors.getAgencies
-  );
+  agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
   agenciesSub$: Subscription;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private interstitial: InterstitialService,
     private kycService: KycService,
     private analytics: AnalyticsService,
-    private store: Store
+    private store: Store,
   ) {
     this.agenciesSub$ = this.agencies$
       .pipe(filter((agencies: AgenciesStateModel) => agencies !== undefined))
       .subscribe((agencies: AgenciesStateModel) => {
         const rawQuestions = agencies.transunion?.currentRawQuestions;
         if (!rawQuestions) return;
-        const xml = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(
-          rawQuestions
-        );
-        const challenge = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(
-          rawQuestions
-        );
+        const xml = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(rawQuestions);
+        const challenge = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(rawQuestions);
         const config = xml.ChallengeConfigurationType
           ? xml.ChallengeConfigurationType
-          : challenge.VerifyChallengeAnswersResponseSuccess
-              .ChallengeConfiguration; // challenge is in progress FLOW
+          : challenge.VerifyChallengeAnswersResponseSuccess.ChallengeConfiguration; // challenge is in progress FLOW
         const questions = config.MultiChoiceQuestion;
-        questions instanceof Array
-          ? (this.questions = questions)
-          : (this.questions = [questions]);
+        questions instanceof Array ? (this.questions = questions) : (this.questions = [questions]);
         this.answeredQuestions = [];
         this.numberOfQuestions = this.questions.length;
         // start kba questions clock
@@ -107,16 +82,12 @@ export class KycKbaquestionsComponent implements OnInit {
       const question = this.answeredQuestions.pop();
       this.answeredQuestions = [...this.answeredQuestions];
       this.questions = [question, ...this.questions];
-      const scroll = parseFloat(
-        ((1 / this.numberOfQuestions) * 100).toFixed(2)
-      );
+      const scroll = parseFloat(((1 / this.numberOfQuestions) * 100).toFixed(2));
       const max = scroll - 100;
       this.kba?.kba?.scroll(scroll, 0, max);
     } else {
       this.kycService.inactivateStep(this.stepID);
-      this.router.navigate([
-        routes.root.children.onboarding.children.identity.full,
-      ]);
+      this.router.navigate([routes.root.children.onboarding.children.identity.full]);
       return;
     }
   }
@@ -151,14 +122,11 @@ export class KycKbaquestionsComponent implements OnInit {
     if (Object.keys(formValues).length) {
       const answers: IVerifyAuthenticationAnswer[] = Object.keys(formValues)
         .filter((key) => {
-          return (
-            formValues[key]?.input?.answer && formValues[key]?.input?.question
-          );
+          return formValues[key]?.input?.answer && formValues[key]?.input?.question;
         })
         .map((key) => {
           let answer: ITransunionKBAAnswer = formValues[key]?.input?.answer;
-          let question: ITransunionKBAQuestion =
-            formValues[key]?.input?.question;
+          let question: ITransunionKBAQuestion = formValues[key]?.input?.question;
           return {
             VerifyChallengeAnswersRequestMultiChoiceQuestion: {
               QuestionId: question?.QuestionId,
@@ -180,24 +148,19 @@ export class KycKbaquestionsComponent implements OnInit {
         this.handleSuspension(AppStatusReason.KbaAttemptsExceeded);
       } else {
         try {
-          const resp = await this.kycService.sendVerifyAuthenticationQuestions(
-            appData,
-            answers
-          );
+          const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, answers);
           !resp.success
             ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
             : await this.handleResponse(resp);
         } catch (err) {
-          console.log("error:kbaHandleSubmit ===> ", err);
+          console.log('error:kbaHandleSubmit ===> ', err);
           this.handleAPIError();
         }
       }
     }
   }
 
-  async handleResponse(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  ): Promise<void> {
+  async handleResponse(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
     // is success and correct
     const { data } = resp;
     if (!data) {
@@ -207,11 +170,11 @@ export class KycKbaquestionsComponent implements OnInit {
     const { ResponseType, AuthenticationStatus } = data;
     const type = ResponseType.toLowerCase();
     const status = AuthenticationStatus.toLowerCase();
-    if (type === "success" && status === "correct") {
+    if (type === 'success' && status === 'correct') {
       await this.handleSuccess();
-    } else if (type === "success" && status === "incorrect") {
+    } else if (type === 'success' && status === 'incorrect') {
       await this.handleIncorrect(resp);
-    } else if (type === "success" && status === "inprogress") {
+    } else if (type === 'success' && status === 'inprogress') {
       await this.handleInProgress(resp);
     } else {
       await this.handleIncorrect(resp);
@@ -223,29 +186,21 @@ export class KycKbaquestionsComponent implements OnInit {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
       success
-        ? this.router.navigate([
-            routes.root.children.onboarding.children.congratulations.full,
-          ])
+        ? this.router.navigate([routes.root.children.onboarding.children.congratulations.full])
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
-      console.log("error:completeOnboarding ===> ", err);
+      console.log('error:completeOnboarding ===> ', err);
       this.handleAPIError();
     }
   }
 
-  async handleIncorrect(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  ): Promise<void> {
-    await this.kycService.updateTransunion(
-      this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp)
-    );
+  async handleIncorrect(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.updateTransunion(this.createTuPartial<IVerifyAuthenticationQuestionsResult>(resp));
     await this.handleSuspension(AppStatusReason.KbaIncorrect);
     this.interstitial.fetching$.next(false);
   }
 
-  async handleInProgress(
-    resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  ): Promise<void> {
+  async handleInProgress(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
     await this.kycService.handleVerificationInProgressFlow(resp);
     this.interstitial.fetching$.next(false);
   }
@@ -260,15 +215,13 @@ export class KycKbaquestionsComponent implements OnInit {
     this.interstitial.fetching$.next(false);
   }
 
-  createTuPartial<T>(
-    resp?: ITUServiceResponse<T | undefined>
-  ): Partial<TransunionInput> {
+  createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {
     const tuPartial: Partial<TransunionInput> = {
       verifyAuthenticationQuestionsKBASuccess: false,
       verifyAuthenticationQuestionsKBAStatus: tu.generators.createOnboardingStatus(
         TUBundles.VerifyAuthenticationQuestionsKBA,
         false,
-        resp
+        resp,
       ),
     };
     return tuPartial;
@@ -293,9 +246,9 @@ export class KycKbaquestionsComponent implements OnInit {
       getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
         TUBundles.GetAuthenticationQuestions,
         false,
-        resp
+        resp,
       ),
-      serviceBundleFulfillmentKey: "",
+      serviceBundleFulfillmentKey: '',
     };
     this.kycService.updateGetAuthenticationQuestions(tuPartial);
     this.kycService.bailoutFromOnboarding(tuPartial, resp);

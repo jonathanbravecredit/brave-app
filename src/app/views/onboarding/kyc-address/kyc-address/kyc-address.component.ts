@@ -1,45 +1,27 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  HostListener,
-  OnDestroy,
-  Renderer2,
-} from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { KycService } from "@shared/services/kyc/kyc.service";
-import { AbstractControl, FormGroup } from "@angular/forms";
-import { UserAttributesInput } from "@shared/services/aws/api.service";
-import { KycBaseComponent } from "@views/onboarding/kyc-base/kyc-base.component";
-import { KycAddressPureComponent } from "@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component";
-import { KycComponentCanDeactivate } from "@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard";
-import {
-  AnalyticClickEvents,
-  AnalyticPageViewEvents,
-} from "@shared/services/analytics/analytics/constants";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { KycService } from '@shared/services/kyc/kyc.service';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
+import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
+import { KycAddressPureComponent } from '@views/onboarding/kyc-address/kyc-address-pure/kyc-address-pure.component';
+import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
+import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
-  selector: "brave-kyc-address",
-  templateUrl: "./kyc-address.component.html",
+  selector: 'brave-kyc-address',
+  templateUrl: './kyc-address.component.html',
 })
-export class KycAddressComponent
-  extends KycBaseComponent
-  implements OnInit, AfterViewInit, KycComponentCanDeactivate {
+export class KycAddressComponent extends KycBaseComponent implements OnInit, AfterViewInit, KycComponentCanDeactivate {
   @ViewChild(KycAddressPureComponent) pure: KycAddressPureComponent | undefined;
   stepID = 1;
   hasError: boolean = false;
   listener: any;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService,
-    private analytics: AnalyticsService
-  ) {
+  constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
 
@@ -67,22 +49,16 @@ export class KycAddressComponent
         },
       } as UserAttributesInput;
       attrs.address = {
-        addressOne: tu.scrubbers.scrubAddressStreets(
-          attrs.address?.addressOne || ""
-        ),
-        addressTwo: tu.scrubbers.scrubAddressStreets(
-          attrs.address?.addressTwo || ""
-        ),
-        city: tu.scrubbers.scrubAddressStreets(attrs.address?.city || ""),
-        state: attrs.address?.state || "",
-        zip: attrs.address?.zip || "",
+        addressOne: tu.scrubbers.scrubAddressStreets(attrs.address?.addressOne || ''),
+        addressTwo: tu.scrubbers.scrubAddressStreets(attrs.address?.addressTwo || ''),
+        city: tu.scrubbers.scrubAddressStreets(attrs.address?.city || ''),
+        state: attrs.address?.state || '',
+        zip: attrs.address?.zip || '',
       };
 
       this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
         this.kycService.completeStep(this.stepID);
-        this.router.navigate([
-          routes.root.children.onboarding.children.identity.full,
-        ]);
+        this.router.navigate([routes.root.children.onboarding.children.identity.full]);
       });
     }
   }
