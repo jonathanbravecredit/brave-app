@@ -1,16 +1,23 @@
-import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
+import { AuthService } from "@shared/services/auth/auth.service";
 
-import { BraveAnalyticsService } from './brave-analytics.service';
+import { BraveAnalyticsService } from "./brave-analytics.service";
 
-describe('BraveAnalyticsService', () => {
+describe("BraveAnalyticsService", () => {
   let service: BraveAnalyticsService;
+  let authMock: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    authMock = jasmine.createSpyObj('AuthService', ['getUserSub', 'getIdTokenJwtTokens'])
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{provide: AuthService, useValue: authMock}]
+    });
     service = TestBed.inject(BraveAnalyticsService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

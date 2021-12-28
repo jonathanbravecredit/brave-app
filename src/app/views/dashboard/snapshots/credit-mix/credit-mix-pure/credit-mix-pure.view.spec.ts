@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { CreditMixFilterPipePipe } from "../credit-mix-filter-pipe/credit-mix-filter-pipe.pipe";
 
-import { CreditMixPureView } from './credit-mix-pure.view';
+import { CreditMixPureView } from "./credit-mix-pure.view";
 
-describe('CreditMixPureView', () => {
+describe("CreditMixPureView", () => {
   let component: CreditMixPureView;
   let fixture: ComponentFixture<CreditMixPureView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreditMixPureView ]
-    })
-    .compileComponents();
+      declarations: [CreditMixPureView, CreditMixFilterPipePipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('CreditMixPureView', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

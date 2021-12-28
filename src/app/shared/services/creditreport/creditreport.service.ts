@@ -66,13 +66,26 @@ export class CreditreportService implements OnDestroy {
   tuPublicItemSubscriber$: BehaviorSubject<ISubscriber> = new BehaviorSubject({} as ISubscriber);
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
-  agenciesSub$: Subscription;
+  agenciesSub$!: Subscription;
 
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
-  preferencesSub$: Subscription;
+  preferencesSub$!: Subscription;
 
   constructor(private statesvc: StateService, private transunion: TransunionService) {
-    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
+    this.subscribeToAgencies();
+    this.subscribeToPreferences();
+  }
+
+  ngOnDestroy(): void {
+    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
+    if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
+  }
+
+  /**
+   * Subscribe to the agencies model
+   */
+  subscribeToAgencies(): void {
+    this.agenciesSub$ = this.agencies$.subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {
         this.tuAgency$.next(tu);
@@ -84,15 +97,16 @@ export class CreditreportService implements OnDestroy {
         this.tuReport = parsedReport;
       }
     });
-    this.preferencesSub$ = this.preferences$.pipe().subscribe((pref: PreferencesStateModel) => {
+  }
+
+  /**
+   * Subscribe to the preferences model
+   */
+  subscribeToPreferences(): void {
+    this.preferencesSub$ = this.preferences$.subscribe((pref: PreferencesStateModel) => {
       this.tuPreferences$.next(pref);
       this.tuPreferences = pref;
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
-    if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
   }
 
   /**

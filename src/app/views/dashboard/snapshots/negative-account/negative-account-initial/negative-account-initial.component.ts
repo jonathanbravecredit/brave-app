@@ -105,8 +105,4 @@ export class NegativeAccountInitialComponent implements OnInit {
   onGoToReportClick(): void {
     this.router.navigate([routes.root.children.dashboard.children.report.full]);
   }
-
-  onDisputeClick(tradeline: ITradeLinePartition): void {
-    this.disputeService;
-  }
 }
