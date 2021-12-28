@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
@@ -16,6 +16,7 @@ describe('DashboardEnrolledComponent', () => {
   let component: DashboardEnrolledComponent;
   let fixture: ComponentFixture<DashboardEnrolledComponent>;
   let routerMock: any;
+  let routeMock: any;
   class RouteMock {
     data = of({
       dashboard: {
@@ -86,12 +87,26 @@ describe('DashboardEnrolledComponent', () => {
       'getCreditUtilizationSnapshotStatus',
     ]);
     creditUtilizationServiceMock.getCreditUtilizationSnapshotStatus.and.returnValue({ status: 'safe', perc: 0 });
+    routeMock = {
+      data: {
+        subscribe: (fn: (value: Data) => void) =>
+          fn({
+            dashboard: {
+              report: new MergeReportClass(),
+              snapshots: new DashboardStateModel(),
+              scores: new ScoresClass(),
+              trends: {},
+              metrics: {},
+            },
+          }),
+      },
+    };
 
     await TestBed.configureTestingModule({
       declarations: [DashboardEnrolledComponent],
       providers: [
         { provide: Router, useValue: routerMock },
-        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: ActivatedRoute, useValue: routeMock },
         { provide: DashboardService, useValue: dashboardServiceMock },
         { provide: CreditMixService, useValue: creditMixServiceMock },
         { provide: CreditUtilizationService, useValue: creditUtilizationServiceMock },
@@ -152,16 +167,14 @@ describe('DashboardEnrolledComponent', () => {
   });
 
   describe('ActivatedRoute constructor', () => {
-    it('Should assign report in constructor', (stop) => {
-      let test = component.report instanceof MergeReportClass;
+    it('Should assign report in constructor', () => {
+      const test = component.report instanceof MergeReportClass;
       expect(test).toBeTrue();
-      stop();
     });
 
-    it('Should assign snapshots in constructor', (stop) => {
+    it('Should assign snapshots in constructor', () => {
       let test = component.snapshots instanceof DashboardStateModel;
       expect(test).toBeTrue();
-      stop();
     });
 
     it('Should assign scores in constructor', (stop) => {
