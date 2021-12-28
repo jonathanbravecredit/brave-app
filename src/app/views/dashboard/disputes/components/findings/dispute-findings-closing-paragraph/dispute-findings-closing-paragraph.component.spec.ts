@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LinkifyPipe } from '@shared/pipes/linkify/linkify.pipe';
 
 import { DisputeFindingsClosingParagraphComponent } from './dispute-findings-closing-paragraph.component';
 
@@ -8,7 +9,7 @@ describe('DisputeFindingsClosingParagraphComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputeFindingsClosingParagraphComponent ]
+      declarations: [ DisputeFindingsClosingParagraphComponent, LinkifyPipe ]
     })
     .compileComponents();
   });

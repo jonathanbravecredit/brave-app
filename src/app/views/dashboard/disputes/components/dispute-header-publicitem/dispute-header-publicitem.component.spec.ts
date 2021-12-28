@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { DecodePipe } from "@shared/pipes/decode/decode.pipe";
 
-import { DisputeHeaderPublicitemComponent } from './dispute-header-publicitem.component';
+import { DisputeHeaderPublicitemComponent } from "./dispute-header-publicitem.component";
 
-describe('DisputeHeaderPublicitemComponent', () => {
+describe("DisputeHeaderPublicitemComponent", () => {
   let component: DisputeHeaderPublicitemComponent;
   let fixture: ComponentFixture<DisputeHeaderPublicitemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputeHeaderPublicitemComponent ]
-    })
-    .compileComponents();
+      declarations: [DisputeHeaderPublicitemComponent, DecodePipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('DisputeHeaderPublicitemComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 export class FeatureFlagsService {
   disputes$: Observable<boolean> = of(true);
   getTrendingData$: Observable<boolean> = of(true);
-  referrals$: Observable<boolean> = of(true);
+  referrals$: Observable<boolean> = of(false);
+  referralsShow$: Observable<boolean> = of(true);
   constructor() {}
 }

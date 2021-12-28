@@ -52,12 +52,17 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
   ngOnInit(): void {
     this.handleChartScoreData();
     if (this.multi) {
-      this.referenceLines = [
-        {
-          name: this.multi[0]!.series[this.multi[0]!.series.length - 1].value.toString(),
-          value: this.multi[0]!.series[this.multi[0]!.series.length - 1].value,
-        },
-      ];
+      const multiZero = this.multi[0];
+      const series = multiZero.series;
+      const last = series[series.length - 1];
+      this.referenceLines = last
+        ? [
+            {
+              name: last.value.toString(),
+              value: last.value,
+            },
+          ]
+        : [];
     }
   }
 

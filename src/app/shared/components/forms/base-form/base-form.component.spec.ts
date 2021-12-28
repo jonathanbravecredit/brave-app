@@ -1,16 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { BaseFormComponent } from './base-form.component';
+import { BaseFormComponent } from "./base-form.component";
 
-describe('BaseFormComponent', () => {
+describe("BaseFormComponent", () => {
   let component: BaseFormComponent;
   let fixture: ComponentFixture<BaseFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BaseFormComponent ]
-    })
-    .compileComponents();
+      declarations: [BaseFormComponent],
+      providers: [FormBuilder, {provide: 'name', useValue: 'test'}],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('BaseFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

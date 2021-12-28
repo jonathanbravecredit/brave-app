@@ -1,16 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { OutlineSsnFullFormComponent } from './outline-ssn-full-form.component';
+import { OutlineSsnFullFormComponent } from "./outline-ssn-full-form.component";
 
-describe('OutlineSsnFullFormComponent', () => {
+describe("OutlineSsnFullFormComponent", () => {
   let component: OutlineSsnFullFormComponent;
   let fixture: ComponentFixture<OutlineSsnFullFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OutlineSsnFullFormComponent ]
-    })
-    .compileComponents();
+      declarations: [OutlineSsnFullFormComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('OutlineSsnFullFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

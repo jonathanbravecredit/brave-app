@@ -1,16 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormBuilder } from "@angular/forms";
 
-import { OutlineOnecolumnFormComponent } from './outline-onecolumn-form.component';
+import { OutlineOnecolumnFormComponent } from "./outline-onecolumn-form.component";
 
-describe('OutlineOnecolumnFormComponent', () => {
+describe("OutlineOnecolumnFormComponent", () => {
   let component: OutlineOnecolumnFormComponent;
   let fixture: ComponentFixture<OutlineOnecolumnFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OutlineOnecolumnFormComponent ]
-    })
-    .compileComponents();
+      declarations: [OutlineOnecolumnFormComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('OutlineOnecolumnFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -50,6 +50,7 @@ export class OnboardingService implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
+    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
   }
 
   /**
