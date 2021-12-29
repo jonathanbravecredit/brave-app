@@ -59,4 +59,29 @@ describe("SignupComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it("should run router.socialSignIn when signUpWithGoogle is called", () => {
+    component.signUpWithGoogle()
+    expect(routerMock.socialSignIn).toHaveBeenCalled();
+  });
+
+  it("should run router.socialSignIn when goToForgot is called", () => {
+    component.goToForgot()
+    expect(routerMock.socialSignIn).toHaveBeenCalled();
+  });
+
+  it("should run router.navigate when goToLogin is called", () => {
+    component.goToLogin()
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it("should run router.navigate when goToPrivacy is called", () => {
+    component.goToPrivacy()
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it("should run router.navigate when goToTerms is called", () => {
+    component.goToTerms()
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 });
