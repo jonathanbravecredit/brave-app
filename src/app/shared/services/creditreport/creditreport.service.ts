@@ -148,7 +148,6 @@ export class CreditreportService implements OnDestroy {
    * @returns {ITradeLinePartition[]}
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
-    if (!this.tuReport) return [{} as ITradeLinePartition];
     const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
