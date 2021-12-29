@@ -8,6 +8,7 @@ export interface IReferral {
   referredByCode: string;
   campaign?: string;
   referralStatus: 'active' | 'suspended' | undefined;
+  referralApproved: boolean | undefined;
 }
 
 export interface IGetReferral {

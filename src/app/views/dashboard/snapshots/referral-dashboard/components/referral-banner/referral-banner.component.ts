@@ -8,6 +8,7 @@ import * as moment from "moment";
 })
 export class ReferralBannerComponent implements OnInit {
   @Input() metrics: IGroupedYearMonthReferral[] = [];
+  @Input() referralApproved: Boolean = false
   referredTen: boolean = false;
   constructor() { }
 

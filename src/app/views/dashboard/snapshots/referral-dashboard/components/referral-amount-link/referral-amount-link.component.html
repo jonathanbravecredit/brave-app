@@ -24,6 +24,31 @@
       </div>
     </div>
   </div>
+
+  <div
+    *ngIf="referralApproved"
+    class="flex flex-col justify-evenly items-center text-center"
+    style="width: 45%"
+  >
+    <p class="text-white mb-7">
+      Earn more by sharing your individual link below:
+    </p>
+    <input
+      #urlInput
+      (click)="copyUrl(urlInput)"
+      class="p-1 rounded-sm mb-3 cursor-pointer"
+      style="max-width: 25vw"
+      [value]="referralLink"
+      readonly
+    />
+    <button
+      (click)="copyUrl(urlInput)"
+      class="text-white rounded px-6 py-1"
+      style="background-color: #f2994a"
+    >
+      Copy Link
+    </button>
+  </div>
 </div>
 
 <div class="fixed w-full" style="bottom: 70px">
