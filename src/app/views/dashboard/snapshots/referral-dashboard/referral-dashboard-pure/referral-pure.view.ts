@@ -9,7 +9,7 @@ export class ReferralDashboardPureView implements OnInit {
   @Input() referral: IReferral | undefined;
   @Input() metrics: IGroupedYearMonthReferral[] = [];
   @Input() payments: IPayments | undefined;
-  @Input() referralApproved: Boolean = false
+  @Input() disabled: boolean | undefined;
   private _isSuspended: boolean = false;
   set isSuspended(value: boolean) {
     this._isSuspended = value;
@@ -23,9 +23,6 @@ export class ReferralDashboardPureView implements OnInit {
   ngOnInit(): void {
     if (this.referral?.referralStatus === 'suspended') {
       this.isSuspended = true;
-    }
-    if (this.referral?.referralApproved) {
-      this.referralApproved = true;
     }
   }
 }

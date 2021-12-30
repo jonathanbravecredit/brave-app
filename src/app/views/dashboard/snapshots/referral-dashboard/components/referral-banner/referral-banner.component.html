@@ -1,7 +1,7 @@
 <div class="py-2 mx-3 mt-1 rounded-sm text-center" style="background-color: #D714DB">
-    <h6 class="text-base" *ngIf="referralApproved && referredTen">🎉 You got the $10 bonus for referring 10 friends!</h6>
-    <h6 class="text-base" *ngIf="referralApproved && !referredTen">😀 Get a $10 bonus if 10 new friends use your link to check their scores!</h6>
-  <h6 class="text-base">
+    <h6 class="text-base" *ngIf="!disabled && referredTen">🎉 You got the $10 bonus for referring 10 friends!</h6>
+    <h6 class="text-base" *ngIf="!disabled && !referredTen">😀 Get a $10 bonus if 10 new friends use your link to check their scores!</h6>
+  <h6 *ngIf="disabled" class="text-base">
     Thank you for your participation. The current referral campaign has ended as of 12/27. All remaining referral gift
     cards will be distributed at your next scheduled date.
   </h6>
