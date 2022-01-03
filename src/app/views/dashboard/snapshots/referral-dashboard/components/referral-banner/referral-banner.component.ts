@@ -19,7 +19,5 @@ export class ReferralBannerComponent implements OnInit {
       const metric = this.metrics.find((m) => m.yearMonth == currYearMonth);
       this.referredTen = (metric?.referrals || 0) >= 10;
     }
-
-    console.log(this.disabled)
   }
 }

@@ -10,7 +10,7 @@ export class ReferralDashboardView implements OnInit {
   metrics: IGroupedYearMonthReferral[] = [];
   referral: IReferral | undefined;
   payments: IPayments | undefined;
-  disabled: boolean = true;
+  disabled: boolean = false;
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((resp: any) => {
       this.metrics = resp.referral.metrics;
