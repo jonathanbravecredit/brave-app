@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { LinksOnlytextButtonComponent } from './links-onlytext-button.component';
+import { LinksOnlytextButtonComponent } from "./links-onlytext-button.component";
+import { LinksOnlytextButtonPipe } from "./links-onlytext-button.pipe";
 
-describe('LinksOnlytextButtonComponent', () => {
+describe("LinksOnlytextButtonComponent", () => {
   let component: LinksOnlytextButtonComponent;
   let fixture: ComponentFixture<LinksOnlytextButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LinksOnlytextButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [LinksOnlytextButtonComponent, LinksOnlytextButtonPipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('LinksOnlytextButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

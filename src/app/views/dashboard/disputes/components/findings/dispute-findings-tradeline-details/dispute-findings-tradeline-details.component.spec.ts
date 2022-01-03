@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TradelineToFindingsPipe } from '@shared/pipes/tradeline-to-findings/tradeline-to-findings.pipe';
 
 import { DisputeFindingsTradelineDetailsComponent } from './dispute-findings-tradeline-details.component';
 
@@ -8,7 +9,7 @@ describe('DisputeFindingsTradelineDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisputeFindingsTradelineDetailsComponent ]
+      declarations: [ DisputeFindingsTradelineDetailsComponent, TradelineToFindingsPipe ]
     })
     .compileComponents();
   });

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { KycSsnPureComponent } from './kyc-ssn-pure.component';
 
@@ -8,9 +9,9 @@ describe('KycSsnPureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KycSsnPureComponent ]
-    })
-    .compileComponents();
+      declarations: [KycSsnPureComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -80,6 +80,15 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Consider upping the memory allocation for the test runner if running into problems.
+`node --max-old-space-size=1024 #increase to 1gb`
+`node --max-old-space-size=2048 #increase to 2gb`
+`node --max-old-space-size=3072 #increase to 3gb`
+`node --max-old-space-size=4096 #increase to 4gb`
+`node --max-old-space-size=5120 #increase to 5gb`
+`node --max-old-space-size=6144 #increase to 6gb`
+`node --max-old-space-size=7168 #increase to 7gb`
+`node --max-old-space-size=8192 #increase to 8gb`
 
 ## Running end-to-end tests
 

@@ -50,6 +50,7 @@
     <brave-snapshot-display-card
       tendency="no-tendency"
       [status]="creditUtilizationStatus || 'default'"
+      [rating]="creditUtilizationPerc?.toString() + '%'"
       title="Credit Utilization"
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
@@ -101,7 +102,7 @@
 </div>
 
 <!-- Referral Gauge -->
-<ng-container *ngIf="featureflags.referrals$ | async">
+<ng-container *ngIf="featureflags.referralsShow$ | async">
   <h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
   <p class="text-sm mb-4">Refer your friends to Brave Credit so you both earn rewards on your credit journey</p>
 
@@ -131,4 +132,3 @@
     </div>
   </div>
 </ng-container>
-<!--  -->

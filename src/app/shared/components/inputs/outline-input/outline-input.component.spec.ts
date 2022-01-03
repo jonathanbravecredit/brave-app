@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { OutlineInputComponent } from './outline-input.component';
 
@@ -8,7 +9,8 @@ describe('OutlineInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OutlineInputComponent ]
+      declarations: [ OutlineInputComponent ],
+      providers: [FormBuilder],
     })
     .compileComponents();
   });

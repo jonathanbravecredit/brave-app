@@ -3,30 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
-import {
-  TransunionInput,
-  TUReportResponse,
-  TUStatusRefInput,
-  UpdateAppDataInput,
-  UserAttributesInput,
-} from '@shared/services/aws/api.service';
-import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces/verify-authentication-response.interface';
-import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
-import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
-import { AppDataStateModel } from '@store/app-data';
+import { UserAttributesInput } from '@shared/services/aws/api.service';
 import { Store } from '@ngxs/store';
 import { KycPhonenumberPureComponent } from '@views/onboarding/kyc-phonenumber/kyc-phonenumber-pure/kyc-phonenumber-pure.component';
-import {
-  GooglePageViewEvents as gtViews,
-  GoogleClickEvents as gtClicks,
-} from '@shared/services/analytics/google/constants';
-import { GoogleService } from '@shared/services/analytics/google/google.service';
-import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
-import { IGetAuthenticationQuestionsResult } from '@shared/interfaces';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { TUBundles } from '@shared/utils/transunion/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
   selector: 'brave-kyc-phonenumber',
@@ -36,6 +18,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   @ViewChild(KycPhonenumberPureComponent) pure: KycPhonenumberPureComponent | undefined;
   private stepID = 3;
   public hasError: boolean = false;
+  phoneError = false;
 
   constructor(
     private router: Router,
@@ -58,13 +41,14 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(['../identity'], { relativeTo: this.route });
+    this.router.navigate([routes.root.children.onboarding.children.identity.full]);
   }
 
   /**
    * Method to:
    * - Update the phone number
    * - Get the authentication questions
+   * IN THE SERVICE
    * - Parse the questions xml data
    * - Resave it in the db as object
    * - find the OTP question (if not go to KBA)
@@ -76,6 +60,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   async goToNext(form: FormGroup): Promise<void> {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingPhone);
     if (form.valid) {
+      this.phoneError = false;
       const { phone } = this.formatAttributes(form, phoneMap);
       const attrs = {
         phone: {
@@ -86,92 +71,21 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
       try {
         const data = await this.kycService.updateUserAttributesAsync(attrs);
         const authResp = await this.kycService.getGetAuthenticationQuestionsResults(data);
-        if (!authResp.success || !authResp.data) {
-          this.handleBailout<IGetAuthenticationQuestionsResult>(authResp); // TU response or BC technical error
-        } else {
-          const questions = await this.kycService.processGetAuthenticationQuestionsResponse(authResp.data);
-          const xml = tu.parsers.onboarding.parseAuthQuestions(questions);
-          if (!xml) {
-            this.handleBailout();
-          } else {
-            const kbaAppData = await this.kycService.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
-            const authQuestions = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAQuestions>(xml); // check if OTP eligible
-            const otpQuestion = this.kycService.getOTPQuestion(authQuestions);
-            if (otpQuestion) {
-              const otpResp = await this.sendOTPResponse(otpQuestion);
-              if (!otpResp.success || !otpResp.data) {
-                this.handleBailout<IVerifyAuthenticationQuestionsResult>(otpResp);
-              } else {
-                const codeQuestions = otpResp.data?.AuthenticationDetails;
-                const pinData = await this.kycService.startPinClock();
-                const questionData = await this.kycService.updateCurrentRawQuestionsAsync(codeQuestions);
-                await this.kycService.updateAgenciesAsync(questionData.agencies); // success, sync up to db
-                this.router.navigate(['../code'], { relativeTo: this.route });
-              }
-            } else {
-              // since no otp question found, they are kba based and already save...start KBA countdown
-              const kbaData = await this.kycService.startKbaClock();
-              await this.kycService.updateAgenciesAsync(kbaData.agencies);
-              this.router.navigate(['../kba'], { relativeTo: this.route });
-            }
-          }
-        }
+        await this.kycService.handleGetAuthenticationFlow(authResp);
       } catch (err) {
         console.log('error ==> ', err);
-        this.handleBailout();
+        this.kycService.handleGetAuthenticationBailout();
       }
-    }
-  }
-
-  /**
-   * Method to:
-   * - Find the correct OTP answer in the response from TU
-   * - Select the answer for the user to receive a text message
-   * - Confirm answer is received
-   */
-  async sendOTPResponse(
-    otpQuestion: ITransunionKBAQuestion,
-  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
-    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
-    const otpAnswer = this.kycService.getOTPSendTextAnswer(otpQuestion);
-    try {
-      const resp = await this.kycService.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
-      if (!resp.success || !resp.data) {
-        return resp;
-      } else {
-        const parsed = resp.data ? resp.data : ({} as IVerifyAuthenticationQuestionsResult);
-        const success = parsed ? parsed.ResponseType.toLowerCase() === 'success' : false;
-        return { success, data: parsed };
-      }
-    } catch (err: any) {
-      return { success: false };
     }
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    this.hasError = true;
-  }
+    const phoneNum = errors.phone.value.input;
+    if (phoneNum.length < 10) {
+      this.phoneError = true;
+    }
 
-  /**
-   * Method to route user to appropriate error screen using kyc service
-   * @param resp
-   */
-  handleBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
-    const tuPartial: {
-      getAuthenticationQuestionsSuccess: boolean;
-      getAuthenticationQuestionsStatus: TUStatusRefInput;
-      serviceBundleFulfillmentKey: string | null;
-    } = {
-      getAuthenticationQuestionsSuccess: false,
-      getAuthenticationQuestionsStatus: tu.generators.createOnboardingStatus(
-        TUBundles.GetAuthenticationQuestions,
-        false,
-        resp,
-      ),
-      serviceBundleFulfillmentKey: '',
-    };
-    this.kycService.updateGetAuthenticationQuestions(tuPartial);
-    this.kycService.bailoutFromOnboarding(tuPartial, resp);
+    this.hasError = true;
   }
 }
 
