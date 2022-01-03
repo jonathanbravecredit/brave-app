@@ -40,7 +40,7 @@ const DisputeRoutes: Routes = [
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: `${disputes.children.findings.segment}/:investigation/:creditbureau`,
+        path: disputes.children.findings.segment + '/:investigation/:creditbureau',
         component: DisputeFindingsView,
         resolve: { reports: FindingsResolver },
         canActivate: [ActiveGuard, AuthGuard],
@@ -66,17 +66,17 @@ const DisputeRoutes: Routes = [
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: `${disputes.children.tradeline.segment}/${disputes.children.tradeline.children.error.segment}`,
+        path: disputes.children.tradeline.segment + '/' + disputes.children.tradeline.children.error.segment,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: `${disputes.children.personalitem.segment}/${disputes.children.personalitem.children.error.segment}`,
+        path: disputes.children.personalitem.segment + '/' + disputes.children.personalitem.children.error.segment,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: `${disputes.children.publicitem.segment}/${disputes.children.publicitem.children.error.segment}`,
+        path: disputes.children.publicitem.segment + '/' + disputes.children.publicitem.children.error.segment,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },

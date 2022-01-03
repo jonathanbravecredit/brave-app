@@ -10,6 +10,7 @@ import * as moment from 'moment';
 export class ReferralAmountLinkComponent implements OnInit {
   @Input() referral: IReferral | undefined;
   @Input() metrics: IGroupedYearMonthReferral[] = [];
+  @Input() disabled: boolean | undefined;
   referrals: number = 0;
   referralLink: string = '';
   showAlert: boolean = false;
