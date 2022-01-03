@@ -9,7 +9,15 @@ import { TransunionInput } from '@shared/services/aws/api.service';
 import { NgxsModule, State, Store } from '@ngxs/store';
 import { AppDataStateModel } from '@store/app-data';
 import { Test } from '@shared/components/badges/percentage-badge/percentage-badge.stories';
-import { IMergeReport, ISubscriber, ITradeline, ITradeLinePartition } from '@shared/interfaces';
+import {
+  IBorrower,
+  IMergeReport,
+  IPublicPartition,
+  IPublicRecord,
+  ISubscriber,
+  ITradeline,
+  ITradeLinePartition,
+} from '@shared/interfaces';
 
 //private statesvc: StateService, private transunion: TransunionService
 
@@ -154,6 +162,7 @@ describe('CreditreportService', () => {
       const test = state?.appData instanceof AppDataStateModel;
       expect(test).toBeTrue();
     });
+
     it('getTradeLinePartitions should return TradeLinePartition array of empty object if tuReport is empty', () => {
       service.tuReport = { TrueLinkCreditReportType: {} } as IMergeReport;
       const partitions = service.getTradeLinePartitions();
@@ -161,13 +170,15 @@ describe('CreditreportService', () => {
       const test = partition !== undefined && Object.keys(partition).length === 0;
       expect(test).toBeTrue();
     });
+
     it('getTradeLinePartitions should return TradeLinePartition array of partitions if tuReport is NOT empty', () => {
       service.tuReport = {
-        TrueLinkCreditReportType: { TradeLinePartition: [{ accountTypeSymbol: 'test' }] } as ITradeLinePartition,
+        TrueLinkCreditReportType: { TradeLinePartition: [{ accountTypeSymbol: 'tradeline' }] } as ITradeLinePartition,
       } as IMergeReport;
       const partitions = service.getTradeLinePartitions();
-      expect(partitions[0].accountTypeSymbol).toEqual('test');
+      expect(partitions[0].accountTypeSymbol).toEqual('tradeline');
     });
+
     it('setTradeline should update the tuTradeline property and tuTradelineSubscriber', () => {
       const subscriber: ISubscriber = { subscriberCode: '1', name: 'test' };
       const tradeline: ITradeLinePartition = { Tradeline: { subscriberCode: '1' } as ITradeline };
@@ -177,9 +188,80 @@ describe('CreditreportService', () => {
         },
       } as IMergeReport;
       service.setTradeline(tradeline);
-      
-      const name = service.tuPublicItemSubscriber?.name;
+
+      const name = service.tuTradelineSubscriber?.name;
+      const subscriberCode = service.tuTradeline?.Tradeline?.subscriberCode;
       expect(name).toEqual('test');
+      expect(subscriberCode).toEqual('1');
     });
+
+    it('getPublicItems should return PublicPartition array of partitions if tuReport is NOT empty', () => {
+      service.tuReport = {
+        TrueLinkCreditReportType: {
+          PulblicRecordPartition: { PublicRecord: { subscriberCode: 'public' } },
+        } as ITradeLinePartition,
+      } as IMergeReport;
+      const partitions = service.getPublicItems();
+      const subscriberCode = partitions[0].PublicRecord?.subscriberCode;
+      expect(subscriberCode).toEqual('public');
+    });
+
+    it('setPublicItem should update the tuPublicItem property and tuPublicItemSubscriber', () => {
+      const subscriber: ISubscriber = { subscriberCode: '1', name: 'test' };
+      const publicItem: IPublicPartition = { PublicRecord: { subscriberCode: '1' } as IPublicRecord };
+      service.tuReport = {
+        TrueLinkCreditReportType: {
+          Subscriber: subscriber,
+        },
+      } as IMergeReport;
+      service.setPublicItem(publicItem);
+
+      const name = service.tuPublicItemSubscriber?.name;
+      const subscriberCode = service.tuPublicItem?.PublicRecord?.subscriberCode;
+      expect(name).toEqual('test');
+      expect(subscriberCode).toEqual('1');
+    });
+
+    it('getPersonalItem should return Borrower partition if tuReport is NOT empty', () => {
+      service.tuReport = {
+        TrueLinkCreditReportType: { Borrower: { borrowerKey: 'borrower' } } as IBorrower,
+      } as IMergeReport;
+      const partitions = service.getPersonalItem();
+      const borrowerKey = partitions.borrowerKey;
+      expect(borrowerKey).toEqual('borrower');
+    });
+
+    it('setPersonalItem should update the tuPersonalItem property', () => {
+      const personalItem: IBorrower = { borrowerKey: 'borrower' } as IBorrower;
+      service.setPersonalItem(personalItem);
+      const borrowerKey = service.tuPersonalItem?.borrowerKey;
+      expect(borrowerKey).toEqual('borrower');
+    });
+
+    it('updateReport should call updateAgencies if updateReport is called with an agencies state model', () => {
+      const agencies = {} as AgenciesStateModel;
+      service.updateReport(agencies);
+      expect(stateMock.updateAgencies).toHaveBeenCalled();
+    });
+
+    it('updateReport should NOT call updateAgencies if updateReport is called with a null agencies state model', () => {
+      const agencies = null;
+      service.updateReport(agencies);
+      expect(stateMock.updateAgencies).not.toHaveBeenCalled();
+    });
+
+    it('updateReportAsync should call updateAgenciesAsync if updateReport is called with an agencies state model', fakeAsync(() => {
+      const agencies = {} as AgenciesStateModel;
+      service.updateReportAsync(agencies);
+      tick(1);
+      expect(stateMock.updateAgenciesAsync).toHaveBeenCalled();
+    }));
+
+    it('updateReportAsync should NOT call updateAgenciesAsync if updateReport is called with a null agencies state model', fakeAsync(() => {
+      const agencies = null;
+      service.updateReportAsync(agencies);
+      tick(1);
+      expect(stateMock.updateAgenciesAsync).not.toHaveBeenCalled();
+    }));
   });
 });

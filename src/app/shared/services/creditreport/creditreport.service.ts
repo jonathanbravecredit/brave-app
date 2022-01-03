@@ -175,7 +175,6 @@ export class CreditreportService implements OnDestroy {
    * @returns {IPublicPartition[]}
    */
   getPublicItems(): IPublicPartition[] {
-    if (!this.tuPublicItem) return [{} as IPublicPartition];
     const partitions = this.tuReport?.TrueLinkCreditReportType?.PulblicRecordPartition;
     if (!partitions) return [{} as IPublicPartition];
     return partitions instanceof Array ? partitions : [partitions];
@@ -204,7 +203,6 @@ export class CreditreportService implements OnDestroy {
    * @returns {IBorrower}
    */
   getPersonalItem(): IBorrower {
-    if (!this.tuPersonalItem) return {} as IBorrower;
     const partitions = this.tuReport?.TrueLinkCreditReportType?.Borrower;
     if (!partitions) return {} as IBorrower;
     return partitions instanceof Array ? partitions[0] : partitions;
@@ -238,7 +236,7 @@ export class CreditreportService implements OnDestroy {
   async updateReportAsync(
     agencies: AgenciesStateModel | null | undefined,
   ): Promise<UpdateAppDataInput | null | undefined> {
-    if (!agencies) throw new Error(`creditreportService:updateReportAsync=Missing agency`);
+    if (!agencies) return;
     try {
       return await this.statesvc.updateAgenciesAsync(agencies);
     } catch (err) {
