@@ -34,7 +34,7 @@ describe('CreditreportService', () => {
     stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
       state: { appData: new AppDataStateModel() },
     });
-    transunionMock = jasmine.createSpyObj('TransunionService', ['refreshCreditReport']);
+    transunionMock = jasmine.createSpyObj('TransunionService', ['getCreditReport']);
 
     TestBed.configureTestingModule({
       imports: [NgxsModule.forRoot([])],
@@ -139,9 +139,9 @@ describe('CreditreportService', () => {
   });
 
   describe('Method calls', () => {
-    it('Should call transunion refreshCreditReport when refreshCreditReport service method is called', () => {
+    it('Should call transunion getCreditReport when refreshCreditReport service method is called', () => {
       service.refreshCreditReport();
-      expect(transunionMock.refreshCreditReport).toHaveBeenCalled();
+      expect(transunionMock.getCreditReport).toHaveBeenCalled();
     });
 
     it('Get Transunion should return a blank object when transunion data is not populated on agencies', () => {
