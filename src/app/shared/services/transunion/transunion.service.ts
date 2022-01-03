@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   ITUServiceResponse,
   IIndicativeEnrichmentResult,
@@ -12,18 +12,15 @@ import {
   IGetAuthenticationQuestionsMsg,
   IVerifyAuthenticationQuestionsMsg,
   IEnrollServiceProductResponse,
-} from "@shared/interfaces";
-import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
-import { IDispute } from "@shared/interfaces/disputes";
-import {
-  APIService,
-  UpdateAppDataInput,
-} from "@shared/services/aws/api.service";
-import { TransunionUtil } from "@shared/utils/transunion/transunion";
-import { AppDataStateModel } from "@store/app-data";
-import { IProcessDisputePersonalResult } from "@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view";
-import { IProcessDisputePublicResult } from "@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view";
-import { IProcessDisputeTradelineResult } from "@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view";
+} from '@shared/interfaces';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { IDispute } from '@shared/interfaces/disputes';
+import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { AppDataStateModel } from '@store/app-data';
+import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
+import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
+import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
 
 /*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
@@ -33,13 +30,13 @@ import { IProcessDisputeTradelineResult } from "@views/dashboard/disputes/disput
 //  - better structure the responses
 // update state > graphql > tu > graphql > appsync > app > updatestate
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class TransunionService {
   tu = TransunionUtil;
   constructor(private api: APIService) {}
 
-  async sendTransunionAPICall(action: string, message: string): Promise<any> {
+  async sendTransunionAPICall<T>(action: string, message: string): Promise<ITUServiceResponse<T | undefined>> {
     try {
       const res = await this.api.Transunion(action, message);
       return res ? JSON.parse(res) : undefined;
@@ -54,16 +51,13 @@ export class TransunionService {
    * @returns
    */
   async sendIndicativeEnrichment(
-    data: UpdateAppDataInput | AppDataStateModel
+    data: UpdateAppDataInput | AppDataStateModel,
   ): Promise<ITUServiceResponse<IIndicativeEnrichmentResult | undefined>> {
     if (!data.user) throw new Error(`Missing user:${data.user}`);
     try {
       const msg = this.createIndicativeEnrichmentPayload(data);
       const clean = this.tu.scrubbers.scrubBackendData(msg);
-      const res = await this.api.Transunion(
-        "IndicativeEnrichment",
-        JSON.stringify(clean)
-      );
+      const res = await this.api.Transunion('IndicativeEnrichment', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };
@@ -79,18 +73,13 @@ export class TransunionService {
    */
   async sendGetAuthenticationQuestions(
     data: UpdateAppDataInput | AppDataStateModel,
-    ssn: string = ""
-  ): Promise<
-    ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>
-  > {
+    ssn: string = '',
+  ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
     if (!ssn) throw new Error(`Missing ssn; ssn:${ssn}`);
     try {
       const msg = this.createGetAuthenticationQuestionsPayload(data, ssn);
       const clean = this.tu.scrubbers.scrubBackendData(msg);
-      const res = await this.api.Transunion(
-        "GetAuthenticationQuestions",
-        JSON.stringify(clean)
-      );
+      const res = await this.api.Transunion('GetAuthenticationQuestions', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };
@@ -106,22 +95,13 @@ export class TransunionService {
    */
   async sendVerifyAuthenticationQuestions(
     appData: UpdateAppDataInput | AppDataStateModel,
-    answers: IVerifyAuthenticationAnswer[]
-  ): Promise<
-    ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>
-  > {
-    if (!answers.length)
-      throw new Error(`No answers submitted; Answers:${answers}`);
+    answers: IVerifyAuthenticationAnswer[],
+  ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
+    if (!answers.length) throw new Error(`No answers submitted; Answers:${answers}`);
     try {
-      const msg = this.createVerifyAuthenticationQuestionsPayload(
-        appData,
-        answers
-      );
+      const msg = this.createVerifyAuthenticationQuestionsPayload(appData, answers);
       const clean = this.tu.scrubbers.scrubBackendData(msg);
-      const res = await this.api.Transunion(
-        "VerifyAuthenticationQuestions",
-        JSON.stringify(clean)
-      );
+      const res = await this.api.Transunion('VerifyAuthenticationQuestions', JSON.stringify(clean));
       return res ? JSON.parse(res) : undefined;
     } catch (err: any) {
       return { success: false, error: err };
@@ -132,49 +112,35 @@ export class TransunionService {
    * Send the verified user to transunion to enroll them and receive their report
    */
   async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
-    return this.sendTransunionAPICall(
-      "CompleteOnboardingEnrollments",
-      JSON.stringify({})
-    );
+    return this.sendTransunionAPICall<any>('CompleteOnboardingEnrollments', JSON.stringify({}));
   }
 
   /**
    * Send the verified user to transunion to enroll them and receive their report
    */
-  async sendEnrollRequest(): Promise<
-    ITUServiceResponse<IEnrollResult | undefined>
-  > {
-    return this.sendTransunionAPICall("Enroll", JSON.stringify({}));
+  async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
+    return this.sendTransunionAPICall<IEnrollResult>('Enroll', JSON.stringify({}));
   }
 
   /**
    * Send the verified user to transunion to enroll them and receive their report
    */
-  async sendEnrollDisputesRequest(): Promise<
-    ITUServiceResponse<IEnrollResult | undefined>
-  > {
-    return this.sendTransunionAPICall("EnrollDisputes", JSON.stringify({}));
+  async sendEnrollDisputesRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
+    return this.sendTransunionAPICall<IEnrollResult>('EnrollDisputes', JSON.stringify({}));
   }
 
   /**
    * Send fulfillment key to Transunion to refresh their report
    */
-  async getCreditReport(): Promise<
-    ITUServiceResponse<IFulfillResult | undefined>
-  > {
-    return this.sendTransunionAPICall("Fulfill", JSON.stringify({}));
+  async getCreditReport(): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
+    return this.sendTransunionAPICall<IFulfillResult>('Fulfill', JSON.stringify({}));
   }
 
   /**
    * Send request to backend to get their credit score snapshots
    */
-  async getCreditScores(): Promise<
-    ITUServiceResponse<ICreditScoreTracking | undefined>
-  > {
-    return this.sendTransunionAPICall(
-      "GetCreditScoreTracking",
-      JSON.stringify({})
-    );
+  async getCreditScores(): Promise<ITUServiceResponse<ICreditScoreTracking | undefined>> {
+    return this.sendTransunionAPICall<ICreditScoreTracking>('GetCreditScoreTracking', JSON.stringify({}));
   }
 
   /**
@@ -184,10 +150,7 @@ export class TransunionService {
    *  - Checks the dispute status, if eligible, returns true, otherwise false
    */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    return this.sendTransunionAPICall(
-      "DisputePreflightCheck",
-      JSON.stringify({})
-    );
+    return this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
   }
 
   /**
@@ -195,10 +158,8 @@ export class TransunionService {
    * @param {UpdateAppDataInput} data AppData state
    * @returns
    */
-  async getDisputeStatus(): Promise<
-    ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>
-  > {
-    return this.sendTransunionAPICall("GetDisputeStatus", JSON.stringify({}));
+  async getDisputeStatus(): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
+    return this.sendTransunionAPICall<IGetDisputeStatusResponseSuccess>('GetDisputeStatus', JSON.stringify({}));
   }
 
   /**
@@ -206,13 +167,8 @@ export class TransunionService {
    * @param fromDate ISO string date format
    * @returns
    */
-  async getTrendingData(
-    fromDate: string
-  ): Promise<ITUServiceResponse<any | undefined>> {
-    return this.sendTransunionAPICall(
-      "GetTrendingData",
-      JSON.stringify({ fromDate })
-    );
+  async getTrendingData(fromDate: string): Promise<ITUServiceResponse<any | undefined>> {
+    return this.sendTransunionAPICall<any>('GetTrendingData', JSON.stringify({ fromDate }));
   }
 
   /**
@@ -221,15 +177,11 @@ export class TransunionService {
    * @returns
    */
   async sendStartDispute(
-    disputes: (
-      | IProcessDisputeTradelineResult
-      | IProcessDisputePublicResult
-      | IProcessDisputePersonalResult
-    )[]
+    disputes: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[],
   ): Promise<ITUServiceResponse<any>> {
     const msg = { disputes }; //this.createStartDisputePayload(data, disputes);
     const clean = this.tu.scrubbers.scrubBackendData(msg);
-    return this.sendTransunionAPICall("StartDispute", JSON.stringify(clean));
+    return this.sendTransunionAPICall<any>('StartDispute', JSON.stringify(clean));
   }
 
   /**
@@ -238,14 +190,9 @@ export class TransunionService {
    * @param disputeId
    * @returns
    */
-  async getInvestigationResults(
-    disputeId: string
-  ): Promise<ITUServiceResponse<any>> {
+  async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
     const msg = { disputeId };
-    return this.sendTransunionAPICall(
-      "GetInvestigationResults",
-      JSON.stringify(msg)
-    );
+    return this.sendTransunionAPICall<any>('GetInvestigationResults', JSON.stringify(msg));
   }
 
   /**
@@ -253,13 +200,8 @@ export class TransunionService {
    * @param id
    * @returns
    */
-  async getInvestigationResultsById(
-    id: string
-  ): Promise<ITUServiceResponse<any | undefined>> {
-    return this.sendTransunionAPICall(
-      "GetInvestigationResultsByID",
-      JSON.stringify({ id })
-    );
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
+    return this.sendTransunionAPICall<any>('GetInvestigationResultsByID', JSON.stringify({ id }));
   }
 
   /**
@@ -269,39 +211,24 @@ export class TransunionService {
    * @param disputeId
    * @returns
    */
-  async getCreditBureauResultsById(
-    id: string
-  ): Promise<ITUServiceResponse<any | undefined>> {
-    return this.sendTransunionAPICall(
-      "GetCreditBureauResultsByID",
-      JSON.stringify({ id })
-    );
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
+    return this.sendTransunionAPICall<any>('GetCreditBureauResultsByID', JSON.stringify({ id }));
   }
 
   /**
    * List all disputes by user
    * @returns
    */
-  async listAllDisputesByUser(): Promise<
-    ITUServiceResponse<IDispute[] | undefined>
-  > {
-    return this.sendTransunionAPICall(
-      "GetAllDisputesByUser",
-      JSON.stringify({})
-    );
+  async listAllDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
+    return this.sendTransunionAPICall<IDispute[]>('GetAllDisputesByUser', JSON.stringify({}));
   }
 
   /**
    * Gets only the latest and current dispute by user
    * @returns
    */
-  async getCurrentDisputeByUser(): Promise<
-    ITUServiceResponse<IDispute | undefined>
-  > {
-    return this.sendTransunionAPICall(
-      "GetCurrentDisputeByUser",
-      JSON.stringify({})
-    );
+  async getCurrentDisputeByUser(): Promise<ITUServiceResponse<IDispute | undefined>> {
+    return this.sendTransunionAPICall<IDispute>('GetCurrentDisputeByUser', JSON.stringify({}));
   }
 
   /**
@@ -310,7 +237,7 @@ export class TransunionService {
    * @returns
    */
   createIndicativeEnrichmentPayload(
-    data: UpdateAppDataInput | AppDataStateModel
+    data: UpdateAppDataInput | AppDataStateModel,
   ): IIndicativeEnrichmentMsg | undefined {
     const attrs = data.user?.userAttributes;
     if (!attrs) {
@@ -339,7 +266,7 @@ export class TransunionService {
    */
   createGetAuthenticationQuestionsPayload(
     data: UpdateAppDataInput | AppDataStateModel,
-    ssn: string = ""
+    ssn: string = '',
   ): IGetAuthenticationQuestionsMsg | undefined {
     const attrs = data.user?.userAttributes;
     if (!attrs) {
@@ -372,12 +299,12 @@ export class TransunionService {
    */
   createVerifyAuthenticationQuestionsPayload(
     data: UpdateAppDataInput | AppDataStateModel,
-    answers: IVerifyAuthenticationAnswer[]
+    answers: IVerifyAuthenticationAnswer[],
   ): IVerifyAuthenticationQuestionsMsg | undefined {
     if (!answers.length) return;
     return {
       answers: answers,
-      key: data.agencies?.transunion?.serviceBundleFulfillmentKey || "",
+      key: data.agencies?.transunion?.serviceBundleFulfillmentKey || '',
     };
   }
 }
