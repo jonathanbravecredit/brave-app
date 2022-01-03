@@ -20,11 +20,11 @@ describe('DashboardEnrolledComponent', () => {
   class RouteMock {
     data = of({
       dashboard: {
-        report: {},
-        snapshots: {},
-        scores: {},
-        trends: {},
-        metrics: {},
+        report: new MergeReportClass(),
+        snapshots: new DashboardStateModel(),
+        scores: new ScoresClass(),
+        trends: new TrendsClass(),
+        metrics: new MetricsClass(),
       },
     });
   }

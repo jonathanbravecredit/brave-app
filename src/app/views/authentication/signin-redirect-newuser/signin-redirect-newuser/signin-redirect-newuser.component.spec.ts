@@ -40,4 +40,45 @@ describe("SigninRedirectNewuserComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it("the appSub$ should be created in the constructor", () => {
+    expect(component['appSub$']).toBeTruthy();
+  });
+
+  it('Should run the interstitial changeMessage method when onManualRedirectClick is clicked', () => {
+    component.onManualRedirectClick()
+    expect(interstitialMock.changeMessage).toHaveBeenCalled();
+  })
+
+  it('Should run the interstitial openInterstitial method when onManualRedirectClick is clicked', () => {
+    component.onManualRedirectClick()
+    expect(interstitialMock.openInterstitial).toHaveBeenCalled();
+  })
+
+  it('Should run the interstitial closeInterstitial method when onManualRedirectClick is clicked', () => {
+    component.onManualRedirectClick()
+    expect(interstitialMock.closeInterstitial).toHaveBeenCalled();
+  })
+
+  it('Should run the onboardUser method when onManualRedirectClick is called', () => {
+    component.onManualRedirectClick()
+    expect(component.onboardUser).toHaveBeenCalled();
+  })
+
+  it('Should run the initUser method when onboardUser is called', () => {
+    component.onboardUser()
+    expect(syncMock.initUser).toHaveBeenCalled();
+  })
+
+  it('Should run the subscribeToListeners method when onboardUser is called', () => {
+    component.onboardUser()
+    expect(syncMock.subscribeToListeners).toHaveBeenCalled();
+  })
+
+  it('Should run the sync.onboardUser method when onboardUser is called', () => {
+    component.onboardUser()
+    expect(syncMock.onboardUser).toHaveBeenCalled();
+  })
+
+
 });
