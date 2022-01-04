@@ -91,8 +91,8 @@ describe('ReferralPureView', () => {
       expect(result).toEqual(true);
     });
 
-    it('should have metrics in referral earnings', () => {
-      let result = dh.hasPropValue('brave-referral-earnings', 'referral', referralMock);
+    it('should have payment in referral earnings', () => {
+      let result = dh.hasPropValue('brave-referral-earnings', 'payments', paymentMock);
 
       expect(result).toEqual(true);
     });
@@ -102,15 +102,5 @@ describe('ReferralPureView', () => {
 
       expect(result).toEqual(true);
     });
-  });
-
-  it('should have proper amount based on payments info', () => {
-    let result = dh.findAll('h1');
-
-    console.log('RESULT ==>>', result);
-
-    console.log('RESULT', component.payments);
-
-    // expect(result).toEqual(); //TODO
   });
 });
