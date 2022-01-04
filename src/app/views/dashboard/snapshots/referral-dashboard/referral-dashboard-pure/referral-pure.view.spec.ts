@@ -72,8 +72,33 @@ describe('ReferralPureView', () => {
   });
 
   describe('confirm that all component are being passed correct data', () => {
+
+    it('should have metrics in referral amount link', () => {
+      let result = dh.hasPropValue('brave-referral-amount-link', 'referral', referralMock);
+
+      expect(result).toEqual(true);
+    });
+
+    it('should have metrics in referral amount link', () => {
+      let result = dh.hasPropValue('brave-referral-amount-link', 'metrics', metricsMock);
+
+      expect(result).toEqual(true);
+    });
+
     it('should have metrics in referral banner', () => {
       let result = dh.hasPropValue('brave-referral-banner', 'metrics', metricsMock);
+
+      expect(result).toEqual(true);
+    });
+
+    it('should have metrics in referral earnings', () => {
+      let result = dh.hasPropValue('brave-referral-earnings', 'referral', referralMock);
+
+      expect(result).toEqual(true);
+    });
+
+    it('should have metrics in referral earnings', () => {
+      let result = dh.hasPropValue('brave-referral-earnings', 'metrics', metricsMock);
 
       expect(result).toEqual(true);
     });

@@ -1,18 +1,19 @@
-import { APP_BASE_HREF, CommonModule, CurrencyPipe } from "@angular/common";
-import { Story, Meta } from "@storybook/angular/types-6-0";
-import { componentWrapperDecorator, moduleMetadata } from "@storybook/angular";
-import { HttpClientModule } from "@angular/common/http";
-import { RouterModule } from "@angular/router";
-import { ReferralDashboardPureView } from "./referral-pure.view";
-import { ReferralBannerComponent } from "../components/referral-banner/referral-banner.component";
-import { ReferralHeaderComponent } from "../components/referral-header/referral-header.component";
-import { ReferralEarningsComponent } from "../components/referral-earnings/referral-earnings.component";
-import { ReferralAmountLinkComponent } from "../components/referral-amount-link/referral-amount-link.component";
-import { ReferralBodyTextComponent } from "../components/referral-body-text/referral-body-text.component";
-import { SharedComponentsModule } from "@shared/components/shared-components.module";
+import { APP_BASE_HREF, CommonModule, CurrencyPipe } from '@angular/common';
+import { Story, Meta } from '@storybook/angular/types-6-0';
+import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { ReferralDashboardPureView } from './referral-pure.view';
+import { ReferralBannerComponent } from '../components/referral-banner/referral-banner.component';
+import { ReferralHeaderComponent } from '../components/referral-header/referral-header.component';
+import { ReferralEarningsComponent } from '../components/referral-earnings/referral-earnings.component';
+import { ReferralAmountLinkComponent } from '../components/referral-amount-link/referral-amount-link.component';
+import { ReferralBodyTextComponent } from '../components/referral-body-text/referral-body-text.component';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
+import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfaces/referrals.interface';
 
 export default {
-  title: "app/views/snapshots/referral-dashboard",
+  title: 'app/views/snapshots/referral-dashboard',
   component: ReferralDashboardPureView,
   decorators: [
     moduleMetadata({
@@ -23,13 +24,8 @@ export default {
         ReferralAmountLinkComponent,
         ReferralBodyTextComponent,
       ],
-      imports: [
-        HttpClientModule,
-        RouterModule.forRoot([], { useHash: true }),
-        CommonModule,
-        SharedComponentsModule,
-      ],
-      providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
+      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true }), CommonModule, SharedComponentsModule],
+      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
       return `
@@ -58,8 +54,38 @@ const Template: Story<ReferralDashboardPureView> = (args: any) => ({
   },
 });
 
+const paymentMock: IPayments = {
+  paymentsPending: 2,
+  paymentsProcessed: 2,
+  paymentScheduledDate: '',
+  currency: 'USD',
+  earningsAmount: 10,
+};
+
+const referralMock: IReferral = {
+  id: '',
+  createdOn: '',
+  modifiedOn: '',
+  processingStatus: 'paid',
+  enrollmentStatus: 'enrolled',
+  referralCode: 'testReferralCode',
+  referredByCode: '',
+  campaign: 'jan2020',
+  referralStatus: 'active',
+  referralApproved: true,
+};
+
+const metricsMock: IGroupedYearMonthReferral[] = [
+  {
+    yearMonth: 122022,
+    referrals: 4,
+  },
+];
+
 export const Default = Template.bind({});
 Default.args = {
-  metrics: [{ yearMonth: 202112, referrals: 1, earnings: 0, currency: "USD" }],
+  payments: paymentMock,
+  referral: referralMock,
+  metrics: metricsMock,
 };
 Default.parameters;
