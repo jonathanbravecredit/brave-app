@@ -10,7 +10,7 @@ import {
   ICreditMixTLSummary,
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Subscription } from 'rxjs';
@@ -35,6 +35,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   rating: string | undefined;
   creditUtilizationPerc: number | undefined;
   routeSub$: Subscription | undefined;
+  referral: IReferral | undefined;
 
   constructor(
     private router: Router,
@@ -66,12 +67,12 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
+      this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
-
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');

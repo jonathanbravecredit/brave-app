@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '@environments/environment';
 import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
@@ -74,7 +74,7 @@ export class ReferralsService implements OnDestroy {
    * Returns the current users referral record
    * @returns
    */
-  async getReferral(): Promise<any> {
+  async getReferral(): Promise<IReferral> {
     const url = `${environment.marketing}/referral`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
