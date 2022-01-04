@@ -1,48 +1,37 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { SettingsService } from "@shared/services/settings/settings.service";
-import { OptionDeactivateComponent } from "@views/dashboard/settings/components/option-deactivate/option-deactivate.component";
-import { OptionPasswordResetComponent } from "@views/dashboard/settings/components/option-password-reset/option-password-reset.component";
-import {
-  ISettingsViews,
-  SettingsOptions,
-} from "@views/dashboard/settings/settings-pure/interface";
-import { SettingsPureComponent } from "@views/dashboard/settings/settings-pure/settings-pure.component";
-import { ALERT_CONFIG } from "@views/dashboard/settings/settings/constants";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { SettingsService } from '@shared/services/settings/settings.service';
+import { OptionDeactivateComponent } from '@views/dashboard/settings/components/option-deactivate/option-deactivate.component';
+import { OptionPasswordResetComponent } from '@views/dashboard/settings/components/option-password-reset/option-password-reset.component';
+import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/settings-pure/interface';
+import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
+import { ALERT_CONFIG } from '@views/dashboard/settings/settings/constants';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
-  selector: "brave-settings",
-  templateUrl: "./settings.component.html",
+  selector: 'brave-settings',
+  templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit {
-  @ViewChild("reset") resetOption: OptionPasswordResetComponent | undefined;
-  @ViewChild("deactivate") deactivateOption:
-    | OptionDeactivateComponent
-    | undefined;
+  @ViewChild('reset') resetOption: OptionPasswordResetComponent | undefined;
+  @ViewChild('deactivate') deactivateOption: OptionDeactivateComponent | undefined;
   @ViewChild(SettingsPureComponent) pure: SettingsPureComponent | undefined;
 
   haveResetError: boolean = false;
   resetSuccess: boolean = false;
-  resetError: string = "";
+  resetError: string = '';
   haveDeactivateError: boolean = false;
   deactivateSuccess: boolean = false;
-  deactivateError: string = "";
+  deactivateError: string = '';
   init: ISettingsViews = SettingsOptions.Init;
   alertConfig = ALERT_CONFIG;
   constructor(
     public route: ActivatedRoute,
     private router: Router,
     private settings: SettingsService,
-    private interstitial: InterstitialService
+    private interstitial: InterstitialService,
   ) {}
 
   ngOnInit(): void {}
@@ -52,14 +41,11 @@ export class SettingsComponent implements OnInit {
   }
 
   onGoToPageClick({ tab, view }: { tab: number; view: ISettingsViews }) {
-    this.router.navigate(
-      [routes.root.children.dashboard.children.settings.children.options.full],
-      {
-        queryParams: {
-          option: view,
-        },
-      }
-    );
+    this.router.navigate([routes.root.dashboard.settings.options.full], {
+      queryParams: {
+        option: view,
+      },
+    });
   }
 
   async onChangePasswordClick(): Promise<void> {
@@ -82,8 +68,7 @@ export class SettingsComponent implements OnInit {
   onDeactivateClick(): void {
     // evt.password -- we actually don't need the password, just there to act as a deterent
     setTimeout(() => {
-      this.deactivateError =
-        "Sorry we could not deactive your account at this time.";
+      this.deactivateError = 'Sorry we could not deactive your account at this time.';
       this.haveDeactivateError = true;
       this.interstitial.fetching$.next(false);
     }, 4000);
@@ -92,14 +77,11 @@ export class SettingsComponent implements OnInit {
       .then((results) => {
         this.deactivateSuccess = true;
         this.interstitial.stopSpinner();
-        this.router.navigate([
-          routes.root.children.auth.children.deactivated.full,
-        ]);
+        this.router.navigate([routes.root.auth.deactivated.full]);
         this.interstitial.fetching$.next(false);
       })
       .catch((err) => {
-        this.deactivateError =
-          "Sorry we could not deactive your account at this time.";
+        this.deactivateError = 'Sorry we could not deactive your account at this time.';
         this.haveDeactivateError = true;
         this.interstitial.fetching$.next(false);
       });

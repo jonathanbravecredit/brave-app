@@ -78,27 +78,27 @@ export class SigninComponent {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate([routes.root.children.auth.children.forgot.full]);
+    this.router.navigate([routes.root.auth.forgot.full]);
   }
 
   /**
    * Method to route user to privacy policy
    */
   goToPrivacy(): void {
-    this.router.navigate([routes.root.children.compliance.children.privacy.full]);
+    this.router.navigate([routes.root.compliance.privacy.full]);
   }
 
   /**
    * Method to route user to terms of service
    */
   goToTerms(): void {
-    this.router.navigate([routes.root.children.compliance.children.tos.full]);
+    this.router.navigate([routes.root.compliance.tos.full]);
   }
 
   /**
    * Method to route user to signup
    */
   goToSignup(): void {
-    this.router.navigate([routes.root.children.auth.children.signup.full]);
+    this.router.navigate([routes.root.auth.signup.full]);
   }
 }

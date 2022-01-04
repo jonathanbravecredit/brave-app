@@ -53,7 +53,7 @@ export class SigninRedirectComponent implements OnDestroy {
       const isNew = await this.sync.isUserBrandNew(id);
       if (isNew) {
         this.cleanUp();
-        this.router.navigate([routes.root.children.auth.children.created.full]);
+        this.router.navigate([routes.root.auth.created.full]);
       } else {
         await this.sync.initUser(id);
         await this.sync.subscribeToListeners(id);
@@ -76,11 +76,11 @@ export class SigninRedirectComponent implements OnDestroy {
           await this.auth.socialSignIn(provider);
         } else {
           this.cleanUp();
-          this.router.navigate([routes.root.children.auth.children.invalid.full]);
+          this.router.navigate([routes.root.auth.invalid.full]);
         }
       } else {
         this.cleanUp();
-        this.router.navigate([routes.root.children.auth.children.invalid.full]);
+        this.router.navigate([routes.root.auth.invalid.full]);
       }
     }
   }
