@@ -36,6 +36,15 @@ export class TransunionService {
   tu = TransunionUtil;
   constructor(private api: APIService) {}
 
+  async sendTransunionAPICall<T>(action: string, message: string): Promise<ITUServiceResponse<T | undefined>> {
+    try {
+      const res = await this.api.Transunion(action, message);
+      return res ? JSON.parse(res) : undefined;
+    } catch (err: any) {
+      return { success: false, error: err };
+    }
+  }
+
   /**
    * Send the indicative enrichment message to the Transunion backend and await a response
    * @param {UpdateAppDataInput} data AppData state
@@ -103,72 +112,35 @@ export class TransunionService {
    * Send the verified user to transunion to enroll them and receive their report
    */
   async sendCompleteOnboarding(): Promise<ITUServiceResponse<any>> {
-    try {
-      const res = await this.api.Transunion('CompleteOnboardingEnrollments', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<any>('CompleteOnboardingEnrollments', JSON.stringify({}));
   }
 
   /**
    * Send the verified user to transunion to enroll them and receive their report
    */
   async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
-    try {
-      const res = await this.api.Transunion('Enroll', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<IEnrollResult>('Enroll', JSON.stringify({}));
   }
 
   /**
    * Send the verified user to transunion to enroll them and receive their report
    */
   async sendEnrollDisputesRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
-    try {
-      const res = await this.api.Transunion('EnrollDisputes', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<IEnrollResult>('EnrollDisputes', JSON.stringify({}));
   }
 
   /**
    * Send fulfillment key to Transunion to refresh their report
    */
   async getCreditReport(): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
-    try {
-      const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
-  }
-
-  /**
-   * Send request to Transunion to refresh their report
-   */
-  async refreshCreditReport(): Promise<ITUServiceResponse<IFulfillResult | undefined>> {
-    try {
-      const res = await this.api.Transunion('Fulfill', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<IFulfillResult>('Fulfill', JSON.stringify({}));
   }
 
   /**
    * Send request to backend to get their credit score snapshots
    */
   async getCreditScores(): Promise<ITUServiceResponse<ICreditScoreTracking | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetCreditScoreTracking', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<ICreditScoreTracking>('GetCreditScoreTracking', JSON.stringify({}));
   }
 
   /**
@@ -178,12 +150,7 @@ export class TransunionService {
    *  - Checks the dispute status, if eligible, returns true, otherwise false
    */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    try {
-      const res = await this.api.Transunion('DisputePreflightCheck', JSON.stringify({}));
-      return res ? JSON.parse(res) : false;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
   }
 
   /**
@@ -192,12 +159,7 @@ export class TransunionService {
    * @returns
    */
   async getDisputeStatus(): Promise<ITUServiceResponse<IGetDisputeStatusResponseSuccess | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetDisputeStatus', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<IGetDisputeStatusResponseSuccess>('GetDisputeStatus', JSON.stringify({}));
   }
 
   /**
@@ -206,12 +168,7 @@ export class TransunionService {
    * @returns
    */
   async getTrendingData(fromDate: string): Promise<ITUServiceResponse<any | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetTrendingData', JSON.stringify({ fromDate }));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<any>('GetTrendingData', JSON.stringify({ fromDate }));
   }
 
   /**
@@ -222,14 +179,9 @@ export class TransunionService {
   async sendStartDispute(
     disputes: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[],
   ): Promise<ITUServiceResponse<any>> {
-    try {
-      const msg = { disputes }; //this.createStartDisputePayload(data, disputes);
-      const clean = this.tu.scrubbers.scrubBackendData(msg);
-      const res = await this.api.Transunion('StartDispute', JSON.stringify(clean));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    const msg = { disputes }; //this.createStartDisputePayload(data, disputes);
+    const clean = this.tu.scrubbers.scrubBackendData(msg);
+    return this.sendTransunionAPICall<any>('StartDispute', JSON.stringify(clean));
   }
 
   /**
@@ -239,13 +191,8 @@ export class TransunionService {
    * @returns
    */
   async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
-    try {
-      const msg = { disputeId };
-      const res = await this.api.Transunion('GetInvestigationResults', JSON.stringify(msg));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    const msg = { disputeId };
+    return this.sendTransunionAPICall<any>('GetInvestigationResults', JSON.stringify(msg));
   }
 
   /**
@@ -254,12 +201,7 @@ export class TransunionService {
    * @returns
    */
   async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetInvestigationResultsByID', JSON.stringify({ id }));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<any>('GetInvestigationResultsByID', JSON.stringify({ id }));
   }
 
   /**
@@ -270,12 +212,7 @@ export class TransunionService {
    * @returns
    */
   async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetCreditBureauResultsByID', JSON.stringify({ id }));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<any>('GetCreditBureauResultsByID', JSON.stringify({ id }));
   }
 
   /**
@@ -283,12 +220,7 @@ export class TransunionService {
    * @returns
    */
   async listAllDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetAllDisputesByUser', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<IDispute[]>('GetAllDisputesByUser', JSON.stringify({}));
   }
 
   /**
@@ -296,12 +228,7 @@ export class TransunionService {
    * @returns
    */
   async getCurrentDisputeByUser(): Promise<ITUServiceResponse<IDispute | undefined>> {
-    try {
-      const res = await this.api.Transunion('GetCurrentDisputeByUser', JSON.stringify({}));
-      return res ? JSON.parse(res) : undefined;
-    } catch (err: any) {
-      return { success: false, error: err };
-    }
+    return this.sendTransunionAPICall<IDispute>('GetCurrentDisputeByUser', JSON.stringify({}));
   }
 
   /**

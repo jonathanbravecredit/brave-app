@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/signup/signup/content';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
@@ -20,11 +19,9 @@ export class SignupComponent implements OnInit {
   message: string = '';
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private auth: AuthService,
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
-    private referral: ReferralsService,
     private neverBounce: NeverbounceService,
   ) {}
 
