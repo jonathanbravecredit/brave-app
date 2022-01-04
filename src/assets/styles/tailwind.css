@@ -548,7 +548,7 @@ video {
   border-color: rgba(228, 228, 231, var(--tw-border-opacity));
 }
 
-[type='text'],[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='month'],[type='search'],[type='tel'],[type='time'],[multiple],textarea,select {
+[type='text'],[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -564,7 +564,7 @@ video {
   line-height: 1.5rem;
 }
 
-[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [multiple]:focus, textarea:focus, select:focus {
+[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
   --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
@@ -1142,6 +1142,10 @@ select {
   top: 0.25rem;
 }
 
+.top-2 {
+  top: 0.5rem;
+}
+
 .top-20 {
   top: 5rem;
 }
@@ -1160,6 +1164,10 @@ select {
 
 .right-1 {
   right: 0.25rem;
+}
+
+.right-2 {
+  right: 0.5rem;
 }
 
 .bottom-0 {
@@ -1377,6 +1385,10 @@ select {
   margin-top: 2.75rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .mt-16 {
   margin-top: 4rem;
 }
@@ -1437,12 +1449,12 @@ select {
   margin-right: 2rem;
 }
 
-.mr-24 {
-  margin-right: 6rem;
-}
-
 .mr-auto {
   margin-right: auto;
+}
+
+.mr-0\.5 {
+  margin-right: 0.125rem;
 }
 
 .mb-0 {
@@ -1471,6 +1483,10 @@ select {
 
 .mb-6 {
   margin-bottom: 1.5rem;
+}
+
+.mb-7 {
+  margin-bottom: 1.75rem;
 }
 
 .mb-8 {
@@ -1681,6 +1697,10 @@ select {
   max-height: 14rem;
 }
 
+.min-h-full {
+  min-height: 100%;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1775,6 +1795,10 @@ select {
 
 .min-w-full {
   min-width: 100%;
+}
+
+.min-w-320-px {
+  min-width: 320px;
 }
 
 .max-w-xs {
@@ -1980,6 +2004,10 @@ select {
   justify-content: space-around;
 }
 
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
 .gap-1 {
   gap: 0.25rem;
 }
@@ -2073,6 +2101,10 @@ select {
 
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
 }
 
 .rounded-full {
@@ -2382,9 +2414,19 @@ select {
   background-color: rgba(233, 60, 37, var(--tw-bg-opacity));
 }
 
+.bg-brave-semicritical {
+  --tw-bg-opacity: 1;
+  background-color: rgba(245, 103, 0, var(--tw-bg-opacity));
+}
+
 .bg-brave-danger {
   --tw-bg-opacity: 1;
   background-color: rgba(249, 162, 31, var(--tw-bg-opacity));
+}
+
+.bg-brave-normal {
+  --tw-bg-opacity: 1;
+  background-color: rgba(187, 217, 4, var(--tw-bg-opacity));
 }
 
 .bg-dk-gray {
@@ -2678,6 +2720,10 @@ select {
   padding-bottom: 2rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .pl-1 {
   padding-left: 0.25rem;
 }
@@ -2771,6 +2817,11 @@ select {
   line-height: 1;
 }
 
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
 .text-2\.5 {
   font-size: 0.625rem;
 }
@@ -2805,6 +2856,10 @@ select {
 
 .font-extrabold {
   font-weight: 800;
+}
+
+.font-black {
+  font-weight: 900;
 }
 
 .uppercase {
@@ -3020,9 +3075,19 @@ select {
   color: rgba(233, 60, 37, var(--tw-text-opacity));
 }
 
+.text-brave-semicritical {
+  --tw-text-opacity: 1;
+  color: rgba(245, 103, 0, var(--tw-text-opacity));
+}
+
 .text-brave-danger {
   --tw-text-opacity: 1;
   color: rgba(249, 162, 31, var(--tw-text-opacity));
+}
+
+.text-brave-normal {
+  --tw-text-opacity: 1;
+  color: rgba(187, 217, 4, var(--tw-text-opacity));
 }
 
 .text-lt-gray {
@@ -3038,6 +3103,16 @@ select {
 .text-dk-gray {
   --tw-text-opacity: 1;
   color: rgba(51, 51, 51, var(--tw-text-opacity));
+}
+
+.text-link-blue {
+  --tw-text-opacity: 1;
+  color: rgba(6, 69, 173, var(--tw-text-opacity));
+}
+
+.focus-within\:text-blueGray-600:focus-within {
+  --tw-text-opacity: 1;
+  color: rgba(71, 85, 105, var(--tw-text-opacity));
 }
 
 .hover\:text-red-700:hover {

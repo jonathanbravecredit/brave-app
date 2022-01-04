@@ -1,26 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditCard, ILoan, IBaseCreditUtilization } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces';
-import { BehaviorSubject } from 'rxjs';
+import { ITradeLinePartition } from '@shared/interfaces';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import {
+  ICreditMixTLSummary,
+  IRecommendationText,
+  TCreditMixCalcObj,
+} from '../interfaces/credit-mix-calc-obj.interface';
 
 @Component({
   selector: 'brave-credit-mix-pure',
   templateUrl: './credit-mix-pure.view.html',
-  styleUrls: ['./credit-mix-pure.view.css']
+  styleUrls: ['./credit-mix-pure.view.css'],
 })
 export class CreditMixPureView implements OnInit {
-  private isRecommendationOpen = new BehaviorSubject(true);
-  isRecommendationOpen$ = this.isRecommendationOpen.asObservable();
-  @Input() creditCards: ICreditCard[] = [];
-  @Input() loans: ILoan[] = [];
-  @Input() closedAccounts: IBaseCreditUtilization[] = [];
+  @Input() tradeLineParition: ITradeLinePartition[] | undefined;
+  @Input() tradeLineSummary: ICreditMixTLSummary | undefined;
+  @Input() recommendations: IRecommendationText | undefined;
+  event = AnalyticClickEvents;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  switchRecommendation(): void {
-    const isRecommendationOpen = this.isRecommendationOpen.value;
-    this.isRecommendationOpen.next(!isRecommendationOpen)
-  }
+  ngOnInit(): void {}
 }

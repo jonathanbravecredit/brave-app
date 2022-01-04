@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { StateService } from '@shared/services/state/state.service';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
-import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
-import { Observable } from 'rxjs';
+import { Component } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import {
+  ISubscriber,
+  ITradeLinePartition,
+} from "@shared/interfaces/merge-report.interface";
+import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { StateService } from "@shared/services/state/state.service";
+import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
+import { DisputeReconfirmFilter } from "@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters";
+import { Observable } from "rxjs";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
-  selector: 'brave-tradelines',
-  templateUrl: './tradelines.component.html',
+  selector: "brave-tradelines",
+  templateUrl: "./tradelines.component.html",
 })
 export class TradelinesComponent {
   /**
@@ -37,11 +41,13 @@ export class TradelinesComponent {
     private statesvc: StateService,
     private disputeService: DisputeService,
     private interstitial: InterstitialService,
-    private creditReportServices: CreditreportService,
+    private creditReportServices: CreditreportService
   ) {
     this.tradeline$ = this.creditReportServices.tuTradeline$.asObservable();
     this.subscriber$ = this.creditReportServices.tuTradelineSubscriber$.asObservable();
-    this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+    this.acknowledged =
+      this.statesvc.state?.appData.agencies?.transunion
+        ?.acknowledgedDisputeTerms || false;
   }
 
   set acknowledged(value: boolean) {
@@ -56,13 +62,17 @@ export class TradelinesComponent {
    * @param {ITradeLinePartition} tradeline
    * @returns {void}
    */
-  async onDisputeClicked(tradeline: ITradeLinePartition | undefined | null): Promise<void> {
+  async onDisputeClicked(
+    tradeline: ITradeLinePartition | undefined | null
+  ): Promise<void> {
     if (tradeline === undefined || tradeline === null) {
       this.handleError();
       return;
     }
-    const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
-    this.interstitial.changeMessage('checking eligibility');
+    const accountType = tu.queries.report.getTradelineTypeDescription(
+      tradeline
+    );
+    this.interstitial.changeMessage("checking eligibility");
     this.interstitial.openInterstitial();
     this.disputeService
       .sendDisputePreflightCheck()
@@ -70,11 +80,17 @@ export class TradelinesComponent {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate(['/disputes/reconfirm'], {
-            queryParams: {
-              type: filter,
-            },
-          });
+          this.router.navigate(
+            [
+              routes.root.children.dashboard.children.disputes.children
+                .reconfirm.full,
+            ],
+            {
+              queryParams: {
+                type: filter,
+              },
+            }
+          );
         } else {
           const code = `${error?.Code}`;
           this.handleError(code);
@@ -85,13 +101,15 @@ export class TradelinesComponent {
       });
   }
 
-  handleError(code: string = '197'): void {
+  handleError(code: string = "197"): void {
     this.interstitial.closeInterstitial();
-    this.router.navigate(['/disputes/error'], {
-      relativeTo: this.route,
-      queryParams: {
-        code: code,
-      },
-    });
+    this.router.navigate(
+      [routes.root.children.dashboard.children.disputes.children.error.full],
+      {
+        queryParams: {
+          code: code,
+        },
+      }
+    );
   }
 }

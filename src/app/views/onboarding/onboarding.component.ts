@@ -35,12 +35,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
   ];
   listener: any;
 
-  constructor(
-    private store: Store,
-    private auth: AuthService,
-    private renderer: Renderer2,
-    private onboardingService: OnboardingService,
-  ) {
+  constructor(private store: Store, private renderer: Renderer2, private onboardingService: OnboardingService) {
     this.onboardingSub$ = this.onboarding$
       .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
       .subscribe((onboarding: OnboardingStateModel) => {

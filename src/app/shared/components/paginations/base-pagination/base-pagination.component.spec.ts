@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { BasePaginationComponent } from './base-pagination.component';
+import { BasePaginationComponent } from "./base-pagination.component";
+import { BasePaginationPipe } from "./base-pagination.pipe";
 
-describe('BasePaginationComponent', () => {
+describe("BasePaginationComponent", () => {
   let component: BasePaginationComponent;
   let fixture: ComponentFixture<BasePaginationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BasePaginationComponent ]
-    })
-    .compileComponents();
+      declarations: [BasePaginationComponent, BasePaginationPipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('BasePaginationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

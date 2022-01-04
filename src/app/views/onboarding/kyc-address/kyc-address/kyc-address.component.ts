@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild, HostListener, OnDestroy, Renderer2 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
@@ -9,6 +9,7 @@ import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guar
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-kyc-address',
@@ -20,12 +21,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   hasError: boolean = false;
   listener: any;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService,
-    private analytics: AnalyticsService,
-  ) {
+  constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
 
@@ -40,7 +36,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(['../name'], { relativeTo: this.route });
+    this.router.navigate([routes.root.children.onboarding.children.name.full]);
   }
 
   goToNext(form: FormGroup): void {
@@ -62,7 +58,7 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
 
       this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
         this.kycService.completeStep(this.stepID);
-        this.router.navigate(['../identity'], { relativeTo: this.route });
+        this.router.navigate([routes.root.children.onboarding.children.identity.full]);
       });
     }
   }

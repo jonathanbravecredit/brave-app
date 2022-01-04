@@ -5,14 +5,23 @@
       [cards]="snapshots"
       [scores]="scores"
       [trends]="trends"
+      [metrics]="metrics"
       [welcomeMsg]="welcomeMsg"
       [lastUpdated]="lastUpdated"
+      [creditMix]="creditMix"
+      [creditMixStatus]="creditMixStatus"
+      [rating]="rating"
+      [creditUtilizationStatus]="creditUtilizationStatus"
+      [creditUtilizationPerc]="creditUtilizationPerc"
+      [referral]="referral"
       (negativeItemsClicked)="onNegativeItemsClicked()"
       (forbearanceItemsClicked)="onForbearanceItemsClicked()"
       (databreachItemsClicked)="onDatabreachItemsClicked()"
       (fullReportClicked)="onFullReportClicked()"
       (disputesClicked)="onDisputesClicked()"
       (creditUtilizationClicked)="onCreditUtilizationClicked()"
+      (creditMixClicked)="onCreditMixClicked()"
+      (referralsClicked)="onReferralsClicked()"
     ></brave-dashboard-enrolled-pure>
   </ng-container>
 </div>

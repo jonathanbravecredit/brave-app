@@ -43,14 +43,14 @@ export class DashboardService implements OnDestroy {
   async refreshReport(): Promise<void> {
     const fulfilledOn = this.statesvc.state?.appData.agencies?.transunion?.fulfilledOn;
     if (!fulfilledOn) {
-      await this.transunion.refreshCreditReport();
+      await this.transunion.getCreditReport();
       return;
     }
     const now = new Date();
     const last = new Date(fulfilledOn);
     const refresh = dateDiffInDays(last, now) > 0 ? true : false;
     if (refresh) {
-      await this.transunion.refreshCreditReport();
+      await this.transunion.getCreditReport();
     }
     return;
   }

@@ -1,30 +1,42 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { from, Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { OnboardingStateModel } from '@store/onboarding';
-import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
-import { AppDataStateModel } from '@store/app-data/app-data.model';
-import { Router } from '@angular/router';
-import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
-import { StateService } from '@shared/services/state/state.service';
+import { Injectable, OnDestroy } from "@angular/core";
+import { Store } from "@ngxs/store";
+import { from, Observable, Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
+import { OnboardingStateModel } from "@store/onboarding";
+import { OnboardingSelectors } from "@store/onboarding/onboarding.selectors";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { Auth } from "aws-amplify";
+import { AppDataStateModel } from "@store/app-data/app-data.model";
+import { Router } from "@angular/router";
+import { AgenciesSelectors, AgenciesStateModel } from "@store/agencies";
+import { StateService } from "@shared/services/state/state.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Injectable()
 export class OnboardingService implements OnDestroy {
   private onboarding: OnboardingStateModel = {} as OnboardingStateModel;
-  private onboarding$: Observable<OnboardingStateModel> = this.store.select(OnboardingSelectors.getOnboarding);
+  private onboarding$: Observable<OnboardingStateModel> = this.store.select(
+    OnboardingSelectors.getOnboarding
+  );
   private onboardingSub$: Subscription;
 
   private agencies: AgenciesStateModel = {} as AgenciesStateModel;
-  private agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
+  private agencies$: Observable<AgenciesStateModel> = this.store.select(
+    AgenciesSelectors.getAgencies
+  );
   private agenciesSub$: Subscription;
 
-  constructor(private store: Store, private statesvc: StateService, private sync: SyncService, private router: Router) {
+  constructor(
+    private store: Store,
+    private statesvc: StateService,
+    private sync: SyncService,
+    private router: Router
+  ) {
     this.onboardingSub$ = this.onboarding$
-      .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
+      .pipe(
+        filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
+      )
       .subscribe((onboarding: OnboardingStateModel) => {
         this.onboarding = onboarding;
       });
@@ -38,15 +50,18 @@ export class OnboardingService implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
+    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
   }
 
   /**
    * Returns the user id from the authenticated user
    */
   async getUserId(): Promise<string | undefined> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser({
+      bypassCache: true,
+    });
     const attrs = await Auth.userAttributes(user);
-    const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    const id = attrs.filter((a) => a.Name === "sub")[0]?.Value;
     return id;
   }
 
@@ -104,23 +119,33 @@ export class OnboardingService implements OnDestroy {
 
     switch (lastComplete) {
       case -1:
-        this.router.navigate(['/onboarding/name']);
+        this.router.navigate([
+          routes.root.children.onboarding.children.name.full,
+        ]);
         break;
       case 0:
-        this.router.navigate(['/onboarding/address']);
+        this.router.navigate([
+          routes.root.children.onboarding.children.address.full,
+        ]);
         break;
       case 1:
-        this.router.navigate(['/onboarding/identity']);
+        this.router.navigate([
+          routes.root.children.onboarding.children.identity.full,
+        ]);
         break;
       case 2:
         // if last on otp or kba go to either one.
         transunion?.kbaCurrentAge
-          ? this.router.navigate(['/onboarding/kba'])
-          : this.router.navigate(['/onboarding/code']);
+          ? this.router.navigate([
+              routes.root.children.onboarding.children.kba.full,
+            ])
+          : this.router.navigate([
+              routes.root.children.onboarding.children.code.full,
+            ]);
         break;
       default:
         // nothing to do, stay on same route
-        this.router.navigate(['/auth/signin']);
+        this.router.navigate([routes.root.children.auth.children.signin.full]);
         break;
     }
   }

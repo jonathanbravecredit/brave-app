@@ -1,16 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
 
-import { DisputesSuccessView } from './disputes-success.view';
+import { DisputesSuccessView } from "./disputes-success.view";
 
-describe('DisputesSuccessView', () => {
+describe("DisputesSuccessView", () => {
   let component: DisputesSuccessView;
   let fixture: ComponentFixture<DisputesSuccessView>;
+  let routerMock: any;
 
   beforeEach(async () => {
+    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
     await TestBed.configureTestingModule({
-      declarations: [ DisputesSuccessView ]
-    })
-    .compileComponents();
+      declarations: [DisputesSuccessView],
+      providers: [{ provide: Router, useValue: routerMock }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +22,7 @@ describe('DisputesSuccessView', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

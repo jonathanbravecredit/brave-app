@@ -4,8 +4,10 @@ import { SnapshotStatus } from './snapshot-display-card.component';
 const enumStrColorCLassIndicator = {
   [SnapshotStatus.Danger]: 'brave-danger',
   [SnapshotStatus.Safe]: 'brave-safe',
+  [SnapshotStatus.SemiCritical]: 'brave-semicritical',
   [SnapshotStatus.Critical]: 'brave-critical',
   [SnapshotStatus.Default]: 'brave-unknown',
+  [SnapshotStatus.Normal]: 'brave-normal',
 };
 
 @Pipe({
@@ -19,9 +21,9 @@ export class SnapshotStatusPipe implements PipeTransform {
     if (outerHeight !== undefined) {
       const prefix = outputStyle === 'text' ? 'text-' : 'bg-';
       result = prefix + enumStrColorCLassIndicator[value as SnapshotStatus];
-      if (outputStyle === 'text') {
-        result += ' text-3.5';
-      }
+      // if (outputStyle === 'text') {
+      //   result += ' text-3.5';
+      // }
     }
     return result;
   }

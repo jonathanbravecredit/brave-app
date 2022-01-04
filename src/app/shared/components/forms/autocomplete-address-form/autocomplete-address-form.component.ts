@@ -7,8 +7,10 @@ import {
 } from '@shared/components/inputs/outline-input/outline-input.component';
 import { IOutlineSelectInputConfig } from '@shared/components/inputs/outline-select-input/outline-select-input.component';
 import { Observable } from 'rxjs';
-
+// DO NOT REMOVE BELOW REFERENCE!!!!
+/// <reference types="google.maps" />
 declare var google: any;
+// DO NOT REMOVE ABOVE REFERENCE!!!!
 
 @Component({
   selector: 'brave-autocomplete-address-form',
@@ -66,7 +68,7 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
     let state = '';
     let zip = '';
     if (!place?.address_components || !place?.address_components.length) return;
-    for (const component of place.address_components as google.maps.GeocoderAddressComponent[]) {
+    for (const component of (place.address_components as unknown) as google.maps.GeocoderAddressComponent[]) {
       // @ts-ignore remove once typings fixed
       const componentType = component.types[0];
 

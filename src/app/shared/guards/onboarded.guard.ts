@@ -1,23 +1,33 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute } from '@angular/router';
-import { OnboardingService } from '@views/onboarding/onboarding.service';
-import { Observable } from 'rxjs';
-
+import { Injectable } from "@angular/core";
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+  ActivatedRoute,
+} from "@angular/router";
+import { OnboardingService } from "@views/onboarding/onboarding.service";
+import { Observable } from "rxjs";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class OnboardedGuard implements CanActivate {
-  constructor(private router: Router, private route: ActivatedRoute, private onboarding: OnboardingService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private onboarding: OnboardingService
+  ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
+    state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.resolver()
       .then((value) => {
         return value;
       })
       .catch((reason) => {
-        console.log('onboarded guard:catch ==>', reason);
+        console.log("onboarded guard:catch ==>", reason);
         return false;
       });
   }
@@ -25,7 +35,7 @@ export class OnboardedGuard implements CanActivate {
   async resolver(): Promise<boolean> {
     const id = await this.onboarding.getUserId();
     if (!id) {
-      this.router.navigate(['/auth/thankyou']); // need a please confirm account view
+      this.router.navigate([routes.root.children.auth.children.thankyou.full]); // need a please confirm account view
       return false;
     } else {
       try {
@@ -40,7 +50,7 @@ export class OnboardedGuard implements CanActivate {
         status = await this.handleOnboarding(isOnboarded);
         return status;
       } catch (err) {
-        this.router.navigate(['/auth/signin']); // need a please confirm account view
+        this.router.navigate([routes.root.children.auth.children.signin.full]); // need a please confirm account view
         return false;
       }
     }
@@ -55,7 +65,7 @@ export class OnboardedGuard implements CanActivate {
       }
       return true;
     } catch (err) {
-      console.log('handleUser:error ===> ', err);
+      console.log("handleUser:error ===> ", err);
       return false;
     }
   }
@@ -78,7 +88,7 @@ export class OnboardedGuard implements CanActivate {
       await this.onboarding.subscribeToListeners(id);
       return true;
     } catch (err) {
-      console.log('subscribeToListeners:error ==> ', err);
+      console.log("subscribeToListeners:error ==> ", err);
       return false;
     }
   }

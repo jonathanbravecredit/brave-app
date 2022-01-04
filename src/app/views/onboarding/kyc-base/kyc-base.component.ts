@@ -19,10 +19,10 @@ export class KycBaseComponent {
     [key: string]: AbstractControl;
   }> = new EventEmitter();
   submitted: boolean = false;
-  form: FormGroup | undefined;
+  form: FormGroup | undefined = new FormGroup({});
   constructor() {}
 
-  canDeactivate(form: FormGroup | undefined): boolean {
+  canDeactivate(form: FormGroup): boolean {
     if (form === undefined) return true;
     if (!form?.valid && !form?.touched) return true;
     if (!!form?.valid && !!form?.touched) return true;

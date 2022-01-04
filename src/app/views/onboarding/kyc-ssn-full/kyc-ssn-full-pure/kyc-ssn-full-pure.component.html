@@ -42,6 +42,11 @@
         </brave-outline-ssn-full-form>
       </div>
 
+      <h3 *ngIf="ssnError" class="text-red-500">Please enter your 9-digit social security number</h3>
+
+      <p *ngIf="showError" class="mb-2 text-sm text-red-500">
+        {{ errorMessage }}
+      </p>
       <div class="mt-5">
         <div class="flex justify-between items-center">
           <brave-links-onlytext-button
@@ -50,7 +55,7 @@
           >
             <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
-          <brave-filled-spinning-button [disabled]="!form.parentForm.valid" (click)="form.submitForm()">
+          <brave-filled-spinning-button [disabled]="!form.parentForm?.valid" (click)="form.submitForm()">
             <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
           </brave-filled-spinning-button>
         </div>

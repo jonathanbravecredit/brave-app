@@ -2,9 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { Subscription } from 'rxjs';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
-import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-signup-thankyou',
@@ -13,13 +11,11 @@ import { OutlineInputComponent } from '@shared/components/inputs/outline-input/o
 export class SignupThankyouComponent implements OnInit, OnDestroy {
   private emailSub$: Subscription;
   private email: string | undefined;
-  constructor(private router: Router, private auth: AuthService, private analytics: AnalyticsService) {
+  constructor(private router: Router, private auth: AuthService) {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }
 
-  ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.AuthThankyou);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     if (this.emailSub$) this.emailSub$.unsubscribe();
@@ -33,7 +29,7 @@ export class SignupThankyouComponent implements OnInit, OnDestroy {
       this.auth.resendSignUp(this.email)?.then(() => {
         setTimeout(async () => {
           await this.auth.signOut();
-          this.router.navigate(['/auth/signin']);
+          this.router.navigate([routes.root.children.auth.children.signin.full]);
         }, 2000);
       });
     }

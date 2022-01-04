@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { UserAttributesInput } from '@shared/services/aws/api.service';
@@ -10,10 +10,7 @@ import { AppStatus, AppStatusReason } from '@shared/utils/brave/constants';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { KycComponentCanDeactivate } from '@views/onboarding/kyc-deactivate-guard/kyc-deactivate.guard';
 import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
-
-interface FlatForm {
-  [key: string]: string;
-}
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-kyc-welcome',
@@ -23,12 +20,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
   @ViewChild(KycWelcomePureComponent) pure: KycWelcomePureComponent | undefined;
   stepID = 0;
   hasError: boolean = false;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService,
-    private analytics: AnalyticsService,
-  ) {
+  constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
 
@@ -38,7 +30,8 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   ngAfterViewInit(): void {
-    this.form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component
+    const form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component)
+    if (form) this.form = form;
   }
 
   async goToNext(form: FormGroup): Promise<void> {
@@ -68,10 +61,10 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
           duration: 24 * 30,
         };
         await this.kycService.suspendUser(suspension);
-        this.router.navigate(['/suspended/default']);
+        this.router.navigate([routes.root.children.suspended.children.default.full]);
       } else {
         this.kycService.completeStep(this.stepID);
-        this.router.navigate(['../address'], { relativeTo: this.route });
+        this.router.navigate([routes.root.children.onboarding.children.address.full]);
       }
     }
   }
