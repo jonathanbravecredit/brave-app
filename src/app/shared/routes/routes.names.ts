@@ -1,315 +1,239 @@
 export const ROUTE_NAMES = {
   root: {
-    segment: "",
-    full: "/",
-    children: {
-      auth: {
-        segment: "auth",
-        full: "/auth",
-        children: {
-          signup: {
-            segment: "signup",
-            full: "/auth/signup",
-            children: {},
+    segment: '',
+    full: '/',
+    auth: {
+      segment: 'auth',
+      full: '/auth',
+      signup: {
+        segment: 'signup',
+        full: '/auth/signup',
+      },
+      signin: {
+        segment: 'signin',
+        full: '/auth/signin',
+      },
+      forgot: {
+        segment: 'forgot',
+        full: '/auth/forgot',
+      },
+      redirect: {
+        segment: 'redirect',
+        full: '/auth/redirect',
+      },
+      created: {
+        segment: 'created',
+        full: '/auth/created',
+      },
+      thankyou: {
+        segment: 'thankyou',
+        full: '/auth/thankyou',
+      },
+      name: {
+        segment: 'name',
+        full: '/auth/name',
+      },
+      error: {
+        segment: 'error',
+        full: '/auth/error',
+      },
+      invalid: {
+        segment: 'invalid',
+        full: '/auth/invalid',
+      },
+      resend: {
+        segment: 'resend',
+        full: '/auth/resend',
+      },
+      deactivated: {
+        segment: 'deactivated',
+        full: '/auth/deactivated',
+      },
+    },
+    compliance: {
+      segment: 'legal',
+      full: '/legal',
+      tos: {
+        segment: 'tos',
+        full: '/legal/tos',
+      },
+      privacy: {
+        segment: 'privacy',
+        full: '/legal/privacy',
+      },
+    },
+    dashboard: {
+      segment: 'dashboard',
+      full: '/dashboard',
+      init: {
+        segment: 'init',
+        full: '/dashboard/init',
+      },
+      settings: {
+        segment: 'settings',
+        full: '/dashboard/settings',
+        options: {
+          segment: 'options',
+          full: '/dashboard/settings/options',
+        },
+      },
+      report: {
+        segment: 'report',
+        full: '/dashboard/report',
+        snapshot: {
+          segment: 'snapshot',
+          full: '/dashboard/report/snapshot',
+          negative: {
+            segment: 'negative',
+            full: '/dashboard/report/snapshot/negative',
           },
-          signin: {
-            segment: "signin",
-            full: "/auth/signin",
-            children: {},
+          forbearance: {
+            segment: 'forbearance',
+            full: '/dashboard/report/snapshot/forbearance',
           },
-          forgot: {
-            segment: "forgot",
-            full: "/auth/forgot",
-            children: {},
+          databreach: {
+            segment: 'databreach',
+            full: '/dashboard/report/snapshot/databreach',
           },
-          redirect: {
-            segment: "redirect",
-            full: "/auth/redirect",
-            children: {},
+          creditutilization: {
+            segment: 'creditutilization',
+            full: '/dashboard/report/snapshot/creditutilization',
           },
-          created: {
-            segment: "created",
-            full: "/auth/created",
-            children: {},
+          creditmix: {
+            segment: 'creditmix',
+            full: '/dashboard/report/snapshot/creditmix',
           },
-          thankyou: {
-            segment: "thankyou",
-            full: "/auth/thankyou",
-            children: {},
+          referrals: {
+            segment: 'referrals',
+            full: '/dashboard/report/snapshot/referrals',
           },
-          name: {
-            segment: "name",
-            full: "/auth/name",
-            children: {},
-          },
+        },
+        tradeline: {
+          segment: 'tradeline',
+          full: '/dashboard/report/tradeline',
+        },
+        publicitem: {
+          segment: 'publicitem',
+          full: '/dashboard/report/publicitem',
+        },
+        personalitem: {
+          segment: 'personalitem',
+          full: '/dashboard/report/personalitem',
+        },
+        error: {
+          segment: 'error',
+          full: '/dashboard/report/error',
+        },
+      },
+      disputes: {
+        segment: 'disputes',
+        full: '/dashboard/disputes',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/disputes/overview',
+        },
+        historical: {
+          segment: 'historical',
+          full: '/dashboard/disputes/historical',
+        },
+        findings: {
+          segment: 'findings',
+          full: '/dashboard/disputes/findings',
+        },
+        reconfirm: {
+          segment: 'reconfirm',
+          full: '/dashboard/disputes/reconfirm',
+        },
+        tradeline: {
+          segment: 'tradeline',
+          full: '/dashboard/disputes/tradeline',
           error: {
-            segment: "error",
-            full: "/auth/error",
-            children: {},
-          },
-          invalid: {
-            segment: "invalid",
-            full: "/auth/invalid",
-            children: {},
-          },
-          resend: {
-            segment: "resend",
-            full: "/auth/resend",
-            children: {},
-          },
-          deactivated: {
-            segment: "deactivated",
-            full: "/auth/deactivated",
-            children: {},
+            segment: 'error',
+            full: '/dashboard/disputes/tradeline/error',
           },
         },
-      },
-      compliance: {
-        segment: "legal",
-        full: "/legal",
-        children: {
-          tos: {
-            segment: "tos",
-            full: "/legal/tos",
-            children: {},
-          },
-          privacy: {
-            segment: "privacy",
-            full: "/legal/privacy",
-            children: {},
-          },
-        },
-      },
-      dashboard: {
-        segment: "dashboard",
-        full: "/dashboard",
-        children: {
-          init: {
-            segment: "init",
-            full: "/dashboard/init",
-            children: {},
-          },
-          settings: {
-            segment: "settings",
-            full: "/dashboard/settings",
-            children: {
-              options: {
-                segment: "options",
-                full: "/dashboard/settings/options",
-                children: {},
-              },
-            },
-          },
-          report: {
-            segment: "report",
-            full: "/dashboard/report",
-            children: {
-              snapshot: {
-                segment: "snapshot",
-                full: "/dashboard/report/snapshot",
-                children: {
-                  negative: {
-                    segment: "negative",
-                    full: "/dashboard/report/snapshot/negative",
-                    children: {},
-                  },
-                  forbearance: {
-                    segment: "forbearance",
-                    full: "/dashboard/report/snapshot/forbearance",
-                    children: {},
-                  },
-                  databreach: {
-                    segment: "databreach",
-                    full: "/dashboard/report/snapshot/databreach",
-                    children: {},
-                  },
-                  creditutilization: {
-                    segment: "creditutilization",
-                    full: "/dashboard/report/snapshot/creditutilization",
-                    children: {},
-                  },
-                  creditmix: {
-                    segment: "creditmix",
-                    full: "/dashboard/report/snapshot/creditmix",
-                    children: {},
-                  },
-                  referrals: {
-                    segment: "referrals",
-                    full: "/dashboard/report/snapshot/referrals",
-                    children: {},
-                  },
-                },
-              },
-              tradeline: {
-                segment: "tradeline",
-                full: "/dashboard/report/tradeline",
-                children: {},
-              },
-              publicitem: {
-                segment: "publicitem",
-                full: "/dashboard/report/publicitem",
-                children: {},
-              },
-              personalitem: {
-                segment: "personalitem",
-                full: "/dashboard/report/personalitem",
-                children: {},
-              },
-              error: {
-                segment: "error",
-                full: "/dashboard/report/error",
-                children: {},
-              },
-            },
-          },
-          disputes: {
-            segment: "disputes",
-            full: "/dashboard/disputes",
-            children: {
-              overview: {
-                segment: "overview",
-                full: "/dashboard/disputes/overview",
-                children: {},
-              },
-              historical: {
-                segment: "historical",
-                full: "/dashboard/disputes/historical",
-                children: {},
-              },
-              findings: {
-                segment: "findings",
-                full: "/dashboard/disputes/findings",
-                children: {},
-              },
-              reconfirm: {
-                segment: "reconfirm",
-                full: "/dashboard/disputes/reconfirm",
-                children: {},
-              },
-              tradeline: {
-                segment: "tradeline",
-                full: "/dashboard/disputes/tradeline",
-                children: {
-                  error: {
-                    segment: "error",
-                    full: "/dashboard/disputes/tradeline/error",
-                    children: {},
-                  },
-                },
-              },
-              personalitem: {
-                segment: "personalitem",
-                full: "/dashboard/disputes/personalitem",
-                children: {
-                  error: {
-                    segment: "error",
-                    full: "/dashboard/disputes/personalitem/error",
-                    children: {},
-                  },
-                },
-              },
-              publicitem: {
-                segment: "publicitem",
-                full: "/dashboard/disputes/publicitem",
-                children: {
-                  error: {
-                    segment: "error",
-                    full: "/dashboard/disputes/publicitem/error",
-                    children: {},
-                  },
-                },
-              },
-              error: {
-                segment: "error",
-                full: "/dashboard/disputes/error",
-                children: {},
-              },
-            },
-          },
+        personalitem: {
+          segment: 'personalitem',
+          full: '/dashboard/disputes/personalitem',
           error: {
-            segment: "error",
-            full: "/dashboard/error",
-            children: {},
+            segment: 'error',
+            full: '/dashboard/disputes/personalitem/error',
           },
         },
-      },
-      onboarding: {
-        segment: "onboarding",
-        full: "/onboarding",
-        children: {
-          name: {
-            segment: "name",
-            full: "/onboarding/name",
-            children: {},
-          },
-          address: {
-            segment: "address",
-            full: "/onboarding/address",
-            children: {},
-          },
-          identity: {
-            segment: "identity",
-            full: "/onboarding/identity",
-            children: {},
-          },
-          identityfull: {
-            segment: "identityfull",
-            full: "/onboarding/identityfull",
-            children: {},
-          },
-          verify: {
-            segment: "verify",
-            full: "/onboarding/verify",
-            children: {},
-          },
-          code: {
-            segment: "code",
-            full: "/onboarding/code",
-            children: {},
-          },
-          kba: {
-            segment: "kba",
-            full: "/onboarding/kba",
-            children: {},
-          },
-          congratulations: {
-            segment: "congratulations",
-            full: "/onboarding/congratulations",
-            children: {},
-          },
-          returning: {
-            segment: "returning",
-            full: "/onboarding/returning",
-            children: {},
-          },
+        publicitem: {
+          segment: 'publicitem',
+          full: '/dashboard/disputes/publicitem',
+
           error: {
-            segment: "error",
-            full: "/onboarding/error",
-            children: {},
+            segment: 'error',
+            full: '/dashboard/disputes/publicitem/error',
           },
-          retry: {
-            segment: "retry",
-            full: "/onboarding/retry",
-            children: {},
-          },
+        },
+        error: {
+          segment: 'error',
+          full: '/dashboard/disputes/error',
         },
       },
-      suspended: {
-        segment: "suspended",
-        full: "/suspended",
-        children: {
-          default: {
-            segment: "default",
-            full: "/suspended/default",
-            children: {},
-          },
-        },
+      error: {
+        segment: 'error',
+        full: '/dashboard/error',
+      },
+    },
+    onboarding: {
+      segment: 'onboarding',
+      full: '/onboarding',
+      name: {
+        segment: 'name',
+        full: '/onboarding/name',
+      },
+      address: {
+        segment: 'address',
+        full: '/onboarding/address',
+      },
+      identity: {
+        segment: 'identity',
+        full: '/onboarding/identity',
+      },
+      identityfull: {
+        segment: 'identityfull',
+        full: '/onboarding/identityfull',
+      },
+      verify: {
+        segment: 'verify',
+        full: '/onboarding/verify',
+      },
+      code: {
+        segment: 'code',
+        full: '/onboarding/code',
+      },
+      kba: {
+        segment: 'kba',
+        full: '/onboarding/kba',
+      },
+      congratulations: {
+        segment: 'congratulations',
+        full: '/onboarding/congratulations',
+      },
+      returning: {
+        segment: 'returning',
+        full: '/onboarding/returning',
+      },
+      error: {
+        segment: 'error',
+        full: '/onboarding/error',
+      },
+      retry: {
+        segment: 'retry',
+        full: '/onboarding/retry',
+      },
+    },
+    suspended: {
+      segment: 'suspended',
+      full: '/suspended',
+      default: {
+        segment: 'default',
+        full: '/suspended/default',
       },
     },
   },
 };
-
-// const test = () => {
-//   const routes = ROUTES;
-//   this.router.navigate([`${routes.root.children.auth.children.signup}`])
-// }

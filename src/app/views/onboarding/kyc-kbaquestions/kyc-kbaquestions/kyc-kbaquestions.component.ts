@@ -87,7 +87,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.kba?.kba?.scroll(scroll, 0, max);
     } else {
       this.kycService.inactivateStep(this.stepID);
-      this.router.navigate([routes.root.children.onboarding.children.identity.full]);
+      this.router.navigate([routes.root.onboarding.identity.full]);
       return;
     }
   }
@@ -186,7 +186,7 @@ export class KycKbaquestionsComponent implements OnInit {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
       success
-        ? this.router.navigate([routes.root.children.onboarding.children.congratulations.full])
+        ? this.router.navigate([routes.root.onboarding.congratulations.full])
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
       console.log('error:completeOnboarding ===> ', err);
@@ -206,7 +206,7 @@ export class KycKbaquestionsComponent implements OnInit {
   }
 
   async handleAPIError(): Promise<void> {
-    this.router.navigate([routes.root.children.onboarding.children.retry.full]);
+    this.router.navigate([routes.root.onboarding.retry.full]);
     this.interstitial.fetching$.next(false);
   }
 
