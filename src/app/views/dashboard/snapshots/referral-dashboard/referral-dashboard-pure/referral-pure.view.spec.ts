@@ -63,20 +63,20 @@ describe('ReferralPureView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('visual changes based on api input', () => {
-    let divAmount = dh.count('div');
+  describe('check that all presentational changes are correct', () => {
+    it('visual changes based on api input', () => {
+      let divAmount = dh.count('div');
 
-    expect(divAmount).toEqual(2);
+      expect(divAmount).toEqual(2);
+    });
   });
 
-  it('should have metrics in referral banner', () => {
-    let result = dh.hasPropValue(
-      'brave-referral-banner',
-      'metrics',
-      metricsMock
-    );
+  describe('confirm that all component are being passed correct data', () => {
+    it('should have metrics in referral banner', () => {
+      let result = dh.hasPropValue('brave-referral-banner', 'metrics', metricsMock);
 
-    expect(result).toEqual(true);
+      expect(result).toEqual(true);
+    });
   });
 
   it('should have proper amount based on payments info', () => {
@@ -86,6 +86,6 @@ describe('ReferralPureView', () => {
 
     console.log('RESULT', component.payments);
 
-    // expect(result).toEqual();
+    // expect(result).toEqual(); //TODO
   });
 });
