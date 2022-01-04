@@ -51,7 +51,7 @@ export class SignupComponent implements OnInit {
         this.analytics.fireUserTrackingEvent(sub);
         this.analytics.addToCohort();
         this.interstitial.fetching$.next(false);
-        this.router.navigate([routes.root.children.auth.children.thankyou.full]);
+        this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
@@ -99,27 +99,27 @@ export class SignupComponent implements OnInit {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate([routes.root.children.auth.children.forgot.full]);
+    this.router.navigate([routes.root.auth.forgot.full]);
   }
 
   /**
    * Method to route user to login
    */
   goToLogin(): void {
-    this.router.navigate([routes.root.children.auth.children.signin.full]);
+    this.router.navigate([routes.root.auth.signin.full]);
   }
 
   /**
    * Method to route user to privacy policy
    */
   goToPrivacy(): void {
-    this.router.navigate([routes.root.children.compliance.children.privacy.full]);
+    this.router.navigate([routes.root.compliance.privacy.full]);
   }
 
   /**
    * Method to route user to terms of service
    */
   goToTerms(): void {
-    this.router.navigate([routes.root.children.compliance.children.tos.full]);
+    this.router.navigate([routes.root.compliance.tos.full]);
   }
 }

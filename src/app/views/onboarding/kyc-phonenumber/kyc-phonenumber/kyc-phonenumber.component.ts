@@ -34,7 +34,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate([routes.root.children.onboarding.children.identity.full]);
+    this.router.navigate([routes.root.onboarding.identity.full]);
   }
 
   /**
