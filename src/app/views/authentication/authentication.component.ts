@@ -8,16 +8,17 @@ import { Subscription } from 'rxjs';
   templateUrl: './authentication.component.html',
 })
 export class AuthenticationComponent implements OnDestroy {
-  constructor() {
+  routeSub$: Subscription | undefined;
+  constructor(private route: ActivatedRoute, private referrals: ReferralsService) {
     //referral code
-    // this.routeSub$ = this.route.queryParams.subscribe((params) => {
-    //   const { referralCode } = params;
-    //   if (!referralCode) return;
-    //   this.referrals.referredByCode$.next(referralCode);
-    // });
+    this.routeSub$ = this.route.queryParams.subscribe((params) => {
+      const { referralCode } = params;
+      if (!referralCode) return;
+      this.referrals.referredByCode$.next(referralCode);
+    });
   }
 
   ngOnDestroy(): void {
-    // if (this.routeSub$) this.routeSub$.unsubscribe();
+    if (this.routeSub$) this.routeSub$.unsubscribe();
   }
 }

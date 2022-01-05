@@ -11,7 +11,6 @@ import { SignupKnowyouComponent } from '@views/authentication/signup-knowyou/sig
 import { SignupResendComponent } from '@views/authentication/signup-resend/signup-resend.component';
 import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
-import { RedirectResolver } from '@shared/resolvers/redirect.resolver';
 import { DeactivatedComponent } from '@views/authentication/deactivated/deactivated.component';
 import { ROUTE_NAMES as routes } from '../../shared/routes/routes.names';
 
@@ -21,47 +20,47 @@ const AuthenticationRoutes: Routes = [
     component: AuthenticationComponent,
     children: [
       {
-        path: routes.root.children.auth.children.signup.segment,
+        path: `${routes.root.auth.signup.segment}`,
         component: SignupComponent,
       },
       {
-        path: routes.root.children.auth.children.signin.segment,
+        path: `${routes.root.auth.signin.segment}`,
         component: SigninComponent,
       },
       {
-        path: routes.root.children.auth.children.forgot.segment,
+        path: `${routes.root.auth.forgot.segment}`,
         component: SigninForgotComponent,
       },
       {
-        path: routes.root.children.auth.children.redirect.segment,
+        path: `${routes.root.auth.redirect.segment}`,
         component: SigninRedirectComponent,
       },
       {
-        path: routes.root.children.auth.children.created.segment,
+        path: `${routes.root.auth.created.segment}`,
         component: SigninRedirectNewuserComponent,
       },
       {
-        path: routes.root.children.auth.children.thankyou.segment,
+        path: `${routes.root.auth.thankyou.segment}`,
         component: SignupThankyouComponent,
       },
       {
-        path: routes.root.children.auth.children.name.segment,
+        path: `${routes.root.auth.name.segment}`,
         component: SignupKnowyouComponent,
       },
       {
-        path: routes.root.children.auth.children.error.segment,
+        path: `${routes.root.auth.error.segment}`,
         component: SignupErrorComponent,
       },
       {
-        path: routes.root.children.auth.children.invalid.segment,
+        path: `${routes.root.auth.invalid.segment}`,
         component: SignupErrorValidationComponent,
       },
       {
-        path: routes.root.children.auth.children.resend.segment,
+        path: `${routes.root.auth.resend.segment}`,
         component: SignupResendComponent,
       },
       {
-        path: routes.root.children.auth.children.deactivated.segment,
+        path: `${routes.root.auth.deactivated.segment}`,
         component: DeactivatedComponent,
       },
       {

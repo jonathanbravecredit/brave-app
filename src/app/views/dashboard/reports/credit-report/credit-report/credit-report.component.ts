@@ -1,26 +1,26 @@
-import { Component, OnInit, AfterViewInit, Input } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Store } from "@ngxs/store";
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngxs/store';
 import {
   IBorrower,
   IMergeReport,
   IPublicPartition,
   ITradeLinePartition,
-} from "@shared/interfaces/merge-report.interface";
-import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
-import { PreferencesStateModel } from "@store/preferences";
-import * as PreferenceActions from "@store/preferences/preferences.actions";
-import { ICreditReportTradelinesCardGroup } from "@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component";
-import { Observable } from "rxjs";
-import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
-import { AnalyticPageViewEvents } from "@shared/services/analytics/analytics/constants";
-import { TransunionService } from "@shared/services/transunion/transunion.service";
-import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+} from '@shared/interfaces/merge-report.interface';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { PreferencesStateModel } from '@store/preferences';
+import * as PreferenceActions from '@store/preferences/preferences.actions';
+import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
+import { Observable } from 'rxjs';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
-  selector: "brave-credit-report",
-  templateUrl: "./credit-report.component.html",
+  selector: 'brave-credit-report',
+  templateUrl: './credit-report.component.html',
 })
 export class CreditReportComponent implements OnInit, AfterViewInit {
   preferences$: Observable<PreferencesStateModel>;
@@ -33,7 +33,7 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private analytics: AnalyticsService,
-    private transunion: TransunionService
+    private transunion: TransunionService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
@@ -71,9 +71,7 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
    */
   onViewDetailClick(tradeline: ITradeLinePartition): void {
     this.creditReportService.setTradeline(tradeline);
-    this.router.navigate([
-      routes.root.children.dashboard.children.report.children.tradeline.full,
-    ]);
+    this.router.navigate([routes.root.dashboard.report.tradeline.full]);
   }
 
   /**
@@ -83,9 +81,7 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
    */
   onViewPublicItemDetailClick(publicItem: IPublicPartition): void {
     this.creditReportService.setPublicItem(publicItem);
-    this.router.navigate([
-      routes.root.children.dashboard.children.report.children.publicitem.full,
-    ]);
+    this.router.navigate([routes.root.dashboard.report.publicitem.full]);
   }
 
   /**
@@ -95,8 +91,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
    */
   onViewPersonalItemDetailClick(personalItem: IBorrower): void {
     this.creditReportService.setPersonalItem(personalItem);
-    this.router.navigate([
-      routes.root.children.dashboard.children.report.children.personalitem.full,
-    ]);
+    this.router.navigate([routes.root.dashboard.report.personalitem.full]);
   }
 }

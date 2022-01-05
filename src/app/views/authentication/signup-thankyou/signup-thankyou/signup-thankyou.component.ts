@@ -29,7 +29,7 @@ export class SignupThankyouComponent implements OnInit, OnDestroy {
       this.auth.resendSignUp(this.email)?.then(() => {
         setTimeout(async () => {
           await this.auth.signOut();
-          this.router.navigate([routes.root.children.auth.children.signin.full]);
+          this.router.navigate([routes.root.auth.signin.full]);
         }, 2000);
       });
     }

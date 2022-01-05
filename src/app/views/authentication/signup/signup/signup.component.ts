@@ -7,6 +7,7 @@ import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/sig
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -23,6 +24,7 @@ export class SignupComponent implements OnInit {
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
+    private referral: ReferralsService,
   ) {}
 
   ngOnInit(): void {}
@@ -50,8 +52,10 @@ export class SignupComponent implements OnInit {
         this.analytics.fireCompleteRegistration(0.0, 'USD');
         this.analytics.fireUserTrackingEvent(sub);
         this.analytics.addToCohort();
+        const code = this.referral.referredByCode$.value;
+        await this.referral.createReferral(sub, code);
         this.interstitial.fetching$.next(false);
-        this.router.navigate([routes.root.children.auth.children.thankyou.full]);
+        this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
@@ -99,27 +103,27 @@ export class SignupComponent implements OnInit {
    * Method to route user to forgot
    */
   goToForgot(): void {
-    this.router.navigate([routes.root.children.auth.children.forgot.full]);
+    this.router.navigate([routes.root.auth.forgot.full]);
   }
 
   /**
    * Method to route user to login
    */
   goToLogin(): void {
-    this.router.navigate([routes.root.children.auth.children.signin.full]);
+    this.router.navigate([routes.root.auth.signin.full]);
   }
 
   /**
    * Method to route user to privacy policy
    */
   goToPrivacy(): void {
-    this.router.navigate([routes.root.children.compliance.children.privacy.full]);
+    this.router.navigate([routes.root.compliance.privacy.full]);
   }
 
   /**
    * Method to route user to terms of service
    */
   goToTerms(): void {
-    this.router.navigate([routes.root.children.compliance.children.tos.full]);
+    this.router.navigate([routes.root.compliance.tos.full]);
   }
 }

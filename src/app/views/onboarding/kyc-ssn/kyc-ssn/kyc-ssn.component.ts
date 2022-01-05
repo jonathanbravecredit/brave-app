@@ -38,7 +38,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    */
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate([routes.root.children.onboarding.children.address.full]);
+    this.router.navigate([routes.root.onboarding.address.full]);
   }
 
   /**
@@ -69,7 +69,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
             } as UserAttributesInput;
             await this.kycService.updateUserAttributesAsync(newAttrs);
             this.kycService.completeStep(this.stepID);
-            this.router.navigate([routes.root.children.onboarding.children.verify.full]);
+            this.router.navigate([routes.root.onboarding.verify.full]);
           }
         }
       } catch {
@@ -98,7 +98,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
       indicativeEnrichmentStatus: tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false, resp),
     };
     this.kycService.updateIndicativeEnrichment(tuPartial);
-    this.router.navigate([routes.root.children.onboarding.children.identityfull.full]);
+    this.router.navigate([routes.root.onboarding.identityfull.full]);
   }
 }
 
