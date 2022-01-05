@@ -28,9 +28,6 @@ export class ReferralDashboardView implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('TEST ==>>', this.payments);
-
-    console.log('METRICS', this.metrics);
   }
 
   ngOnDestroy(): void {
