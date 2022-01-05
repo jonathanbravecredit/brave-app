@@ -15,6 +15,7 @@ export class ReferralsService implements OnDestroy {
   campaign = CURRENT_CAMPAIGN;
   referredByCode$ = new BehaviorSubject<string | null>(null);
   isActive: boolean = false;
+  isActive$ = new BehaviorSubject<boolean>(false);
   isActiveSub$: Subscription | undefined;
 
   constructor(
@@ -25,6 +26,7 @@ export class ReferralsService implements OnDestroy {
   ) {
     this.isActiveSub$ = this.feature.referrals$.subscribe((isActive) => {
       this.isActive = isActive;
+      this.isActive$.next(isActive);
     });
   }
 
@@ -92,7 +94,12 @@ export class ReferralsService implements OnDestroy {
    * @returns
    */
   async getReferralMonthlyCampaignEarnings(month?: string, year?: string): Promise<IGroupedYearMonthReferral[]> {
+    console.log('ACTIVE', this.isActive);
+
     if (!this.isActive) return [];
+
+    console.log('HERE');
+
     const url = `${environment.marketing}/referral/campaign/earnings/monthly`;
     const token = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
