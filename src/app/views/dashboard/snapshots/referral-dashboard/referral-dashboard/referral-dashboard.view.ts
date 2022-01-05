@@ -23,7 +23,7 @@ export class ReferralDashboardView implements OnInit, OnDestroy {
     });
 
     this.isActiveSub$ = this.referralService.isActive$.subscribe((isActive) => {
-      this.disabled = isActive;
+      this.disabled = !isActive;
     });
   }
 
