@@ -23,6 +23,7 @@ import { AppStatusReason } from '@shared/utils/brave/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 @Component({
   selector: 'brave-kyc-kbaquestions',
@@ -44,6 +45,7 @@ export class KycKbaquestionsComponent implements OnInit {
     private interstitial: InterstitialService,
     private kycService: KycService,
     private analytics: AnalyticsService,
+    private referral: ReferralsService,
     private store: Store,
   ) {
     this.agenciesSub$ = this.agencies$
@@ -185,6 +187,8 @@ export class KycKbaquestionsComponent implements OnInit {
     try {
       this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
+      const sub = await this.kycService.getUserSub();
+      this.referral.updateReferral(sub, 'enrolled');
       success
         ? this.router.navigate([routes.root.onboarding.congratulations.full])
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);

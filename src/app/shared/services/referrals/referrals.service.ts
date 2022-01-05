@@ -47,8 +47,7 @@ export class ReferralsService implements OnDestroy {
     let body = { id: sub, campaign: this.campaign, referredByCode };
     let headers = {};
     let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
-    // return await fetch(signedReq);
-    return;
+    return await fetch(signedReq);
   }
 
   /**
