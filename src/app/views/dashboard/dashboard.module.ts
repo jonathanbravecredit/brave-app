@@ -80,6 +80,7 @@ import { ReferralAmountLinkComponent } from "./snapshots/referral-dashboard/comp
 import { ReferralBodyTextComponent } from "./snapshots/referral-dashboard/components/referral-body-text/referral-body-text.component";
 import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
 import { FacebookShareComponent } from "@shared/components/share-buttons/facebook-share/facebook-share.component";
+import { SettingsWarningComponent } from './settings/components/settings-warning/settings-warning.component';
 
 const modules = [
   CommonModule,
@@ -158,7 +159,7 @@ const components = [
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, SettingsWarningComponent],
   imports: [...modules],
   exports: [...components],
 })

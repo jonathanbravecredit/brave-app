@@ -14,4 +14,7 @@
       <brave-filled-spinning-button (click)="deactivateClick.emit()">{{ content.b1 }}</brave-filled-spinning-button>
     </div>
   </ng-container>
+  <ng-container *ngIf="showWarning">
+    <brave-settings-warning [title]="warningContent.h1" [text]="warningContent.p1"> </brave-settings-warning>
+  </ng-container>
 </div>

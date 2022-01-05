@@ -67,11 +67,6 @@ export class SettingsComponent implements OnInit {
 
   onDeactivateClick(): void {
     // evt.password -- we actually don't need the password, just there to act as a deterent
-    setTimeout(() => {
-      this.deactivateError = 'Sorry we could not deactive your account at this time.';
-      this.haveDeactivateError = true;
-      this.interstitial.fetching$.next(false);
-    }, 4000);
     this.settings
       .deactivateAccount()
       .then((results) => {
