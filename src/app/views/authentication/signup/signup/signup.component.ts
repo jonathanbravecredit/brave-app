@@ -7,6 +7,7 @@ import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/sig
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -23,6 +24,7 @@ export class SignupComponent implements OnInit {
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
+    private referral: ReferralsService,
   ) {}
 
   ngOnInit(): void {}
@@ -50,6 +52,8 @@ export class SignupComponent implements OnInit {
         this.analytics.fireCompleteRegistration(0.0, 'USD');
         this.analytics.fireUserTrackingEvent(sub);
         this.analytics.addToCohort();
+        const code = this.referral.referredByCode$.value;
+        await this.referral.createReferral(sub, code);
         this.interstitial.fetching$.next(false);
         this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
