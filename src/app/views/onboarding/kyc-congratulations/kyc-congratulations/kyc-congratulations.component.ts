@@ -9,7 +9,8 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
