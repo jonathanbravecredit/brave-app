@@ -75,25 +75,25 @@ describe('SignupComponent', () => {
     });
 
     it('should run router.navigate when goToForgot is called', () => {
-      const route = [routes.root.children.auth.children.forgot.full];
+      const route = [routes.root.auth.forgot.full];
       component.goToForgot();
       expect(routerMock.navigate).toHaveBeenCalledWith(route);
     });
 
     it('should run router.navigate when goToLogin is called', () => {
-      const route = [routes.root.children.auth.children.signin.full];
+      const route = [routes.root.auth.signin.full];
       component.goToLogin();
       expect(routerMock.navigate).toHaveBeenCalledWith(route);
     });
 
     it('should run router.navigate when goToPrivacy is called', () => {
-      const route = [routes.root.children.compliance.children.privacy.full];
+      const route = [routes.root.compliance.privacy.full];
       component.goToPrivacy();
       expect(routerMock.navigate).toHaveBeenCalledWith(route);
     });
 
     it('should run router.navigate when goToTerms is called', () => {
-      const route = [routes.root.children.compliance.children.tos.full];
+      const route = [routes.root.compliance.tos.full];
       component.goToTerms();
       expect(routerMock.navigate).toHaveBeenCalledWith(route);
     });
