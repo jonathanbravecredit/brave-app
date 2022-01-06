@@ -12,6 +12,6 @@
     "authRoleName": {
         "Ref": "AuthRoleName"
     },
-    "S3DeploymentBucket": "amplify-braveapp-prod-115121-deployment",
+    "S3DeploymentBucket": "amplify-braveapp-dev-110519-deployment",
     "S3DeploymentRootKey": "amplify-appsync-files/48ccaf089dee0e36e8c4c1dd5b3eea98ce80f563"
 }
