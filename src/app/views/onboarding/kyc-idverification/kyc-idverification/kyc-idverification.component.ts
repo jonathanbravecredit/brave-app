@@ -50,7 +50,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate([routes.root.children.onboarding.children.verify.full]);
+    this.router.navigate([routes.root.onboarding.verify.full]);
   }
 
   updateViewState(viewState: KycIdverificationState) {
@@ -165,8 +165,10 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     try {
       await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
+      const sub = await this.kycService.getUserSub();
+      this.referral.updateReferral(sub, 'enrolled');
       success
-        ? this.router.navigate([routes.root.children.onboarding.children.congratulations.full]) // api successful and TU successful
+        ? this.router.navigate([routes.root.onboarding.congratulations.full]) // api successful and TU successful
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
       console.log('error:completeOnboarding ===> ', err);
@@ -191,7 +193,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
   }
 
   handleAPIError(): void {
-    this.router.navigate([routes.root.children.onboarding.children.retry.full]);
+    this.router.navigate([routes.root.onboarding.retry.full]);
     this.interstitial.fetching$.next(false);
   }
 

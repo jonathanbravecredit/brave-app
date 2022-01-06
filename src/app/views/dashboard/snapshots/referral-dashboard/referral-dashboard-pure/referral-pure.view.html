@@ -6,7 +6,7 @@
     "
     class="p-2 pb-10"
   >
-    <brave-referral-banner [metrics]="metrics"></brave-referral-banner>
+    <brave-referral-banner [metrics]="metrics" [disabled]="disabled"></brave-referral-banner>
     <brave-referral-earnings
       [payments]="payments"
       [metrics]="metrics"
@@ -14,7 +14,19 @@
     <brave-referral-amount-link
       [metrics]="metrics"
       [referral]="referral"
+      [disabled]="disabled"
     ></brave-referral-amount-link>
+    <h3 *ngIf="!disabled" class="text-lg mb-4 mt-10 text-white">
+      Or, click to share your link via social media:
+    </h3>
+    <div *ngIf="!disabled" class="min-w-full flex justify-evenly">
+      <brave-facebook-share
+        [referralCode]="referral?.referralCode"
+      ></brave-facebook-share>
+      <brave-twitter-share
+        [referralCode]="referral?.referralCode"
+      ></brave-twitter-share>
+    </div>
     <brave-referral-body-text></brave-referral-body-text>
   </div>
 </ng-container>

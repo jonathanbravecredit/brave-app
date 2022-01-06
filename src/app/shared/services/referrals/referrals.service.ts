@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '@environments/environment';
 import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
@@ -15,6 +15,7 @@ export class ReferralsService implements OnDestroy {
   campaign = CURRENT_CAMPAIGN;
   referredByCode$ = new BehaviorSubject<string | null>(null);
   isActive: boolean = false;
+  isActive$ = new BehaviorSubject<boolean>(false);
   isActiveSub$: Subscription | undefined;
 
   constructor(
@@ -25,6 +26,7 @@ export class ReferralsService implements OnDestroy {
   ) {
     this.isActiveSub$ = this.feature.referrals$.subscribe((isActive) => {
       this.isActive = isActive;
+      this.isActive$.next(isActive);
     });
   }
 
@@ -45,8 +47,7 @@ export class ReferralsService implements OnDestroy {
     let body = { id: sub, campaign: this.campaign, referredByCode };
     let headers = {};
     let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
-    // return await fetch(signedReq);
-    return;
+    return await fetch(signedReq);
   }
 
   /**
@@ -74,7 +75,7 @@ export class ReferralsService implements OnDestroy {
    * Returns the current users referral record
    * @returns
    */
-  async getReferral(): Promise<any> {
+  async getReferral(): Promise<IReferral> {
     const url = `${environment.marketing}/referral`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
@@ -93,6 +94,7 @@ export class ReferralsService implements OnDestroy {
    */
   async getReferralMonthlyCampaignEarnings(month?: string, year?: string): Promise<IGroupedYearMonthReferral[]> {
     if (!this.isActive) return [];
+
     const url = `${environment.marketing}/referral/campaign/earnings/monthly`;
     const token = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({

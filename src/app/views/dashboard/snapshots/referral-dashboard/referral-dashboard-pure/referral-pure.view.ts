@@ -9,6 +9,7 @@ export class ReferralDashboardPureView implements OnInit {
   @Input() referral: IReferral | undefined;
   @Input() metrics: IGroupedYearMonthReferral[] = [];
   @Input() payments: IPayments | undefined;
+  @Input() disabled: boolean | undefined;
   private _isSuspended: boolean = false;
   set isSuspended(value: boolean) {
     this._isSuspended = value;

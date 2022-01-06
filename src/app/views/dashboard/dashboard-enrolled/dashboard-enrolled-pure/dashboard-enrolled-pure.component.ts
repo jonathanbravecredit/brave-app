@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { IMergeReport } from "@shared/interfaces";
 import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
 import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface";
-import { IGroupedYearMonthReferral } from "@shared/interfaces/referrals.interface";
+import { IGroupedYearMonthReferral, IReferral } from "@shared/interfaces/referrals.interface";
 import { AnalyticClickEvents } from "@shared/services/analytics/analytics/constants";
 import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
 import { DashboardStateModel } from "@store/dashboard/dashboard.model";
@@ -29,6 +29,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() pages!: any[];
   @Input() data: {}[] | undefined;
   @Input() rating: string | undefined;
+  @Input() referral: IReferral | undefined;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();

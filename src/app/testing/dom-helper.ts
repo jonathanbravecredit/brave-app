@@ -26,7 +26,10 @@ export class DOMHelper<T> {
   countText(tagName: string, text: string): number {
     const elements = this.fixture.debugElement.queryAll(By.css(tagName));
     return elements.filter(
-      (element) => element.nativeElement.textContent === text
+      (element) => {
+        // console.log('TEXT =>>', element.nativeElement.textContent, text, element.nativeElement.textContent === text)
+        element.nativeElement.textContent === text
+      }
     ).length;
   }
 

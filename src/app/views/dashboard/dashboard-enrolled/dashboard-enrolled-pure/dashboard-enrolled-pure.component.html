@@ -102,7 +102,7 @@
 </div>
 
 <!-- Referral Gauge -->
-<ng-container *ngIf="featureflags.referralsShow$ | async">
+<ng-container *ngIf="(featureflags.referralsShow$ | async) && referral?.referralApproved">
   <h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
   <p class="text-sm mb-4">Refer your friends to Brave Credit so you both earn rewards on your credit journey</p>
 

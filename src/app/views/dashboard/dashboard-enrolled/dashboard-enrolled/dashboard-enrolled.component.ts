@@ -10,7 +10,7 @@ import {
   ICreditMixTLSummary,
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
+import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Subscription } from 'rxjs';
@@ -35,6 +35,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   rating: string | undefined;
   creditUtilizationPerc: number | undefined;
   routeSub$: Subscription | undefined;
+  referral: IReferral | undefined;
 
   constructor(
     private router: Router,
@@ -66,12 +67,12 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
       this.metrics = resp.dashboard.referrals;
+      this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
-
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
@@ -87,7 +88,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.negative.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.negative.full]);
   }
 
   onForbearanceItemsClicked() {
@@ -95,35 +96,33 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.forbearance.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.forbearance.full]);
   }
 
   onDatabreachItemsClicked() {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.databreach.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.databreach.full]);
   }
 
   onFullReportClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.report.full]);
+    this.router.navigate([routes.root.dashboard.report.full]);
   }
 
   onDisputesClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.disputes.full]);
+    this.router.navigate([routes.root.dashboard.disputes.full]);
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate([
-      routes.root.children.dashboard.children.report.children.snapshot.children.creditutilization.full,
-    ]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.creditutilization.full]);
   }
 
   onCreditMixClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.creditmix.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.creditmix.full]);
   }
 
   onReferralsClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.referrals.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.referrals.full]);
   }
 }
