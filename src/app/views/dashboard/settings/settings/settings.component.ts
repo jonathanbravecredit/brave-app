@@ -25,6 +25,7 @@ export class SettingsComponent implements OnInit {
   haveDeactivateError: boolean = false;
   deactivateSuccess: boolean = false;
   deactivateError: string = '';
+  showDeactivateWarning: boolean = false;
   init: ISettingsViews = SettingsOptions.Init;
   alertConfig = ALERT_CONFIG;
   constructor(
@@ -78,6 +79,8 @@ export class SettingsComponent implements OnInit {
       .catch((err) => {
         this.deactivateError = 'Sorry we could not deactive your account at this time.';
         this.haveDeactivateError = true;
+        this.showDeactivateWarning = true;
+        this.interstitial.stopSpinner();
         this.interstitial.fetching$.next(false);
       });
   }

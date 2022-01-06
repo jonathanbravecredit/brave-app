@@ -12,6 +12,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IDispute } from '@shared/interfaces/disputes';
+import { IErrorResponse } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -187,18 +188,6 @@ export class DisputeService implements OnDestroy {
     }
   }
 
-  // /**
-  //  * Query the TU service for any investigation results
-  //  * @returns
-  //  */
-  // async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
-  //   try {
-  //     return await this.transunion.getInvestigationResults(disputeId);
-  //   } catch (err) {
-  //     throw `disputeService:getInvestigationResults=${err}`;
-  //   }
-  // }
-
   /**
    * Query the TU service for any investigation results by report id
    * @returns
@@ -220,6 +209,22 @@ export class DisputeService implements OnDestroy {
       return await this.transunion.getCreditBureauResultsById(id);
     } catch (err) {
       throw `disputeService:getInvestigationResults=${err}`;
+    }
+  }
+
+  /**
+   * Query to return all the users disputes
+   * @returns
+   */
+  async getDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
+    try {
+      return await this.transunion.sendTransunionAPICall('ListDisputeByUser', JSON.stringify({}));
+    } catch (err) {
+      return {
+        success: false,
+        error: err as IErrorResponse,
+        data: [],
+      };
     }
   }
 }
