@@ -1,41 +1,34 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { Router } from "@angular/router";
-import { Store } from "@ngxs/store";
+import { Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngxs/store';
 import {
   APIService,
   CreateAppDataInput,
   GetAppDataQuery,
   OnUpdateAppDataSubscription,
-} from "@shared/services/aws/api.service";
-import * as AppDataActions from "@store/app-data/app-data.actions";
-import { AppDataStateModel } from "@store/app-data";
-import { BehaviorSubject, Observable } from "rxjs";
-import { ZenObservable } from "zen-observable-ts";
-import * as queries from "@shared/queries";
-import { StateService } from "@shared/services/state/state.service";
-import { Auth } from "aws-amplify";
-import { CognitoUser } from "amazon-cognito-identity-js";
-import { BraveUtil } from "@shared/utils/brave/brave";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+} from '@shared/services/aws/api.service';
+import * as AppDataActions from '@store/app-data/app-data.actions';
+import { AppDataStateModel } from '@store/app-data';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ZenObservable } from 'zen-observable-ts';
+import * as queries from '@shared/queries';
+import { StateService } from '@shared/services/state/state.service';
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from 'amazon-cognito-identity-js';
+import { BraveUtil } from '@shared/utils/brave/brave';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SyncService implements OnDestroy {
-  data$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject(
-    {} as AppDataStateModel
-  );
+  data$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
   fetching$ = new BehaviorSubject<boolean>(false);
   apiUpdateListener$: ZenObservable.Subscription | undefined;
   // apiCreateListener$: ZenObservable.Subscription;
   // apiDeleteListener$: ZenObservable.Subscription;
 
-  constructor(
-    private api: APIService,
-    private store: Store,
-    private router: Router,
-    private statesvc: StateService
-  ) {}
+  constructor(private api: APIService, private store: Store, private router: Router, private statesvc: StateService) {}
 
   ngOnDestroy(): void {
     if (this.apiUpdateListener$) this.apiUpdateListener$.unsubscribe();
@@ -81,15 +74,13 @@ export class SyncService implements OnDestroy {
   async subscribeToListeners(id: string): Promise<void> {
     const { owner } = await queries.GetOwner(id);
     if (owner) {
-      this.apiUpdateListener$ = this.api
-        .OnUpdateAppDataListener(owner)
-        .subscribe((data: any) => {
-          if (data.value.errors) throw `API OnUpdateAppDataListener error`;
-          const appData = data.value.data["onUpdateAppData"];
-          if (!appData) return;
-          const clean = this.cleanBackendData(appData);
-          this.store.dispatch(new AppDataActions.Edit(clean));
-        });
+      this.apiUpdateListener$ = this.api.OnUpdateAppDataListener(owner).subscribe((data: any) => {
+        if (data.value.errors) throw `API OnUpdateAppDataListener error`;
+        const appData = data.value.data['onUpdateAppData'];
+        if (!appData) return;
+        const clean = this.cleanBackendData(appData);
+        this.store.dispatch(new AppDataActions.Edit(clean));
+      });
     }
   }
 
@@ -127,7 +118,7 @@ export class SyncService implements OnDestroy {
       this.data$.next(clean);
       return data.user?.onboarding?.lastComplete === 3;
     } catch (err) {
-      console.log("isUserOnboarded ==> ", err);
+      console.log('isUserOnboarded ==> ', err);
       return false;
     }
   }
@@ -139,7 +130,7 @@ export class SyncService implements OnDestroy {
    */
   async goToDashboard(id: string): Promise<void> {
     // const data = await this.syncDBDownToState(id); // handled in resolver now
-    this.router.navigate([routes.root.children.dashboard.children.init.full]);
+    this.router.navigate([routes.root.dashboard.init.full]);
   }
 
   /**
@@ -170,20 +161,16 @@ export class SyncService implements OnDestroy {
   async initAppData(id: string): Promise<AppDataStateModel | undefined> {
     if (!id) return;
     try {
-      const input:
-        | CreateAppDataInput
-        | undefined = BraveUtil.generators.createNewUserData(id);
+      const input: CreateAppDataInput | undefined = BraveUtil.generators.createNewUserData(id);
       if (input === undefined) return;
       const data = await this.api.CreateAppData(input);
       const clean = this.cleanBackendData(data);
 
       return await new Promise((resolve, reject) => {
-        this.store
-          .dispatch(new AppDataActions.Add(clean))
-          .subscribe((appData) => {
-            this.data$.next(clean);
-            return resolve(clean);
-          });
+        this.store.dispatch(new AppDataActions.Add(clean)).subscribe((appData) => {
+          this.data$.next(clean);
+          return resolve(clean);
+        });
       });
     } catch (err) {
       throw new Error(`syncService:InitAppData=${JSON.stringify(err)}`);
@@ -199,26 +186,18 @@ export class SyncService implements OnDestroy {
   routeUser(lastComplete: number): void {
     switch (lastComplete) {
       case -1:
-        this.router.navigate([
-          routes.root.children.onboarding.children.name.full,
-        ]);
+        this.router.navigate([routes.root.onboarding.name.full]);
         break;
       case 0:
-        this.router.navigate([
-          routes.root.children.onboarding.children.address.full,
-        ]);
+        this.router.navigate([routes.root.onboarding.address.full]);
 
         break;
       case 1:
-        this.router.navigate([
-          routes.root.children.onboarding.children.identity.full,
-        ]);
+        this.router.navigate([routes.root.onboarding.identity.full]);
 
         break;
       case 2:
-        this.router.navigate([
-          routes.root.children.onboarding.children.verify.full,
-        ]);
+        this.router.navigate([routes.root.onboarding.verify.full]);
 
         break;
       default:
@@ -234,17 +213,14 @@ export class SyncService implements OnDestroy {
    * @param {string} id user id
    * @param {AppDataStateModel} payload (optional)
    */
-  async syncDBDownToState(
-    id: string,
-    payload?: AppDataStateModel
-  ): Promise<AppDataStateModel> {
+  async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
     let userId: string;
-    if (id === "") {
+    if (id === '') {
       const creds: CognitoUser = await Auth.currentAuthenticatedUser({
         bypassCache: true,
       });
       const attrs = await Auth.userAttributes(creds);
-      userId = attrs.filter((a) => a.Name === "sub")[0]?.Value;
+      userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     } else {
       userId = id;
     }
@@ -263,7 +239,7 @@ export class SyncService implements OnDestroy {
         });
       });
     } catch (err) {
-      throw "Error syncing db to state";
+      throw 'Error syncing db to state';
     }
   }
 
@@ -272,9 +248,7 @@ export class SyncService implements OnDestroy {
    * @param {GetAppDataQuery} data
    * @returns
    */
-  cleanBackendData(
-    data: GetAppDataQuery | OnUpdateAppDataSubscription
-  ): AppDataStateModel {
+  cleanBackendData(data: GetAppDataQuery | OnUpdateAppDataSubscription): AppDataStateModel {
     let clean = BraveUtil.scrubbers.scrubBackendData(data);
     return clean;
   }

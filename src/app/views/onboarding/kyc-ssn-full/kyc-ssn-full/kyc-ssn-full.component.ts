@@ -32,7 +32,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate([routes.root.children.onboarding.children.address.full]);
+    this.router.navigate([routes.root.onboarding.address.full]);
   }
 
   goToNext(form: FormGroup): void {
@@ -51,7 +51,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
         } as UserAttributesInput;
         this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
           this.kycService.completeStep(this.stepID);
-          this.router.navigate([routes.root.children.onboarding.children.verify.full]);
+          this.router.navigate([routes.root.onboarding.verify.full]);
         });
       }
     } else {

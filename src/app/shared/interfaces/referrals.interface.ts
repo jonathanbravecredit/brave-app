@@ -8,6 +8,7 @@ export interface IReferral {
   referredByCode: string;
   campaign?: string;
   referralStatus: 'active' | 'suspended' | undefined;
+  referralApproved: boolean | undefined;
 }
 
 export interface IGetReferral {
@@ -36,12 +37,12 @@ export interface ICreateReferral {
 export interface IGroupedYearMonthReferral {
   yearMonth: number;
   referrals: number;
-  earnings: number;
-  currency: string;
 }
 
 export interface IPayments {
   paymentsPending: number;
   paymentsProcessed: number;
   paymentScheduledDate: string | moment.Moment;
+  currency: string;
+  earningsAmount: number;
 }

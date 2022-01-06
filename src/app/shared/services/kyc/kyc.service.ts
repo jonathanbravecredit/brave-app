@@ -326,13 +326,13 @@ export class KycService {
             const pinData = await this.startPinClock();
             const questionData = await this.updateCurrentRawQuestionsAsync(codeQuestions);
             await this.updateAgenciesAsync(questionData.agencies); // success, sync up to db
-            this.router.navigate([routes.root.children.onboarding.children.code.full]);
+            this.router.navigate([routes.root.onboarding.code.full]);
           }
         } else {
           // since no otp question found, they are kba based and already save...start KBA countdown
           const kbaData = await this.startKbaClock();
           await this.updateAgenciesAsync(kbaData.agencies);
-          this.router.navigate([routes.root.children.onboarding.children.kba.full]);
+          this.router.navigate([routes.root.onboarding.kba.full]);
         }
       }
     }
@@ -361,7 +361,7 @@ export class KycService {
       } else {
         await this.updateCurrentRawQuestionsAsync(xml); // will throw error if connection issue
         // do not restart clock
-        this.router.navigate([routes.root.children.onboarding.children.kba.full]);
+        this.router.navigate([routes.root.onboarding.kba.full]);
       }
     }
   }
@@ -580,7 +580,7 @@ export class KycService {
     if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
       // technical error...api did not respond and error thrown (empty resp);
       this.analytics.fireErrorEvent(AnalyticErrorEvents.ApiTechnicalIssue);
-      this.router.navigate([routes.root.children.onboarding.children.retry.full]);
+      this.router.navigate([routes.root.onboarding.retry.full]);
     } else {
       const critical = tu.queries.exceptions.isErrorCritical(resp);
       const authAttempts = transunion.authAttempt || 0;
@@ -596,7 +596,7 @@ export class KycService {
       } else if (authAttempts >= 2) {
         await this.handleSuspension(AppStatusReason.AuthAttemptsExceeded);
       } else {
-        this.router.navigate([routes.root.children.onboarding.children.retry.full]);
+        this.router.navigate([routes.root.onboarding.retry.full]);
       }
     }
   }
@@ -634,7 +634,7 @@ export class KycService {
       duration: 24 * 30,
     };
     await this.suspendUser(suspension);
-    this.router.navigate([routes.root.children.suspended.children.default.full]);
+    this.router.navigate([routes.root.suspended.default.full]);
   }
 
   /**
