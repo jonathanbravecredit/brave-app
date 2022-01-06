@@ -23,9 +23,6 @@ export class ReferralAmountLinkComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-
-    console.log(this.disabled)
-
     const now = new Date();
     const currYearMonth = +moment(now).format('YYYYMM');
     if (this.metrics.length) {
