@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -15,6 +16,7 @@ export class SettingsService {
     private router: Router,
     private auth: AuthService,
     private dispute: DisputeService,
+    private transunion: TransunionService,
     private interstitial: InterstitialService,
   ) {}
 
@@ -107,12 +109,14 @@ export class SettingsService {
         // no open disputes...compolete or inprogress
         const complete = data.filter((d) => d.disputeStatus.toLowerCase() === 'completedispute');
         if (!complete.length) {
+          this.transunion.sendTransunionAPICall('CancelEnrollment', JSON.stringify({}));
           this.auth.deactivateAccount();
         } else {
           const youngest = _.orderBy(complete, ['closedOn'], ['desc'])[0]; // youngest disputes
           const thirtDaysAgo = moment(new Date().toISOString()).add(-30, 'days');
           const test = moment(youngest.closedOn).isBefore(thirtDaysAgo);
           if (test) {
+            this.transunion.sendTransunionAPICall('CancelEnrollment', JSON.stringify({}));
             this.auth.deactivateAccount();
           } else {
             throw 'younger than 30 days';
