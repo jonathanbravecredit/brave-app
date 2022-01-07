@@ -46,16 +46,19 @@ describe('SettingsService', () => {
       await expectAsync(service.deactivateAccount()).toBeRejectedWith('no disputes');
     });
 
-    it(`DeactivateAccount should throw an error 'no disputes' when disputes comes back success but data empty`, async () => {
+    it(`DeactivateAccount should call handleDeactivation when disputes comes back success but data empty`, fakeAsync(() => {
       const success = { success: true, error: null, data: [] };
       disputeMock.getDisputesByUser.and.returnValue(success);
-      await expectAsync(service.deactivateAccount()).toBeRejectedWith('no disputes');
-    });
+      const spy = spyOn(service, 'handleDeactivation');
+      service.deactivateAccount();
+      tick(1);
+      expect(spy).toHaveBeenCalled();
+    }));
 
-    it(`DeactivateAccount should throw an error 'no disputes' when disputes comes back success but data undefined`, async () => {
+    it(`DeactivateAccount should throw an error 'disputes confirmation failed' when disputes comes back success but data undefined`, async () => {
       const success = { success: true, error: null, data: undefined };
       disputeMock.getDisputesByUser.and.returnValue(success);
-      await expectAsync(service.deactivateAccount()).toBeRejectedWith('no disputes');
+      await expectAsync(service.deactivateAccount()).toBeRejectedWith('disputes confirmation failed');
     });
 
     it(`DeactivateAccount should throw an error 'an open dispute' when disputes comes back success but data has open disputes`, async () => {
