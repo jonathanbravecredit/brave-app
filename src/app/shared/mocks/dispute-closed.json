@@ -1,0 +1,24 @@
+{
+  "id": "d7f75ef8-d76e-49b3-9414-0d10a90afaee",
+  "disputeId": "353993488",
+  "closedDisputes": {
+    "lastUpdatedDate": "12/11/2021",
+    "requestedDate": "12/11/2021",
+    "totalClosedDisputedItems": 1,
+    "openDate": "12/11/2021",
+    "totalDisputedItems": 1,
+    "estimatedCompletionDate": "12/28/2021"
+  },
+  "disputeInvestigationResults": "44ea2426-90b7-4670-af16-16923381cc28",
+  "disputeItems": "[{\"result\":{\"isFinished\":true,\"data\":{\"hasCustomInput\":false,\"customInput\":\"\",\"reasonsId\":[\"33\"],\"reasons\":[{\"id\":\"33\",\"claimCode\":\"A2\",\"text\":\"I have no knowledge of this account\"}]}},\"tradeline\":{\"accountTypeAbbreviation\":\"Collection\",\"accountTypeDescription\":\"Collection Account\",\"accountTypeSymbol\":\"Y\",\"Tradeline\":{\"PayStatus\":{\"symbol\":9,\"description\":\"Collection/Chargeoff\",\"rank\":2,\"abbreviation\":\"Coll/Chargeoff\"},\"creditorName\":\"NATIONWD REC\",\"IndustryCode\":{\"symbol\":\"Y\",\"description\":\"Collection Services\",\"rank\":199,\"abbreviation\":\"Collection Services\"},\"currentBalance\":50,\"subscriberCode\":\"027BJ001\",\"handle\":\"TR01_-387034658_818869140_89\",\"CollectionTrade\":{\"actualPaymentAmount\":0,\"originalCreditor\":\"PHYSICIANS PRACTICE GROUP\",\"creditType\":{\"symbol\":\"Y\",\"description\":\"Collection Account\",\"rank\":5,\"abbreviation\":\"Collection\"}},\"dateAccountStatus\":\"2021-12-05\",\"accountNumber\":8141851,\"DisputeFlag\":{\"symbol\":\"F\",\"description\":\"Account not disputed\",\"rank\":199,\"abbreviation\":\"Account not disputed\"},\"Source\":{\"InquiryDate\":\"2021-12-11\",\"Reference\":\"D7F75EF8-D76E-49B3-941\",\"BorrowerKey\":\"\",\"Bureau\":{\"symbol\":\"TUC\",\"description\":\"TransUnion\",\"rank\":1,\"abbreviation\":\"TransUnion\"}},\"OpenClosed\":{\"symbol\":\"O\",\"description\":\"Open\",\"rank\":199,\"abbreviation\":\"Open\"},\"Remark\":{\"RemarkCode\":{\"symbol\":\"T00CLA\",\"description\":\"Placed for collection\",\"rank\":199,\"abbreviation\":\"Placed for collection\"},\"customRemark\":\"\"},\"highBalance\":50,\"dateOpened\":\"2016-03-25\",\"dateReported\":\"2021-12-05\",\"VerificationIndicator\":{\"symbol\":\"F\",\"description\":\"Account not disputed\",\"rank\":199,\"abbreviation\":\"Account not disputed\"},\"position\":3,\"dateVerified\":\"2021-12-05\",\"bureau\":\"TransUnion\",\"AccountDesignator\":{\"symbol\":\"I\",\"description\":\"Individual\",\"rank\":199,\"abbreviation\":\"Individual\"},\"AccountCondition\":{\"symbol\":\"F\",\"description\":\"Derogatory\",\"rank\":20,\"abbreviation\":\"Derog\"}}}}]",
+  "closedOn": "2021-12-11T23:31:50.797Z",
+  "disputeCreditBureau": "298e380e-6270-4c99-9ed2-a6abf309f741",
+  "disputeLetterCode": "FIN 000427344580 - Dispute Status Amanda Holley",
+  "disputeStatus": "completeDispute",
+  "openDisputes": {},
+  "disputeLetterContent": "Thank you for contacting TransUnion. Our goal is to maintain\ncomplete and accurate information on consumer credit reports.\n\nRe: Dispute Status\n\nWe received  your request on 12/11/2021 and are currently\nprocessing it. When the investigation is completed, you will\nreceive a response and/or a copy of your updated credit report to\nnotify you of the results.\n\nIf you have any additional questions or concerns, please contact\nTransUnion at the address shown below, or visit us on the web at\nthe following web site to check the status of your dispute. We\nupdate the status page once each business day. When contacting\nour office, please provide your current file number 427344580.\n\n  Web Site: https://dispute.transunion.com?src=email\n\nTransUnion Consumer Relations\nP.O. Box 2000\nChester, PA 19016-2000\n\nPlease do not reply to this email as this is a system generated\nemail.",
+  "agencyName": "TU",
+  "createdOn": "2021-12-11T23:31:50.797Z",
+  "modifiedOn": "2021-12-11T23:31:53.183Z",
+  "openedOn": "2021-12-11T23:31:50.797Z"
+}
