@@ -51,6 +51,7 @@ export class SigninRedirectComponent implements OnDestroy {
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       const isNew = await this.sync.isUserBrandNew(id);
+      console.log('TESTEST 2')
       if (isNew) {
         this.cleanUp();
         this.router.navigate([routes.root.children.auth.children.created.full]);
@@ -61,6 +62,7 @@ export class SigninRedirectComponent implements OnDestroy {
         this.cleanUp();
       }
     } catch (err) {
+      console.log('TESTEST 1')
       let retries: string | null | number = window.sessionStorage.getItem('braveOAuthRetries');
       if (retries == null) {
         retries = 3;
