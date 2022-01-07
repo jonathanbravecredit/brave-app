@@ -99,7 +99,6 @@ export class SettingsService {
    * @returns
    */
   async deactivateAccount(): Promise<string> {
-    debugger;
     try {
       const disputes = await this.dispute.getDisputesByUser();
       if (disputes.success) {
