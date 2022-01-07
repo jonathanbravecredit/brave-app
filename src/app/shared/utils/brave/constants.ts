@@ -5,6 +5,7 @@ export enum AppStatus {
   Active = 'active',
   Suspended = 'suspended',
   Disabled = 'disabled',
+  Cancelled = 'cancelled',
 }
 
 export enum AppStatusReason {

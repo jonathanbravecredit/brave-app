@@ -8,6 +8,7 @@ import { SignupState } from '@views/authentication/signup/signup/signup.componen
 import { BehaviorSubject } from 'rxjs';
 import { SignupComponent } from './signup.component';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 // private router: Router,
 // private route: ActivatedRoute,
@@ -42,6 +43,7 @@ describe('SignupComponent', () => {
     neverBounceMock = jasmine.createSpyObj('NeverbounceService', ['validateEmail']);
 
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [SignupComponent],
       providers: [
         { provide: Router, useValue: routerMock },
