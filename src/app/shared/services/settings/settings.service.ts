@@ -1,17 +1,23 @@
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { AuthService } from "@shared/services/auth/auth.service";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SettingsService {
   constructor(
     private router: Router,
     private auth: AuthService,
-    private interstitial: InterstitialService
+    private dispute: DisputeService,
+    private transunion: TransunionService,
+    private interstitial: InterstitialService,
   ) {}
 
   /**
@@ -56,7 +62,7 @@ export class SettingsService {
     try {
       return await this.auth.forgotPassword(email);
     } catch (err) {
-      throw `settingService:forgotPassword=${err.message}`;
+      throw `settingService:forgotPassword=${err}`;
     }
   }
 
@@ -67,15 +73,11 @@ export class SettingsService {
    * @param password
    * @returns
    */
-  async forgotPasswordSubmit(
-    email: string,
-    code: string,
-    password: string
-  ): Promise<any> {
+  async forgotPasswordSubmit(email: string, code: string, password: string): Promise<any> {
     try {
       return await this.auth.forgotPasswordSubmit(email, code, password);
     } catch (err) {
-      throw `settingService:forgotPasswordSubmit=${err.message}`;
+      throw `settingService:forgotPasswordSubmit=${err}`;
     }
   }
   /**
@@ -84,26 +86,45 @@ export class SettingsService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(
-    oldPassword: string,
-    newPassword: string
-  ): Promise<string> {
+  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     try {
       return await this.auth.resetPassword(oldPassword, newPassword);
     } catch (err) {
-      throw `settingService:resetPassword=${err.message}`;
+      throw `settingService:resetPassword=${err}`;
     }
   }
+
   /**
    * Submit user for deletion, disables in cognito
    * @returns
    */
   async deactivateAccount(): Promise<string> {
     try {
-      const resp = this.auth.deactivateAccount();
-      return resp;
+      const disputes = await this.dispute.getDisputesByUser();
+      if (disputes.success) {
+        const { data } = disputes;
+        if (!data || !data.length) throw 'no disputes';
+        const open = data.find((d) => d.disputeStatus.toLowerCase() === 'opendispute'); // if they have an open dispute, cannot close
+        if (open) throw 'an open dispute';
+        const complete = data.filter((d) => d.disputeStatus.toLowerCase() === 'completedispute'); // no open disputes...compolete or inprogress
+        if (!complete.length) {
+          await this.handleDeactivation();
+        } else {
+          const youngest = _.orderBy(complete, ['closedOn'], ['desc'])[0]; // youngest disputes
+          const thirtDaysAgo = moment(new Date().toISOString()).add(-30, 'days');
+          const test = moment(youngest.closedOn).isBefore(thirtDaysAgo);
+          if (test) {
+            await this.handleDeactivation();
+          } else {
+            throw 'younger than 30 days';
+          }
+        }
+        return 'success';
+      } else {
+        throw 'no disputes';
+      }
     } catch (err) {
-      throw `settingService:deactivateAccount=${err}`;
+      throw err;
     }
   }
 
@@ -119,6 +140,19 @@ export class SettingsService {
     } catch (err) {
       this.interstitial.fetching$.next(false);
       throw `settingService:signOut=${err}`;
+    }
+  }
+
+  async handleDeactivation(): Promise<void> {
+    try {
+      const turesp = await this.transunion.sendTransunionAPICall('CancelEnrollment', JSON.stringify({}));
+      if (turesp.success) {
+        this.auth.deactivateAccount();
+      } else {
+        throw 'cancel enroll failed';
+      }
+    } catch (err) {
+      throw err;
     }
   }
 }

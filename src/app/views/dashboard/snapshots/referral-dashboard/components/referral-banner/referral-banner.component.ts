@@ -9,7 +9,7 @@ import * as moment from 'moment';
 export class ReferralBannerComponent implements OnInit {
   @Input() metrics: IGroupedYearMonthReferral[] = [];
   @Input() disabled: boolean | undefined;
-  referredTen: boolean = false;
+  referredBonus: boolean = false;
   constructor() {}
 
   ngOnInit(): void {
@@ -17,7 +17,7 @@ export class ReferralBannerComponent implements OnInit {
     const currYearMonth = +moment(now).format('YYYYMM');
     if (this.metrics.length) {
       const metric = this.metrics.find((m) => m.yearMonth == currYearMonth);
-      this.referredTen = (metric?.referrals || 0) >= 10;
+      this.referredBonus = (metric?.referrals || 0) >= 5;
     }
   }
 }
