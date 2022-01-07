@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AuthService } from '@shared/services/auth/auth.service';
+import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { SignupState } from '@views/authentication/signup/signup/signup.component';
@@ -118,5 +118,21 @@ describe('SignupComponent', () => {
     });
   });
 
-  describe('signUpWithCognito Method', () => {});
+  describe('signUpWithCognito Method', () => {
+    it('return immeditatly if the user is invalid', () => {
+      let fakeUser: any = false;
+
+      component.signUpWithCognito(fakeUser as NewUser);
+
+      expect(neverBounceMock.validateEmail).not.toHaveBeenCalled();
+    });
+
+    it('run neverBounce.validateEmail if the user is valid', () => {
+      let fakeUser: NewUser = {username: 'username', password: 'password'};
+
+      component.signUpWithCognito(fakeUser);
+
+      expect(neverBounceMock.validateEmail).toHaveBeenCalled();
+    });
+  });
 });

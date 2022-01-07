@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
@@ -16,11 +17,17 @@ class RouteMock {
 describe('ReferralDashboardView', () => {
   let component: ReferralDashboardView;
   let fixture: ComponentFixture<ReferralDashboardView>;
+  let routerMock: any;
 
   beforeEach(async () => {
+    routerMock = jasmine.createSpyObj('Router', ['']);
     await TestBed.configureTestingModule({
       declarations: [ReferralDashboardView],
-      providers: [{ provide: ActivatedRoute, useClass: RouteMock }],
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: Router, useValue: routerMock },
+      ],
     }).compileComponents();
   });
 

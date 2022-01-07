@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaseModalSmallComponent } from '@shared/components/modals/base-modal-small/base-modal-small.component';
 
 import { SignupErrorValidationComponent } from './signup-error-validation.component';
 
@@ -8,9 +9,8 @@ describe('SignupErrorValidationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SignupErrorValidationComponent ]
-    })
-    .compileComponents();
+      declarations: [SignupErrorValidationComponent, BaseModalSmallComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -22,4 +22,16 @@ describe('SignupErrorValidationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run initiateModal on initilization', () => {
+    spyOn(component, 'initiateModal');
+    component.ngOnInit();
+    expect(component.initiateModal).toHaveBeenCalled();
+  });
+
+  // it('', () => {
+  //   spyOn(component, 'initiateModal');
+  //   component.initiateModal(false);
+  //   expect(component.modal?.showModal).toEqual(false);  //TODO FIND OUT WHY THIS IS BREAKING OTHER FILES
+  // });
 });

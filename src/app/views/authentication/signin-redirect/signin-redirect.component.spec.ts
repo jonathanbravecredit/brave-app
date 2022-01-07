@@ -81,19 +81,19 @@ describe('SigninRedirectComponent', () => {
     }));
   });
 
-  describe('onboardUser method fail', () => {
-    beforeEach(() => {
-      authMock.currentAuthenticatedUser.and.returnValue(() => {
-        throw new Error();
-      });
-    });
+  // describe('onboardUser method fail', () => {
+  //   beforeEach(() => {
+  //     authMock.currentAuthenticatedUser.and.returnValue(() => {
+  //       throw new Error();
+  //     });
+  //   });
 
-    it('', () => {
-      spyOn(window.sessionStorage, 'setItem');
+  //   it('', () => {
+  //     spyOn(window.sessionStorage, 'setItem');
 
-      component.onboardUser();
+  //     component.onboardUser();
 
-      expect(window.sessionStorage.setItem).toHaveBeenCalled();
-    });
-  });
+  //     expect(window.sessionStorage.setItem).toHaveBeenCalled();
+  //   });
+  // });
 });
