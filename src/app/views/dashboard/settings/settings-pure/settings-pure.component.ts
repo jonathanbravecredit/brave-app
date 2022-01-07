@@ -33,6 +33,7 @@ export class SettingsPureComponent {
   @Input() haveDeactivateError: boolean = false;
   @Input() deactivateSuccess: boolean = false;
   @Input() deactivateError: string = '';
+  @Input() showDeactivateWarning: boolean = false;
 
   settingsOptions = SettingsOptions;
 
