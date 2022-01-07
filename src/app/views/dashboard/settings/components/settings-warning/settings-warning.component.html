@@ -1,9 +1,9 @@
 <div class="p-4 mb-8 mx-2 relative" style="background-color: #d714db; color: white; border-radius: 8px">
-  <h1 class="brave-body2-semibold mb-4 text-center text-white">{{ title }}</h1>
-  <p *ngIf="text" class="brave-body2 text-center mb-4 text-white">
+  <h1 class="brave-body2-semibold mb-4 text-left text-white">{{ title }}</h1>
+  <p *ngIf="text" class="brave-body2 text-left mb-4 text-white">
     {{ text }}
   </p>
-  <p *ngIf="subtext" class="brave-body2 text-center text-white">
+  <p *ngIf="subtext" class="brave-body2 text-left text-white">
     {{ subtext }}
   </p>
   <div class="absolute top-2 right-2" (click)="closeClick.emit()">

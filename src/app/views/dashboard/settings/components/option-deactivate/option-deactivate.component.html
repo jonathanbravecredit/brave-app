@@ -15,6 +15,13 @@
     </div>
   </ng-container>
   <ng-container *ngIf="showWarning">
-    <brave-settings-warning [title]="warningContent.h1" [text]="warningContent.p1"> </brave-settings-warning>
+    <div class="mt-10">
+      <brave-settings-warning
+        [title]="warningContent.h1"
+        [text]="warningContent.p1"
+        (closeClick)="onWarningCloseClick()"
+      >
+      </brave-settings-warning>
+    </div>
   </ng-container>
 </div>

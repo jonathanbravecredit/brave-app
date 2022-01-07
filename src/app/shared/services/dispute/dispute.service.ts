@@ -218,7 +218,7 @@ export class DisputeService implements OnDestroy {
    */
   async getDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
     try {
-      return await this.transunion.sendTransunionAPICall('ListDisputeByUser', JSON.stringify({}));
+      return await this.transunion.sendTransunionAPICall('ListDisputesByUser', JSON.stringify({}));
     } catch (err) {
       return {
         success: false,

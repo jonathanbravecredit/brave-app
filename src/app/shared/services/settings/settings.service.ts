@@ -93,31 +93,29 @@ export class SettingsService {
       throw `settingService:resetPassword=${err}`;
     }
   }
+
   /**
    * Submit user for deletion, disables in cognito
    * @returns
    */
   async deactivateAccount(): Promise<string> {
+    debugger;
     try {
       const disputes = await this.dispute.getDisputesByUser();
       if (disputes.success) {
         const { data } = disputes;
         if (!data || !data.length) throw 'no disputes';
-        // if they have an open dispute, cannot close
-        const open = data.find((d) => d.disputeStatus.toLowerCase() === 'opendispute');
+        const open = data.find((d) => d.disputeStatus.toLowerCase() === 'opendispute'); // if they have an open dispute, cannot close
         if (open) throw 'an open dispute';
-        // no open disputes...compolete or inprogress
-        const complete = data.filter((d) => d.disputeStatus.toLowerCase() === 'completedispute');
+        const complete = data.filter((d) => d.disputeStatus.toLowerCase() === 'completedispute'); // no open disputes...compolete or inprogress
         if (!complete.length) {
-          this.transunion.sendTransunionAPICall('CancelEnrollment', JSON.stringify({}));
-          this.auth.deactivateAccount();
+          await this.handleDeactivation();
         } else {
           const youngest = _.orderBy(complete, ['closedOn'], ['desc'])[0]; // youngest disputes
           const thirtDaysAgo = moment(new Date().toISOString()).add(-30, 'days');
           const test = moment(youngest.closedOn).isBefore(thirtDaysAgo);
           if (test) {
-            this.transunion.sendTransunionAPICall('CancelEnrollment', JSON.stringify({}));
-            this.auth.deactivateAccount();
+            await this.handleDeactivation();
           } else {
             throw 'younger than 30 days';
           }
@@ -143,6 +141,19 @@ export class SettingsService {
     } catch (err) {
       this.interstitial.fetching$.next(false);
       throw `settingService:signOut=${err}`;
+    }
+  }
+
+  async handleDeactivation(): Promise<void> {
+    try {
+      const turesp = await this.transunion.sendTransunionAPICall('CancelEnrollment', JSON.stringify({}));
+      if (turesp.success) {
+        this.auth.deactivateAccount();
+      } else {
+        throw 'cancel enroll failed';
+      }
+    } catch (err) {
+      throw err;
     }
   }
 }
