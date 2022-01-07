@@ -61,10 +61,10 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
           duration: 24 * 30,
         };
         await this.kycService.suspendUser(suspension);
-        this.router.navigate([routes.root.children.suspended.children.default.full]);
+        this.router.navigate([routes.root.suspended.default.full]);
       } else {
         this.kycService.completeStep(this.stepID);
-        this.router.navigate([routes.root.children.onboarding.children.address.full]);
+        this.router.navigate([routes.root.onboarding.address.full]);
       }
     }
   }

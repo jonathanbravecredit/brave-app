@@ -88,7 +88,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.negative.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.negative.full]);
   }
 
   onForbearanceItemsClicked() {
@@ -96,35 +96,33 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.forbearance.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.forbearance.full]);
   }
 
   onDatabreachItemsClicked() {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.databreach.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.databreach.full]);
   }
 
   onFullReportClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.report.full]);
+    this.router.navigate([routes.root.dashboard.report.full]);
   }
 
   onDisputesClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.disputes.full]);
+    this.router.navigate([routes.root.dashboard.disputes.full]);
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate([
-      routes.root.children.dashboard.children.report.children.snapshot.children.creditutilization.full,
-    ]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.creditutilization.full]);
   }
 
   onCreditMixClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.creditmix.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.creditmix.full]);
   }
 
   onReferralsClicked() {
-    this.router.navigate([routes.root.children.dashboard.children.report.children.snapshot.children.referrals.full]);
+    this.router.navigate([routes.root.dashboard.report.snapshot.referrals.full]);
   }
 }

@@ -27,7 +27,7 @@ export class ForbearanceView implements OnInit {
    */
   onViewDetailClick(tradeline: ITradeLinePartition): void {
     this.creditReportService.setTradeline(tradeline);
-    this.router.navigate([routes.root.children.dashboard.children.report.children.tradeline.full]);
+    this.router.navigate([routes.root.dashboard.report.tradeline.full]);
   }
 
   onInfoClick(): void {
