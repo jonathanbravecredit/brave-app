@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AdCardComponent } from '@shared/components/cards/ad-card/ad-card.component';
-import { frontPageAd } from '@shared/interfaces/ads.interface';
+import { IAdData } from '@shared/interfaces/ads.interface';
 
 @Component({
   selector: 'brave-dashboard-ads-carousel',
   templateUrl: './dashboard-ads-carousel.component.html',
 })
 export class DashboardAdsCarouselComponent implements OnInit {
-  data: frontPageAd[] = [
+  data: IAdData[] = [
     {
       imageLink: '',
       title: 'TITLE',
@@ -17,6 +17,9 @@ export class DashboardAdsCarouselComponent implements OnInit {
       textOne: 'TEXTONE',
       textTwo: 'TEXTTWO',
       textThree: 'TEXTTHREE',
+      active: true,
+      createdOn: '',
+      modifiedOn: '',
     },
     {
       imageLink: '',
@@ -27,9 +30,11 @@ export class DashboardAdsCarouselComponent implements OnInit {
       textOne: 'TEXTONE2',
       textTwo: 'TEXTTWO2',
       textThree: 'TEXTTHREE2',
+      active: true,
+      createdOn: '',
+      modifiedOn: '',
     },
   ];
-
 
   pages: any[] = [AdCardComponent, AdCardComponent];
 

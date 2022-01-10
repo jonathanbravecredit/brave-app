@@ -14,6 +14,7 @@ import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referra
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Subscription } from 'rxjs';
+import { IAdData } from '@shared/interfaces/ads.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -36,6 +37,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   creditUtilizationPerc: number | undefined;
   routeSub$: Subscription | undefined;
   referral: IReferral | undefined;
+  adsData: IAdData[] | undefined;
 
   constructor(
     private router: Router,
@@ -50,6 +52,9 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     if (fullfilled) {
       this.lastUpdated = new Date(fullfilled).toLocaleDateString();
     }
+    this.dashboardService.getAdData().subscribe((resp: any) => {
+      this.adsData = resp
+    })
   }
 
   ngOnInit(): void {

@@ -11,6 +11,8 @@ import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
+import { IAdData } from '@shared/interfaces/ads.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -25,6 +27,7 @@ export class DashboardService implements OnDestroy {
     private store: Store,
     private reportService: CreditreportService,
     private transunion: TransunionService,
+    private http: HttpClient,
   ) {
     this.tuReport$ = this.reportService.tuReport$;
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
@@ -75,5 +78,9 @@ export class DashboardService implements OnDestroy {
         this.api.UpdateAppData(input);
       }
     });
+  }
+
+  getAdData(): Observable<IAdData> {
+    return this.http.get<IAdData>('ADD URL HERE')
   }
 }

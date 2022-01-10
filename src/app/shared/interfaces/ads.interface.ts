@@ -1,4 +1,4 @@
-export interface frontPageAd {
+export interface IAdData {
   imageLink: string;
   title: string;
   recommended: string;
@@ -7,4 +7,7 @@ export interface frontPageAd {
   textOne: string;
   textTwo: string;
   textThree: string;
+  active: boolean;
+  createdOn: string | undefined;
+  modifiedOn: string | undefined;
 }
