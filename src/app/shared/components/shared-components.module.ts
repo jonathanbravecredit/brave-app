@@ -119,6 +119,7 @@ import { PercentageGaugeComponent } from "./charts/percentage-gauge/percentage-g
 import { CreditUtilizationFillBarComponent } from "./charts/credit-utilization-fill-bar/credit-utilization-fill-bar.component";
 import { FacebookShareComponent } from "./share-buttons/facebook-share/facebook-share.component";
 import { TwitterShareComponent } from "./share-buttons/twitter-share/twitter-share.component";
+import { AdCardComponent } from './cards/ad-card/ad-card.component';
 
 const components = [
   BaseFormComponent,
@@ -248,7 +249,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, AdCardComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
