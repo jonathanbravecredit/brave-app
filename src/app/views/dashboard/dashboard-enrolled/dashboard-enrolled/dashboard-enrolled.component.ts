@@ -13,8 +13,9 @@ import {
 import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IAdData } from '@shared/interfaces/ads.interface';
+import { shuffle } from 'lodash';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -37,6 +38,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   creditUtilizationPerc: number | undefined;
   routeSub$: Subscription | undefined;
   referral: IReferral | undefined;
+  adsData$: Observable<IAdData[]> | undefined;
   adsData: IAdData[] | undefined;
 
   constructor(
@@ -52,9 +54,14 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     if (fullfilled) {
       this.lastUpdated = new Date(fullfilled).toLocaleDateString();
     }
-    this.dashboardService.getAdData().subscribe((resp: any) => {
-      this.adsData = resp
-    })
+
+
+    this.dashboardService.getAdData().then((resp: any) => {
+
+      this.adsData = shuffle(resp);
+    });
+
+
   }
 
   ngOnInit(): void {

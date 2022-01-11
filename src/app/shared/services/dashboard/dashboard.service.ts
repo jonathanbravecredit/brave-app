@@ -7,13 +7,14 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, from, Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { IAdData } from '@shared/interfaces/ads.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@environments/environment';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -28,6 +29,7 @@ export class DashboardService implements OnDestroy {
     private store: Store,
     private reportService: CreditreportService,
     private transunion: TransunionService,
+    private auth: AuthService,
     private http: HttpClient,
   ) {
     this.tuReport$ = this.reportService.tuReport$;
@@ -81,7 +83,12 @@ export class DashboardService implements OnDestroy {
     });
   }
 
-  getAdData(): Observable<IAdData> {
-    return this.http.get<IAdData>(environment.ads + '/ads')
+  async getAdData(): Promise<IAdData[]> {
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+
+    return this.http.get<IAdData[]>(environment.ads + '/ads', { headers }).toPromise();
   }
 }

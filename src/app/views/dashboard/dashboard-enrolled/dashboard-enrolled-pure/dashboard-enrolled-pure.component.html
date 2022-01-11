@@ -71,7 +71,7 @@
   </div>
 </div>
 
-<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
+<!-- <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
   content.b1
 }}</brave-links-onlytext-button>
 
@@ -99,9 +99,10 @@
       <p>close</p>
     </div>
   </ng-container>
-</div>
+</div> -->
 
-<brave-dashboard-ads-carousel [adsData]="adsData"></brave-dashboard-ads-carousel>
+<brave-dashboard-ads-carousel *ngIf="adsData" [adsData]="adsData"></brave-dashboard-ads-carousel>
+
 
 <!-- Referral Gauge -->
 <ng-container *ngIf="(featureflags.referralsShow$ | async) && referral?.referralApproved">

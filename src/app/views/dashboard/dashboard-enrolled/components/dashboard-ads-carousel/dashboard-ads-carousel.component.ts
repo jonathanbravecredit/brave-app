@@ -14,7 +14,6 @@ export class DashboardAdsCarouselComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-
     if (this.adsData) {
       this.adsData.forEach((e) => {
         this.pages.push(AdCardComponent);
