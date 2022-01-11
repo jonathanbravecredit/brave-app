@@ -103,7 +103,11 @@ export class SettingsService {
       const disputes = await this.dispute.getDisputesByUser();
       if (disputes.success) {
         const { data } = disputes;
-        if (!data || !data.length) throw 'no disputes';
+        if (!data) throw 'disputes confirmation failed';
+        if (!data.length) {
+          await this.handleDeactivation();
+          return 'success';
+        }
         const open = data.find((d) => d.disputeStatus.toLowerCase() === 'opendispute'); // if they have an open dispute, cannot close
         if (open) throw 'an open dispute';
         const complete = data.filter((d) => d.disputeStatus.toLowerCase() === 'completedispute'); // no open disputes...compolete or inprogress
