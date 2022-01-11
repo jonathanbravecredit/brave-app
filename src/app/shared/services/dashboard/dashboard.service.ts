@@ -13,6 +13,7 @@ import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '@environments/environment';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -81,6 +82,6 @@ export class DashboardService implements OnDestroy {
   }
 
   getAdData(): Observable<IAdData> {
-    return this.http.get<IAdData>('ADD URL HERE')
+    return this.http.get<IAdData>(environment.ads + '/ads')
   }
 }
