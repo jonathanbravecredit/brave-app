@@ -101,6 +101,8 @@
   </ng-container>
 </div>
 
+<brave-dashboard-ads-carousel [adsData]="adsData"></brave-dashboard-ads-carousel>
+
 <!-- Referral Gauge -->
 <ng-container *ngIf="(featureflags.referralsShow$ | async) && referral?.referralApproved">
   <h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>

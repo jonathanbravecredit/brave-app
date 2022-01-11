@@ -155,7 +155,7 @@ const components = [
   ReferralEarningsComponent,
   ReferralAmountLinkComponent,
   ReferralBodyTextComponent,
-  DashboardAdsCarouselComponent,
+  DashboardAdsCarouselComponent
 ];
 
 const pipes = [AccountStatusPipe];

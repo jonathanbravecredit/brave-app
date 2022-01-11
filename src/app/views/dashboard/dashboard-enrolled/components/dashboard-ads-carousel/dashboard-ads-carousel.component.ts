@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AdCardComponent } from '@shared/components/cards/ad-card/ad-card.component';
 import { IAdData } from '@shared/interfaces/ads.interface';
 
@@ -7,38 +7,18 @@ import { IAdData } from '@shared/interfaces/ads.interface';
   templateUrl: './dashboard-ads-carousel.component.html',
 })
 export class DashboardAdsCarouselComponent implements OnInit {
-  data: IAdData[] = [
-    {
-      imageLink: '',
-      title: 'TITLE',
-      recommended: 'RECOMMENDED',
-      creditCheck: 'CREDITCHECK',
-      annual: 'ANNUAL',
-      textOne: 'TEXTONE',
-      textTwo: 'TEXTTWO',
-      textThree: 'TEXTTHREE',
-      active: true,
-      createdOn: '',
-      modifiedOn: '',
-    },
-    {
-      imageLink: '',
-      title: 'TITLE2',
-      recommended: 'RECOMMENDED2',
-      creditCheck: 'CREDITCHECK2',
-      annual: 'ANNUAL2',
-      textOne: 'TEXTONE2',
-      textTwo: 'TEXTTWO2',
-      textThree: 'TEXTTHREE2',
-      active: true,
-      createdOn: '',
-      modifiedOn: '',
-    },
-  ];
+  @Input() adsData: IAdData[] | undefined;
 
-  pages: any[] = [AdCardComponent, AdCardComponent];
+  pages: any[] = [];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    if (this.adsData) {
+      this.adsData.forEach((e) => {
+        this.pages.push(AdCardComponent);
+      });
+    }
+  }
 }
