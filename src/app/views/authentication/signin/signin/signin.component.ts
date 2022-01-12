@@ -5,6 +5,8 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SignInErrorDescriptions, SignInErrors } from '@views/authentication/signin/signin/content';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 
 export type SigninState = 'init' | 'invalid';
 
@@ -15,7 +17,12 @@ export type SigninState = 'init' | 'invalid';
 export class SigninComponent {
   viewState: SigninState = 'init';
   message: string = '';
-  constructor(private router: Router, private auth: AuthService, private interstitial: InterstitialService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+    private interstitial: InterstitialService,
+    private analytics: AnalyticsService,
+  ) {}
 
   /**
    * Method to sign user up
@@ -24,6 +31,7 @@ export class SigninComponent {
     if (!user) return;
     try {
       const cognitorUser = await this.auth.signIn(user.username, user.password);
+      this.analytics.fireClickEvent(AnalyticClickEvents.UserLogIn);
       if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
       } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
         const { requiredAttributes } = cognitorUser?.challengeParam;
