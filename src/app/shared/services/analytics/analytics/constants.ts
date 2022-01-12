@@ -40,6 +40,7 @@ export enum AnalyticClickEvents {
   CreditMixProductRecommendation = 'creditmix_product_recommendation',
   DisputeSucessfullySubmited = 'dispute_sucessfully_submited',
   DisputeInvestigationResults = 'dispute_investigation_results',
+  UserLogIn = 'user_log_in',
 }
 
 export enum AnalyticErrorEvents {
