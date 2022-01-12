@@ -30,7 +30,6 @@ export class SignupErrorValidationComponent implements OnInit {
   }
 
   initiateModal(showModal: boolean): void {
-    console.log('TESTEST', showModal, this.modal)
     if (this.modal) {
       this.modal.showModal = showModal;
     }
