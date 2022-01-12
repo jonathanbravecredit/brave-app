@@ -54,14 +54,9 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     if (fullfilled) {
       this.lastUpdated = new Date(fullfilled).toLocaleDateString();
     }
-
-
     this.dashboardService.getAdData().then((resp: any) => {
-
       this.adsData = shuffle(resp);
     });
-
-
   }
 
   ngOnInit(): void {
