@@ -15,10 +15,11 @@ describe('ReferralDashboardView', () => {
   let routerMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    routerMock = jasmine.createSpyObj('Router', ['']);
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [ReferralDashboardView],
+      imports: [HttpClientTestingModule],
       providers: [
         { provide: ActivatedRoute, useClass: RouteMock },
         { provide: Router, useValue: routerMock },

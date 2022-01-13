@@ -1,5 +1,5 @@
 import { ApplicationRef } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -27,7 +27,7 @@ describe('SigninRedirectComponent', () => {
       'subscribeToListeners',
       'onboardUser',
     ]);
-    authMock = jasmine.createSpyObj('AuthService', ['socialSignIn']);
+    authMock = jasmine.createSpyObj('AuthService', ['socialSignIn', 'userAttributes', 'currentAuthenticatedUser']);
     interstitialMock = jasmine.createSpyObj('InterstitialService', [
       'changeMessage',
       'openInterstitial',
@@ -54,4 +54,46 @@ describe('SigninRedirectComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onboardUser method success', () => {
+    beforeEach(() => {
+      authMock.currentAuthenticatedUser.and.returnValue(Promise.resolve(true));
+      authMock.userAttributes.and.returnValue(Promise.resolve([{ name: 'sub', Value: 1 }]));
+      syncMock.isUserBrandNew.and.returnValue(Promise.resolve(true));
+    });
+
+    it('should run cleanUp if isNew is truthy', fakeAsync(() => {
+      spyOn(component, 'cleanUp');
+
+      component.onboardUser();
+
+      tick();
+
+      expect(component.cleanUp).toHaveBeenCalled();
+    }));
+
+    it('should run router.navigate if isNew is truthy', fakeAsync(() => {
+      component.onboardUser();
+
+      tick();
+
+      expect(routerMock.navigate).toHaveBeenCalled();
+    }));
+  });
+
+  // describe('onboardUser method fail', () => {
+  //   beforeEach(() => {
+  //     authMock.currentAuthenticatedUser.and.returnValue(() => {
+  //       throw new Error();
+  //     });
+  //   });
+
+  //   it('', () => {
+  //     spyOn(window.sessionStorage, 'setItem');
+
+  //     component.onboardUser();
+
+  //     expect(window.sessionStorage.setItem).toHaveBeenCalled();
+  //   });
+  // });
 });

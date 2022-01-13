@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { IMergeReport } from "@shared/interfaces";
+import { IAdData } from "@shared/interfaces/ads.interface";
 import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
 import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface";
 import { IGroupedYearMonthReferral, IReferral } from "@shared/interfaces/referrals.interface";
@@ -30,6 +31,7 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() data: {}[] | undefined;
   @Input() rating: string | undefined;
   @Input() referral: IReferral | undefined;
+  @Input() adsData: IAdData[] | undefined;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
