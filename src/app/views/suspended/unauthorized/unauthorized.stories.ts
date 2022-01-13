@@ -2,6 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { UnauthorizedView } from '@views/suspended/unauthorized/unauthorized.view';
+import { SharedComponentsModule } from '@shared/components/shared-components.module';
 
 export default {
   title: 'app/views/suspended/unauthorized',
@@ -9,7 +10,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [],
+      imports: [SharedComponentsModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {

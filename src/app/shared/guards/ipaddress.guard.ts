@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import Auth from '@aws-amplify/auth';
+import { IpAddressResponse, IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,12 +12,15 @@ export class IpAddressGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((res) => {
-        return true;
+    return this.ipAddress
+      .validateIpAddress()
+      .then(async (res: Response) => {
+        const geolocation: IpAddressResponse = await res.json();
+        console.log('geolocation ==> ', geolocation);
+        return geolocation.success;
       })
       .catch((err) => {
-        this.router.navigate([routes.root.auth.signin.full]);
+        this.router.navigate([routes.root.suspended.unauthorized.full]);
         return false;
       });
   }
