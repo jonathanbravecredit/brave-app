@@ -20,4 +20,12 @@ describe('SigninPureComponent', () => {
   xit('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create viewState with the default of "init" if a viewState is not passed in ', () => {
+    expect(component.viewState).toEqual('init');
+  });
+
+  it('should create a blank message if nothing is passed in', () => {
+    expect(component.message).toEqual('');
+  });
 });

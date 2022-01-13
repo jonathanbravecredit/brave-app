@@ -68,8 +68,8 @@ export class SigninForgotComponent {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private interstitial: InterstitialService,
+    private interstitial: InterstitialService
+
   ) {}
 
   onSubmitEmailClick(form: FormGroup): void {

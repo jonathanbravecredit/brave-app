@@ -15,6 +15,7 @@ import { DeactivatedComponent } from './deactivated.component';
 //     }).compileComponents();
 //   });
 
+
 //   beforeEach(() => {
 //     fixture = TestBed.createComponent(DeactivatedComponent);
 //     component = fixture.componentInstance;
@@ -25,3 +26,4 @@ import { DeactivatedComponent } from './deactivated.component';
 //     expect(component).toBeTruthy();
 //   });
 // });
+

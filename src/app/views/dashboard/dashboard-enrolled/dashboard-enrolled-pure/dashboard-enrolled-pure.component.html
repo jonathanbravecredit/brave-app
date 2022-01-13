@@ -78,11 +78,13 @@
 <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
 <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
 <div class="mt-2 flex flex-col justify-center items-center">
-  <brave-credit-builder-card
+  <brave-dashboard-ads-carousel
+    *ngIf="adsData"
+    [adsData]="adsData"
     braveAnalytics
     [analyticClickEvents]="AnalyticClickEvents.DashboardProduct"
     [analyticConfig]="{ google: false, mixpanel: false, brave: true }"
-  ></brave-credit-builder-card>
+  ></brave-dashboard-ads-carousel>
   <p
     class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
     (click)="showDisclaimer = !showDisclaimer"
