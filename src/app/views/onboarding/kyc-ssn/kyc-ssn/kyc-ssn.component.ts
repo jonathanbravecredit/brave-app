@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
@@ -10,6 +10,7 @@ import { TUBundles } from '@shared/utils/transunion/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-kyc-ssn',
@@ -18,12 +19,8 @@ import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/an
 export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterViewInit {
   @ViewChild(KycSsnPureComponent) pure: KycSsnPureComponent | undefined;
   stepID = 2;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private kycService: KycService,
-    private analytics: AnalyticsService,
-  ) {
+  ssnError = false;
+  constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
 
@@ -41,7 +38,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    */
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(['../address'], { relativeTo: this.route });
+    this.router.navigate([routes.root.onboarding.address.full]);
   }
 
   /**
@@ -53,6 +50,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
     if (form.valid) {
       const { lastfour } = this.formatAttributes(form, ssnMap);
       const attrs = { ssn: { lastfour: lastfour } } as UserAttributesInput;
+      this.ssnError = false;
 
       try {
         const data = await this.kycService.updateUserAttributesAsync(attrs);
@@ -71,7 +69,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
             } as UserAttributesInput;
             await this.kycService.updateUserAttributesAsync(newAttrs);
             this.kycService.completeStep(this.stepID);
-            this.router.navigate(['../verify'], { relativeTo: this.route });
+            this.router.navigate([routes.root.onboarding.verify.full]);
           }
         }
       } catch {
@@ -85,7 +83,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
    * @param { [key: string]: AbstractControl } errors
    */
   handleError(errors: { [key: string]: AbstractControl }): void {
-    // console.log('form errors', errors);
+    const lastFour = errors.lastfour.value.input;
+    if (lastFour.length < 4) {
+      this.ssnError = true;
+    }
   }
 
   handleBailout<T>(resp?: ITUServiceResponse<T | undefined>) {
@@ -97,7 +98,7 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
       indicativeEnrichmentStatus: tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, false, resp),
     };
     this.kycService.updateIndicativeEnrichment(tuPartial);
-    this.router.navigate(['../identityfull'], { relativeTo: this.route });
+    this.router.navigate([routes.root.onboarding.identityfull.full]);
   }
 }
 

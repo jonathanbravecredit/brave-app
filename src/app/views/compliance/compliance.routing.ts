@@ -3,14 +3,21 @@ import { NgModule } from '@angular/core';
 import { ComplianceComponent } from '@views/compliance/compliance.component';
 import { ComplianceTosComponent } from '@views/compliance/compliance-tos/compliance-tos.component';
 import { CompliancePrivacyComponent } from '@views/compliance/compliance-privacy/compliance-privacy.component';
+import { ROUTE_NAMES as routes } from '../../shared/routes/routes.names';
 
 const ComplianceRoutes: Routes = [
   {
     path: '',
     component: ComplianceComponent,
     children: [
-      { path: 'tos', component: ComplianceTosComponent },
-      { path: 'privacy', component: CompliancePrivacyComponent },
+      {
+        path: `${routes.root.compliance.tos.segment}`,
+        component: ComplianceTosComponent,
+      },
+      {
+        path: `${routes.root.compliance.privacy.segment}`,
+        component: CompliancePrivacyComponent,
+      },
     ],
   },
 ];

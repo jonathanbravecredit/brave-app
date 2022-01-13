@@ -142,6 +142,7 @@ export class TradelineDetailsTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+
     if (this.isDisputePageOne) {
       this.mapper = this.disputeOneMapping;
       this.mapperType = 'disputeOne';

@@ -4,6 +4,7 @@ import { IPublicPartition } from '@shared/interfaces';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { Observable } from 'rxjs';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 type viewDisplay = 'sent' | 'not-sent';
 
@@ -37,8 +38,7 @@ export class DisputesPublicView implements OnDestroy {
           this.viewDisplay = 'sent';
         } else {
           const errorCode = error?.Code;
-          this.router.navigate([`./error`], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.error.segment], {
             queryParams: {
               code: errorCode,
             },

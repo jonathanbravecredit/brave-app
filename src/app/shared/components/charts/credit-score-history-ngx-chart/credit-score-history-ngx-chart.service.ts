@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core";
-import { ICreditScore } from "@shared/interfaces";
-import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
-import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
+import { Injectable } from '@angular/core';
+import { ICreditScore } from '@shared/interfaces';
+import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
+import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import {
   IGetTrendingData,
   IProductAttributeData,
   IProductTrendingData,
-} from "@shared/interfaces/get-trending-data.interface";
-import { TransunionService } from "@shared/services/transunion/transunion.service";
-import * as moment from "moment";
+} from '@shared/interfaces/get-trending-data.interface';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import * as moment from 'moment';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CreditScoreHistoryNgxChartService {
   constructor(private transunion: TransunionService) {}
@@ -21,26 +21,27 @@ export class CreditScoreHistoryNgxChartService {
   }
 
   createChartCreditScoreData(
-    productAttributeData: IProductAttributeData | undefined,
+    productAttributeData: IProductAttributeData | null | undefined,
     currentCreditScore: number | undefined,
-    lastUpdated: string | number | Date | undefined
+    lastUpdated: string | number | Date | undefined,
   ): IResultsData[] {
-    const productAttribute =
-      productAttributeData?.ProductTrendingData instanceof Array
+    const productAttribute = productAttributeData
+      ? productAttributeData?.ProductTrendingData instanceof Array
         ? productAttributeData.ProductTrendingData
-        : [productAttributeData?.ProductTrendingData];
+        : [productAttributeData?.ProductTrendingData]
+      : [];
 
     const filteredProductAttributeDate = productAttribute.filter((data) => {
-      return data?.AttributeStatus !== "Failure";
+      return data?.AttributeStatus !== 'Failure';
     });
 
     if (!productAttributeData || filteredProductAttributeDate.length === 0) {
       return [
         {
-          name: "Credit Score",
+          name: 'Credit Score',
           series: [
             {
-              name: moment(lastUpdated).format("MMM"),
+              name: moment(lastUpdated).format('MMM'),
               value: currentCreditScore!,
             },
           ],
@@ -49,14 +50,14 @@ export class CreditScoreHistoryNgxChartService {
     }
 
     let creditScoreDataObj: IResultsData = {
-      name: "Credit Score",
+      name: 'Credit Score',
       series: [],
     };
 
     for (let productTrendingData of filteredProductAttributeDate) {
       if (productTrendingData) {
         let object = {
-          name: moment(productTrendingData.AttributeDate).format("MMM"),
+          name: moment(productTrendingData.AttributeDate).format('MMM'),
           value: +productTrendingData.AttributeValue,
         };
         creditScoreDataObj.series.push(object);

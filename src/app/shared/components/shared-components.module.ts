@@ -117,6 +117,9 @@ import { AutocompleteAddressFormComponent } from './forms/autocomplete-address-f
 import { PercentageBadgeComponent } from './badges/percentage-badge/percentage-badge.component';
 import { PercentageGaugeComponent } from './charts/percentage-gauge/percentage-gauge.component';
 import { CreditUtilizationFillBarComponent } from './charts/credit-utilization-fill-bar/credit-utilization-fill-bar.component';
+import { FacebookShareComponent } from './share-buttons/facebook-share/facebook-share.component';
+import { TwitterShareComponent } from './share-buttons/twitter-share/twitter-share.component';
+import { AdCardComponent } from './cards/ad-card/ad-card.component';
 
 const components = [
   BaseFormComponent,
@@ -210,7 +213,7 @@ const components = [
   PercentageBadgeComponent,
   PercentageBadgeComponent,
   PercentageGaugeComponent,
-  CreditUtilizationFillBarComponent
+  CreditUtilizationFillBarComponent,
 ];
 
 // component specific pipes only
@@ -228,6 +231,9 @@ const pipes = [
   CreditReportGraphicPipe,
   BasePaginationPipe,
   BaseModalPipe,
+  FacebookShareComponent,
+  TwitterShareComponent,
+  AdCardComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

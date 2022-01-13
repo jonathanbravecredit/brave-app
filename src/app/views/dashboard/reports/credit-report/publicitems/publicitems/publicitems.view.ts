@@ -6,6 +6,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-publicitems',
@@ -50,15 +51,13 @@ export class PublicitemsView {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = 'public';
-          this.router.navigate(['/disputes/reconfirm'], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
             queryParams: {
               type: filter,
             },
           });
         } else {
-          this.router.navigate(['/disputes/error'], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.error.full], {
             queryParams: {
               code: error?.Code || '197',
             },
@@ -66,8 +65,7 @@ export class PublicitemsView {
         }
       })
       .catch((err) => {
-        this.router.navigate(['/disputes/error'], {
-          relativeTo: this.route,
+        this.router.navigate([routes.root.dashboard.disputes.error.full], {
           queryParams: {
             code: '197',
           },

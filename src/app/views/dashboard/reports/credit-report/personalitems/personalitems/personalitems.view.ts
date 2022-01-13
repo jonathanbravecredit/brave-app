@@ -6,6 +6,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-personalitems',
@@ -50,15 +51,13 @@ export class PersonalitemsView {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = 'personal';
-          this.router.navigate(['/disputes/reconfirm'], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
             queryParams: {
               type: filter,
             },
           }); // add query param to filter for only personal items
         } else {
-          this.router.navigate(['../error'], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.error.full], {
             queryParams: {
               code: error?.Code || '197',
             },
@@ -66,8 +65,7 @@ export class PersonalitemsView {
         }
       })
       .catch((err) => {
-        this.router.navigate(['../error'], {
-          relativeTo: this.route,
+        this.router.navigate([routes.root.dashboard.disputes.error.full], {
           queryParams: {
             code: '197',
           },

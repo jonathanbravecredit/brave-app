@@ -9,15 +9,14 @@ import {
 } from '@shared/services/aws/api.service';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { AppDataStateModel } from '@store/app-data';
-import { deleteKeyNestedObject } from '@shared/utils/utils';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ZenObservable } from 'zen-observable-ts';
 import * as queries from '@shared/queries';
 import { StateService } from '@shared/services/state/state.service';
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from 'amazon-cognito-identity-js';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Injectable({
   providedIn: 'root',
@@ -131,7 +130,7 @@ export class SyncService implements OnDestroy {
    */
   async goToDashboard(id: string): Promise<void> {
     // const data = await this.syncDBDownToState(id); // handled in resolver now
-    this.router.navigate(['/dashboard/init']);
+    this.router.navigate([routes.root.dashboard.init.full]);
   }
 
   /**
@@ -187,16 +186,19 @@ export class SyncService implements OnDestroy {
   routeUser(lastComplete: number): void {
     switch (lastComplete) {
       case -1:
-        this.router.navigate(['/onboarding/name']);
+        this.router.navigate([routes.root.onboarding.name.full]);
         break;
       case 0:
-        this.router.navigate(['/onboarding/address']);
+        this.router.navigate([routes.root.onboarding.address.full]);
+
         break;
       case 1:
-        this.router.navigate(['/onboarding/identity']);
+        this.router.navigate([routes.root.onboarding.identity.full]);
+
         break;
       case 2:
-        this.router.navigate(['/onboarding/verify']);
+        this.router.navigate([routes.root.onboarding.verify.full]);
+
         break;
       default:
         // nothing to do, stay on same route
@@ -214,7 +216,9 @@ export class SyncService implements OnDestroy {
   async syncDBDownToState(id: string, payload?: AppDataStateModel): Promise<AppDataStateModel> {
     let userId: string;
     if (id === '') {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
       const attrs = await Auth.userAttributes(creds);
       userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     } else {

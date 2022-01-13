@@ -16,6 +16,7 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-credit-report',
@@ -39,7 +40,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReport);
     this.transunion.getCreditScores().then((scores) => {
       this.scores = scores.data;
     });
@@ -71,7 +71,7 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
    */
   onViewDetailClick(tradeline: ITradeLinePartition): void {
     this.creditReportService.setTradeline(tradeline);
-    this.router.navigate(['../report/tradeline'], { relativeTo: this.route });
+    this.router.navigate([routes.root.dashboard.report.tradeline.full]);
   }
 
   /**
@@ -81,7 +81,7 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
    */
   onViewPublicItemDetailClick(publicItem: IPublicPartition): void {
     this.creditReportService.setPublicItem(publicItem);
-    this.router.navigate(['../report/publicitem'], { relativeTo: this.route });
+    this.router.navigate([routes.root.dashboard.report.publicitem.full]);
   }
 
   /**
@@ -91,6 +91,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
    */
   onViewPersonalItemDetailClick(personalItem: IBorrower): void {
     this.creditReportService.setPersonalItem(personalItem);
-    this.router.navigate(['../report/personalitem'], { relativeTo: this.route });
+    this.router.navigate([routes.root.dashboard.report.personalitem.full]);
   }
 }

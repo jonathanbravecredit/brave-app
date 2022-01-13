@@ -61,7 +61,26 @@ import { CreditUtilizationAvailableComponent } from './snapshots/credit-utilizat
 import { CreditUtilizationNoCardsHeaderComponent } from './snapshots/credit-utilization/components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component';
 import { CreditUtilizationNoCardsTextComponent } from './snapshots/credit-utilization/components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component';
 import { CreditUtilizationColorPercentComponent } from './snapshots/credit-utilization/components/credit-utilization-color-percent/credit-utilization-color-percent.component';
+import { CreditMixHeaderComponent } from './snapshots/credit-mix/components/credit-mix-header/credit-mix-header.component';
+import { CreditMixRatingComponent } from './snapshots/credit-mix/components/credit-mix-rating/credit-mix-rating.component';
+import { CreditMixBadgesComponent } from './snapshots/credit-mix/components/credit-mix-badges/credit-mix-badges.component';
+import { CreditMixIconsComponent } from './snapshots/credit-mix/components/credit-mix-icons/credit-mix-icons.component';
+import { CreditMixSubHeadersComponent } from './snapshots/credit-mix/components/credit-mix-sub-headers/credit-mix-sub-headers.component';
+import { CreditMixCardSectionComponent } from './snapshots/credit-mix/components/credit-mix-card-section/credit-mix-card-section.component';
+import { CreditMixRecommendationComponent } from './snapshots/credit-mix/components/credit-mix-recommendation/credit-mix-recommendation.component';
+import { CreditMixFilterPipePipe } from './snapshots/credit-mix/credit-mix-filter-pipe/credit-mix-filter-pipe.pipe';
+import { CreditMixCardComponent } from './snapshots/credit-mix/components/credit-mix-card/credit-mix-card.component';
 import { DashboardCarouselComponent } from './dashboard-enrolled/components/dashboard-carousel/dashboard-carousel.component';
+import { ReferralDashboardView } from './snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
+import { ReferralDashboardPureView } from './snapshots/referral-dashboard/referral-dashboard-pure/referral-pure.view';
+import { ReferralHeaderComponent } from './snapshots/referral-dashboard/components/referral-header/referral-header.component';
+import { ReferralBannerComponent } from './snapshots/referral-dashboard/components/referral-banner/referral-banner.component';
+import { ReferralEarningsComponent } from './snapshots/referral-dashboard/components/referral-earnings/referral-earnings.component';
+import { ReferralAmountLinkComponent } from './snapshots/referral-dashboard/components/referral-amount-link/referral-amount-link.component';
+import { ReferralBodyTextComponent } from './snapshots/referral-dashboard/components/referral-body-text/referral-body-text.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { SettingsWarningComponent } from './settings/components/settings-warning/settings-warning.component';
+import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/dashboard-ads-carousel/dashboard-ads-carousel.component';
 
 const modules = [
   CommonModule,
@@ -71,6 +90,7 @@ const modules = [
   DisputesModule,
   CreditReportModule,
   DashboardRoutingModule,
+  SharedDirectivesModule,
 ];
 const components = [
   DashboardComponent,
@@ -85,10 +105,9 @@ const components = [
   SettingsPureComponent,
   SettingsOptionComponent,
   SettingsOptionListComponent,
+  SettingsWarningComponent,
   OptionPasswordResetComponent,
   OptionDeactivateComponent,
-  CreditMixPureView,
-  CreditMixView,
   BaseExceptionPureView,
   BaseExceptionView,
   ForbearanceView,
@@ -116,7 +135,27 @@ const components = [
   CreditUtilizationNoCardsHeaderComponent,
   CreditUtilizationNoCardsTextComponent,
   CreditUtilizationColorPercentComponent,
+  CreditMixHeaderComponent,
+  CreditMixView,
+  CreditMixPureView,
   DashboardCarouselComponent,
+  CreditMixRatingComponent,
+  CreditMixBadgesComponent,
+  CreditMixIconsComponent,
+  CreditMixSubHeadersComponent,
+  CreditMixCardSectionComponent,
+  CreditMixRecommendationComponent,
+  DashboardCarouselComponent,
+  CreditMixFilterPipePipe,
+  CreditMixCardComponent,
+  ReferralDashboardPureView,
+  ReferralDashboardView,
+  ReferralHeaderComponent,
+  ReferralBannerComponent,
+  ReferralEarningsComponent,
+  ReferralAmountLinkComponent,
+  ReferralBodyTextComponent,
+  DashboardAdsCarouselComponent
 ];
 
 const pipes = [AccountStatusPipe];

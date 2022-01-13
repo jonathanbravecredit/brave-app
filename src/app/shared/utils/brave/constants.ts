@@ -5,6 +5,7 @@ export enum AppStatus {
   Active = 'active',
   Suspended = 'suspended',
   Disabled = 'disabled',
+  Cancelled = 'cancelled',
 }
 
 export enum AppStatusReason {
@@ -18,6 +19,7 @@ export enum AppStatusReason {
   PinAttemptsExceeded = 'pinAttemptsExceeded',
   PinAgeExceeded = 'pinAgeExceeded',
   KbaAttemptsExceeded = 'kbaAttemptsExceeded',
+  KbaIncorrect = 'kbaIncorrect',
   KbaAgeExceeded = 'kbaAgeExceeded',
   EnrollmentFailed = 'enrollmentFailed',
 }
@@ -32,7 +34,8 @@ export const AppStatusReasonDescriptions: Record<string, string> = {
   [AppStatusReason.PinRequestsExceeded]: `Account disabled for 30 days for exceeding the number of pin reset requests`,
   [AppStatusReason.PinAttemptsExceeded]: `Account disabled for 30 days for exceeding the number of pin attempts`,
   [AppStatusReason.PinAgeExceeded]: `Account disabled for 30 days for allowing the pin to expire after 15 minutes`,
-  [AppStatusReason.KbaAttemptsExceeded]: `Account disabled for 30 days for exceeding the number of kba attempts`,
+  [AppStatusReason.KbaAttemptsExceeded]: `Account disabled for 30 days for getting kba questions incorrect`,
+  [AppStatusReason.KbaIncorrect]: `Account disabled for 30 days for exceeding the number of kba attempts`,
   [AppStatusReason.KbaAgeExceeded]: `Account disabled for 30 days for allowing the kba questions to expire after 96 hours`,
   [AppStatusReason.EnrollmentFailed]: `Non-specific enrollment failure`,
 };

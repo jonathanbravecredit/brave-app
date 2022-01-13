@@ -15,7 +15,9 @@ module.exports = {
       'brave-blurple': '#222C9D',
       'brave-safe': '#4BD269',
       'brave-critical': '#E93C25',
+      'brave-semicritical': '#F56700',
       'brave-danger': '#F9A21F',
+      'brave-normal': '#BBD904',
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
       'dk-gray': '#333333',
@@ -26,8 +28,10 @@ module.exports = {
       'brave-blurple': '#222C9D',
       'brave-safe': '#4BD269',
       'brave-critical': '#E93C25',
+      'brave-semicritical': '#F56700',
       'brave-lusitan-blue': '#ecf8fa',
       'brave-danger': '#F9A21F',
+      'brave-normal': '#BBD904',
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
       'dk-gray': '#333333',
@@ -39,10 +43,13 @@ module.exports = {
       'brave-blurple': '#222C9D',
       'brave-safe': '#4BD269',
       'brave-critical': '#E93C25',
+      'brave-semicritical': '#F56700',
       'brave-danger': '#F9A21F',
+      'brave-normal': '#BBD904',
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
       'dk-gray': '#333333',
+      'link-blue': '#0645AD',
     },
     extend: {
       rotate: {
@@ -125,6 +132,7 @@ module.exports = {
       },
       minWidth: {
         '140-px': '140px',
+        '320-px': '320px',
         48: '12rem',
       },
       backgroundSize: {

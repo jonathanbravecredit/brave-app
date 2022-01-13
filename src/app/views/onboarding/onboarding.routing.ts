@@ -15,6 +15,8 @@ import { KycDeactivateGuard } from '@views/onboarding/kyc-deactivate-guard/kyc-d
 import { KycExceptionsView } from '@views/onboarding/kyc-exceptions/kyc-exceptions/kyc-exceptions.view';
 import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-retry.component';
 import { ActiveGuard } from '@shared/guards/active.guard';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+const onboarding = routes.root.onboarding;
 
 // our routing scheme ===> layout/view/subview/subview2...
 const OnboardingRoutes: Routes = [
@@ -29,61 +31,61 @@ const OnboardingRoutes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'name',
+        path: `${onboarding.name.segment}`,
         component: KycWelcomeComponent,
         canDeactivate: [KycDeactivateGuard],
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'address',
+        path: `${onboarding.address.segment}`,
         component: KycAddressComponent,
         canDeactivate: [KycDeactivateGuard],
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'identity',
+        path: `${onboarding.identity.segment}`,
         component: KycSsnComponent,
         canDeactivate: [KycDeactivateGuard],
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'identityfull',
+        path: `${onboarding.identityfull.segment}`,
         component: KycSsnFullComponent,
         canDeactivate: [KycDeactivateGuard],
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'verify',
+        path: `${onboarding.verify.segment}`,
         component: KycPhonenumberComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'code',
+        path: `${onboarding.code.segment}`,
         component: KycIdverificationComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'kba',
+        path: `${onboarding.kba.segment}`,
         component: KycKbaquestionsComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'congratulations',
+        path: `${onboarding.congratulations.segment}`,
         component: KycCongratulationsComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'returning',
+        path: `${onboarding.returning.segment}`,
         component: KycWelcomebackComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'error',
+        path: `${onboarding.error.segment}`,
         component: KycExceptionsView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'retry',
+        path: `${onboarding.retry.segment}`,
         component: KycRetryComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },

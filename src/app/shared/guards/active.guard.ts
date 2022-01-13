@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, Activ
 import { Observable } from 'rxjs';
 import { StateService } from '@shared/services/state/state.service';
 import { AppStatus } from '@shared/utils/brave/constants';
-
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +17,7 @@ export class ActiveGuard implements CanActivate {
       appData: { status },
     } = this.statesvc.state$.value;
     if (status && status !== AppStatus.Active) {
-      this.router.navigate(['/suspended/default']);
+      this.router.navigate([routes.root.suspended.default.full]);
       return false;
     }
     return true;

@@ -5,8 +5,10 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { Router } from '@angular/router';
 import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { CognitoUser } from 'amazon-cognito-identity-js';
-import { Subscription } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { async, Subscription } from 'rxjs';
+import { catchError, first, tap } from 'rxjs/operators';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { id } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'brave-signin-redirect',
@@ -30,6 +32,9 @@ export class SigninRedirectComponent implements OnDestroy {
         tap(async (stable) => {
           await this.onboardUser();
         }),
+        catchError(async () => {
+          await this.onboardUser();
+        }),
       )
       .subscribe();
   }
@@ -40,13 +45,15 @@ export class SigninRedirectComponent implements OnDestroy {
 
   async onboardUser(): Promise<void> {
     try {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       const isNew = await this.sync.isUserBrandNew(id);
       if (isNew) {
         this.cleanUp();
-        this.router.navigate(['/auth/created']);
+        this.router.navigate([routes.root.auth.created.full]);
       } else {
         await this.sync.initUser(id);
         await this.sync.subscribeToListeners(id);
@@ -69,11 +76,11 @@ export class SigninRedirectComponent implements OnDestroy {
           await this.auth.socialSignIn(provider);
         } else {
           this.cleanUp();
-          this.router.navigate(['/auth/invalid']);
+          this.router.navigate([routes.root.auth.invalid.full]);
         }
       } else {
         this.cleanUp();
-        this.router.navigate(['/auth/invalid']);
+        this.router.navigate([routes.root.auth.invalid.full]);
       }
     }
   }

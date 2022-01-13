@@ -6,6 +6,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-disputes-reconfirm',
@@ -27,8 +28,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
     this.disputeService.setPersonalItem(personalItem);
-    this.router.navigate(['../personalitem'], {
-      relativeTo: this.route,
+    this.router.navigate([routes.root.dashboard.disputes.personalitem.full], {
       queryParams: {
         step: 'summary',
         type: null,
@@ -41,8 +41,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputePublicClick=Missing id:${id}`;
     this.disputeService.setPublicItem(publicItem);
-    this.router.navigate(['../publicitem'], {
-      relativeTo: this.route,
+    this.router.navigate([routes.root.dashboard.disputes.publicitem.full], {
       queryParams: {
         step: 'select',
         type: null,
@@ -60,8 +59,7 @@ export class DisputesReconfirmView {
     const id = this.statesvc.state?.appData.id;
     if (!id) throw `reconfirm:onDisputeTradelineClick=Missing id:${id}`;
     this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate(['../tradeline'], {
-      relativeTo: this.route,
+    this.router.navigate([routes.root.dashboard.disputes.tradeline.full], {
       queryParams: {
         step: 'select',
         type: null,

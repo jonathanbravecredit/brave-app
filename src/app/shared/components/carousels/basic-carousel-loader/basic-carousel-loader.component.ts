@@ -38,7 +38,7 @@ export class BasicCarouselLoaderComponent implements AfterViewInit, OnDestroy {
    */
   componentRef?: ComponentRef<any>;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private changeDetector: ChangeDetectorRef) {}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngAfterViewInit(): void {
     // added Promise to resolve change after check error

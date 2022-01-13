@@ -15,7 +15,7 @@ export default {
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
-      return `<div class="container mx-auto max-w-xs h-full">${story}</div>`;
+      return "<div class='container mx-auto max-w-xs h-full'>" + story +"</div>";
     }),
   ],
 } as Meta;

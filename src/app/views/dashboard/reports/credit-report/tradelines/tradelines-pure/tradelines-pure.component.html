@@ -8,11 +8,12 @@
   ></brave-tradeline-summary>
 </div>
 <brave-credit-utilization-fill-bar
-[creditType]="config?.accountTypeSymbol?.toLowerCase()"
-[currentBalance]="config?.currentBalance"
-[maxCreditAmount]="config?.creditLimit"
-[highestBalance]="config?.highestBalance"
-[openClosed]="config?.openClosed"
+  [creditType]="config?.accountTypeSymbol?.toLowerCase()"
+  [currentBalance]="config?.currentBalance"
+  [maxCreditAmount]="config?.creditLimit"
+  [highestBalance]="config?.highestBalance"
+  [openClosed]="config?.openClosed"
+  [creditLimit]="config?.creditLimit"
 ></brave-credit-utilization-fill-bar>
 <div class="mt-6">
   <brave-tradeline-details

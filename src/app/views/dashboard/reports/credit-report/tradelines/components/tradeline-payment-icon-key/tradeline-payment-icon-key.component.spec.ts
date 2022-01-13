@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { DecodePipe } from "@shared/pipes/decode/decode.pipe";
 
-import { TradelinePaymentIconKeyComponent } from './tradeline-payment-icon-key.component';
+import { TradelinePaymentIconKeyComponent } from "./tradeline-payment-icon-key.component";
 
-describe('TradelinePaymentIconKeyComponent', () => {
+describe("TradelinePaymentIconKeyComponent", () => {
   let component: TradelinePaymentIconKeyComponent;
   let fixture: ComponentFixture<TradelinePaymentIconKeyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TradelinePaymentIconKeyComponent ]
-    })
-    .compileComponents();
+      declarations: [TradelinePaymentIconKeyComponent, DecodePipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('TradelinePaymentIconKeyComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

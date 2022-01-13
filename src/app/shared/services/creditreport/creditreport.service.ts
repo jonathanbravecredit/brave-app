@@ -66,13 +66,26 @@ export class CreditreportService implements OnDestroy {
   tuPublicItemSubscriber$: BehaviorSubject<ISubscriber> = new BehaviorSubject({} as ISubscriber);
 
   @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
-  agenciesSub$: Subscription;
+  agenciesSub$!: Subscription;
 
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
-  preferencesSub$: Subscription;
+  preferencesSub$!: Subscription;
 
   constructor(private statesvc: StateService, private transunion: TransunionService) {
-    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
+    this.subscribeToAgencies();
+    this.subscribeToPreferences();
+  }
+
+  ngOnDestroy(): void {
+    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
+    if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
+  }
+
+  /**
+   * Subscribe to the agencies model
+   */
+  subscribeToAgencies(): void {
+    this.agenciesSub$ = this.agencies$.subscribe((agencies: AgenciesStateModel) => {
       const tu = this.getTransunion(agencies);
       if (Object.keys(tu).length) {
         this.tuAgency$.next(tu);
@@ -84,15 +97,16 @@ export class CreditreportService implements OnDestroy {
         this.tuReport = parsedReport;
       }
     });
-    this.preferencesSub$ = this.preferences$.pipe().subscribe((pref: PreferencesStateModel) => {
+  }
+
+  /**
+   * Subscribe to the preferences model
+   */
+  subscribeToPreferences(): void {
+    this.preferencesSub$ = this.preferences$.subscribe((pref: PreferencesStateModel) => {
       this.tuPreferences$.next(pref);
       this.tuPreferences = pref;
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
-    if (this.preferencesSub$) this.preferencesSub$.unsubscribe();
   }
 
   /**
@@ -115,7 +129,7 @@ export class CreditreportService implements OnDestroy {
    * Refresh the credit report if necessary
    */
   refreshCreditReport(): void {
-    this.transunion.refreshCreditReport();
+    this.transunion.getCreditReport();
   }
 
   /**
@@ -134,7 +148,6 @@ export class CreditreportService implements OnDestroy {
    * @returns {ITradeLinePartition[]}
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
-    if (!this.tuReport) return [{} as ITradeLinePartition];
     const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
     return partitions instanceof Array ? partitions : [partitions];
@@ -162,7 +175,6 @@ export class CreditreportService implements OnDestroy {
    * @returns {IPublicPartition[]}
    */
   getPublicItems(): IPublicPartition[] {
-    if (!this.tuPublicItem) return [{} as IPublicPartition];
     const partitions = this.tuReport?.TrueLinkCreditReportType?.PulblicRecordPartition;
     if (!partitions) return [{} as IPublicPartition];
     return partitions instanceof Array ? partitions : [partitions];
@@ -191,7 +203,6 @@ export class CreditreportService implements OnDestroy {
    * @returns {IBorrower}
    */
   getPersonalItem(): IBorrower {
-    if (!this.tuPersonalItem) return {} as IBorrower;
     const partitions = this.tuReport?.TrueLinkCreditReportType?.Borrower;
     if (!partitions) return {} as IBorrower;
     return partitions instanceof Array ? partitions[0] : partitions;
@@ -225,7 +236,7 @@ export class CreditreportService implements OnDestroy {
   async updateReportAsync(
     agencies: AgenciesStateModel | null | undefined,
   ): Promise<UpdateAppDataInput | null | undefined> {
-    if (!agencies) throw new Error(`creditreportService:updateReportAsync=Missing agency`);
+    if (!agencies) return;
     try {
       return await this.statesvc.updateAgenciesAsync(agencies);
     } catch (err) {

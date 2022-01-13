@@ -1,0 +1,74 @@
+<div class="min-w-full flex justify-evenly mb-8">
+  <div class="flex flex-col justify-center items-center">
+    <div
+      class="flex justify-center items-center mb-2 rounded-3xl"
+      style="
+        height: 40px;
+        width: 40px;
+      "
+      [ngStyle]="{'background-color': hasCreditCards ? '#222C9D' : '#c4c4c4'}"
+    >
+      <span
+        class="material-icons-outlined text-2xl"
+        style="color: white"
+      >
+        credit_card
+      </span>
+    </div>
+    <div class="font-semibold" style="font-size: 9px">Credit Cards</div>
+  </div>
+  <div class="flex flex-col justify-center items-center">
+    <div
+      class="flex justify-center items-center mb-2 rounded-3xl"
+      style="
+        height: 40px;
+        width: 40px;
+      "
+      [ngStyle]="{'background-color': hasStudentLoans ? '#222C9D' : '#c4c4c4'}"
+    >
+      <span
+        class="material-icons-outlined text-2xl"
+        style="color: white"
+      >
+        paid
+      </span>
+    </div>
+    <div class="font-semibold" style="font-size: 9px">Student Loans</div>
+  </div>
+  <div class="flex flex-col justify-center items-center">
+    <div
+      class="flex justify-center items-center mb-2 rounded-3xl"
+      style="
+        height: 40px;
+        width: 40px;
+      "
+      [ngStyle]="{'background-color': hasAutoLoans ? '#222C9D' : '#c4c4c4'}"
+    >
+      <span
+        class="material-icons-outlined text-2xl"
+        style="color: white"
+      >
+        directions_car_filled
+      </span>
+    </div>
+    <div class="font-semibold" style="font-size: 9px">Auto Loans</div>
+  </div>
+  <div class="flex flex-col justify-center items-center">
+    <div
+      class="flex justify-center items-center mb-2 rounded-3xl"
+      style="
+        height: 40px;
+        width: 40px;
+      "
+      [ngStyle]="{'background-color': hasMortgages ? '#222C9D' : '#c4c4c4'}"
+    >
+      <span
+        class="material-icons-outlined text-2xl"
+        style="color: white"
+      >
+        cottage
+      </span>
+    </div>
+    <div class="font-semibold" style="font-size: 9px">Mortgages</div>
+  </div>
+</div>

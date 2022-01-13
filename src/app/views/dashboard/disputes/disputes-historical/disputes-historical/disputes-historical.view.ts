@@ -7,7 +7,7 @@ import { DisputeStatus } from '@shared/constants/disputes.interface';
 import { IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
 import { Subscription } from 'rxjs';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 @Component({
   selector: 'brave-disputes-historical',
   templateUrl: './disputes-historical.view.html',
@@ -46,8 +46,7 @@ export class DisputesHistoricalView implements OnInit, OnDestroy {
       const resp = await this.transunion.getInvestigationResults(disputeId);
       const { success, error, data } = resp;
       if (!success) {
-        this.router.navigate(['../error'], {
-          relativeTo: this.route,
+        this.router.navigate([routes.root.dashboard.disputes.error.segment], {
           queryParams: {
             code: error?.Code,
           },
@@ -57,9 +56,7 @@ export class DisputesHistoricalView implements OnInit, OnDestroy {
       // do I need to set the current dispute
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage('gathering results');
-      this.router.navigate(['../findings', irID, cbID], {
-        relativeTo: this.route,
-      });
+      this.router.navigate([routes.root.dashboard.disputes.findings.segment, irID, cbID]);
     }
   }
 }

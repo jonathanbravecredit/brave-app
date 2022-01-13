@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { LinkifyPipe } from "@shared/pipes/linkify/linkify.pipe";
 
-import { ForbearanceTipsComponent } from './forbearance-tips.component';
+import { ForbearanceTipsComponent } from "./forbearance-tips.component";
 
-describe('ForbearanceTipsComponent', () => {
+describe("ForbearanceTipsComponent", () => {
   let component: ForbearanceTipsComponent;
   let fixture: ComponentFixture<ForbearanceTipsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ForbearanceTipsComponent ]
-    })
-    .compileComponents();
+      declarations: [ForbearanceTipsComponent, LinkifyPipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('ForbearanceTipsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

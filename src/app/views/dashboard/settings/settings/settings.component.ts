@@ -8,6 +8,7 @@ import { OptionPasswordResetComponent } from '@views/dashboard/settings/componen
 import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/settings-pure/interface';
 import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
 import { ALERT_CONFIG } from '@views/dashboard/settings/settings/constants';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-settings',
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
   haveDeactivateError: boolean = false;
   deactivateSuccess: boolean = false;
   deactivateError: string = '';
+  showDeactivateWarning: boolean = false;
   init: ISettingsViews = SettingsOptions.Init;
   alertConfig = ALERT_CONFIG;
   constructor(
@@ -40,8 +42,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onGoToPageClick({ tab, view }: { tab: number; view: ISettingsViews }) {
-    this.router.navigate([`./options`], {
-      relativeTo: this.route,
+    this.router.navigate([routes.root.dashboard.settings.options.full], {
       queryParams: {
         option: view,
       },
@@ -67,22 +68,19 @@ export class SettingsComponent implements OnInit {
 
   onDeactivateClick(): void {
     // evt.password -- we actually don't need the password, just there to act as a deterent
-    setTimeout(() => {
-      this.deactivateError = 'Sorry we could not deactive your account at this time.';
-      this.haveDeactivateError = true;
-      this.interstitial.fetching$.next(false);
-    }, 4000);
     this.settings
       .deactivateAccount()
       .then((results) => {
         this.deactivateSuccess = true;
         this.interstitial.stopSpinner();
-        this.router.navigate(['/auth/deactivated']);
+        this.router.navigate([routes.root.auth.deactivated.full]);
         this.interstitial.fetching$.next(false);
       })
       .catch((err) => {
         this.deactivateError = 'Sorry we could not deactive your account at this time.';
         this.haveDeactivateError = true;
+        this.showDeactivateWarning = true;
+        this.interstitial.stopSpinner();
         this.interstitial.fetching$.next(false);
       });
   }

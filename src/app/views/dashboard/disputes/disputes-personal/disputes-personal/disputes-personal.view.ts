@@ -4,6 +4,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { Observable } from 'rxjs';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 type viewDisplay = 'sent' | 'not-sent';
 
@@ -37,10 +38,9 @@ export class DisputesPersonalView implements OnDestroy {
           this.viewDisplay = 'sent';
         } else {
           const errorCode = error?.Code;
-          this.router.navigate([`./error`], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.error.segment], {
             queryParams: {
-              code: errorCode,
+              code: error?.Code,
             },
           });
         }

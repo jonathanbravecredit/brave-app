@@ -18,6 +18,7 @@ export class OutlineSsnLastfourFormComponent extends BaseFormComponent {
     mask: 'XXXX',
     unmask: '0000',
     maxLength: 4,
+    minLength: 4,
     hidden: true,
     placeholder: 'XXXX',
     autocomplete: 'off',

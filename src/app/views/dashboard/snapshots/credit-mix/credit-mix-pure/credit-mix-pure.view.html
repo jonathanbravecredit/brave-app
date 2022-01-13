@@ -1,23 +1,68 @@
-<div class="flex items-center py-4">
-  <span class="material-icons">chevron_left</span>
-  <span class="text-sm ml-2">Back</span>
-</div>
-<div class="border-b-2 border-blueGray-800 pb-4">
-  <div class="mb-10">
-    <h1 class="text-xl font-semibold">Credit Mix</h1>
-    <p class="text-sm">Low Score Impact</p>
-  </div>
-  <div class="mt-2">
-    <p>A healthy credit mix can show lenders that you are responsible.</p>
-  </div>
-  <div class="w-full py-5 text-center rounded-lg border border-indigo-800" *ngIf="(isRecommendationOpen$ | async) === true">
-    <div class="flex items-center">
-      <span class="font-semibold text-indigo-800 mx-auto">RECOMMENDATION</span>
-      <span class="text-sm material-icons-outlined" (click)="switchRecommendation()">close</span>
-    </div>
-    <div class="mt-4 py-2 text-center">
-      <p>Recommendation text here</p>
-    </div>
-  </div>
-  <brave-collection-credit-mix-accounts [creditCards]="creditCards" [loans]="loans" [closedAccounts]="closedAccounts"></brave-collection-credit-mix-accounts>
-</div>
+<brave-credit-mix-header></brave-credit-mix-header>
+<brave-credit-mix-rating
+  [tradeLineSummary]="tradeLineSummary"
+  [rating]="recommendations?.rating"
+  [ratingColor]="recommendations?.color"
+></brave-credit-mix-rating>
+<brave-credit-mix-badges
+  [tradeLineSummary]="tradeLineSummary"
+  [selectedBadge]="recommendations?.rating"
+></brave-credit-mix-badges>
+<brave-credit-mix-icons
+  [hasCreditCards]="tradeLineSummary?.hasOpenCreditCards"
+  [hasStudentLoans]="tradeLineSummary?.hasOpenStudentLoans"
+  [hasAutoLoans]="tradeLineSummary?.hasOpenAutoLoans"
+  [hasMortgages]="tradeLineSummary?.hasOpenMortgages"
+></brave-credit-mix-icons>
+<brave-credit-mix-recommendation
+  [tradeLineSum]="tradeLineSummary"
+  [recommendations]="recommendations"
+  braveAnalytics
+  [analyticClickEvents]="event.CreditMixProductRecommendation"
+  [analyticConfig]="{google: false, mixpanel: false, brave: true}"
+></brave-credit-mix-recommendation>
+<brave-credit-mix-sub-headers></brave-credit-mix-sub-headers>
+<brave-credit-mix-card-section
+  title="Credit Cards"
+  icon="credit_card"
+  [populated]="tradeLineSummary?.hasCreditCards"
+  populatedText="Your utilization, or usage, levels for each credit card is below:"
+  emptyText="Working on your credit to open your first credit card? Do it quickly and affordably with our partners!"
+></brave-credit-mix-card-section>
+<brave-credit-mix-card
+  [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
+  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'credit card'"
+></brave-credit-mix-card>
+<brave-credit-mix-card-section
+  title="Student Loans"
+  icon="paid"
+  [populated]="tradeLineSummary?.hasStudentLoans"
+  populatedText="The remaining balance for each student loan you have is below:"
+  emptyText="Working on your credit to get a student loan? Do it quickly and affordably with our partners!"
+></brave-credit-mix-card-section>
+<brave-credit-mix-card
+  [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
+  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'student loan'"
+></brave-credit-mix-card>
+<brave-credit-mix-card-section
+  title="Auto Loans"
+  icon="directions_car_filled"
+  [populated]="tradeLineSummary?.hasAutoLoans"
+  populatedText="The remaining balance for each car loan you have is below:"
+  emptyText="Working on your credit to get an affordable car loan? Do it quickly and affordably with our partners!"
+></brave-credit-mix-card-section>
+<brave-credit-mix-card
+  [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
+  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'auto loan'"
+></brave-credit-mix-card>
+<brave-credit-mix-card-section
+  title="Mortgages"
+  icon="cottage"
+  [populated]="tradeLineSummary?.hasMortgages"
+  populatedText="The remaining balance for each mortgage you have is below:"
+  emptyText="Working on your credit to buy your first house? Do it quickly and affordably with our partners!"
+></brave-credit-mix-card-section>
+<brave-credit-mix-card
+  [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
+  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'mortgage'"
+></brave-credit-mix-card>

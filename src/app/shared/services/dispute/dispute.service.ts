@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { ITUServiceResponse } from '@shared/interfaces/common-tu.interface';
 import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { StateService } from '@shared/services/state/state.service';
@@ -13,6 +12,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IDispute } from '@shared/interfaces/disputes';
+import { IErrorResponse } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +56,7 @@ export class DisputeService implements OnDestroy {
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
 
-  constructor(private store: Store, private statesvc: StateService, private transunion: TransunionService) {
+  constructor(private statesvc: StateService, private transunion: TransunionService) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });
@@ -188,18 +188,6 @@ export class DisputeService implements OnDestroy {
     }
   }
 
-  // /**
-  //  * Query the TU service for any investigation results
-  //  * @returns
-  //  */
-  // async getInvestigationResults(disputeId: string): Promise<ITUServiceResponse<any>> {
-  //   try {
-  //     return await this.transunion.getInvestigationResults(disputeId);
-  //   } catch (err) {
-  //     throw `disputeService:getInvestigationResults=${err}`;
-  //   }
-  // }
-
   /**
    * Query the TU service for any investigation results by report id
    * @returns
@@ -221,6 +209,22 @@ export class DisputeService implements OnDestroy {
       return await this.transunion.getCreditBureauResultsById(id);
     } catch (err) {
       throw `disputeService:getInvestigationResults=${err}`;
+    }
+  }
+
+  /**
+   * Query to return all the users disputes
+   * @returns
+   */
+  async getDisputesByUser(): Promise<ITUServiceResponse<IDispute[] | undefined>> {
+    try {
+      return await this.transunion.sendTransunionAPICall('ListDisputesByUser', JSON.stringify({}));
+    } catch (err) {
+      return {
+        success: false,
+        error: err as IErrorResponse,
+        data: [],
+      };
     }
   }
 }

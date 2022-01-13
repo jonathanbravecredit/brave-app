@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { KycService } from '@shared/services/kyc/kyc.service';
 import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component';
 import { FormGroup, AbstractControl } from '@angular/forms';
@@ -20,6 +20,7 @@ import { AppStatusReason } from '@shared/utils/brave/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
 
@@ -33,7 +34,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private store: Store,
     private kycService: KycService,
     private analytics: AnalyticsService,
@@ -50,7 +50,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
 
   goBack(): void {
     this.kycService.inactivateStep(this.stepID);
-    this.router.navigate(['../verify'], { relativeTo: this.route });
+    this.router.navigate([routes.root.onboarding.verify.full]);
   }
 
   updateViewState(viewState: KycIdverificationState) {
@@ -96,11 +96,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         if (!newpin) {
           !resp.success
             ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
-            : resp.success &&
-              resp.data?.ResponseType.toLowerCase() === 'success' &&
-              resp.data?.AuthenticationStatus.toLowerCase() === 'correct'
-            ? await this.handleSuccess()
-            : await this.handleIncorrect(resp);
+            : await this.handleResponse(resp);
         } else {
           this.updateViewState('sent');
         }
@@ -134,6 +130,28 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     }
   }
 
+  async handleResponse(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    // is success and correct
+    const { data } = resp;
+    if (!data) {
+      await this.handleIncorrect(resp);
+      return;
+    }
+
+    const { ResponseType, AuthenticationStatus } = data;
+    const type = ResponseType.toLowerCase();
+    const status = AuthenticationStatus.toLowerCase();
+    if (type === 'success' && status === 'correct') {
+      await this.handleSuccess();
+    } else if (type === 'success' && status === 'incorrect') {
+      await this.handleIncorrect(resp);
+    } else if (type === 'success' && status === 'inprogress') {
+      await this.handleInProgress(resp);
+    } else {
+      await this.handleIncorrect(resp);
+    }
+  }
+
   /**
    * Once the user is verified complete the onboarding step on the server
    * - update the state to indicate the step is complete (IMPORTANT, needs to be called first)
@@ -145,13 +163,12 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    */
   async handleSuccess(): Promise<void> {
     try {
-      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+      await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
-      if (success) this.handleReferrals();
+      const sub = await this.kycService.getUserSub();
+      this.referral.updateReferral(sub, 'enrolled');
       success
-        ? this.router.navigate(['../congratulations'], {
-            relativeTo: this.route,
-          }) // api successful and TU successful
+        ? this.router.navigate([routes.root.onboarding.congratulations.full]) // api successful and TU successful
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
       console.log('error:completeOnboarding ===> ', err);
@@ -170,19 +187,19 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     this.interstitial.fetching$.next(false);
   }
 
+  async handleInProgress(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
+    await this.kycService.handleVerificationInProgressFlow(resp);
+    this.interstitial.fetching$.next(false);
+  }
+
   handleAPIError(): void {
-    this.router.navigate(['/onboarding/retry']);
+    this.router.navigate([routes.root.onboarding.retry.full]);
     this.interstitial.fetching$.next(false);
   }
 
   async handleSuspension(reason: AppStatusReason): Promise<void> {
     await this.kycService.handleSuspension(reason);
     this.interstitial.fetching$.next(false);
-  }
-
-  async handleReferrals(): Promise<void> {
-    const sub = await this.kycService.getUserSub();
-    this.referral.updateReferral(sub, 'enrolled');
   }
 
   createTuPartial<T>(resp?: ITUServiceResponse<T | undefined>): Partial<TransunionInput> {

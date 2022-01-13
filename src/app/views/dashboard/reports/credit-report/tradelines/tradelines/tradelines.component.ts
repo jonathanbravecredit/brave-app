@@ -8,6 +8,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-tradelines',
@@ -70,7 +71,7 @@ export class TradelinesComponent {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate(['/disputes/reconfirm'], {
+          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
             queryParams: {
               type: filter,
             },
@@ -87,8 +88,7 @@ export class TradelinesComponent {
 
   handleError(code: string = '197'): void {
     this.interstitial.closeInterstitial();
-    this.router.navigate(['/disputes/error'], {
-      relativeTo: this.route,
+    this.router.navigate([routes.root.dashboard.disputes.error.full], {
       queryParams: {
         code: code,
       },

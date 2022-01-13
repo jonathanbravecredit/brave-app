@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-negative-account-initial',
@@ -22,7 +23,6 @@ export class NegativeAccountInitialComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private statesvc: StateService,
-    private analytics: AnalyticsService,
     private creditReportService: CreditreportService,
     private disputeService: DisputeService,
   ) {
@@ -37,9 +37,7 @@ export class NegativeAccountInitialComponent implements OnInit {
     return this._acknowledged;
   }
 
-  ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotNegative);
-  }
+  ngOnInit(): void {}
 
   /**
    * Listens for the Dispute confirmation and refreshes the report
@@ -53,15 +51,13 @@ export class NegativeAccountInitialComponent implements OnInit {
         const { success, error } = resp;
         if (success) {
           const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate(['/disputes/reconfirm'], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
             queryParams: {
               type: filter,
             },
           });
         } else {
-          this.router.navigate(['/disputes/error'], {
-            relativeTo: this.route,
+          this.router.navigate([routes.root.dashboard.disputes.error.full], {
             queryParams: {
               code: error?.Code || '197',
             },
@@ -69,8 +65,7 @@ export class NegativeAccountInitialComponent implements OnInit {
         }
       })
       .catch((err) => {
-        this.router.navigate(['/disputes/error'], {
-          relativeTo: this.route,
+        this.router.navigate([routes.root.dashboard.disputes.error.full], {
           queryParams: {
             code: '197',
           },
@@ -79,14 +74,10 @@ export class NegativeAccountInitialComponent implements OnInit {
   }
 
   onGoToDashboardClick(): void {
-    this.router.navigate(['/dashboard/init']);
+    this.router.navigate([routes.root.dashboard.init.full]);
   }
 
   onGoToReportClick(): void {
-    this.router.navigate(['/dashboard/report']);
-  }
-
-  onDisputeClick(tradeline: ITradeLinePartition): void {
-    this.disputeService;
+    this.router.navigate([routes.root.dashboard.report.full]);
   }
 }

@@ -1,4 +1,9 @@
 <div class="p-2">
-  <brave-data-breaches-pure [breachCards]="breaches || []" (cardClick)="onCardClick($event)">
+  <brave-data-breaches-pure
+    braveAnalytics
+    [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCardReview"
+    [breachCards]="breaches || []"
+    (cardClick)="onCardClick($event)"
+  >
   </brave-data-breaches-pure>
 </div>

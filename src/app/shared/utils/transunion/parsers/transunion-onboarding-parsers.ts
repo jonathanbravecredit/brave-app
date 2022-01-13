@@ -1,3 +1,4 @@
+import { IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
 import { IGetAuthenticationQuestionsResult } from '@shared/interfaces/get-authorization-questions.interface';
 import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
@@ -27,6 +28,19 @@ export class TransunionOnboardingParsers extends TransunionBase {
   static parseAuthQuestions(questions: IGetAuthenticationQuestionsResult | undefined): string | undefined {
     if (!questions) return '';
     const questionXml = questions.Questions;
+    return questionXml ? questionXml : '';
+  }
+
+  /**
+   * Helper method to parse the auth questions as embeded objects
+   * @param questions
+   * @returns
+   */
+  static parseVerificationInProgressQuestions(
+    questions: IVerifyAuthenticationQuestionsResult | undefined,
+  ): string | undefined {
+    if (!questions) return '';
+    const questionXml = questions.AuthenticationDetails;
     return questionXml ? questionXml : '';
   }
 

@@ -11,8 +11,8 @@ import { SignupKnowyouComponent } from '@views/authentication/signup-knowyou/sig
 import { SignupResendComponent } from '@views/authentication/signup-resend/signup-resend.component';
 import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/signup-thankyou/signup-thankyou.component';
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
-import { RedirectResolver } from '@shared/resolvers/redirect.resolver';
 import { DeactivatedComponent } from '@views/authentication/deactivated/deactivated.component';
+import { ROUTE_NAMES as routes } from '../../shared/routes/routes.names';
 
 const AuthenticationRoutes: Routes = [
   {
@@ -20,21 +20,54 @@ const AuthenticationRoutes: Routes = [
     component: AuthenticationComponent,
     children: [
       {
+        path: `${routes.root.auth.signup.segment}`,
+        component: SignupComponent,
+      },
+      {
+        path: `${routes.root.auth.signin.segment}`,
+        component: SigninComponent,
+      },
+      {
+        path: `${routes.root.auth.forgot.segment}`,
+        component: SigninForgotComponent,
+      },
+      {
+        path: `${routes.root.auth.redirect.segment}`,
+        component: SigninRedirectComponent,
+      },
+      {
+        path: `${routes.root.auth.created.segment}`,
+        component: SigninRedirectNewuserComponent,
+      },
+      {
+        path: `${routes.root.auth.thankyou.segment}`,
+        component: SignupThankyouComponent,
+      },
+      {
+        path: `${routes.root.auth.name.segment}`,
+        component: SignupKnowyouComponent,
+      },
+      {
+        path: `${routes.root.auth.error.segment}`,
+        component: SignupErrorComponent,
+      },
+      {
+        path: `${routes.root.auth.invalid.segment}`,
+        component: SignupErrorValidationComponent,
+      },
+      {
+        path: `${routes.root.auth.resend.segment}`,
+        component: SignupResendComponent,
+      },
+      {
+        path: `${routes.root.auth.deactivated.segment}`,
+        component: DeactivatedComponent,
+      },
+      {
         path: '',
         redirectTo: 'signin',
         pathMatch: 'full',
       },
-      { path: 'signup', component: SignupComponent },
-      { path: 'signin', component: SigninComponent },
-      { path: 'forgot', component: SigninForgotComponent },
-      { path: 'redirect', component: SigninRedirectComponent },
-      { path: 'created', component: SigninRedirectNewuserComponent },
-      { path: 'thankyou', component: SignupThankyouComponent },
-      { path: 'name', component: SignupKnowyouComponent },
-      { path: 'error', component: SignupErrorComponent },
-      { path: 'invalid', component: SignupErrorValidationComponent },
-      { path: 'resend', component: SignupResendComponent },
-      { path: 'deactivated', component: DeactivatedComponent },
     ],
   },
 ];
@@ -42,6 +75,6 @@ const AuthenticationRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(AuthenticationRoutes)],
   exports: [RouterModule],
-  providers: [RedirectResolver],
+  providers: [],
 })
 export class AuthenticationRoutingModule {}

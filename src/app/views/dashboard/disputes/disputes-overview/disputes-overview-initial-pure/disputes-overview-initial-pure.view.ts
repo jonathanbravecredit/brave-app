@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { IDisputeCurrent, TDisputeEntity } from '@views/dashboard/disputes/components/cards';
 
 export interface IDisputesOverview {
@@ -14,7 +15,7 @@ export class DisputesOverviewInitialPureView implements OnInit {
   @Input() overview: IDisputesOverview | undefined;
   @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
   @Output() viewHistoricalClick: EventEmitter<void> = new EventEmitter();
-
+  events = AnalyticClickEvents;
   constructor() {}
 
   ngOnInit(): void {}

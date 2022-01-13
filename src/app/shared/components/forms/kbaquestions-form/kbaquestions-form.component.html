@@ -10,9 +10,8 @@
             <div class="item" [ngStyle]="{ 'width.px': itemWidth }">
               <brave-kba-multiplechoice-input
                 (click)="clickAnswer.emit(question)"
-                (onComponentReady)="
-                  addChild(formatChildName('question', i), $event)
-                "
+                (onComponentReady)="addChild(formatChildName('question', i), $event)"
+                (onComponentDestroy)="removeChild(formatChildName('question', i))"
                 [required]="true"
                 [question]="question"
               ></brave-kba-multiplechoice-input>

@@ -13,6 +13,8 @@ import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/ba
 import { FindingsResolver } from '@shared/resolvers/findings/findings.resolver';
 import { DisputesResolver } from '@shared/resolvers/disputes/disputes.resolver';
 import { DisputesHistoricalView } from '@views/dashboard/disputes/disputes-historical/disputes-historical/disputes-historical.view';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+const disputes = routes.root.dashboard.disputes;
 
 const DisputeRoutes: Routes = [
   {
@@ -26,60 +28,60 @@ const DisputeRoutes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'overview',
+        path: `${disputes.overview.segment}`,
         component: DisputesOverviewInitialView,
         resolve: { disputes: DisputesResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'historical',
+        path: `${disputes.historical.segment}`,
         component: DisputesHistoricalView,
         resolve: { disputes: DisputesResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'findings/:investigation/:creditbureau',
+        path: `${disputes.findings.segment}/:investigation/:creditbureau`,
         component: DisputeFindingsView,
         resolve: { reports: FindingsResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'reconfirm',
+        path: `${disputes.reconfirm.segment}`,
         component: DisputesReconfirmView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'tradeline',
+        path: `${disputes.tradeline.segment}`,
         component: DisputesTradelineView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'personalitem',
+        path: `${disputes.personalitem.segment}`,
         component: DisputesPersonalView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'publicitem',
+        path: `${disputes.publicitem.segment}`,
         component: DisputesPublicView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'tradeline/error',
+        path: `${disputes.tradeline.segment}/${disputes.tradeline.error.segment}`,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'personalitem/error',
+        path: `${disputes.personalitem.segment}/${disputes.personalitem.error.segment}`,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'publicitem/error',
+        path: `${disputes.publicitem.segment}/${disputes.publicitem.error.segment}`,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: 'error',
+        path: `${disputes.error.segment}`,
         component: BaseExceptionView,
         canActivate: [ActiveGuard, AuthGuard],
       },
