@@ -16,6 +16,8 @@ import {
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IDispute } from '@shared/interfaces/disputes';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { MonitorClickEvents } from '@shared/services/safeListMonitoring/constants';
+import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
@@ -34,7 +36,7 @@ import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disput
 })
 export class TransunionService {
   tu = TransunionUtil;
-  constructor(private api: APIService) {}
+  constructor(private api: APIService, private safeListMonitoringService: SafeListMonitoringService) {}
 
   async sendTransunionAPICall<T>(action: string, message: string): Promise<ITUServiceResponse<T | undefined>> {
     try {
@@ -126,6 +128,7 @@ export class TransunionService {
    * Send the verified user to transunion to enroll them and receive their report
    */
   async sendEnrollDisputesRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
+    this.safeListMonitoringService.fireClickEvent(MonitorClickEvents.DisputesEnroll);
     return this.sendTransunionAPICall<IEnrollResult>('EnrollDisputes', JSON.stringify({}));
   }
 

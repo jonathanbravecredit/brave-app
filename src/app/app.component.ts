@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { InitService } from '@shared/services/init/init.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
 @Component({
   selector: 'brave-root',
   templateUrl: './app.component.html',
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private init: InitService,
     private interstitial: InterstitialService,
+    private safeListMonitoringService: SafeListMonitoringService
   ) {
     this.spinner$ = this.interstitial.open$.asObservable();
     this.message$ = this.interstitial.message$.asObservable();
