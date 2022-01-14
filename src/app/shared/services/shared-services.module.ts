@@ -18,6 +18,7 @@ import { CreditUtilizationService } from './credit-utilization/credit-utilizatio
 import { ModalService } from '@shared/services/modal/modal.service';
 import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 
 const services = [
   InitService,
@@ -38,6 +39,7 @@ const services = [
   ModalService,
   NeverbounceService,
   ReferralsService,
+  IpaddressService,
 ];
 
 @NgModule({
