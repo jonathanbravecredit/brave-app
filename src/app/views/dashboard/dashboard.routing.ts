@@ -22,6 +22,7 @@ import { CreditMixResolver } from '@shared/resolvers/credit-mix/credit-mix.resol
 import { ReferralDashboardView } from '@views/dashboard/snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
 import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
 const dashboard = routes.root.dashboard;
 const snapshot = routes.root.dashboard.report.snapshot;
 
@@ -29,92 +30,92 @@ const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [ActiveGuard, AuthGuard],
+    canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
     children: [
       {
         path: `${dashboard.init.segment}`,
         component: DashboardEnrolledComponent,
         resolve: { dashboard: DashboardResolver },
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.settings.segment}`,
         component: SettingsComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.settings.segment}/${dashboard.settings.options.segment}`,
         component: SettingsComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}`,
         component: CreditReportComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.disputes.segment}`,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
         loadChildren: () => import('./disputes/disputes.module').then((m) => m.DisputesModule),
       },
       {
         path: `${dashboard.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.negative.segment}`,
         component: NegativeAccountInitialComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.forbearance.segment}`,
         component: ForbearanceView,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.databreach.segment}`,
         component: DataBreachesComponent,
         resolve: { breaches: SnapshotDatabreachesResolver },
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.creditutilization.segment}`,
         component: CreditUtilizationView,
         resolve: { creditReports: CreditUtilizationResolver },
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.creditmix.segment}`,
         component: CreditMixView,
         resolve: { tradeLineParition: CreditMixResolver },
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.referrals.segment}`,
         component: ReferralDashboardView,
         resolve: { referral: ReferralResolver },
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.tradeline.segment}`,
         component: TradelinesComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.publicitem.segment}`,
         component: PublicitemsView,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.personalitem.segment}`,
         component: PersonalitemsView,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
     ],
   },

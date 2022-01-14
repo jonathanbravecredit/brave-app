@@ -16,6 +16,7 @@ import { KycExceptionsView } from '@views/onboarding/kyc-exceptions/kyc-exceptio
 import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-retry.component';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
 const onboarding = routes.root.onboarding;
 
 // our routing scheme ===> layout/view/subview/subview2...
@@ -23,7 +24,7 @@ const OnboardingRoutes: Routes = [
   {
     path: '',
     component: OnboardingComponent,
-    canActivate: [ActiveGuard, AuthGuard],
+    canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
     children: [
       {
         path: '',
@@ -34,60 +35,60 @@ const OnboardingRoutes: Routes = [
         path: `${onboarding.name.segment}`,
         component: KycWelcomeComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.address.segment}`,
         component: KycAddressComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.identity.segment}`,
         component: KycSsnComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.identityfull.segment}`,
         component: KycSsnFullComponent,
         canDeactivate: [KycDeactivateGuard],
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.verify.segment}`,
         component: KycPhonenumberComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.code.segment}`,
         component: KycIdverificationComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.kba.segment}`,
         component: KycKbaquestionsComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.congratulations.segment}`,
         component: KycCongratulationsComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.returning.segment}`,
         component: KycWelcomebackComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.error.segment}`,
         component: KycExceptionsView,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.retry.segment}`,
         component: KycRetryComponent,
-        canActivate: [ActiveGuard, AuthGuard],
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
     ],
   },
