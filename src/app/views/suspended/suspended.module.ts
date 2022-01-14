@@ -5,11 +5,12 @@ import { SharedComponentsModule } from '@shared/components/shared-components.mod
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { SuspendedRoutingModule } from '@views/suspended/suspended.routing';
 import { SuspendedDefaultView } from './suspended-default/suspended-default.view';
+import { UnauthorizedView } from './unauthorized/unauthorized.view';
 
-const components = [SuspendedView];
+const components = [SuspendedView, SuspendedDefaultView, UnauthorizedView];
 
 @NgModule({
-  declarations: [...components, SuspendedDefaultView],
+  declarations: [...components],
   imports: [CommonModule, SharedComponentsModule, SharedPipesModule, SuspendedRoutingModule],
   exports: [...components],
 })
