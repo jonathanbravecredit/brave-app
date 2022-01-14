@@ -12,16 +12,19 @@ export class IpAddressGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.ipAddress
-      .validateIpAddress()
-      .then(async (res: Response) => {
-        const geolocation: IpAddressResponse = await res.json();
-        console.log('geolocation ==> ', geolocation);
-        return geolocation.success;
+    return this.resolver()
+      .then((res) => {
+        return res;
       })
       .catch((err) => {
         this.router.navigate([routes.root.suspended.unauthorized.full]);
         return false;
       });
+  }
+
+  async resolver(): Promise<boolean> {
+    const res: Response = await this.ipAddress.validateIpAddress();
+    const geolocation: IpAddressResponse = await res.json();
+    return geolocation.success;
   }
 }

@@ -18,8 +18,9 @@ export class IpaddressService extends GuestBase {
   }
 
   async validateIpAddress(): Promise<Response> {
-    const url = `${environment.validation}/validation/ipaddress`;
-    let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify({}));
+    const url = `${environment.validation}/validation/ipwhitelist`;
+    const body = { dummy: 'dummy ' };
+    let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
     return await fetch(signedReq);
   }
 }
