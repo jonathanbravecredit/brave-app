@@ -111,4 +111,10 @@ export class OutlineInputComponent implements OnInit {
     if (!this.input) return;
     this.input.nativeElement.focus();
   }
+
+  onChange(target: EventTarget | null): void {
+    if (!target) return;
+    const input = target as HTMLInputElement;
+    this.componentFormGroup.controls.input.setValue(input.value);
+  }
 }
