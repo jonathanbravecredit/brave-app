@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { v4 } from 'uuid';
 import { Hub } from '@aws-amplify/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -8,6 +8,7 @@ import { InitService } from '@shared/services/init/init.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
+
 @Component({
   selector: 'brave-root',
   templateUrl: './app.component.html',
@@ -20,7 +21,6 @@ export class AppComponent implements OnInit {
   // inject app monitoring services and auth service
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private analytics: AnalyticsService,
     private init: InitService,
     private interstitial: InterstitialService,
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
     })();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
       } else if (event instanceof NavigationEnd) {

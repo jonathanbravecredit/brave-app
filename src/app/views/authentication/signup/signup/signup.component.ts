@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
     try {
       const resp: Response = await this.neverBounce.validateEmail(user.username);
       const body: NeverBounceResponse = await resp.json();
-      isValid = body.result === 'invalid' || body.result === 'disposable' ? false : true;
+      isValid = body.result === 'invalid' || body.result === 'disposable' || body.result === 'unknown' ? false : true;
     } catch (err) {
       isValid = false;
     }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { OnboardingState, OnboardingStateModel } from '@store/onboarding';
+import { OnboardingStateModel } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';

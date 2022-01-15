@@ -4,6 +4,7 @@
       >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
     <input
+      #inputField
       name="input_field"
       inputmode="numeric"
       pattern="[0-9]*"
@@ -11,6 +12,7 @@
       formControlName="input"
       [placeholder]="config?.placeholder || ''"
       [autocomplete]="config?.autocomplete || 'off'"
+      (change)="onChange($event.target)"
       [mask]="'00000'"
       [ngClass]="{
         'border-red-500':
