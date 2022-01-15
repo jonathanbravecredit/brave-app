@@ -47,14 +47,16 @@ export class SafeListMonitoringService {
       this.sessionService.updateSessionData({
         sessionId: this.sessionData.sessionId,
         expirationDate: moment(new Date()).add(1, 'day').toISOString(),
-      });
+      }, event);
     }
   }
 
   fireClickEvent(event: MonitorClickEvents) {
-    const sessionId = sessionStorage.get('bravesessionid');
-    if (!sessionId) {
-      sessionStorage.set('bravesessionid', uuid.v4());
+    if (event === MonitorClickEvents.DisputesEnroll && this.sessionData) {
+      this.sessionService.updateSessionData({
+        sessionId: this.sessionData.sessionId,
+        expirationDate: moment(new Date()).add(1, 'day').toISOString(),
+      }, event)
     }
   }
 }

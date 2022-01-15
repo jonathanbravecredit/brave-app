@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { Auth } from 'aws-amplify';
+import { MonitorClickEvents, MonitorViewEvents } from '@shared/services/safeListMonitoring/constants';
 
 export interface ISessionData {
   sessionId: string;
@@ -67,11 +68,11 @@ export class SessionService {
   async sessionLogic() {
     const braveSessionData: ISessionData = sessionStorage.get('braveSessionId');
     if (!braveSessionData) {
-      const lastSession = await this.getLastSession();
+      const lastSession = await this.getLastestSession();
       if (lastSession) {
         let expireCompare = moment(new Date()).isAfter(lastSession.sessionExpirationDate);
         if (expireCompare) {
-          this.settingHelper()
+          this.settingHelper();
         } else {
           let data: ISessionData = {
             sessionId: lastSession.sessionId,
@@ -81,14 +82,14 @@ export class SessionService {
           this.sessionData$.next(data);
         }
       } else {
-        this.settingHelper()
+        this.settingHelper();
       }
     } else {
       let expireCompare = moment(new Date()).isAfter(braveSessionData.expirationDate);
       if (expireCompare) {
-        this.settingHelper()
+        this.settingHelper();
       } else {
-        return
+        return;
       }
       return;
     }
@@ -100,48 +101,62 @@ export class SessionService {
     await this.createSessionData(this.sessionData);
   }
 
-
-  async getLastSession(): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens()
+  async getLastestSession(): Promise<ISessionDB> {
+    let token = await this.auth.getIdTokenJwtTokens();
     let headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-
-    return this.http
-      .get<ISessionDB>(this.dbUrl, { headers })
-      .toPromise(); //TODO
-  }
-
-  async getSessionData(sessionId: string): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens()
-    let headers = new HttpHeaders({
-      Authorization: `${token}`,
-    });
-    const params = new HttpParams();
-    params.append('sessionId', sessionId);
+    let params = new HttpParams();
+    params = params.append('limit', '1');
+    params = params.append('sort', 'desc');
 
     return this.http
       .get<ISessionDB>(this.dbUrl, { headers, params })
       .toPromise(); //TODO
   }
 
-  async createSessionData(data: ISessionData): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens()
+  async getSessionData(sessionId: string): Promise<ISessionDB> {
+    let token = await this.auth.getIdTokenJwtTokens();
     let headers = new HttpHeaders({
       Authorization: `${token}`,
     });
+
     return this.http
-      .post<ISessionDB>(this.dbUrl, data, { headers })
+      .get<ISessionDB>(`${this.dbUrl}/${sessionId}`, { headers })
       .toPromise(); //TODO
   }
 
-  async updateSessionData(data: ISessionData): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens()
+  async createSessionData(data: ISessionData): Promise<ISessionDB> {
+    let token = await this.auth.getIdTokenJwtTokens();
     let headers = new HttpHeaders({
       Authorization: `${token}`,
     });
+    let body = {
+      userId: await this.auth.getUserSub(),
+      sessionId: data.sessionId,
+      sessionDate: moment(new Date()),
+      sessionExpirationDate: data.expirationDate,
+      pageViews: 1,
+    };
     return this.http
-      .patch<ISessionDB>(this.dbUrl, data, { headers })
+      .post<ISessionDB>(this.dbUrl, body, { headers })
+      .toPromise(); //TODO
+  }
+
+  async updateSessionData(data: ISessionData, event: string): Promise<ISessionDB> {
+    let token = await this.auth.getIdTokenJwtTokens();
+    let headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+    let body = {
+      userId: await this.auth.getUserSub(),
+      sessionId: data.sessionId,
+      sessionExpirationDate: data.expirationDate,
+      event
+    }
+
+    return this.http
+      .patch<ISessionDB>(this.dbUrl, body, { headers })
       .toPromise(); //TODO
   }
 }
