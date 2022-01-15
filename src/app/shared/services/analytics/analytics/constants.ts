@@ -38,6 +38,7 @@ export enum AnalyticClickEvents {
   NavigationFraudToCreditReport = 'navigation_fraudtocreditreport',
   DashboardProduct = 'dashboard_product',
   CreditMixProductRecommendation = 'creditmix_product_recommendation',
+  DisputeEnrollment = 'dispute_enrollment',
   DisputeSucessfullySubmited = 'dispute_sucessfully_submited',
   DisputeInvestigationResults = 'dispute_investigation_results',
   UserLogIn = 'user_log_in',
