@@ -12,7 +12,7 @@ export class ReferralDashboardView implements OnInit, OnDestroy {
   metrics: IGroupedYearMonthReferral[] = [];
   referral: IReferral | undefined;
   payments: IPayments | undefined;
-  disabled: boolean = false;
+  disabled: boolean = true;
   isActiveSub$: Subscription | undefined;
 
   constructor(private route: ActivatedRoute, private referralService: ReferralsService) {
