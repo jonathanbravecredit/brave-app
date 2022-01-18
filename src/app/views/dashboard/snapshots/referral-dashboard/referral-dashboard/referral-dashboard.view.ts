@@ -22,9 +22,9 @@ export class ReferralDashboardView implements OnInit, OnDestroy {
       this.payments = resp.referral.payments;
     });
 
-    this.isActiveSub$ = this.referralService.isActive$.subscribe((isActive) => {
-      this.disabled = !isActive;
-    });
+    // this.isActiveSub$ = this.referralService.isActive$.subscribe((isActive) => {
+    //   this.disabled = !isActive;
+    // });
   }
 
   ngOnInit(): void {
