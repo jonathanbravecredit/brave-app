@@ -9,6 +9,6 @@
   <span class="font-bold">Tuesday, {{ paymentMonth }} {{ paymentDay }}</span>
 </p>
 
-<p *ngIf="!payments || referredAmount <= 0" class="text-xs text-center text-white">
+<p *ngIf="!payments || referredAmount <= 0 && !disabled" class="text-xs text-center text-white">
   Share your referral link to start earning!
 </p>
