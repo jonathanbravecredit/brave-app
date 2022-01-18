@@ -9,6 +9,7 @@ import * as moment from 'moment';
 export class ReferralEarningsComponent implements OnInit {
   @Input() metrics: IGroupedYearMonthReferral[] = [];
   @Input() payments: IPayments | undefined;
+  @Input() disabled: boolean | undefined;
   earnings: number = 0;
   referredAmount: number = 0;
   referredTen: boolean = false;

@@ -1,4 +1,4 @@
-<h6 class="text-base text-white mb-4 mt-6 text-center">Your {{ month }} Earnings</h6>
+<h6 class="text-base text-white mb-4 mt-6 text-center">Your Campaign Earnings</h6>
 
 <h1 class="text-5xl text-white font-semibold text-center mb-3">
   {{ payments?.earningsAmount | currency: payments?.currency:'symbol':'1.0-0' }}
@@ -9,6 +9,6 @@
   <span class="font-bold">Tuesday, {{ paymentMonth }} {{ paymentDay }}</span>
 </p>
 
-<p *ngIf="!payments || referredAmount <= 0" class="text-xs text-center text-white">
+<p *ngIf="!payments || referredAmount <= 0 && !disabled" class="text-xs text-center text-white">
   Share your referral link to start earning!
 </p>
