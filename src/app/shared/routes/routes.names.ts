@@ -234,6 +234,10 @@ export const ROUTE_NAMES = {
         segment: 'default',
         full: '/suspended/default',
       },
+      unauthorized: {
+        segment: 'unauthorized',
+        full: '/suspended/unauthorized',
+      },
     },
   },
 };

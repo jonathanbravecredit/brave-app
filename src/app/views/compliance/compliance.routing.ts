@@ -4,18 +4,22 @@ import { ComplianceComponent } from '@views/compliance/compliance.component';
 import { ComplianceTosComponent } from '@views/compliance/compliance-tos/compliance-tos.component';
 import { CompliancePrivacyComponent } from '@views/compliance/compliance-privacy/compliance-privacy.component';
 import { ROUTE_NAMES as routes } from '../../shared/routes/routes.names';
+import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
 
 const ComplianceRoutes: Routes = [
   {
     path: '',
     component: ComplianceComponent,
+    canActivate: [IpAddressGuard],
     children: [
       {
         path: `${routes.root.compliance.tos.segment}`,
+        canActivate: [IpAddressGuard],
         component: ComplianceTosComponent,
       },
       {
         path: `${routes.root.compliance.privacy.segment}`,
+        canActivate: [IpAddressGuard],
         component: CompliancePrivacyComponent,
       },
     ],
