@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { StateService } from '@shared/services/state/state.service';
 import { PartialObserver } from 'rxjs';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
@@ -15,11 +17,17 @@ export class BottomNavbarComponent implements OnInit {
   disableLocalNavigationHandler: boolean = false;
   disableEventEmitter: boolean = false;
   @Output() navigationTo: EventEmitter<string> = new EventEmitter();
-  clicked: string = ''
+  clicked: string = '';
+  stateX: any;
 
-  constructor() {}
+  constructor(private state: StateService) {
+    this.state.state$.subscribe((r) => {
+      this.stateX = r.appData
+    })
+  }
 
   ngOnInit(): void {
+    console.log('STATEX', this.stateX)
   }
 
   navigate(navigationItemName: string): void {
@@ -31,13 +39,10 @@ export class BottomNavbarComponent implements OnInit {
   }
 
   pointerDownHandler(id: string) {
-    this.clicked = id,
-    this.currentActiveItemId = id
+    (this.clicked = id), (this.currentActiveItemId = id);
   }
 
   pointerUpHandler() {
-    this.clicked = ''
+    this.clicked = '';
   }
-
-
 }
