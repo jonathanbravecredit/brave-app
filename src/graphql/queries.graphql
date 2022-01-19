@@ -199,6 +199,11 @@ query GetAppData($id: ID!) {
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      disputes {
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -411,6 +416,11 @@ query ListAppDatas(
         databreachCardStatus
         databreachReviewed
         databreachStatus
+      }
+      navBar {
+        disputes {
+          badge
+        }
       }
       status
       statusReason

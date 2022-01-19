@@ -9,17 +9,23 @@ export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
 }
 
+export type __SubscriptionContainer = {
+  onCreateAppData: OnCreateAppDataSubscription;
+  onUpdateAppData: OnUpdateAppDataSubscription;
+  onDeleteAppData: OnDeleteAppDataSubscription;
+};
+
 export type Transunion = {
   __typename: "Transunion";
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
-  indicativeEnrichmentStatus?: TUStatusRef;
+  indicativeEnrichmentStatus?: TUStatusRef | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
-  getAuthenticationQuestionsStatus?: TUStatusRef;
+  getAuthenticationQuestionsStatus?: TUStatusRef | null;
   verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
-  verifyAuthenticationQuestionsOTPStatus?: TUStatusRef;
+  verifyAuthenticationQuestionsOTPStatus?: TUStatusRef | null;
   verifyAuthenticationQuestionsKBASuccess?: boolean | null;
-  verifyAuthenticationQuestionsKBAStatus?: TUStatusRef;
+  verifyAuthenticationQuestionsKBAStatus?: TUStatusRef | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
@@ -30,14 +36,14 @@ export type Transunion = {
   kbaAttempts?: number | null;
   kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
-  enrollReport?: TUReportResponse;
-  enrollMergeReport?: TUReportResponse;
-  enrollVantageScore?: TUReportResponse;
+  enrollReport?: TUReportResponse | null;
+  enrollMergeReport?: TUReportResponse | null;
+  enrollVantageScore?: TUReportResponse | null;
   enrolled?: boolean | null;
   enrolledOn?: string | null;
-  fulfillReport?: TUReportResponse;
-  fulfillMergeReport?: TUReportResponse;
-  fulfillVantageScore?: TUReportResponse;
+  fulfillReport?: TUReportResponse | null;
+  fulfillMergeReport?: TUReportResponse | null;
+  fulfillVantageScore?: TUReportResponse | null;
   fulfilledOn?: string | null;
   acknowledgedDisputeTerms?: boolean | null;
   acknowledgedDisputeTermsOn?: string | null;
@@ -74,6 +80,7 @@ export type CreateAppDataInput = {
   agencies: AgenciesInput;
   preferences: PreferencesInput;
   dashboard?: DashboardInput | null;
+  navBar?: NavBarInput | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -247,6 +254,14 @@ export type DataBreachCardInput = {
   paragraphs?: Array<string | null> | null;
 };
 
+export type NavBarInput = {
+  disputes?: NavBarConfigInput | null;
+};
+
+export type NavBarConfigInput = {
+  badge?: boolean | null;
+};
+
 export type ModelAppDataConditionInput = {
   status?: ModelStringInput | null;
   statusReason?: ModelStringInput | null;
@@ -307,76 +322,77 @@ export type ModelBooleanInput = {
 
 export type AppData = {
   __typename: "AppData";
-  id?: string;
-  user?: User;
-  agencies?: Agencies;
-  preferences?: Preferences;
-  dashboard?: Dashboard;
+  id: string;
+  user: User;
+  agencies: Agencies;
+  preferences: Preferences;
+  dashboard?: Dashboard | null;
+  navBar?: NavBar | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
   lastStatusModifiedOn?: string | null;
   nextStatusModifiedOn?: string | null;
   isLoaded?: boolean | null;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
   owner?: string | null;
 };
 
 export type User = {
   __typename: "User";
-  id?: string;
-  userAttributes?: UserAttributes;
-  onboarding?: Onboarding;
+  id: string;
+  userAttributes?: UserAttributes | null;
+  onboarding?: Onboarding | null;
 };
 
 export type UserAttributes = {
   __typename: "UserAttributes";
-  name?: Name;
-  address?: Address;
-  phone?: Phone;
-  dob?: Dob;
-  ssn?: Ssn;
+  name?: Name | null;
+  address?: Address | null;
+  phone?: Phone | null;
+  dob?: Dob | null;
+  ssn?: Ssn | null;
 };
 
 export type Name = {
   __typename: "Name";
-  first?: string;
+  first: string;
   middle?: string | null;
-  last?: string;
+  last: string;
 };
 
 export type Address = {
   __typename: "Address";
-  addressOne?: string;
+  addressOne: string;
   addressTwo?: string | null;
-  city?: string;
-  state?: string;
-  zip?: string;
+  city: string;
+  state: string;
+  zip: string;
 };
 
 export type Phone = {
   __typename: "Phone";
-  primary?: string;
+  primary: string;
 };
 
 export type Dob = {
   __typename: "Dob";
-  year?: string;
-  month?: string;
-  day?: string;
+  year: string;
+  month: string;
+  day: string;
 };
 
 export type Ssn = {
   __typename: "Ssn";
-  lastfour?: string;
+  lastfour: string;
   full?: string | null;
 };
 
 export type Onboarding = {
   __typename: "Onboarding";
-  lastActive?: number;
-  lastComplete?: number;
+  lastActive: number;
+  lastComplete: number;
   started?: boolean | null;
   abandoned?: boolean | null;
   display?: Array<OnboardingStep | null> | null;
@@ -392,9 +408,9 @@ export type OnboardingStep = {
 
 export type Agencies = {
   __typename: "Agencies";
-  transunion?: Transunion;
-  equifax?: Equifax;
-  experian?: Experian;
+  transunion?: Transunion | null;
+  equifax?: Equifax | null;
+  experian?: Experian | null;
 };
 
 export type Equifax = {
@@ -409,7 +425,7 @@ export type Experian = {
 
 export type Preferences = {
   __typename: "Preferences";
-  showAllAccounts?: ShowAccountsPreference;
+  showAllAccounts?: ShowAccountsPreference | null;
 };
 
 export type ShowAccountsPreference = {
@@ -448,12 +464,23 @@ export type DataBreachCard = {
   paragraphs?: Array<string | null> | null;
 };
 
+export type NavBar = {
+  __typename: "NavBar";
+  disputes?: NavBarConfig | null;
+};
+
+export type NavBarConfig = {
+  __typename: "NavBarConfig";
+  badge?: boolean | null;
+};
+
 export type UpdateAppDataInput = {
   id: string;
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
   dashboard?: DashboardInput | null;
+  navBar?: NavBarInput | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -497,7 +524,7 @@ export type ModelIDInput = {
 
 export type ModelAppDataConnection = {
   __typename: "ModelAppDataConnection";
-  items?: Array<AppData | null> | null;
+  items: Array<AppData | null>;
   nextToken?: string | null;
 };
 
@@ -851,6 +878,13 @@ export type CreateAppDataMutation = {
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
   } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1085,6 +1119,13 @@ export type UpdateAppDataMutation = {
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
+  } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
   } | null;
   status?: string | null;
   statusReason?: string | null;
@@ -1321,6 +1362,13 @@ export type DeleteAppDataMutation = {
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
   } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1556,6 +1604,13 @@ export type GetAppDataQuery = {
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
   } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -1569,7 +1624,7 @@ export type GetAppDataQuery = {
 
 export type ListAppDatasQuery = {
   __typename: "ModelAppDataConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "AppData";
     id: string;
     user: {
@@ -1793,6 +1848,13 @@ export type ListAppDatasQuery = {
       databreachReviewed?: boolean | null;
       databreachStatus?: string | null;
     } | null;
+    navBar?: {
+      __typename: "NavBar";
+      disputes?: {
+        __typename: "NavBarConfig";
+        badge?: boolean | null;
+      } | null;
+    } | null;
     status?: string | null;
     statusReason?: string | null;
     statusReasonDescription?: string | null;
@@ -1802,7 +1864,7 @@ export type ListAppDatasQuery = {
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
-  } | null> | null;
+  } | null>;
   nextToken?: string | null;
 };
 
@@ -2029,6 +2091,13 @@ export type OnCreateAppDataSubscription = {
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
+  } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
   } | null;
   status?: string | null;
   statusReason?: string | null;
@@ -2265,6 +2334,13 @@ export type OnUpdateAppDataSubscription = {
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
   } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+  } | null;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;
@@ -2499,6 +2575,13 @@ export type OnDeleteAppDataSubscription = {
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
     databreachStatus?: string | null;
+  } | null;
+  navBar?: {
+    __typename: "NavBar";
+    disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
   } | null;
   status?: string | null;
   statusReason?: string | null;
@@ -2886,6 +2969,13 @@ export class APIService {
             databreachReviewed
             databreachStatus
           }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
+          }
           status
           statusReason
           statusReasonDescription
@@ -3137,6 +3227,13 @@ export class APIService {
             databreachReviewed
             databreachStatus
           }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
+          }
           status
           statusReason
           statusReasonDescription
@@ -3387,6 +3484,13 @@ export class APIService {
             databreachCardStatus
             databreachReviewed
             databreachStatus
+          }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
           }
           status
           statusReason
@@ -3649,6 +3753,13 @@ export class APIService {
             databreachReviewed
             databreachStatus
           }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
+          }
           status
           statusReason
           statusReasonDescription
@@ -3900,6 +4011,13 @@ export class APIService {
               databreachReviewed
               databreachStatus
             }
+            navBar {
+              __typename
+              disputes {
+                __typename
+                badge
+              }
+            }
             status
             statusReason
             statusReasonDescription
@@ -3930,7 +4048,9 @@ export class APIService {
   }
   OnCreateAppDataListener(
     owner?: string
-  ): Observable<SubscriptionResponse<OnCreateAppDataSubscription>> {
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateAppData">>
+  > {
     const statement = `subscription OnCreateAppData($owner: String) {
         onCreateAppData(owner: $owner) {
           __typename
@@ -4156,6 +4276,13 @@ export class APIService {
             databreachReviewed
             databreachStatus
           }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
+          }
           status
           statusReason
           statusReasonDescription
@@ -4173,12 +4300,16 @@ export class APIService {
     }
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnCreateAppDataSubscription>>;
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateAppData">>
+    >;
   }
 
   OnUpdateAppDataListener(
     owner?: string
-  ): Observable<SubscriptionResponse<OnUpdateAppDataSubscription>> {
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateAppData">>
+  > {
     const statement = `subscription OnUpdateAppData($owner: String) {
         onUpdateAppData(owner: $owner) {
           __typename
@@ -4404,6 +4535,13 @@ export class APIService {
             databreachReviewed
             databreachStatus
           }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
+          }
           status
           statusReason
           statusReasonDescription
@@ -4421,12 +4559,16 @@ export class APIService {
     }
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnUpdateAppDataSubscription>>;
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateAppData">>
+    >;
   }
 
   OnDeleteAppDataListener(
     owner?: string
-  ): Observable<SubscriptionResponse<OnDeleteAppDataSubscription>> {
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteAppData">>
+  > {
     const statement = `subscription OnDeleteAppData($owner: String) {
         onDeleteAppData(owner: $owner) {
           __typename
@@ -4652,6 +4794,13 @@ export class APIService {
             databreachReviewed
             databreachStatus
           }
+          navBar {
+            __typename
+            disputes {
+              __typename
+              badge
+            }
+          }
           status
           statusReason
           statusReasonDescription
@@ -4669,6 +4818,8 @@ export class APIService {
     }
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<SubscriptionResponse<OnDeleteAppDataSubscription>>;
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteAppData">>
+    >;
   }
 }
