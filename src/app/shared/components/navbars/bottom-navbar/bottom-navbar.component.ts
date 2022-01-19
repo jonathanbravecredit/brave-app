@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { NavBarInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { PartialObserver } from 'rxjs';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
@@ -18,16 +19,16 @@ export class BottomNavbarComponent implements OnInit {
   disableEventEmitter: boolean = false;
   @Output() navigationTo: EventEmitter<string> = new EventEmitter();
   clicked: string = '';
-  stateX: any;
+  navBarData: NavBarInput | null | undefined;
 
   constructor(private state: StateService) {
     this.state.state$.subscribe((r) => {
-      this.stateX = r.appData
-    })
+      this.navBarData = r.appData.navBar;
+    });
   }
 
   ngOnInit(): void {
-    console.log('STATEX', this.stateX)
+    console.log('STATEX', this.navBarData);
   }
 
   navigate(navigationItemName: string): void {
