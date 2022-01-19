@@ -19,3 +19,8 @@ export class Delete {
   static readonly type = '[AppData] Delete';
   constructor() {}
 }
+
+export class UpdateNavBar {
+  static readonly type = '[AppData] UpdateNavBar';
+  constructor(public payload: boolean) {}
+}

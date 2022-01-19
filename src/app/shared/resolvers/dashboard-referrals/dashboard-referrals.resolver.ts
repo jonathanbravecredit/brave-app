@@ -13,6 +13,10 @@ export class DashboardReferralsResolver implements Resolve<IGroupedYearMonthRefe
     const now = new Date();
     const month = moment(now).format('MM');
     const year = moment(now).format('YYYY');
-    return await this.referralService.getReferralMonthlyCampaignEarnings(month, year);
+    // return await this.referralService.getReferralMonthlyCampaignEarnings(month, year);
+    return [{
+      yearMonth: 12022,
+      referrals: 0,
+    }];
   }
 }

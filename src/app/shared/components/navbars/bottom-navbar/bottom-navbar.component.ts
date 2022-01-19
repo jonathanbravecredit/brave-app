@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { NavBarInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
-import { PartialObserver } from 'rxjs';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
+import * as appDataActions from '@store/app-data/app-data.actions'
 
 @Component({
   selector: 'brave-bottom-navbar',
@@ -21,15 +21,13 @@ export class BottomNavbarComponent implements OnInit {
   clicked: string = '';
   navBarData: NavBarInput | null | undefined;
 
-  constructor(private state: StateService) {
+  constructor(private state: StateService, private trans: TransunionService, private store: Store) {
     this.state.state$.subscribe((r) => {
       this.navBarData = r.appData.navBar;
     });
   }
 
-  ngOnInit(): void {
-    console.log('STATEX', this.navBarData);
-  }
+  ngOnInit(): void {}
 
   navigate(navigationItemName: string): void {
     if (!this.disableLocalNavigationHandler) {
@@ -37,6 +35,11 @@ export class BottomNavbarComponent implements OnInit {
         this.navigationTo.emit(navigationItemName);
       }
     }
+  }
+
+  disputesNotifClick() {
+    this.store.dispatch(new appDataActions.UpdateNavBar(false))
+    this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle: false }));
   }
 
   pointerDownHandler(id: string) {
