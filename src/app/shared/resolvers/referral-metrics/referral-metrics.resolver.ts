@@ -12,6 +12,12 @@ export class ReferralMetricsResolver implements Resolve<any> {
     const now = new Date();
     const month = moment(now).format('MM');
     const year = moment(now).format('YYYY');
-    return this.referral.getReferralMonthlyCampaignEarnings(month, year);
+    // return await this.referralService.getReferralMonthlyCampaignEarnings(month, year);
+    return [
+      {
+        yearMonth: 12022,
+        referrals: 0,
+      },
+    ];
   }
 }
