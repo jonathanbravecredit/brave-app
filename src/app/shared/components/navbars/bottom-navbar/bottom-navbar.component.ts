@@ -24,6 +24,7 @@ export class BottomNavbarComponent implements OnInit {
   constructor(private state: StateService, private trans: TransunionService, private store: Store) {
     this.state.state$.subscribe((r) => {
       this.navBarData = r.appData.navBar;
+      console.log('TESTEST', r)
     });
   }
 
