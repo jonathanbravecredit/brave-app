@@ -60,42 +60,28 @@ export class SessionService {
     const user = await Auth.currentAuthenticatedUser({
       bypassCache: true,
     });
-    console.log('USERCHECK', user);
     return !!user;
   }
 
   async sessionLogic() {
-    const braveSessionData: ISessionData = sessionStorage.get('braveSessionId');
-    if (!braveSessionData) {
-      const lastSession = await this.getLastestSession();
-      if (lastSession) {
-        let expireCompare = moment(new Date()).isAfter(lastSession.sessionExpirationDate);
-        if (expireCompare) {
-          this.settingHelper();
-        } else {
-          let data: ISessionData = {
-            sessionId: lastSession.sessionId,
-            expirationDate: lastSession.sessionExpirationDate,
-          };
-          sessionStorage.setItem('bravesessionid', JSON.stringify(data));
-          this.sessionData$.next(data);
-        }
-      } else {
-        this.settingHelper();
-      }
-    } else {
-      let expireCompare = moment(new Date()).isAfter(braveSessionData.expirationDate);
+    const lastSession = await this.getLastestSession();
+    if (lastSession) {
+      let expireCompare = moment(new Date()).isAfter(lastSession.sessionExpirationDate);
       if (expireCompare) {
         this.settingHelper();
       } else {
-        return;
+        let data: ISessionData = {
+          sessionId: lastSession.sessionId,
+          expirationDate: lastSession.sessionExpirationDate,
+        };
+        this.sessionData$.next(data);
       }
-      return;
+    } else {
+      this.settingHelper();
     }
   }
 
   async settingHelper() {
-    sessionStorage.setItem('bravesessionid', JSON.stringify(this.sessionData));
     this.sessionData$.next(this.sessionData);
     await this.createSessionData(this.sessionData);
   }
