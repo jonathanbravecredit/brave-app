@@ -1,48 +1,40 @@
 export interface IReferral {
   id: string;
-  createdOn: string;
-  modifiedOn: string;
-  processingStatus: 'pending' | 'paid';
-  enrollmentStatus: 'pending' | 'enrolled';
   referralCode: string;
-  referredByCode: string;
-  campaign?: string;
-  referralStatus: 'active' | 'suspended' | undefined;
-  referralApproved: boolean | undefined;
+
+  referredByCode: string | null | undefined;
+  referredById: string | undefined;
+  referredByEmail: string | undefined;
+
+  eligible: 0 | 1;
+
+  baseEarned: number;
+  bonusEarned: number;
+  addOnEarned: number;
+
+  campaignActive: string;
+  campaignActiveReferred: number;
+  campaignActiveEarned: number;
+  campaignActivePaid: number;
+  campaignActiveAddOn: number;
+
+  campaignPrior: string;
+  campaignPriorReferred: number;
+  campaignPriorEarned: number;
+  campaignPriorPaid: number;
+  campaignPriorAddOn: number;
+
+  nextPaymentDate: string;
+  notified: boolean;
+  createdOn: string | undefined;
+  modifiedOn: string | undefined;
 }
 
 export interface IGetReferral {
   id: string;
 }
 
-export interface IUpdateReferral {
-  id: string;
-  campaign?: string;
-  referralCode?: string;
-  referredByCode?: string;
-  enrollmentStatus?: 'pending' | 'enrolled';
-  processingStatus?: 'pending' | 'paid';
-}
-
-export interface IDeleteReferral {
-  id: string;
-}
-
 export interface ICreateReferral {
   id: string;
-  campaign?: string;
   referredByCode?: string;
-}
-
-export interface IGroupedYearMonthReferral {
-  yearMonth: number;
-  referrals: number;
-}
-
-export interface IPayments {
-  paymentsPending: number;
-  paymentsProcessed: number;
-  paymentScheduledDate: string | moment.Moment;
-  currency: string;
-  earningsAmount: number;
 }

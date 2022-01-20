@@ -7,7 +7,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { Auth } from 'aws-amplify';
-import { MonitorClickEvents, MonitorViewEvents } from '@shared/services/safeListMonitoring/constants';
 
 export interface ISessionData {
   sessionId: string;
@@ -152,8 +151,8 @@ export class SessionService {
       userId: await this.auth.getUserSub(),
       sessionId: data.sessionId,
       sessionExpirationDate: data.expirationDate,
-      event
-    }
+      event,
+    };
 
     return this.http
       .patch<ISessionDB>(this.dbUrl, body, { headers })
