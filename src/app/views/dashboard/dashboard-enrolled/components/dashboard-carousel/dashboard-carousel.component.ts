@@ -5,7 +5,7 @@ import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
-import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
@@ -15,7 +15,7 @@ import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-sc
 export class DashboardCarouselComponent implements OnInit {
   @Input() trends: IGetTrendingData | null | undefined;
   @Input() report: IMergeReport | null | undefined;
-  @Input() scores: ICreditScoreTracking | null | undefined;
+  @Input() scores: IProductTrendingData[] | null | undefined;
   @Input() lastUpdated!: string;
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
@@ -23,12 +23,13 @@ export class DashboardCarouselComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const currentScore = this.report
-      ? new ParseRiskScorePipe().transform(this.report)
-      : null;
+    const currentScore = this.report ? new ParseRiskScorePipe().transform(this.report) : null;
     const graphic: ICreditReportGraphic = !this.scores
       ? { currentValue: currentScore, ptsChange: 0 }
-      : { currentValue: this.scores.currentScore, ptsChange: this.scores.delta };
+      : {
+          currentValue: +this.scores[0].AttributeValue,
+          ptsChange: +this.scores[0].AttributeValue - +this.scores[1].AttributeValue,
+        };
     const chart: ICreditScoreHistoryNgxChartInputs = {
       trends: this.trends,
       report: this.report,
