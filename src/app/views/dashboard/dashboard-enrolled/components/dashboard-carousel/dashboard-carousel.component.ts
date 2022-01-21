@@ -28,7 +28,7 @@ export class DashboardCarouselComponent implements OnInit {
       ? { currentValue: currentScore, ptsChange: 0 }
       : {
           currentValue: +this.scores[0].AttributeValue,
-          ptsChange: +this.scores[0].AttributeValue - +this.scores[1].AttributeValue,
+          ptsChange: this.scores[1] ? +this.scores[0].AttributeValue - +this.scores[1].AttributeValue : undefined,
         };
     const chart: ICreditScoreHistoryNgxChartInputs = {
       trends: this.trends,

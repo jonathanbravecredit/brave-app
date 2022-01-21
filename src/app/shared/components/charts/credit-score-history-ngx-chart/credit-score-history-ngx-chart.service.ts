@@ -5,6 +5,7 @@ import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.i
 import {
   IGetTrendingData,
   IProductAttributeData,
+  IProductTrendingAttribute,
   IProductTrendingData,
 } from '@shared/interfaces/get-trending-data.interface';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
@@ -17,7 +18,17 @@ export class CreditScoreHistoryNgxChartService {
   constructor(private transunion: TransunionService) {}
 
   transformTrendingData(trendingData: IGetTrendingData | null): IProductAttributeData | undefined {
-    return trendingData!.ProductAttributes.ProductTrendingAttribute.ProductAttributeData;
+    let scores;
+    if (trendingData?.ProductAttributes.ProductTrendingAttribute instanceof Array) {
+      scores = trendingData?.ProductAttributes.ProductTrendingAttribute.filter(
+        (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
+      )[0];
+    }
+    if (scores) {
+      return scores.ProductAttributeData;
+    } else {
+      return undefined
+    }
   }
 
   createChartCreditScoreData(
@@ -34,12 +45,7 @@ export class CreditScoreHistoryNgxChartService {
     const filteredProductAttributeDate = productAttribute.filter((data) => {
       return data?.AttributeStatus !== 'Failure';
     });
-
-    console.log(
-      'TESTEST Service Test, expect to be true ==>>',
-      !productAttributeData || filteredProductAttributeDate.length === 0,
-    );
-
+    
     if (!productAttributeData || filteredProductAttributeDate.length === 0) {
       return [
         {

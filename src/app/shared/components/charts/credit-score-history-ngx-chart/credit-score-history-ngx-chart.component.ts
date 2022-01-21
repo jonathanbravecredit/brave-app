@@ -64,11 +64,6 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
           ]
         : [];
     }
-
-    console.log('TESTEST multi', this.multi)
-    console.log('TESTEST trends', this.trends)
-    console.log('TESTEST report', this.report)
-    console.log('TESTEST data', this.data)
   }
 
   ngAfterViewInit(): void {
