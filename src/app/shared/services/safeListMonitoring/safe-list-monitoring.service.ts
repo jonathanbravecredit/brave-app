@@ -43,13 +43,11 @@ export class SafeListMonitoringService {
 
   firePageView(event: MonitorViewEvents) {
     if (event === MonitorViewEvents.KeyPageView && this.sessionData) {
-      this.sessionService.updateSessionData(
-        {
-          sessionId: this.sessionData.sessionId,
-          expirationDate: moment(new Date()).add(1, 'day').toISOString(),
-        },
-        event,
-      );
+      const data = {
+        sessionId: this.sessionData.sessionId,
+        expirationDate: moment(new Date()).add(1, 'day').toISOString(),
+      };
+      this.sessionService.updateSessionData(data, event);
     }
   }
 
