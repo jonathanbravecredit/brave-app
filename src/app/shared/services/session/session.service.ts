@@ -126,7 +126,7 @@ export class SessionService {
       sessionId,
       event,
     };
-
+    console.log('update session called: ', body);
     return this.http
       .put<ISessionDB>(`${this.url}/${sessionId}`, body, { headers })
       .toPromise(); //TODO

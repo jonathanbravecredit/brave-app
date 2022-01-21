@@ -120,6 +120,7 @@ import { CreditUtilizationFillBarComponent } from './charts/credit-utilization-f
 import { FacebookShareComponent } from './share-buttons/facebook-share/facebook-share.component';
 import { TwitterShareComponent } from './share-buttons/twitter-share/twitter-share.component';
 import { AdCardComponent } from './cards/ad-card/ad-card.component';
+import { NotificationBadgeComponent } from './badges/notification-badge/notification-badge.component';
 
 const components = [
   BaseFormComponent,
@@ -214,6 +215,7 @@ const components = [
   PercentageBadgeComponent,
   PercentageGaugeComponent,
   CreditUtilizationFillBarComponent,
+  NotificationBadgeComponent,
 ];
 
 // component specific pipes only

@@ -7,6 +7,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { Observable } from 'rxjs';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-personalitems',
@@ -28,6 +29,7 @@ export class PersonalitemsView {
     private statesvc: StateService,
     private disputeService: DisputeService,
     private creditReportServices: CreditreportService,
+    private interstitial: InterstitialService,
   ) {
     this.personalItem$ = this.creditReportServices.tuPersonalItem$.asObservable();
     this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
@@ -45,8 +47,10 @@ export class PersonalitemsView {
    * @returns {void}
    */
   async onDisputeClick(): Promise<void> {
+    this.interstitial.changeMessage('checking eligibility');
+    this.interstitial.openInterstitial();
     this.disputeService
-      .sendDisputePreflightCheck()
+      .onUserConfirmed()
       .then((resp) => {
         const { success, error } = resp;
         if (success) {
@@ -55,21 +59,23 @@ export class PersonalitemsView {
             queryParams: {
               type: filter,
             },
-          }); // add query param to filter for only personal items
-        } else {
-          this.router.navigate([routes.root.dashboard.disputes.error.full], {
-            queryParams: {
-              code: error?.Code || '197',
-            },
           });
+        } else {
+          const code = `${error?.Code}`;
+          this.handleError(code);
         }
       })
       .catch((err) => {
-        this.router.navigate([routes.root.dashboard.disputes.error.full], {
-          queryParams: {
-            code: '197',
-          },
-        });
+        this.handleError();
       });
+  }
+
+  handleError(code: string = '197'): void {
+    this.interstitial.closeInterstitial();
+    this.router.navigate([routes.root.dashboard.disputes.error.full], {
+      queryParams: {
+        code: code,
+      },
+    });
   }
 }

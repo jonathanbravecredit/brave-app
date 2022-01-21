@@ -34,6 +34,19 @@ export class ReferralsService implements OnDestroy {
     this.isActiveSub$?.unsubscribe();
   }
 
+  checkCodeValidity(referralCode: string): void {
+    let referral = this.getReferralByReferralCode(referralCode); //TODO
+  }
+
+  /**
+   * Returns the current users referral record
+   * @param referralCode
+   * @returns
+   */
+  async getReferralByReferralCode(referralCode: string) {
+    //TODO
+  }
+
   /**
    * HTTP Requests to create referral in referral service backend
    * @param sub
