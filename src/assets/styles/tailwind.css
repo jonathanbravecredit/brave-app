@@ -2716,6 +2716,10 @@ select {
   padding-bottom: 1.5rem;
 }
 
+.pb-7 {
+  padding-bottom: 1.75rem;
+}
+
 .pb-8 {
   padding-bottom: 2rem;
 }

@@ -9,6 +9,7 @@ import { SignupState } from '@views/authentication/signup/signup/signup.componen
 export class SignupPureComponent {
   @Input() viewState: SignupState = 'init';
   @Input() message: string = '';
+  @Input() hasReferralCode: boolean = false;
   @Output() clickGoogle: EventEmitter<void> = new EventEmitter();
   @Output() clickFacebook: EventEmitter<void> = new EventEmitter();
   @Output() clickSignup: EventEmitter<NewUser> = new EventEmitter();
