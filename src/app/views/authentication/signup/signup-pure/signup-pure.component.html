@@ -1,27 +1,25 @@
 <div class="flex content-center items-center justify-center h-full p-2">
   <div class="w-full max-w-xs">
-    <div
-      class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0"
-    >
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
       <!-- logo -->
       <div class="flex justify-center">
-        <img
-          class="w-24 h-24 mb-3"
-          src="https://d3e1i93f88eoxl.cloudfront.net/logo-only.png"
-        />
+        <img class="w-24 h-24 mb-3" src="https://d3e1i93f88eoxl.cloudfront.net/logo-only.png" />
       </div>
 
       <div class="flex justify-center">
-        <img
-          class="w-64"
-          src="https://d3e1i93f88eoxl.cloudfront.net/logo-text-only-blurple.svg"
-        />
+        <img class="w-64" src="https://d3e1i93f88eoxl.cloudfront.net/logo-text-only-blurple.svg" />
       </div>
       <!-- Social sign up buttons -->
       <div class="rounded-t mb-0 mt-6">
         <div class="text-center mb-3">
           <h5 class="brave-h5-semibold">Create your new account!</h5>
         </div>
+
+        <div *ngIf="hasReferralCode" class="my-2 rounded-lg text-center text-white p-4 bg-fuchsia-500">
+          <h3 class="mb-2 font-semibold text-sm">Invalid Referral Code</h3>
+          <p class="text-sm">The code you’re using is not valid for any campaign or referral bonuses</p>
+        </div>
+
         <!-- <div class="btn-wrapper text-center">
           <div class="mb-1">
             <brave-google-iconsignin-button (click)="clickGoogle.emit()"></brave-google-iconsignin-button>
@@ -30,46 +28,24 @@
             <brave-facebook-onlytextsignin-button (click)="clickFacebook.emit()"></brave-facebook-onlytextsignin-button>
           </div>
         </div> -->
-        <div class="my-10">
+        <div [ngClass]="hasReferralCode ? 'mt-4 mb-10' : 'my-10'">
           <div class="flex items-center mx-5 mb-5">
-            <div
-              class="mr-1 flex justify-center mr-3"
-              style="min-width: 2.25rem"
-            >
-              <img
-                style="max-width: 2.25rem"
-                src="https://d3e1i93f88eoxl.cloudfront.net/stopwatch.svg"
-              />
+            <div class="mr-1 flex justify-center mr-3" style="min-width: 2.25rem">
+              <img style="max-width: 2.25rem" src="https://d3e1i93f88eoxl.cloudfront.net/stopwatch.svg" />
             </div>
             <p class="brave-body2">Sign up in under 2 minutes</p>
           </div>
           <div class="flex mx-5 mb-5">
-            <div
-              class="mr-1 flex justify-center mr-3"
-              style="min-width: 2.25rem"
-            >
-              <img
-                style="max-width: 1.875rem"
-                src="https://d3e1i93f88eoxl.cloudfront.net/shield.svg"
-              />
+            <div class="mr-1 flex justify-center mr-3" style="min-width: 2.25rem">
+              <img style="max-width: 1.875rem" src="https://d3e1i93f88eoxl.cloudfront.net/shield.svg" />
             </div>
-            <p class="brave-body2">
-              We use bank-grade security to protect your information
-            </p>
+            <p class="brave-body2">We use bank-grade security to protect your information</p>
           </div>
           <div class="flex mx-5">
-            <div
-              class="mr-1 flex justify-center mr-3"
-              style="min-width: 2.25rem"
-            >
-              <img
-                style="max-width: 2.25rem"
-                src="https://d3e1i93f88eoxl.cloudfront.net/transunion_logo.svg"
-              />
+            <div class="mr-1 flex justify-center mr-3" style="min-width: 2.25rem">
+              <img style="max-width: 2.25rem" src="https://d3e1i93f88eoxl.cloudfront.net/transunion_logo.svg" />
             </div>
-            <p class="brave-body2">
-              Check your TransUnion® report & dispute any issues!
-            </p>
+            <p class="brave-body2">Check your TransUnion® report & dispute any issues!</p>
           </div>
         </div>
       </div>
@@ -90,11 +66,7 @@
         <div class="text-sm text-blueGray-600">
           <span>Already have an account? Login&nbsp;</span>
           <span>
-            <a
-              (click)="clickLogin.emit()"
-              class="hover:cursor-pointer font-bold"
-              >here.</a
-            >
+            <a (click)="clickLogin.emit()" class="hover:cursor-pointer font-bold">here.</a>
           </span>
         </div>
       </div>
@@ -104,15 +76,11 @@
         <div class="text-sm text-blueGray-600 text-center">
           <small>
             By joining you are agreeing to our&nbsp;<span
-              ><a
-                (click)="clickPrivacy.emit()"
-                class="underline hover:cursor-pointer whitespace-nowrap"
+              ><a (click)="clickPrivacy.emit()" class="underline hover:cursor-pointer whitespace-nowrap"
                 >Privacy Policy</a
               ></span
             >&nbsp;and&nbsp;<span
-              ><a
-                (click)="clickTerms.emit()"
-                class="underline hover:cursor-pointer whitespace-nowrap"
+              ><a (click)="clickTerms.emit()" class="underline hover:cursor-pointer whitespace-nowrap"
                 >Terms of Service</a
               ></span
             >

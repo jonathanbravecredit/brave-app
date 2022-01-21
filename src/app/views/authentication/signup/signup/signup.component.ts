@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -18,6 +18,7 @@ export type SignupState = 'init' | 'invalid';
 export class SignupComponent implements OnInit {
   viewState: SignupState = 'init';
   message: string = '';
+  hasReferralCode: boolean = false
   constructor(
     private router: Router,
     private auth: AuthService,
@@ -25,7 +26,15 @@ export class SignupComponent implements OnInit {
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
-  ) {}
+  ) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.includes('referralCode')) {
+          this.hasReferralCode = true
+        }
+      }
+    })
+  }
 
   ngOnInit(): void {}
 
