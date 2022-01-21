@@ -7,6 +7,8 @@ export interface IReferral {
   referredByEmail: string | undefined;
 
   eligible: 0 | 1;
+  suspended: boolean;
+  enrolled: boolean;
 
   baseEarned: number;
   bonusEarned: number;
@@ -17,12 +19,14 @@ export interface IReferral {
   campaignActiveEarned: number;
   campaignActivePaid: number;
   campaignActiveAddOn: number;
+  campaignActiveBonus: boolean;
 
   campaignPrior: string;
   campaignPriorReferred: number;
   campaignPriorEarned: number;
   campaignPriorPaid: number;
   campaignPriorAddOn: number;
+  campaignPriorBonus: boolean;
 
   nextPaymentDate: string;
   notified: boolean;

@@ -104,7 +104,7 @@
 </div>
 
 <!-- Referral Gauge -->
-<ng-container *ngIf="(featureflags.referralsShow$ | async) && referral?.referralApproved">
+<ng-container *ngIf="(featureflags.referralsShow$ | async) && referral?.eligible">
   <h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
   <p class="text-sm mb-4">Refer your friends to Brave Credit so you both earn rewards on your credit journey</p>
 
@@ -116,12 +116,14 @@
 
     <div class="relative">
       <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
-        <h1 class="text-white font-semibold text-center text-7xl mb-2">{{ totalReferredAmount }}/10</h1>
+        <h1 class="text-white font-semibold text-center text-7xl mb-2">
+          {{ referral?.campaignActiveReferred || 0 }}/10
+        </h1>
         <p class="text-center text-2xl" style="max-width: 50%">Referrals</p>
       </div>
 
       <brave-percentage-gauge
-        [percentageNumber]="[{ name: 'name', value: totalReferredAmount * 10 }]"
+        [percentageNumber]="[{ name: 'name', value: (referral?.campaignActiveReferred || 0) * 10 }]"
         [startAngle]="180"
         [runCalcColor]="false"
         [view]="[350, 250]"

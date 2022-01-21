@@ -4,6 +4,7 @@ export interface ICampaign {
   currentVersion: number;
   campaign: string;
   denomination: number;
+  maxReferrals: number;
   bonusThreshold: number;
   bonusAmount: number;
   addOnFlagOne: string;
