@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfaces/referrals.interface';
-import { ReferralMetricsResolver } from '@shared/resolvers/referral-metrics/referral-metrics.resolver';
+import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { ICampaign } from '@shared/interfaces/campaign.interface';
+import { IReferral } from '@shared/interfaces/referrals.interface';
+import { CampaignResolver } from '@shared/resolvers/campaign/campaign.resolver';
 import { ReferralRecordResolver } from '@shared/resolvers/referral-record/referral-record.resolver';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { ReferralPaymentsResolver } from '../referral-payments/referral-payments.resolver';
 
 export interface IReferralResolver {
-  metrics: IGroupedYearMonthReferral[] | null;
+  metrics: null;
   referral: IReferral | null;
-  payments: IPayments | null;
+  payments: null;
+  campaign: ICampaign | null;
 }
 
 @Injectable({
@@ -18,20 +19,15 @@ export interface IReferralResolver {
 export class ReferralResolver implements Resolve<IReferralResolver> {
   constructor(
     private interstitial: InterstitialService,
-    protected referralMetrics: ReferralMetricsResolver,
     protected referralRecord: ReferralRecordResolver,
-    protected referralPayments: ReferralPaymentsResolver,
+    protected campaignResolver: CampaignResolver,
   ) {}
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IReferralResolver> {
     this.interstitial.changeMessage(' ');
     this.interstitial.openInterstitial();
 
-    let metrics;
-    try {
-      metrics = await this.referralMetrics.resolve(route, state);
-    } catch {
-      metrics = null;
-    }
+    let metrics = null;
+    let payments = null;
 
     let referral;
     try {
@@ -40,17 +36,18 @@ export class ReferralResolver implements Resolve<IReferralResolver> {
       referral = null;
     }
 
-    let payments;
+    let campaign;
     try {
-      payments = await this.referralPayments.resolve(route, state);
+      campaign = await this.campaignResolver.resolve(route, state);
     } catch {
-      payments = null;
+      campaign = null;
     }
 
     return {
       metrics,
       referral,
       payments,
+      campaign,
     };
   }
 }

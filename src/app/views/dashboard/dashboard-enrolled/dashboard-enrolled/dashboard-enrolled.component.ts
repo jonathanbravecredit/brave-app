@@ -10,7 +10,7 @@ import {
   ICreditMixTLSummary,
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
+import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Observable, Subscription } from 'rxjs';
@@ -29,7 +29,6 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   snapshots: DashboardStateModel | undefined;
   scores!: ICreditScoreTracking | null;
   trends!: IGetTrendingData | null;
-  metrics!: IGroupedYearMonthReferral[] | null;
   creditMix: IRecommendationText | undefined;
   creditMixStatus: string | undefined;
   creditUtilizationStatus: string | undefined;
@@ -73,7 +72,6 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       this.snapshots = resp.dashboard.snapshots;
       this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
-      this.metrics = resp.dashboard.referrals;
       this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array

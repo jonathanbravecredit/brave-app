@@ -13,6 +13,10 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IDispute } from '@shared/interfaces/disputes';
 import { IErrorResponse } from '@shared/interfaces';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
+import { MonitorClickEvents } from '@shared/services/safeListMonitoring/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +60,12 @@ export class DisputeService implements OnDestroy {
   stateSub$: Subscription;
   _state: AppDataStateModel = {} as AppDataStateModel;
 
-  constructor(private statesvc: StateService, private transunion: TransunionService) {
+  constructor(
+    private statesvc: StateService,
+    private analytics: AnalyticsService,
+    private transunion: TransunionService,
+    private safeMonitor: SafeListMonitoringService,
+  ) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
     });
@@ -147,7 +156,16 @@ export class DisputeService implements OnDestroy {
     try {
       // acknowledge the user has read and accepted the terms
       if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
-      return await this.sendDisputePreflightCheck();
+      const preflight = await this.sendDisputePreflightCheck();
+      if (preflight.success) {
+        this.analytics.fireClickEvent(AnalyticClickEvents.DisputeEnrollment, {
+          google: true,
+          mixpanel: true,
+          brave: true,
+        });
+        this.safeMonitor.fireClickEvent(MonitorClickEvents.DisputesEnroll);
+      }
+      return preflight;
     } catch (err) {
       throw `disputeService:onUserConfirmed=${err}`;
     }

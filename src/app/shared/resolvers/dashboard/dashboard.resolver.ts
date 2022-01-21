@@ -3,7 +3,7 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { IMergeReport } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
+import { IReferral } from '@shared/interfaces/referrals.interface';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 import { DashboardReferralsResolver } from '@shared/resolvers/dashboard-referrals/dashboard-referrals.resolver';
 import { DashboardScoreTrackingResolver } from '@shared/resolvers/dashboard-score-tracking/dashboard-score-tracking.resolver';
@@ -20,7 +20,6 @@ export interface IDashboardResolver {
   snapshots: DashboardStateModel | null;
   scores: ICreditScoreTracking | null;
   trends: IGetTrendingData | null;
-  referrals: IGroupedYearMonthReferral[] | null;
   referral: IReferral | null;
 }
 
@@ -34,7 +33,6 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
     protected snapshotsResolver: DashboardSnapshotsResolver,
     protected scoreTrackingResolver: DashboardScoreTrackingResolver,
     protected scoreTrendsResolver: DashboardScoreTrendsResolver,
-    protected referralsResolver: DashboardReferralsResolver,
     protected referralResolver: ReferralResolver,
   ) {}
 
@@ -47,7 +45,6 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
       this.snapshotsResolver.resolve(route, state),
       this.scoreTrackingResolver.resolve(route, state),
       this.scoreTrendsResolver.resolve(route, state),
-      this.referralsResolver.resolve(route, state),
       this.referralResolver.resolve(route, state),
     ])
       .pipe(
@@ -57,8 +54,7 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
             snapshots: value[1],
             scores: value[2],
             trends: value[3],
-            referrals: value[4],
-            referral: value[5].referral,
+            referral: value[4].referral,
           };
         }),
         finalize(() => {

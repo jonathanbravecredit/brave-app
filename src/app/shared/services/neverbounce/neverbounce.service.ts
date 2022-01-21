@@ -1,4 +1,3 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GuestBase } from '@shared/utils/guest/guest';
 import { GuestService } from '@shared/services/auth/guest.service';
@@ -17,7 +16,7 @@ export interface NeverBounceResponse {
   providedIn: 'root',
 })
 export class NeverbounceService extends GuestBase {
-  constructor(private http: HttpClient, private iam: IamService) {
+  constructor(private iam: IamService) {
     super(new GuestService());
   }
 

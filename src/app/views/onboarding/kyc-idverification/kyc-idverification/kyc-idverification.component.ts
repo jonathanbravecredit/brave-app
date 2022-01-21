@@ -166,7 +166,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       const { success, error } = await this.kycService.sendEnrollRequest();
       const sub = await this.kycService.getUserSub();
-      this.referral.updateReferral(sub, 'enrolled');
       success
         ? this.router.navigate([routes.root.onboarding.congratulations.full]) // api successful and TU successful
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);

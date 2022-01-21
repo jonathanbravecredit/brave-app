@@ -12,6 +12,7 @@
       [minlength]="config?.minLength || 0"
       [placeholder]="config?.placeholder || ''"
       [autocomplete]="config?.autocomplete || 'off'"
+      (change)="onChange($event.target)"
       [ngClass]="{
         'border-red-500':
           required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
