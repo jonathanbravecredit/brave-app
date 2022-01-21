@@ -12,7 +12,6 @@
       formControlName="input"
       [placeholder]="config?.placeholder || ''"
       [autocomplete]="config?.autocomplete || 'off'"
-      (change)="onChange($event.target)"
       [mask]="'00000'"
       [ngClass]="{
         'border-red-500':

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IFilledClosingAlertConfig } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
-import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
-import * as moment from 'moment';
+import { IReferral } from '@shared/interfaces/referrals.interface';
 
 @Component({
   selector: 'brave-referral-amount-link',
@@ -9,9 +8,7 @@ import * as moment from 'moment';
 })
 export class ReferralAmountLinkComponent implements OnInit {
   @Input() referral: IReferral | undefined;
-  @Input() metrics: IGroupedYearMonthReferral[] = [];
   @Input() disabled: boolean | undefined;
-  referrals: number = 0;
   referralLink: string = '';
   showAlert: boolean = false;
   alertConfig: IFilledClosingAlertConfig = {
@@ -23,11 +20,6 @@ export class ReferralAmountLinkComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const now = new Date();
-    const currYearMonth = +moment(now).format('YYYYMM');
-    if (this.metrics.length) {
-      this.referrals = this.metrics.find((m) => m.yearMonth === currYearMonth)?.referrals || 0;
-    }
     if (this.referral) {
       this.referralLink = `https://app.brave.credit/auth/signup?referralCode=${this.referral.referralCode}`;
     }
