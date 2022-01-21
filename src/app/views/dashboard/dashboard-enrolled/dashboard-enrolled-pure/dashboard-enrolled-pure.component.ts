@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMergeReport } from '@shared/interfaces';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
-import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
@@ -18,7 +18,7 @@ import * as moment from 'moment';
 export class DashboardEnrolledPureComponent implements OnInit {
   @Input() report: IMergeReport | undefined;
   @Input() cards: DashboardStateModel | undefined;
-  @Input() scores: ICreditScoreTracking | undefined | null;
+  @Input() scores: IProductTrendingData[] | undefined | null;
   @Input() trends: IGetTrendingData | undefined | null;
   @Input() creditMix: IRecommendationText | undefined;
   @Input() creditMixStatus: string | undefined;
