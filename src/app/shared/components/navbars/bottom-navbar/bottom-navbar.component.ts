@@ -38,7 +38,7 @@ export class BottomNavbarComponent implements OnInit {
   }
 
   disputesNotifClick() {
-    this.store.dispatch(new appDataActions.UpdateNavBar(false))
+    this.store.dispatch(new appDataActions.UpdateNavBar(false));
     this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle: false }));
   }
 
