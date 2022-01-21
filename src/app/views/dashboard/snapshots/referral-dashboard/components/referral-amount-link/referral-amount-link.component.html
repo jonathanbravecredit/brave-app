@@ -3,12 +3,14 @@
     <div class="flex justify-center align-center">
       <div class="relative">
         <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
-          <h1 class="text-white font-semibold text-center" style="font-size: 2.5rem">{{ referrals }}/10</h1>
+          <h1 class="text-white font-semibold text-center" style="font-size: 2.5rem">
+            {{ referral?.campaignActiveReferred }}/10
+          </h1>
           <p class="text-white text-sm text-center" style="max-width: 50%">Friends referred this month</p>
         </div>
 
         <brave-percentage-gauge
-          [percentageNumber]="[{ name: 'name', value: referrals * 10 }]"
+          [percentageNumber]="[{ name: 'name', value: (referral?.campaignActiveReferred || 0) * 10 }]"
           [startAngle]="180"
           [runCalcColor]="false"
         ></brave-percentage-gauge>

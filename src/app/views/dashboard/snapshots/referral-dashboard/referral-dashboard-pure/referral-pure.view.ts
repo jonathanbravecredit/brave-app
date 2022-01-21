@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfaces/referrals.interface';
+import { IReferral } from '@shared/interfaces/referrals.interface';
+import { ICampaign } from '@shared/interfaces/campaign.interface';
 
 @Component({
   selector: 'brave-referral-pure',
@@ -7,8 +8,7 @@ import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfa
 })
 export class ReferralDashboardPureView implements OnInit {
   @Input() referral: IReferral | undefined;
-  @Input() metrics: IGroupedYearMonthReferral[] = [];
-  @Input() payments: IPayments | undefined;
+  @Input() campaign: ICampaign | undefined;
   @Input() disabled: boolean | undefined;
   private _isSuspended: boolean = false;
   set isSuspended(value: boolean) {
@@ -21,8 +21,6 @@ export class ReferralDashboardPureView implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (this.referral?.referralStatus === 'suspended') {
-      this.isSuspended = true;
-    }
+    this.isSuspended = this.referral?.suspended || false;
   }
 }
