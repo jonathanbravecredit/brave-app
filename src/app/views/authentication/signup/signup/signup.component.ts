@@ -28,7 +28,6 @@ export class SignupComponent implements OnInit {
     private referral: ReferralsService,
   ) {
     router.events.subscribe(event => {
-      console.log('TESTEST', event)
       if (event instanceof NavigationEnd) {
         if (event.url.includes('referralCode')) {
           this.hasReferralCode = true
