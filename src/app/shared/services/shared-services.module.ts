@@ -19,6 +19,7 @@ import { ModalService } from '@shared/services/modal/modal.service';
 import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
+import { CampaignService } from '@shared/services/campaign/campaign.service';
 
 const services = [
   InitService,
@@ -40,6 +41,7 @@ const services = [
   NeverbounceService,
   ReferralsService,
   IpaddressService,
+  CampaignService,
 ];
 
 @NgModule({

@@ -15,6 +15,8 @@ import { IDispute } from '@shared/interfaces/disputes';
 import { IErrorResponse } from '@shared/interfaces';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
+import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
+import { MonitorClickEvents } from '@shared/services/safeListMonitoring/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +64,7 @@ export class DisputeService implements OnDestroy {
     private statesvc: StateService,
     private analytics: AnalyticsService,
     private transunion: TransunionService,
+    private safeMonitor: SafeListMonitoringService,
   ) {
     this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
       this.tradeline = tradeline;
@@ -160,6 +163,7 @@ export class DisputeService implements OnDestroy {
           mixpanel: true,
           brave: true,
         });
+        this.safeMonitor.fireClickEvent(MonitorClickEvents.DisputesEnroll);
       }
       return preflight;
     } catch (err) {

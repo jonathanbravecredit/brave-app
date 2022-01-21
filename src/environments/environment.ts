@@ -9,7 +9,7 @@ export const environment = {
   analytics: 'https://ua5mzvz5o1.execute-api.us-east-2.amazonaws.com/dev',
   validation: 'https://6j8cg2fn7c.execute-api.us-east-2.amazonaws.com/dev',
   ads: 'https://lhx63lgz0a.execute-api.us-east-2.amazonaws.com/dev',
-  session: '', //TODOURL
+  session: 'https://aqs59xtqua.execute-api.us-east-2.amazonaws.com/dev',
 };
 
 /*

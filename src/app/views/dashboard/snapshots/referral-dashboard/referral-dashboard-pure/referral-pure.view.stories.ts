@@ -10,7 +10,7 @@ import { ReferralEarningsComponent } from '../components/referral-earnings/refer
 import { ReferralAmountLinkComponent } from '../components/referral-amount-link/referral-amount-link.component';
 import { ReferralBodyTextComponent } from '../components/referral-body-text/referral-body-text.component';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { IGroupedYearMonthReferral, IPayments, IReferral } from '@shared/interfaces/referrals.interface';
+import { IReferral } from '@shared/interfaces/referrals.interface';
 
 export default {
   title: 'app/views/snapshots/referral-dashboard',
@@ -44,9 +44,6 @@ export default {
   ],
 } as Meta;
 
-// const cards = [
-// ];
-
 const Template: Story<ReferralDashboardPureView> = (args: any) => ({
   component: ReferralDashboardPureView,
   props: {
@@ -54,38 +51,8 @@ const Template: Story<ReferralDashboardPureView> = (args: any) => ({
   },
 });
 
-const paymentMock: IPayments = {
-  paymentsPending: 2,
-  paymentsProcessed: 2,
-  paymentScheduledDate: '',
-  currency: 'USD',
-  earningsAmount: 10,
-};
-
-const referralMock: IReferral = {
-  id: '',
-  createdOn: '',
-  modifiedOn: '',
-  processingStatus: 'paid',
-  enrollmentStatus: 'enrolled',
-  referralCode: 'testReferralCode',
-  referredByCode: '',
-  campaign: 'jan2020',
-  referralStatus: 'active',
-  referralApproved: true,
-};
-
-const metricsMock: IGroupedYearMonthReferral[] = [
-  {
-    yearMonth: 122022,
-    referrals: 4,
-  },
-];
-
-export const Default = Template.bind({});
-Default.args = {
-  payments: paymentMock,
-  referral: referralMock,
-  metrics: metricsMock,
-};
-Default.parameters;
+// export const Default = Template.bind({});
+// Default.args = {
+//   referral: {},
+// };
+// Default.parameters;

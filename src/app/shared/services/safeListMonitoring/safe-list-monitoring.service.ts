@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MonitorClickEvents, MonitorViewEvents } from '@shared/services/safeListMonitoring/constants';
-import { ISessionData, SessionService } from '@shared/services/session/session.service';
+import { ISessionDB, SessionService } from '@shared/services/session/session.service';
 import * as moment from 'moment';
-import * as uuid from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SafeListMonitoringService {
-  sessionData: ISessionData | undefined;
+  sessionData: ISessionDB | undefined;
 
   constructor(private router: Router, private sessionService: SessionService) {
     this.router.events.subscribe((event) => {
@@ -44,19 +43,25 @@ export class SafeListMonitoringService {
 
   firePageView(event: MonitorViewEvents) {
     if (event === MonitorViewEvents.KeyPageView && this.sessionData) {
-      this.sessionService.updateSessionData({
-        sessionId: this.sessionData.sessionId,
-        expirationDate: moment(new Date()).add(1, 'day').toISOString(),
-      }, event);
+      this.sessionService.updateSessionData(
+        {
+          sessionId: this.sessionData.sessionId,
+          expirationDate: moment(new Date()).add(1, 'day').toISOString(),
+        },
+        event,
+      );
     }
   }
 
   fireClickEvent(event: MonitorClickEvents) {
     if (event === MonitorClickEvents.DisputesEnroll && this.sessionData) {
-      this.sessionService.updateSessionData({
-        sessionId: this.sessionData.sessionId,
-        expirationDate: moment(new Date()).add(1, 'day').toISOString(),
-      }, event)
+      this.sessionService.updateSessionData(
+        {
+          sessionId: this.sessionData.sessionId,
+          expirationDate: moment(new Date()).add(1, 'day').toISOString(),
+        },
+        event,
+      );
     }
   }
 }

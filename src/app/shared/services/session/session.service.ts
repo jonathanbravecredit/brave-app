@@ -7,7 +7,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { Auth } from 'aws-amplify';
-import { MonitorClickEvents, MonitorViewEvents } from '@shared/services/safeListMonitoring/constants';
 
 export interface ISessionData {
   sessionId: string;
@@ -20,25 +19,23 @@ export interface ISessionDB {
   sessionDate: string;
   sessionExpirationDate: string;
   pageViews: number;
+  clickEvents: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class SessionService {
-  sessionData$: BehaviorSubject<ISessionData> = new BehaviorSubject({} as ISessionData);
-  dbUrl: string = environment.session + '/session';
-  sessionData: ISessionData = {
-    sessionId: uuid.v4(),
-    expirationDate: moment(new Date()).add(1, 'day').toISOString(),
-  };
+  sessionData$: BehaviorSubject<ISessionDB> = new BehaviorSubject({} as ISessionDB);
+  sessionData: ISessionDB | undefined;
+  url: string = environment.session;
 
   constructor(private http: HttpClient, private auth: AuthService) {
     Hub.listen('auth', async (data) => {
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
-          this.sessionLogic();
+          await this.sessionLogic();
           break;
         default:
           break;
@@ -61,49 +58,31 @@ export class SessionService {
     const user = await Auth.currentAuthenticatedUser({
       bypassCache: true,
     });
-    console.log('USERCHECK', user);
     return !!user;
   }
 
-  async sessionLogic() {
-    const braveSessionData: ISessionData = sessionStorage.get('braveSessionId');
-    if (!braveSessionData) {
-      const lastSession = await this.getLastestSession();
+  async sessionLogic(): Promise<void> {
+    try {
+      const lastSession = (await this.getLastestSession())[0];
       if (lastSession) {
-        let expireCompare = moment(new Date()).isAfter(lastSession.sessionExpirationDate);
-        if (expireCompare) {
-          this.settingHelper();
-        } else {
-          let data: ISessionData = {
-            sessionId: lastSession.sessionId,
-            expirationDate: lastSession.sessionExpirationDate,
-          };
-          sessionStorage.setItem('bravesessionid', JSON.stringify(data));
-          this.sessionData$.next(data);
-        }
+        const expired = moment(new Date()).isAfter(lastSession.sessionExpirationDate);
+        expired ? this.settingHelper() : this.sessionData$.next(lastSession);
       } else {
         this.settingHelper();
       }
-    } else {
-      let expireCompare = moment(new Date()).isAfter(braveSessionData.expirationDate);
-      if (expireCompare) {
-        this.settingHelper();
-      } else {
-        return;
-      }
-      return;
+    } catch (err) {
+      this.settingHelper();
     }
   }
 
-  async settingHelper() {
-    sessionStorage.setItem('bravesessionid', JSON.stringify(this.sessionData));
-    this.sessionData$.next(this.sessionData);
-    await this.createSessionData(this.sessionData);
+  async settingHelper(): Promise<void> {
+    const session = await this.createSessionData();
+    this.sessionData$.next(session);
   }
 
-  async getLastestSession(): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens();
-    let headers = new HttpHeaders({
+  async getLastestSession(): Promise<ISessionDB[]> {
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
     let params = new HttpParams();
@@ -111,52 +90,45 @@ export class SessionService {
     params = params.append('sort', 'desc');
 
     return this.http
-      .get<ISessionDB>(this.dbUrl, { headers, params })
+      .get<ISessionDB[]>(this.url, { headers, params })
       .toPromise(); //TODO
   }
 
   async getSessionData(sessionId: string): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens();
-    let headers = new HttpHeaders({
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
 
     return this.http
-      .get<ISessionDB>(`${this.dbUrl}/${sessionId}`, { headers })
+      .get<ISessionDB>(`${this.url}/${sessionId}`, { headers })
       .toPromise(); //TODO
   }
 
-  async createSessionData(data: ISessionData): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens();
-    let headers = new HttpHeaders({
+  async createSessionData(): Promise<ISessionDB> {
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-    let body = {
-      userId: await this.auth.getUserSub(),
-      sessionId: data.sessionId,
-      sessionDate: moment(new Date()),
-      sessionExpirationDate: data.expirationDate,
-      pageViews: 1,
-    };
+    const body = {};
     return this.http
-      .post<ISessionDB>(this.dbUrl, body, { headers })
+      .post<ISessionDB>(this.url, body, { headers })
       .toPromise(); //TODO
   }
 
   async updateSessionData(data: ISessionData, event: string): Promise<ISessionDB> {
-    let token = await this.auth.getIdTokenJwtTokens();
-    let headers = new HttpHeaders({
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-    let body = {
-      userId: await this.auth.getUserSub(),
-      sessionId: data.sessionId,
-      sessionExpirationDate: data.expirationDate,
-      event
-    }
+    const { sessionId } = data;
+    const body = {
+      sessionId,
+      event,
+    };
 
     return this.http
-      .patch<ISessionDB>(this.dbUrl, body, { headers })
+      .put<ISessionDB>(`${this.url}/${sessionId}`, body, { headers })
       .toPromise(); //TODO
   }
 }
