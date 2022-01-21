@@ -35,6 +35,11 @@ export class CreditScoreHistoryNgxChartService {
       return data?.AttributeStatus !== 'Failure';
     });
 
+    console.log(
+      'TESTEST Service Test, expect to be true ==>>',
+      !productAttributeData || filteredProductAttributeDate.length === 0,
+    );
+
     if (!productAttributeData || filteredProductAttributeDate.length === 0) {
       return [
         {
