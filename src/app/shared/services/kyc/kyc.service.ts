@@ -101,6 +101,15 @@ export class KycService {
     return { ...state.user?.onboarding, lastActive, lastComplete, started };
   }
 
+  /**
+   * Takes a progress step ID and sets the complete status to false
+   * Then updates the state
+   * @param {number} step the progress step ID
+   */
+  async updateAuthenticatedOn(authenticated: boolean, authenticatedOn: string): Promise<void> {
+    await this.statesvc.updateAuthenticatedOnAsync(authenticated, authenticatedOn);
+  }
+
   async abandonOnboarding(): Promise<void> {
     await this.statesvc.updateAbandonedStatusAsync();
   }

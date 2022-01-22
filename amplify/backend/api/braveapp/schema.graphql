@@ -112,6 +112,7 @@ type ShowAccountsPreference {
 }
 type Transunion {
   authenticated: Boolean
+  authenticatedOn: String
   indicativeEnrichmentSuccess: Boolean
   indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean

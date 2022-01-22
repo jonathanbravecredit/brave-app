@@ -117,4 +117,17 @@ export class AgenciesState {
       },
     });
   }
+
+  @Action(AgenciesActions.UpdateAuthentication)
+  updateAuthentication(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.UpdateAuthentication) {
+    const state = ctx.getState();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        authenticated: payload.authenticated,
+        authenticatedOn: payload.authenticatedOn,
+      },
+    });
+  }
 }
