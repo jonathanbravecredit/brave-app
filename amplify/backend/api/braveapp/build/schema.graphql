@@ -131,6 +131,7 @@ type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
 
 type Transunion @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
+  authenticatedOn: String
   indicativeEnrichmentSuccess: Boolean
   indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
@@ -259,6 +260,7 @@ input AgenciesInput {
 
 input TransunionInput {
   authenticated: Boolean
+  authenticatedOn: String
   indicativeEnrichmentSuccess: Boolean
   indicativeEnrichmentStatus: TUStatusRefInput
   getAuthenticationQuestionsSuccess: Boolean
@@ -364,7 +366,7 @@ enum ModelSortDirection {
 }
 
 type ModelAppDataConnection @aws_iam @aws_cognito_user_pools {
-  items: [AppData]
+  items: [AppData!]!
   nextToken: String
 }
 
@@ -496,7 +498,7 @@ input UpdateAppDataInput {
 }
 
 input DeleteAppDataInput {
-  id: ID
+  id: ID!
 }
 
 input ModelAppDataConditionInput {
