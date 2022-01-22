@@ -24,7 +24,7 @@ export class SignupComponent implements OnInit {
   message: string = '';
   hasReferralCode: boolean = false;
   referralCode: string | undefined;
-  validReferralCode: boolean = true;
+  validReferralCode: boolean = false;
 
   constructor(
     private router: Router,
