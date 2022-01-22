@@ -46,6 +46,7 @@ subscription OnCreateAppData($owner: String) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -259,6 +260,7 @@ subscription OnUpdateAppData($owner: String) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -472,6 +474,7 @@ subscription OnDeleteAppData($owner: String) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
