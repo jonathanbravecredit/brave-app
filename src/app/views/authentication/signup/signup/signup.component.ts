@@ -25,6 +25,7 @@ export class SignupComponent implements OnInit {
   hasReferralCode: boolean = false;
   referralCode: string | undefined;
   validReferralCode: boolean = false;
+  fetchingFinished: boolean = false;
 
   constructor(
     private router: Router,
@@ -33,7 +34,6 @@ export class SignupComponent implements OnInit {
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
-    private http: HttpClient,
     private iam: IamService,
   ) {
     router.events.subscribe((event) => {
@@ -41,28 +41,31 @@ export class SignupComponent implements OnInit {
         if (event.url.includes('referralCode')) {
           this.hasReferralCode = true;
           this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
+          this.checkReferralCode();
         }
       }
     });
   }
 
-  ngOnInit(): void {
-    if (this.hasReferralCode) {
-      this.checkReferralCode();
-    }
-  }
+  ngOnInit(): void {}
 
   async checkReferralCode() {
-    let referralValidation = await this.iam.signRequest(
+    let referralValidationRequest = await this.iam.signRequest(
       `${environment.marketing}/referral/validation/${this.referralCode}`,
-      'GET',
+      'POST',
       {},
       JSON.stringify({}),
     );
 
-    if (JSON.parse(referralValidation).valid) {
+    let referralValidationData = await fetch(referralValidationRequest)
+
+    let referralValidation: { valid: boolean } = await referralValidationData.json()
+
+    if (referralValidation.valid) {
       this.validReferralCode = true;
     }
+
+    this.fetchingFinished = true
   }
 
   /**

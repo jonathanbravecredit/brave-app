@@ -11,6 +11,7 @@ export class SignupPureComponent {
   @Input() message: string = '';
   @Input() hasReferralCode: boolean = false;
   @Input() validReferralCode: boolean = false;
+  @Input() fetchingFinished: boolean = false;
   @Output() clickGoogle: EventEmitter<void> = new EventEmitter();
   @Output() clickFacebook: EventEmitter<void> = new EventEmitter();
   @Output() clickSignup: EventEmitter<NewUser> = new EventEmitter();
