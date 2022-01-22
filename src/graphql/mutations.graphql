@@ -2,6 +2,7 @@
 mutation PatchTransunion($id: ID!, $msg: String) {
   patchTransunion(id: $id, msg: $msg) {
     authenticated
+    authenticatedOn
     indicativeEnrichmentSuccess
     indicativeEnrichmentStatus {
       id
@@ -165,6 +166,7 @@ mutation CreateAppData(
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -376,6 +378,7 @@ mutation UpdateAppData(
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -587,6 +590,7 @@ mutation DeleteAppData(
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id

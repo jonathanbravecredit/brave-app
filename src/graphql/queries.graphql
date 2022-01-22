@@ -49,6 +49,7 @@ query GetAppData($id: ID!) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -262,6 +263,7 @@ query ListAppDatas(
       agencies {
         transunion {
           authenticated
+          authenticatedOn
           indicativeEnrichmentSuccess
           indicativeEnrichmentStatus {
             id
