@@ -185,7 +185,8 @@ export class KycKbaquestionsComponent implements OnInit {
 
   async handleSuccess(): Promise<void> {
     try {
-      this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+      await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
+      await this.kycService.updateAuthenticatedOn(true, new Date().toISOString());
       const { success, error } = await this.kycService.sendEnrollRequest();
       const sub = await this.kycService.getUserSub();
       this.referral.updateReferral(sub, 'enrolled');
