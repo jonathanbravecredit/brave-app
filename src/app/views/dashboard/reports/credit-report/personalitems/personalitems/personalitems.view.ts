@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { IBorrower } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -25,7 +25,6 @@ export class PersonalitemsView {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
     private creditReportServices: CreditreportService,
