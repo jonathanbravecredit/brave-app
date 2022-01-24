@@ -4,5 +4,5 @@ export interface ICreditReportGraphicInputs {
   base?: number;
   limit?: number;
   currentValue: number | null | undefined;
-  ptsChange: number | null;
+  ptsChange: number | string | undefined;
 }

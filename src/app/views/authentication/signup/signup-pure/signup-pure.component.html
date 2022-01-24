@@ -1,4 +1,4 @@
-<div class="flex content-center items-center justify-center h-full p-2">
+<div *ngIf="fetchingFinished" class="flex content-center items-center justify-center h-full p-2">
   <div class="w-full max-w-xs">
     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
       <!-- logo -->
@@ -15,9 +15,19 @@
           <h5 class="brave-h5-semibold">Create your new account!</h5>
         </div>
 
-        <div *ngIf="hasReferralCode" class="my-2 rounded-lg text-center text-white p-4 bg-fuchsia-500">
-          <h3 class="mb-2 font-semibold text-sm">Invalid Referral Code</h3>
-          <p class="text-sm">The code you’re using is not valid for any campaign or referral bonuses</p>
+        <div
+          *ngIf="hasReferralCode"
+          class="my-2 rounded-lg text-center p-4"
+          [ngClass]="validReferralCode ? 'bg-teal-100' : 'bg-fuchsia-500'"
+        >
+          <h3 *ngIf="validReferralCode" class="mb-2 font-semibold text-sm">Conquer your credit scores and earn!*</h3>
+          <h3 *ngIf="!validReferralCode" class="mb-2 font-semibold text-sm text-white">Invalid Referral Code</h3>
+          <p *ngIf="validReferralCode" class="text-sm">
+            Take control of your scores & earn a referral bonus for joining with friends!
+          </p>
+          <p *ngIf="!validReferralCode" class="text-sm text-white">
+            The code you’re using is not valid for any campaign or referral bonuses
+          </p>
         </div>
 
         <!-- <div class="btn-wrapper text-center">
@@ -75,7 +85,7 @@
       <div class="flex justify-center mt-10">
         <div class="text-sm text-blueGray-600 text-center">
           <small>
-            By joining you are agreeing to our&nbsp;<span
+            By joining you are agreeing to our Privacy Policy and Terms of Service&nbsp;<span
               ><a (click)="clickPrivacy.emit()" class="underline hover:cursor-pointer whitespace-nowrap"
                 >Privacy Policy</a
               ></span
@@ -84,6 +94,13 @@
                 >Terms of Service</a
               ></span
             >
+            .&nbsp;
+            <span
+              ><a (click)="clickReferralTerms.emit()" class="underline hover:cursor-pointer whitespace-nowrap"
+                >*Terms and conditions</a
+              ></span
+            >
+            for the referral programs apply
           </small>
         </div>
       </div>
