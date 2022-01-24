@@ -1,76 +1,73 @@
 <a [routerLink]="['/dashboard/report']">
-<div class="h-full rounded-md bg-indigo-700 px-7 py-2 shadow-sm">
-  <div *ngIf="(currentValue || 0) > 0; else noScore" class="flex justify-between mt-2">
-    <!-- Score -->
-    <div class="flex flex-col text-white text-center">
-      <p class="font-bold text-sm">Your Score</p>
-      <p class="text-3xl font-bold mt-2">{{ currentValue || 550 }}</p>
-      <p class="font-extrabold text-sm">{{ currentValue || 550 | creditReportGraphic: 'status' }}</p>
-      <div class="font-bold flex flex-nowrap mt-2">
-        <div class="mr-2 text-2xl -mt-2">
-          <span
-            class="material-icons align-bottom transform"
-            [ngClass]="ptsChange < 0 ? 'rotate-90 text-red-500' : '-rotate-90 text-fuchsia-500'"
-          >
-            play_arrow
-          </span>
-        </div>
-        <span class="whitespace-nowrap">{{ ptsChange >= 0 ? '+' : '' }}{{ ptsChange }} points</span>
-      </div>
-      <p class="text-opacity-75 whitespace-nowrap mt-1" style="font-size: 0.66rem">since last month</p>
-    </div>
-    <!-- Chart -->
-    <div class="flex relative">
-      <img src="https://d3e1i93f88eoxl.cloudfront.net/credit-range-sloped-graph.svg" />
-      <div class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
-        <brave-horizontal-creditscore-invisiblebar
-          [currentValue]="currentValue || 550"
-          [rotationOffset]="31"
-        ></brave-horizontal-creditscore-invisiblebar>
-      </div>
-    </div>
-  </div>
-  <!-- NO SCORE -->
-  <ng-template #noScore>
-    <div class="flex justify-between mt-2">
+  <div class="h-full rounded-md bg-indigo-700 px-7 py-2 shadow-sm">
+    <div *ngIf="(currentValue || 0) > 0; else noScore" class="flex justify-between mt-2">
       <!-- Score -->
       <div class="flex flex-col text-white text-center">
         <p class="font-bold text-sm">Your Score</p>
-        <p class="text-3xl font-bold mt-2">{{ 300 }}</p>
-        <p class="font-extrabold text-sm">{{ 300 | creditReportGraphic: 'status' }}</p>
+        <p class="text-3xl font-bold mt-2">{{ currentValue || 550 }}</p>
+        <p class="font-extrabold text-sm">{{ currentValue || 550 | creditReportGraphic: 'status' }}</p>
         <div class="font-bold flex flex-nowrap mt-2">
           <div class="mr-2 text-2xl -mt-2">
             <span
+              *ngIf="ptsChange"
               class="material-icons align-bottom transform"
               [ngClass]="ptsChange < 0 ? 'rotate-90 text-red-500' : '-rotate-90 text-fuchsia-500'"
             >
               play_arrow
             </span>
           </div>
-          <span class="whitespace-nowrap">{{ ptsChange >= 0 ? '+' : '' }}{{ ptsChange }} points</span>
+          <span *ngIf="ptsChange" class="whitespace-nowrap">{{ ptsChange >= 0 ? '+' : '' }}{{ ptsChange }} points</span>
+          <span *ngIf="!ptsChange" class="whitespace-nowrap"></span>
         </div>
-        <p class="text-opacity-75 whitespace-nowrap mt-1" style="font-size: 0.66rem">since last month</p>
+        <p *ngIf="ptsChange" class="text-opacity-75 whitespace-nowrap mt-1" style="font-size: 0.66rem">since last month</p>
+        <p *ngIf="!ptsChange" class="text-opacity-75 whitespace-nowrap mt-1" style="font-size: 0.66rem"></p>
       </div>
       <!-- Chart -->
       <div class="flex relative">
         <img src="https://d3e1i93f88eoxl.cloudfront.net/credit-range-sloped-graph.svg" />
         <div class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
           <brave-horizontal-creditscore-invisiblebar
-            [currentValue]="300"
+            [currentValue]="currentValue || 550"
             [rotationOffset]="31"
           ></brave-horizontal-creditscore-invisiblebar>
         </div>
       </div>
     </div>
-  </ng-template>
+    <!-- NO SCORE -->
+    <ng-template #noScore>
+      <div class="flex justify-between mt-2">
+        <!-- Score -->
+        <div class="flex flex-col text-white text-center">
+          <p class="font-bold text-sm">Your Score</p>
+          <p class="text-3xl font-bold mt-2">{{ 300 }}</p>
+          <p class="font-extrabold text-sm">{{ 300 | creditReportGraphic: 'status' }}</p>
+          <div class="font-bold flex flex-nowrap mt-2">
+            <div class="mr-2 text-2xl -mt-2">
+            </div>
+            <span class="whitespace-nowrap">0 points</span>
+          </div>
+          <p class="text-opacity-75 whitespace-nowrap mt-1" style="font-size: 0.66rem">since last month</p>
+        </div>
+        <!-- Chart -->
+        <div class="flex relative">
+          <img src="https://d3e1i93f88eoxl.cloudfront.net/credit-range-sloped-graph.svg" />
+          <div class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
+            <brave-horizontal-creditscore-invisiblebar
+              [currentValue]="300"
+              [rotationOffset]="31"
+            ></brave-horizontal-creditscore-invisiblebar>
+          </div>
+        </div>
+      </div>
+    </ng-template>
 
-  <div class="mt-2">
-    <p class="font-bold text-white text-center" style="font-size: 0.66rem; line-height: 0.875rem">
-      VantageScore<span class="inline-block align-text-top">&#174;</span>&nbsp; from TransUnion<span
-        class="inline-block align-text-top"
-        >&#174;</span
-      >
-    </p>
+    <div class="mt-2">
+      <p class="font-bold text-white text-center" style="font-size: 0.66rem; line-height: 0.875rem">
+        VantageScore<span class="inline-block align-text-top">&#174;</span>&nbsp; from TransUnion<span
+          class="inline-block align-text-top"
+          >&#174;</span
+        >
+      </p>
+    </div>
   </div>
-</div>
 </a>

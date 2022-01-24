@@ -3,7 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import {
+  IGetTrendingData,
+  IProductTrendingAttribute,
+  IProductTrendingData,
+} from '@shared/interfaces/get-trending-data.interface';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
 import {
@@ -27,8 +31,9 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   lastUpdated: string | undefined;
   report: IMergeReport | undefined;
   snapshots: DashboardStateModel | undefined;
-  scores!: ICreditScoreTracking | null;
+  sortedScores!: IProductTrendingData[] | null;
   trends!: IGetTrendingData | null;
+  trendingScores: IProductTrendingData[] = [];
   creditMix: IRecommendationText | undefined;
   creditMixStatus: string | undefined;
   creditUtilizationStatus: string | undefined;
@@ -70,8 +75,21 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
       this.report = resp.dashboard.report;
       this.snapshots = resp.dashboard.snapshots;
-      this.scores = resp.dashboard.scores || null;
       this.trends = resp.dashboard.trends;
+      if (this.trends) {
+        const trendAttrs =
+          this.trends.ProductAttributes.ProductTrendingAttribute instanceof Array
+            ? this.trends.ProductAttributes.ProductTrendingAttribute
+            : [this.trends.ProductAttributes.ProductTrendingAttribute];
+        const scores = trendAttrs.filter(
+          (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
+        )[0];
+        this.trendingScores =
+          scores.ProductAttributeData.ProductTrendingData instanceof Array
+            ? scores.ProductAttributeData.ProductTrendingData
+            : [scores.ProductAttributeData.ProductTrendingData];
+      }
+      this.sortScores(this.trendingScores);
       this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
@@ -85,6 +103,12 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
       const creditUtilSnapshotObj = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
       this.creditUtilizationStatus = creditUtilSnapshotObj.status;
       this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
+    });
+  }
+
+  sortScores(scores: IProductTrendingData[]) {
+    this.sortedScores = scores.sort((a, b) => {
+      return a.AttributeDate > b.AttributeDate ? -1 : 1;
     });
   }
 
