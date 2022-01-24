@@ -22,11 +22,19 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     dispute: IDispute | null,
     creditBureau: ICreditBureau | undefined,
   ): IDisputeToDisputeFindingOutput | undefined {
+    console.log('DISPUTE => ', dispute);
     if (!dispute) return;
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
-    if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    return this.mapClosedDispute(creditBureau);
+    if (status.toLowerCase() === 'opendispute') {
+      const resp = this.mapOpenDispute(dispute);
+      console.log('FIN => ', resp);
+      return resp;
+    } else {
+      const resp = this.mapClosedDispute(creditBureau);
+      console.log('FIN => ', resp);
+      return resp;
+    }
   }
 
   mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {
