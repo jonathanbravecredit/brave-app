@@ -26,15 +26,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    const allOpenClosed = this.isAllOpenClosed(dispute);
-    const anyClosed = this.anyClosed(dispute);
-    if (!allOpenClosed) {
-      return this.mapClosedOpenDispute(dispute, creditBureau);
-    } else if (anyClosed) {
-      return this.mapClosedDispute(dispute, creditBureau);
-    } else {
-      return this.mapClosedOpenDispute(dispute, creditBureau);
-    }
+    return this.mapClosedDispute(creditBureau);
   }
 
   mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {
@@ -47,29 +39,11 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     } as IDisputeToDisputeFindingOutput;
   }
 
-  mapClosedDispute(dispute: IDispute, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
+  mapClosedDispute(creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
     return {
       status: 'closed',
-      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
+      reportCreatedAt: creditBureau?.transactionControl?.tracking?.transactionTimeStamp || '--',
       fileIdentificationNumber: `${creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
     };
-  }
-
-  mapClosedOpenDispute(dispute: IDispute, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
-    return {
-      status: 'closed',
-      reportCreatedAt: dispute.openDisputes?.lastUpdatedDate || '--',
-      fileIdentificationNumber: `${creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
-    } as IDisputeToDisputeFindingOutput;
-  }
-
-  isAllOpenClosed(dispute: IDispute): boolean {
-    const totalDisputed = dispute?.openDisputes?.totalDisputedItems;
-    const closedDisputes = dispute?.openDisputes?.totalClosedDisputedItems;
-    return totalDisputed === closedDisputes;
-  }
-
-  anyClosed(dispute: IDispute): boolean {
-    return Object.keys(dispute.closedDisputes).length > 0;
   }
 }
