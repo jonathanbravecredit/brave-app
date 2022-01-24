@@ -8,6 +8,10 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '@environments/environment';
+import { IReferral } from '@shared/interfaces/referrals.interface';
+import { IamService } from '@shared/services/auth/iam.service';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -18,7 +22,11 @@ export type SignupState = 'init' | 'invalid';
 export class SignupComponent implements OnInit {
   viewState: SignupState = 'init';
   message: string = '';
-  hasReferralCode: boolean = false
+  hasReferralCode: boolean = false;
+  referralCode: string | undefined;
+  validReferralCode: boolean = false;
+  fetchingFinished: boolean = false;
+
   constructor(
     private router: Router,
     private auth: AuthService,
@@ -26,17 +34,39 @@ export class SignupComponent implements OnInit {
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
+    private iam: IamService,
   ) {
-    router.events.subscribe(event => {
+    router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('referralCode')) {
-          this.hasReferralCode = true
+          this.hasReferralCode = true;
+          this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
+          this.checkReferralCode();
         }
       }
-    })
+    });
   }
 
   ngOnInit(): void {}
+
+  async checkReferralCode() {
+    let referralValidationRequest = await this.iam.signRequest(
+      `${environment.marketing}/referral/validation/${this.referralCode}`,
+      'POST',
+      {},
+      JSON.stringify({}),
+    );
+
+    let referralValidationData = await fetch(referralValidationRequest)
+
+    let referralValidation: { valid: boolean } = await referralValidationData.json()
+
+    if (referralValidation.valid) {
+      this.validReferralCode = true;
+    }
+
+    this.fetchingFinished = true
+  }
 
   /**
    * Method to sign user up
@@ -134,5 +164,9 @@ export class SignupComponent implements OnInit {
    */
   goToTerms(): void {
     this.router.navigate([routes.root.compliance.tos.full]);
+  }
+
+  goToReferralTerms(): void {
+    document.location.href = 'https://www.brave.credit/referral-promotion-terms'
   }
 }
