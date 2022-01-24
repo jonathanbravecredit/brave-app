@@ -203,8 +203,8 @@ export class TransunionService {
    * @param id
    * @returns
    */
-  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
-    return this.sendTransunionAPICall<any>('GetInvestigationResultsByID', JSON.stringify({ id }));
+  async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
+    return this.sendTransunionAPICall<string>('GetInvestigationResultsByID', JSON.stringify({ id }));
   }
 
   /**
@@ -214,8 +214,8 @@ export class TransunionService {
    * @param disputeId
    * @returns
    */
-  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<any | undefined>> {
-    return this.sendTransunionAPICall<any>('GetCreditBureauResultsByID', JSON.stringify({ id }));
+  async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
+    return this.sendTransunionAPICall<string>('GetCreditBureauResultsByID', JSON.stringify({ id }));
   }
 
   /**
