@@ -9,13 +9,8 @@
   [ngClass]="{ 'opacity-40': preview }"
 >
   <!-- tag div: Display of current type of snapshot -->
-  <div
-    *ngIf="label !== undefined"
-    class="absolute -mt-5 ml-3 px-1 font-semibold bg-white text-sm font-headings"
-  >
-    <span class="font-sans" [ngClass]="label | snapshotLabel: 'color-class'">{{
-      label | snapshotLabel: "text"
-    }}</span>
+  <div *ngIf="label !== undefined" class="absolute -mt-5 ml-3 px-1 font-semibold bg-white text-sm font-headings">
+    <span class="font-sans" [ngClass]="label | snapshotLabel: 'color-class'">{{ label | snapshotLabel: 'text' }}</span>
   </div>
   <!-- left column  section 1: Display of current snapshot status indicator-->
   <!-- SQUARE VERSION -->
@@ -31,11 +26,7 @@
       class="rounded-full border-none w-4 h-4"
       [ngClass]="status | snapshotStatus: 'background'"
     ></div>
-    <div
-      *ngIf="color"
-      class="rounded-full border-none w-4 h-4"
-      [ngStyle]="{ 'background-color': color }"
-    ></div>
+    <div *ngIf="color" class="rounded-full border-none w-4 h-4" [ngStyle]="{ 'background-color': color }"></div>
   </div>
   <div class="flex flex-col mr-auto justify-center">
     <!--  center column section 2: Display of snapshot card information -->
@@ -49,29 +40,17 @@
   </div>
   <!-- right column section 3: Display of values -->
   <div class="flex flex-col items-end mr-6 text-end justify-center">
-    <span *ngIf="!rating" class="text-xl m-auto">
-      <p
-        *ngIf="typeOfSnapshot === 'tag'"
-        [ngClass]="status | snapshotStatus: 'text'"
-        class="font-bold font-headings"
-      >
+    <span *ngIf="!rating && value !== null" class="text-xl m-auto">
+      <p *ngIf="typeOfSnapshot === 'tag'" [ngClass]="status | snapshotStatus: 'text'" class="font-bold font-headings">
         {{ value }}
       </p>
-      <p
-        *ngIf="typeOfSnapshot !== 'tag'"
-        class="font-bold font-headings text-dk-gray"
-      >
+      <p *ngIf="typeOfSnapshot !== 'tag'" class="font-bold font-headings text-dk-gray">
         {{ value }}<span *ngIf="typeOfSnapshot === 'percentage'">%</span>
       </p>
     </span>
     <span class="text-2.5 -mt-1" *ngIf="typeOfSnapshot === 'date'">
       <p class="font-sans text-dk-gray">{{ typeOfDate }}</p>
     </span>
-      <span
-        [ngClass]="status | snapshotStatus: 'text'"
-        class="text-base font-semibold"
-        *ngIf="rating"
-        >{{ rating }}</span
-      >
+    <span [ngClass]="status | snapshotStatus: 'text'" class="text-base font-semibold" *ngIf="rating">{{ rating }}</span>
   </div>
 </div>
