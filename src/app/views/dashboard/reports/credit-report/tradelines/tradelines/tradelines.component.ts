@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -24,7 +24,7 @@ export class TradelinesComponent {
    */
   subscriber$: Observable<ISubscriber>;
   /**
-   * Flag to indicate that dispute terms have been acknowledged
+   * Flag to indicate that dispute terms have been acknowledgeds
    */
   _acknowledged: boolean = false;
   /**
@@ -34,7 +34,6 @@ export class TradelinesComponent {
    */
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
     private interstitial: InterstitialService,
