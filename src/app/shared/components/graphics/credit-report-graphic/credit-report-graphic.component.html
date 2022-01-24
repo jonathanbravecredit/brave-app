@@ -19,7 +19,7 @@
             </span>
           </div>
           <span *ngIf="ptsChange || ptsChange === 0" class="whitespace-nowrap"
-            >{{ ptsChange !== 0 ? ptsChange > 0 ? '+' : '-' : '' }}{{ ptsChange }} points</span
+            >{{ ptsChange > 0 ? '+' : '' }}{{ ptsChange }} points</span
           >
           <span *ngIf="!ptsChange && ptsChange !== 0" class="whitespace-nowrap"></span>
         </div>
