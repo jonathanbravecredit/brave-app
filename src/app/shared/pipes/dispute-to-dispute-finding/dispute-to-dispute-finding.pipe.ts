@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { IDispute } from '@shared/interfaces/disputes';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
+import { TreeMapModule } from '@swimlane/ngx-charts';
 
 export interface IDisputeToDisputeFindingOutput {
   status: string;
@@ -25,7 +26,7 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
     if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    return this.mapClosedDispute(dispute, creditBureau);
+    return this.mapClosedDispute(creditBureau);
   }
 
   mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {
@@ -38,10 +39,10 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     } as IDisputeToDisputeFindingOutput;
   }
 
-  mapClosedDispute(dispute: IDispute, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
+  mapClosedDispute(creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
     return {
       status: 'closed',
-      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
+      reportCreatedAt: creditBureau?.transactionControl?.tracking?.transactionTimeStamp || '--',
       fileIdentificationNumber: `${creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
     };
   }
