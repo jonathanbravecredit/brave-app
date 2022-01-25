@@ -17,6 +17,7 @@ type AppData @aws_iam @aws_cognito_user_pools {
   agencies: Agencies!
   preferences: Preferences!
   dashboard: Dashboard
+  navBar: NavBar
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -46,6 +47,14 @@ type UserAttributes @aws_iam @aws_cognito_user_pools {
   phone: Phone
   dob: Dob
   ssn: Ssn
+}
+
+type NavBar @aws_iam @aws_cognito_user_pools {
+  disputes: NavBarConfig
+}
+
+type NavBarConfig @aws_iam @aws_cognito_user_pools {
+  badge: Boolean
 }
 
 type Address @aws_iam @aws_cognito_user_pools {
@@ -131,6 +140,7 @@ type ShowAccountsPreference @aws_iam @aws_cognito_user_pools {
 
 type Transunion @aws_iam @aws_cognito_user_pools {
   authenticated: Boolean
+  authenticatedOn: String
   indicativeEnrichmentSuccess: Boolean
   indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean
@@ -259,6 +269,7 @@ input AgenciesInput {
 
 input TransunionInput {
   authenticated: Boolean
+  authenticatedOn: String
   indicativeEnrichmentSuccess: Boolean
   indicativeEnrichmentStatus: TUStatusRefInput
   getAuthenticationQuestionsSuccess: Boolean
@@ -358,13 +369,21 @@ input DataBreachCardInput {
   paragraphs: [String]
 }
 
+input NavBarInput {
+  disputes: NavBarConfigInput
+}
+
+input NavBarConfigInput {
+  badge: Boolean
+}
+
 enum ModelSortDirection {
   ASC
   DESC
 }
 
 type ModelAppDataConnection @aws_iam @aws_cognito_user_pools {
-  items: [AppData]
+  items: [AppData!]!
   nextToken: String
 }
 
@@ -473,6 +492,7 @@ input CreateAppDataInput {
   agencies: AgenciesInput!
   preferences: PreferencesInput!
   dashboard: DashboardInput
+  navBar: NavBarInput
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -487,6 +507,7 @@ input UpdateAppDataInput {
   agencies: AgenciesInput
   preferences: PreferencesInput
   dashboard: DashboardInput
+  navBar: NavBarInput
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -496,7 +517,7 @@ input UpdateAppDataInput {
 }
 
 input DeleteAppDataInput {
-  id: ID
+  id: ID!
 }
 
 input ModelAppDataConditionInput {

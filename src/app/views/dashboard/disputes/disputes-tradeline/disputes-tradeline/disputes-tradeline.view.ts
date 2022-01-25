@@ -45,7 +45,11 @@ export class DisputesTradelineView implements OnDestroy {
         // TODO need to handle the response appropriately now that we are set up with TU
         const { success, error, data } = await this.disputeService.sendStartDispute();
         if (success) {
-          this.analytics.fireClickEvent(AnalyticClickEvents.DisputeSucessfullySubmited);
+          this.analytics.fireClickEvent(AnalyticClickEvents.DisputeSucessfullySubmited, {
+            google: true,
+            mixpanel: true,
+            brave: true,
+          });
           this.viewDisplay = 'sent';
         } else {
           const errorCode = error?.Code;

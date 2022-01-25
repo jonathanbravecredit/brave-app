@@ -5,6 +5,8 @@ import { CreditScoreHistoryNgxChartComponent } from "@shared/components/charts/c
 import { SharedComponentsModule } from "@shared/components/shared-components.module";
 import { CustomLineChartService } from "@shared/services/charts/custom-line-chart.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 export default {
   title: "app/components/charts/credit-score-history-ngx-chart",
@@ -12,7 +14,7 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [SharedComponentsModule, BrowserAnimationsModule],
+      imports: [SharedComponentsModule, BrowserAnimationsModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
         CustomLineChartService,
         { provide: APP_BASE_HREF, useValue: "/" },

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { DisputeStatus } from '../enums';
 
 @Component({
@@ -12,6 +13,7 @@ export class DisputeCurrentCardComponent {
   @Input() accountType: string | undefined = '--';
   @Input() estCompletionDate: string | undefined = '--';
   @Output() viewDetailsClick: EventEmitter<void> = new EventEmitter();
+  events = AnalyticClickEvents;
 
   processingStatus = DisputeStatus.Processing;
   constructor() {}

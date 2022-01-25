@@ -1,44 +1,35 @@
 <h3 class="text-lg font-bold mt-6 mb-5">How to Earn</h3>
 <p class="mb-5">
-  Get $3 for every friend you refer who doesn’t have a Brave Credit account, and
-  who successfully enrolls and checks their credit scores here. There’s a 10
-  person referral limit a month.
+  Get ${{ denomination || '--' }} for every friend you refer who doesn't have a Brave Credit account, and who
+  successfully enrolls and checks their credit scores here. There's a {{ bonusThreshold || '--' }} person referral limit
+  a month.
 </p>
 <p class="mb-5">
-  BONUS: get an <span class="font-bold">additional $5</span> if 5 friends successfully enroll!
+  BONUS: get an <span class="font-bold">additional ${{ bonusAmount || '--' }}</span> if
+  {{ bonusThreshold || '--' }} friends successfully enroll!
 </p>
 <p>
-  The 10 person limit resets every month, and no referrals roll over to new campaigns. See the full terms
-  <a
-    class="underline cursor-pointer text-link-blue"
-    href="http://www.brave.credit/referral-promotion-terms"
-    >here</a
-  >.
+  The {{ bonusThreshold || '--' }} person limit resets every month, and no referrals roll over to new campaigns. See the
+  full terms
+  <a class="underline cursor-pointer text-link-blue" href="http://www.brave.credit/referral-promotion-terms">here</a>.
 </p>
 <h3 class="text-lg font-bold mt-8 mb-5">When Is it Paid Out?</h3>
 <p class="mb-5">
-  If you succesfully refer 10 people, your $35 gift card will be sent to the
-  email on record
-  <span class="font-bold">
-    the Tuesday after the full week the 10th person enrolls.</span
-  >
+  If you succesfully refer {{ bonusThreshold || '--' }} people, your ${{ maxEarnings || '--' }} gift card will be sent
+  to the email on record
+  <span class="font-bold"> the Tuesday after the full week the {{ bonusThreshold || '--' }}th person enrolls.</span>
 </p>
 <p>
-  If you have under 10 people referred for a month, you’ll get the payout the
-  first Tuesday of the following month.
+  If you have under {{ bonusThreshold || '--' }} people referred for a month, you'll get the payout the first Tuesday of
+  the following month.
 </p>
 <h3 class="text-lg font-bold mt-8 mb-5">What Kind of Giftcard is It?</h3>
 <p class="mb-8">
-  Our partner will send Amazon gift cards, but if that is unavailable they will
-  provide a selection of cards from a similar retailer (Walmart, ebay, or other
-  major retailers), or a Visa card.
+  Our partner will send Amazon gift cards, but if that is unavailable they will provide a selection of cards from a
+  similar retailer (Walmart, ebay, or other major retailers), or a Visa card.
 </p>
 <p>
-  See the full terms and condition of the offer, including definitions, how long
-  the promotion runs, and qualifying / disqualifying events,
-  <a
-    href="http://www.brave.credit/referral-promotion-terms"
-    class="underline cursor-pointer text-link-blue"
-    >here.</a
-  >
+  See the full terms and condition of the offer, including definitions, how long the promotion runs, and qualifying /
+  disqualifying events,
+  <a href="http://www.brave.credit/referral-promotion-terms" class="underline cursor-pointer text-link-blue">here.</a>
 </p>

@@ -549,6 +549,32 @@ export class StateService {
   }
 
   /**
+   * (Promise) Takes a progress step ID and sets the complete status to true
+   * Then updates the state
+   * @param {number} step the progress step ID
+   */
+  async updateAuthenticatedOnAsync(
+    authenticated: boolean,
+    authenticatedOn: string,
+  ): Promise<UpdateAppDataInput | null | undefined> {
+    return await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new AgenciesActions.UpdateAuthentication({ authenticated, authenticatedOn }))
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          if (!input.id) {
+            throw new Error(`stateService:updateAuthenticatedOnAsync=No id provided ${input.id}`);
+          } else {
+            this.api
+              .UpdateAppData(input)
+              .then((res) => resolve(res))
+              .catch((err) => reject(err));
+          }
+        });
+    });
+  }
+
+  /**
    * (Asynchronous) Takes a progress step ID and sets the active status to true or false
    * Then updates the state
    * @param {number} step the progress step ID

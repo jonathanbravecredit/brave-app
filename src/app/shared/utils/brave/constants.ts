@@ -79,6 +79,11 @@ export const INIT_DATA: CreateAppDataInput = {
   status: AppStatus.Active,
   statusReason: AppStatusReason.Active,
   statusReasonDescription: AppStatusReasonDescriptions[AppStatusReason.Active],
+  navBar: {
+    disputes: {
+      badge: true,
+    },
+  },
 };
 
 export const BRAVE_TECHNICAL_ERROR: IBraveTechnicalError = {

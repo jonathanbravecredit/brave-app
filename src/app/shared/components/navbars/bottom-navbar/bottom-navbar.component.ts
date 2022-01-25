@@ -1,8 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { PartialObserver } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { NavBarInput } from '@shared/services/aws/api.service';
+import { StateService } from '@shared/services/state/state.service';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
+import * as appDataActions from '@store/app-data/app-data.actions'
 
 @Component({
   selector: 'brave-bottom-navbar',
@@ -15,12 +18,16 @@ export class BottomNavbarComponent implements OnInit {
   disableLocalNavigationHandler: boolean = false;
   disableEventEmitter: boolean = false;
   @Output() navigationTo: EventEmitter<string> = new EventEmitter();
-  clicked: string = ''
+  clicked: string = '';
+  navBarData: NavBarInput | null | undefined;
 
-  constructor() {}
-
-  ngOnInit(): void {
+  constructor(private state: StateService, private trans: TransunionService, private store: Store) {
+    this.state.state$.subscribe((r) => {
+      this.navBarData = r.appData.navBar;
+    });
   }
+
+  ngOnInit(): void {}
 
   navigate(navigationItemName: string): void {
     if (!this.disableLocalNavigationHandler) {
@@ -30,14 +37,17 @@ export class BottomNavbarComponent implements OnInit {
     }
   }
 
+  disputesNotifClick() {
+    this.store.dispatch(new appDataActions.UpdateNavBar(false));
+    this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle: false }));
+  }
+
   pointerDownHandler(id: string) {
-    this.clicked = id,
-    this.currentActiveItemId = id
+    (this.clicked = id); 
+    (this.currentActiveItemId = id);
   }
 
   pointerUpHandler() {
-    this.clicked = ''
+    this.clicked = '';
   }
-
-
 }
