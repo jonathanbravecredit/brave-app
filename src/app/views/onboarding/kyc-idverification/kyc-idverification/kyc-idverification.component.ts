@@ -167,7 +167,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       await this.kycService.updateAuthenticatedOn(true, new Date().toISOString());
       const { success, error } = await this.kycService.sendEnrollRequest();
       const sub = await this.kycService.getUserSub();
-      this.referral.updateReferral(sub, 'enrolled');
       success
         ? this.router.navigate([routes.root.onboarding.congratulations.full]) // api successful and TU successful
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);

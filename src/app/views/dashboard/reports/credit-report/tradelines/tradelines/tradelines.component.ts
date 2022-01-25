@@ -65,7 +65,7 @@ export class TradelinesComponent {
     this.interstitial.changeMessage('checking eligibility');
     this.interstitial.openInterstitial();
     this.disputeService
-      .sendDisputePreflightCheck()
+      .onUserConfirmed()
       .then((resp) => {
         const { success, error } = resp;
         if (success) {

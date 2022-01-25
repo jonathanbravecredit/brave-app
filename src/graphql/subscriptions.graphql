@@ -197,6 +197,11 @@ subscription OnCreateAppData($owner: String) {
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      disputes {
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -406,6 +411,11 @@ subscription OnUpdateAppData($owner: String) {
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      disputes {
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -614,6 +624,11 @@ subscription OnDeleteAppData($owner: String) {
       databreachCardStatus
       databreachReviewed
       databreachStatus
+    }
+    navBar {
+      disputes {
+        badge
+      }
     }
     status
     statusReason

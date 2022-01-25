@@ -317,6 +317,11 @@ mutation CreateAppData(
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      disputes {
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -529,6 +534,11 @@ mutation UpdateAppData(
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      disputes {
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -740,6 +750,11 @@ mutation DeleteAppData(
       databreachCardStatus
       databreachReviewed
       databreachStatus
+    }
+    navBar {
+      disputes {
+        badge
+      }
     }
     status
     statusReason

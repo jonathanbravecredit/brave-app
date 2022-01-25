@@ -189,7 +189,6 @@ export class KycKbaquestionsComponent implements OnInit {
       await this.kycService.updateAuthenticatedOn(true, new Date().toISOString());
       const { success, error } = await this.kycService.sendEnrollRequest();
       const sub = await this.kycService.getUserSub();
-      this.referral.updateReferral(sub, 'enrolled');
       success
         ? this.router.navigate([routes.root.onboarding.congratulations.full])
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
