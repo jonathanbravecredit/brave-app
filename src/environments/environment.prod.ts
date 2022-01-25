@@ -5,4 +5,5 @@ export const environment = {
   analytics: 'https://2piy9ocdre.execute-api.us-east-2.amazonaws.com/prod',
   validation: 'https://gl2hq6upfg.execute-api.us-east-2.amazonaws.com/prod',
   ads: 'https://p85xvtfba5.execute-api.us-east-2.amazonaws.com/prod',
+  session: 'https://omiwc1gndg.execute-api.us-east-2.amazonaws.com/prod',
 };
