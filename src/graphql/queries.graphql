@@ -49,6 +49,7 @@ query GetAppData($id: ID!) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -199,6 +200,11 @@ query GetAppData($id: ID!) {
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      disputes {
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -262,6 +268,7 @@ query ListAppDatas(
       agencies {
         transunion {
           authenticated
+          authenticatedOn
           indicativeEnrichmentSuccess
           indicativeEnrichmentStatus {
             id
@@ -411,6 +418,11 @@ query ListAppDatas(
         databreachCardStatus
         databreachReviewed
         databreachStatus
+      }
+      navBar {
+        disputes {
+          badge
+        }
       }
       status
       statusReason

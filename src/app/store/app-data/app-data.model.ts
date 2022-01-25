@@ -1,4 +1,10 @@
-import { AgenciesInput, UpdateAppDataInput, UserInput, PreferencesInput } from '@shared/services/aws/api.service';
+import {
+  AgenciesInput,
+  UpdateAppDataInput,
+  UserInput,
+  PreferencesInput,
+  NavBarInput,
+} from '@shared/services/aws/api.service';
 
 type typename = 'AppData';
 
@@ -8,6 +14,7 @@ export class AppDataStateModel implements UpdateAppDataInput {
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
+  navBar?: NavBarInput | null | undefined;
   status?: string | null;
   statusReason?: string | null;
   statusReasonDescription?: string | null;

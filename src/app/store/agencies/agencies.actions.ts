@@ -45,3 +45,8 @@ export class InitiateTransunionKBADetails {
   static readonly type = '[Agencies] InitiateTransunionKBADetails';
   constructor() {}
 }
+
+export class UpdateAuthentication {
+  static readonly type = '[Agencies] UpdateAuthentication';
+  constructor(public payload: { authenticated: boolean; authenticatedOn: string }) {}
+}

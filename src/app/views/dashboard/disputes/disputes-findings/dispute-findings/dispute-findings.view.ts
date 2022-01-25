@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
+import { ICreditBureau, IDisputeCreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { IDispute } from '@shared/interfaces/disputes';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
 import { DisputeService } from '@shared/services/dispute/dispute.service';

@@ -46,6 +46,7 @@ subscription OnCreateAppData($owner: String) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -195,6 +196,11 @@ subscription OnCreateAppData($owner: String) {
       databreachCardStatus
       databreachReviewed
       databreachStatus
+    }
+    navBar {
+      disputes {
+        badge
+      }
     }
     status
     statusReason
@@ -254,6 +260,7 @@ subscription OnUpdateAppData($owner: String) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -403,6 +410,11 @@ subscription OnUpdateAppData($owner: String) {
       databreachCardStatus
       databreachReviewed
       databreachStatus
+    }
+    navBar {
+      disputes {
+        badge
+      }
     }
     status
     statusReason
@@ -462,6 +474,7 @@ subscription OnDeleteAppData($owner: String) {
     agencies {
       transunion {
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           id
@@ -611,6 +624,11 @@ subscription OnDeleteAppData($owner: String) {
       databreachCardStatus
       databreachReviewed
       databreachStatus
+    }
+    navBar {
+      disputes {
+        badge
+      }
     }
     status
     statusReason

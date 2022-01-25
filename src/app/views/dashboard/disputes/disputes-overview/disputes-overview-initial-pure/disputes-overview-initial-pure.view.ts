@@ -15,7 +15,6 @@ export class DisputesOverviewInitialPureView implements OnInit {
   @Input() overview: IDisputesOverview | undefined;
   @Output() viewDetailsClick: EventEmitter<TDisputeEntity> = new EventEmitter();
   @Output() viewHistoricalClick: EventEmitter<void> = new EventEmitter();
-  events = AnalyticClickEvents;
   constructor() {}
 
   ngOnInit(): void {}

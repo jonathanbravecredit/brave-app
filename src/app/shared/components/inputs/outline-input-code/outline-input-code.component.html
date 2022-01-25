@@ -4,6 +4,7 @@
       >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
     <input
+      #inputField
       name="input_field"
       inputmode="numeric"
       pattern="[0-9]*"

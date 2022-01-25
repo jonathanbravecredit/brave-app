@@ -5,11 +5,13 @@
     >
     <div class="relative">
       <input
+        #inputField
         name="input_field"
         [type]="hide ? 'password' : 'text'"
         formControlName="input"
         [placeholder]="config?.placeholder || ''"
         [autocomplete]="config?.autocomplete || 'off'"
+        (change)="onChange($event.target)"
         [ngClass]="{
           'border-red-500':
             required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
