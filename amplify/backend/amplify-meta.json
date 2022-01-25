@@ -28,7 +28,7 @@
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://app.brave.credit/auth/redirect/\"],\"LogoutURLs\":[\"https://app.brave.credit/auth/signin/\"]}",
         "UserPoolName": "braveapp0ea8ea07_userpool_0ea8ea07"
       },
-      "lastPushTimeStamp": "2022-01-06T22:44:25.052Z",
+      "lastPushTimeStamp": "2022-01-24T18:50:29.771Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/auth/braveapp0ea8ea07-cloudformation-template.yml",
         "logicalId": "authbraveapp0ea8ea07"
@@ -79,7 +79,7 @@
         "GraphQLAPIIdOutput": "rr5wtr4ev5exlbutrkih3r5lhq",
         "GraphQLAPIEndpointOutput": "https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql"
       },
-      "lastPushTimeStamp": "2022-01-06T22:44:25.064Z",
+      "lastPushTimeStamp": "2022-01-24T18:50:29.779Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apibraveapp"
@@ -97,7 +97,7 @@
         "Name": "S3Trigger3c67af6a-dev",
         "LambdaExecutionRole": "S3Trigger3c67af6aLambdaRole3c67af6a-dev"
       },
-      "lastPushTimeStamp": "2022-01-06T22:44:25.079Z",
+      "lastPushTimeStamp": "2022-01-24T18:50:29.810Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/function/S3Trigger3c67af6a-cloudformation-template.json",
         "logicalId": "functionS3Trigger3c67af6a"
@@ -127,7 +127,7 @@
         "Name": "GraphQLResolverFunction-dev",
         "LambdaExecutionRole": "braveappLambdaRole4b35ec75-dev"
       },
-      "lastPushTimeStamp": "2022-01-06T22:44:25.084Z",
+      "lastPushTimeStamp": "2022-01-24T18:50:29.816Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/function/GraphQLResolverFunction-cloudformation-template.json",
         "logicalId": "functionGraphQLResolverFunction"
@@ -157,7 +157,7 @@
         "Name": "PatchTransunionCustomResolver-dev",
         "LambdaExecutionRole": "braveappLambdaRole7fa2ae45-dev"
       },
-      "lastPushTimeStamp": "2022-01-06T22:44:25.087Z",
+      "lastPushTimeStamp": "2022-01-24T18:50:29.825Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/function/PatchTransunionCustomResolver-cloudformation-template.json",
         "logicalId": "functionPatchTransunionCustomResolver"
@@ -187,7 +187,7 @@
         "BucketName": "braveapp7123270838f144d09004f496c2f9ef0f110519-dev",
         "Region": "us-east-2"
       },
-      "lastPushTimeStamp": "2022-01-06T22:44:25.091Z",
+      "lastPushTimeStamp": "2022-01-24T18:50:29.832Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-braveapp-dev-110519-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
         "logicalId": "storages3b5dd189d"

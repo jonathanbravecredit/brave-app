@@ -31,7 +31,7 @@ const services = [
   KycService,
   DashboardService,
   TransunionService,
-  DisputeService,
+  // DisputeService, // already in provided for in root
   CustomLineChartService,
   NavigationService,
   FeatureFlagsService,

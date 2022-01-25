@@ -24,8 +24,13 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     if (!dispute) return;
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
-    if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    return this.mapClosedDispute(dispute, creditBureau);
+    if (status.toLowerCase() === 'opendispute') {
+      const resp = this.mapOpenDispute(dispute);
+      return resp;
+    } else {
+      const resp = this.mapClosedDispute(creditBureau);
+      return resp;
+    }
   }
 
   mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {
@@ -38,10 +43,10 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     } as IDisputeToDisputeFindingOutput;
   }
 
-  mapClosedDispute(dispute: IDispute, creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
+  mapClosedDispute(creditBureau: ICreditBureau | undefined): IDisputeToDisputeFindingOutput {
     return {
       status: 'closed',
-      reportCreatedAt: dispute.closedDisputes?.lastUpdatedDate || '--',
+      reportCreatedAt: creditBureau?.transactionControl?.tracking?.transactionTimeStamp || '--',
       fileIdentificationNumber: `${creditBureau?.transactionControl?.tracking?.identifier?.fin}-${creditBureau?.transactionControl?.tracking?.identifier?.activityNumber}`,
     };
   }

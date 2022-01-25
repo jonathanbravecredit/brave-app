@@ -14,6 +14,7 @@ type AppData
   agencies: Agencies!
   preferences: Preferences!
   dashboard: Dashboard
+  navBar: NavBar
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -37,6 +38,12 @@ type UserAttributes {
   phone: Phone
   dob: Dob
   ssn: Ssn
+}
+type NavBar {
+  disputes: NavBarConfig
+}
+type NavBarConfig {
+  badge: Boolean
 }
 type Address {
   addressOne: String!
@@ -112,6 +119,7 @@ type ShowAccountsPreference {
 }
 type Transunion {
   authenticated: Boolean
+  authenticatedOn: String
   indicativeEnrichmentSuccess: Boolean
   indicativeEnrichmentStatus: TUStatusRef
   getAuthenticationQuestionsSuccess: Boolean

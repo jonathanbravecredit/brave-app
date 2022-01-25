@@ -42,4 +42,11 @@ export class AppDataState {
       ...payload,
     });
   }
+
+  @Action(AppDataActions.UpdateNavBar)
+  UpdateNavBar(ctx: StateContext<AppDataStateModel>, { payload }: AppDataActions.UpdateNavBar): void {
+    ctx.patchState({
+      navBar: { disputes: { badge: payload } },
+    });
+  }
 }

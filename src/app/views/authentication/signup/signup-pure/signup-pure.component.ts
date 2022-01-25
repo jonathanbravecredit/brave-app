@@ -9,6 +9,9 @@ import { SignupState } from '@views/authentication/signup/signup/signup.componen
 export class SignupPureComponent {
   @Input() viewState: SignupState = 'init';
   @Input() message: string = '';
+  @Input() hasReferralCode: boolean = false;
+  @Input() validReferralCode: boolean = false;
+  @Input() fetchingFinished: boolean = false;
   @Output() clickGoogle: EventEmitter<void> = new EventEmitter();
   @Output() clickFacebook: EventEmitter<void> = new EventEmitter();
   @Output() clickSignup: EventEmitter<NewUser> = new EventEmitter();
@@ -16,6 +19,7 @@ export class SignupPureComponent {
   @Output() clickLogin: EventEmitter<void> = new EventEmitter();
   @Output() clickPrivacy: EventEmitter<void> = new EventEmitter();
   @Output() clickTerms: EventEmitter<void> = new EventEmitter();
+  @Output() clickReferralTerms: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 }

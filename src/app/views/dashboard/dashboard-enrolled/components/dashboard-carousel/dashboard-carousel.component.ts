@@ -28,13 +28,13 @@ export class DashboardCarouselComponent implements OnInit {
     }
     const currentScore = this.report ? new ParseRiskScorePipe().transform(this.report) : null;
     const graphic: ICreditReportGraphic = !this.scores
-      ? { currentValue: currentScore, ptsChange: 0 }
+      ? { currentValue: currentScore, ptsChange: null }
       : {
           currentValue: +this.scores[0].AttributeValue,
           ptsChange:
             this.scores[1] && lastIndex
               ? +this.scores[lastIndex].AttributeValue - +this.scores[lastIndex - 1].AttributeValue
-              : undefined,
+              : null,
         };
     const chart: ICreditScoreHistoryNgxChartInputs = {
       trends: this.trends,
