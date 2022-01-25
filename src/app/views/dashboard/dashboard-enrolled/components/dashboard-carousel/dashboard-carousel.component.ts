@@ -7,13 +7,14 @@ import { IMergeReport } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { TESTERTRENDING } from '@views/dashboard/dashboard-enrolled/components/dashboard-carousel/testerData';
 
 @Component({
   selector: 'brave-dashboard-carousel',
   templateUrl: './dashboard-carousel.component.html',
 })
 export class DashboardCarouselComponent implements OnInit {
-  @Input() trends: IGetTrendingData | null | undefined;
+  trends: IGetTrendingData | null | undefined = TESTERTRENDING
   @Input() report: IMergeReport | null | undefined;
   @Input() scores: IProductTrendingData[] | null | undefined;
   @Input() lastUpdated!: string;
@@ -23,12 +24,19 @@ export class DashboardCarouselComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    let lastIndex;
+    if (this.scores) {
+      lastIndex = this.scores.length - 1;
+    }
     const currentScore = this.report ? new ParseRiskScorePipe().transform(this.report) : null;
     const graphic: ICreditReportGraphic = !this.scores
       ? { currentValue: currentScore, ptsChange: 0 }
       : {
           currentValue: +this.scores[0].AttributeValue,
-          ptsChange: this.scores[1] ? +this.scores[0].AttributeValue - +this.scores[1].AttributeValue : undefined,
+          ptsChange:
+            this.scores[1] && lastIndex
+              ? +this.scores[lastIndex].AttributeValue - +this.scores[lastIndex - 1].AttributeValue
+              : undefined,
         };
     const chart: ICreditScoreHistoryNgxChartInputs = {
       trends: this.trends,
