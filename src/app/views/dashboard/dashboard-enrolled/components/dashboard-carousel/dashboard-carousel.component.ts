@@ -4,17 +4,15 @@ import { CreditScoreHistoryNgxChartComponent } from '@shared/components/charts/c
 import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-graphic';
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
-import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
-import { TESTERTRENDING } from '@views/dashboard/dashboard-enrolled/components/dashboard-carousel/testerData';
 
 @Component({
   selector: 'brave-dashboard-carousel',
   templateUrl: './dashboard-carousel.component.html',
 })
 export class DashboardCarouselComponent implements OnInit {
-  trends: IGetTrendingData | null | undefined = TESTERTRENDING
+  @Input() trends: IGetTrendingData | null | undefined;
   @Input() report: IMergeReport | null | undefined;
   @Input() scores: IProductTrendingData[] | null | undefined;
   @Input() lastUpdated!: string;
