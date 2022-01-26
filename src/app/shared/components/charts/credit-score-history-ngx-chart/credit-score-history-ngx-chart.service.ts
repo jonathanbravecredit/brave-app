@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ICreditScore } from '@shared/interfaces';
 import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
-import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import {
   IGetTrendingData,
-  IProductAttributeData,
   IProductTrendingAttribute,
   IProductTrendingData,
 } from '@shared/interfaces/get-trending-data.interface';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import * as dayjs from 'dayjs';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -21,14 +17,16 @@ export class CreditScoreHistoryNgxChartService {
   transformTrendingData(trendingData: IGetTrendingData | null): any | undefined {
     let scores;
     let monthlyScores: { [key: string]: IProductTrendingData } = Object.assign({});
-    if (trendingData?.ProductAttributes.ProductTrendingAttribute instanceof Array) {
+    if (
+      trendingData?.ProductAttributes.ProductTrendingAttribute &&
+      trendingData?.ProductAttributes.ProductTrendingAttribute instanceof Array
+    ) {
       scores = trendingData?.ProductAttributes.ProductTrendingAttribute.filter(
         (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
       )[0].ProductAttributeData.ProductTrendingData;
     }
 
     if (scores && scores instanceof Array) {
-
       scores.forEach((data) => {
         let date = dayjs(data.AttributeDate).format('MMYYYY');
         if (!monthlyScores[date]) {
@@ -47,11 +45,7 @@ export class CreditScoreHistoryNgxChartService {
       });
     }
 
-    if (scores) {
-      return scores;
-    } else {
-      return undefined;
-    }
+    return scores || undefined;
   }
 
   createChartCreditScoreData(
@@ -75,7 +69,7 @@ export class CreditScoreHistoryNgxChartService {
           name: 'Credit Score',
           series: [
             {
-              name: moment(lastUpdated).format('MMM'),
+              name: dayjs(lastUpdated).format('MMM'),
               value: currentCreditScore!,
             },
           ],
@@ -91,7 +85,7 @@ export class CreditScoreHistoryNgxChartService {
     for (let productTrendingData of filteredProductAttributeDate) {
       if (productTrendingData) {
         let object = {
-          name: moment(productTrendingData.AttributeDate).format('MMM'),
+          name: dayjs(productTrendingData.AttributeDate).format('MMM'),
           value: +productTrendingData.AttributeValue,
         };
         creditScoreDataObj.series.push(object);
