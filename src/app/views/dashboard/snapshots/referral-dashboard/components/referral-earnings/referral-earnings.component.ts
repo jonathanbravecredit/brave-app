@@ -18,6 +18,9 @@ export class ReferralEarningsComponent implements OnInit {
   ngOnInit(): void {
     this.paymentMonth = moment(this.referral?.nextPaymentDate).format('MMM');
     this.paymentDay = moment(this.referral?.nextPaymentDate).format('DD');
-    this.earnings = (this.referral?.campaignActiveEarned || 0) + (this.referral?.campaignActiveAddOn || 0);
+    this.earnings =
+      (this.referral?.campaignActiveEarned || 0) +
+      (this.referral?.campaignActiveBonus || 0) +
+      (this.referral?.campaignActiveAddOn || 0);
   }
 }
