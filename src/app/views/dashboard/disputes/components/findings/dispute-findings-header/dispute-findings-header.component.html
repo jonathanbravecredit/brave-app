@@ -5,7 +5,7 @@
   <div class="mx-3">
     <div class="flex justify-between">
       <p class="text-sm">Report Created On:</p>
-      <p class="text-sm text-right">{{ reportCreatedAt }}</p>
+      <p class="text-sm text-right">{{ reportCreatedAt | date: 'short' }}</p>
     </div>
     <div class="flex justify-between">
       <p class="text-sm">File Identification Number:</p>

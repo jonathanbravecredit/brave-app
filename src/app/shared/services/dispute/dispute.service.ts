@@ -53,7 +53,9 @@ export class DisputeService implements OnDestroy {
   /*===========================================================================*/
   // These help track the responses
   /*===========================================================================*/
+  currentDisputeSub$: Subscription | undefined;
   currentDispute$: BehaviorSubject<IDispute> = new BehaviorSubject<IDispute>({} as IDispute);
+  currentDispute: IDispute = {} as IDispute;
   disputeStack: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[] = [];
 
   _acknowledged: boolean = false;
@@ -79,6 +81,9 @@ export class DisputeService implements OnDestroy {
       this.state = state.appData;
       this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
     });
+    this.currentDisputeSub$ = this.currentDispute$.subscribe((dispute) => {
+      this.currentDispute = dispute;
+    });
   }
 
   set acknowledged(value: boolean) {
@@ -100,8 +105,12 @@ export class DisputeService implements OnDestroy {
     if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
     if (this.personalItemSub$) this.personalItemSub$.unsubscribe();
     if (this.stateSub$) this.stateSub$.unsubscribe();
+    if (this.currentDisputeSub$) this.currentDisputeSub$.unsubscribe();
   }
 
+  getCurrentDispute(): IDispute {
+    return this.currentDispute$.getValue();
+  }
   getUserStateOfResidence(): string {
     return this.statesvc.state?.appData.user?.userAttributes?.address?.state || '';
   }

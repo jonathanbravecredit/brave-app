@@ -10,23 +10,24 @@ export interface IReferral {
   suspended: boolean;
   enrolled: boolean;
 
-  baseEarned: number;
-  bonusEarned: number;
-  addOnEarned: number;
+  totalReferred: number;
+  totalEarned: number;
+  totalBonus: number;
+  totalAddOn: number;
 
   campaignActive: string;
   campaignActiveReferred: number;
   campaignActiveEarned: number;
   campaignActivePaid: number;
   campaignActiveAddOn: number;
-  campaignActiveBonus: boolean;
+  campaignActiveBonus: number;
 
   campaignPrior: string;
   campaignPriorReferred: number;
   campaignPriorEarned: number;
   campaignPriorPaid: number;
   campaignPriorAddOn: number;
-  campaignPriorBonus: boolean;
+  campaignPriorBonus: number;
 
   nextPaymentDate: string;
   notified: boolean;
