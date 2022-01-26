@@ -81,6 +81,7 @@ import { ReferralBodyTextComponent } from './snapshots/referral-dashboard/compon
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 import { SettingsWarningComponent } from './settings/components/settings-warning/settings-warning.component';
 import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/dashboard-ads-carousel/dashboard-ads-carousel.component';
+import { CreditUtilizationAssessmentComponent } from './snapshots/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component';
 
 const modules = [
   CommonModule,
@@ -155,7 +156,8 @@ const components = [
   ReferralEarningsComponent,
   ReferralAmountLinkComponent,
   ReferralBodyTextComponent,
-  DashboardAdsCarouselComponent
+  DashboardAdsCarouselComponent,
+  CreditUtilizationAssessmentComponent,
 ];
 
 const pipes = [AccountStatusPipe];
