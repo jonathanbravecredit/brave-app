@@ -37,13 +37,24 @@ export class BottomNavbarComponent implements OnInit {
     }
   }
 
-  disputesNotifClick() {
+  badgeClicked(item: IBottomNavbarItem): void {
+    switch (item.name.toLowerCase()) {
+      case 'disputes':
+        this.toggleDisputesBadge();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  toggleDisputesBadge(): void {
     this.store.dispatch(new appDataActions.UpdateNavBar(false));
     this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle: false }));
   }
 
   pointerDownHandler(id: string) {
-    (this.clicked = id); 
+    (this.clicked = id);
     (this.currentActiveItemId = id);
   }
 
