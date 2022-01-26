@@ -13,7 +13,6 @@ export class CreditUtilizationAssessmentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('HERE', this.hasCards)
     if (this.hasCards) {
       this.text = this.calculateText(this.utilizationPerc);
       this.color = this.calculateColor(this.utilizationPerc)
