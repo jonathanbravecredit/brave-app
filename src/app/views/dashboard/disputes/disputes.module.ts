@@ -65,6 +65,7 @@ import { DisputesHistoricalView } from './disputes-historical/disputes-historica
 import { DisputesHistoricalPureView } from './disputes-historical/disputes-historical-pure/disputes-historical-pure.view';
 import { DisputeFindingsTradelineDetailsComponent } from './components/findings/dispute-findings-tradeline-details/dispute-findings-tradeline-details.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { DisputesEmptyComponent } from './disputes-empty/disputes-empty.component';
 
 const modules = [
   CommonModule,
@@ -135,7 +136,7 @@ const components = [
 const pipes = [DisputeCardStatusPipe];
 
 @NgModule({
-  declarations: [...components, pipes],
+  declarations: [...components, pipes, DisputesEmptyComponent],
   imports: [...modules],
   exports: [...components, pipes],
 })
