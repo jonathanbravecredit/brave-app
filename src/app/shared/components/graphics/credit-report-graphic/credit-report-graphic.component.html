@@ -9,32 +9,28 @@
         <div class="font-bold flex flex-nowrap mt-2">
           <div class="mr-2 text-2xl -mt-2">
             <span
-              *ngIf="ptsChange || ptsChange === 0"
               class="material-icons align-bottom transform"
               [ngClass]="
-                ptsChange !== 0 ? (ptsChange < 0 ? 'rotate-90 text-red-500' : '-rotate-90 text-fuchsia-500') : ''
+                ptsChange && ptsChange !== 0
+                  ? ptsChange < 0
+                    ? 'rotate-90 text-red-500'
+                    : '-rotate-90 text-fuchsia-500'
+                  : ''
               "
             >
               play_arrow
             </span>
           </div>
-          <span *ngIf="ptsChange || ptsChange === 0" class="whitespace-nowrap"
-            >{{ ptsChange > 0 ? '+' : '' }}{{ ptsChange }} points</span
+          <span class="whitespace-nowrap"
+            >{{ !ptsChange || ptsChange > 0 || ptsChange === 0 ? '+' : '' }}{{ ptsChange ? ptsChange : 0 }} points</span
           >
-          <span *ngIf="!ptsChange && ptsChange !== 0" class="whitespace-nowrap"></span>
         </div>
         <p
-          *ngIf="ptsChange || ptsChange === 0"
           class="text-opacity-75 whitespace-nowrap mt-1"
           style="font-size: 0.66rem"
         >
           since last update
         </p>
-        <p
-          *ngIf="!ptsChange && ptsChange !== 0"
-          class="text-opacity-75 whitespace-nowrap mt-1"
-          style="font-size: 0.66rem"
-        ></p>
       </div>
       <!-- Chart -->
       <div class="flex relative">
