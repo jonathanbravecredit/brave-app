@@ -65,6 +65,13 @@ import { DisputesHistoricalView } from './disputes-historical/disputes-historica
 import { DisputesHistoricalPureView } from './disputes-historical/disputes-historical-pure/disputes-historical-pure.view';
 import { DisputeFindingsTradelineDetailsComponent } from './components/findings/dispute-findings-tradeline-details/dispute-findings-tradeline-details.component';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
+import { DisputesEmptyComponent } from './disputes-empty/disputes-empty/disputes-empty.component';
+import { DisputesEmptyImageComponent } from './disputes-empty/components/disputes-empty-image/disputes-empty-image.component';
+import { DisputesEmptyButtonComponent } from './disputes-empty/components/disputes-empty-button/disputes-empty-button.component';
+import { DisputesEmptyErrorTextComponent } from './disputes-empty/components/disputes-empty-error-text/disputes-empty-error-text.component';
+import { DisputesEmptySubTitleComponent } from './disputes-empty/components/disputes-empty-sub-title/disputes-empty-sub-title.component';
+import { DisputesEmptyPureComponent } from '@views/dashboard/disputes/disputes-empty/disputes-empty-pure/disputes-empty-pure.component';
+import { DisputesEmptyTitleComponent } from '@views/dashboard/disputes/disputes-empty/components/disputes-empty-title/disputes-empty-title.component';
 
 const modules = [
   CommonModule,
@@ -130,6 +137,13 @@ const components = [
   DisputeHeaderComponent,
   DisputeReasonPageComponent,
   DisputeFindingsTradelineDetailsComponent,
+  DisputesEmptyComponent,
+  DisputesEmptyPureComponent,
+  DisputesEmptyTitleComponent,
+  DisputesEmptyImageComponent,
+  DisputesEmptyButtonComponent,
+  DisputesEmptyErrorTextComponent,
+  DisputesEmptySubTitleComponent,
 ];
 
 const pipes = [DisputeCardStatusPipe];
