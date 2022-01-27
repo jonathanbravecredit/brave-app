@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { DOMHelper } from '@testing/dom-helper';
 
 import { ReferralBannerComponent } from './referral-banner.component';
@@ -7,12 +6,7 @@ import { ReferralBannerComponent } from './referral-banner.component';
 describe('ReferralBannerComponent', () => {
   let component: ReferralBannerComponent;
   let fixture: ComponentFixture<ReferralBannerComponent>;
-  const metricsMock: IGroupedYearMonthReferral[] = [
-    {
-      yearMonth: 122022,
-      referrals: 4,
-    },
-  ];
+
   let dh: DOMHelper<ReferralBannerComponent>;
 
   beforeEach(async () => {
@@ -29,7 +23,6 @@ describe('ReferralBannerComponent', () => {
   });
 
   beforeEach(() => {
-    component.metrics = metricsMock;
     component.disabled = false;
 
     fixture.detectChanges();

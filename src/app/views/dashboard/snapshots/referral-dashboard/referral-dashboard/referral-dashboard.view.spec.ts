@@ -19,7 +19,6 @@ describe('ReferralDashboardView', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [ReferralDashboardView],
-      imports: [HttpClientTestingModule],
       providers: [
         { provide: ActivatedRoute, useClass: RouteMock },
         { provide: Router, useValue: routerMock },
