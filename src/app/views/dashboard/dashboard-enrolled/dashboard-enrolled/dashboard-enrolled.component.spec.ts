@@ -9,7 +9,6 @@ import { DashboardEnrolledComponent } from './dashboard-enrolled.component';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IGetTrendingData, IProductAttributes } from '@shared/interfaces/get-trending-data.interface';
-import { IGroupedYearMonthReferral } from '@shared/interfaces/referrals.interface';
 import { ICreditMixTLSummary } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 
 describe('DashboardEnrolledComponent', () => {
@@ -24,7 +23,6 @@ describe('DashboardEnrolledComponent', () => {
         snapshots: new DashboardStateModel(),
         scores: new ScoresClass(),
         trends: new TrendsClass(),
-        metrics: new MetricsClass(),
       },
     });
   }
@@ -48,13 +46,17 @@ describe('DashboardEnrolledComponent', () => {
 
   class TrendsClass implements IGetTrendingData {
     ProductAttributes = {} as IProductAttributes;
-  }
-
-  class MetricsClass implements IGroupedYearMonthReferral {
-    yearMonth = 0;
-    referrals = 0;
-    earnings = 0;
-    currency = 'USD';
+    AccountName = '';
+    ErrorResponse = {
+      nil: false,
+    };
+    RequestKey = '';
+    ResponseType = '';
+    ClientKey = '';
+    PartnerAttributes = {
+      nil: false,
+    };
+    ProductDisplayToken = '';
   }
 
   class TradelineSummaryClass implements ICreditMixTLSummary {
@@ -96,7 +98,6 @@ describe('DashboardEnrolledComponent', () => {
               snapshots: new DashboardStateModel(),
               scores: new ScoresClass(),
               trends: new TrendsClass(),
-              metrics: [new MetricsClass()],
             },
           }),
       },
@@ -177,18 +178,8 @@ describe('DashboardEnrolledComponent', () => {
       expect(test).toBeTrue();
     });
 
-    it('Should assign scores in constructor', () => {
-      let test = component.scores instanceof ScoresClass;
-      expect(test).toBeTrue();
-    });
-
     it('Should assign trends in constructor', () => {
       let test = component.trends instanceof TrendsClass;
-      expect(test).toBeTrue();
-    });
-
-    xit('Should assign metrics in constructor', () => {
-      let test = component.metrics && component.metrics[0] instanceof MetricsClass;
       expect(test).toBeTrue();
     });
 

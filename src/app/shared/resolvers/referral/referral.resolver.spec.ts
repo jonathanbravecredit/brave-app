@@ -1,7 +1,5 @@
 import { TestBed } from "@angular/core/testing";
 import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { ReferralMetricsResolver } from "../referral-metrics/referral-metrics.resolver";
-import { ReferralPaymentsResolver } from "../referral-payments/referral-payments.resolver";
 import { ReferralRecordResolver } from "../referral-record/referral-record.resolver";
 
 import { ReferralResolver } from "./referral.resolver";
@@ -24,9 +22,7 @@ describe("ReferralResolver", () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: InterstitialService, useValue: interstitialmock },
-        { provide: ReferralMetricsResolver, useValue: referralMetricsmock },
         { provide: ReferralRecordResolver, useValue: referralRecordmock },
-        { provide: ReferralPaymentsResolver, useValue: referralPaymentsmock },
       ],
     });
     resolver = TestBed.inject(ReferralResolver);
