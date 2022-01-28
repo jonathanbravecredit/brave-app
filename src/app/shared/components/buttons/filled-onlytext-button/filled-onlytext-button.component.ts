@@ -28,15 +28,9 @@ export class FilledOnlytextButtonComponent {
     color: 'text-white',
     full: false,
   };
-  @Input() clickRoute: string | undefined;
 
   @Input() disabled: boolean = false;
 
   constructor(private router: Router) { }
 
-  buttonClick() {
-    if (this.clickRoute) {
-      this.router.navigate([this.clickRoute]);
-    }
-  }
 }
