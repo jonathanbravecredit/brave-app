@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface IFilledOnlyTextButtonConfig {
   buttonSize: string;
@@ -27,8 +28,15 @@ export class FilledOnlytextButtonComponent {
     color: 'text-white',
     full: false,
   };
+  @Input() clickRoute: string | undefined;
 
   @Input() disabled: boolean = false;
 
-  constructor() {}
+  constructor(private router: Router) { }
+
+  buttonClick() {
+    if (this.clickRoute) {
+      this.router.navigate([this.clickRoute]);
+    }
+  }
 }

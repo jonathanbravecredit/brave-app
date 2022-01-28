@@ -15,12 +15,9 @@ export class DisputesEmptyButtonComponent implements OnInit {
     color: 'text-white',
     full: false,
   };
+  clickRoute = routes.root.dashboard.report.full
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-
-  buttonClick() {
-    this.router.navigate([routes.root.dashboard.report.full]);
-  }
 }
