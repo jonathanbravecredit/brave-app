@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IGroupedYearMonthReferral, IReferral } from '@shared/interfaces/referrals.interface';
 import { DOMHelper } from '@testing/dom-helper';
-import { ReferralDashboardPureView } from '@views/dashboard/snapshots/referral-dashboard/referral-dashboard-pure/referral-pure.view';
 
 import { ReferralAmountLinkComponent } from './referral-amount-link.component';
 
@@ -10,25 +8,6 @@ describe('ReferralAmountLinkComponent', () => {
   let fixture: ComponentFixture<ReferralAmountLinkComponent>;
   let dh: DOMHelper<ReferralAmountLinkComponent>;
 
-  const referralMock: IReferral = {
-    id: '',
-    createdOn: '',
-    modifiedOn: '',
-    processingStatus: 'paid',
-    enrollmentStatus: 'enrolled',
-    referralCode: 'testReferralCode',
-    referredByCode: '',
-    campaign: 'jan2020',
-    referralStatus: 'active',
-    referralApproved: true,
-  };
-
-  const metricsMock: IGroupedYearMonthReferral[] = [
-    {
-      yearMonth: 122022,
-      referrals: 4,
-    },
-  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -45,8 +24,6 @@ describe('ReferralAmountLinkComponent', () => {
   });
 
   beforeEach(() => {
-    component.referral = referralMock;
-    component.metrics = metricsMock;
     component.disabled = false;
 
     fixture.detectChanges();

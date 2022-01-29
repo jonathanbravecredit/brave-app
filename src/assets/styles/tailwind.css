@@ -1336,6 +1336,11 @@ select {
   margin-bottom: 2.5rem;
 }
 
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
 .-my-1 {
   margin-top: -0.25rem;
   margin-bottom: -0.25rem;
@@ -1665,6 +1670,10 @@ select {
   height: 10rem;
 }
 
+.h-56 {
+  height: 14rem;
+}
+
 .h-60 {
   height: 15rem;
 }
@@ -1751,6 +1760,10 @@ select {
 
 .w-32 {
   width: 8rem;
+}
+
+.w-56 {
+  width: 14rem;
 }
 
 .w-64 {

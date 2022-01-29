@@ -21,6 +21,8 @@ export interface IProductTrendingAttribute {
   AttributeName: string;
   Bureau: string;
   ProductAttributeData: IProductAttributeData;
+  ServiceBundleCode: string;
+  ServiceProduct: string;
 }
 
 export interface IProductAttributeData {

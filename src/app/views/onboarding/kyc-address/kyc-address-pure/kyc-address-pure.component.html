@@ -41,11 +41,9 @@
           >
             <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
-          <brave-filled-onlytext-button (click)="form.submitForm()"
-            ><span class="flex items-center"
-              >Continue<span class="material-icons px-1">arrow_forward</span></span
-            ></brave-filled-onlytext-button
-          >
+          <brave-filled-spinning-button (onClick)="form.submitForm()">
+            <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
+          </brave-filled-spinning-button>
         </div>
       </div>
     </div>

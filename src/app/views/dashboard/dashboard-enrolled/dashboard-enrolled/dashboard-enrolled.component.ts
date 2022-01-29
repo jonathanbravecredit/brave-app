@@ -108,7 +108,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
 
   sortScores(scores: IProductTrendingData[]) {
     this.sortedScores = scores.sort((a, b) => {
-      return a.AttributeDate > b.AttributeDate ? -1 : 1;
+      return a.AttributeDate < b.AttributeDate ? -1 : 1;
     });
   }
 
