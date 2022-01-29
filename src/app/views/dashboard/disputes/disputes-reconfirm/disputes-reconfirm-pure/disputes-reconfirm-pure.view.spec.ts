@@ -3,7 +3,6 @@ import { IBorrower, IBorrowerName, ITradeLinePartition } from '@shared/interface
 import { FilterPersonalPipe } from '@shared/pipes/filterPersonal/filter-personal.pipe';
 import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
 import { DOMHelper } from '@testing/dom-helper';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 
 import { DisputesReconfirmPureView } from './disputes-reconfirm-pure.view';
