@@ -11,7 +11,7 @@
         class="hover:cursor-pointer flex flex-col text-center"
         [ngClass]="currentActiveItemId === item.id ? 'text-gray-900' : ''"
         *ngFor="let item of navigationItems"
-        (click)="navigate(item.id); disputesNotifClick()"
+        (click)="navigate(item.id); badgeClicked(item)"
         [ngStyle]="{ 'min-width': '24.9%', 'max-width': '24.9%' }"
       >
         <span class="material-icons-outlined" [ngClass]="{ 'text-brave-blurple': currentActiveItemId === item.id }">{{

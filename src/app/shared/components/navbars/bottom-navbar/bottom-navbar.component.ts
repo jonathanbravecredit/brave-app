@@ -5,7 +5,7 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
-import * as appDataActions from '@store/app-data/app-data.actions'
+import * as appDataActions from '@store/app-data/app-data.actions';
 
 @Component({
   selector: 'brave-bottom-navbar',
@@ -37,14 +37,25 @@ export class BottomNavbarComponent implements OnInit {
     }
   }
 
-  disputesNotifClick() {
-    this.store.dispatch(new appDataActions.UpdateNavBar(false));
-    this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle: false }));
+  badgeClicked(item: IBottomNavbarItem): void {
+    switch (item.name.toLowerCase()) {
+      case 'disputes':
+        this.toggleDisputesBadge(false);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  toggleDisputesBadge(toggle: boolean): void {
+    this.store.dispatch(new appDataActions.UpdateNavBar(toggle));
+    this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle }));
   }
 
   pointerDownHandler(id: string) {
-    (this.clicked = id); 
-    (this.currentActiveItemId = id);
+    this.clicked = id;
+    this.currentActiveItemId = id;
   }
 
   pointerUpHandler() {

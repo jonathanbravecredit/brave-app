@@ -2,7 +2,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { IDispute } from '@shared/interfaces/disputes';
 import { ITrueLinkCreditReportType } from '@shared/interfaces/merge-report.interface';
-import { TreeMapModule } from '@swimlane/ngx-charts';
 
 export interface IDisputeToDisputeFindingOutput {
   status: string;
@@ -25,8 +24,13 @@ export class DisputeToDisputeFindingPipe implements PipeTransform {
     if (!dispute) return;
     const status = dispute.disputeStatus;
     if (!status) return {} as IDisputeToDisputeFindingOutput;
-    if (status.toLowerCase() === 'opendispute') return this.mapOpenDispute(dispute);
-    return this.mapClosedDispute(creditBureau);
+    if (status.toLowerCase() === 'opendispute') {
+      const resp = this.mapOpenDispute(dispute);
+      return resp;
+    } else {
+      const resp = this.mapClosedDispute(creditBureau);
+      return resp;
+    }
   }
 
   mapOpenDispute(dispute: IDispute): IDisputeToDisputeFindingOutput {

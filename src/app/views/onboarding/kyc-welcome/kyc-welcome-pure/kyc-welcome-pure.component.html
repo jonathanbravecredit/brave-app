@@ -45,11 +45,9 @@
 
       <div>
         <div class="flex justify-end items-center">
-          <brave-filled-onlytext-button (click)="form.submitForm()"
-            ><span class="flex items-center"
-              >I Accept<span class="material-icons px-1">arrow_forward</span></span
-            ></brave-filled-onlytext-button
-          >
+          <brave-filled-spinning-button (onClick)="form.submitForm()">
+            <span class="flex items-center">I Accept<span class="material-icons px-1">arrow_forward</span></span>
+          </brave-filled-spinning-button>
         </div>
       </div>
     </div>
