@@ -18,30 +18,130 @@ export class DashboardCarouselComponent implements OnInit {
   @Input() lastUpdated!: string;
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
+  private _sortedScores: IProductTrendingData[] = [];
+  private _currentScore: number | null = null;
+  private _delta: number = 0;
+  private _graphic!: ICreditReportGraphic;
+  private _chart!: ICreditScoreHistoryNgxChartInputs;
 
   constructor() {}
 
   ngOnInit(): void {
-    let lastIndex;
-    if (this.scores) {
-      lastIndex = this.scores.length - 1;
+    this.sortedScores = this.scores?.length ? this.scores : [];
+    this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
+    this.delta = this.calculateDelta(this.sortedScores);
+    this.graphic = this.formatGraphicData(this.currentScore, this.delta);
+    this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
+    this.data = [this.graphic, this.chart];
+  }
+
+  get delta(): number {
+    return this._delta;
+  }
+
+  set delta(val: number) {
+    this._delta = val;
+  }
+
+  get graphic(): ICreditReportGraphic {
+    return this._graphic;
+  }
+
+  set graphic(val: ICreditReportGraphic) {
+    this._graphic = val;
+  }
+
+  get chart(): ICreditScoreHistoryNgxChartInputs {
+    return this._chart;
+  }
+
+  set chart(val: ICreditScoreHistoryNgxChartInputs) {
+    this._chart = val;
+  }
+
+  get currentScore(): number | null {
+    return this._currentScore;
+  }
+  set currentScore(val: number | null) {
+    this._currentScore = val;
+  }
+
+  get sortedScores(): IProductTrendingData[] {
+    return this._sortedScores;
+  }
+
+  set sortedScores(val: IProductTrendingData[]) {
+    this._sortedScores = [...val].sort((a, b) => {
+      const aDate = new Date(a.AttributeDate || 0).valueOf();
+      const bDate = new Date(b.AttributeDate || 0).valueOf();
+      return bDate - aDate;
+    });
+  }
+
+  /**
+   * find the current score from either the sorted scores or the report
+   * @param scores
+   * @returns
+   */
+  findCurrentScore(scores: IProductTrendingData[], report: IMergeReport | null | undefined): number | null {
+    if (scores.length) {
+      return isNaN(+scores[0].AttributeValue) ? null : +scores[0].AttributeValue;
+    } else {
+      return report ? this.transformRiskScore(report) : null;
     }
-    const currentScore = this.report ? new ParseRiskScorePipe().transform(this.report) : null;
-    const graphic: ICreditReportGraphic = !this.scores
-      ? { currentValue: currentScore, ptsChange: null }
-      : {
-          currentValue: +this.scores[0].AttributeValue,
-          ptsChange:
-            this.scores[1] && lastIndex
-              ? +this.scores[lastIndex].AttributeValue - +this.scores[lastIndex - 1].AttributeValue
-              : null,
-        };
-    const chart: ICreditScoreHistoryNgxChartInputs = {
-      trends: this.trends,
-      report: this.report,
-      lastUpdated: this.lastUpdated,
-      currentCreditScore: currentScore,
+  }
+
+  /**
+   * Get the delta from the current sorted score and the prior score or zero
+   * @param scores
+   * @returns
+   */
+  calculateDelta(scores: IProductTrendingData[]): number {
+    if (scores.length > 1) {
+      return isNaN(+scores[0].AttributeValue) || isNaN(+scores[1].AttributeValue)
+        ? 0
+        : +scores[0].AttributeValue - +scores[1].AttributeValue;
+    } else {
+      return 0;
+    }
+  }
+
+  transformRiskScore(report: IMergeReport): number {
+    return new ParseRiskScorePipe().transform(report);
+  }
+
+  /**
+   * Helper method to format the graphic data
+   * @param currentScore
+   * @param sortedScores
+   * @param delta
+   * @returns
+   */
+  formatGraphicData(currentScore: number | null, delta: number): ICreditReportGraphic {
+    return {
+      currentValue: currentScore,
+      ptsChange: delta,
     };
-    this.data = [graphic, chart];
+  }
+  /**
+   * Helper method to format the chart data
+   * @param trends
+   * @param report
+   * @param lastUpdated
+   * @param currentCreditScore
+   * @returns
+   */
+  formatChartData(
+    trends: IGetTrendingData | null | undefined,
+    report: IMergeReport | null | undefined,
+    lastUpdated: string,
+    currentCreditScore: number | null,
+  ): ICreditScoreHistoryNgxChartInputs {
+    return {
+      trends,
+      report,
+      lastUpdated,
+      currentCreditScore,
+    };
   }
 }
