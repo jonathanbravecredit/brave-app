@@ -156,16 +156,22 @@ describe('DashboardCarouselComponent', () => {
 
 const MOCK_SCORES = [
   {
+    AttributeDate: '2021-12-21T16:31:50',
+    AttributeStatus: 'Success',
+    AttributeValue: 795,
+    ServiceProductFulfillmentKey: '02e33248-f9d2-4e00-9770-b8376521b823',
+  },
+  {
     AttributeDate: '2022-01-19T06:35:23',
     AttributeStatus: 'Success',
     AttributeValue: 766,
     ServiceProductFulfillmentKey: 'c3dd0d55-5bbd-4b19-9016-fe9eb7f8c172',
   },
   {
-    AttributeDate: '2021-12-21T16:31:50',
+    AttributeDate: '2021-11-19T06:35:23',
     AttributeStatus: 'Success',
-    AttributeValue: 795,
-    ServiceProductFulfillmentKey: '02e33248-f9d2-4e00-9770-b8376521b823',
+    AttributeValue: 745,
+    ServiceProductFulfillmentKey: 'c3dd0d55-5bbd-4b19-9016-fe9eb7f8c172',
   },
 ];
 
