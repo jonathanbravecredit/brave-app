@@ -23,7 +23,6 @@ export class KycBaseComponent {
   constructor() {}
 
   canDeactivate(form: FormGroup): boolean {
-    if (form === undefined) return true;
     if (!form?.valid && !form?.touched) return true;
     if (!!form?.valid && !!form?.touched) return true;
     return false;

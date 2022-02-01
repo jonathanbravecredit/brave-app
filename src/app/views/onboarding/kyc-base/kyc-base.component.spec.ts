@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormGroup } from '@angular/forms';
 
 import { KycBaseComponent } from './kyc-base.component';
 
@@ -22,4 +23,20 @@ describe('KycBaseComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have canDeactivate return true if form valid and touched are false', () => {
+    expect(component.canDeactivate({valid: false, touched: false} as FormGroup)).toEqual(true)
+  })
+
+  it('should have canDeactivate return true if form valid and touched are true', () => {
+    expect(component.canDeactivate({valid: true, touched: true} as FormGroup)).toEqual(true)
+  })
+
+  it('should call flattenAttributes when formatAttributes is called', () => {
+    spyOn(component, 'flattenAttributes')
+
+    component.formatAttributes({value: []} as FormGroup, {})
+
+    expect(component.flattenAttributes).toHaveBeenCalled()
+  })
 });
