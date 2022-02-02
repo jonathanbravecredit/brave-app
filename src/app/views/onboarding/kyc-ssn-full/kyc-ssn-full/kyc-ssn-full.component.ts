@@ -17,6 +17,9 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   @ViewChild(KycSsnFullPureComponent) pure: KycSsnFullPureComponent | undefined;
   stepID = 2;
   ssnError = false;
+  ssn: Record<string, any> = {
+    full: true,
+  };
   constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
@@ -39,7 +42,7 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentityFull);
     if (form.valid) {
       this.ssnError = false;
-      const { full } = this.formatAttributes(form, ssn);
+      const { full } = this.formatAttributes(form, this.ssn);
       if (full.length < 9) {
         this.handleError({});
       } else {
@@ -73,11 +76,9 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
       this.ssnError = true;
     }
 
-    this.pure?.hasError === true;
-    this.pure?.showError === true;
+    if (this.pure) {
+      this.pure.hasError = true;
+      this.pure.showError = true;
+    }
   }
 }
-
-const ssn: Record<string, any> = {
-  full: true,
-};

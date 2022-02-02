@@ -100,34 +100,34 @@ describe('KycPhonenumberComponent', () => {
   });
 
   it('should set phoneError to false when goToNext is called and form.valid is true', () => {
-    component.goToNext({valid: true} as FormGroup);
+    component.goToNext({ valid: true } as FormGroup);
 
     expect(component.phoneError).toEqual(false);
   });
 
   it('should run updateUserAttributesAsync when goToNext is called', fakeAsync(() => {
-    component.goToNext({valid: true, value: []} as FormGroup);
+    component.goToNext({ valid: true, value: [] } as FormGroup);
 
-    tick()
+    tick();
 
-    expect(kycServiceMock.updateUserAttributesAsync).toHaveBeenCalled()
-  }))
+    expect(kycServiceMock.updateUserAttributesAsync).toHaveBeenCalled();
+  }));
 
   it('should run getGetAuthenticationQuestionsResults when goToNext is called', fakeAsync(() => {
-    component.goToNext({valid: true, value: []} as FormGroup);
+    component.goToNext({ valid: true, value: [] } as FormGroup);
 
-    tick()
+    tick();
 
-    expect(kycServiceMock.getGetAuthenticationQuestionsResults).toHaveBeenCalled()
-  }))
+    expect(kycServiceMock.getGetAuthenticationQuestionsResults).toHaveBeenCalled();
+  }));
 
   it('should run handleGetAuthenticationFlow when goToNext is called', fakeAsync(() => {
-    component.goToNext({valid: true, value: []} as FormGroup);
+    component.goToNext({ valid: true, value: [] } as FormGroup);
 
-    tick()
+    tick();
 
-    expect(kycServiceMock.handleGetAuthenticationFlow).toHaveBeenCalled()
-  }))
+    expect(kycServiceMock.handleGetAuthenticationFlow).toHaveBeenCalled();
+  }));
 
   // it('should run handleGetAuthenticationBailout when goToNext is called', fakeAsync(() => { //todo test try catch - catch function call
   //   kycServiceMock.updateUserAttributesAsync.and.returnValue(new Error('testError'))
@@ -138,5 +138,4 @@ describe('KycPhonenumberComponent', () => {
 
   //   expect(kycServiceMock.handleGetAuthenticationBailout).toHaveBeenCalled()
   // }))
-
 });
