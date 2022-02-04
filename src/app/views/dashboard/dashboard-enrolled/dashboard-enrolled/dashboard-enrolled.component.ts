@@ -70,8 +70,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     if (this.userName) {
       this.welcomeMsg = 'Welcome back, ' + this.userName;
     }
-    // this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
-    this.currentScore = 4; //!TEST
+    this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
   }
 
   ngOnDestroy(): void {
@@ -103,10 +102,9 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
-      this.suppressed = false; //!TEST
-      // this.report?.TrueLinkCreditReportType?.Message instanceof Array
-      //   ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
-      //   : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
+      this.suppressed = this.report?.TrueLinkCreditReportType?.Message instanceof Array
+        ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
+        : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
