@@ -47,14 +47,17 @@ export class BottomNavbarComponent implements OnInit {
    */
   badgeClicked(item: IBottomNavbarItem): void {
     switch (item.name.toLowerCase()) {
-      // case 'home':
-      //   this.toggleDisputesBadge({ home: { badge: false } });
-      //   break;
-      // case 'report':
-      //   this.toggleDisputesBadge({ report: { badge: false } });
-      //   break;
+      case 'init':
+        this.toggleDisputesBadge({ home: { badge: false } });
+        break;
+      case 'report':
+        this.toggleDisputesBadge({ report: { badge: false } });
+        break;
       case 'disputes':
         this.toggleDisputesBadge({ disputes: { badge: false } });
+        break;
+      case 'settings':
+        this.toggleDisputesBadge({ settings: { badge: false } });
         break;
       default:
         break;

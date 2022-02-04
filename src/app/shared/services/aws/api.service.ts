@@ -257,7 +257,10 @@ export type DataBreachCardInput = {
 };
 
 export type NavBarInput = {
+  home?: NavBarConfigInput | null;
+  report?: NavBarConfigInput | null;
   disputes?: NavBarConfigInput | null;
+  settings?: NavBarConfigInput | null;
 };
 
 export type NavBarConfigInput = {
@@ -468,7 +471,10 @@ export type DataBreachCard = {
 
 export type NavBar = {
   __typename: "NavBar";
+  home?: NavBarConfig | null;
+  report?: NavBarConfig | null;
   disputes?: NavBarConfig | null;
+  settings?: NavBarConfig | null;
 };
 
 export type NavBarConfig = {
@@ -884,7 +890,19 @@ export type CreateAppDataMutation = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -1127,7 +1145,19 @@ export type UpdateAppDataMutation = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -1370,7 +1400,19 @@ export type DeleteAppDataMutation = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -1613,7 +1655,19 @@ export type GetAppDataQuery = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -1858,7 +1912,19 @@ export type ListAppDatasQuery = {
     } | null;
     navBar?: {
       __typename: "NavBar";
+      home?: {
+        __typename: "NavBarConfig";
+        badge?: boolean | null;
+      } | null;
+      report?: {
+        __typename: "NavBarConfig";
+        badge?: boolean | null;
+      } | null;
       disputes?: {
+        __typename: "NavBarConfig";
+        badge?: boolean | null;
+      } | null;
+      settings?: {
         __typename: "NavBarConfig";
         badge?: boolean | null;
       } | null;
@@ -2103,7 +2169,19 @@ export type OnCreateAppDataSubscription = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -2346,7 +2424,19 @@ export type OnUpdateAppDataSubscription = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -2589,7 +2679,19 @@ export type OnDeleteAppDataSubscription = {
   } | null;
   navBar?: {
     __typename: "NavBar";
+    home?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    report?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
     disputes?: {
+      __typename: "NavBarConfig";
+      badge?: boolean | null;
+    } | null;
+    settings?: {
       __typename: "NavBarConfig";
       badge?: boolean | null;
     } | null;
@@ -2984,7 +3086,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
@@ -3243,7 +3357,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
@@ -3502,7 +3628,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
@@ -3771,7 +3909,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
@@ -4030,7 +4180,19 @@ export class APIService {
             }
             navBar {
               __typename
+              home {
+                __typename
+                badge
+              }
+              report {
+                __typename
+                badge
+              }
               disputes {
+                __typename
+                badge
+              }
+              settings {
                 __typename
                 badge
               }
@@ -4296,7 +4458,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
@@ -4556,7 +4730,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
@@ -4816,7 +5002,19 @@ export class APIService {
           }
           navBar {
             __typename
+            home {
+              __typename
+              badge
+            }
+            report {
+              __typename
+              badge
+            }
             disputes {
+              __typename
+              badge
+            }
+            settings {
               __typename
               badge
             }
