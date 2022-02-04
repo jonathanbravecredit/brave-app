@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { NavBarInput } from '@shared/services/aws/api.service';
+import { NavBarInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
@@ -37,20 +37,39 @@ export class BottomNavbarComponent implements OnInit {
     }
   }
 
+  /**
+   * @param item
+   * ex:
+   *  - home
+   *  - report
+   *  - disputes
+   *  - settings
+   */
   badgeClicked(item: IBottomNavbarItem): void {
     switch (item.name.toLowerCase()) {
+      // case 'home':
+      //   this.toggleDisputesBadge({ home: { badge: false } });
+      //   break;
+      // case 'report':
+      //   this.toggleDisputesBadge({ report: { badge: false } });
+      //   break;
       case 'disputes':
-        this.toggleDisputesBadge(false);
+        this.toggleDisputesBadge({ disputes: { badge: false } });
         break;
-
       default:
         break;
     }
   }
 
-  toggleDisputesBadge(toggle: boolean): void {
-    this.store.dispatch(new appDataActions.UpdateNavBar(toggle));
-    this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle }));
+  toggleDisputesBadge(nav: Partial<NavBarInput>): void {
+    this.store
+      .dispatch(new appDataActions.UpdateNavBar(nav))
+      .toPromise()
+      .then((state: { appData: UpdateAppDataInput }) => {
+        //send all the nav bar data back
+        const navBar = state.appData.navBar;
+        this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ navBar }));
+      });
   }
 
   pointerDownHandler(id: string) {

@@ -50,7 +50,10 @@ type UserAttributes @aws_iam @aws_cognito_user_pools {
 }
 
 type NavBar @aws_iam @aws_cognito_user_pools {
+  home: NavBarConfig
+  report: NavBarConfig
   disputes: NavBarConfig
+  settings: NavBarConfig
 }
 
 type NavBarConfig @aws_iam @aws_cognito_user_pools {
@@ -370,7 +373,10 @@ input DataBreachCardInput {
 }
 
 input NavBarInput {
+  home: NavBarConfigInput
+  report: NavBarConfigInput
   disputes: NavBarConfigInput
+  settings: NavBarConfigInput
 }
 
 input NavBarConfigInput {
