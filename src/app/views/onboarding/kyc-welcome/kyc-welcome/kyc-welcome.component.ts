@@ -20,6 +20,16 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
   @ViewChild(KycWelcomePureComponent) pure: KycWelcomePureComponent | undefined;
   stepID = 0;
   hasError: boolean = false;
+  name: Record<string, any> = {
+    first: true,
+    middle: true,
+    last: true,
+  };
+  dob: Record<string, any> = {
+    year: true,
+    month: true,
+    day: true,
+  };
   constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
@@ -40,10 +50,10 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
       // write to state...TODO write to DB
       const attrs = {
         name: {
-          ...this.formatAttributes(form, name),
+          ...this.formatAttributes(form, this.name),
         },
         dob: {
-          ...this.formatAttributes(form, dob),
+          ...this.formatAttributes(form, this.dob),
         },
       } as UserAttributesInput;
       await this.kycService.updateUserAttributesAsync(attrs);
@@ -73,15 +83,3 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
     this.hasError = true;
   }
 }
-
-const name: Record<string, any> = {
-  first: true,
-  middle: true,
-  last: true,
-};
-
-const dob: Record<string, any> = {
-  year: true,
-  month: true,
-  day: true,
-};

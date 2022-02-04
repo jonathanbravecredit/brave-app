@@ -1,46 +1,46 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { OutlineNamedobFormComponent } from '@shared/components/forms/outline-namedob-form/outline-namedob-form.component';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
-
-import { KycWelcomeComponent } from './kyc-welcome.component';
-
-class routeMock {}
+import { DOMHelper } from '@testing/dom-helper';
+import { Helper } from '@testing/test-helper';
+import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
+import { KycWelcomeComponent } from '@views/onboarding/kyc-welcome/kyc-welcome/kyc-welcome.component';
 
 describe('KycWelcomeComponent', () => {
   let component: KycWelcomeComponent;
   let fixture: ComponentFixture<KycWelcomeComponent>;
+  let dh: DOMHelper<KycWelcomeComponent>;
+  let h: Helper<KycWelcomeComponent>;
   let routerMock: any;
   let analyticsMock: any;
   let kycServiceMock: any;
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
-    routerMock.navigate.and.returnValue(null);
-
     analyticsMock = jasmine.createSpyObj('AnalyticsService', ['firePageViewEvent', 'fireClickEvent']);
-    analyticsMock.firePageViewEvent.and.returnValue(null);
-    analyticsMock.fireClickEvent.and.returnValue(null);
-
     kycServiceMock = jasmine.createSpyObj('KycService', [
       'activateStep',
-      'updateUserAttributesAsync',
+      'inactivateStep',
       'completeStep',
-      'suspendUser',
+      'updateUserAttributesAsync',
+      'getGetAuthenticationQuestionsResults',
+      'handleGetAuthenticationFlow',
+      'handleGetAuthenticationBailout',
+      'updateIndicativeEnrichment',
+      'getIndicativeEnrichmentResults',
+      'processIndicativeEnrichmentResponse',
     ]);
-    kycServiceMock.activateStep.and.returnValue(null);
-    kycServiceMock.updateUserAttributesAsync.and.returnValue(null);
-    kycServiceMock.completeStep.and.returnValue(null);
-    kycServiceMock.suspendUser.and.returnValue(null);
 
     await TestBed.configureTestingModule({
-      imports: [
-        { provide: Router, useValue: routerMock },
-        { provide: ActivatedRoute, useClass: routeMock },
+      declarations: [KycWelcomeComponent],
+      providers: [
         { provide: AnalyticsService, useValue: analyticsMock },
+        { provide: Router, useValue: routerMock },
         { provide: KycService, useValue: kycServiceMock },
       ],
-      declarations: [KycWelcomeComponent],
     }).compileComponents();
   });
 
@@ -50,7 +50,34 @@ describe('KycWelcomeComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should firePageViewEvent on init', () => {
+    component.ngOnInit();
+    expect(analyticsMock.firePageViewEvent).toHaveBeenCalled();
+  });
+
+  it('should activateStep on init', () => {
+    component.ngOnInit();
+    expect(kycServiceMock.activateStep).toHaveBeenCalled();
+  });
+
+  it('should set form to pure.formComponent.parentForm on ngAfterViewInit', () => {
+    let parentFormTest = {} as FormGroup;
+    component.pure = {
+      formComponent: { parentForm: parentFormTest } as OutlineNamedobFormComponent,
+    } as KycWelcomePureComponent;
+
+    component.ngAfterViewInit();
+
+    expect(component.form).toEqual(parentFormTest);
+  });
+
+  it('should set hasError to true when handleError is called', () => {
+    component.handleError({});
+
+    expect(component.hasError).toEqual(true);
   });
 });
