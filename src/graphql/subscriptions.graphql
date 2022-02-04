@@ -198,7 +198,16 @@ subscription OnCreateAppData($owner: String) {
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
@@ -412,7 +421,16 @@ subscription OnUpdateAppData($owner: String) {
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
@@ -626,7 +644,16 @@ subscription OnDeleteAppData($owner: String) {
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
