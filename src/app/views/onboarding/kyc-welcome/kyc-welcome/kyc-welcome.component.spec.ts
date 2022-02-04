@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OutlineNamedobFormComponent } from '@shared/components/forms/outline-namedob-form/outline-namedob-form.component';
@@ -25,6 +25,7 @@ describe('KycWelcomeComponent', () => {
       'activateStep',
       'inactivateStep',
       'completeStep',
+      'suspendUser',
       'updateUserAttributesAsync',
       'getGetAuthenticationQuestionsResults',
       'handleGetAuthenticationFlow',
@@ -80,4 +81,26 @@ describe('KycWelcomeComponent', () => {
 
     expect(component.hasError).toEqual(true);
   });
+
+  it('should run fireClickEvent when goToNext is called', () => {
+    component.goToNext({} as FormGroup)
+
+    expect(analyticsMock.fireClickEvent).toHaveBeenCalled()
+  })
+
+  it('should run updateUserAttributesAsync when goToNext is called and form.valid is true', fakeAsync(() => {
+    component.goToNext({valid: true} as FormGroup)
+
+    tick()
+
+    expect(kycServiceMock.updateUserAttributesAsync).toHaveBeenCalled()
+  }))
+
+  it('should run updateUserAttributesAsync when goToNext is called and form.valid is true', fakeAsync(() => {
+    component.goToNext({valid: true} as FormGroup)
+
+    tick()
+
+    expect(kycServiceMock.suspendUser).toHaveBeenCalled()
+  }))
 });
