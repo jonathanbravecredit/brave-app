@@ -20,6 +20,7 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Observable, Subscription } from 'rxjs';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { shuffle } from 'lodash';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -44,6 +45,8 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   referral: IReferral | undefined;
   adsData$: Observable<IAdData[]> | undefined;
   adsData: IAdData[] | undefined;
+  suppressed: boolean = false;
+  currentScore: number | null = null;
 
   constructor(
     private router: Router,
@@ -64,7 +67,11 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
+    if (this.userName) {
+      this.welcomeMsg = 'Welcome back, ' + this.userName;
+    }
+    // this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
+    this.currentScore = 4; //!TEST
   }
 
   ngOnDestroy(): void {
@@ -96,6 +103,10 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
+      this.suppressed = false; //!TEST
+      // this.report?.TrueLinkCreditReportType?.Message instanceof Array
+      //   ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
+      //   : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
@@ -153,5 +164,17 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
 
   onReferralsClicked() {
     this.router.navigate([routes.root.dashboard.report.snapshot.referrals.full]);
+  }
+
+  findCurrentScore(scores: IProductTrendingData[] | null, report: IMergeReport | null | undefined): number | null {
+    if (scores && scores.length) {
+      return isNaN(+scores[0].AttributeValue) ? null : +scores[0].AttributeValue;
+    } else {
+      return report ? this.transformRiskScore(report) : null;
+    }
+  }
+
+  transformRiskScore(report: IMergeReport): number {
+    return new ParseRiskScorePipe().transform(report);
   }
 }
