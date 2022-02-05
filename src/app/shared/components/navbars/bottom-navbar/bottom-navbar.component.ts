@@ -46,7 +46,7 @@ export class BottomNavbarComponent implements OnInit {
    *  - settings
    */
   badgeClicked(item: IBottomNavbarItem): void {
-    switch (item.name.toLowerCase()) {
+    switch (item.id) {
       case 'init':
         this.toggleDisputesBadge({ home: { badge: false } });
         break;
