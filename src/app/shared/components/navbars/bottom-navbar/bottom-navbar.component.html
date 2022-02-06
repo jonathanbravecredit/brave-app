@@ -31,7 +31,10 @@
         >
         <brave-notification-badge
           class="relative"
-          *ngIf="item.name === 'Disputes' && navBarData?.disputes?.badge"
+          *ngIf="
+            (item.id === 'disputes' && navBarData?.disputes?.badge) ||
+            (item.id === 'report' && navBarData?.report?.badge)
+          "
           text="1"
           left="50%"
           top="-45px"

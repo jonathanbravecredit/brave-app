@@ -5,7 +5,6 @@ import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
   selector: 'brave-dashboard-carousel',
@@ -16,10 +15,10 @@ export class DashboardCarouselComponent implements OnInit {
   @Input() report: IMergeReport | null | undefined;
   @Input() scores: IProductTrendingData[] | null | undefined;
   @Input() lastUpdated!: string;
+  @Input() currentScore: number | null = null;
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
-  private _currentScore: number | null = null;
   private _delta: number = 0;
   private _graphic!: ICreditReportGraphic;
   private _chart!: ICreditScoreHistoryNgxChartInputs;
@@ -28,7 +27,6 @@ export class DashboardCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     this.sortedScores = this.scores?.length ? this.scores : [];
-    this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
     this.delta = this.calculateDelta(this.sortedScores);
     this.graphic = this.formatGraphicData(this.currentScore, this.delta);
     this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
@@ -59,13 +57,6 @@ export class DashboardCarouselComponent implements OnInit {
     this._chart = val;
   }
 
-  get currentScore(): number | null {
-    return this._currentScore;
-  }
-  set currentScore(val: number | null) {
-    this._currentScore = val;
-  }
-
   get sortedScores(): IProductTrendingData[] {
     return this._sortedScores;
   }
@@ -83,13 +74,6 @@ export class DashboardCarouselComponent implements OnInit {
    * @param scores
    * @returns
    */
-  findCurrentScore(scores: IProductTrendingData[], report: IMergeReport | null | undefined): number | null {
-    if (scores.length) {
-      return isNaN(+scores[0].AttributeValue) ? null : +scores[0].AttributeValue;
-    } else {
-      return report ? this.transformRiskScore(report) : null;
-    }
-  }
 
   /**
    * Get the delta from the current sorted score and the prior score or zero
@@ -106,9 +90,6 @@ export class DashboardCarouselComponent implements OnInit {
     }
   }
 
-  transformRiskScore(report: IMergeReport): number {
-    return new ParseRiskScorePipe().transform(report);
-  }
 
   /**
    * Helper method to format the graphic data
