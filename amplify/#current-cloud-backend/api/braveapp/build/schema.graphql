@@ -17,6 +17,7 @@ type AppData @aws_iam @aws_cognito_user_pools {
   agencies: Agencies!
   preferences: Preferences!
   dashboard: Dashboard
+  navBar: NavBar
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -46,6 +47,14 @@ type UserAttributes @aws_iam @aws_cognito_user_pools {
   phone: Phone
   dob: Dob
   ssn: Ssn
+}
+
+type NavBar @aws_iam @aws_cognito_user_pools {
+  disputes: NavBarConfig
+}
+
+type NavBarConfig @aws_iam @aws_cognito_user_pools {
+  badge: Boolean
 }
 
 type Address @aws_iam @aws_cognito_user_pools {
@@ -360,6 +369,14 @@ input DataBreachCardInput {
   paragraphs: [String]
 }
 
+input NavBarInput {
+  disputes: NavBarConfigInput
+}
+
+input NavBarConfigInput {
+  badge: Boolean
+}
+
 enum ModelSortDirection {
   ASC
   DESC
@@ -475,6 +492,7 @@ input CreateAppDataInput {
   agencies: AgenciesInput!
   preferences: PreferencesInput!
   dashboard: DashboardInput
+  navBar: NavBarInput
   status: String
   statusReason: String
   statusReasonDescription: String
@@ -489,6 +507,7 @@ input UpdateAppDataInput {
   agencies: AgenciesInput
   preferences: PreferencesInput
   dashboard: DashboardInput
+  navBar: NavBarInput
   status: String
   statusReason: String
   statusReasonDescription: String

@@ -31,6 +31,8 @@ export class DashboardEnrolledPureComponent implements OnInit {
   @Input() rating: string | undefined;
   @Input() referral: IReferral | undefined;
   @Input() adsData: IAdData[] | undefined;
+  @Input() suppressed: boolean = false;
+  @Input() currentScore: number | null = null;
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() databreachItemsClicked: EventEmitter<void> = new EventEmitter();
