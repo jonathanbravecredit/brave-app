@@ -5,6 +5,7 @@ import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
   selector: 'brave-dashboard-carousel',
@@ -15,7 +16,6 @@ export class DashboardCarouselComponent implements OnInit {
   @Input() report: IMergeReport | null | undefined;
   @Input() scores: IProductTrendingData[] | null | undefined;
   @Input() lastUpdated!: string;
-  @Input() currentScore: number | null = null;
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
