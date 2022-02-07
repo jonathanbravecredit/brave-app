@@ -318,7 +318,16 @@ mutation CreateAppData(
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
@@ -535,7 +544,16 @@ mutation UpdateAppData(
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
@@ -752,7 +770,16 @@ mutation DeleteAppData(
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
