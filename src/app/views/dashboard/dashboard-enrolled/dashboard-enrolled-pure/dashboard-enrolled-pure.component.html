@@ -1,7 +1,13 @@
 <h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
 
-<div class="my-4 flex justify-center">
+<div
+  *ngIf="(currentScore !== 1 && currentScore !== 4) || (currentScore === 4 && !suppressed)"
+  class="my-4 flex justify-center"
+>
   <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
+</div>
+<div *ngIf="currentScore === 1 || currentScore === 4" class="my-4 flex justify-center">
+  <brave-dashboard-credit-score-error [suppressed]="suppressed"></brave-dashboard-credit-score-error>
 </div>
 
 <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>

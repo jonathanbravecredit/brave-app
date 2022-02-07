@@ -14,6 +14,10 @@ export enum CreditReportStatus {
 export class CreditReportGraphicPipe implements PipeTransform {
   private possibleStatusFromValue = [
     {
+      percentage: 1,
+      status: CreditReportStatus.VeryPoor,
+    },
+    {
       percentage: 300,
       status: CreditReportStatus.VeryPoor,
     },

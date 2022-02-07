@@ -82,6 +82,7 @@ import { SharedDirectivesModule } from '@shared/directives/shared-directives.mod
 import { SettingsWarningComponent } from './settings/components/settings-warning/settings-warning.component';
 import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/dashboard-ads-carousel/dashboard-ads-carousel.component';
 import { CreditUtilizationAssessmentComponent } from './snapshots/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component';
+import { DashboardCreditScoreErrorComponent } from './dashboard-enrolled/components/dashboard-credit-score-error/dashboard-credit-score-error.component';
 
 const modules = [
   CommonModule,
@@ -163,7 +164,7 @@ const components = [
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, DashboardCreditScoreErrorComponent],
   imports: [...modules],
   exports: [...components],
 })
