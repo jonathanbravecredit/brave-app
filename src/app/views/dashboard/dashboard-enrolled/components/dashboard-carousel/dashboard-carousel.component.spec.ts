@@ -25,11 +25,6 @@ describe('DashboardCarouselComponent', () => {
   });
 
   describe('LifeCycle methods', () => {
-    it('should call findCurrentScore', () => {
-      spyOn(component, 'findCurrentScore');
-      component.ngOnInit();
-      expect(component.findCurrentScore).toHaveBeenCalled();
-    });
     it('should call calculateDelta', () => {
       spyOn(component, 'calculateDelta');
       component.ngOnInit();
@@ -88,28 +83,7 @@ describe('DashboardCarouselComponent', () => {
     });
   });
 
-  describe('findCurrentScore', () => {
-    it('should return the current score when scores.length > 0', () => {
-      const score = component.findCurrentScore(MOCK_SCORES, null);
-      expect(score).toEqual(766);
-    });
-    it('should return null when the score value cannot be converted to numeric', () => {
-      const score = component.findCurrentScore(MOCK_BAD_SCORES, null);
-      expect(score).toBeNull();
-    });
-
-    it('should call transformRiskScore when scores are empty and report is not null', () => {
-      spyOn(component, 'transformRiskScore');
-      component.findCurrentScore([], {} as IMergeReport);
-      expect(component.transformRiskScore).toHaveBeenCalled();
-    });
-
-    it('should return null when the scores are missing and the report is invalid', () => {
-      const score = component.findCurrentScore([], null);
-      expect(score).toBeNull();
-    });
-  });
-
+  
   describe('calculateDelta helper method', () => {
     it('should calculate the delta to the diff between current and prior score when both available', () => {
       const delta = component.calculateDelta(MOCK_SCORES);

@@ -9,7 +9,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 export class DashboardScoreTrackingResolver implements Resolve<ICreditScoreTracking | null> {
   constructor(private transunion: TransunionService) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ICreditScoreTracking | null> {
+  async resolve(): Promise<ICreditScoreTracking | null> {
     const { success, data: scores } = await this.transunion.getCreditScores();
     if (success) {
       return scores || null;
