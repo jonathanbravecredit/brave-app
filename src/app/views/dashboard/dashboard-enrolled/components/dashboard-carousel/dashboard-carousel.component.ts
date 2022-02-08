@@ -31,7 +31,7 @@ export class DashboardCarouselComponent implements OnInit {
     this.sortedScores = this.scores?.length ? this.scores : [];
     this.score = this.findCurrentScore(this.sortedScores, this.report);
     this.delta = this.calculateDelta(this.sortedScores);
-    this.graphic = this.formatGraphicData(this.currentScore, this.delta);
+    this.graphic = this.formatGraphicData(this.score, this.delta);
     this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
     this.data = [this.graphic, this.chart];
   }
