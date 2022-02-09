@@ -49,21 +49,4 @@ export class DashboardEnrolledPureComponent implements OnInit {
   constructor(public featureflags: FeatureFlagsService) {}
 
   ngOnInit(): void {}
-
-  get score(): number | undefined {
-    const creditScore = this.report?.TrueLinkCreditReportType?.Borrower?.CreditScore;
-    if (creditScore instanceof Array) {
-      const score = creditScore.find((value) => {
-        return value.scoreName.toLowerCase() === 'vantagescore3';
-      });
-      const _score = Math.round(score?.riskScore as number);
-      if (isNaN(_score)) return;
-      return _score;
-    } else {
-      const score = creditScore?.riskScore;
-      const _score = Math.round(score as number);
-      if (isNaN(_score)) return;
-      return _score;
-    }
-  }
 }
