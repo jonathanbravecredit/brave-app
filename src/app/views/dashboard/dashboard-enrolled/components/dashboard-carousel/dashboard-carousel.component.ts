@@ -16,6 +16,7 @@ export class DashboardCarouselComponent implements OnInit {
   @Input() report: IMergeReport | null | undefined;
   @Input() scores: IProductTrendingData[] | null | undefined;
   @Input() lastUpdated!: string;
+  @Input() currentScore: number | null = null;
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
