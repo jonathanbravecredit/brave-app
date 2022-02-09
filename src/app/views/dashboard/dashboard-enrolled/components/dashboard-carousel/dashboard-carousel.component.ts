@@ -5,6 +5,7 @@ import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
   selector: 'brave-dashboard-carousel',
@@ -76,19 +77,6 @@ export class DashboardCarouselComponent implements OnInit {
       const bDate = new Date(b.AttributeDate || 0).valueOf();
       return bDate - aDate;
     });
-  }
-
-  /**
-   * find the current score from either the sorted scores or the report
-   * @param scores
-   * @returns
-   */
-  findCurrentScore(scores: IProductTrendingData[], report: IMergeReport | null | undefined): number | null {
-    if (scores.length) {
-      return isNaN(+scores[0].AttributeValue) ? null : +scores[0].AttributeValue;
-    } else {
-      return report ? this.transformRiskScore(report) : null;
-    }
   }
 
   /**
