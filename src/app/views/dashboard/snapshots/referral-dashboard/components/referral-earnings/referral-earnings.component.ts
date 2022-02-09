@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IReferral } from '@shared/interfaces/referrals.interface';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
+import * as timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault('America/Los_Angeles');
 
 @Component({
   selector: 'brave-referral-earnings',
@@ -8,16 +14,14 @@ import * as moment from 'moment';
 })
 export class ReferralEarningsComponent implements OnInit {
   @Input() referral: IReferral | undefined;
-  paymentMonth: string = '';
-  paymentDay: any = '';
+  paymentLongForm: string = '';
   earnings: number = 0;
-  month: string = moment().format('MMMM');
 
   constructor() {}
 
   ngOnInit(): void {
-    this.paymentMonth = moment(this.referral?.nextPaymentDate).format('MMM');
-    this.paymentDay = moment(this.referral?.nextPaymentDate).format('DD');
+    const payDate = dayjs(this.referral?.nextPaymentDate).tz();
+    this.paymentLongForm = payDate.format('dddd, MMM DD');
     this.earnings = (this.referral?.campaignActiveEarned || 0) + (this.referral?.campaignActiveBonus || 0);
   }
 }

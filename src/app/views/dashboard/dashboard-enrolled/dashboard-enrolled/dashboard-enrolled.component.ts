@@ -90,6 +90,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
         const scores = trendAttrs.filter(
           (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
         )[0];
+
         this.trendingScores =
           scores.ProductAttributeData.ProductTrendingData instanceof Array
             ? scores.ProductAttributeData.ProductTrendingData
@@ -102,9 +103,10 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
-      this.suppressed = this.report?.TrueLinkCreditReportType?.Message instanceof Array
-        ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
-        : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
+      this.suppressed =
+        this.report?.TrueLinkCreditReportType?.Message instanceof Array
+          ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
+          : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
