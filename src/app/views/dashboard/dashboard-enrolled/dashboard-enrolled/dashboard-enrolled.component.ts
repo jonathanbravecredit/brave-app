@@ -70,7 +70,6 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     if (this.userName) {
       this.welcomeMsg = 'Welcome back, ' + this.userName;
     }
-    this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
   }
 
   ngOnDestroy(): void {
@@ -97,6 +96,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
             : [scores.ProductAttributeData.ProductTrendingData];
       }
       this.sortScores(this.trendingScores);
+      this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
       this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
