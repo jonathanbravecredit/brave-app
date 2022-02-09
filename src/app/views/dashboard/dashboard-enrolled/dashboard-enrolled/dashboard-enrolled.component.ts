@@ -97,9 +97,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
             : [scores.ProductAttributeData.ProductTrendingData];
       }
       this.sortScores(this.trendingScores);
-      console.log('this.sortedScores', this.sortedScores);
       this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
-      console.log('current score: ', this.currentScore);
       this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
