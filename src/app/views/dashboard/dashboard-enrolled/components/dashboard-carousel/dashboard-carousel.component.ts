@@ -20,7 +20,6 @@ export class DashboardCarouselComponent implements OnInit {
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
-  private _score: number | null = null;
   private _delta: number = 0;
   private _graphic!: ICreditReportGraphic;
   private _chart!: ICreditScoreHistoryNgxChartInputs;
@@ -29,9 +28,8 @@ export class DashboardCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     this.sortedScores = this.scores?.length ? this.scores : [];
-    this.score = this.findCurrentScore(this.sortedScores, this.report);
     this.delta = this.calculateDelta(this.sortedScores);
-    this.graphic = this.formatGraphicData(this.score, this.delta);
+    this.graphic = this.formatGraphicData(this.currentScore, this.delta);
     this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
     this.data = [this.graphic, this.chart];
   }
@@ -60,13 +58,6 @@ export class DashboardCarouselComponent implements OnInit {
     this._chart = val;
   }
 
-  get score(): number | null {
-    return this._score;
-  }
-  set score(val: number | null) {
-    this._score = val;
-  }
-
   get sortedScores(): IProductTrendingData[] {
     return this._sortedScores;
   }
@@ -77,19 +68,6 @@ export class DashboardCarouselComponent implements OnInit {
       const bDate = new Date(b.AttributeDate || 0).valueOf();
       return bDate - aDate;
     });
-  }
-
-  /**
-   * find the current score from either the sorted scores or the report
-   * @param scores
-   * @returns
-   */
-  findCurrentScore(scores: IProductTrendingData[], report: IMergeReport | null | undefined): number | null {
-    if (scores.length) {
-      return isNaN(+scores[0].AttributeValue) ? null : +scores[0].AttributeValue;
-    } else {
-      return report ? this.transformRiskScore(report) : null;
-    }
   }
 
   /**
