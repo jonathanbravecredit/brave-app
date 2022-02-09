@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
@@ -96,7 +97,9 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
             : [scores.ProductAttributeData.ProductTrendingData];
       }
       this.sortScores(this.trendingScores);
+      console.log('this.sortedScores', this.sortedScores);
       this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
+      console.log('current score: ', this.currentScore);
       this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
@@ -119,7 +122,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
 
   sortScores(scores: IProductTrendingData[]) {
     this.sortedScores = scores.sort((a, b) => {
-      return a.AttributeDate < b.AttributeDate ? -1 : 1;
+      return dayjs(a.AttributeDate).isAfter(b.AttributeDate) ? -1 : 1;
     });
   }
 
