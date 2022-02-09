@@ -6,17 +6,15 @@ import { CreditReportGraphicComponent } from '@shared/components/graphics/credit
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { IDashboardData } from '@shared/services/dashboard/dashboard.service';
 
 @Component({
   selector: 'brave-dashboard-carousel',
   templateUrl: './dashboard-carousel.component.html',
 })
 export class DashboardCarouselComponent implements OnInit {
-  @Input() trends: IGetTrendingData | null | undefined;
-  @Input() report: IMergeReport | null | undefined;
-  @Input() scores: IProductTrendingData[] | null | undefined;
-  @Input() lastUpdated!: string;
-  @Input() currentScore: number | null = null;
+  @Input() dashData: IDashboardData | undefined;
+  @Input() updatedAt: string = new Date().toISOString();
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
@@ -27,11 +25,16 @@ export class DashboardCarouselComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.sortedScores = this.scores?.length ? this.scores : [];
-    this.delta = this.calculateDelta(this.sortedScores);
-    this.graphic = this.formatGraphicData(this.currentScore, this.delta);
-    this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
-    this.data = [this.graphic, this.chart];
+    if (this.dashData) {
+      const { dashTrends: trends, dashScores: scores, dashScore: score, dashReport: report } = this.dashData;
+      this.sortedScores = scores?.length ? scores : [];
+      this.delta = this.calculateDelta(this.sortedScores);
+      this.graphic = this.formatGraphicData(score, this.delta);
+      this.chart = this.formatChartData(trends, report, this.updatedAt, score);
+      this.data = [this.graphic, this.chart];
+    } else {
+      console.log('no data');
+    }
   }
 
   get delta(): number {
@@ -96,9 +99,9 @@ export class DashboardCarouselComponent implements OnInit {
    * @param delta
    * @returns
    */
-  formatGraphicData(currentScore: number | null, delta: number): ICreditReportGraphic {
+  formatGraphicData(currentScore: number | undefined, delta: number): ICreditReportGraphic {
     return {
-      currentValue: currentScore,
+      currentValue: currentScore || null,
       ptsChange: delta,
     };
   }
