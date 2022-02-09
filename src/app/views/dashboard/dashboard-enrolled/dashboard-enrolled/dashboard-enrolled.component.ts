@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
@@ -119,7 +120,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
 
   sortScores(scores: IProductTrendingData[]) {
     this.sortedScores = scores.sort((a, b) => {
-      return a.AttributeDate < b.AttributeDate ? -1 : 1;
+      return dayjs(a.AttributeDate).isAfter(b.AttributeDate) ? -1 : 1;
     });
   }
 
