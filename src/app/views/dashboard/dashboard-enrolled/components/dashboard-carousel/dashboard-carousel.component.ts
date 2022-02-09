@@ -20,7 +20,6 @@ export class DashboardCarouselComponent implements OnInit {
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
-  private _currentScore: number | null = null;
   private _delta: number = 0;
   private _graphic!: ICreditReportGraphic;
   private _chart!: ICreditScoreHistoryNgxChartInputs;
@@ -29,7 +28,6 @@ export class DashboardCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     this.sortedScores = this.scores?.length ? this.scores : [];
-    this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
     this.delta = this.calculateDelta(this.sortedScores);
     this.graphic = this.formatGraphicData(this.currentScore, this.delta);
     this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
@@ -58,13 +56,6 @@ export class DashboardCarouselComponent implements OnInit {
 
   set chart(val: ICreditScoreHistoryNgxChartInputs) {
     this._chart = val;
-  }
-
-  get currentScore(): number | null {
-    return this._currentScore;
-  }
-  set currentScore(val: number | null) {
-    this._currentScore = val;
   }
 
   get sortedScores(): IProductTrendingData[] {
