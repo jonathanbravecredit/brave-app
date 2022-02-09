@@ -6,7 +6,7 @@
 <ng-container *ngIf="(referral?.campaignActiveReferred || 0) > 0; else noReferrals">
   <p class="text-xs text-center text-white">
     {{ "You'll get your gift card on " }}
-    <span class="font-bold">Tuesday, {{ paymentMonth }} {{ paymentDay }}</span>
+    <span class="font-bold">{{ paymentLongForm }}</span>
   </p>
 </ng-container>
 <ng-template #noReferrals>

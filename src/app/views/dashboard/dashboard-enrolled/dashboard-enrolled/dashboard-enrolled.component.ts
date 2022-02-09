@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
@@ -70,7 +71,6 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     if (this.userName) {
       this.welcomeMsg = 'Welcome back, ' + this.userName;
     }
-    this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
   }
 
   ngOnDestroy(): void {
@@ -90,21 +90,24 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
         const scores = trendAttrs.filter(
           (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
         )[0];
+
         this.trendingScores =
           scores.ProductAttributeData.ProductTrendingData instanceof Array
             ? scores.ProductAttributeData.ProductTrendingData
             : [scores.ProductAttributeData.ProductTrendingData];
       }
       this.sortScores(this.trendingScores);
+      this.currentScore = this.findCurrentScore(this.sortedScores, this.report);
       this.referral = resp.dashboard.referral;
       const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
         ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
           ? this.report?.TrueLinkCreditReportType.TradeLinePartition
           : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
         : [];
-      this.suppressed = this.report?.TrueLinkCreditReportType?.Message instanceof Array
-        ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
-        : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
+      this.suppressed =
+        this.report?.TrueLinkCreditReportType?.Message instanceof Array
+          ? this.report?.TrueLinkCreditReportType?.Message[0].Code.abbreviation === 'Credit data suppressed'
+          : this.report?.TrueLinkCreditReportType?.Message?.Code.abbreviation === 'Credit data suppressed';
       this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
@@ -117,7 +120,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
 
   sortScores(scores: IProductTrendingData[]) {
     this.sortedScores = scores.sort((a, b) => {
-      return a.AttributeDate < b.AttributeDate ? -1 : 1;
+      return dayjs(a.AttributeDate).isAfter(b.AttributeDate) ? -1 : 1;
     });
   }
 

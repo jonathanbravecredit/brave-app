@@ -158,13 +158,14 @@ const components = [
   ReferralAmountLinkComponent,
   ReferralBodyTextComponent,
   DashboardAdsCarouselComponent,
+  DashboardCreditScoreErrorComponent,
   CreditUtilizationAssessmentComponent,
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, DashboardCreditScoreErrorComponent],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })
