@@ -13,7 +13,7 @@ interface IDisputeResolver {
 })
 export class DisputesResolver implements Resolve<IDisputeResolver> {
   constructor(private transunion: TransunionService) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IDisputeResolver> {
+  async resolve(): Promise<IDisputeResolver> {
     const { data: allDisputes } = await this.transunion.listAllDisputesByUser();
     const { data: currDispute } = await this.transunion.getCurrentDisputeByUser();
     return {

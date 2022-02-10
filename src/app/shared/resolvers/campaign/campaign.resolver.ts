@@ -8,7 +8,7 @@ import { CampaignService } from '@shared/services/campaign/campaign.service';
 })
 export class CampaignResolver implements Resolve<ICampaign> {
   constructor(protected campaignService: CampaignService) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ICampaign> {
+  async resolve(): Promise<ICampaign> {
     return await this.campaignService.getCampaign();
   }
 }

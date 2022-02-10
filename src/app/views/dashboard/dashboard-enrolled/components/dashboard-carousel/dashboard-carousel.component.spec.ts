@@ -43,19 +43,13 @@ describe('DashboardCarouselComponent', () => {
     it('should set sortedScores when scores is populated', () => {
       component.scores = MOCK_SCORES;
       component.ngOnInit();
-      expect(component.sortedScores.length).toEqual(2);
+      expect(component.sortedScores.length).toEqual(3);
     });
 
     it('should set sortedScores to empty array when scores is NOT populated', () => {
       component.scores = [];
       component.ngOnInit();
       expect(component.sortedScores.length).toEqual(0);
-    });
-
-    it('should set the current score based on the sorted scores', () => {
-      component.scores = MOCK_SCORES;
-      component.ngOnInit();
-      expect(component.currentScore).toEqual(766);
     });
 
     it('should set the delta based on the current score and prior score', () => {
@@ -83,7 +77,7 @@ describe('DashboardCarouselComponent', () => {
     });
   });
 
-  
+
   describe('calculateDelta helper method', () => {
     it('should calculate the delta to the diff between current and prior score when both available', () => {
       const delta = component.calculateDelta(MOCK_SCORES);
