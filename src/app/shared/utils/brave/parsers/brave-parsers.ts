@@ -2,6 +2,7 @@ import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { BraveBase } from '@shared/utils/brave/brave-base';
+import * as dayjs from 'dayjs';
 
 export class BraveParsers extends BraveBase {
   constructor() {
@@ -47,7 +48,7 @@ export class BraveParsers extends BraveBase {
       ? scores?.ProductAttributeData?.ProductTrendingData
       : [scores?.ProductAttributeData?.ProductTrendingData]
     ).sort((a, b) => {
-      return a.AttributeDate < b.AttributeDate ? -1 : 1;
+      return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? 1 : -1;
     });
   }
 }
