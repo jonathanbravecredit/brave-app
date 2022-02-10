@@ -39,12 +39,9 @@ export class BraveParsers extends BraveBase {
       ? data.ProductAttributes?.ProductTrendingAttribute
       : [data.ProductAttributes?.ProductTrendingAttribute];
 
-    console.log('TEST 1', trendAttrs);
-
     const scores = trendAttrs.filter((a) => {
-      a.AttributeName.indexOf('TUCVantageScore3V7') >= 0;
+      return a.AttributeName.indexOf('VantageScore3') >= 0;
     })[0];
-    console.log('TEST 2', scores);
 
     return (Array.isArray(scores?.ProductAttributeData?.ProductTrendingData)
       ? scores?.ProductAttributeData?.ProductTrendingData
