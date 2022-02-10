@@ -1,3 +1,5 @@
+import * as DashboardActions from '@store/dashboard/dashboard.actions';
+import * as _ from 'lodash';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
@@ -7,42 +9,101 @@ import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
-import { BehaviorSubject, from, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+
+export interface IDashboardData {
+  dashReport: IMergeReport | null;
+  dashSnapshots: DashboardStateModel | null;
+  dashTrends: IGetTrendingData | null;
+  dashScores: IProductTrendingData[] | null;
+  dashScore: number;
+  dashScoreSuppressed: boolean | null;
+}
 
 @Injectable()
 export class DashboardService implements OnDestroy {
+  state: AppDataStateModel | undefined;
   state$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
   stateSub$: Subscription = new Subscription();
-  state: AppDataStateModel | undefined;
+  // hold the merge report for easy access...this may be redundant
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
+  // data to pass to child components
+  dashReport$ = new BehaviorSubject<IMergeReport | null>(null);
+  dashSnapshots$ = new BehaviorSubject<DashboardStateModel | null>(null);
+  dashTrends$ = new BehaviorSubject<IGetTrendingData | null>(null);
+  dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null);
+  dashScore$ = new BehaviorSubject<number>(4);
+  dashScoreSuppressed$ = new BehaviorSubject(false);
+  // subscriptions to dash
+  dashScoresSub$: Subscription | undefined;
+
+  welcome: string = '';
+  name: string | undefined;
+  updatedOn: string | undefined;
 
   constructor(
-    private statesvc: StateService,
     private api: APIService,
-    private store: Store,
-    private reportService: CreditreportService,
-    private transunion: TransunionService,
     private auth: AuthService,
     private http: HttpClient,
+    private store: Store,
+    private statesvc: StateService,
+    private reportService: CreditreportService,
+    private transunion: TransunionService,
   ) {
     this.tuReport$ = this.reportService.tuReport$;
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state$.next(state.appData);
       this.state = state.appData;
     });
+
+    this.dashScoresSub$ = this.dashScores$.subscribe((scores) => {
+      const score = this.getCurrentScore(scores);
+      this.dashScore$.next(score || 4);
+    });
   }
 
   ngOnDestroy() {
-    if (this.stateSub$) this.stateSub$.unsubscribe();
+    this.stateSub$?.unsubscribe();
+    this.dashScoresSub$?.unsubscribe();
   }
 
+  getCurrentScore(scores: IProductTrendingData[] | null): number | null {
+    if (scores && scores.length) {
+      return isNaN(+scores[0]?.AttributeValue) ? null : +scores[0]?.AttributeValue;
+    } else {
+      return this.tuReport$ ? this.parseRiskScoreFromReport(this.tuReport$.getValue()) : null;
+    }
+  }
+
+  getWelcomeMessage(): string {
+    return this.name ? `Welcome back, ${this.name}` : '';
+  }
+
+  getLastUpdated(): string | undefined {
+    return this.updatedOn;
+  }
+  setLastUpdated(): void {
+    const fullfilled = _.find(this.state, 'fulfilledOn') as string;
+    if (fullfilled) {
+      this.updatedOn = new Date(fullfilled).toLocaleDateString();
+    }
+  }
+
+  setUserName(): void {
+    this.name = this.state?.user?.userAttributes?.name?.first;
+  }
+
+  parseRiskScoreFromReport(report: IMergeReport): number {
+    return new ParseRiskScorePipe().transform(report);
+  }
   /**
    * Refresh the users report if stale
    */
@@ -89,6 +150,8 @@ export class DashboardService implements OnDestroy {
       Authorization: `${token}`,
     });
 
-    return this.http.get<IAdData[]>(environment.ads + '/ads', { headers }).toPromise();
+    return this.http
+      .get<IAdData[]>(environment.ads + '/ads', { headers })
+      .toPromise();
   }
 }
