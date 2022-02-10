@@ -5,6 +5,7 @@ import { ICreditReportGraphic } from '@shared/components/graphics/credit-report-
 import { CreditReportGraphicComponent } from '@shared/components/graphics/credit-report-graphic/credit-report-graphic.component';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 @Component({
   selector: 'brave-dashboard-carousel',
@@ -70,12 +71,6 @@ export class DashboardCarouselComponent implements OnInit {
   }
 
   /**
-   * find the current score from either the sorted scores or the report
-   * @param scores
-   * @returns
-   */
-
-  /**
    * Get the delta from the current sorted score and the prior score or zero
    * @param scores
    * @returns
@@ -90,6 +85,9 @@ export class DashboardCarouselComponent implements OnInit {
     }
   }
 
+  transformRiskScore(report: IMergeReport): number {
+    return new ParseRiskScorePipe().transform(report);
+  }
 
   /**
    * Helper method to format the graphic data
