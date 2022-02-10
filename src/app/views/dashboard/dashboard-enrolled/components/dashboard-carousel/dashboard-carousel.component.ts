@@ -7,6 +7,7 @@ import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 import { IDashboardData } from '@shared/services/dashboard/dashboard.service';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'brave-dashboard-carousel',
@@ -67,9 +68,7 @@ export class DashboardCarouselComponent implements OnInit {
 
   set sortedScores(val: IProductTrendingData[]) {
     this._sortedScores = [...val].sort((a, b) => {
-      const aDate = new Date(a.AttributeDate || 0).valueOf();
-      const bDate = new Date(b.AttributeDate || 0).valueOf();
-      return bDate - aDate;
+      return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? -1 : 1;
     });
   }
 
@@ -79,10 +78,11 @@ export class DashboardCarouselComponent implements OnInit {
    * @returns
    */
   calculateDelta(scores: IProductTrendingData[]): number {
+    console.log('HERE', scores.length)
     if (scores.length > 1) {
-      return isNaN(+scores[0].AttributeValue) || isNaN(+scores[1].AttributeValue)
-        ? 0
-        : +scores[0].AttributeValue - +scores[1].AttributeValue;
+      let latestScore = +scores[scores.length - 1].AttributeValue;
+      let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
+      return isNaN(latestScore) || isNaN(lastMonthsScore) ? 0 : latestScore - lastMonthsScore;
     } else {
       return 0;
     }

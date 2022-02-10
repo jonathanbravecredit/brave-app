@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { IDashboardData } from '@shared/services/dashboard/dashboard.service';
 
 import { DashboardCarouselComponent } from './dashboard-carousel.component';
 
@@ -27,56 +28,62 @@ describe('DashboardCarouselComponent', () => {
   describe('LifeCycle methods', () => {
     it('should call calculateDelta', () => {
       spyOn(component, 'calculateDelta');
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.calculateDelta).toHaveBeenCalled();
     });
     it('should call formatGraphicData', () => {
       spyOn(component, 'formatGraphicData');
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.formatGraphicData).toHaveBeenCalled();
     });
     it('should call formatChartData', () => {
       spyOn(component, 'formatChartData');
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.formatChartData).toHaveBeenCalled();
     });
     it('should set sortedScores when scores is populated', () => {
-      component.scores = MOCK_SCORES;
+      component.dashData = {dashScores: MOCK_SCORES} as IDashboardData;
       component.ngOnInit();
       expect(component.sortedScores.length).toEqual(3);
     });
 
     it('should set sortedScores to empty array when scores is NOT populated', () => {
-      component.scores = [];
+      component.sortedScores = [];
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.sortedScores.length).toEqual(0);
     });
 
     it('should set the delta based on the current score and prior score', () => {
-      component.scores = MOCK_SCORES;
+      component.dashData = {dashScores: MOCK_SCORES} as IDashboardData;
       component.ngOnInit();
       expect(component.delta).toEqual(-29);
     });
 
     it('should set the graphic using current score, sorted score, and delta', () => {
-      component.scores = MOCK_SCORES;
+      component.sortedScores = MOCK_SCORES;
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.graphic).toBeTruthy();
     });
 
     it('should set the chart using trends, report, lastUpdated, and currentScore', () => {
-      component.scores = MOCK_SCORES;
-      component.lastUpdated = '2022-01-19T06:35:23';
+      component.sortedScores = MOCK_SCORES;
+      component.updatedAt = '2022-01-19T06:35:23';
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.chart).toBeTruthy();
     });
 
     it('should set the data tuple to graphic and chart', () => {
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.data).toEqual([component.graphic, component.chart]);
     });
   });
-
 
   describe('calculateDelta helper method', () => {
     it('should calculate the delta to the diff between current and prior score when both available', () => {
@@ -85,7 +92,7 @@ describe('DashboardCarouselComponent', () => {
     });
 
     it('should set the delta to 0 when only 1 score available', () => {
-      const mocks = MOCK_SCORES;
+      const mocks = MOCK_BAD_SCORES;
       mocks.pop();
       const delta = component.calculateDelta(mocks);
       expect(delta).toEqual(0);

@@ -48,7 +48,7 @@ export class BraveParsers extends BraveBase {
       ? scores?.ProductAttributeData?.ProductTrendingData
       : [scores?.ProductAttributeData?.ProductTrendingData]
     ).sort((a, b) => {
-      return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? 1 : -1;
+      return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? -1 : 1;
     });
   }
 }
