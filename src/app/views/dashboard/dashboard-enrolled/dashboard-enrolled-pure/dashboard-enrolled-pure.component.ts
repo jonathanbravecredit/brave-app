@@ -52,8 +52,8 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
       this.dashboardService.dashScore$,
       this.dashboardService.dashScoreSuppressed$,
     ])
-      .pipe(skip(1))
       .subscribe((val) => {
+        console.log('TEST', val)
         this.dashboardData$?.next({
           dashReport: val[0],
           dashSnapshots: val[1],
