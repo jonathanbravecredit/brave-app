@@ -12,7 +12,7 @@ import * as dayjs from 'dayjs';
   providedIn: 'root',
 })
 export class CreditScoreHistoryNgxChartService {
-  constructor(private transunion: TransunionService) {}
+  constructor() {}
 
   transformTrendingData(trendingData: IGetTrendingData | null): any | undefined {
     let scores;

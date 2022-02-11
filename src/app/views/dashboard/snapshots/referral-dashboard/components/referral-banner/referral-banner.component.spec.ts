@@ -31,10 +31,4 @@ describe('ReferralBannerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should show only 1 h6 if the referral program is enabled', () => {
-    const result = dh.count('h6');
-
-    expect(result).toEqual(1);
-  });
 });

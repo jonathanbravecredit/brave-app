@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { IDashboardData } from '@shared/services/dashboard/dashboard.service';
 
 import { DashboardCarouselComponent } from './dashboard-carousel.component';
 
@@ -25,88 +26,62 @@ describe('DashboardCarouselComponent', () => {
   });
 
   describe('LifeCycle methods', () => {
-    it('should call findCurrentScore', () => {
-      spyOn(component, 'findCurrentScore');
-      component.ngOnInit();
-      expect(component.findCurrentScore).toHaveBeenCalled();
-    });
     it('should call calculateDelta', () => {
       spyOn(component, 'calculateDelta');
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.calculateDelta).toHaveBeenCalled();
     });
     it('should call formatGraphicData', () => {
       spyOn(component, 'formatGraphicData');
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.formatGraphicData).toHaveBeenCalled();
     });
     it('should call formatChartData', () => {
       spyOn(component, 'formatChartData');
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.formatChartData).toHaveBeenCalled();
     });
     it('should set sortedScores when scores is populated', () => {
-      component.scores = MOCK_SCORES;
+      component.dashData = {dashScores: MOCK_SCORES} as IDashboardData;
       component.ngOnInit();
-      expect(component.sortedScores.length).toEqual(2);
+      expect(component.sortedScores.length).toEqual(3);
     });
 
     it('should set sortedScores to empty array when scores is NOT populated', () => {
-      component.scores = [];
+      component.sortedScores = [];
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.sortedScores.length).toEqual(0);
     });
 
-    it('should set the current score based on the sorted scores', () => {
-      component.scores = MOCK_SCORES;
-      component.ngOnInit();
-      expect(component.currentScore).toEqual(766);
-    });
-
     it('should set the delta based on the current score and prior score', () => {
-      component.scores = MOCK_SCORES;
+      component.dashData = {dashScores: MOCK_SCORES} as IDashboardData;
       component.ngOnInit();
       expect(component.delta).toEqual(-29);
     });
 
     it('should set the graphic using current score, sorted score, and delta', () => {
-      component.scores = MOCK_SCORES;
+      component.sortedScores = MOCK_SCORES;
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.graphic).toBeTruthy();
     });
 
     it('should set the chart using trends, report, lastUpdated, and currentScore', () => {
-      component.scores = MOCK_SCORES;
-      component.lastUpdated = '2022-01-19T06:35:23';
+      component.sortedScores = MOCK_SCORES;
+      component.updatedAt = '2022-01-19T06:35:23';
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.chart).toBeTruthy();
     });
 
     it('should set the data tuple to graphic and chart', () => {
+      component.dashData = {} as IDashboardData;
       component.ngOnInit();
       expect(component.data).toEqual([component.graphic, component.chart]);
-    });
-  });
-
-  describe('findCurrentScore', () => {
-    it('should return the current score when scores.length > 0', () => {
-      const score = component.findCurrentScore(MOCK_SCORES, null);
-      expect(score).toEqual(766);
-    });
-    it('should return null when the score value cannot be converted to numeric', () => {
-      const score = component.findCurrentScore(MOCK_BAD_SCORES, null);
-      expect(score).toBeNull();
-    });
-
-    it('should call transformRiskScore when scores are empty and report is not null', () => {
-      spyOn(component, 'transformRiskScore');
-      component.findCurrentScore([], {} as IMergeReport);
-      expect(component.transformRiskScore).toHaveBeenCalled();
-    });
-
-    it('should return null when the scores are missing and the report is invalid', () => {
-      const score = component.findCurrentScore([], null);
-      expect(score).toBeNull();
     });
   });
 
@@ -117,7 +92,7 @@ describe('DashboardCarouselComponent', () => {
     });
 
     it('should set the delta to 0 when only 1 score available', () => {
-      const mocks = MOCK_SCORES;
+      const mocks = MOCK_BAD_SCORES;
       mocks.pop();
       const delta = component.calculateDelta(mocks);
       expect(delta).toEqual(0);
@@ -156,6 +131,12 @@ describe('DashboardCarouselComponent', () => {
 
 const MOCK_SCORES = [
   {
+    AttributeDate: '2021-11-19T06:35:23',
+    AttributeStatus: 'Success',
+    AttributeValue: 745,
+    ServiceProductFulfillmentKey: 'c3dd0d55-5bbd-4b19-9016-fe9eb7f8c172',
+  },
+  {
     AttributeDate: '2021-12-21T16:31:50',
     AttributeStatus: 'Success',
     AttributeValue: 795,
@@ -165,12 +146,6 @@ const MOCK_SCORES = [
     AttributeDate: '2022-01-19T06:35:23',
     AttributeStatus: 'Success',
     AttributeValue: 766,
-    ServiceProductFulfillmentKey: 'c3dd0d55-5bbd-4b19-9016-fe9eb7f8c172',
-  },
-  {
-    AttributeDate: '2021-11-19T06:35:23',
-    AttributeStatus: 'Success',
-    AttributeValue: 745,
     ServiceProductFulfillmentKey: 'c3dd0d55-5bbd-4b19-9016-fe9eb7f8c172',
   },
 ];

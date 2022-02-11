@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 export class DashboardScoreTrendsResolver implements Resolve<IGetTrendingData | null> {
   constructor(private transunion: TransunionService) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IGetTrendingData | null> {
+  async resolve(): Promise<IGetTrendingData | null> {
     const now = new Date();
     now.setMonth(now.getMonth() - 12);
     const data = await this.transunion.getTrendingData(now.toISOString());

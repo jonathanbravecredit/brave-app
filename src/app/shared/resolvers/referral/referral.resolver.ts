@@ -38,7 +38,7 @@ export class ReferralResolver implements Resolve<IReferralResolver> {
 
     let campaign;
     try {
-      campaign = await this.campaignResolver.resolve(route, state);
+      campaign = await this.campaignResolver.resolve();
     } catch {
       campaign = null;
     }
