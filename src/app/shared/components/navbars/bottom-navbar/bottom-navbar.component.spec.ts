@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngxs/store';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { of } from 'rxjs';
@@ -14,11 +15,13 @@ describe('BottomNavbarComponent', () => {
   let stateMock: any;
   let transMock: any;
   let storeMock: any;
+  let interstitialMock: any;
 
   beforeEach(async () => {
     stateMock = jasmine.createSpyObj('StateService', [''], { state$: of() });
     transMock = jasmine.createSpyObj('TransunionService', ['']);
     storeMock = jasmine.createSpyObj('Store', ['']);
+    interstitialMock = jasmine.createSpyObj('InterstitialService', ['openInterstitial']);
 
     await TestBed.configureTestingModule({
       declarations: [BottomNavbarComponent],
@@ -26,6 +29,7 @@ describe('BottomNavbarComponent', () => {
         { provide: StateService, useValue: stateMock },
         { provide: TransunionService, useValue: transMock },
         { provide: Store, useValue: storeMock },
+        { provide: InterstitialService, useValue: interstitialMock },
       ],
     }).compileComponents();
   });

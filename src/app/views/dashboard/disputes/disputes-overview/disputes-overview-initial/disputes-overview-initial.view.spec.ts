@@ -21,7 +21,7 @@ describe("DisputesOverviewInitialView", () => {
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj("Router", [""]);
-    interstitialMock = jasmine.createSpyObj("InterstitialService", [""]);
+    interstitialMock = jasmine.createSpyObj("InterstitialService", ["closeInterstitial"]);
     disputeServiceMock = jasmine.createSpyObj("DisputeService", [""]);
     transunionMock = jasmine.createSpyObj("TransunionService", [""]);
     await TestBed.configureTestingModule({
