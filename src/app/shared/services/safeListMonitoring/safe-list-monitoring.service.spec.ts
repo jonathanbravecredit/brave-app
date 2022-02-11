@@ -1,12 +1,24 @@
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { SessionService } from '@shared/services/session/session.service';
+import { of } from 'rxjs';
 
 import { SafeListMonitoringService } from './safe-list-monitoring.service';
 
 describe('SafeListMonitoringService', () => {
   let service: SafeListMonitoringService;
+  let routerMock: any;
+  let sessionMock: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    sessionMock = jasmine.createSpyObj('SessionService', ['updateSessionData'], {sessionData$: of()});
+    routerMock = jasmine.createSpyObj('Router', [''], { events: of() });
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: routerMock },
+        { provide: SessionService, useValue: sessionMock },
+      ],
+    });
     service = TestBed.inject(SafeListMonitoringService);
   });
 
