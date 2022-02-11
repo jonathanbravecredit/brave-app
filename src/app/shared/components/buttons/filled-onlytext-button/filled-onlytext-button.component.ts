@@ -31,6 +31,6 @@ export class FilledOnlytextButtonComponent {
 
   @Input() disabled: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
 }
