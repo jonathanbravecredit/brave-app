@@ -31,7 +31,6 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.interstitial.closeInterstitial();
-    console.log('HERE herehere');
   }
   ngOnDestroy(): void {
     if (this.routeSub$) this.routeSub$.unsubscribe();
@@ -44,7 +43,6 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
    * @returns
    */
   async onViewDetailsClick(entity: TDisputeEntity): Promise<void> {
-    console.log('HERE CLICKED');
     if (!entity.dispute) throw `dispute missing`;
     const dispute: IDispute = entity.dispute;
     const { disputeId } = dispute;
