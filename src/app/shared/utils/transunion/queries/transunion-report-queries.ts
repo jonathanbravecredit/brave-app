@@ -22,6 +22,17 @@ export class TransunionReportQueries extends TransunionBase {
   }
 
   /*===================================*/
+  //           MESSAGE
+  /*===================================*/
+
+  static isReportSupressed(report: IMergeReport | null): boolean {
+    if (!report) return false;
+    return report?.TrueLinkCreditReportType?.Message instanceof Array
+      ? report?.TrueLinkCreditReportType?.Message[0]?.Code?.abbreviation === 'Credit data suppressed'
+      : report?.TrueLinkCreditReportType?.Message?.Code?.abbreviation === 'Credit data suppressed';
+  }
+
+  /*===================================*/
   //           TRADELINE RECORDS
   /*===================================*/
 
@@ -30,7 +41,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  static listTradelines(report: IMergeReport): ITradeLinePartition[] | [] {
+  static listTradelines(report: IMergeReport | null): ITradeLinePartition[] | [] {
     if (!report) return [];
     const partition = report.TrueLinkCreditReportType?.TradeLinePartition;
     if (partition === undefined) return [];

@@ -38,7 +38,7 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
     return forkJoin([
       this.initResolver.resolve(route, state),
       this.snapshotsResolver.resolve(route, state),
-      this.scoreTrendsResolver.resolve(route, state),
+      this.scoreTrendsResolver.resolve(),
       this.referralResolver.resolve(route, state),
     ])
       .pipe(
