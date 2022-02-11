@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
