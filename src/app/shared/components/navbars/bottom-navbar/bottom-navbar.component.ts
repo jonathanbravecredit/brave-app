@@ -6,6 +6,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
 import * as appDataActions from '@store/app-data/app-data.actions';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-bottom-navbar',
@@ -21,7 +22,12 @@ export class BottomNavbarComponent implements OnInit {
   clicked: string = '';
   navBarData: NavBarInput | null | undefined;
 
-  constructor(private state: StateService, private trans: TransunionService, private store: Store) {
+  constructor(
+    private state: StateService,
+    private trans: TransunionService,
+    private store: Store,
+    private interstitial: InterstitialService,
+  ) {
     this.state.state$.subscribe((r) => {
       this.navBarData = r.appData.navBar;
     });
@@ -54,6 +60,7 @@ export class BottomNavbarComponent implements OnInit {
         this.toggleDisputesBadge({ report: { badge: false } });
         break;
       case 'disputes':
+        this.interstitial.openInterstitial()
         this.toggleDisputesBadge({ disputes: { badge: false } });
         break;
       case 'settings':

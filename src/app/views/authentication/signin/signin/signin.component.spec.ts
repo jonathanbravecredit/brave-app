@@ -9,8 +9,10 @@ import { InterstitialService } from '@shared/services/interstitial/interstitial.
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedServicesModule } from '@shared/services/shared-services.module';
+import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 //    private route: ActivatedRoute,
+// private analytics: AnalyticsService,
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -20,12 +22,14 @@ describe('SigninComponent', () => {
   let authServiceMock: any;
   let interstitialServiceMock: any;
   let routerMock: any;
+  let analyticsMock: any;
   class RouteMock {}
 
   beforeEach(async () => {
     authServiceMock = jasmine.createSpyObj('AuthService', ['signIn', 'socialSignIn']);
     interstitialServiceMock = jasmine.createSpyObj('InterstitialService', ['fetching$']);
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
 
     authServiceMock.signIn.and.returnValue({} as ISignInCognitoUser);
     authServiceMock.socialSignIn.and.returnValue(null);
@@ -39,6 +43,7 @@ describe('SigninComponent', () => {
         { provide: AuthService, useValue: authServiceMock },
         { provide: InterstitialService, useValue: interstitialServiceMock },
         { provide: Router, useValue: routerMock },
+        { provide: AnalyticsService, useValue: analyticsMock },
         { provide: ActivatedRoute, useClass: RouteMock },
       ],
     }).compileComponents();
