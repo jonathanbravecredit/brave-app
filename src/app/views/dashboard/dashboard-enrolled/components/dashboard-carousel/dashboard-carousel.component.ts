@@ -27,8 +27,9 @@ export class DashboardCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.dashData) {
-      const { dashTrends: trends, dashScores: scores, dashScore: score, dashReport: report } = this.dashData;
+      const { dashTrends: trends, dashScores: scores, dashReport: report } = this.dashData; // removing dashScore: score,;
       this.sortedScores = scores?.length ? scores : [];
+      const score = this.getCurrentScore(this.sortedScores);
       this.delta = this.calculateDelta(this.sortedScores);
       this.graphic = this.formatGraphicData(score, this.delta);
       this.chart = this.formatChartData(trends, report, this.updatedAt, score);
@@ -78,13 +79,21 @@ export class DashboardCarouselComponent implements OnInit {
    * @returns
    */
   calculateDelta(scores: IProductTrendingData[]): number {
-    console.log('HERE', scores.length)
     if (scores.length > 1) {
       let latestScore = +scores[scores.length - 1].AttributeValue;
       let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
       return isNaN(latestScore) || isNaN(lastMonthsScore) ? 0 : latestScore - lastMonthsScore;
     } else {
       return 0;
+    }
+  }
+
+  getCurrentScore(scores: IProductTrendingData[]): number {
+    if (scores.length > 1) {
+      let latestScore = +scores[scores.length - 1].AttributeValue;
+      return isNaN(latestScore) ? 4 : latestScore;
+    } else {
+      return isNaN(+scores[0].AttributeValue) ? 4 : +scores[0].AttributeValue;
     }
   }
 
