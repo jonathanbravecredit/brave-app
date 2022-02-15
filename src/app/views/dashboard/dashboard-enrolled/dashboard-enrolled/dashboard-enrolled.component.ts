@@ -71,7 +71,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
-      // if (trends) this.dashboardService.dashScore$.next(BraveUtil.parsers.parseTransunionTrendingData(trends)[0]);
+      const prodTrends = BraveUtil.parsers.parseTransunionTrendingData(trends);
+      const score = this.dashboardService.getCurrentScore(prodTrends);
+      if (trends) this.dashboardService.dashScore$.next(score);
       this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(report));
       // check referral progress if active
       this.referral = referral;

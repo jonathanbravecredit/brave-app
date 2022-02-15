@@ -108,7 +108,7 @@ export class DashboardCarouselComponent implements OnInit {
    * @param delta
    * @returns
    */
-  formatGraphicData(currentScore: number | undefined, delta: number): ICreditReportGraphic {
+  formatGraphicData(currentScore: number | null | undefined, delta: number): ICreditReportGraphic {
     return {
       currentValue: currentScore || null,
       ptsChange: delta,

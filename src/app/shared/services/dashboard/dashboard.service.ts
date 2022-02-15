@@ -24,7 +24,7 @@ export interface IDashboardData {
   dashSnapshots: DashboardStateModel | null;
   dashTrends: IGetTrendingData | null;
   dashScores: IProductTrendingData[] | null;
-  dashScore: number;
+  dashScore: number | null;
   dashScoreSuppressed: boolean | null;
 }
 
@@ -40,7 +40,7 @@ export class DashboardService implements OnDestroy {
   dashSnapshots$ = new BehaviorSubject<DashboardStateModel | null>(null);
   dashTrends$ = new BehaviorSubject<IGetTrendingData | null>(null);
   dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null);
-  dashScore$ = new BehaviorSubject<number>(4);
+  dashScore$ = new BehaviorSubject<number | null>(null);
   dashScoreSuppressed$ = new BehaviorSubject(false);
   // subscriptions to dash
   dashScoresSub$: Subscription | undefined;
@@ -150,8 +150,6 @@ export class DashboardService implements OnDestroy {
       Authorization: `${token}`,
     });
 
-    return this.http
-      .get<IAdData[]>(environment.ads + '/ads', { headers })
-      .toPromise();
+    return this.http.get<IAdData[]>(environment.ads + '/ads', { headers }).toPromise();
   }
 }
