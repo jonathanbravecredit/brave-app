@@ -38,4 +38,3 @@ export class TradelineToFindingsPipe implements PipeTransform {
     return mapped;
   }
 }
-
