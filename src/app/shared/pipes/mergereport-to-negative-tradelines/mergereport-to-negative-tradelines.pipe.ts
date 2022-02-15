@@ -12,7 +12,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
 
   transform(report: IMergeReport): ITradeLinePartition[] | [] {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
-    if (!this.tradeLines) return [DEFAULT_TRADELINE];
+    if (!this.tradeLines) return [DEFAULT_TRADELINE.tradeline];
     if (!(this.tradeLines instanceof Array)) {
       this.tradeLines = [this.tradeLines];
     }

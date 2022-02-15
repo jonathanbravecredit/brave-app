@@ -35,6 +35,6 @@ export class TradelineToFindingsPipe implements PipeTransform {
       highCredit: tradeline.trade?.highCredit, // can only find on trade
       remarks: remarks,
     };
-    return mapped;
+    return mapped as ITradelineDetailsConfig;
   }
 }
