@@ -117,14 +117,14 @@ export class TradelinePaymentHistoryComponent implements OnInit {
     if (monthlyPayments === undefined) return months;
     let payments = monthlyPayments.filter((pay) => {
       if (pay.date === undefined) return false;
-      const badDate = pay.date.substring(0, 10);
+      const badDate = pay.date?.substring(0, 10);
       const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
       return goodDate.getFullYear() === year;
     });
     payments.forEach((pay) => {
       if (pay.date === undefined) return;
       const status = `${pay.status}`.length ? `${pay.status}`.toLowerCase() : 'u';
-      const badDate = pay.date.substring(0, 10);
+      const badDate = pay.date?.substring(0, 10);
       const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
       months[goodDate.getMonth()] = status;
     });
