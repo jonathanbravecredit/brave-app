@@ -31,7 +31,7 @@ export class TransunionReportParsers extends TransunionBase {
   /**
    * Flatten the credit statement provided by the borrower
    */
-  static parseBorrowerForCreditStatement(borrower: IBorrower | IBorrower[] | undefined): string | null | undefined {
+  static parseBorrowerForCreditStatement(borrower: IBorrower | undefined): string | null | undefined {
     if (!borrower) return;
     return borrower instanceof Array
       ? this.parseCreditStatement(borrower[0].CreditStatement)
