@@ -49,8 +49,8 @@ const condition9 = (summary: ICreditMixTLSummary) => {
 
 export enum Recommendations {
   Link = 'https://learn.self.inc/lpg/click-through/credit-builder-education-credit-card/?affiliate_partner=Bulldog%20Media%20Group&irgwc=1&irclickid=yB12CQ130xyIRHnyqjWYSydRUkG2Ph1p1VLCXg0&utm_source=impact_radius&utm_medium=affiliate&utm_campaign=Bulldog%20Media%20Group&utm_content=Self%20-%20Credit%20Card%20%2B%20Credit%20Builder%20Combo%20Page&media_partner1=&media_partner2=&media_parter3=&ad_name=Self%20-%20Credit%20Card%20%2B%20Credit%20Builder%20Combo%20Page&ad_type=TEXT_LINK&media_partner_id=70161&campaign_id=10159&media_partner_type=mediapartner&click_time_unix=1638237272355&subid1=N4P567_19805&subid2=&subid3=&sharedid=N4P567_19805&ircid=10159',
-  TwoToFourLink = 'https://beemrdwn.com/imp.aspx?l=30975&c=19805',
-  AllClosedLink = 'https://beemrdwn.com/imp.aspx?l=30975&c=19805',
+  TwoToFourLink = 'https://www.commissionsoup.com/opts.aspx?t=POIUA7&u=https%3A%2F%2Fwww.milestonegoldcard.com%2Fpre-qualify%3Fmmcid%3DMAAG00213075001%26subid%3DPOIUA7_5851_19805',
+  AllClosedLink = 'https://www.commissionsoup.com/opts.aspx?t=POIUA7&u=https%3A%2F%2Fwww.milestonegoldcard.com%2Fpre-qualify%3Fmmcid%3DMAAG00213075001%26subid%3DPOIUA7_5851_19805',
 
   NotTooLate = "It's never too late to start building a diversified credit base to help your score!",
   GoodStart = "You're off to a good start on building a strong credit base!",

@@ -13,9 +13,11 @@ export class BraveParsers extends BraveBase {
     if (!transunion) return JSON.parse('{}');
     const fulfillMergeReport = transunion.fulfillMergeReport;
     const enrollMergeReport = transunion.enrollMergeReport;
-    const serviceProductString: string | IMergeReport = (fulfillMergeReport
-      ? fulfillMergeReport?.serviceProductObject || '{}'
-      : enrollMergeReport?.serviceProductObject || '{}') as string | IMergeReport;
+    const serviceProductString: string | IMergeReport = (
+      fulfillMergeReport
+        ? fulfillMergeReport?.serviceProductObject || '{}'
+        : enrollMergeReport?.serviceProductObject || '{}'
+    ) as string | IMergeReport;
     const spo1: IMergeReport | string =
       typeof serviceProductString === 'string'
         ? JSON.parse(serviceProductString)
@@ -41,12 +43,13 @@ export class BraveParsers extends BraveBase {
       : [data.ProductAttributes?.ProductTrendingAttribute];
 
     const scores = trendAttrs.filter((a) => {
-      return a.AttributeName.indexOf('VantageScore3') >= 0;
+      return a.AttributeName.indexOf('VantageScore3V7') >= 0;
     })[0];
 
-    return (Array.isArray(scores?.ProductAttributeData?.ProductTrendingData)
-      ? scores?.ProductAttributeData?.ProductTrendingData
-      : [scores?.ProductAttributeData?.ProductTrendingData]
+    return (
+      Array.isArray(scores?.ProductAttributeData?.ProductTrendingData)
+        ? scores?.ProductAttributeData?.ProductTrendingData
+        : [scores?.ProductAttributeData?.ProductTrendingData]
     ).sort((a, b) => {
       return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? -1 : 1;
     });
