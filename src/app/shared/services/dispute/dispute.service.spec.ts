@@ -55,7 +55,7 @@ describe('DisputeService', () => {
     TestBed.configureTestingModule({
       providers: [
         DisputeService,
-        { provide: StateService, useClass: stateMock },
+        { provide: StateService, useValue: stateMock },
         { provide: TransunionService, useValue: transunionMock },
         { provide: AnalyticsService, useValue: analyticsMock },
         { provide: SafeListMonitoringService, useValue: safeMonitorMock },

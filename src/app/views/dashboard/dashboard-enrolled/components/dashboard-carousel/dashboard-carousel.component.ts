@@ -78,7 +78,6 @@ export class DashboardCarouselComponent implements OnInit {
    * @returns
    */
   calculateDelta(scores: IProductTrendingData[]): number {
-    console.log('HERE', scores.length);
     if (scores.length > 1) {
       let latestScore = +scores[scores.length - 1].AttributeValue;
       let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
