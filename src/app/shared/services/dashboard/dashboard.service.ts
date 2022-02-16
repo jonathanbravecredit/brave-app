@@ -83,7 +83,11 @@ export class DashboardService implements OnDestroy {
         const swap = -1;
         return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? keep : swap;
       })[0];
-      return isNaN(+sorted.AttributeValue) ? null : +sorted.AttributeValue;
+      return isNaN(+sorted.AttributeValue)
+        ? this.tuReport$
+          ? this.parseRiskScoreFromReport(this.tuReport$.getValue())
+          : null
+        : +sorted.AttributeValue;
     } else {
       return this.tuReport$ ? this.parseRiskScoreFromReport(this.tuReport$.getValue()) : null;
     }
