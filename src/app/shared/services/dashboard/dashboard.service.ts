@@ -1,5 +1,6 @@
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import * as _ from 'lodash';
+import * as dayjs from 'dayjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
@@ -78,9 +79,11 @@ export class DashboardService implements OnDestroy {
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {
     if (scores && scores.length) {
       const sorted = scores.sort((a, b) => {
-        return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? -1 : 1;
+        const keepOrder = 1;
+        const switchOrder = -1;
+        return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? keepOrder : switchOrder;
       })[0];
-      return isNaN(+sorted.AttributeValue) ? null : +scores.AttributeValue;
+      return isNaN(+sorted.AttributeValue) ? null : +sorted.AttributeValue;
     } else {
       return this.tuReport$ ? this.parseRiskScoreFromReport(this.tuReport$.getValue()) : null;
     }
