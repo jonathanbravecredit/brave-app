@@ -77,7 +77,10 @@ export class DashboardService implements OnDestroy {
 
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {
     if (scores && scores.length) {
-      return isNaN(+scores[0]?.AttributeValue) ? null : +scores[0]?.AttributeValue;
+      const sorted = scores.sort((a, b) => {
+        return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? -1 : 1;
+      })[0];
+      return isNaN(+sorted.AttributeValue) ? null : +scores.AttributeValue;
     } else {
       return this.tuReport$ ? this.parseRiskScoreFromReport(this.tuReport$.getValue()) : null;
     }
