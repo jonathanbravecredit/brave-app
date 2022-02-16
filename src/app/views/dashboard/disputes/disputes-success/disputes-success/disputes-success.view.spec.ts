@@ -25,4 +25,10 @@ describe("DisputesSuccessView", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run router.navigate when onGoBackClick is called', () => {
+    component.onGoBackClick()
+
+    expect(routerMock.navigate).toHaveBeenCalled()
+  })
 });

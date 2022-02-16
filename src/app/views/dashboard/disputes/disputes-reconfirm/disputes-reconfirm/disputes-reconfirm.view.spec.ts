@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces';
+import { IMergeReport, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { StateService } from '@shared/services/state/state.service';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { BehaviorSubject, of } from 'rxjs';
 
 import { DisputesReconfirmView } from './disputes-reconfirm.view';
@@ -30,14 +31,15 @@ describe('DisputesReconfirmView', () => {
   }
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('', ['']);
-    interstitialMock = jasmine.createSpyObj('', ['']);
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    interstitialMock = jasmine.createSpyObj('InterstitialService', ['']);
     disputeServiceMock = jasmine.createSpyObj('DisputeService', [
       'setPersonalItem',
       'setPublicItem',
       'setTradelineItem',
     ]);
-    statesvcMock = jasmine.createSpyObj('', ['']);
+    statesvcMock = jasmine.createSpyObj('StateService', [''], [{ state: { appData: { id: 'testIdString' } } }]);
+    statesvcMock.state = { appData: { id: 'testIdString' } }
     await TestBed.configureTestingModule({
       declarations: [DisputesReconfirmView],
       providers: [
@@ -59,5 +61,59 @@ describe('DisputesReconfirmView', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('onDisputePersonalClick', () => {
+    // it('should throw an error if id is falsy', () => {
+    //   //todo figure out how to fix this
+    // })
+
+    it('should run setPersonalItem if id is truthy', () => {
+      component.onDisputePersonalClick({} as IPersonalItemsDetailsConfig);
+
+      expect(disputeServiceMock.setPersonalItem).toHaveBeenCalled()
+    });
+
+    it('should run navigate if id is truthy', () => {
+      component.onDisputePersonalClick({} as IPersonalItemsDetailsConfig);
+
+      expect(routerMock.navigate).toHaveBeenCalled()
+    });
+  });
+
+  describe('onDisputePublicClick', () => {
+    // it('should throw an error if id is falsy', () => {
+    //   //todo figure out how to fix this
+    // })
+
+    it('should run setPublicItem if id is truthy', () => {
+      component.onDisputePublicClick({} as IPublicPartition);
+
+      expect(disputeServiceMock.setPublicItem).toHaveBeenCalled()
+    });
+
+    it('should run navigate if id is truthy', () => {
+      component.onDisputePublicClick({} as IPublicPartition);
+
+      expect(routerMock.navigate).toHaveBeenCalled()
+    });
+  });
+
+  describe('onDisputeTradelineClick', () => {
+    // it('should throw an error if id is falsy', () => {
+    //   //todo figure out how to fix this
+    // })
+
+    it('should run setTradelineItem if id is truthy', () => {
+      component.onDisputeTradelineClick({} as ITradeLinePartition);
+
+      expect(disputeServiceMock.setTradelineItem).toHaveBeenCalled()
+    });
+
+    it('should run navigate if id is truthy', () => {
+      component.onDisputeTradelineClick({} as ITradeLinePartition);
+
+      expect(routerMock.navigate).toHaveBeenCalled()
+    });
   });
 });
