@@ -5,7 +5,7 @@ import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { SignupState } from '@views/authentication/signup/signup/signup.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { SignupComponent } from './signup.component';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -28,7 +28,7 @@ describe('SignupComponent', () => {
   let neverBounceMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    routerMock = jasmine.createSpyObj('Router', ['navigate'], {events: of()});
     authMock = jasmine.createSpyObj('AuthService', ['socialSignIn', '']);
     analyticsMock = jasmine.createSpyObj('AnalyticsService', [
       'fireCompleteRegistration',
@@ -38,7 +38,7 @@ describe('SignupComponent', () => {
     interstitialMock = jasmine.createSpyObj(
       'InterstitialService',
       [''],
-      [{ fetching$: new BehaviorSubject<boolean>(false) }],
+      { fetching$: new BehaviorSubject<boolean>(false) },
     );
     neverBounceMock = jasmine.createSpyObj('NeverbounceService', ['validateEmail']);
 

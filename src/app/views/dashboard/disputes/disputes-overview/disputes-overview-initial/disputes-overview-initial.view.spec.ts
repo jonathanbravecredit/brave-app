@@ -1,17 +1,17 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { ActivatedRoute, Router } from "@angular/router";
-import { IDispute } from "@shared/interfaces/disputes";
-import { DisputesToDisputesHistoricalPipe } from "@shared/pipes/disputes-to-disputes-historical/disputes-to-disputes-historical.pipe";
-import { DisputesToDisputesOverviewPipe } from "@shared/pipes/disputes-to-disputes-overview/disputes-to-disputes-overview.pipe";
-import { DisputeService } from "@shared/services/dispute/dispute.service";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { TransunionService } from "@shared/services/transunion/transunion.service";
-import { IDisputeHistorical } from "@views/dashboard/disputes/components/cards";
-import { BehaviorSubject, of } from "rxjs";
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IDispute } from '@shared/interfaces/disputes';
+import { DisputesToDisputesHistoricalPipe } from '@shared/pipes/disputes-to-disputes-historical/disputes-to-disputes-historical.pipe';
+import { DisputesToDisputesOverviewPipe } from '@shared/pipes/disputes-to-disputes-overview/disputes-to-disputes-overview.pipe';
+import { DisputeService } from '@shared/services/dispute/dispute.service';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { TransunionService } from '@shared/services/transunion/transunion.service';
+import { IDisputeHistorical } from '@views/dashboard/disputes/components/cards';
+import { BehaviorSubject, of } from 'rxjs';
 
-import { DisputesOverviewInitialView } from "./disputes-overview-initial.view";
+import { DisputesOverviewInitialView } from './disputes-overview-initial.view';
 
-describe("DisputesOverviewInitialView", () => {
+describe('DisputesOverviewInitialView', () => {
   let component: DisputesOverviewInitialView;
   let fixture: ComponentFixture<DisputesOverviewInitialView>;
   let routerMock: any;
@@ -29,8 +29,8 @@ describe("DisputesOverviewInitialView", () => {
     });
     transunionMock = jasmine.createSpyObj('', ['getInvestigationResults']);
     routeMock = jasmine.createSpyObj('', [''], {
-      data: of()
-    })
+      data: of(),
+    });
 
     await TestBed.configureTestingModule({
       declarations: [DisputesOverviewInitialView, DisputesToDisputesHistoricalPipe, DisputesToDisputesOverviewPipe],
@@ -53,7 +53,6 @@ describe("DisputesOverviewInitialView", () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should unsubscribe routeSub$ on destroy', () => {
     spyOn(component.routeSub$, 'unsubscribe' as never);

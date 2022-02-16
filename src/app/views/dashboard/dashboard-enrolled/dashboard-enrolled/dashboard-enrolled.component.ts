@@ -1,49 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import {
-  IGetTrendingData,
-  IProductTrendingAttribute,
-  IProductTrendingData,
-} from '@shared/interfaces/get-trending-data.interface';
-import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
+import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
 import {
   ICreditMixTLSummary,
   IRecommendationText,
 } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
+import { BraveUtil } from '@shared/utils/brave/brave';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Observable, Subscription } from 'rxjs';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { shuffle } from 'lodash';
+import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { IMergeReport } from '@shared/interfaces';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
   templateUrl: './dashboard-enrolled.component.html',
 })
-export class DashboardEnrolledComponent implements OnInit, OnDestroy {
-  userName: string | undefined;
-  welcomeMsg: string | undefined;
-  lastUpdated: string | undefined;
-  report: IMergeReport | undefined;
+export class DashboardEnrolledComponent implements OnDestroy {
+  // is credit report suppressed
+  suppressed: boolean = false;
+  // snapshots and analysis
   snapshots: DashboardStateModel | undefined;
-  sortedScores!: IProductTrendingData[] | null;
-  trends!: IGetTrendingData | null;
-  trendingScores: IProductTrendingData[] = [];
+  rating: string | undefined;
   creditMix: IRecommendationText | undefined;
   creditMixStatus: string | undefined;
   creditUtilizationStatus: string | undefined;
-  tradelineSummary: ICreditMixTLSummary | undefined;
-  rating: string | undefined;
   creditUtilizationPerc: number | undefined;
-  routeSub$: Subscription | undefined;
-  referral: IReferral | undefined;
+  creditMixSummary: ICreditMixTLSummary | undefined;
+  // tu data
+  // report: IMergeReport | undefined;
+  report: IMergeReport | null | undefined;
+  referral: IReferral | null | undefined;
+  trends!: IGetTrendingData | null;
+  trendingScores: IProductTrendingData[] = [];
+  sortedScores!: IProductTrendingData[] | null;
+  // ad data for carousel
   adsData$: Observable<IAdData[]> | undefined;
   adsData: IAdData[] | undefined;
+  // sub to router
+  routeSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -53,18 +55,7 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
     private creditUtilizationService: CreditUtilizationService,
   ) {
     this.subscribeToRouteData();
-    this.userName = this.dashboardService.state?.user?.userAttributes?.name?.first;
-    const fullfilled = this.dashboardService.state?.agencies?.transunion?.fulfilledOn;
-    if (fullfilled) {
-      this.lastUpdated = new Date(fullfilled).toLocaleDateString();
-    }
-    this.dashboardService.getAdData().then((resp: any) => {
-      this.adsData = shuffle(resp);
-    });
-  }
-
-  ngOnInit(): void {
-    if (this.userName) this.welcomeMsg = 'Welcome back, ' + this.userName;
+    this.setAdData();
   }
 
   ngOnDestroy(): void {
@@ -73,42 +64,35 @@ export class DashboardEnrolledComponent implements OnInit, OnDestroy {
 
   subscribeToRouteData(): void {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
-      this.report = resp.dashboard.report;
-      this.snapshots = resp.dashboard.snapshots;
-      this.trends = resp.dashboard.trends;
-      if (this.trends) {
-        const trendAttrs =
-          this.trends.ProductAttributes.ProductTrendingAttribute instanceof Array
-            ? this.trends.ProductAttributes.ProductTrendingAttribute
-            : [this.trends.ProductAttributes.ProductTrendingAttribute];
-        const scores = trendAttrs.filter(
-          (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
-        )[0];
-        this.trendingScores =
-          scores.ProductAttributeData.ProductTrendingData instanceof Array
-            ? scores.ProductAttributeData.ProductTrendingData
-            : [scores.ProductAttributeData.ProductTrendingData];
-      }
-      this.sortScores(this.trendingScores);
-      this.referral = resp.dashboard.referral;
-      const tradelines = this.report?.TrueLinkCreditReportType?.TradeLinePartition
-        ? this.report?.TrueLinkCreditReportType.TradeLinePartition instanceof Array
-          ? this.report?.TrueLinkCreditReportType.TradeLinePartition
-          : [this.report?.TrueLinkCreditReportType.TradeLinePartition]
-        : [];
-      this.tradelineSummary = this.creditMixService.getTradelineSummary(tradelines);
-      this.creditMix = this.creditMixService.getRecommendations(this.tradelineSummary);
+      // these are key data sources
+      const { report, snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
+      this.report = report; // verify there is actually a report
+      if (report) this.dashboardService.dashReport$.next(report);
+      if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
+      if (trends) this.dashboardService.dashTrends$.next(trends);
+      if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
+      const prodTrends = BraveUtil.parsers.parseTransunionTrendingData(trends);
+      const score = this.dashboardService.getCurrentScore(prodTrends);
+      if (trends) this.dashboardService.dashScore$.next(score);
+      this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(report));
+      // check referral progress if active
+      this.referral = referral;
+      // for the credit mix
+      const tradelines = TransunionUtil.queries.report.listTradelines(report);
+      this.creditMixSummary = this.creditMixService.getTradelineSummary(tradelines);
+      this.creditMix = this.creditMixService.getRecommendations(this.creditMixSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
-      this.rating = this.creditMixService.getRecommendations(this.tradelineSummary)?.rating;
+      this.rating = this.creditMixService.getRecommendations(this.creditMixSummary)?.rating;
+      // for the credit utilization
       const creditUtilSnapshotObj = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
       this.creditUtilizationStatus = creditUtilSnapshotObj.status;
       this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
     });
   }
 
-  sortScores(scores: IProductTrendingData[]) {
-    this.sortedScores = scores.sort((a, b) => {
-      return a.AttributeDate < b.AttributeDate ? -1 : 1;
+  setAdData(): void {
+    this.dashboardService.getAdData().then((resp: any) => {
+      this.adsData = shuffle(resp);
     });
   }
 

@@ -4,8 +4,8 @@
       <!-- Score -->
       <div class="flex flex-col text-white text-center">
         <p class="font-bold text-sm">Your Score</p>
-        <p class="text-3xl font-bold mt-2">{{ currentValue || 550 }}</p>
-        <p class="font-extrabold text-sm">{{ currentValue || 550 | creditReportGraphic: 'status' }}</p>
+        <p class="text-3xl font-bold mt-2">{{ currentValue || 4 }}</p>
+        <p class="font-extrabold text-sm">{{ currentValue || 4 | creditReportGraphic: 'status' }}</p>
         <div class="font-bold flex flex-nowrap mt-2">
           <div class="mr-2 text-2xl -mt-2">
             <span
@@ -25,19 +25,14 @@
             >{{ !ptsChange || ptsChange > 0 || ptsChange === 0 ? '+' : '' }}{{ ptsChange ? ptsChange : 0 }} points</span
           >
         </div>
-        <p
-          class="text-opacity-75 whitespace-nowrap mt-1"
-          style="font-size: 0.66rem"
-        >
-          since last update
-        </p>
+        <p class="text-opacity-75 whitespace-nowrap mt-1" style="font-size: 0.66rem">since last update</p>
       </div>
       <!-- Chart -->
       <div class="flex relative">
         <img src="https://d3e1i93f88eoxl.cloudfront.net/credit-range-sloped-graph.svg" />
-        <div class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
+        <div *ngIf="currentValue || 4 > 4" class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
           <brave-horizontal-creditscore-invisiblebar
-            [currentValue]="currentValue || 550"
+            [currentValue]="currentValue || 4"
             [rotationOffset]="31"
           ></brave-horizontal-creditscore-invisiblebar>
         </div>
@@ -49,8 +44,8 @@
         <!-- Score -->
         <div class="flex flex-col text-white text-center">
           <p class="font-bold text-sm">Your Score</p>
-          <p class="text-3xl font-bold mt-2">{{ 300 }}</p>
-          <p class="font-extrabold text-sm">{{ 300 | creditReportGraphic: 'status' }}</p>
+          <p class="text-3xl font-bold mt-2">{{ 4 }}</p>
+          <p class="font-extrabold text-sm">{{ 4 | creditReportGraphic: 'status' }}</p>
           <div class="font-bold flex flex-nowrap mt-2">
             <div class="mr-2 text-2xl -mt-2"></div>
             <span class="whitespace-nowrap">0 points</span>
@@ -60,9 +55,9 @@
         <!-- Chart -->
         <div class="flex relative">
           <img src="https://d3e1i93f88eoxl.cloudfront.net/credit-range-sloped-graph.svg" />
-          <div class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
+          <div *ngIf="false" class="absolute top-1/2 w-full" style="transform: skewY(-31deg)">
             <brave-horizontal-creditscore-invisiblebar
-              [currentValue]="300"
+              [currentValue]="4"
               [rotationOffset]="31"
             ></brave-horizontal-creditscore-invisiblebar>
           </div>

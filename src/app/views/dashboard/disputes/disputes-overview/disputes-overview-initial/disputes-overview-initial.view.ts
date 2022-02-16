@@ -29,7 +29,9 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.interstitial.closeInterstitial();
+  }
   ngOnDestroy(): void {
     if (this.routeSub$) this.routeSub$.unsubscribe();
   }

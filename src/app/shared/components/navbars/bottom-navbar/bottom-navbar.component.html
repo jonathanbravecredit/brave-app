@@ -13,6 +13,13 @@
         *ngFor="let item of navigationItems"
         (click)="navigate(item.id); badgeClicked(item)"
         [ngStyle]="{ 'min-width': '24.9%', 'max-width': '24.9%' }"
+        style="
+          -webkit-user-select: none;
+          -webkit-touch-callout: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        "
       >
         <span class="material-icons-outlined" [ngClass]="{ 'text-brave-blurple': currentActiveItemId === item.id }">{{
           item.iconName
@@ -24,7 +31,10 @@
         >
         <brave-notification-badge
           class="relative"
-          *ngIf="item.name === 'Disputes' && navBarData?.disputes?.badge"
+          *ngIf="
+            (item.id === 'disputes' && navBarData?.disputes?.badge) ||
+            (item.id === 'report' && navBarData?.report?.badge)
+          "
           text="1"
           left="50%"
           top="-45px"

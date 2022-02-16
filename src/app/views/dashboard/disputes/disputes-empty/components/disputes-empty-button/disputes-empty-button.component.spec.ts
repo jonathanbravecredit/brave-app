@@ -10,7 +10,6 @@ describe('DisputesEmptyButtonComponent', () => {
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
-
     await TestBed.configureTestingModule({
       declarations: [DisputesEmptyButtonComponent],
       providers: [{ provide: Router, useValue: routerMock }],
