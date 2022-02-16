@@ -79,9 +79,9 @@ export class DashboardService implements OnDestroy {
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {
     if (scores && scores.length) {
       const sorted = scores.sort((a, b) => {
-        const keepOrder = 1;
-        const switchOrder = -1;
-        return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? keepOrder : switchOrder;
+        const keep = 1;
+        const swap = -1;
+        return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? keep : swap;
       })[0];
       return isNaN(+sorted.AttributeValue) ? null : +sorted.AttributeValue;
     } else {
