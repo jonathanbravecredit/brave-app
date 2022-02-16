@@ -1,5 +1,6 @@
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import * as _ from 'lodash';
+import * as dayjs from 'dayjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
@@ -24,7 +25,7 @@ export interface IDashboardData {
   dashSnapshots: DashboardStateModel | null;
   dashTrends: IGetTrendingData | null;
   dashScores: IProductTrendingData[] | null;
-  dashScore: number;
+  dashScore: number | null;
   dashScoreSuppressed: boolean | null;
 }
 
@@ -40,7 +41,7 @@ export class DashboardService implements OnDestroy {
   dashSnapshots$ = new BehaviorSubject<DashboardStateModel | null>(null);
   dashTrends$ = new BehaviorSubject<IGetTrendingData | null>(null);
   dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null);
-  dashScore$ = new BehaviorSubject<number>(4);
+  dashScore$ = new BehaviorSubject<number | null>(null);
   dashScoreSuppressed$ = new BehaviorSubject(false);
   // subscriptions to dash
   dashScoresSub$: Subscription | undefined;
@@ -77,7 +78,16 @@ export class DashboardService implements OnDestroy {
 
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {
     if (scores && scores.length) {
-      return isNaN(+scores[0]?.AttributeValue) ? null : +scores[0]?.AttributeValue;
+      const sorted = scores.sort((a, b) => {
+        const swap = 1;
+        const keep = -1;
+        return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? swap : keep;
+      })[0];
+      return isNaN(+sorted.AttributeValue)
+        ? this.tuReport$
+          ? this.parseRiskScoreFromReport(this.tuReport$.getValue())
+          : null
+        : +sorted.AttributeValue;
     } else {
       return this.tuReport$ ? this.parseRiskScoreFromReport(this.tuReport$.getValue()) : null;
     }
@@ -150,8 +160,6 @@ export class DashboardService implements OnDestroy {
       Authorization: `${token}`,
     });
 
-    return this.http
-      .get<IAdData[]>(environment.ads + '/ads', { headers })
-      .toPromise();
+    return this.http.get<IAdData[]>(environment.ads + '/ads', { headers }).toPromise();
   }
 }
