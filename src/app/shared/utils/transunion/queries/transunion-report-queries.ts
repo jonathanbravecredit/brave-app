@@ -27,9 +27,10 @@ export class TransunionReportQueries extends TransunionBase {
 
   static isReportSupressed(report: IMergeReport | null): boolean {
     if (!report) return false;
-    return report?.TrueLinkCreditReportType?.Message instanceof Array
-      ? report?.TrueLinkCreditReportType?.Message[0]?.Code?.abbreviation === 'Credit data suppressed'
-      : report?.TrueLinkCreditReportType?.Message?.Code?.abbreviation === 'Credit data suppressed';
+    let res = report?.TrueLinkCreditReportType?.Message.find((ele) => {
+      ele.Code?.abbreviation === 'Credit data suppressed';
+    });
+    return res ? true : false;
   }
 
   /*===================================*/

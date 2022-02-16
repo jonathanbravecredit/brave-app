@@ -2,7 +2,6 @@ export * from './common-tu.interface';
 export * from './dispute-preflight-check.interface';
 export * from './enroll-request.interface';
 export * from './enroll.interface';
-export * from './errors.interface';
 export * from './fulfill-request.interface';
 export * from './fulfill.interface';
 export * from './get-authorization-questions.interface';
