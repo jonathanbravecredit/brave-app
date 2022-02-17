@@ -5,7 +5,7 @@ export interface ITradelineDetailsConfig {
   tradeline: ITradeLinePartition;
   trade?: ITrade;
   accountNumber?: string | number;
-  accountTypeSymbol?: string;
+  accountTypeSymbol?: string | null;
   accountTypeDescription?: string;
   accountTypeDescriptionValue?: string;
   creditorName?: string;

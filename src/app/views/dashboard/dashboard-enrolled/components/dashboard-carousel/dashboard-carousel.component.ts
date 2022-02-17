@@ -78,7 +78,6 @@ export class DashboardCarouselComponent implements OnInit {
    * @returns
    */
   calculateDelta(scores: IProductTrendingData[]): number {
-    console.log('HERE', scores.length);
     if (scores.length > 1) {
       let latestScore = +scores[scores.length - 1].AttributeValue;
       let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
@@ -99,7 +98,7 @@ export class DashboardCarouselComponent implements OnInit {
    * @param delta
    * @returns
    */
-  formatGraphicData(currentScore: number | null | undefined, delta: number): ICreditReportGraphic {
+  formatGraphicData(currentScore: number | null, delta: number): ICreditReportGraphic {
     return {
       currentValue: currentScore || null,
       ptsChange: delta,
