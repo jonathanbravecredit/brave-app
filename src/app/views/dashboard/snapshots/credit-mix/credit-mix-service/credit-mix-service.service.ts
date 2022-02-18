@@ -23,15 +23,11 @@ export class CreditMixService implements OnDestroy {
   tuReportSub$: Subscription | undefined;
   tradeLinePartition: ITradeLinePartition[] = [];
 
-  // @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
-  // agenciesSub$: Subscription;
-
   constructor(private creditReport: CreditreportService) {
     this.subscribeToCreditReport();
   }
 
   subscribeToCreditReport() {
-    this.tuReport$ = this.creditReport.tuReport$;
     this.tuReportSub$ = this.creditReport.tuReport$.subscribe((report) => {
       this.tuReport$.next(report);
       this.tuReport = report;

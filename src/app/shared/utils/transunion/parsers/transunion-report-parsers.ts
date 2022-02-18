@@ -24,7 +24,11 @@ export class TransunionReportParsers extends TransunionBase {
   static parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
     if (remarks === undefined) return '';
     return remarks instanceof Array
-      ? remarks.map((r) => r.RemarkCode?.description || '').reduce((a, b) => `${a} \n ${b}`)
+      ? remarks
+          .map((r) => r.RemarkCode?.description || '')
+          .reduce((a, b) => {
+            return `${a} \n ${b}`;
+          }, '')
       : remarks.RemarkCode?.description || '';
   }
 
@@ -98,7 +102,10 @@ export class TransunionReportParsers extends TransunionBase {
    * @param subscriber
    * @returns
    */
-  static unparseSubscriber(subscriber: ISubscriber | undefined | null, nameOverride?: string): [string?, string?, string?] {
+  static unparseSubscriber(
+    subscriber: ISubscriber | undefined | null,
+    nameOverride?: string,
+  ): [string?, string?, string?] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
     const name = nameOverride ? nameOverride : subscriber.name;
     const address = this.unparseAddress(subscriber.CreditAddress);

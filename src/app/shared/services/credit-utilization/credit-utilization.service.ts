@@ -24,7 +24,6 @@ export class CreditUtilizationService implements OnDestroy {
   }
 
   subscribeToCreditReport() {
-    this.tuReport$ = this.creditReport.tuReport$;
     this.tuReportSub$ = this.creditReport.tuReport$.subscribe((report) => {
       this.tuReport$.next(report);
       this.tuReport = report;
