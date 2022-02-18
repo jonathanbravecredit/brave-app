@@ -148,9 +148,7 @@ export class CreditreportService implements OnDestroy {
    * @returns {ITradeLinePartition[]}
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
-    const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
-    if (!partitions) return [{} as ITradeLinePartition];
-    return partitions instanceof Array ? partitions : [partitions];
+    return this.tuReport.TrueLinkCreditReportType.TradeLinePartition;
   }
 
   /**
@@ -162,10 +160,11 @@ export class CreditreportService implements OnDestroy {
   setTradeline(tradeline: ITradeLinePartition): void {
     this.tuTradeline = tradeline;
     this.tuTradeline$.next(tradeline);
+
     let subscribers = this.tuReport.TrueLinkCreditReportType.Subscriber;
-    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
     const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subscribers) || ({} as ISubscriber);
     if (subscriber === undefined) return;
+
     this.tuTradelineSubscriber = subscriber;
     this.tuTradelineSubscriber$.next(subscriber);
   }
@@ -175,9 +174,7 @@ export class CreditreportService implements OnDestroy {
    * @returns {IPublicPartition[]}
    */
   getPublicItems(): IPublicPartition[] {
-    const partitions = this.tuReport?.TrueLinkCreditReportType?.PulblicRecordPartition;
-    if (!partitions) return [{} as IPublicPartition];
-    return partitions instanceof Array ? partitions : [partitions];
+    return this.tuReport.TrueLinkCreditReportType.PulblicRecordPartition;
   }
 
   /**
@@ -189,10 +186,11 @@ export class CreditreportService implements OnDestroy {
   setPublicItem(publicItem: IPublicPartition): void {
     this.tuPublicItem = publicItem;
     this.tuPublicItem$.next(publicItem);
+
     let subscribers = this.tuReport.TrueLinkCreditReportType.Subscriber;
-    subscribers = subscribers instanceof Array ? subscribers : [subscribers || ({} as ISubscriber)];
     const subscriber = tu.queries.report.getPublicSubscriberByKey(publicItem, subscribers) || ({} as ISubscriber);
     if (subscriber === undefined) return;
+
     this.tuPublicItemSubscriber = subscriber;
     this.tuPublicItemSubscriber$.next(subscriber);
   }
@@ -203,9 +201,7 @@ export class CreditreportService implements OnDestroy {
    * @returns {IBorrower}
    */
   getPersonalItem(): IBorrower {
-    const partitions = this.tuReport?.TrueLinkCreditReportType?.Borrower;
-    if (!partitions) return {} as IBorrower;
-    return partitions instanceof Array ? partitions[0] : partitions;
+    return this.tuReport.TrueLinkCreditReportType.Borrower;
   }
 
   /**
