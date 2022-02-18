@@ -127,8 +127,8 @@ export class TransunionService {
   async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollCreditReportResponse | undefined>> {
     const res = await this.sendTransunionAPICall<IEnrollCreditReportResponse>('Enroll', JSON.stringify({}));
     this.store.dispatch(new CreditReportActions.Add({
-      report: res.data?.report,
-      updatedOn: new Dayjs(),
+      report: res.data === undefined ? null : res.data.report,
+      updatedOn: new Dayjs().toISOString(),
     }))
     return res
   }

@@ -48,7 +48,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   adsData: IAdData[] | undefined;
   // sub to router
   routeSub$: Subscription | undefined;
-  report: IMergeReport | null | undefined;
+  report: IMergeReport | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription;
 
@@ -63,13 +63,13 @@ export class DashboardEnrolledComponent implements OnDestroy {
     this.reportSub$ = this.report$
       .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
       .subscribe((creditReportData: CreditReportStateModel) => {
-      this.report = creditReportData.report
-      })
+        this.report = creditReportData.report;
+      });
+
+    console.log('HERE', this.report)
 
     this.subscribeToRouteData();
     this.setAdData();
-
-    console.log('HERE', this.report)
   }
 
   ngOnDestroy(): void {
@@ -80,20 +80,20 @@ export class DashboardEnrolledComponent implements OnDestroy {
   subscribeToRouteData(): void {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
       // these are key data sources
-      const { report, snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
+      const { snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
 
-      if (report) this.dashboardService.dashReport$.next(report);
+      if (this.report) this.dashboardService.dashReport$.next(this.report);
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
       const prodTrends = BraveUtil.parsers.parseTransunionTrendingData(trends);
       const score = this.dashboardService.getCurrentScore(prodTrends);
       if (trends) this.dashboardService.dashScore$.next(score);
-      this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(report));
+      this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
       // check referral progress if active
       this.referral = referral;
       // for the credit mix
-      const tradelines = TransunionUtil.queries.report.listTradelines(report);
+      const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
       this.creditMixSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.creditMixSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');

@@ -5,6 +5,6 @@ import { Dayjs } from 'dayjs';
 export interface CreditReportStep extends IProgressStep {}
 type typename = 'CreditReport';
 export class CreditReportStateModel {
-  report: IMergeReport | undefined = {TrueLinkCreditReportType: {SafetyCheckPassed: 'TEST SUCCESS'}} as IMergeReport;
-  updatedOn: Dayjs = new Dayjs();
+  report: IMergeReport | null = null;
+  updatedOn: string = new Dayjs().toISOString();
 }
