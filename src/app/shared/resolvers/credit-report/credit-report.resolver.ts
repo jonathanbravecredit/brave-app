@@ -16,21 +16,33 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
   async resolve(): Promise<IMergeReport | null> {
     const state = await this.store.selectOnce(CreditReportSelectors.getCreditReport).toPromise();
     const fresh = await this.isFresh(state);
-    if (!fresh) {
+    if (fresh) {
+      return state.report;
+    } else {
       try {
-        const report = await this.creditReportV2.getCurrentCreditReport();
+        const { report } = await this.creditReportV2.getCurrentCreditReport();
         this.setCreditReport(report);
         return report;
       } catch {
         return null;
       }
     }
-    return state.report;
   }
 
   async setCreditReport(report: IMergeReport | null = null): Promise<void> {
     const payload = { report, updatedOn: new Date().toISOString() };
-    await this.store.dispatch(new CreditReportActions.Add(payload)).toPromise();
+    await new Promise((resolve, reject) => {
+      this.store
+        .dispatch(new CreditReportActions.Add(payload))
+        .toPromise()
+        .then((res) => {
+          console.log('dispatch report: ', res);
+          resolve(res); //the report
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 
   async isFresh(state: CreditReportStateModel): Promise<boolean> {

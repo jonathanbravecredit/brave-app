@@ -75,7 +75,10 @@ export class DashboardEnrolledComponent implements OnDestroy {
       .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
       .subscribe((creditReportData: CreditReportStateModel) => {
         this.report = creditReportData.report;
-        if (this.report) this.dashboardService.dashReport$.next(this.report);
+        if (this.report) {
+          this.dashboardService.dashReport$.next(this.report);
+          this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
+        }
       });
   }
 
@@ -87,10 +90,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
-      const prodTrends = BraveUtil.parsers.parseTransunionTrendingData(trends);
-      const score = this.dashboardService.getCurrentScore(prodTrends);
-      if (trends) this.dashboardService.dashScore$.next(score);
-      this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
+
       // check referral progress if active
       this.referral = referral;
       // for the credit mix

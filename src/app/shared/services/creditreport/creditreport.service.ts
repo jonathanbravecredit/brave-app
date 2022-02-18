@@ -16,7 +16,7 @@ import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { BraveUtil } from '@shared/utils/brave/brave';
-import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
+import { CreditReportSelectors, CreditReportState, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
 
 /**
@@ -73,8 +73,12 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$!: Subscription;
 
+  @Select(CreditReportState) creditReport$!: Observable<CreditReportStateModel>;
+  creditReportSub$!: Subscription;
+
   constructor(private statesvc: StateService, private transunion: TransunionService, private store: Store) {
     this.subscribeToAgencies();
+    this.subscribeToCreditReport();
     this.subscribeToPreferences();
   }
 
@@ -93,20 +97,17 @@ export class CreditreportService implements OnDestroy {
         this.tuAgency$.next(tu);
         this.tuAgency = tu;
       }
-      // const parsedReport = this.getCreditReport(agencies);
-      // if (Object.keys(parsedReport).length) {
-      //   this.tuReport$.next(parsedReport);
-      //   this.tuReport = parsedReport;
-      // }
     });
   }
 
-  subscribeToCreditReporT() {
-    let storeReport = this.store.select(CreditReportSelectors.getCreditReport);
-    storeReport.pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
-      .subscribe((creditReportData: CreditReportStateModel) => {
-        if (creditReportData.report) {
-          this.tuReport$.next(creditReportData.report);
+  subscribeToCreditReport() {
+    this.creditReportSub$ = this.creditReport$
+      .pipe(filter((creditReport: CreditReportStateModel) => creditReport !== undefined))
+      .subscribe((creditReport: CreditReportStateModel) => {
+        const { report } = creditReport;
+        if (report) {
+          this.tuReport$.next(report);
+          this.tuReport = report;
         }
       });
   }
