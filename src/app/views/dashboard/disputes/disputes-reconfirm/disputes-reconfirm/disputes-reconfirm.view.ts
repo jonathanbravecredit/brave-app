@@ -5,24 +5,27 @@ import { CreditreportService } from '@shared/services/creditreport/creditreport.
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { Creditreportv2Service } from '@shared/services/creditreportv2/creditreportv2.service';
+import { Store } from '@ngxs/store';
+import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'brave-disputes-reconfirm',
   templateUrl: './disputes-reconfirm.view.html',
 })
 export class DisputesReconfirmView {
-  creditReport$: Observable<IMergeReport>;
+  report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
+
   constructor(
     private router: Router,
     public route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
-    private creditReportService: CreditreportService,
-  ) {
-    this.creditReport$ = this.creditReportService.tuReport$.asObservable();
-  }
+    private store: Store,
+  ) {}
 
   onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {
     const id = this.statesvc.state?.appData.id;

@@ -23,6 +23,7 @@ import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { Dayjs } from 'dayjs';
 
 /*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
@@ -154,13 +155,7 @@ export class TransunionService {
    *  - Checks the dispute status, if eligible, returns true, otherwise false
    */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    const res = await this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
-    const payload = {
-      report: res.data === undefined ? null : res.data.report,
-      updatedOn: new Dayjs().toISOString(),
-    };
-    this.store.dispatch(new CreditReportActions.Add(payload));
-    return res
+    return await this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
   }
 
   /**

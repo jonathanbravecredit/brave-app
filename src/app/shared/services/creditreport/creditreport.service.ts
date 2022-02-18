@@ -16,6 +16,8 @@ import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { BraveUtil } from '@shared/utils/brave/brave';
+import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
+import { filter } from 'rxjs/operators';
 
 /**
  * Service to parse and pull information from credit reports
@@ -71,7 +73,7 @@ export class CreditreportService implements OnDestroy {
   @Select(PreferencesState) preferences$!: Observable<PreferencesStateModel>;
   preferencesSub$!: Subscription;
 
-  constructor(private statesvc: StateService, private transunion: TransunionService) {
+  constructor(private statesvc: StateService, private transunion: TransunionService, private store: Store) {
     this.subscribeToAgencies();
     this.subscribeToPreferences();
   }
@@ -91,12 +93,22 @@ export class CreditreportService implements OnDestroy {
         this.tuAgency$.next(tu);
         this.tuAgency = tu;
       }
-      const parsedReport = this.getCreditReport(agencies);
-      if (Object.keys(parsedReport).length) {
-        this.tuReport$.next(parsedReport);
-        this.tuReport = parsedReport;
-      }
+      // const parsedReport = this.getCreditReport(agencies);
+      // if (Object.keys(parsedReport).length) {
+      //   this.tuReport$.next(parsedReport);
+      //   this.tuReport = parsedReport;
+      // }
     });
+  }
+
+  subscribeToCreditReporT() {
+    let storeReport = this.store.select(CreditReportSelectors.getCreditReport);
+    storeReport.pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
+      .subscribe((creditReportData: CreditReportStateModel) => {
+        if (creditReportData.report) {
+          this.tuReport$.next(creditReportData.report);
+        }
+      });
   }
 
   /**

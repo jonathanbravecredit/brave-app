@@ -17,6 +17,7 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
 import { MonitorClickEvents } from '@shared/services/safeListMonitoring/constants';
+import { Creditreportv2Service } from '@shared/services/creditreportv2/creditreportv2.service';
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +71,7 @@ export class DisputeService implements OnDestroy {
     private analytics: AnalyticsService,
     private transunion: TransunionService,
     private safeMonitor: SafeListMonitoringService,
+    private creditReportService: Creditreportv2Service
   ) {
     this.subscribeToTradeline();
     this.subscribeToPublicItems();
@@ -219,7 +221,9 @@ export class DisputeService implements OnDestroy {
   }
 
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    return await this.transunion.sendDisputePreflightCheck();
+    const res = await this.transunion.sendDisputePreflightCheck();
+    this.creditReportService.updateCreditReportState(res.data.report)
+    return res
   }
 
   /**
