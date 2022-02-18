@@ -76,7 +76,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
       .subscribe((creditReportData: CreditReportStateModel) => {
         this.report = creditReportData.report;
         if (this.report) this.dashboardService.dashReport$.next(this.report);
-        console.log('HERE', this.report);
       });
   }
 
