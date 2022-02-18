@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngxs/store';
 import {
   ITUServiceResponse,
   IIndicativeEnrichmentResult,
@@ -12,6 +13,7 @@ import {
   IGetAuthenticationQuestionsMsg,
   IVerifyAuthenticationQuestionsMsg,
   IEnrollServiceProductResponse,
+  IEnrollCreditReportResponse,
 } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IDispute } from '@shared/interfaces/disputes';
@@ -23,6 +25,8 @@ import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { Dayjs } from 'dayjs';
+import * as CreditReportActions from '../../../store/credit-report/credit-report.actions';
 
 /*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
@@ -36,7 +40,7 @@ import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disput
 })
 export class TransunionService {
   tu = TransunionUtil;
-  constructor(private api: APIService, private safeListMonitoringService: SafeListMonitoringService) {}
+  constructor(private api: APIService, private safeListMonitoringService: SafeListMonitoringService, private store: Store) {}
 
   async sendTransunionAPICall<T>(action: string, message: string): Promise<ITUServiceResponse<T | undefined>> {
     try {
@@ -120,8 +124,13 @@ export class TransunionService {
   /**
    * Send the verified user to transunion to enroll them and receive their report
    */
-  async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
-    return this.sendTransunionAPICall<IEnrollResult>('Enroll', JSON.stringify({}));
+  async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollCreditReportResponse | undefined>> {
+    const res = await this.sendTransunionAPICall<IEnrollCreditReportResponse>('Enroll', JSON.stringify({}));
+    this.store.dispatch(new CreditReportActions.Add({
+      report: res.data?.report,
+      updatedOn: new Dayjs(),
+    }))
+    return res
   }
 
   /**
