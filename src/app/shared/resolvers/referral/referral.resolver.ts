@@ -22,7 +22,7 @@ export class ReferralResolver implements Resolve<IReferralResolver> {
     protected referralRecord: ReferralRecordResolver,
     protected campaignResolver: CampaignResolver,
   ) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IReferralResolver> {
+  async resolve(): Promise<IReferralResolver> {
     this.interstitial.changeMessage(' ');
     this.interstitial.openInterstitial();
 
@@ -31,7 +31,7 @@ export class ReferralResolver implements Resolve<IReferralResolver> {
 
     let referral;
     try {
-      referral = await this.referralRecord.resolve(route, state);
+      referral = await this.referralRecord.resolve();
     } catch {
       referral = null;
     }

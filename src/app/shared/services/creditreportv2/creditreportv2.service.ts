@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
+import { ICreditReport } from '@shared/models/CreditReports.model';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
@@ -12,14 +13,13 @@ import * as CreditReportActions from '../../../store/credit-report/credit-report
 export class Creditreportv2Service {
   constructor(private http: HttpClient, private auth: AuthService, private store: Store) {}
 
-  async getCurrentCreditReport(): Promise<IMergeReport> {
+  async getCurrentCreditReport(): Promise<ICreditReport> {
     const url = `${environment.creditreports}/creditreport`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
       Authorization: `${idToken}`,
     });
-    const report = await this.http.get<IMergeReport>(url, { headers }).toPromise();
-    console.log('get report', JSON.stringify(report));
+    const report = await this.http.get<ICreditReport>(url, { headers }).toPromise();
     return report;
   }
 
