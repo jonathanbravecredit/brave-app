@@ -1,6 +1,6 @@
 import { IMergeReport } from '@shared/interfaces';
 
 export class CreditReportStateModel {
-  report!: IMergeReport;
+  report!: IMergeReport | null;
   updatedOn!: string | null;
 }
