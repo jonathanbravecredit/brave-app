@@ -50,7 +50,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
-  private reportSub$: Subscription;
+  private reportSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -60,21 +60,24 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private creditUtilizationService: CreditUtilizationService,
     private store: Store,
   ) {
-    this.reportSub$ = this.report$
-      .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
-      .subscribe((creditReportData: CreditReportStateModel) => {
-        this.report = creditReportData.report;
-      });
-
-    console.log('HERE', this.report)
-
+    this.subscribeToReportData();
     this.subscribeToRouteData();
     this.setAdData();
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
-    this.reportSub$.unsubscribe();
+    this.reportSub$?.unsubscribe();
+  }
+
+  subscribeToReportData(): void {
+    this.reportSub$ = this.report$
+      .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
+      .subscribe((creditReportData: CreditReportStateModel) => {
+        this.report = creditReportData.report;
+        if (this.report) this.dashboardService.dashReport$.next(this.report);
+        console.log('HERE', this.report);
+      });
   }
 
   subscribeToRouteData(): void {
@@ -82,7 +85,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
       // these are key data sources
       const { snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
 
-      if (this.report) this.dashboardService.dashReport$.next(this.report);
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));

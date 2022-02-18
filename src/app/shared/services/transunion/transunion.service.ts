@@ -40,7 +40,11 @@ import * as CreditReportActions from '../../../store/credit-report/credit-report
 })
 export class TransunionService {
   tu = TransunionUtil;
-  constructor(private api: APIService, private safeListMonitoringService: SafeListMonitoringService, private store: Store) {}
+  constructor(
+    private api: APIService,
+    private safeListMonitoringService: SafeListMonitoringService,
+    private store: Store,
+  ) {}
 
   async sendTransunionAPICall<T>(action: string, message: string): Promise<ITUServiceResponse<T | undefined>> {
     try {
@@ -126,11 +130,12 @@ export class TransunionService {
    */
   async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollCreditReportResponse | undefined>> {
     const res = await this.sendTransunionAPICall<IEnrollCreditReportResponse>('Enroll', JSON.stringify({}));
-    this.store.dispatch(new CreditReportActions.Add({
+    const payload = {
       report: res.data === undefined ? null : res.data.report,
       updatedOn: new Dayjs().toISOString(),
-    }))
-    return res
+    };
+    this.store.dispatch(new CreditReportActions.Add(payload));
+    return res;
   }
 
   /**
