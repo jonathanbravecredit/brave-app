@@ -11,7 +11,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -134,10 +134,13 @@ export class DashboardService implements OnDestroy {
 
   isCreditFreezeEnabled(): Observable<boolean> {
     return this.tuReport$.pipe(
+      filter((report) => report !== undefined),
       switchMap((report) => {
-        const creditreport = report?.TrueLinkCreditReportType;
-        const isFreezeEnabled = creditreport?.SB168Frozen && creditreport?.SB168Frozen?.transunion;
-        return of(isFreezeEnabled ? true : false);
+        const {
+          TrueLinkCreditReportType: { SB168Frozen },
+        } = report;
+        const isFrozen = SB168Frozen?.transunion;
+        return of(isFrozen ? true : false);
       }),
     );
   }
