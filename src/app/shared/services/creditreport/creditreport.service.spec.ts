@@ -159,7 +159,6 @@ describe('CreditreportService', () => {
 
     it('getStateSnapshot should return appData', () => {
       const state = service.getStateSnapshot();
-      console.log('state ==> ', state);
       const test = state?.appData instanceof AppDataStateModel;
       expect(test).toBeTrue();
     });

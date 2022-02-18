@@ -3,6 +3,7 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
+import { CreditReportResolver } from '@shared/resolvers/credit-report/credit-report.resolver';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 import { DashboardScoreTrendsResolver } from '@shared/resolvers/dashboard-score-trends/dashboard-score-trends.resolver';
 import { DashboardSnapshotsResolver } from '@shared/resolvers/dashboard-snapshots/dashboard-snapshots.resolver';
@@ -29,6 +30,7 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
     protected snapshotsResolver: DashboardSnapshotsResolver,
     protected scoreTrendsResolver: DashboardScoreTrendsResolver,
     protected referralResolver: ReferralResolver,
+    protected creditReportResolver: CreditReportResolver,
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IDashboardResolver> {
@@ -40,11 +42,12 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
       this.snapshotsResolver.resolve(route, state),
       this.scoreTrendsResolver.resolve(),
       this.referralResolver.resolve(route, state),
+      this.creditReportResolver.resolve(),
     ])
       .pipe(
         map((value) => {
           return {
-            report: value[0],
+            report: value[4], // still running the init to load app data, but don't need the report anymore
             snapshots: value[1],
             trends: value[2],
             referral: value[3].referral,

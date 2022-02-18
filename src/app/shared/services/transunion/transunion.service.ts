@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
 import {
   ITUServiceResponse,
   IIndicativeEnrichmentResult,
@@ -12,7 +11,6 @@ import {
   IIndicativeEnrichmentMsg,
   IGetAuthenticationQuestionsMsg,
   IVerifyAuthenticationQuestionsMsg,
-  IEnrollServiceProductResponse,
   IEnrollCreditReportResponse,
 } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
@@ -25,8 +23,6 @@ import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
-import { Dayjs } from 'dayjs';
-import * as CreditReportActions from '../../../store/credit-report/credit-report.actions';
 
 /*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
@@ -40,11 +36,7 @@ import * as CreditReportActions from '../../../store/credit-report/credit-report
 })
 export class TransunionService {
   tu = TransunionUtil;
-  constructor(
-    private api: APIService,
-    private safeListMonitoringService: SafeListMonitoringService,
-    private store: Store,
-  ) {}
+  constructor(private api: APIService, private safeListMonitoringService: SafeListMonitoringService) {}
 
   async sendTransunionAPICall<T>(action: string, message: string): Promise<ITUServiceResponse<T | undefined>> {
     try {
@@ -130,11 +122,6 @@ export class TransunionService {
    */
   async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollCreditReportResponse | undefined>> {
     const res = await this.sendTransunionAPICall<IEnrollCreditReportResponse>('Enroll', JSON.stringify({}));
-    const payload = {
-      report: res.data === undefined ? null : res.data.report,
-      updatedOn: new Dayjs().toISOString(),
-    };
-    this.store.dispatch(new CreditReportActions.Add(payload));
     return res;
   }
 
