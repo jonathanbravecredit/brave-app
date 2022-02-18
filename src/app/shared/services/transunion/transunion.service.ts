@@ -167,7 +167,13 @@ export class TransunionService {
    *  - Checks the dispute status, if eligible, returns true, otherwise false
    */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    return this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
+    const res = await this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
+    const payload = {
+      report: res.data === undefined ? null : res.data.report,
+      updatedOn: new Dayjs().toISOString(),
+    };
+    this.store.dispatch(new CreditReportActions.Add(payload));
+    return res
   }
 
   /**
