@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IMergeReport, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
+import { Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { StateService } from '@shared/services/state/state.service';
-import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
-import { Observable, Subscription } from 'rxjs';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { Creditreportv2Service } from '@shared/services/creditreportv2/creditreportv2.service';
-import { Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
-import { filter } from 'rxjs/operators';
+import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 @Component({
   selector: 'brave-disputes-reconfirm',
