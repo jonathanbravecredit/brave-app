@@ -189,7 +189,6 @@ export class DisputeService implements OnDestroy {
       // acknowledge the user has read and accepted the terms
       // you have to acknowledge in order to get to this point
       await this.acknowledgeDisputeTerms(this.state);
-      debugger;
       const preflight = await this.sendDisputePreflightCheck();
       if (preflight.success) {
         this.analytics.fireClickEvent(AnalyticClickEvents.DisputeEnrollment, {
