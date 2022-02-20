@@ -71,7 +71,7 @@ export class DisputeService implements OnDestroy {
     private analytics: AnalyticsService,
     private transunion: TransunionService,
     private safeMonitor: SafeListMonitoringService,
-    private creditReportService: Creditreportv2Service
+    private creditReportService: Creditreportv2Service,
   ) {
     this.subscribeToTradeline();
     this.subscribeToPublicItems();
@@ -189,6 +189,7 @@ export class DisputeService implements OnDestroy {
       // acknowledge the user has read and accepted the terms
       // you have to acknowledge in order to get to this point
       await this.acknowledgeDisputeTerms(this.state);
+      debugger;
       const preflight = await this.sendDisputePreflightCheck();
       if (preflight.success) {
         this.analytics.fireClickEvent(AnalyticClickEvents.DisputeEnrollment, {
@@ -222,8 +223,9 @@ export class DisputeService implements OnDestroy {
 
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
     const res = await this.transunion.sendDisputePreflightCheck();
-    this.creditReportService.updateCreditReportState(res.data.report)
-    return res
+    if (!res.data || !res.data.report) return res;
+    await this.creditReportService.updateCreditReportStateAsync(res.data.report);
+    return res;
   }
 
   /**
