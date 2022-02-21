@@ -71,7 +71,7 @@ export class DisputeService implements OnDestroy {
     private analytics: AnalyticsService,
     private transunion: TransunionService,
     private safeMonitor: SafeListMonitoringService,
-    private creditReportService: Creditreportv2Service
+    private creditReportService: Creditreportv2Service,
   ) {
     this.subscribeToTradeline();
     this.subscribeToPublicItems();
@@ -222,10 +222,9 @@ export class DisputeService implements OnDestroy {
 
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
     const res = await this.transunion.sendDisputePreflightCheck();
-    if (!res.success && res.data.report) {
-      this.creditReportService.updateCreditReportState(res.data.report)
-    }
-    return res
+    if (!res.data || !res.data.report) return res;
+    await this.creditReportService.updateCreditReportStateAsync(res.data.report);
+    return res;
   }
 
   /**
