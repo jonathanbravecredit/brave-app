@@ -85,6 +85,10 @@ import { CreditUtilizationAssessmentComponent } from './snapshots/credit-utiliza
 import { DashboardCreditScoreErrorComponent } from './dashboard-enrolled/components/dashboard-credit-score-error/dashboard-credit-score-error.component';
 import { ProgressTrackerComponent } from './snapshots/progress-tracker/progress-tracker/progress-tracker.component';
 import { ProgressTrackerPureComponent } from './snapshots/progress-tracker/progress-tracker-pure/progress-tracker-pure.component';
+import { FutureScoreCardComponent } from './snapshots/progress-tracker/components/future-score-card/future-score-card.component';
+import { ProgressTrackerHeaderComponent } from './snapshots/progress-tracker/components/progress-tracker-header/progress-tracker-header.component';
+import { ProgressTrackerDisclaimerComponent } from './snapshots/progress-tracker/components/progress-tracker-disclaimer/progress-tracker-disclaimer.component';
+import { ProgressTrackerGoalCardComponent } from './snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
 
 const modules = [
   CommonModule,
@@ -164,6 +168,10 @@ const components = [
   CreditUtilizationAssessmentComponent,
   ProgressTrackerComponent,
   ProgressTrackerPureComponent,
+  FutureScoreCardComponent,
+  ProgressTrackerHeaderComponent,
+  ProgressTrackerDisclaimerComponent,
+  ProgressTrackerGoalCardComponent,
 ];
 
 const pipes = [AccountStatusPipe];

@@ -4,15 +4,26 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FilledChecktextProgressbarComponent } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
-import { MOCKPROGRESSTRACKERDATA } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { ProgressTrackerComponent } from '@views/dashboard/snapshots/progress-tracker/progress-tracker/progress-tracker.component';
+import { FutureScoreCardComponent } from '@views/dashboard/snapshots/progress-tracker/components/future-score-card/future-score-card.component';
+import { ProgressTrackerPureComponent } from '@views/dashboard/snapshots/progress-tracker/progress-tracker-pure/progress-tracker-pure.component';
+import { ProgressTrackerHeaderComponent } from '@views/dashboard/snapshots/progress-tracker/components/progress-tracker-header/progress-tracker-header.component';
+import { ProgressTrackerDisclaimerComponent } from '@views/dashboard/snapshots/progress-tracker/components/progress-tracker-disclaimer/progress-tracker-disclaimer.component';
+import { ProgressTrackerGoalCardComponent } from '@views/dashboard/snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
 
 export default {
   title: 'app/views/snapshots/progress-tracker',
   component: ProgressTrackerComponent,
   decorators: [
     moduleMetadata({
-      declarations: [FilledChecktextProgressbarComponent],
+      declarations: [
+        FilledChecktextProgressbarComponent,
+        FutureScoreCardComponent,
+        ProgressTrackerPureComponent,
+        ProgressTrackerHeaderComponent,
+        ProgressTrackerDisclaimerComponent,
+        ProgressTrackerGoalCardComponent,
+      ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),

@@ -1,0 +1,24 @@
+<div class="flex justify-center items-center flex-col mt-6 rounded-lg p-4 bg-blue-300 text-white">
+  <h1 class="text-2xl font-semibold">Your FutureScore:</h1>
+  <p class="text-5xl font-semibold mt-2">{{ futureScore }}</p>
+  <p>{{ scoreReview }}</p>
+  <div class="flex mt-2 items-center">
+    <span
+      class="text-4xl material-icons align-bottom transform mr-4 mt-1"
+      [ngClass]="
+        pointsDiff && pointsDiff !== 0
+          ? pointsDiff < 0
+            ? 'rotate-90 text-red-500'
+            : '-rotate-90 text-emerald-600'
+          : ''
+      "
+    >
+      play_arrow
+    </span>
+    <div class="text-2xl font-semibold">
+      <span>{{ pointsDiff > 0 ? '+' : pointsDiff === 0 ? '' : '-' }}{{ pointsDiff }}</span>
+      points
+    </div>
+  </div>
+  <p class="text-sm">Based on initial {{ monthYear }} score of {{ currentScore }}</p>
+</div>

@@ -1,4 +1,20 @@
 <div>
-  <h5 class="text-sm">{{currentGoal.titleText}}</h5>
+  <h5 class="text-sm">{{currentGoal.label}}</h5>
   <brave-filled-checktext-progressbar [steps]="steps" [activatedStep]="0" [completedStep]="-1"></brave-filled-checktext-progressbar>
+</div>
+
+<brave-future-score-card></brave-future-score-card>
+
+<div>
+  <brave-progress-tracker-header [currentGoal]="currentGoal"></brave-progress-tracker-header>
+</div>
+
+<div class="mt-1 mb-4">
+  <div *ngFor="let goal of currentGoal.goals">
+    <brave-progress-tracker-goal-card [goal]="goal"></brave-progress-tracker-goal-card>
+  </div>
+</div>
+
+<div>
+  <brave-progress-tracker-disclaimer></brave-progress-tracker-disclaimer>
 </div>

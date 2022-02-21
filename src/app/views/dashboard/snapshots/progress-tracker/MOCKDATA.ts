@@ -8,19 +8,26 @@ export const MOCKPROGRESSTRACKERDATA = {
       order: 0,
       id: 'credit_card',
       progress: 'in_progress',
-      titleText: 'Your plan to get a credit card:',
+      label: 'Your plan to get a credit card:',
+      header: "Let's help you get a credit card!",
+      text:
+        "We've made it easy for you to reach your goal and claim your FutureScore. Follow these steps, and with healthy financial habits, you could get your credit card in not time!",
       goals: [
         {
           order: 0,
           id: 'review_report',
           stepText: 'Review your report',
+          title: 'Review your credit report',
           progress: 'complete',
+          pointsGain: '+19',
         },
         {
           order: 1,
           id: 'claim_future_score',
           stepText: 'Claim your FutureScore',
+          title: 'Claim Your FutureScore to get your dream credit card',
           progress: 'not_started',
+          pointsGain: '+53',
         },
       ],
     },
@@ -52,4 +59,4 @@ export const MOCKPROGRESSTRACKERDATA = {
       ],
     },
   ],
-}
+};
