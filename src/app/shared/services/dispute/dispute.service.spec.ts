@@ -1,4 +1,3 @@
-
 import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
@@ -14,6 +13,11 @@ import { of, Subscription } from 'rxjs';
 import { DisputeService } from './dispute.service';
 
 const setup = () => {
+  const stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
+    state$: of(),
+    state: { appData: new AppDataStateModel() },
+  });
+  const analyticsMock = jasmine.createSpyObj('AnalyticsService', ['fireClickEvent']);
   const transunionMock = jasmine.createSpyObj('TransunionService', [
     'sendDisputePreflightCheck',
     'sendStartDispute',
@@ -22,19 +26,21 @@ const setup = () => {
     'sendTransunionAPICall',
   ]);
   const safeMonitorMock = jasmine.createSpyObj('SafeListMonitoringService', ['fireClickEvent']);
-  const analyticsMock = jasmine.createSpyObj('AnalyticsService', ['fireClickEvent']);
-  const stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
-    state$: of(),
-    state: { appData: new AppDataStateModel() },
-  });
-  const disputeService = new DisputeService(stateMock, analyticsMock, transunionMock, safeMonitorMock);
+  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', ['updateCreditReportStateAsync']);
+  const disputeService = new DisputeService(
+    stateMock,
+    analyticsMock,
+    transunionMock,
+    safeMonitorMock,
+    creditReportMock,
+  );
 
   // const valueServiceSpy = jasmine.createSpyObj('ValueService', ['getValue']);
   // const stubValue = 'stub value';
   // const masterService = new MasterService(valueServiceSpy);
 
   // valueServiceSpy.getValue.and.returnValue(stubValue);
-  return { disputeService, transunionMock, safeMonitorMock, analyticsMock, stateMock };
+  return { disputeService, transunionMock, safeMonitorMock, analyticsMock, stateMock, creditReportMock };
 };
 
 describe('DisputeService', () => {
@@ -222,7 +228,6 @@ describe('DisputeService', () => {
       spyOn(disputeService.currentDisputeSub$!, 'unsubscribe');
       disputeService.ngOnDestroy();
       expect(disputeService.currentDisputeSub$!.unsubscribe).toHaveBeenCalled();
-
     });
   });
 
@@ -406,5 +411,5 @@ describe('DisputeService', () => {
         });
       });
     });
-  })
+  });
 });

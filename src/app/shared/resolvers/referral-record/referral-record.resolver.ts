@@ -8,7 +8,7 @@ import { ReferralsService } from '@shared/services/referrals/referrals.service';
 })
 export class ReferralRecordResolver implements Resolve<IReferral> {
   constructor(private referralService: ReferralsService) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IReferral> {
+  async resolve(): Promise<IReferral> {
     return await this.referralService.getReferral();
   }
 }

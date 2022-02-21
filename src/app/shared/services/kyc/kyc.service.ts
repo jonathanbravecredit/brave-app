@@ -19,6 +19,7 @@ import {
   IGetAuthenticationQuestionsResult,
   IIndicativeEnrichmentResult,
   IVerifyAuthenticationQuestionsResult,
+  IMergeReport,
 } from '@shared/interfaces';
 import { Router } from '@angular/router';
 import { BraveUtil as bc } from '@shared/utils/brave/brave';
@@ -29,6 +30,7 @@ import { AnalyticErrorEvents } from '@shared/services/analytics/analytics/consta
 import { AuthService } from '@shared/services/auth/auth.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import * as CreditReportActions from '@store/credit-report/credit-report.actions';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -185,7 +187,7 @@ export class KycService {
   ): Promise<ITUServiceResponse<IIndicativeEnrichmentResult | undefined>> {
     try {
       return await this.transunion.sendIndicativeEnrichment(appData);
-    } catch {
+    } catch (err) {
       return bc.technicalError;
     }
   }
@@ -530,6 +532,16 @@ export class KycService {
    */
   async startKbaClock(): Promise<UpdateAppDataInput> {
     return await this.statesvc.initiateKBADetailsAsync();
+  }
+
+  /*=====================================*/
+  /*
+  /*                STATE
+  /*
+  /*=====================================*/
+  async setCreditReport(report: IMergeReport | null = null): Promise<void> {
+    const payload = { report, updatedOn: new Date().toISOString() };
+    await this.store.dispatch(new CreditReportActions.Add(payload)).toPromise();
   }
 
   /*=====================================*/
