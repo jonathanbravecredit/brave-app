@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -19,12 +19,14 @@ describe('DisputesReconfirmView', () => {
   let fixture: ComponentFixture<DisputesReconfirmView>;
   let storeMock: any;
   let routerMock: any;
+  let routeMock: any;
   let statesvcMock: any;
   let disputeServiceMock: any;
 
   beforeEach(async () => {
     storeMock = jasmine.createSpyObj('Store', ['select']);
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
     statesvcMock = jasmine.createSpyObj('StateService', [''], [{ state: { appData: { id: 'testIdString' } } }]);
     statesvcMock.state = { appData: { id: 'testIdString' } };
     disputeServiceMock = jasmine.createSpyObj('DisputeService', [
@@ -38,6 +40,7 @@ describe('DisputesReconfirmView', () => {
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: Router, useValue: routerMock },
+        { provide: ActivatedRoute, useValue: routeMock },
         { provide: StateService, useValue: statesvcMock },
         { provide: DisputeService, useValue: disputeServiceMock },
       ],

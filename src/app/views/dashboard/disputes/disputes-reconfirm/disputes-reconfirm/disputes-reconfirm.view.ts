@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -19,6 +19,7 @@ export class DisputesReconfirmView {
   constructor(
     private store: Store,
     private router: Router,
+    public route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
   ) {}
