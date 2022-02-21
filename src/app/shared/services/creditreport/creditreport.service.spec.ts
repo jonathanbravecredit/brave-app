@@ -8,7 +8,6 @@ import { of, Subscription } from 'rxjs';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { NgxsModule, State, Store } from '@ngxs/store';
 import { AppDataStateModel } from '@store/app-data';
-import { Test } from '@shared/components/badges/percentage-badge/percentage-badge.stories';
 import {
   IBorrower,
   IMergeReport,
@@ -19,6 +18,7 @@ import {
   ITradeLinePartition,
   ITrueLinkCreditReportType,
 } from '@shared/interfaces';
+import { CreditReportStateModel } from '@store/credit-report';
 
 //private statesvc: StateService, private transunion: TransunionService
 
@@ -48,6 +48,10 @@ describe('CreditreportService', () => {
     Object.defineProperty(service, 'agencies$', { writable: true });
     service.agencies$ = of({} as AgenciesStateModel);
     service.subscribeToAgencies();
+
+    Object.defineProperty(service, 'creditReport$', { writable: true });
+    service.creditReport$ = of({} as CreditReportStateModel);
+    service.subscribeToCreditReport();
     // store = TestBed.inject(Store);
     h = new Helper(service);
     // storeSpy = spyOn(store, 'select');
@@ -60,6 +64,10 @@ describe('CreditreportService', () => {
   describe('Service constructor', () => {
     it('Should assign agenciesSub$ on constructor', () => {
       const test = service.agenciesSub$ instanceof Subscription;
+      expect(test).toBeTrue();
+    });
+    it('Should assign creditReportSub$ on constructor', () => {
+      const test = service.creditReportSub$ instanceof Subscription;
       expect(test).toBeTrue();
     });
     it('Should NOT set the tuAgency property and equal default when the agency tu state is empty', (done: () => void) => {
@@ -92,14 +100,27 @@ describe('CreditreportService', () => {
         },
       });
     });
-    it('Should NOT set the tuReport property when the agency tu state is empty', (done: () => void) => {
-      const tuMock = {} as TransunionInput;
-      const agencyMock = {
-        transunion: tuMock,
-      };
-      service.agencies$ = of(agencyMock);
+
+    it('Should NOT set the tuReport property on subscribeToAgencies', (done: () => void) => {
+      service.agencies$ = of({});
       service.subscribeToAgencies();
       service.agencies$.subscribe({
+        next: () => {
+          const test = service.tuReport?.TrueLinkCreditReportType === undefined;
+          expect(test).toBeTrue();
+          done();
+        },
+      });
+    });
+
+    it('Should NOT set the tuReport property when the report is null', (done: () => void) => {
+      const reportMock = {
+        report: null,
+        updatedOn: null,
+      } as CreditReportStateModel;
+      service.creditReport$ = of(reportMock);
+      service.subscribeToCreditReport();
+      service.creditReport$.subscribe({
         next: () => {
           const test = service.tuReport !== undefined && Object.keys(service.tuReport).length === 0;
           expect(test).toBeTrue();
@@ -107,16 +128,14 @@ describe('CreditreportService', () => {
         },
       });
     });
-    it('Should set the tuReport property when the agency tu state is NOT empty', (done: () => void) => {
-      const tuMock = {
-        fulfillMergeReport: { serviceProductObject: '{ "TrueLinkCreditReportType": {} }' },
-      } as TransunionInput;
-      const agencyMock = {
-        transunion: tuMock,
-      };
-      service.agencies$ = of(agencyMock);
-      service.subscribeToAgencies();
-      service.agencies$.subscribe({
+    it('Should set the tuReport property when the report is NOT empty', (done: () => void) => {
+      const reportMock = {
+        report: { TrueLinkCreditReportType: {} } as unknown as IMergeReport,
+        updatedOn: null,
+      } as CreditReportStateModel;
+      service.creditReport$ = of(reportMock);
+      service.subscribeToCreditReport();
+      service.creditReport$.subscribe({
         next: () => {
           const test = service.tuReport.TrueLinkCreditReportType !== undefined;
           expect(test).toBeTrue();
@@ -163,12 +182,10 @@ describe('CreditreportService', () => {
       expect(test).toBeTrue();
     });
 
-    it('getTradeLinePartitions should return TradeLinePartition array of empty object if tuReport is empty', () => {
+    it('getTradeLinePartitions should return TradeLinePartition array of empty array if tuReport is empty', () => {
       service.tuReport = { TrueLinkCreditReportType: {} } as IMergeReport;
       const partitions = service.getTradeLinePartitions();
-      const partition = partitions[0];
-      const test = partition !== undefined && Object.keys(partition).length === 0;
-      expect(test).toBeTrue();
+      expect(partitions.length).toEqual(0);
     });
 
     it('getTradeLinePartitions should return TradeLinePartition array of partitions if tuReport is NOT empty', () => {

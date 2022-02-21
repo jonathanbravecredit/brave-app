@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
-
 import { CreditReportResolver } from './credit-report.resolver';
 
-describe('CreditReportResolver', () => {
-  let resolver: CreditReportResolver;
+const setup = () => {
+  const storeMock = jasmine.createSpyObj('Store', ['']);
+  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', ['']);
+  const creditReportResolver = new CreditReportResolver(storeMock, creditReportMock);
+  return { creditReportResolver, storeMock, creditReportMock };
+};
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    resolver = TestBed.inject(CreditReportResolver);
-  });
+describe('CreditReportResolver', () => {
+  const { storeMock, creditReportMock, creditReportResolver } = setup();
 
   it('should be created', () => {
-    expect(resolver).toBeTruthy();
+    expect(creditReportResolver).toBeTruthy();
   });
 });
