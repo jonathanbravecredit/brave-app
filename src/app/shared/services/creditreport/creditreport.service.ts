@@ -16,7 +16,7 @@ import { AppDataStateModel } from '@store/app-data';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { BraveUtil } from '@shared/utils/brave/brave';
-import { CreditReportSelectors, CreditReportState, CreditReportStateModel } from '@store/credit-report';
+import { CreditReportState, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
 
 /**
@@ -76,7 +76,7 @@ export class CreditreportService implements OnDestroy {
   @Select(CreditReportState) creditReport$!: Observable<CreditReportStateModel>;
   creditReportSub$!: Subscription;
 
-  constructor(private statesvc: StateService, private transunion: TransunionService, private store: Store) {
+  constructor(private statesvc: StateService, private transunion: TransunionService) {
     this.subscribeToAgencies();
     this.subscribeToCreditReport();
     this.subscribeToPreferences();
@@ -101,15 +101,13 @@ export class CreditreportService implements OnDestroy {
   }
 
   subscribeToCreditReport() {
-    this.creditReportSub$ = this.creditReport$
-      .pipe(filter((creditReport: CreditReportStateModel) => creditReport !== undefined))
-      .subscribe((creditReport: CreditReportStateModel) => {
-        const { report } = creditReport;
-        if (report) {
-          this.tuReport$.next(report);
-          this.tuReport = report;
-        }
-      });
+    this.creditReportSub$ = this.creditReport$.subscribe((creditReport: CreditReportStateModel) => {
+      const { report } = creditReport;
+      if (report) {
+        this.tuReport$.next(report);
+        this.tuReport = report;
+      }
+    });
   }
 
   /**
@@ -161,7 +159,7 @@ export class CreditreportService implements OnDestroy {
    * @returns {ITradeLinePartition[]}
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
-    return this.tuReport.TrueLinkCreditReportType.TradeLinePartition;
+    return this.tuReport.TrueLinkCreditReportType.TradeLinePartition || [];
   }
 
   /**

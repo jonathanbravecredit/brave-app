@@ -17,11 +17,11 @@ export class DisputesReconfirmView {
   report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
 
   constructor(
+    private store: Store,
     private router: Router,
     public route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
-    private store: Store,
   ) {}
 
   onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {

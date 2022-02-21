@@ -1,16 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { BraveUtil } from '@shared/utils/brave/brave';
-import { AgenciesState, AgenciesStateModel } from '@store/agencies';
 import {
   CreditMixRecommendations as Recs,
   RecommendationConditionalLogic as Logic,
   RecommendationValues as Values,
 } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service-conditions';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ICreditMixTLSummary, IRecommendationText } from '../interfaces/credit-mix-calc-obj.interface';
 
 @Injectable({
