@@ -17,6 +17,7 @@ import {
   ISubscriber,
   ITradeline,
   ITradeLinePartition,
+  ITrueLinkCreditReportType,
 } from '@shared/interfaces';
 
 //private statesvc: StateService, private transunion: TransunionService
@@ -28,7 +29,7 @@ describe('CreditreportService', () => {
   let h: Helper<CreditreportService>;
   let store: Store;
   let storeSpy: any;
-  class PartitionMockClass implements ITradeLinePartition {}
+  class PartitionMockClass {}
 
   beforeEach(() => {
     stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
@@ -158,7 +159,6 @@ describe('CreditreportService', () => {
 
     it('getStateSnapshot should return appData', () => {
       const state = service.getStateSnapshot();
-      console.log('state ==> ', state);
       const test = state?.appData instanceof AppDataStateModel;
       expect(test).toBeTrue();
     });
@@ -173,19 +173,21 @@ describe('CreditreportService', () => {
 
     it('getTradeLinePartitions should return TradeLinePartition array of partitions if tuReport is NOT empty', () => {
       service.tuReport = {
-        TrueLinkCreditReportType: { TradeLinePartition: [{ accountTypeSymbol: 'tradeline' }] } as ITradeLinePartition,
+        TrueLinkCreditReportType: { TradeLinePartition: [{ accountTypeSymbol: 'tradeline' } as ITradeLinePartition] },
       } as IMergeReport;
       const partitions = service.getTradeLinePartitions();
       expect(partitions[0].accountTypeSymbol).toEqual('tradeline');
     });
 
     it('setTradeline should update the tuTradeline property and tuTradelineSubscriber', () => {
-      const subscriber: ISubscriber = { subscriberCode: '1', name: 'test' };
-      const tradeline: ITradeLinePartition = { Tradeline: { subscriberCode: '1' } as ITradeline };
+      const subscriber: ISubscriber[] = [{ subscriberCode: '1', name: 'test' }] as ISubscriber[];
+      const tradeline: ITradeLinePartition = {
+        Tradeline: { subscriberCode: '1' } as ITradeline,
+      } as ITradeLinePartition;
       service.tuReport = {
         TrueLinkCreditReportType: {
           Subscriber: subscriber,
-        },
+        } as ITrueLinkCreditReportType,
       } as IMergeReport;
       service.setTradeline(tradeline);
 
@@ -198,8 +200,8 @@ describe('CreditreportService', () => {
     it('getPublicItems should return PublicPartition array of partitions if tuReport is NOT empty', () => {
       service.tuReport = {
         TrueLinkCreditReportType: {
-          PulblicRecordPartition: { PublicRecord: { subscriberCode: 'public' } },
-        } as ITradeLinePartition,
+          PulblicRecordPartition: [{ PublicRecord: { subscriberCode: 'public' } }],
+        } as ITrueLinkCreditReportType,
       } as IMergeReport;
       const partitions = service.getPublicItems();
       const subscriberCode = partitions[0].PublicRecord?.subscriberCode;
@@ -207,7 +209,7 @@ describe('CreditreportService', () => {
     });
 
     it('setPublicItem should update the tuPublicItem property and tuPublicItemSubscriber', () => {
-      const subscriber: ISubscriber = { subscriberCode: '1', name: 'test' };
+      const subscriber: ISubscriber[] = [{ subscriberCode: '1', name: 'test' }] as ISubscriber[];
       const publicItem: IPublicPartition = { PublicRecord: { subscriberCode: '1' } as IPublicRecord };
       service.tuReport = {
         TrueLinkCreditReportType: {
@@ -224,7 +226,7 @@ describe('CreditreportService', () => {
 
     it('getPersonalItem should return Borrower partition if tuReport is NOT empty', () => {
       service.tuReport = {
-        TrueLinkCreditReportType: { Borrower: { borrowerKey: 'borrower' } } as IBorrower,
+        TrueLinkCreditReportType: { Borrower: { borrowerKey: 'borrower' } as IBorrower },
       } as IMergeReport;
       const partitions = service.getPersonalItem();
       const borrowerKey = partitions.borrowerKey;

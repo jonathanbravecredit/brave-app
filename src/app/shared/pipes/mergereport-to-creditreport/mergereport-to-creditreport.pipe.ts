@@ -10,17 +10,12 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
   name: 'mergereportToCreditreport',
 })
 export class MergereportToCreditreportPipe implements PipeTransform {
-  private tradeLines!: ITradeLinePartition | ITradeLinePartition[] | undefined;
-  private creditReportAccounts: ICreditReportCardInputs[] | undefined;
   transform(report: IMergeReport, prefs?: PreferencesStateModel): ICreditReportTradelinesCardGroup[] {
-    this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
-    if (!this.tradeLines) return [{} as ICreditReportTradelinesCardGroup];
-    return this.tradeLines instanceof Array
-      ? this.sortByCreditReportGroups(this.tradeLines)
-          .sortByDateOpened(this.tradeLines)
-          .mapTradeLineToAccount(this.tradeLines)
-          .groupCreditReportAccounts(this.creditReportAccounts)
-      : this.mapTradeLineToAccount([this.tradeLines]).groupCreditReportAccounts(this.creditReportAccounts);
+    let tradelines = [...report.TrueLinkCreditReportType.TradeLinePartition];
+    tradelines = this.sortByCreditReportGroups(tradelines);
+    tradelines = this.sortByDateOpened(tradelines);
+    let creditReportAccounts = this.mapTradeLineToAccount(tradelines);
+    return this.groupCreditReportAccounts(creditReportAccounts);
   }
 
   /**
@@ -28,9 +23,8 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private sortByCreditReportGroups(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = tu.sorters.report.sortByCreditReportGroups(tradeLines);
-    return this;
+  private sortByCreditReportGroups(tradeLines: ITradeLinePartition[]): ITradeLinePartition[] {
+    return tu.sorters.report.sortByCreditReportGroups(tradeLines);
   }
 
   /**
@@ -38,9 +32,8 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private sortByDateOpened(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.tradeLines = tu.sorters.report.sortTradelineByDateOpened(tradeLines);
-    return this;
+  private sortByDateOpened(tradeLines: ITradeLinePartition[]): ITradeLinePartition[] {
+    return tu.sorters.report.sortTradelineByDateOpened(tradeLines);
   }
 
   /**
@@ -48,9 +41,8 @@ export class MergereportToCreditreportPipe implements PipeTransform {
    * @param {ITradeLinePartition[]} tradeLines
    * @returns
    */
-  private mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): MergereportToCreditreportPipe {
-    this.creditReportAccounts = tu.mappers.mapTradelineToSummaryCard(tradeLines);
-    return this;
+  private mapTradeLineToAccount(tradeLines: ITradeLinePartition[]): ICreditReportCardInputs[] {
+    return tu.mappers.mapTradelineToSummaryCard(tradeLines);
   }
 
   /**

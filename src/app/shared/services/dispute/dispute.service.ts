@@ -17,6 +17,7 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
 import { MonitorClickEvents } from '@shared/services/safeListMonitoring/constants';
+import { Creditreportv2Service } from '@shared/services/creditreportv2/creditreportv2.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,15 +29,18 @@ export class DisputeService implements OnDestroy {
   /*===========================================================================*/
   tradeline: ITradeLinePartition | undefined;
   tradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
-  tradelineSub$: Subscription;
+  tradelineSub$!: Subscription | undefined;
 
   publicItem: IPublicPartition | undefined;
   publicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
-  publicItemSub$: Subscription;
+  publicItemSub$!: Subscription | undefined;
 
   personalItem: IPersonalItemsDetailsConfig | undefined;
   personalItem$ = new BehaviorSubject<IPersonalItemsDetailsConfig>({} as IPersonalItemsDetailsConfig);
-  personalItemSub$: Subscription;
+  personalItemSub$!: Subscription | undefined;
+
+  stateSub$!: Subscription | undefined;
+  _state: AppDataStateModel = {} as AppDataStateModel;
 
   /*=========================================================================================*/
   // The Subscriber (for tradeline, publicitem) Behavior Subjects are to track the current
@@ -56,34 +60,24 @@ export class DisputeService implements OnDestroy {
   currentDisputeSub$: Subscription | undefined;
   currentDispute$: BehaviorSubject<IDispute> = new BehaviorSubject<IDispute>({} as IDispute);
   currentDispute: IDispute = {} as IDispute;
-  disputeStack: (IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult)[] = [];
+  disputeStack = new Array<
+    IProcessDisputeTradelineResult | IProcessDisputePublicResult | IProcessDisputePersonalResult
+  >();
 
   _acknowledged: boolean = false;
-  stateSub$: Subscription;
-  _state: AppDataStateModel = {} as AppDataStateModel;
 
   constructor(
     private statesvc: StateService,
     private analytics: AnalyticsService,
     private transunion: TransunionService,
     private safeMonitor: SafeListMonitoringService,
+    private creditReportService: Creditreportv2Service,
   ) {
-    this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
-      this.tradeline = tradeline;
-    });
-    this.publicItemSub$ = this.publicItem$.subscribe((publicItem) => {
-      this.publicItem = publicItem;
-    });
-    this.personalItemSub$ = this.personalItem$.subscribe((personalItem) => {
-      this.personalItem = personalItem;
-    });
-    this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
-      this.state = state.appData;
-      this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
-    });
-    this.currentDisputeSub$ = this.currentDispute$.subscribe((dispute) => {
-      this.currentDispute = dispute;
-    });
+    this.subscribeToTradeline();
+    this.subscribeToPublicItems();
+    this.subscribeToPersonalItems();
+    this.subscribeToState();
+    this.subscribeToCurrentDispute();
   }
 
   set acknowledged(value: boolean) {
@@ -100,6 +94,37 @@ export class DisputeService implements OnDestroy {
     return this._state;
   }
 
+  subscribeToTradeline(): void {
+    this.tradelineSub$ = this.tradeline$.subscribe((tradeline) => {
+      this.tradeline = tradeline;
+    });
+  }
+
+  subscribeToPublicItems(): void {
+    this.publicItemSub$ = this.publicItem$.subscribe((publicItem) => {
+      this.publicItem = publicItem;
+    });
+  }
+
+  subscribeToPersonalItems(): void {
+    this.personalItemSub$ = this.personalItem$.subscribe((personalItem) => {
+      this.personalItem = personalItem;
+    });
+  }
+
+  subscribeToState(): void {
+    this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
+      this.state = state.appData;
+      this.acknowledged = state.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+    });
+  }
+
+  subscribeToCurrentDispute(): void {
+    this.currentDisputeSub$ = this.currentDispute$.subscribe((dispute) => {
+      this.currentDispute = dispute;
+    });
+  }
+
   ngOnDestroy(): void {
     if (this.tradelineSub$) this.tradelineSub$.unsubscribe();
     if (this.publicItemSub$) this.publicItemSub$.unsubscribe();
@@ -111,6 +136,7 @@ export class DisputeService implements OnDestroy {
   getCurrentDispute(): IDispute {
     return this.currentDispute$.getValue();
   }
+
   getUserStateOfResidence(): string {
     return this.statesvc.state?.appData.user?.userAttributes?.address?.state || '';
   }
@@ -118,7 +144,6 @@ export class DisputeService implements OnDestroy {
   setTradelineItem(tradeline: ITradeLinePartition): void {
     this.tradeline$.next(tradeline);
     const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline) || ({} as ISubscriber);
-    if (subscriber === undefined) return;
     this.tuTradelineSubscriber = subscriber;
     this.tuTradelineSubscriber$.next(subscriber);
   }
@@ -126,7 +151,6 @@ export class DisputeService implements OnDestroy {
   setPublicItem(publicItem: IPublicPartition): void {
     this.publicItem$.next(publicItem);
     const subscriber = tu.queries.report.getPublicSubscriberByKey(publicItem) || ({} as ISubscriber);
-    if (subscriber === undefined) return;
     this.tuPublicItemSubscriber = subscriber;
     this.tuPublicItemSubscriber$.next(subscriber);
   }
@@ -161,10 +185,10 @@ export class DisputeService implements OnDestroy {
    * @returns
    */
   async onUserConfirmed(): Promise<ITUServiceResponse<any>> {
-    if (!this.state) throw `tradelines:onConfirmed=Missing state`;
     try {
       // acknowledge the user has read and accepted the terms
-      if (!this.acknowledged) await this.acknowledgeDisputeTerms(this.state);
+      // you have to acknowledge in order to get to this point
+      await this.acknowledgeDisputeTerms(this.state);
       const preflight = await this.sendDisputePreflightCheck();
       if (preflight.success) {
         this.analytics.fireClickEvent(AnalyticClickEvents.DisputeEnrollment, {
@@ -197,22 +221,17 @@ export class DisputeService implements OnDestroy {
   }
 
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    try {
-      return await this.transunion.sendDisputePreflightCheck();
-    } catch (err) {
-      throw `disputeService:sendDisputePreflightCheck=${err}`;
-    }
+    const res = await this.transunion.sendDisputePreflightCheck();
+    if (!res.data || !res.data.report) return res;
+    await this.creditReportService.updateCreditReportStateAsync(res.data.report);
+    return res;
   }
 
   /**
    * Initiate a new dispute. Cannot have one in progress.
    */
   async sendStartDispute(): Promise<ITUServiceResponse<any>> {
-    try {
-      return await this.transunion.sendStartDispute(this.disputeStack);
-    } catch (err) {
-      throw `disputeService:sendStartDispute=${err}`;
-    }
+    return await this.transunion.sendStartDispute(this.disputeStack);
   }
 
   /**
@@ -220,11 +239,7 @@ export class DisputeService implements OnDestroy {
    * @returns
    */
   async getInvestigationResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
-    try {
-      return await this.transunion.getInvestigationResultsById(id);
-    } catch (err) {
-      throw `disputeService:getInvestigationResults=${err}`;
-    }
+    return await this.transunion.getInvestigationResultsById(id);
   }
 
   /**
@@ -232,11 +247,7 @@ export class DisputeService implements OnDestroy {
    * @returns
    */
   async getCreditBureauResultsById(id: string): Promise<ITUServiceResponse<string | undefined>> {
-    try {
-      return await this.transunion.getCreditBureauResultsById(id);
-    } catch (err) {
-      throw `disputeService:getInvestigationResults=${err}`;
-    }
+    return await this.transunion.getCreditBureauResultsById(id);
   }
 
   /**

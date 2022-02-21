@@ -11,7 +11,6 @@ export class MergereportToPublicitemsPipe implements PipeTransform {
     const publicrecords = report.TrueLinkCreditReportType?.PulblicRecordPartition;
     if (publicrecords === undefined) return;
     if (publicrecords instanceof Array) return publicrecords.map((item) => this.mapping(item));
-    if (!(publicrecords instanceof Array)) return [this.mapping(publicrecords)];
     return;
   }
 
