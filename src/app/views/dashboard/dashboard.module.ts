@@ -83,6 +83,8 @@ import { SettingsWarningComponent } from './settings/components/settings-warning
 import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/dashboard-ads-carousel/dashboard-ads-carousel.component';
 import { CreditUtilizationAssessmentComponent } from './snapshots/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component';
 import { DashboardCreditScoreErrorComponent } from './dashboard-enrolled/components/dashboard-credit-score-error/dashboard-credit-score-error.component';
+import { ProgressTrackerComponent } from './snapshots/progress-tracker/progress-tracker/progress-tracker.component';
+import { ProgressTrackerPureComponent } from './snapshots/progress-tracker/progress-tracker-pure/progress-tracker-pure.component';
 
 const modules = [
   CommonModule,
@@ -160,6 +162,8 @@ const components = [
   DashboardAdsCarouselComponent,
   DashboardCreditScoreErrorComponent,
   CreditUtilizationAssessmentComponent,
+  ProgressTrackerComponent,
+  ProgressTrackerPureComponent,
 ];
 
 const pipes = [AccountStatusPipe];
