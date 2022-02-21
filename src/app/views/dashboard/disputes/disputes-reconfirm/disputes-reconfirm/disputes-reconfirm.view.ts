@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
@@ -17,11 +17,10 @@ export class DisputesReconfirmView {
   report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
 
   constructor(
+    private store: Store,
     private router: Router,
-    public route: ActivatedRoute,
     private statesvc: StateService,
     private disputeService: DisputeService,
-    private store: Store,
   ) {}
 
   onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {
