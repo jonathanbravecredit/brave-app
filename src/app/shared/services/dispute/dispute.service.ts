@@ -222,7 +222,9 @@ export class DisputeService implements OnDestroy {
 
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
     const res = await this.transunion.sendDisputePreflightCheck();
-    this.creditReportService.updateCreditReportState(res.data.report)
+    if (!res.success && res.data.report) {
+      this.creditReportService.updateCreditReportState(res.data.report)
+    }
     return res
   }
 
