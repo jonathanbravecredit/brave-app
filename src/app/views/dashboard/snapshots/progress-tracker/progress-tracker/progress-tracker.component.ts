@@ -17,7 +17,6 @@ export class ProgressTrackerComponent implements OnInit {
   ngOnInit(): void {
     this.setCurrentGoal()
     this.createSteps()
-    console.log('HERE', this.currentGoal)
   }
 
 

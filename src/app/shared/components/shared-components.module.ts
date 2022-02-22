@@ -121,6 +121,7 @@ import { FacebookShareComponent } from './share-buttons/facebook-share/facebook-
 import { TwitterShareComponent } from './share-buttons/twitter-share/twitter-share.component';
 import { AdCardComponent } from './cards/ad-card/ad-card.component';
 import { NotificationBadgeComponent } from './badges/notification-badge/notification-badge.component';
+import { CircleChecktextProgressbarComponent } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 
 const components = [
   BaseFormComponent,
@@ -216,6 +217,7 @@ const components = [
   PercentageGaugeComponent,
   CreditUtilizationFillBarComponent,
   NotificationBadgeComponent,
+  CircleChecktextProgressbarComponent
 ];
 
 // component specific pipes only

@@ -98,7 +98,7 @@ const modules = [
   DisputesModule,
   CreditReportModule,
   DashboardRoutingModule,
-  SharedDirectivesModule,
+  SharedDirectivesModule
 ];
 const components = [
   DashboardComponent,

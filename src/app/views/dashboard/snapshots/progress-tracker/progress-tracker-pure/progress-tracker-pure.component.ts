@@ -14,7 +14,5 @@ export class ProgressTrackerPureComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('HERE', this.currentGoal)
-  }
+  ngOnInit(): void {}
 }

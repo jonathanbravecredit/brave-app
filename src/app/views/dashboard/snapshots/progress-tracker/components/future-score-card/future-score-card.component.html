@@ -1,6 +1,6 @@
 <div class="flex justify-center items-center flex-col mt-6 rounded-lg p-4 bg-blue-300 text-white">
-  <h1 class="text-2xl font-semibold">Your FutureScore:</h1>
-  <p class="text-5xl font-semibold mt-2">{{ futureScore }}</p>
+  <h1 class="text-2xl font-semibold font-headings">Your FutureScore:</h1>
+  <p class="text-5xl mt-2 font-headings">{{ futureScore }}</p>
   <p>{{ scoreReview }}</p>
   <div class="flex mt-2 items-center">
     <span
@@ -17,8 +17,8 @@
     </span>
     <div class="text-2xl font-semibold">
       <span>{{ pointsDiff > 0 ? '+' : pointsDiff === 0 ? '' : '-' }}{{ pointsDiff }}</span>
-      points
+      points*
     </div>
   </div>
-  <p class="text-sm">Based on initial {{ monthYear }} score of {{ currentScore }}</p>
+  <p class="text-xs">Based on initial {{ monthYear }} score of {{ currentScore }}</p>
 </div>

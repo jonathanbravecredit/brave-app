@@ -1,4 +1,7 @@
-<div class="border border-solid rounded-lg p-4 my-6" [ngClass]="goal.progress === 'complete' ? 'border-green-500' : 'border-slate-600'">
+<div
+  class="border border-solid rounded-lg p-4 my-6"
+  [ngClass]="goal.progress === 'complete' ? 'border-green-500' : 'border-slate-600'"
+>
   <div class="flex justify-between items-center">
     <span
       class="material-icons-outlined text-4xl"
@@ -6,10 +9,43 @@
     >
       check_circle
     </span>
-    <div class="text-center mx-6 font-semibold">{{ goal.title }}</div>
+    <div class="text-center mx-6 font-semibold text-lg">{{ goal.title }}</div>
     <div>
       <span class="text-2xl text-blue-900 font-bold">{{ goal.pointsGain }}</span>
       <p class="text-sm text-gray-500">Points*</p>
     </div>
+  </div>
+
+  <div
+    *ngIf="expanded"
+    [@openClose]="expanded ? 'open' : 'closed'"
+    class="flex flex-col justify-evenly items-center overflow-hidden"
+  >
+    <p class="mt-6  mx-10">{{ goal.cardInfo.textOne }}</p>
+    <brave-filled-onlytext-button class="my-6  mx-10" [config]="config">{{
+      goal.cardInfo.buttonText
+    }}</brave-filled-onlytext-button>
+    <p class="mb-6  mx-10">{{ goal.cardInfo.textTwo }}</p>
+
+    <div *ngIf="goal.progress === 'complete'" class="bg-green-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2">
+      <h4 class="font-bold mt-2 mb-4 text-center">{{ goal.successHeader }}</h4>
+      <p class="mb-2 text-center">{{ goal.successText }}</p>
+    </div>
+
+    <div *ngIf="goal.progress !== 'complete' && goal.questionHeader" class="bg-gray-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2">
+      <h4 class="font-bold mt-2 mb-4 text-center">{{ goal.questionHeader }}</h4>
+      <div class="text-white flex justify-center mb-2">
+        <div (click)="clickYes()" class="px-10 py-2 bg-gray-600 mr-6 cursor-pointer">Yes</div>
+        <div (click)="clickNo()" class="px-10 py-2 bg-gray-600 cursor-pointer">No</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="flex min-w-full justify-center items-center mt-2 cursor-pointer" (click)="changeExpand()">
+    <p class="text-sm">{{ expanded ? 'Close' : 'Learn More' }}</p>
+    <span class="material-icons-outlined ml-2 transform text-sm" [ngClass]="expanded ? '-rotate-90' : 'rotate-90'">
+      arrow_forward_ios
+    </span>
   </div>
 </div>

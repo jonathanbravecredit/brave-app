@@ -10,6 +10,9 @@ import { ProgressTrackerPureComponent } from '@views/dashboard/snapshots/progres
 import { ProgressTrackerHeaderComponent } from '@views/dashboard/snapshots/progress-tracker/components/progress-tracker-header/progress-tracker-header.component';
 import { ProgressTrackerDisclaimerComponent } from '@views/dashboard/snapshots/progress-tracker/components/progress-tracker-disclaimer/progress-tracker-disclaimer.component';
 import { ProgressTrackerGoalCardComponent } from '@views/dashboard/snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
+import { FilledOnlytextButtonComponent } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
+import { FilledOnlytextButtonPipe } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export default {
   title: 'app/views/snapshots/progress-tracker',
@@ -23,8 +26,10 @@ export default {
         ProgressTrackerHeaderComponent,
         ProgressTrackerDisclaimerComponent,
         ProgressTrackerGoalCardComponent,
+        FilledOnlytextButtonComponent,
+        FilledOnlytextButtonPipe,
       ],
-      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
+      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true }), BrowserAnimationsModule],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
