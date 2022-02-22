@@ -1,4 +1,4 @@
-export const MOCKPROGRESSTRACKERDATA = {
+export const MOCKPROGRESSTRACKERDATA: IGoalHolder = {
   initiative: {
     id: 'future_score',
     currentGoal: 'buy_house',
@@ -31,32 +31,59 @@ export const MOCKPROGRESSTRACKERDATA = {
         },
       ],
     },
-    {
-      order: 1,
-      id: 'buy_house',
-      progress: 'in_progress',
-      goals: [
-        {
-          order: 0,
-          id: 'review_score',
-          progress: 'complete',
-        },
-        {
-          order: 1,
-          id: 'claim_future_score',
-          progress: 'not_started',
-        },
-        {
-          order: 2,
-          id: 'down_payment',
-          progress: 'complete',
-        },
-        {
-          order: 3,
-          id: 'debt_income_ratio',
-          progress: 'not_started',
-        },
-      ],
-    },
+    // {
+    //   order: 1,
+    //   id: 'buy_house',
+    //   progress: 'in_progress',
+    //   goals: [
+    //     {
+    //       order: 0,
+    //       id: 'review_score',
+    //       progress: 'complete',
+    //     },
+    //     {
+    //       order: 1,
+    //       id: 'claim_future_score',
+    //       progress: 'not_started',
+    //     },
+    //     {
+    //       order: 2,
+    //       id: 'down_payment',
+    //       progress: 'complete',
+    //     },
+    //     {
+    //       order: 3,
+    //       id: 'debt_income_ratio',
+    //       progress: 'not_started',
+    //     },
+    //   ],
+    // },
   ],
 };
+
+export interface IGoalHolder {
+  initiative: {
+    id: string;
+    currentGoal: string;
+  };
+  aggregateGoals: IGoalSummary[];
+}
+
+export interface IGoalSummary {
+  order: number;
+  id: string;
+  progress: string;
+  label: string;
+  header: string;
+  text: string;
+  goals: IGoalInterface[];
+}
+
+export interface IGoalInterface {
+  order: number;
+  id: string;
+  stepText: string;
+  title: string;
+  progress: string;
+  pointsGain: string;
+}

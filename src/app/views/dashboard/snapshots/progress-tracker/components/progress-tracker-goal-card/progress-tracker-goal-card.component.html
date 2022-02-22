@@ -1,7 +1,12 @@
-<div class="border border-solid border-slate-600 rounded-lg p-4">
+<div class="border border-solid border-slate-600 rounded-lg p-4 my-6">
   <div class="flex justify-between items-center">
-    <span class="material-icons-outlined"> check_circle </span>
-    <div class="text-center max-w-[50%]">{{ goal.title }}</div>
+    <span
+      class="material-icons-outlined text-4xl"
+      [ngClass]="goal.progress === 'complete' ? 'text-green-500' : 'text-slate-400'"
+    >
+      check_circle
+    </span>
+    <div class="text-center mx-4">{{ goal.title }}</div>
     <div>
       <span>{{ goal.pointsGain }}</span>
       <p>Points*</p>
