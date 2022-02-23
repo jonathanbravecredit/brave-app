@@ -1,5 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { NgxsOnInit } from '@ngxs/store';
+import { Component, Input, OnInit } from '@angular/core';
 
 export interface ICircleProgressStep {
   id: number;

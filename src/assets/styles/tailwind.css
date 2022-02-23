@@ -3148,11 +3148,6 @@ select {
   color: rgba(224, 242, 254, var(--tw-text-opacity));
 }
 
-.text-lightBlue-200 {
-  --tw-text-opacity: 1;
-  color: rgba(186, 230, 253, var(--tw-text-opacity));
-}
-
 .text-lightBlue-400 {
   --tw-text-opacity: 1;
   color: rgba(56, 189, 248, var(--tw-text-opacity));
@@ -3236,11 +3231,6 @@ select {
 .text-coolGray-200 {
   --tw-text-opacity: 1;
   color: rgba(229, 231, 235, var(--tw-text-opacity));
-}
-
-.text-coolGray-300 {
-  --tw-text-opacity: 1;
-  color: rgba(209, 213, 219, var(--tw-text-opacity));
 }
 
 .text-coolGray-700 {
