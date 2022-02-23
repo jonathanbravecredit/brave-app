@@ -1,17 +1,19 @@
 <div class="bg-gray-50 p-4">
-  <h5 class="text-sm">{{currentGoal?.label}}</h5>
+  <h5 class="text-sm">{{ data?.initiativeTitle }}</h5>
   <brave-circle-checktext-progressbar [steps]="steps"></brave-circle-checktext-progressbar>
 </div>
 
 <brave-future-score-card></brave-future-score-card>
 
-<div>
-  <brave-progress-tracker-header [currentGoal]="currentGoal"></brave-progress-tracker-header>
-</div>
+<div *ngFor="let primaryTask of primaryTasks">
+  <div>
+    <brave-progress-tracker-header [primaryTask]="primaryTask"></brave-progress-tracker-header>
+  </div>
 
-<div class="mt-1 mb-4">
-  <div *ngFor="let goal of currentGoal?.goals">
-    <brave-progress-tracker-goal-card [goal]="goal"></brave-progress-tracker-goal-card>
+  <div class="mt-1 mb-4">
+    <div *ngFor="let subTask of primaryTask?.subTasks">
+      <brave-progress-tracker-goal-card [subTask]="subTask"></brave-progress-tracker-goal-card>
+    </div>
   </div>
 </div>
 

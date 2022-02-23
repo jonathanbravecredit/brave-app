@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { InitiativeSubTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 
 @Component({
   selector: 'brave-progress-tracker-goal-card',
@@ -27,7 +28,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ],
 })
 export class ProgressTrackerGoalCardComponent implements OnInit {
-  @Input() goal: any;
+  @Input() subTask: InitiativeSubTask | undefined;
   expanded: boolean = false;
   config: IFilledOnlyTextButtonConfig = {
     buttonSize: 'lg',

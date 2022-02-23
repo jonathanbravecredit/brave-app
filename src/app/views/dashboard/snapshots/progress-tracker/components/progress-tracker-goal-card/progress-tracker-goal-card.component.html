@@ -1,44 +1,46 @@
 <div
   class="border border-solid rounded-lg p-4 my-6"
-  [ngClass]="goal.progress === 'complete' ? 'border-green-500' : 'border-slate-600'"
+  [ngClass]="subTask?.taskStatus === 'complete' ? 'border-green-500' : 'border-slate-600'"
 >
-  <div class="flex justify-between items-center z-10">
+  <div class="flex justify-between items-center cursor-pointer" (click)="expanded = !expanded">
     <span
       class="material-icons-outlined text-4xl"
-      [ngClass]="goal.progress === 'complete' ? 'text-green-500' : 'text-gray-300'"
+      [ngClass]="subTask?.taskStatus === 'complete' ? 'text-green-500' : 'text-gray-300'"
     >
       check_circle
     </span>
-    <div class="text-center mx-6 font-semibold text-lg">{{ goal.title }}</div>
+    <div class="text-center mx-6 font-semibold text-lg">{{ subTask?.taskCard?.header }}</div>
     <div>
-      <span class="text-2xl text-blue-900 font-bold">{{ goal.pointsGain }}</span>
+      <span class="text-2xl text-blue-900 font-bold">{{ subTask?.taskCard?.metric }}</span>
       <p class="text-sm text-gray-500">Points*</p>
     </div>
   </div>
 
   <div
     [@openClose]="expanded ? 'open' : 'closed'"
-    class="flex flex-col justify-evenly items-center overflow-hidden z-0"
+    class="flex flex-col justify-evenly items-center overflow-hidden"
   >
-    <p class="mt-6 mx-10" [innerHTML]="goal.cardInfo.textOne | linkify"></p>
-    <brave-filled-onlytext-button class="my-6 mx-10" [config]="config">{{
-      goal.cardInfo.buttonText
-    }}</brave-filled-onlytext-button>
-    <p class="mb-6 mx-10" [innerHTML]="goal.cardInfo.textTwo | linkify"></p>
+    <p class="mt-6 mx-10" [innerHTML]="subTask?.taskCard?.textOne | linkify"></p>
+    <a [href]="subTask?.taskCard?.link"  class="my-6 mx-10">
+      <brave-filled-onlytext-button [config]="config">{{
+        subTask?.taskCard?.textButton
+      }}</brave-filled-onlytext-button>
+    </a>
+    <p class="mb-6 mx-10" [innerHTML]="subTask?.taskCard?.textTwo | linkify"></p>
 
     <div
-      *ngIf="goal.progress === 'complete'"
+      *ngIf="subTask?.taskStatus === 'complete'"
       class="bg-green-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
     >
-      <h4 class="font-bold mt-2 mb-4 text-center">{{ goal.successHeader }}</h4>
-      <p class="mb-2 text-center" [innerHTML]="goal.successText | linkify"></p>
+      <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.successHeader }}</h4>
+      <p class="mb-2 text-center" [innerHTML]="subTask?.taskCard?.successText | linkify"></p>
     </div>
 
     <div
-      *ngIf="goal.progress !== 'complete' && goal.questionHeader"
+      *ngIf="subTask?.taskStatus !== 'complete' && subTask?.taskCard?.questionHeader"
       class="bg-gray-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
     >
-      <h4 class="font-bold mt-2 mb-4 text-center">{{ goal.questionHeader }}</h4>
+      <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.questionHeader }}</h4>
       <div class="text-white flex justify-center mb-2">
         <div (click)="clickYes()" class="px-10 py-2 bg-gray-600 mr-6 cursor-pointer">Yes</div>
         <div (click)="clickNo()" class="px-10 py-2 bg-gray-600 cursor-pointer">No</div>
