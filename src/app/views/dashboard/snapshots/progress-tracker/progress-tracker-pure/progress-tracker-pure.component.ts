@@ -7,7 +7,7 @@ import { Initiative, InitiativeTask } from '@views/dashboard/snapshots/progress-
   templateUrl: './progress-tracker-pure.component.html',
 })
 export class ProgressTrackerPureComponent implements OnInit {
-  @Input() data: Initiative | undefined;
+  @Input() initiative: Initiative | null = null;
   @Input() goalId: string = '';
   @Input() steps: IProgressStep[] = [];
   @Input() primaryTasks: InitiativeTask[] = [];

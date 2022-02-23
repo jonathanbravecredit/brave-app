@@ -138,3 +138,14 @@ export interface InitiativeExtendedTaskCard extends InitiativeTaskCard {
 export interface InitiativeSubTask extends InitiativeTask {
   taskCard: InitiativeExtendedTaskCard;
 }
+
+export interface InitiativePatchBody {
+  primaryTasks: InitiativePatchTask[],
+  subTasks: InitiativePatchTask[],
+}
+
+export interface InitiativePatchTask {
+  taskId: string,
+  taskOrder: number,
+  taskStatus: string,
+}

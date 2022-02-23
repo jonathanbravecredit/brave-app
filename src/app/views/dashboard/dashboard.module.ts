@@ -90,7 +90,7 @@ import { ProgressTrackerHeaderComponent } from './snapshots/progress-tracker/com
 import { ProgressTrackerDisclaimerComponent } from './snapshots/progress-tracker/components/progress-tracker-disclaimer/progress-tracker-disclaimer.component';
 import { ProgressTrackerGoalCardComponent } from './snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
 import { DashboardReportMissingComponent } from './dashboard-enrolled/components/dashboard-report-missing/dashboard-report-missing.component';
-
+import { CircleChecktextProgressbarComponent } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 
 const modules = [
   CommonModule,
@@ -100,7 +100,7 @@ const modules = [
   DisputesModule,
   CreditReportModule,
   DashboardRoutingModule,
-  SharedDirectivesModule
+  SharedDirectivesModule,
 ];
 const components = [
   DashboardComponent,
@@ -174,12 +174,14 @@ const components = [
   ProgressTrackerHeaderComponent,
   ProgressTrackerDisclaimerComponent,
   ProgressTrackerGoalCardComponent,
+  CircleChecktextProgressbarComponent,
+  DashboardReportMissingComponent,
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, DashboardReportMissingComponent],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })

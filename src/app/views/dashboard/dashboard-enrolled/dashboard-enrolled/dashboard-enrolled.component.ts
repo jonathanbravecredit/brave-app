@@ -21,6 +21,8 @@ import { IMergeReport } from '@shared/interfaces';
 import { Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
+import { ProgressTrackerSelectors, ProgressTrackerStateModel } from '@store/progress-tracker';
+import { Initiative } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -49,8 +51,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
   // sub to router
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
+  initiative: Initiative | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
+  private initiative$: Observable<ProgressTrackerStateModel> = this.store.select(ProgressTrackerSelectors.getProgressTracker);
+  private initiativeSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -62,12 +67,14 @@ export class DashboardEnrolledComponent implements OnDestroy {
   ) {
     this.subscribeToReportData();
     this.subscribeToRouteData();
+    this.subscribeToProgressTrackerData();
     this.setAdData();
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
+    this.initiativeSub$?.unsubscribe()
   }
 
   subscribeToReportData(): void {
@@ -82,6 +89,17 @@ export class DashboardEnrolledComponent implements OnDestroy {
       });
   }
 
+  subscribeToProgressTrackerData() {
+    this.initiativeSub$ = this.initiative$
+    .pipe(filter((ProgressTrackerData: ProgressTrackerStateModel) => ProgressTrackerData !== undefined))
+    .subscribe((ProgressTrackerData: ProgressTrackerStateModel) => {
+      this.initiative = ProgressTrackerData.data;
+      if (this.initiative) {
+        this.dashboardService.progressTrackerData$.next(this.initiative);
+      }
+    });
+  }
+
   subscribeToRouteData(): void {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
       // these are key data sources
@@ -90,6 +108,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
+
 
       // check referral progress if active
       this.referral = referral;
