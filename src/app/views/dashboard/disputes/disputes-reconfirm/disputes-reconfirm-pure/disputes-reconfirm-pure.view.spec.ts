@@ -30,7 +30,7 @@ describe('DisputesReconfirmPureView', () => {
   });
 
   it('should show the brave-dispute-header if there are tradelines', () => {
-    component.tradelines = [1, 2] as ITradeLinePartition[];
+    component.tradelines = [1, 2] as unknown as ITradeLinePartition[];
     fixture.detectChanges();
     expect(dh.count('brave-dispute-header')).toEqual(2);
   });

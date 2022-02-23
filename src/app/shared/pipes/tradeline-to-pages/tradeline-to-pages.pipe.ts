@@ -106,7 +106,10 @@ export class TradelineToPagesPipe implements PipeTransform {
    */
   parseRemarks(remarks: IRemark[] | undefined): string | undefined | null {
     if (remarks === undefined) return;
-    return remarks.map((r) => r.customRemark).reduce((a, b) => `${a} \n ${b}`)
-
+    return remarks
+      .map((r) => r.customRemark)
+      .reduce((a, b) => {
+        return `${a} \n ${b}`;
+      }, '');
   }
 }

@@ -18,6 +18,9 @@ import { shuffle } from 'lodash';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IMergeReport } from '@shared/interfaces';
+import { Store } from '@ngxs/store';
+import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -36,7 +39,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
   creditMixSummary: ICreditMixTLSummary | undefined;
   // tu data
   // report: IMergeReport | undefined;
-  report: IMergeReport | null | undefined;
   referral: IReferral | null | undefined;
   trends!: IGetTrendingData | null;
   trendingScores: IProductTrendingData[] = [];
@@ -46,6 +48,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
   adsData: IAdData[] | undefined;
   // sub to router
   routeSub$: Subscription | undefined;
+  report: IMergeReport | null = null;
+  private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
+  private reportSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -53,32 +58,43 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private dashboardService: DashboardService,
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
+    private store: Store,
   ) {
+    this.subscribeToReportData();
     this.subscribeToRouteData();
     this.setAdData();
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
+    this.reportSub$?.unsubscribe();
+  }
+
+  subscribeToReportData(): void {
+    this.reportSub$ = this.report$
+      .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
+      .subscribe((creditReportData: CreditReportStateModel) => {
+        this.report = creditReportData.report;
+        if (this.report) {
+          this.dashboardService.dashReport$.next(this.report);
+          this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
+        }
+      });
   }
 
   subscribeToRouteData(): void {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
       // these are key data sources
-      const { report, snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
-      this.report = report; // verify there is actually a report
-      if (report) this.dashboardService.dashReport$.next(report);
+      const { snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
+
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
-      const prodTrends = BraveUtil.parsers.parseTransunionTrendingData(trends);
-      const score = this.dashboardService.getCurrentScore(prodTrends);
-      if (trends) this.dashboardService.dashScore$.next(score);
-      this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(report));
+
       // check referral progress if active
       this.referral = referral;
       // for the credit mix
-      const tradelines = TransunionUtil.queries.report.listTradelines(report);
+      const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
       this.creditMixSummary = this.creditMixService.getTradelineSummary(tradelines);
       this.creditMix = this.creditMixService.getRecommendations(this.creditMixSummary);
       this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');

@@ -89,6 +89,8 @@ import { FutureScoreCardComponent } from './snapshots/progress-tracker/component
 import { ProgressTrackerHeaderComponent } from './snapshots/progress-tracker/components/progress-tracker-header/progress-tracker-header.component';
 import { ProgressTrackerDisclaimerComponent } from './snapshots/progress-tracker/components/progress-tracker-disclaimer/progress-tracker-disclaimer.component';
 import { ProgressTrackerGoalCardComponent } from './snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
+import { DashboardReportMissingComponent } from './dashboard-enrolled/components/dashboard-report-missing/dashboard-report-missing.component';
+
 
 const modules = [
   CommonModule,
@@ -177,7 +179,7 @@ const components = [
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, DashboardReportMissingComponent],
   imports: [...modules],
   exports: [...components],
 })

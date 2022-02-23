@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

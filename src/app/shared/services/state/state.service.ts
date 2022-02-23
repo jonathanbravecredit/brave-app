@@ -43,7 +43,8 @@ export class StateService {
    */
   async updateStateNoDBSyncAsync(appdata: AppDataStateModel): Promise<AppDataStateModel> {
     return await new Promise((resolve, reject) => {
-      this.store.dispatch(new AppDataActions.Edit(appdata)).subscribe((state: { appData: AppDataStateModel }) => {
+      this.store.dispatch(new AppDataActions.Edit(appdata))
+        .subscribe((state: { appData: AppDataStateModel }) => {
         return resolve(state.appData);
       });
     });
