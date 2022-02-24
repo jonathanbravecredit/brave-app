@@ -2892,6 +2892,10 @@ select {
   line-height: 1.5rem;
 }
 
+.leading-8 {
+  line-height: 2rem;
+}
+
 .leading-none {
   line-height: 1;
 }

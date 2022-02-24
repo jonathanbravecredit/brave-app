@@ -1,3 +1,4 @@
+import { IMergeReport } from '@shared/interfaces';
 import { IErrorResponse, INil } from '@shared/interfaces/errors.interface';
 
 export interface IEnroll {
@@ -129,4 +130,10 @@ export interface IEnrollServiceProductResponse {
   ServiceProductTypeId: string;
   ServiceProductValue: string;
   Status: string;
+}
+
+
+export interface IEnrollCreditReportResponse {
+  report: IMergeReport,
+  score: number,
 }

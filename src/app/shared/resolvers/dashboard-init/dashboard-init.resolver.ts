@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import { APIService } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
-import { from, Observable, of } from 'rxjs';
+import { from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { IMergeReport } from '@shared/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
@@ -23,7 +23,7 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
     private statesvc: StateService,
   ) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IMergeReport | null> {
+  async resolve(): Promise<IMergeReport | null> {
     const id = this.statesvc.state?.appData.id;
     const sub = await this.auth.getUserSub();
     const appData = await this.store.selectOnce(AppDataSelectors.getAppData).toPromise();

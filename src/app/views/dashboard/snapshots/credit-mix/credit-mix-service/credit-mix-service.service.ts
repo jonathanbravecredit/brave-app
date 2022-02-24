@@ -1,51 +1,40 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select } from '@ngxs/store';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { BraveUtil } from '@shared/utils/brave/brave';
-import { AgenciesState, AgenciesStateModel } from '@store/agencies';
+import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import {
   CreditMixRecommendations as Recs,
   RecommendationConditionalLogic as Logic,
   RecommendationValues as Values,
 } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service-conditions';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ICreditMixTLSummary, IRecommendationText } from '../interfaces/credit-mix-calc-obj.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreditMixService implements OnDestroy {
-  tradeLinePartition: ITradeLinePartition[] = [];
-  tuReportSub$: Subscription | undefined;
-
   // easy access to the Transunion merge report
   tuReport: IMergeReport = {} as IMergeReport;
-  tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
+  tuReport$ = new BehaviorSubject({} as IMergeReport);
+  tuReportSub$: Subscription | undefined;
+  tradeLinePartition: ITradeLinePartition[] = [];
 
-  @Select(AgenciesState) agencies$!: Observable<AgenciesStateModel>;
-  agenciesSub$: Subscription;
-
-  constructor() {
-    this.agenciesSub$ = this.agencies$.pipe().subscribe((agencies: AgenciesStateModel) => {
-      const parsedReport = this.getCreditReport(agencies);
-      if (Object.keys(parsedReport).length) {
-        this.tuReport$.next(parsedReport);
-        this.tuReport = parsedReport;
-      }
-    });
+  constructor(private creditReport: CreditreportService) {
+    this.subscribeToCreditReport();
   }
 
-  getCreditReport(agencies: AgenciesStateModel): IMergeReport {
-    const transunion = agencies.transunion;
-    return BraveUtil.parsers.parseTransunionMergeReport(transunion);
+  subscribeToCreditReport() {
+    this.tuReportSub$ = this.creditReport.tuReport$.subscribe((report) => {
+      this.tuReport$.next(report);
+      this.tuReport = report;
+    });
   }
 
   getTradeLinePartitions(): ITradeLinePartition[] {
     if (!this.tuReport) return [{} as ITradeLinePartition];
-    const partitions = this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition;
+    const partitions = this.tuReport.TrueLinkCreditReportType.TradeLinePartition;
     if (!partitions) return [{} as ITradeLinePartition];
-    return partitions instanceof Array ? partitions : [partitions];
+    return partitions;
   }
 
   ngOnDestroy() {

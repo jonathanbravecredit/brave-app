@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { CreditReportResolver } from '@shared/resolvers/credit-report/credit-report.resolver';
 import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 import { DashboardInitResolver } from '../dashboard-init/dashboard-init.resolver';
-import { DashboardReferralsResolver } from '../dashboard-referrals/dashboard-referrals.resolver';
 import { DashboardScoreTrendsResolver } from '../dashboard-score-trends/dashboard-score-trends.resolver';
 import { DashboardSnapshotsResolver } from '../dashboard-snapshots/dashboard-snapshots.resolver';
 
@@ -14,11 +14,13 @@ describe('DashboardResolver', () => {
   let snapshotsResolverMock: any;
   let scoreTrendsResolverMock: any;
   let referralResolverMock: any;
+  let creditReportResolverMock: any;
   beforeEach(() => {
     dashboardResolverMock = jasmine.createSpyObj('DashboardInitResolver', ['resolve']);
     snapshotsResolverMock = jasmine.createSpyObj('DashboardSnapshotsResolver', ['resolve']);
     scoreTrendsResolverMock = jasmine.createSpyObj('DashboardScoreTrendsResolver', ['resolve']);
     referralResolverMock = jasmine.createSpyObj('ReferralResolver', ['resolve']);
+    creditReportResolverMock = jasmine.createSpyObj('CreditReportResolver', ['resolve']);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -35,6 +37,10 @@ describe('DashboardResolver', () => {
         {
           provide: ReferralResolver,
           useValue: referralResolverMock,
+        },
+        {
+          provide: CreditReportResolver,
+          useValue: creditReportResolverMock,
         },
       ],
     });

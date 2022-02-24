@@ -11,7 +11,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 import { dateDiffInDays } from '@shared/utils/dates';
 import { AppDataStateModel } from '@store/app-data';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -35,7 +35,9 @@ export class DashboardService implements OnDestroy {
   state$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
   stateSub$: Subscription = new Subscription();
   // hold the merge report for easy access...this may be redundant
+  tuReport: IMergeReport | undefined;
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
+  tuReportSub$: Subscription | undefined;
   // data to pass to child components
   dashReport$ = new BehaviorSubject<IMergeReport | null>(null);
   dashSnapshots$ = new BehaviorSubject<DashboardStateModel | null>(null);
@@ -59,7 +61,12 @@ export class DashboardService implements OnDestroy {
     private reportService: CreditreportService,
     private transunion: TransunionService,
   ) {
-    this.tuReport$ = this.reportService.tuReport$;
+    this.tuReportSub$ = this.reportService.tuReport$
+      .pipe(filter((report) => report !== undefined))
+      .subscribe((report) => {
+        this.tuReport$.next(report);
+        this.tuReport = report;
+      });
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state$.next(state.appData);
       this.state = state.appData;
@@ -74,6 +81,7 @@ export class DashboardService implements OnDestroy {
   ngOnDestroy() {
     this.stateSub$?.unsubscribe();
     this.dashScoresSub$?.unsubscribe();
+    this.tuReportSub$?.unsubscribe();
   }
 
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {
@@ -84,12 +92,12 @@ export class DashboardService implements OnDestroy {
         return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? swap : keep;
       })[0];
       return isNaN(+sorted.AttributeValue)
-        ? this.tuReport$
-          ? this.parseRiskScoreFromReport(this.tuReport$.getValue())
+        ? this.tuReport
+          ? this.parseRiskScoreFromReport(this.tuReport)
           : null
         : +sorted.AttributeValue;
     } else {
-      return this.tuReport$ ? this.parseRiskScoreFromReport(this.tuReport$.getValue()) : null;
+      return this.tuReport ? this.parseRiskScoreFromReport(this.tuReport) : null;
     }
   }
 
@@ -134,10 +142,10 @@ export class DashboardService implements OnDestroy {
 
   isCreditFreezeEnabled(): Observable<boolean> {
     return this.tuReport$.pipe(
+      filter((report) => report !== undefined),
       switchMap((report) => {
-        const creditreport = report?.TrueLinkCreditReportType;
-        const isFreezeEnabled = creditreport?.SB168Frozen && creditreport?.SB168Frozen?.transunion;
-        return of(isFreezeEnabled ? true : false);
+        const isFrozen = report?.TrueLinkCreditReportType?.SB168Frozen?.transunion;
+        return of(isFrozen ? true : false);
       }),
     );
   }

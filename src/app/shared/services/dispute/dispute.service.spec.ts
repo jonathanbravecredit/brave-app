@@ -1,19 +1,17 @@
-
-import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { IPublicPartition, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { MonitorClickEvents } from '@shared/services/safeListMonitoring/constants';
-import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
-import { StateService } from '@shared/services/state/state.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { AppDataStateModel } from '@store/app-data';
 import { of, Subscription } from 'rxjs';
 import { DisputeService } from './dispute.service';
 
 const setup = () => {
+  const stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
+    state$: of(),
+    state: { appData: new AppDataStateModel() },
+  });
+  const analyticsMock = jasmine.createSpyObj('AnalyticsService', ['fireClickEvent']);
   const transunionMock = jasmine.createSpyObj('TransunionService', [
     'sendDisputePreflightCheck',
     'sendStartDispute',
@@ -22,47 +20,45 @@ const setup = () => {
     'sendTransunionAPICall',
   ]);
   const safeMonitorMock = jasmine.createSpyObj('SafeListMonitoringService', ['fireClickEvent']);
-  const analyticsMock = jasmine.createSpyObj('AnalyticsService', ['fireClickEvent']);
-  const stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
-    state$: of(),
-    state: { appData: new AppDataStateModel() },
-  });
-  const disputeService = new DisputeService(stateMock, analyticsMock, transunionMock, safeMonitorMock);
-
-  // const valueServiceSpy = jasmine.createSpyObj('ValueService', ['getValue']);
-  // const stubValue = 'stub value';
-  // const masterService = new MasterService(valueServiceSpy);
-
-  // valueServiceSpy.getValue.and.returnValue(stubValue);
-  return { disputeService, transunionMock, safeMonitorMock, analyticsMock, stateMock };
+  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', ['updateCreditReportStateAsync']);
+  const disputeService = new DisputeService(
+    stateMock,
+    analyticsMock,
+    transunionMock,
+    safeMonitorMock,
+    creditReportMock,
+  );
+  return { disputeService, transunionMock, safeMonitorMock, analyticsMock, stateMock, creditReportMock };
 };
 
 describe('DisputeService', () => {
-  let service: DisputeService;
-  let stateMock: any;
-  let transunionMock: any;
-  let safeMonitorMock: any;
-  let analyticsMock: any;
+  // let service: DisputeService;
+  // let stateMock: any;
+  // let transunionMock: any;
+  // let safeMonitorMock: any;
+  // let analyticsMock: any;
+  // let creditReportMock: any;
 
-  beforeEach(() => {
-    transunionMock = jasmine.createSpyObj('TransunionService', ['subscribe']);
-    safeMonitorMock = jasmine.createSpyObj('SafeListMonitoringService', ['fireClickEvent']);
-    analyticsMock = jasmine.createSpyObj('AnalyticsService', ['fireClickEvent']);
-    stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
-      state$: of(),
-      state: { appData: new AppDataStateModel() },
-    });
-    TestBed.configureTestingModule({
-      providers: [
-        DisputeService,
-        { provide: StateService, useValue: stateMock },
-        { provide: TransunionService, useValue: transunionMock },
-        { provide: AnalyticsService, useValue: analyticsMock },
-        { provide: SafeListMonitoringService, useValue: safeMonitorMock },
-      ],
-    });
-    service = TestBed.inject(DisputeService);
-  });
+  // beforeEach(() => {
+  //   transunionMock = jasmine.createSpyObj('TransunionService', ['subscribe']);
+  //   safeMonitorMock = jasmine.createSpyObj('SafeListMonitoringService', ['fireClickEvent']);
+  //   analyticsMock = jasmine.createSpyObj('AnalyticsService', ['fireClickEvent']);
+  //   stateMock = jasmine.createSpyObj('StateService', ['updateAgenciesAsync', 'updateAgencies'], {
+  //     state$: of(),
+  //     state: { appData: new AppDataStateModel() },
+  //   });
+  //   creditReport
+  //   TestBed.configureTestingModule({
+  //     providers: [
+  //       DisputeService,
+  //       { provide: StateService, useValue: stateMock },
+  //       { provide: TransunionService, useValue: transunionMock },
+  //       { provide: AnalyticsService, useValue: analyticsMock },
+  //       { provide: SafeListMonitoringService, useValue: safeMonitorMock },
+  //     ],
+  //   });
+  //   service = TestBed.inject(DisputeService);
+  // });
 
   it('should be created', () => {
     const { disputeService } = setup();
@@ -222,7 +218,6 @@ describe('DisputeService', () => {
       spyOn(disputeService.currentDisputeSub$!, 'unsubscribe');
       disputeService.ngOnDestroy();
       expect(disputeService.currentDisputeSub$!.unsubscribe).toHaveBeenCalled();
-
     });
   });
 
@@ -347,13 +342,13 @@ describe('DisputeService', () => {
             transunion: {},
           },
         } as AppDataStateModel;
-        transunionMock.sendDisputePreflightCheck.and.returnValue({ success: true });
+        transunionMock.sendDisputePreflightCheck.and.returnValue({ success: true, data: {} });
         disputeService.onUserConfirmed();
         expect(disputeService.sendDisputePreflightCheck).toHaveBeenCalled();
       });
       xit(`Should call analytics fireClickEvent safeMonitor click events if preflight response is true`, () => {
         const { disputeService, transunionMock, analyticsMock, safeMonitorMock } = setup();
-        transunionMock.sendDisputePreflightCheck.and.returnValue({ sucess: true });
+        transunionMock.sendDisputePreflightCheck.and.returnValue({ sucess: true, data: {} });
         disputeService.onUserConfirmed();
         expect(analyticsMock.fireClickEvent).toHaveBeenCalledWith(AnalyticClickEvents.DisputeEnrollment, {
           google: true,
@@ -406,5 +401,5 @@ describe('DisputeService', () => {
         });
       });
     });
-  })
+  });
 });
