@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
+import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { Initiative, InitiativeSubTask, InitiativeTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-progress-tracker',
@@ -8,6 +10,7 @@ import { Initiative, InitiativeSubTask, InitiativeTask } from '@views/dashboard/
 })
 export class ProgressTrackerComponent implements OnInit, OnDestroy {
   initiative: Initiative | null = null; //! replace default
+  initiative$: Subscription | undefined;
 
   steps: IProgressStep[] = [];
   goalId: string = 'credit_card'; //! replace default
@@ -21,17 +24,23 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor() {}
+  constructor(dashboardService: DashboardService) {
+    this.initiative$ = dashboardService.progressTrackerData$.subscribe((data) => {
+      this.initiative = data;
+    });
+  }
 
   ngOnInit(): void {
     this.setCurrentPrimaryTasks();
     this.createSteps();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.initiative$?.unsubscribe();
+  }
 
   setCurrentPrimaryTasks() {
-    this.primaryTasks = this.initiative.primaryTasks || [];
+    this.primaryTasks = this.initiative?.primaryTasks || [];
   }
 
   createSteps() {

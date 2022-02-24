@@ -13,9 +13,9 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
   constructor(private store: Store, private progressTrackerService: ProgressTrackerService) {}
 
   async resolve(): Promise<Initiative | null> {
-    const state = await this.store.selectOnce(ProgressTrackerSelectors.getProgressTracker).toPromise();
-    if (state) {
-      this.setProgressTracker(state.data);
+    // const state = await this.store.selectOnce(ProgressTrackerSelectors.getProgressTracker).toPromise();
+    const state = this.store.selectSnapshot((state) => state.ProgressTracker);
+    if (state.data) {
       return state.data;
     } else {
       try {
@@ -30,13 +30,14 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
 
   async setProgressTracker(data: Initiative | null = null): Promise<void> {
     const payload = { data };
+    console.log('HERE', payload)
     await new Promise((resolve, reject) => {
       this.store
         .dispatch(new ProgressTrackerActions.Add(payload))
         .toPromise()
         .then((res) => {
           console.log('dispatch progressTrackerData: ', res);
-          resolve(res); //the report
+          resolve(res);
         })
         .catch((err) => {
           reject(err);

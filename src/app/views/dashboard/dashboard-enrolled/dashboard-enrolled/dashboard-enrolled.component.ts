@@ -51,10 +51,10 @@ export class DashboardEnrolledComponent implements OnDestroy {
   // sub to router
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
-  initiative: Initiative | null = null;
+  // initiative: Initiative | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
-  private initiative$: Observable<ProgressTrackerStateModel> = this.store.select(ProgressTrackerSelectors.getProgressTracker);
+  private initiative: Initiative = this.store.selectSnapshot((state) => state.ProgressTracker).data;
   private initiativeSub$: Subscription | undefined;
 
   constructor(
@@ -67,14 +67,14 @@ export class DashboardEnrolledComponent implements OnDestroy {
   ) {
     this.subscribeToReportData();
     this.subscribeToRouteData();
-    this.subscribeToProgressTrackerData();
+    this.setProgressTrackerDataInDashboardService();
     this.setAdData();
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
-    this.initiativeSub$?.unsubscribe()
+    this.initiativeSub$?.unsubscribe();
   }
 
   subscribeToReportData(): void {
@@ -89,15 +89,10 @@ export class DashboardEnrolledComponent implements OnDestroy {
       });
   }
 
-  subscribeToProgressTrackerData() {
-    this.initiativeSub$ = this.initiative$
-    .pipe(filter((ProgressTrackerData: ProgressTrackerStateModel) => ProgressTrackerData !== undefined))
-    .subscribe((ProgressTrackerData: ProgressTrackerStateModel) => {
-      this.initiative = ProgressTrackerData.data;
-      if (this.initiative) {
-        this.dashboardService.progressTrackerData$.next(this.initiative);
-      }
-    });
+  setProgressTrackerDataInDashboardService() {
+    if (this.initiative) {
+      this.dashboardService.progressTrackerData$.next(this.initiative);
+    }
   }
 
   subscribeToRouteData(): void {
@@ -108,7 +103,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
-
 
       // check referral progress if active
       this.referral = referral;

@@ -1,5 +1,5 @@
 export const MOCKPROGRESSTRACKERDATA: Initiative = {
-  id: 'future_score',
+  id: 'user_id',
   initiative: 'future_score',
   initiativeReason: 'credit_card',
   initiativeStatus: 'in_progress',

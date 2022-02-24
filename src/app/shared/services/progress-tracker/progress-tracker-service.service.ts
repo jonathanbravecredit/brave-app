@@ -24,9 +24,8 @@ export class ProgressTrackerService {
       Authorization: `${token}`,
     });
 
-    // return this.http.get<Initiative>(environment. + '/', { headers }).toPromise();
-
-    return new Promise((res) => res(MOCKPROGRESSTRACKERDATA));
+    //let res = this.http.get<Initiative>(environment. + '/', { headers }).toPromise();
+    return await new Promise((res) => res(MOCKPROGRESSTRACKERDATA));
   }
 
   // async postProgressTrackerData(reason: string): Promise<Initiative> {
@@ -53,10 +52,6 @@ export class ProgressTrackerService {
   // }
 
   updateProgressTrackerState(progressTrackerData: Initiative) {
-    const payload = {
-      data: progressTrackerData,
-      updatedOn: new Date().toISOString(),
-    };
-    this.store.dispatch(new ProgressTrackerActions.Add({ data: payload.data }));
+    this.store.dispatch(new ProgressTrackerActions.Add({ data: progressTrackerData }));
   }
 }

@@ -174,7 +174,6 @@ const components = [
   ProgressTrackerHeaderComponent,
   ProgressTrackerDisclaimerComponent,
   ProgressTrackerGoalCardComponent,
-  CircleChecktextProgressbarComponent,
   DashboardReportMissingComponent,
 ];
 
