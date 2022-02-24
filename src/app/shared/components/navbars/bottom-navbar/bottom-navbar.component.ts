@@ -60,7 +60,8 @@ export class BottomNavbarComponent implements OnInit {
         this.toggleDisputesBadge({ report: { badge: false } });
         break;
       case 'disputes':
-        this.interstitial.openInterstitial()
+        this.interstitial.changeMessage('');
+        this.interstitial.openInterstitial();
         this.toggleDisputesBadge({ disputes: { badge: false } });
         break;
       case 'settings':
