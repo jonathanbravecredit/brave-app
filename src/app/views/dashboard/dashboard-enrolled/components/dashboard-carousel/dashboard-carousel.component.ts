@@ -27,7 +27,7 @@ export class DashboardCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.dashData) {
-      const { dashTrends: trends, dashScores: scores, dashScore: score, dashReport: report } = this.dashData;
+      const { dashTrends: trends, dashScores: scores, dashScore: score, dashReport: report } = this.dashData; // removing dashScore: score,;
       this.sortedScores = scores?.length ? scores : [];
       this.delta = this.calculateDelta(this.sortedScores);
       this.graphic = this.formatGraphicData(score, this.delta);

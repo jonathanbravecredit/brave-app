@@ -167,7 +167,6 @@ export class DashboardService implements OnDestroy {
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-
     return this.http.get<IAdData[]>(`${environment.api}/ads`, { headers }).toPromise();
   }
 }
