@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { IpAddressResponse, IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { environment } from '@environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,8 +24,12 @@ export class IpAddressGuard implements CanActivate {
   }
 
   async resolver(): Promise<boolean> {
-    const res: Response = await this.ipAddress.validateIpAddress();
-    const geolocation: IpAddressResponse = await res.json();
-    return geolocation.success;
+    try {
+      const res: Response = await this.ipAddress.validateIpAddress();
+      const geolocation: IpAddressResponse = await res.json();
+      return environment.production ? geolocation.success : true;
+    } catch (err) {
+      return true; // if service is down
+    }
   }
 }
