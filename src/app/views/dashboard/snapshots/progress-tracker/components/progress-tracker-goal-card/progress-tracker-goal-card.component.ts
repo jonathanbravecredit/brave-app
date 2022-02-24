@@ -36,6 +36,7 @@ import { ProgressTrackerService } from '@shared/services/progress-tracker/progre
 export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() subTask: InitiativeSubTask | undefined;
   @Input() patchBody: InitiativePatchBody | undefined;
+  @Input() taskCompleted: boolean = false;
   expanded: boolean = false;
   hideQuestion: boolean = false;
   config: IFilledOnlyTextButtonConfig = {
@@ -53,12 +54,12 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   clickYes() {
     this.patchBody?.subTasks.forEach((subTask: InitiativePatchTask) => {
       if (subTask.taskId === this.subTask?.taskId) {
-        subTask.taskStatus === 'complete';
-        this.subTask.taskStatus === 'complete';
+        subTask.taskStatus = 'complete';
+        this.taskCompleted = true;
       }
     });
     if (this.patchBody) {
-      this.progressTrackerService.patchProgressTrackerData(this.patchBody);
+      // this.progressTrackerService.patchProgressTrackerData(this.patchBody);
     }
   }
 

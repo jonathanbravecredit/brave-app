@@ -1,11 +1,11 @@
 <div
   class="border border-solid rounded-lg p-4 my-6"
-  [ngClass]="subTask?.taskStatus === 'complete' ? 'border-green-500' : 'border-slate-600'"
+  [ngClass]="taskCompleted ? 'border-green-500' : 'border-slate-600'"
 >
   <div class="flex justify-between items-center cursor-pointer" (click)="expanded = !expanded">
     <span
       class="material-icons-outlined text-4xl"
-      [ngClass]="subTask?.taskStatus === 'complete' ? 'text-green-500' : 'text-gray-300'"
+      [ngClass]="taskCompleted ? 'text-green-500' : 'text-gray-300'"
     >
       check_circle
     </span>
@@ -29,7 +29,7 @@
     <p class="mb-6 mx-10" [innerHTML]="subTask?.taskCard?.textTwo | linkify"></p>
 
     <div
-      *ngIf="subTask?.taskStatus === 'complete'"
+      *ngIf="taskCompleted"
       class="bg-green-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
     >
       <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.successHeader }}</h4>
@@ -37,7 +37,7 @@
     </div>
 
     <div
-      *ngIf="subTask?.taskStatus !== 'complete' && subTask?.taskCard?.questionHeader && !hideQuestion"
+      *ngIf="!taskCompleted && subTask?.taskCard?.questionHeader && !hideQuestion"
       class="bg-gray-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
     >
       <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.questionHeader }}</h4>

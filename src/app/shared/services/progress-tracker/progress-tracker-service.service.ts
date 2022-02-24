@@ -38,14 +38,14 @@ export class ProgressTrackerService {
   //   return this.http.post<Initiative>(environment. + '/', body, { headers }).toPromise();
   // }
 
-  async patchProgressTrackerData(patchBody: InitiativePatchBody): Promise<Initiative> {
-    const token = await this.auth.getIdTokenJwtTokens();
-    const headers = new HttpHeaders({
-      Authorization: `${token}`,
-    });
+  // async patchProgressTrackerData(patchBody: InitiativePatchBody): Promise<Initiative> {
+  //   const token = await this.auth.getIdTokenJwtTokens();
+  //   const headers = new HttpHeaders({
+  //     Authorization: `${token}`,
+  //   });
 
-    return this.http.patch<Initiative>('test url' , patchBody, { headers }).toPromise(); //!change test url
-  }
+  //   return this.http.patch<Initiative>('test url' , patchBody, { headers }).toPromise(); //!change test url
+  // }
 
   updateProgressTrackerState(progressTrackerData: Initiative) {
     this.store.dispatch(new ProgressTrackerActions.Add({ data: progressTrackerData }));
