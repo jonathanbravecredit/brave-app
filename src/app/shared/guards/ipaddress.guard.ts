@@ -23,8 +23,12 @@ export class IpAddressGuard implements CanActivate {
   }
 
   async resolver(): Promise<boolean> {
-    const res: Response = await this.ipAddress.validateIpAddress();
-    const geolocation: IpAddressResponse = await res.json();
-    return geolocation.success;
+    try {
+      const res: Response = await this.ipAddress.validateIpAddress();
+      const geolocation: IpAddressResponse = await res.json();
+      return geolocation.success;
+    } catch (err) {
+      return true; // if service is down
+    }
   }
 }
