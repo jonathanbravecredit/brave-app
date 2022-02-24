@@ -10,10 +10,10 @@ export class TradelineToPagesPipe implements PipeTransform {
   transform(tradeline: ITradeLinePartition | undefined): any[] {
     if (!tradeline || !Object.keys(tradeline).length)
       return [
-        this.mapToDetailsPageOne({}),
-        this.mapToDetailsPageTwo({}),
-        this.mapToPaymentHistory({}),
-        this.mapToRemarks({}),
+        this.mapToDetailsPageOne({} as ITradeLinePartition),
+        this.mapToDetailsPageTwo({} as ITradeLinePartition),
+        this.mapToPaymentHistory({} as ITradeLinePartition),
+        this.mapToRemarks({} as ITradeLinePartition),
       ];
     const data = [
       this.mapToDetailsPageOne(tradeline),
@@ -104,10 +104,12 @@ export class TradelineToPagesPipe implements PipeTransform {
    * @param remarks
    * @returns
    */
-  parseRemarks(remarks: IRemark | IRemark[] | undefined): string | undefined {
+  parseRemarks(remarks: IRemark[] | undefined): string | undefined | null {
     if (remarks === undefined) return;
-    return remarks instanceof Array
-      ? remarks.map((r) => r.customRemark).reduce((a, b) => `${a} \n ${b}`)
-      : remarks.customRemark;
+    return remarks
+      .map((r) => r.customRemark)
+      .reduce((a, b) => {
+        return `${a} \n ${b}`;
+      }, '');
   }
 }

@@ -15,19 +15,17 @@ export class PaymentsService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   async getPayments(): Promise<any> {
-    const url = `${environment.marketing}/referral/campaign/payments`;
+    const url = `${environment.api}/referral/campaign/payments`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
       Authorization: `${idToken}`,
     });
     let params = new HttpParams();
     params = params.append('campaign', this.campaign);
-    return await this.http
-      .get<any>(url, { headers, params })
-      .toPromise();
+    return await this.http.get<any>(url, { headers, params }).toPromise();
   }
 }

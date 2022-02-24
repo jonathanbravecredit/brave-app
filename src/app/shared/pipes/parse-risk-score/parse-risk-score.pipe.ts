@@ -7,7 +7,7 @@ import { IMergeReport } from '@shared/interfaces/merge-report.interface';
 export class ParseRiskScorePipe implements PipeTransform {
   transform(report: IMergeReport | undefined): number {
     if (report === undefined) return -1;
-    const creditScore = report?.TrueLinkCreditReportType?.Borrower?.CreditScore;
+    const creditScore = report?.TrueLinkCreditReportType?.Borrower?.CreditScore[0];
     if (creditScore instanceof Array) {
       const score = creditScore.find((value) => {
         return value?.scoreName?.toLowerCase() === 'vantagescore3';

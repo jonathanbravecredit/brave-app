@@ -1,6 +1,5 @@
 <ng-container *ngIf="dashboardData$ | async as data">
   <h2 class="text-lg font-semibold">{{ welcome }}</h2>
-
   <div
     *ngIf="(data.dashScore !== 1 && data.dashScore !== 4) || (data.dashScore === 4 && !data.dashScoreSuppressed)"
     class="my-4 flex justify-center"
