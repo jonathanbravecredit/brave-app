@@ -170,6 +170,6 @@ export class DashboardService implements OnDestroy {
       Authorization: `${token}`,
     });
 
-    return this.http.get<IAdData[]>(environment.ads + '/ads', { headers }).toPromise();
+    return this.http.get<IAdData[]>(`${environment.api}/ads`, { headers }).toPromise();
   }
 }

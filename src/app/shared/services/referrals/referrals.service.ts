@@ -56,7 +56,7 @@ export class ReferralsService implements OnDestroy {
 
   async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
     if (!this.isActive) return;
-    const url = `${environment.marketing}/referral`;
+    const url = `${environment.api}/referral`;
     let body = { id: sub, campaign: this.campaign, referredByCode };
     let headers = {};
     let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
@@ -68,13 +68,11 @@ export class ReferralsService implements OnDestroy {
    * @returns
    */
   async getReferral(): Promise<IReferral> {
-    const url = `${environment.marketing}/referral`;
+    const url = `${environment.api}/referral`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
       Authorization: `${idToken}`,
     });
-    return await this.http
-      .get<any>(url, { headers })
-      .toPromise();
+    return await this.http.get<any>(url, { headers }).toPromise();
   }
 }

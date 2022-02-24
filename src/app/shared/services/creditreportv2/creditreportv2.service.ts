@@ -14,7 +14,7 @@ export class Creditreportv2Service {
   constructor(private http: HttpClient, private auth: AuthService, private store: Store) {}
 
   async getCurrentCreditReport(): Promise<ICreditReport> {
-    const url = `${environment.creditreports}/creditreport`;
+    const url = `${environment.api}/creditreport`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
       Authorization: `${idToken}`,
