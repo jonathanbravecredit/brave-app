@@ -1918,10 +1918,6 @@ select {
   width: 6rem;
 }
 
-.w-28 {
-  width: 7rem;
-}
-
 .w-32 {
   width: 8rem;
 }
@@ -2280,6 +2276,10 @@ select {
   border-radius: 0.5rem;
 }
 
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
 .rounded-3xl {
   border-radius: 1.5rem;
 }
@@ -2330,6 +2330,10 @@ select {
 
 .border-0 {
   border-width: 0px;
+}
+
+.border-2 {
+  border-width: 2px;
 }
 
 .border {
@@ -3084,10 +3088,6 @@ select {
 
 .leading-6 {
   line-height: 1.5rem;
-}
-
-.leading-8 {
-  line-height: 2rem;
 }
 
 .leading-none {
