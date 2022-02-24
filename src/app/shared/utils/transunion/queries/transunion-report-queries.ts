@@ -3,7 +3,6 @@ import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
 import {
   IBorrower,
   IBorrowerAddress,
-  ICreditAddress,
   IInquiryPartition,
   IMergeReport,
   IPublicPartition,
@@ -11,7 +10,6 @@ import {
   ITradeLinePartition,
 } from '@shared/interfaces/merge-report.interface';
 import { DataBreaches, DateBreachCard, FORBEARANCE_TYPE } from '@shared/utils/constants';
-import { INDUSTRY_CODES } from '@shared/utils/transunion/constants';
 import { DataBreachConditions } from '@shared/utils/transunion/queries/utils';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
@@ -19,6 +17,18 @@ import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components
 export class TransunionReportQueries extends TransunionBase {
   constructor() {
     super();
+  }
+
+  /*===================================*/
+  //           MESSAGE
+  /*===================================*/
+
+  static isReportSupressed(report: IMergeReport | null): boolean {
+    if (!report) return false;
+    let res = report.TrueLinkCreditReportType?.Message?.find((ele) => {
+      ele.Code?.abbreviation === 'Credit data suppressed';
+    });
+    return res ? true : false;
   }
 
   /*===================================*/
@@ -30,7 +40,7 @@ export class TransunionReportQueries extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  static listTradelines(report: IMergeReport): ITradeLinePartition[] | [] {
+  static listTradelines(report: IMergeReport | null): ITradeLinePartition[] | [] {
     if (!report) return [];
     const partition = report.TrueLinkCreditReportType?.TradeLinePartition;
     if (partition === undefined) return [];
@@ -200,9 +210,8 @@ export class TransunionReportQueries extends TransunionBase {
     const accountType = FORBEARANCE_TYPE[accountTypeSymbol.toLowerCase()];
     if (!accountType) return false;
     if (accountTypeSymbol.toLowerCase() === 'm') return true; // simple mortgage
-    const {
-      Tradeline: { GrantedTrade: { AccountType: { symbol = '', description = '' } = {} } = {} } = {},
-    } = partition;
+    const { Tradeline: { GrantedTrade: { AccountType: { symbol = '', description = '' } = {} } = {} } = {} } =
+      partition;
     if (`${symbol}`.toLowerCase() === 'st') {
       return true;
     }

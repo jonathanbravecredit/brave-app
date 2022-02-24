@@ -13,7 +13,6 @@ import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { Observable } from 'rxjs';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';

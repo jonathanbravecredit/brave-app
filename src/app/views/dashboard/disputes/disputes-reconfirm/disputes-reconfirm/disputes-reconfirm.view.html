@@ -1,5 +1,5 @@
 <div class="p-2">
-  <ng-container *ngIf="creditReport$ | async as report">
+  <ng-container *ngIf="(report$ | async)?.report as report">
     <ng-container *ngIf="route.queryParams | async as params">
       <!-- =========== personal items =========== -->
       <ng-container *ngIf="params.type === 'personal'">

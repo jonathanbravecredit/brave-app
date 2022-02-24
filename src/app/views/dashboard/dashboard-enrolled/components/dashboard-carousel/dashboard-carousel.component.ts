@@ -6,17 +6,16 @@ import { CreditReportGraphicComponent } from '@shared/components/graphics/credit
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { IDashboardData } from '@shared/services/dashboard/dashboard.service';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'brave-dashboard-carousel',
   templateUrl: './dashboard-carousel.component.html',
 })
 export class DashboardCarouselComponent implements OnInit {
-  @Input() trends: IGetTrendingData | null | undefined;
-  @Input() report: IMergeReport | null | undefined;
-  @Input() scores: IProductTrendingData[] | null | undefined;
-  @Input() lastUpdated!: string;
-  @Input() currentScore: number | null = null;
+  @Input() dashData: IDashboardData | undefined;
+  @Input() updatedAt: string = new Date().toISOString();
   pages: any[] = [CreditReportGraphicComponent, CreditScoreHistoryNgxChartComponent];
   data: [ICreditReportGraphic, ICreditScoreHistoryNgxChartInputs] | undefined;
   private _sortedScores: IProductTrendingData[] = [];
@@ -27,11 +26,16 @@ export class DashboardCarouselComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.sortedScores = this.scores?.length ? this.scores : [];
-    this.delta = this.calculateDelta(this.sortedScores);
-    this.graphic = this.formatGraphicData(this.currentScore, this.delta);
-    this.chart = this.formatChartData(this.trends, this.report, this.lastUpdated, this.currentScore);
-    this.data = [this.graphic, this.chart];
+    if (this.dashData) {
+      const { dashTrends: trends, dashScores: scores, dashScore: score, dashReport: report } = this.dashData;
+      this.sortedScores = scores?.length ? scores : [];
+      this.delta = this.calculateDelta(this.sortedScores);
+      this.graphic = this.formatGraphicData(score, this.delta);
+      this.chart = this.formatChartData(trends, report, this.updatedAt, score);
+      this.data = [this.graphic, this.chart];
+    } else {
+      console.log('no data');
+    }
   }
 
   get delta(): number {
@@ -64,9 +68,7 @@ export class DashboardCarouselComponent implements OnInit {
 
   set sortedScores(val: IProductTrendingData[]) {
     this._sortedScores = [...val].sort((a, b) => {
-      const aDate = new Date(a.AttributeDate || 0).valueOf();
-      const bDate = new Date(b.AttributeDate || 0).valueOf();
-      return bDate - aDate;
+      return dayjs(a.AttributeDate).isBefore(b.AttributeDate) ? -1 : 1;
     });
   }
 
@@ -77,9 +79,9 @@ export class DashboardCarouselComponent implements OnInit {
    */
   calculateDelta(scores: IProductTrendingData[]): number {
     if (scores.length > 1) {
-      return isNaN(+scores[0].AttributeValue) || isNaN(+scores[1].AttributeValue)
-        ? 0
-        : +scores[0].AttributeValue - +scores[1].AttributeValue;
+      let latestScore = +scores[scores.length - 1].AttributeValue;
+      let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
+      return isNaN(latestScore) || isNaN(lastMonthsScore) ? 0 : latestScore - lastMonthsScore;
     } else {
       return 0;
     }
@@ -98,7 +100,7 @@ export class DashboardCarouselComponent implements OnInit {
    */
   formatGraphicData(currentScore: number | null, delta: number): ICreditReportGraphic {
     return {
-      currentValue: currentScore,
+      currentValue: currentScore || null,
       ptsChange: delta,
     };
   }

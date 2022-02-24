@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
-import { BraveUtil } from '@shared/utils/brave/brave';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardSelectors } from '@store/dashboard/dashboard.selectors';
-import { AgenciesSelectors } from '@store/agencies/agencies.selectors';
+import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
+import { CreditReportSelectors } from '@store/credit-report/credit-report.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -17,42 +16,45 @@ import { AppDataStateModel } from '@store/app-data';
 export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel | null> {
   constructor(private store: Store, private statesvc: StateService) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<DashboardStateModel | null> {
-    const transunion = await this.store.selectOnce(AgenciesSelectors.getTransunion).toPromise();
+  async resolve(): Promise<DashboardStateModel | null> {
+    const { report } = await this.store.selectOnce(CreditReportSelectors.getCreditReport).toPromise();
     const dashboard = await this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
-    const report = BraveUtil.parsers.parseTransunionMergeReport(transunion);
-    if (!Object.keys(transunion).length || !Object.keys(report).length) {
+    if (dashboard?.isLoaded && dashboard?.databreachCards && dashboard?.databreachCards?.length > 0) {
+      return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
+    } else if (dashboard?.isLoaded && report) {
+      return this.flagAndDispatch(report);
+    } else if (!report) {
       return new Promise((resolve) => resolve(null));
-    } else if (dashboard?.isLoaded && dashboard?.databreachCards && dashboard?.databreachCards?.length > 0) {
-      // loaded and databreach cards already loaded
-      // TODO...check if there are any new one
-      return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
-    } else if (dashboard?.isLoaded) {
-      // loaded but databreach cards not loaded...need to load them up
-      this.flagDatabreaches(report);
-      this.store
-        .dispatch(new DashboardActions.Edit({ isLoaded: true }))
-        .subscribe((data: { appData: AppDataStateModel }) => {
-          this.statesvc.updateStateDBSync(data.appData);
-        });
-      return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
     } else {
-      this.transform(report);
-      this.store
-        .dispatch(new DashboardActions.Edit({ isLoaded: true }))
-        .subscribe((data: { appData: AppDataStateModel }) => {
-          this.statesvc.updateStateDBSync(data.appData);
-        });
-      return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
+      return this.transformAndDispatch(report);
     }
   }
 
-  private transform(report: IMergeReport | undefined): void {
-    if (report === undefined) return;
-    let tradelines = report?.TrueLinkCreditReportType?.TradeLinePartition;
-    tradelines = tradelines instanceof Array ? tradelines : ([tradelines] as ITradeLinePartition[]);
-    this.flagNegativeForbearanceTradelines(tradelines);
+  private flagAndDispatch(report: IMergeReport): Promise<DashboardStateModel> {
     this.flagDatabreaches(report);
+    return this.dispatch();
+  }
+
+  private transformAndDispatch(report: IMergeReport): Promise<DashboardStateModel> {
+    this.transform(report);
+    return this.dispatch();
+  }
+
+  private transform(report: IMergeReport): void {
+    const {
+      TrueLinkCreditReportType: { TradeLinePartition: trades },
+    } = report;
+    this.flagNegativeForbearanceTradelines(trades);
+    this.flagDatabreaches(report);
+  }
+
+  private dispatch(): Promise<DashboardStateModel> {
+    this.store
+      .dispatch(new DashboardActions.Edit({ isLoaded: true }))
+      .subscribe((data: { appData: AppDataStateModel }) => {
+        this.statesvc.updateStateDBSync(data.appData);
+      });
+    return this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
   }
 
   /**
@@ -79,7 +81,6 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
     const breaches = tu.queries.report.listDataBreaches(report);
     if (breaches.length > 0) {
       this.store.dispatch(new DashboardActions.AddDatabreachCards(breaches));
-      // this.store.dispatch(new DashboardActions.FlagDatabreachSnapshot());
     }
   }
 }

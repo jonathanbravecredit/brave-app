@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
+import { CreditReportResolver } from '@shared/resolvers/credit-report/credit-report.resolver';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
 import { DashboardScoreTrendsResolver } from '@shared/resolvers/dashboard-score-trends/dashboard-score-trends.resolver';
 import { DashboardSnapshotsResolver } from '@shared/resolvers/dashboard-snapshots/dashboard-snapshots.resolver';
@@ -29,25 +30,28 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
     protected snapshotsResolver: DashboardSnapshotsResolver,
     protected scoreTrendsResolver: DashboardScoreTrendsResolver,
     protected referralResolver: ReferralResolver,
+    protected creditReportResolver: CreditReportResolver,
   ) {}
 
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IDashboardResolver> {
+  async resolve(): Promise<IDashboardResolver> {
     this.interstitial.changeMessage(' ');
     this.interstitial.openInterstitial();
 
+    const report = await this.creditReportResolver.resolve();
+    // keep this ordering
     return forkJoin([
-      this.initResolver.resolve(route, state),
-      this.snapshotsResolver.resolve(route, state),
-      this.scoreTrendsResolver.resolve(route, state),
-      this.referralResolver.resolve(route, state),
+      this.initResolver.resolve(),
+      this.snapshotsResolver.resolve(),
+      this.scoreTrendsResolver.resolve(),
+      this.referralResolver.resolve(),
     ])
       .pipe(
-        map((value) => {
+        map(([init, snapshots, trends, referrals]) => {
           return {
-            report: value[0],
-            snapshots: value[1],
-            trends: value[2],
-            referral: value[3].referral,
+            report: report, // snapshots depends on this so wait
+            snapshots: snapshots,
+            trends: trends,
+            referral: referrals.referral,
           };
         }),
         finalize(() => {

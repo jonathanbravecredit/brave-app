@@ -7,6 +7,7 @@ import {
 } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/constants';
 import { ITradelinePaymentHistory } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/interfaces';
 import { TradelinePaymentIconKeyComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
+import * as dayjs from 'dayjs';
 import * as moment from 'moment';
 
 @Component({
@@ -117,15 +118,15 @@ export class TradelinePaymentHistoryComponent implements OnInit {
     if (monthlyPayments === undefined) return months;
     let payments = monthlyPayments.filter((pay) => {
       if (pay.date === undefined) return false;
-      const badDate = pay.date.substring(0, 10);
-      const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
+      const badDate = pay.date?.substring(0, 10);
+      const goodDate = dayjs(badDate, 'YYYY-MM-DD').toDate();
       return goodDate.getFullYear() === year;
     });
     payments.forEach((pay) => {
       if (pay.date === undefined) return;
       const status = `${pay.status}`.length ? `${pay.status}`.toLowerCase() : 'u';
-      const badDate = pay.date.substring(0, 10);
-      const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
+      const badDate = pay.date?.substring(0, 10);
+      const goodDate = dayjs(badDate, 'YYYY-MM-DD').toDate();
       months[goodDate.getMonth()] = status;
     });
     return months;
