@@ -12,7 +12,7 @@
 
   <div class="mt-1 mb-4">
     <div *ngFor="let subTask of primaryTask?.subTasks">
-      <brave-progress-tracker-goal-card [subTask]="subTask"></brave-progress-tracker-goal-card>
+      <brave-progress-tracker-goal-card [patchBody]="patchBody" [subTask]="subTask"></brave-progress-tracker-goal-card>
     </div>
   </div>
 </div>

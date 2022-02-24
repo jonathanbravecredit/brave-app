@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
-import { ProgressTrackerSelectors } from '@store/progress-tracker';
 import { Initiative } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import * as ProgressTrackerActions from '../../../store/progress-tracker/progress-tracker.actions';
 
@@ -20,7 +19,7 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
     } else {
       try {
         const data = await this.progressTrackerService.getProgressTrackerData();
-        this.setProgressTracker(data);
+        await this.setProgressTracker(data);
         return data;
       } catch {
         return null;
@@ -30,7 +29,6 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
 
   async setProgressTracker(data: Initiative | null = null): Promise<void> {
     const payload = { data };
-    console.log('HERE', payload)
     await new Promise((resolve, reject) => {
       this.store
         .dispatch(new ProgressTrackerActions.Add(payload))

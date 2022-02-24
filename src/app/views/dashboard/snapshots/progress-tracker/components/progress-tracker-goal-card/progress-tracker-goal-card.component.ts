@@ -1,7 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { InitiativeSubTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import {
+  InitiativePatchBody,
+  InitiativePatchTask,
+  InitiativeSubTask,
+  InitiativeTask,
+} from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 
 @Component({
   selector: 'brave-progress-tracker-goal-card',
@@ -29,7 +35,9 @@ import { InitiativeSubTask } from '@views/dashboard/snapshots/progress-tracker/M
 })
 export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() subTask: InitiativeSubTask | undefined;
+  @Input() patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
+  hideQuestion: boolean = false;
   config: IFilledOnlyTextButtonConfig = {
     buttonSize: 'lg',
     backgroundColor: 'bg-indigo-800',
@@ -38,11 +46,23 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
     full: false,
   };
 
-  constructor() {}
+  constructor(private progressTrackerService: ProgressTrackerService) {}
 
   ngOnInit(): void {}
 
-  clickYes() {}
+  clickYes() {
+    this.patchBody?.subTasks.forEach((subTask: InitiativePatchTask) => {
+      if (subTask.taskId === this.subTask?.taskId) {
+        subTask.taskStatus === 'complete';
+        this.subTask.taskStatus === 'complete';
+      }
+    });
+    if (this.patchBody) {
+      this.progressTrackerService.patchProgressTrackerData(this.patchBody);
+    }
+  }
 
-  clickNo() {}
+  clickNo() {
+    this.hideQuestion = true;
+  }
 }

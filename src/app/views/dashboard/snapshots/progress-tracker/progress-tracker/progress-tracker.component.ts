@@ -1,7 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { Initiative, InitiativeSubTask, InitiativeTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import {
+  Initiative,
+  InitiativePatchBody,
+  InitiativeSubTask,
+  InitiativeTask,
+} from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class ProgressTrackerComponent implements OnInit, OnDestroy {
   initiative: Initiative | null = null; //! replace default
   initiative$: Subscription | undefined;
-
+  patchBody: InitiativePatchBody = { primaryTasks: [], subTasks: [] };
   steps: IProgressStep[] = [];
   goalId: string = 'credit_card'; //! replace default
   primaryTasks: InitiativeTask[] = [];
@@ -33,6 +38,7 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setCurrentPrimaryTasks();
     this.createSteps();
+    this.createPatchBody();
   }
 
   ngOnDestroy() {
@@ -64,6 +70,23 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  createPatchBody() {
+    this.initiative?.primaryTasks.forEach((primaryTask: InitiativeTask) => {
+      this.patchBody.primaryTasks.push({
+        taskId: primaryTask.taskId,
+        taskOrder: primaryTask.taskOrder,
+        taskStatus: primaryTask.taskStatus,
+      });
+      primaryTask.subTasks?.forEach((subTask: InitiativeSubTask) => {
+        this.patchBody.subTasks.push({
+          taskId: subTask.taskId,
+          taskOrder: subTask.taskOrder,
+          taskStatus: subTask.taskStatus,
+        });
+      });
+    });
   }
 
   //choose compoennt based on init
