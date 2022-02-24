@@ -26,13 +26,11 @@ export class CampaignService {
    * @returns
    */
   async getCampaign(): Promise<ICampaign> {
-    const url = `${environment.marketing}/campaigns`;
+    const url = `${environment.api}/campaigns`;
     const idToken = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
       Authorization: `${idToken}`,
     });
-    return await this.http
-      .get<any>(url, { headers })
-      .toPromise();
+    return await this.http.get<any>(url, { headers }).toPromise();
   }
 }

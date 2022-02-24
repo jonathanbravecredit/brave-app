@@ -8,9 +8,7 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@environments/environment';
-import { IReferral } from '@shared/interfaces/referrals.interface';
 import { IamService } from '@shared/services/auth/iam.service';
 
 export type SignupState = 'init' | 'invalid';
@@ -51,21 +49,21 @@ export class SignupComponent implements OnInit {
 
   async checkReferralCode() {
     let referralValidationRequest = await this.iam.signRequest(
-      `${environment.marketing}/referral/validation/${this.referralCode}`,
+      `${environment.api}/referral/validation/${this.referralCode}`,
       'POST',
       {},
       JSON.stringify({}),
     );
 
-    let referralValidationData = await fetch(referralValidationRequest)
+    let referralValidationData = await fetch(referralValidationRequest);
 
-    let referralValidation: { valid: boolean } = await referralValidationData.json()
+    let referralValidation: { valid: boolean } = await referralValidationData.json();
 
     if (referralValidation.valid) {
       this.validReferralCode = true;
     }
 
-    this.fetchingFinished = true
+    this.fetchingFinished = true;
   }
 
   /**
@@ -167,6 +165,6 @@ export class SignupComponent implements OnInit {
   }
 
   goToReferralTerms(): void {
-    document.location.href = 'https://www.brave.credit/referral-promotion-terms'
+    document.location.href = 'https://www.brave.credit/referral-promotion-terms';
   }
 }

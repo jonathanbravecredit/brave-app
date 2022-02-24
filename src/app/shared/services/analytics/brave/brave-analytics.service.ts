@@ -17,7 +17,7 @@ export class BraveAnalyticsService {
     if (this.disable) {
       return; // don't fire on dev
     }
-    const url = `${environment.analytics}/tracking`;
+    const url = `${environment.api}/tracking`;
     const sub = await this.auth.getUserSub();
     const token = await this.auth.getIdTokenJwtTokens();
     const session = sessionStorage.getItem('sessionId') || '';
@@ -33,8 +33,6 @@ export class BraveAnalyticsService {
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-    return await this.http
-      .post<any>(url, body, { headers })
-      .toPromise();
+    return await this.http.post<any>(url, body, { headers }).toPromise();
   }
 }
