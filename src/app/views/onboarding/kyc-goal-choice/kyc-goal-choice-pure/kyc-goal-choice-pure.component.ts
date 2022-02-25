@@ -14,6 +14,6 @@ export class KycGoalChoicePureComponent implements OnInit {
   ngOnInit(): void {}
 
   buttonClick(goalInfo: IGoalInfo) {
-    this.progressTrackerService.updateUserGoal(goalInfo)
+    this.progressTrackerService.postUserGoal(goalInfo)
   }
 }

@@ -1,12 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
+import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import {
-  Initiative,
-  InitiativePatchBody,
-  InitiativeSubTask,
-  InitiativeTask,
-} from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,11 +13,11 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   initiative$: Subscription | undefined;
   steps: IProgressStep[] = [];
   goalId: string = 'credit_card'; //! replace default
-  primaryTasks: InitiativeTask[] = [];
+  initiativeTasks: InitiativeTask[] = [];
 
   get firstprimaryTask(): InitiativeTask | undefined {
-    if (this.primaryTasks) {
-      return this.primaryTasks[0];
+    if (this.initiativeTasks) {
+      return this.initiativeTasks[0];
     } else {
       return undefined;
     }
@@ -35,7 +30,7 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setCurrentPrimaryTasks();
+    this.setCurrentInitiativeTasks();
     this.createSteps();
   }
 
@@ -43,14 +38,14 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
     this.initiative$?.unsubscribe();
   }
 
-  setCurrentPrimaryTasks() {
-    this.primaryTasks = this.initiative?.primaryTasks || [];
+  setCurrentInitiativeTasks() {
+    this.initiativeTasks = this.initiative?.initiativeTasks || [];
   }
 
   createSteps() {
     this.steps = [];
-    if (this.primaryTasks && this.primaryTasks.length > 1) {
-      this.primaryTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
+    if (this.initiativeTasks && this.initiativeTasks.length > 1) {
+      this.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
         this.steps.push({
           id: i,
           active: true,

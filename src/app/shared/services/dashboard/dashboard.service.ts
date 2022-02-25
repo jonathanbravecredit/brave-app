@@ -19,7 +19,7 @@ import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
-import { Initiative } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;

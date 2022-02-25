@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditReportResolver } from '@shared/resolvers/credit-report/credit-report.resolver';
 import { DashboardInitResolver } from '@shared/resolvers/dashboard-init/dashboard-init.resolver';
@@ -11,7 +12,6 @@ import { DashboardSnapshotsResolver } from '@shared/resolvers/dashboard-snapshot
 import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-import { Initiative } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { forkJoin } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 

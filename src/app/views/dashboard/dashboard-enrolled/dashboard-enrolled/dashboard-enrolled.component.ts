@@ -22,7 +22,7 @@ import { Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
 import { ProgressTrackerSelectors, ProgressTrackerStateModel } from '@store/progress-tracker';
-import { Initiative } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled',

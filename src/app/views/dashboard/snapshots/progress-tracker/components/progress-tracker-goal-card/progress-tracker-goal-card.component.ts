@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { InitiativePatchBody, InitiativeSubTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
+import { InitiativePatchBody, InitiativeSubTask } from '@shared/interfaces/progress-tracker.interface';
 
 @Component({
   selector: 'brave-progress-tracker-goal-card',

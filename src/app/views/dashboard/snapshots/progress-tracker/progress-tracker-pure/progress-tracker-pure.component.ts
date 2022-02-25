@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
-import { Initiative, InitiativePatchBody, InitiativeTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import { Initiative, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
 
 @Component({
   selector: 'brave-progress-tracker-pure',
@@ -10,7 +10,7 @@ export class ProgressTrackerPureComponent implements OnInit {
   @Input() initiative: Initiative | null = null;
   @Input() goalId: string = '';
   @Input() steps: IProgressStep[] = [];
-  @Input() primaryTasks: InitiativeTask[] = [];
+  @Input() initiativeTasks: InitiativeTask[] = [];
 
   constructor() {}
 

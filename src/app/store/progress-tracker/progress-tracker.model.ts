@@ -1,4 +1,5 @@
-import { Initiative } from "@views/dashboard/snapshots/progress-tracker/MOCKDATA";
+import { Initiative } from "@shared/interfaces/progress-tracker.interface";
+
 
 export class ProgressTrackerStateModel {
   data: Initiative | null = null

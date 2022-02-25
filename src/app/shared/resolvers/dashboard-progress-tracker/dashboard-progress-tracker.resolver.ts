@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
-import { Initiative } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import * as ProgressTrackerActions from '../../../store/progress-tracker/progress-tracker.actions';
 
 @Injectable({

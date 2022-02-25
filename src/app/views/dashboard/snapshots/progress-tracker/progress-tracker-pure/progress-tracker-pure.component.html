@@ -5,13 +5,13 @@
 
 <brave-future-score-card></brave-future-score-card>
 
-<div *ngFor="let primaryTask of primaryTasks">
+<div *ngFor="let initiativeTask of initiativeTasks">
   <div>
-    <brave-progress-tracker-header [primaryTask]="primaryTask"></brave-progress-tracker-header>
+    <brave-progress-tracker-header [initiativeTask]="initiativeTask"></brave-progress-tracker-header>
   </div>
 
   <div class="mt-1 mb-4">
-    <div *ngFor="let subTask of primaryTask?.subTasks">
+    <div *ngFor="let subTask of initiativeTask?.subTasks">
       <brave-progress-tracker-goal-card [taskCompleted]="subTask.taskStatus === 'complete'" [subTask]="subTask"></brave-progress-tracker-goal-card>
     </div>
   </div>
