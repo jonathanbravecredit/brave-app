@@ -11,7 +11,6 @@ export class ProgressTrackerPureComponent implements OnInit {
   @Input() goalId: string = '';
   @Input() steps: IProgressStep[] = [];
   @Input() primaryTasks: InitiativeTask[] = [];
-  @Input() patchBody: InitiativePatchBody | undefined;
 
   constructor() {}
 

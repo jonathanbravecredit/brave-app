@@ -140,12 +140,7 @@ export interface InitiativeSubTask extends InitiativeTask {
 }
 
 export interface InitiativePatchBody {
-  primaryTasks: InitiativePatchTask[],
-  subTasks: InitiativePatchTask[],
-}
-
-export interface InitiativePatchTask {
-  taskId: string,
-  taskOrder: number,
-  taskStatus: string,
+  parentId: string | undefined;
+  taskId: string | undefined;
+  status: string | undefined;
 }

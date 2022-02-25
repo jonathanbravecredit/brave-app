@@ -1,12 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import {
-  InitiativePatchBody,
-  InitiativePatchTask,
-  InitiativeSubTask,
-  InitiativeTask,
-} from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import { InitiativePatchBody, InitiativeSubTask } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 
 @Component({
@@ -35,8 +30,8 @@ import { ProgressTrackerService } from '@shared/services/progress-tracker/progre
 })
 export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() subTask: InitiativeSubTask | undefined;
-  @Input() patchBody: InitiativePatchBody | undefined;
   @Input() taskCompleted: boolean = false;
+  patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
   hideQuestion: boolean = false;
   config: IFilledOnlyTextButtonConfig = {
@@ -49,21 +44,28 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
 
   constructor(private progressTrackerService: ProgressTrackerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.patchBody = {
+      parentId: this.subTask?.parentId,
+      taskId: this.subTask?.taskId,
+      status: this.subTask?.taskStatus,
+    };
+  }
 
   clickYes() {
-    this.patchBody?.subTasks.forEach((subTask: InitiativePatchTask) => {
-      if (subTask.taskId === this.subTask?.taskId) {
-        subTask.taskStatus = 'complete';
-        this.taskCompleted = true;
-      }
-    });
+    this.taskCompleted = true;
     if (this.patchBody) {
+      this.patchBody.status = 'complete';
       // this.progressTrackerService.patchProgressTrackerData(this.patchBody);
     }
   }
 
   clickNo() {
+    if (this.subTask?.taskStatus === 'complete' && this.patchBody) {
+      this.taskCompleted = false;
+      this.patchBody.status = 'in_progress';
+      // this.progressTrackerService.patchProgressTrackerData(this.patchBody);
+    }
     this.hideQuestion = true;
   }
 }

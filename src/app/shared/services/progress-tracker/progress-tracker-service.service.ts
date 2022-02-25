@@ -3,9 +3,14 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { StateService } from '@shared/services/state/state.service';
-import { Initiative, InitiativePatchBody, MOCKPROGRESSTRACKERDATA } from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
+import {
+  Initiative,
+  InitiativePatchBody,
+  MOCKPROGRESSTRACKERDATA,
+} from '@views/dashboard/snapshots/progress-tracker/MOCKDATA';
 import { environment } from '@environments/environment';
 import * as ProgressTrackerActions from '../../../store/progress-tracker/progress-tracker.actions';
+import { IGoalInfo } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +54,17 @@ export class ProgressTrackerService {
 
   updateProgressTrackerState(progressTrackerData: Initiative) {
     this.store.dispatch(new ProgressTrackerActions.Add({ data: progressTrackerData }));
+  }
+
+  updateUserGoal(goalInfo: IGoalInfo) {
+    //   const token = await this.auth.getIdTokenJwtTokens();
+    //   const headers = new HttpHeaders({
+    //     Authorization: `${token}`,
+    //   });
+    // const patchBody = {
+    //   programId: goalInfo.programId,
+    //   reason: goalInfo.reason,
+    // };
+    //   return this.http.patch<Initiative>('test url' , patchBody, { headers }).toPromise(); //!change test url
   }
 }

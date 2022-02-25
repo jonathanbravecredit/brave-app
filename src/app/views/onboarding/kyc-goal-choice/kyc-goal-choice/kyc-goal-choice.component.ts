@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 
 export interface IGoalInfo {
-  id: string,
-  header: string,
+  programId: string;
+  reason: string;
+  header: string;
 }
 
 @Component({
   selector: 'brave-kyc-goal-choice',
-  templateUrl: './kyc-goal-choice.component.html'
+  templateUrl: './kyc-goal-choice.component.html',
 })
 export class KycGoalChoiceComponent implements OnInit {
-  goalItems: IGoalInfo[] = [{id: '', header: 'Buy a house'}, {id: '', header: 'Get a credit card'}]
+  goalItems: IGoalInfo[] = [
+    { programId: '1', reason: 'buy_house', header: 'Buy a house' },
+    { programId: '1', reason: 'credit_card', header: 'Get a credit card' },
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

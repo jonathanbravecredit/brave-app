@@ -71,6 +71,9 @@ const components = [
   KycRetryComponent,
   KycRetryPureComponent,
   KycGoalChoiceComponent,
+  KycGoalChoicePureComponent,
+  KycGoalChoiceCardComponent,
+  KycGoalChoiceHeaderComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];
@@ -78,7 +81,7 @@ const pipes = [KycKbaquestionsPipe];
 const services = [OnboardingService];
 
 @NgModule({
-  declarations: [...components, ...pipes, KycGoalChoicePureComponent, KycGoalChoiceCardComponent, KycGoalChoiceHeaderComponent],
+  declarations: [...components, ...pipes],
   imports: [CommonModule, SharedComponentsModule, SharedPipesModule, OnboardingRoutingModule],
   exports: [...components, ...pipes],
   providers: [...services],

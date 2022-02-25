@@ -3,11 +3,11 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KycGoalChoiceComponent } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
 import { KycGoalChoicePureComponent } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice-pure/kyc-goal-choice-pure.component';
 import { KycGoalChoiceCardComponent } from '@views/onboarding/kyc-goal-choice/components/kyc-goal-choice-card/kyc-goal-choice-card.component';
 import { KycGoalChoiceHeaderComponent } from '@views/onboarding/kyc-goal-choice/components/kyc-goal-choice-header/kyc-goal-choice-header.component';
+
 
 export default {
   title: 'app/views/onboarding/kyc-goal-choice',
@@ -17,9 +17,9 @@ export default {
       declarations: [
         KycGoalChoicePureComponent,
         KycGoalChoiceCardComponent,
-        KycGoalChoiceHeaderComponent
+        KycGoalChoiceHeaderComponent,
       ],
-      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true }), BrowserAnimationsModule],
+      imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     componentWrapperDecorator((story) => {
