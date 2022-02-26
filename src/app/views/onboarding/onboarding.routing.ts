@@ -17,6 +17,7 @@ import { KycRetryComponent } from '@views/onboarding/kyc-retry/kyc-retry/kyc-ret
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
+import { KycGoalChoiceComponent } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
 const onboarding = routes.root.onboarding;
 
 // our routing scheme ===> layout/view/subview/subview2...
@@ -30,6 +31,11 @@ const OnboardingRoutes: Routes = [
         path: '',
         redirectTo: 'returning',
         pathMatch: 'full',
+      },
+      {
+        path: `${onboarding.goalChoice.segment}`,
+        component: KycGoalChoiceComponent,
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.name.segment}`,

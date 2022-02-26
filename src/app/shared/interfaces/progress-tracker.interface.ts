@@ -38,5 +38,5 @@ export interface InitiativeSubTask extends InitiativeTask {
 export interface InitiativePatchBody {
   parentId: string | undefined;
   taskId: string | undefined;
-  status: string | undefined;
+  taskStatus: string | undefined;
 }

@@ -6,8 +6,8 @@ import * as dayjs from 'dayjs';
   templateUrl: './future-score-card.component.html',
 })
 export class FutureScoreCardComponent implements OnInit {
-  @Input() futureScore: number = 622;
-  @Input() currentScore: number = 550;
+  @Input() futureScore: number = 0;
+  @Input() originalScore: number = 550;
   scoreReview: string = '';
   pointsDiff: number = 0;
   monthYear: string = dayjs().format('MMMM YYYY');
@@ -15,19 +15,19 @@ export class FutureScoreCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.calculatePointsDiff()
-    this.scoreReview = this.getScoreReview()
+    this.calculatePointsDiff();
+    this.scoreReview = this.getScoreReview();
   }
 
   calculatePointsDiff() {
-    this.pointsDiff = this.futureScore - this.currentScore
+    this.pointsDiff = this.futureScore - this.originalScore;
   }
 
   getScoreReview(): string {
     switch (this.futureScore) {
-      case (622):
-        return'Good'
+      case 622:
+        return 'Good';
     }
-    return '' //! wont be needed
+    return ''; //! wont be needed
   }
 }

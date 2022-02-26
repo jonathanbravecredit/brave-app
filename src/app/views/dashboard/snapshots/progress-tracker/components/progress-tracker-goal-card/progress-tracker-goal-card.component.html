@@ -3,10 +3,7 @@
   [ngClass]="taskCompleted ? 'border-green-500' : 'border-slate-600'"
 >
   <div class="flex justify-between items-center cursor-pointer" (click)="expanded = !expanded">
-    <span
-      class="material-icons-outlined text-4xl"
-      [ngClass]="taskCompleted ? 'text-green-500' : 'text-gray-300'"
-    >
+    <span class="material-icons-outlined text-4xl" [ngClass]="taskCompleted ? 'text-green-500' : 'text-gray-300'">
       check_circle
     </span>
     <div class="text-center mx-6 font-semibold text-lg">{{ subTask?.taskCard?.header }}</div>
@@ -16,15 +13,10 @@
     </div>
   </div>
 
-  <div
-    [@openClose]="expanded ? 'open' : 'closed'"
-    class="flex flex-col justify-evenly items-center overflow-hidden"
-  >
+  <div [@openClose]="expanded ? 'open' : 'closed'" class="flex flex-col justify-evenly items-center overflow-hidden">
     <p class="mt-6 mx-10" [innerHTML]="subTask?.taskCard?.textOne | linkify"></p>
-    <a [href]="subTask?.taskCard?.link"  class="my-6 mx-10">
-      <brave-filled-onlytext-button [config]="config">{{
-        subTask?.taskCard?.textButton
-      }}</brave-filled-onlytext-button>
+    <a *ngIf="subTask?.taskCard?.textButton" [href]="subTask?.taskCard?.link" class="my-6 mx-10">
+      <brave-filled-onlytext-button [config]="config">{{ subTask?.taskCard?.textButton }}</brave-filled-onlytext-button>
     </a>
     <p class="mb-6 mx-10" [innerHTML]="subTask?.taskCard?.textTwo | linkify"></p>
 

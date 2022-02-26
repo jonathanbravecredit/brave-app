@@ -31,22 +31,25 @@ export class ProgressTrackerService {
 
     try {
       let res = await this.http.get<Initiative>(environment.api + '/initiatives', { headers }).toPromise();
-      console.log('HERE res', res);
       return res;
     } catch (error) {
-      console.log('here', error);
       return null;
     }
     // return await new Promise((res) => res(MOCKPROGRESSTRACKERDATA));
   }
 
-  async updateProgressTrackerData(patchBody: InitiativePatchBody): Promise<Initiative> {
+  async updateProgressTrackerData(patchBody: InitiativePatchBody): Promise<Initiative | null> {
     const token = await this.auth.getIdTokenJwtTokens();
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
 
-    return await this.http.put<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise(); //!change test url
+    try {
+      let res = await this.http.put<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise(); //!change test url
+      return res;
+    } catch (err) {
+      return null;
+    }
   }
 
   async postUserGoal(goalInfo: IGoalInfo) {

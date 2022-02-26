@@ -22,7 +22,8 @@ import { Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
 import { ProgressTrackerSelectors, ProgressTrackerStateModel } from '@store/progress-tracker';
-import { Initiative } from '@shared/interfaces/progress-tracker.interface';
+import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
+import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -54,8 +55,10 @@ export class DashboardEnrolledComponent implements OnDestroy {
   // initiative: Initiative | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
-  private initiative: Initiative = this.store.selectSnapshot((state) => state.ProgressTracker).data;
+  initiative: Initiative = this.store.selectSnapshot((state) => state.ProgressTracker).data;
   private initiativeSub$: Subscription | undefined;
+  initiativeSteps: IProgressStep[] = [];
+  futureScore: number = 0;
 
   constructor(
     private router: Router,
@@ -69,6 +72,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
     this.subscribeToRouteData();
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
+    this.createSteps();
+    this.findFutureScore();
   }
 
   ngOnDestroy(): void {
@@ -93,6 +98,38 @@ export class DashboardEnrolledComponent implements OnDestroy {
     if (this.initiative) {
       this.dashboardService.progressTrackerData$.next(this.initiative);
     }
+  }
+
+  createSteps() {
+    this.initiativeSteps = [];
+    if (this.initiative.initiativeTasks && this.initiative.initiativeTasks.length > 1) {
+      this.initiative.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
+        this.initiativeSteps.push({
+          id: i,
+          active: true,
+          complete: primaryTask.taskStatus === 'complete',
+          name: primaryTask.taskLabel,
+        });
+      });
+    } else {
+      this.initiative.initiativeTasks[0]?.subTasks?.forEach((subTask: InitiativeSubTask, i: number) => {
+        this.initiativeSteps.push({
+          id: i,
+          active: true,
+          complete: subTask.taskStatus === 'complete',
+          name: subTask.taskLabel,
+        });
+      });
+    }
+  }
+
+  findFutureScore() {
+    this.initiative.initiativeTasks.forEach((initiativeTasks: InitiativeTask) => {
+      let res = initiativeTasks.subTasks?.reduce((total: number, subTask: InitiativeSubTask) => {
+        return total + +subTask.taskCard?.metric;
+      }, 0);
+      this.futureScore += res ? res : 0;
+    });
   }
 
   subscribeToRouteData(): void {
@@ -166,5 +203,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   onReferralsClicked() {
     this.router.navigate([routes.root.dashboard.report.snapshot.referrals.full]);
+  }
+
+  onProgressTrackerClicked() {
+    this.router.navigate([routes.root.dashboard.report.snapshot.progressTracker.full]);
   }
 }

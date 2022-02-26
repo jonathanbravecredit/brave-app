@@ -1,9 +1,11 @@
-<brave-kyc-goal-choice-header></brave-kyc-goal-choice-header>
+<div class="w-full max-w-xs mt-6">
+  <brave-kyc-goal-choice-header></brave-kyc-goal-choice-header>
 
-<div class="h-full flex flex-col justify-apart">
-  <brave-kyc-goal-choice-card
-    *ngFor="let goalInfo of goalItems"
-    [goalInfo]="goalInfo"
-    (click)="buttonClick(goalInfo)"
-  ></brave-kyc-goal-choice-card>
+  <div class="h-full flex flex-col justify-apart">
+    <brave-kyc-goal-choice-card
+      *ngFor="let goalInfo of goalItems"
+      [goalInfo]="goalInfo"
+      (click)="buttonClick.emit(goalInfo)"
+    ></brave-kyc-goal-choice-card>
+  </div>
 </div>

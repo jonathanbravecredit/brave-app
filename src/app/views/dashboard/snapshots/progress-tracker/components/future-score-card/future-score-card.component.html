@@ -16,9 +16,9 @@
       play_arrow
     </span>
     <div class="text-2xl font-semibold">
-      <span>{{ pointsDiff > 0 ? '+' : pointsDiff === 0 ? '' : '-' }}{{ pointsDiff }}</span>
+      <span>{{ pointsDiff > 0 ? '+' : '' }}{{ pointsDiff }}</span>
       points*
     </div>
   </div>
-  <p class="text-xs">Based on initial {{ monthYear }} score of {{ currentScore }}</p>
+  <p class="text-xs">Based on initial {{ monthYear }} score of {{ originalScore }}</p>
 </div>

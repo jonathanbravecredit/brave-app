@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 import { IGoalInfo } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
+
 
 @Component({
   selector: 'brave-kyc-goal-choice-pure',
@@ -9,11 +10,10 @@ import { IGoalInfo } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc
 export class KycGoalChoicePureComponent implements OnInit {
   @Input() goalItems: IGoalInfo[] | undefined;
 
-  constructor(private progressTrackerService: ProgressTrackerService) {}
+  @Output() buttonClick: EventEmitter<IGoalInfo> = new EventEmitter<IGoalInfo>()
+
+  constructor() {}
 
   ngOnInit(): void {}
 
-  buttonClick(goalInfo: IGoalInfo) {
-    this.progressTrackerService.postUserGoal(goalInfo)
-  }
 }

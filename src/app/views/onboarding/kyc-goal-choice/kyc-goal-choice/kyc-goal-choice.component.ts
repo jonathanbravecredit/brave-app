@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 export interface IGoalInfo {
   programId: string;
@@ -16,7 +21,12 @@ export class KycGoalChoiceComponent implements OnInit {
     { programId: '1', reason: 'credit_card', header: 'Get a credit card' },
   ];
 
-  constructor() {}
+  constructor(private progressTrackerService: ProgressTrackerService, private router: Router) {}
 
   ngOnInit(): void {}
+
+  buttonClick(goalInfo: IGoalInfo) {
+    this.progressTrackerService.postUserGoal(goalInfo);
+    this.router.navigate([routes.root.onboarding.name.full]);
+  }
 }

@@ -14,6 +14,7 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   steps: IProgressStep[] = [];
   goalId: string = 'credit_card'; //! replace default
   initiativeTasks: InitiativeTask[] = [];
+  futureScore: number = 0;
 
   get firstprimaryTask(): InitiativeTask | undefined {
     if (this.initiativeTasks) {
@@ -32,6 +33,7 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setCurrentInitiativeTasks();
     this.createSteps();
+    this.findFutureScore();
   }
 
   ngOnDestroy() {
@@ -63,6 +65,15 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  findFutureScore() {
+    this.initiative?.initiativeTasks.forEach((initiativeTasks: InitiativeTask) => {
+      let res = initiativeTasks.subTasks?.reduce((total: number, subTask: InitiativeSubTask) => {
+        return total + +subTask.taskCard?.metric;
+      }, 0);
+      this.futureScore += res ? res : 0;
+    });
   }
 
   //choose compoennt based on init

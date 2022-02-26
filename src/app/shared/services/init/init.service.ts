@@ -176,7 +176,8 @@ export class InitService {
 
     switch (lastComplete) {
       case -1:
-        this.router.navigate([routes.root.onboarding.name.full]);
+        // this.router.navigate([routes.root.onboarding.name.full]);
+        this.router.navigate([routes.root.onboarding.goalChoice.full]);
         break;
       case 0:
         this.router.navigate([routes.root.onboarding.address.full]);
