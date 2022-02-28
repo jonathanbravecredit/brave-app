@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LinkifyPipe } from '@shared/pipes/linkify/linkify.pipe';
 
 import { ProgressTrackerHeaderComponent } from './progress-tracker-header.component';
 
@@ -8,7 +9,7 @@ describe('ProgressTrackerHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProgressTrackerHeaderComponent ]
+      declarations: [ ProgressTrackerHeaderComponent, LinkifyPipe ]
     })
     .compileComponents();
   });

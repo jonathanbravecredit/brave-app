@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { StateService } from '@shared/services/state/state.service';
 import { environment } from '@environments/environment';
 import * as ProgressTrackerActions from '../../../store/progress-tracker/progress-tracker.actions';
 import { IGoalInfo } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
@@ -15,7 +14,6 @@ export class ProgressTrackerService {
   constructor(
     private http: HttpClient,
     private store: Store,
-    private statesvc: StateService,
     private auth: AuthService,
   ) {}
 
