@@ -14,14 +14,13 @@ import { FindingsResolver } from '@shared/resolvers/findings/findings.resolver';
 import { DisputesResolver } from '@shared/resolvers/disputes/disputes.resolver';
 import { DisputesHistoricalView } from '@views/dashboard/disputes/disputes-historical/disputes-historical/disputes-historical.view';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
 const disputes = routes.root.dashboard.disputes;
 
 const DisputeRoutes: Routes = [
   {
     path: '',
     component: DisputesComponent,
-    canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: '',
@@ -32,59 +31,59 @@ const DisputeRoutes: Routes = [
         path: `${disputes.overview.segment}`,
         component: DisputesOverviewInitialView,
         resolve: { disputes: DisputesResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.historical.segment}`,
         component: DisputesHistoricalView,
         resolve: { disputes: DisputesResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.findings.segment}/:investigation/:creditbureau`,
         component: DisputeFindingsView,
         resolve: { reports: FindingsResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.reconfirm.segment}`,
         component: DisputesReconfirmView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.tradeline.segment}`,
         component: DisputesTradelineView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.personalitem.segment}`,
         component: DisputesPersonalView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.publicitem.segment}`,
         component: DisputesPublicView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.tradeline.segment}/${disputes.tradeline.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.personalitem.segment}/${disputes.personalitem.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.publicitem.segment}/${disputes.publicitem.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${disputes.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
     ],
   },
