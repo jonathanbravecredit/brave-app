@@ -7,20 +7,24 @@ import * as dayjs from 'dayjs';
 })
 export class FutureScoreCardComponent implements OnInit {
   @Input() futureScore: number = 0;
-  @Input() originalScore: number = 550;
+  @Input() enrolledScore: string | undefined = '0';
+  @Input() enrolledOn: string | undefined;
   scoreReview: string = '';
   pointsDiff: number = 0;
-  monthYear: string = dayjs().format('MMMM YYYY');
+  monthYear: string = '';
 
   constructor() {}
 
   ngOnInit(): void {
     this.calculatePointsDiff();
     this.scoreReview = this.getScoreReview();
+    this.monthYear = dayjs(this.enrolledOn).format('MMMM YYYY');
   }
 
   calculatePointsDiff() {
-    this.pointsDiff = this.futureScore - this.originalScore;
+    if (this.enrolledScore) {
+      this.pointsDiff = this.futureScore - +this.enrolledScore;
+    }
   }
 
   getScoreReview(): string {

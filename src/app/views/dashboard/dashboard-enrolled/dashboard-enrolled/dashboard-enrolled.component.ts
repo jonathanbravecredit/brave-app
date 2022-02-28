@@ -56,6 +56,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
   initiative: Initiative = this.store.selectSnapshot((state) => state.ProgressTracker).data;
+  enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
+    ?.enrollVantageScore.serviceProductValue;
   private initiativeSub$: Subscription | undefined;
   initiativeSteps: IProgressStep[] = [];
   futureScore: number = 0;
@@ -130,6 +132,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
       }, 0);
       this.futureScore += res ? res : 0;
     });
+    if (this.enrolledScore) {
+      this.futureScore += +this.enrolledScore;
+    } else {
+      this.futureScore = 0;
+    }
   }
 
   subscribeToRouteData(): void {

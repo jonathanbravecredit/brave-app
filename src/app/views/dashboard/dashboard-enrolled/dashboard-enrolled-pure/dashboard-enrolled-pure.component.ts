@@ -68,7 +68,8 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     this.updatedAt = this.dashboardService.getLastUpdated() || new Date().toISOString();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngOnDestroy(): void {
     this.dashboardDataSub$?.unsubscribe();

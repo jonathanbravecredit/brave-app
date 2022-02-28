@@ -12,8 +12,11 @@ export class ProgressTrackerPureComponent implements OnInit {
   @Input() steps: IProgressStep[] = [];
   @Input() initiativeTasks: InitiativeTask[] = [];
   @Input() futureScore: number = 0;
+  @Input() enrolledScore: string | undefined;
+  @Input() enrolledOn: string | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }

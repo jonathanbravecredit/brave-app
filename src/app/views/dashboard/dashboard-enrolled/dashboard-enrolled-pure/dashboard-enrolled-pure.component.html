@@ -24,7 +24,7 @@
     <brave-snapshot-display-card
       title="Claim Your FutureScore:"
       typeOfSnapshot="time"
-      [value]="data.dashScore ? (data.dashScore + futureScore).toString() : '0'"
+      [value]="futureScore"
       (click)="onProgressTrackerClicked.emit()"
       [useBubble]="false"
       backGroundColor="#ffd683"

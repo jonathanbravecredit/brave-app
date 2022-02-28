@@ -3,7 +3,11 @@
   <brave-circle-checktext-progressbar [steps]="steps"></brave-circle-checktext-progressbar>
 </div>
 
-<brave-future-score-card [futureScore]="futureScore"></brave-future-score-card>
+<brave-future-score-card
+  [futureScore]="futureScore"
+  [enrolledScore]="enrolledScore"
+
+></brave-future-score-card>
 
 <div *ngFor="let initiativeTask of initiativeTasks">
   <div>
@@ -12,7 +16,10 @@
 
   <div class="mt-1 mb-4">
     <div *ngFor="let subTask of initiativeTask?.subTasks">
-      <brave-progress-tracker-goal-card [taskCompleted]="subTask.taskStatus === 'complete'" [subTask]="subTask"></brave-progress-tracker-goal-card>
+      <brave-progress-tracker-goal-card
+        [taskCompleted]="subTask.taskStatus === 'complete'"
+        [subTask]="subTask"
+      ></brave-progress-tracker-goal-card>
     </div>
   </div>
 </div>

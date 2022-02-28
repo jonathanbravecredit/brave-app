@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
@@ -15,6 +16,10 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   goalId: string = 'credit_card'; //! replace default
   initiativeTasks: InitiativeTask[] = [];
   futureScore: number = 0;
+  enrolledOn: string | undefined = this.store.selectSnapshot((state) => state.appData)?.agencies?.transunion
+    ?.enrolledOn;
+  enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData)?.agencies?.transunion
+    ?.enrollVantageScore.serviceProductValue;
 
   get firstprimaryTask(): InitiativeTask | undefined {
     if (this.initiativeTasks) {
@@ -24,8 +29,8 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(dashboardService: DashboardService) {
-    this.initiative$ = dashboardService.progressTrackerData$.subscribe((data) => {
+  constructor(private dashboardService: DashboardService, private store: Store) {
+    this.initiative$ = this.dashboardService.progressTrackerData$.subscribe((data) => {
       this.initiative = data;
     });
   }
@@ -74,6 +79,11 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
       }, 0);
       this.futureScore += res ? res : 0;
     });
+    if (this.enrolledScore) {
+      this.futureScore += +this.enrolledScore;
+    } else {
+      this.futureScore = 0;
+    }
   }
 
   //choose compoennt based on init
