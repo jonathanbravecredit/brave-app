@@ -1,6 +1,6 @@
 <ng-container *ngIf="dashboardData$ | async as data">
   <h2 class="text-lg font-semibold">{{ welcome }}</h2>
-
+  
   <div class="bg-gray-50 p-4 cursor-pointer" (click)="onProgressTrackerClicked.emit()">
     <h5 class="text-sm">{{ initiative?.initiativeTitle }}</h5>
     <brave-circle-checktext-progressbar [steps]="initiativeSteps"></brave-circle-checktext-progressbar>
