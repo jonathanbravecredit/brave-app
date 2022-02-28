@@ -73,7 +73,7 @@ export class ProgressTrackerComponent implements OnInit, OnDestroy {
   }
 
   findFutureScore() {
-    this.initiative?.initiativeTasks.forEach((initiativeTasks: InitiativeTask) => {
+    this.initiative?.initiativeTasks?.forEach((initiativeTasks: InitiativeTask) => {
       let res = initiativeTasks.subTasks?.reduce((total: number, subTask: InitiativeSubTask) => {
         return total + +subTask.taskCard?.metric;
       }, 0);
