@@ -23,7 +23,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() creditMixStatus: string | undefined;
   @Input() creditUtilizationStatus: string | undefined;
   @Input() creditUtilizationPerc: number | undefined;
-  @Input() initiative: Initiative | undefined;
+  @Input() initiative: Initiative | null = null;
   @Input() initiativeSteps: IProgressStep[] = [];
   @Input() futureScore: number = 0;
 
@@ -68,8 +68,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     this.updatedAt = this.dashboardService.getLastUpdated() || new Date().toISOString();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.dashboardDataSub$?.unsubscribe();

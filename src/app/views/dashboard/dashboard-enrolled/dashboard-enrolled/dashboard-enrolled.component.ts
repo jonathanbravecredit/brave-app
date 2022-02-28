@@ -18,12 +18,13 @@ import { shuffle } from 'lodash';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IMergeReport } from '@shared/interfaces';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
-import { ProgressTrackerSelectors, ProgressTrackerStateModel } from '@store/progress-tracker';
 import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
+import { ProgressTrackerStateModel } from '@store/progress-tracker';
+import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -52,13 +53,13 @@ export class DashboardEnrolledComponent implements OnDestroy {
   // sub to router
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
-  // initiative: Initiative | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
-  initiative: Initiative = this.store.selectSnapshot((state) => state.ProgressTracker).data;
+
+  initiative: Initiative | null = null;
   enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
     ?.enrollVantageScore.serviceProductValue;
-  private initiativeSub$: Subscription | undefined;
+  // private initiativeSub$: Subscription | undefined;
   initiativeSteps: IProgressStep[] = [];
   futureScore: number = 0;
 
@@ -69,9 +70,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     private store: Store,
+    private progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
     this.subscribeToRouteData();
+    this.initiative = progressTracker.initiative;
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
     this.createSteps();
@@ -81,7 +84,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
-    this.initiativeSub$?.unsubscribe();
   }
 
   subscribeToReportData(): void {
