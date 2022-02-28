@@ -104,8 +104,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   createSteps() {
     this.initiativeSteps = [];
-    if (this.initiative.initiativeTasks && this.initiative.initiativeTasks.length > 1) {
-      this.initiative.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
+    if (this.initiative?.initiativeTasks && this.initiative?.initiativeTasks.length > 1) {
+      this.initiative?.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
         this.initiativeSteps.push({
           id: i,
           active: true,
@@ -114,19 +114,21 @@ export class DashboardEnrolledComponent implements OnDestroy {
         });
       });
     } else {
-      this.initiative.initiativeTasks[0]?.subTasks?.forEach((subTask: InitiativeSubTask, i: number) => {
-        this.initiativeSteps.push({
-          id: i,
-          active: true,
-          complete: subTask.taskStatus === 'complete',
-          name: subTask.taskLabel,
+      if (this.initiative?.initiativeTasks) {
+        this.initiative?.initiativeTasks[0]?.subTasks?.forEach((subTask: InitiativeSubTask, i: number) => {
+          this.initiativeSteps.push({
+            id: i,
+            active: true,
+            complete: subTask.taskStatus === 'complete',
+            name: subTask.taskLabel,
+          });
         });
-      });
+      }
     }
   }
 
   findFutureScore() {
-    this.initiative.initiativeTasks.forEach((initiativeTasks: InitiativeTask) => {
+    this.initiative?.initiativeTasks?.forEach((initiativeTasks: InitiativeTask) => {
       let res = initiativeTasks.subTasks?.reduce((total: number, subTask: InitiativeSubTask) => {
         return total + +subTask.taskCard?.metric;
       }, 0);
