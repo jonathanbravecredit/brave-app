@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { environment } from '@environments/environment';
-import * as ProgressTrackerActions from '../../../store/progress-tracker/progress-tracker.actions';
 import { IGoalInfo } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
 import { Initiative, InitiativePatchBody } from '@shared/interfaces/progress-tracker.interface';
 
@@ -11,15 +9,7 @@ import { Initiative, InitiativePatchBody } from '@shared/interfaces/progress-tra
   providedIn: 'root',
 })
 export class ProgressTrackerService {
-  constructor(
-    private http: HttpClient,
-    private store: Store,
-    private auth: AuthService,
-  ) {}
-
-  updateProgressTrackerState(progressTrackerData: Initiative) {
-    this.store.dispatch(new ProgressTrackerActions.Add({ data: progressTrackerData }));
-  }
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   async getProgressTrackerData(): Promise<Initiative | null> {
     const token = await this.auth.getIdTokenJwtTokens();
@@ -33,7 +23,6 @@ export class ProgressTrackerService {
     } catch (error) {
       return null;
     }
-    // return await new Promise((res) => res(MOCKPROGRESSTRACKERDATA));
   }
 
   async updateProgressTrackerData(patchBody: InitiativePatchBody): Promise<Initiative | null> {
@@ -59,6 +48,7 @@ export class ProgressTrackerService {
       programId: goalInfo.programId,
       reason: goalInfo.reason,
     };
+
     return await this.http.post<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise();
   }
 }
