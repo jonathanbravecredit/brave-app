@@ -334,29 +334,29 @@ describe('DisputeService', () => {
         disputeService.onUserConfirmed();
         expect(disputeService.acknowledgeDisputeTerms).toHaveBeenCalledWith(disputeService.state);
       });
-      xit(`Should call sendDisputePreflightCheck`, () => {
-        const { disputeService, transunionMock } = setup();
-        spyOn(disputeService, 'sendDisputePreflightCheck');
-        disputeService.state = {
-          agencies: {
-            transunion: {},
-          },
-        } as AppDataStateModel;
-        transunionMock.sendDisputePreflightCheck.and.returnValue({ success: true, data: {} });
-        disputeService.onUserConfirmed();
-        expect(disputeService.sendDisputePreflightCheck).toHaveBeenCalled();
-      });
-      xit(`Should call analytics fireClickEvent safeMonitor click events if preflight response is true`, () => {
-        const { disputeService, transunionMock, analyticsMock, safeMonitorMock } = setup();
-        transunionMock.sendDisputePreflightCheck.and.returnValue({ sucess: true, data: {} });
-        disputeService.onUserConfirmed();
-        expect(analyticsMock.fireClickEvent).toHaveBeenCalledWith(AnalyticClickEvents.DisputeEnrollment, {
-          google: true,
-          mixpanel: true,
-          brave: true,
-        });
-        expect(safeMonitorMock.fireClickEvent).toHaveBeenCalledWith(MonitorClickEvents.DisputesEnroll);
-      });
+    //   xit(`Should call sendDisputePreflightCheck`, () => {
+    //     const { disputeService, transunionMock } = setup();
+    //     spyOn(disputeService, 'sendDisputePreflightCheck');
+    //     disputeService.state = {
+    //       agencies: {
+    //         transunion: {},
+    //       },
+    //     } as AppDataStateModel;
+    //     transunionMock.sendDisputePreflightCheck.and.returnValue({ success: true, data: {report: {}} });
+    //     disputeService.onUserConfirmed();
+    //     expect(disputeService.sendDisputePreflightCheck).toHaveBeenCalled();
+    //   });
+    //   xit(`Should call analytics fireClickEvent safeMonitor click events if preflight response is true`, () => {
+    //     const { disputeService, transunionMock, analyticsMock, safeMonitorMock } = setup();
+    //     transunionMock.sendDisputePreflightCheck.and.returnValue({ sucess: true, data: {report: {}} });
+    //     disputeService.onUserConfirmed();
+    //     expect(analyticsMock.fireClickEvent).toHaveBeenCalledWith(AnalyticClickEvents.DisputeEnrollment, {
+    //       google: true,
+    //       mixpanel: true,
+    //       brave: true,
+    //     });
+    //     expect(safeMonitorMock.fireClickEvent).toHaveBeenCalledWith(MonitorClickEvents.DisputesEnroll);
+    //   });
     });
 
     it('sendDisputePreflightCheck should call transunion.sendDisputePreflightCheck', () => {

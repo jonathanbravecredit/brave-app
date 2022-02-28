@@ -19,6 +19,7 @@ import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -47,6 +48,7 @@ export class DashboardService implements OnDestroy {
   dashScoreSuppressed$ = new BehaviorSubject(false);
   // subscriptions to dash
   dashScoresSub$: Subscription | undefined;
+  progressTrackerData$ = new BehaviorSubject<Initiative | null>(null);
 
   welcome: string = '';
   name: string | undefined;

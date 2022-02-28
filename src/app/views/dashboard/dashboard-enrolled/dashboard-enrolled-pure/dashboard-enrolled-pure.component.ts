@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 import { IAdData } from '@shared/interfaces/ads.interface';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { DashboardService, IDashboardData } from '@shared/services/dashboard/dashboard.service';
@@ -21,6 +23,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() creditMixStatus: string | undefined;
   @Input() creditUtilizationStatus: string | undefined;
   @Input() creditUtilizationPerc: number | undefined;
+  @Input() initiative: Initiative | undefined;
+  @Input() initiativeSteps: IProgressStep[] = [];
+  @Input() futureScore: number = 0;
 
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
@@ -30,6 +35,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Output() creditUtilizationClicked: EventEmitter<void> = new EventEmitter();
   @Output() creditMixClicked: EventEmitter<void> = new EventEmitter();
   @Output() referralsClicked: EventEmitter<void> = new EventEmitter();
+  @Output() onProgressTrackerClicked: EventEmitter<void> = new EventEmitter();
 
   public score: number = 4;
   public welcome: string = '';
@@ -62,7 +68,8 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     this.updatedAt = this.dashboardService.getLastUpdated() || new Date().toISOString();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngOnDestroy(): void {
     this.dashboardDataSub$?.unsubscribe();

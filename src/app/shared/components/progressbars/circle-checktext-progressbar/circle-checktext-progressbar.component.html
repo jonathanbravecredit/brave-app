@@ -1,0 +1,43 @@
+<div>
+  <div class="py-6">
+    <div class="flex items-center">
+      <ng-container *ngFor="let step of steps; index as i; first as isFirst; last as isLast">
+        <div
+          class="flex-auto h-2 w-1/5 transition duration-500 ease-in-out bg-coolGray-200"
+          [ngClass]="i === 0 ? 'rounded rounded-r-1' : ''"
+        ></div>
+        <div class="flex items-center text-white relative">
+          <div
+            [ngClass]="step.complete ? 'bg-lightBlue-200' : 'bg-coolGray-200'"
+            class="
+              flex
+              justify-center
+              items-center
+              text-center
+              rounded-full
+              transition
+              duration-500
+              ease-in-out
+              h-8
+              w-8
+              -ml-0.5
+            "
+          >
+            <span class="material-icons text-coolGray-700" *ngIf="step.complete">done</span>
+          </div>
+          <div
+            class="absolute top-0 -ml-12 text-center w-32 mt-9 font-sans text-xs text-black px-4"
+            [ngClass]="step.complete ? 'font-semibold' : ''"
+          >
+            <!-- {{ config.steps.length }} -->
+            {{ step.name }}
+          </div>
+        </div>
+        <div
+          class="flex-auto h-2 w-1/5 transition duration-500 ease-in-out bg-coolGray-200"
+          [ngClass]="i === lastIndex ? 'rounded rounded-l-none' : ''"
+        ></div>
+      </ng-container>
+    </div>
+  </div>
+</div>

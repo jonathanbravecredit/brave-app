@@ -83,7 +83,15 @@ import { SettingsWarningComponent } from './settings/components/settings-warning
 import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/dashboard-ads-carousel/dashboard-ads-carousel.component';
 import { CreditUtilizationAssessmentComponent } from './snapshots/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component';
 import { DashboardCreditScoreErrorComponent } from './dashboard-enrolled/components/dashboard-credit-score-error/dashboard-credit-score-error.component';
+import { ProgressTrackerComponent } from './snapshots/progress-tracker/progress-tracker/progress-tracker.component';
+import { ProgressTrackerPureComponent } from './snapshots/progress-tracker/progress-tracker-pure/progress-tracker-pure.component';
+import { FutureScoreCardComponent } from './snapshots/progress-tracker/components/future-score-card/future-score-card.component';
+import { ProgressTrackerHeaderComponent } from './snapshots/progress-tracker/components/progress-tracker-header/progress-tracker-header.component';
+import { ProgressTrackerDisclaimerComponent } from './snapshots/progress-tracker/components/progress-tracker-disclaimer/progress-tracker-disclaimer.component';
+import { ProgressTrackerGoalCardComponent } from './snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
 import { DashboardReportMissingComponent } from './dashboard-enrolled/components/dashboard-report-missing/dashboard-report-missing.component';
+
+import { OnboardingModule } from '@views/onboarding/onboarding.module';
 
 const modules = [
   CommonModule,
@@ -94,6 +102,9 @@ const modules = [
   CreditReportModule,
   DashboardRoutingModule,
   SharedDirectivesModule,
+
+  OnboardingModule //! Remove after testing
+
 ];
 const components = [
   DashboardComponent,
@@ -161,12 +172,24 @@ const components = [
   DashboardAdsCarouselComponent,
   DashboardCreditScoreErrorComponent,
   CreditUtilizationAssessmentComponent,
+  ProgressTrackerComponent,
+  ProgressTrackerPureComponent,
+  FutureScoreCardComponent,
+  ProgressTrackerHeaderComponent,
+  ProgressTrackerDisclaimerComponent,
+  ProgressTrackerGoalCardComponent,
+  DashboardReportMissingComponent,
+
+
+
+
+
 ];
 
 const pipes = [AccountStatusPipe];
 
 @NgModule({
-  declarations: [...components, ...pipes, DashboardReportMissingComponent],
+  declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
 })
