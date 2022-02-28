@@ -9,7 +9,7 @@ describe('DisputesEmptyButtonComponent', () => {
   let routerMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['']);
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({
       declarations: [DisputesEmptyButtonComponent],
       providers: [{ provide: Router, useValue: routerMock }],
@@ -24,5 +24,11 @@ describe('DisputesEmptyButtonComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should run router navigate when buttonClick', () => {
+    component.buttonClick();
+
+    expect(routerMock.navigate).toHaveBeenCalled();
   });
 });

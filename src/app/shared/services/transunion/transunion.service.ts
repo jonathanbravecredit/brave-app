@@ -11,7 +11,7 @@ import {
   IIndicativeEnrichmentMsg,
   IGetAuthenticationQuestionsMsg,
   IVerifyAuthenticationQuestionsMsg,
-  IEnrollServiceProductResponse,
+  IEnrollCreditReportResponse,
 } from '@shared/interfaces';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { IDispute } from '@shared/interfaces/disputes';
@@ -23,6 +23,7 @@ import { AppDataStateModel } from '@store/app-data';
 import { IProcessDisputePersonalResult } from '@views/dashboard/disputes/disputes-personal/disputes-personal-pure/disputes-personal-pure.view';
 import { IProcessDisputePublicResult } from '@views/dashboard/disputes/disputes-public/disputes-public-pure/disputes-public-pure.view';
 import { IProcessDisputeTradelineResult } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/disputes-tradeline-pure.view';
+import { Dayjs } from 'dayjs';
 
 /*============IMPORTANT==============*/
 // TODO this is where the JSON transform the interfaces
@@ -120,8 +121,9 @@ export class TransunionService {
   /**
    * Send the verified user to transunion to enroll them and receive their report
    */
-  async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollResult | undefined>> {
-    return this.sendTransunionAPICall<IEnrollResult>('Enroll', JSON.stringify({}));
+  async sendEnrollRequest(): Promise<ITUServiceResponse<IEnrollCreditReportResponse | undefined>> {
+    const res = await this.sendTransunionAPICall<IEnrollCreditReportResponse>('Enroll', JSON.stringify({}));
+    return res;
   }
 
   /**
@@ -153,7 +155,7 @@ export class TransunionService {
    *  - Checks the dispute status, if eligible, returns true, otherwise false
    */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    return this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
+    return await this.sendTransunionAPICall<any>('DisputePreflightCheck', JSON.stringify({}));
   }
 
   /**

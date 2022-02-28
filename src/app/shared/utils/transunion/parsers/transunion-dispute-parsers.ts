@@ -1,4 +1,4 @@
-import { ISubscriber } from '@shared/interfaces/credit-bureau.interface';
+import { ICreditBureauSubscriber } from '@shared/interfaces/credit-bureau.interface';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionDisputeParsers extends TransunionBase {
@@ -13,7 +13,7 @@ export class TransunionDisputeParsers extends TransunionBase {
    * @param subscriber
    * @returns
    */
-  static unparseSubscriber(subscriber: ISubscriber | undefined): [string, string, string] {
+  static unparseSubscriber(subscriber: ICreditBureauSubscriber | undefined): [string, string, string] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
     const name = subscriber?.name?.unparsed || this.bcMissing;
     const address = subscriber?.address?.street?.unparsed

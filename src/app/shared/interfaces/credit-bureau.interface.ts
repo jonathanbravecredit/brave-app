@@ -132,10 +132,10 @@ export interface ICredit {
 
 export interface IItem {
   itemName?: string;
-  subscriber: ISubscriber;
+  subscriber: ICreditBureauSubscriber;
 }
 
-export interface ISubscriber {
+export interface ICreditBureauSubscriber {
   industryCode?: string;
   memberCode?: string;
   name: ITUUnparsed;
@@ -192,7 +192,7 @@ export interface ICustomCredit {
 export interface IRecordBase {
   itemKey: string;
   type?: string;
-  subscriber: ISubscriber;
+  subscriber: ICreditBureauSubscriber;
   dateEffective: string;
   dateEffectiveLabel: string;
 }
