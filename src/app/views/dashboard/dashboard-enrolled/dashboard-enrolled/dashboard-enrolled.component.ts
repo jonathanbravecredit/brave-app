@@ -104,8 +104,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   createSteps() {
     this.initiativeSteps = [];
-    if (this.initiative.initiativeTasks && this.initiative.initiativeTasks.length > 1) {
-      this.initiative.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
+    if (this.initiative?.initiativeTasks && this.initiative?.initiativeTasks.length > 1) {
+      this.initiative?.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
         this.initiativeSteps.push({
           id: i,
           active: true,
@@ -114,7 +114,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
         });
       });
     } else {
-      if (this.initiative.initiativeTasks) {
+      if (this.initiative?.initiativeTasks) {
         this.initiative?.initiativeTasks[0]?.subTasks?.forEach((subTask: InitiativeSubTask, i: number) => {
           this.initiativeSteps.push({
             id: i,
