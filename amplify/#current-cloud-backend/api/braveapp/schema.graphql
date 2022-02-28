@@ -40,7 +40,10 @@ type UserAttributes {
   ssn: Ssn
 }
 type NavBar {
+  home: NavBarConfig
+  report: NavBarConfig
   disputes: NavBarConfig
+  settings: NavBarConfig
 }
 type NavBarConfig {
   badge: Boolean
