@@ -30,13 +30,16 @@ export class ProgressTrackerService implements OnDestroy {
   enrolledOn: string | null | undefined;
   enrolledScore: string | null | undefined;
 
+  storeSub$: Subscription | undefined;
+
   constructor(private http: HttpClient, private auth: AuthService, private store: Store) {
     this.subscribeToProgressTrackerData();
-    this.setEnrolledValues();
+    this.subscribeToStoreValues();
   }
 
   ngOnDestroy(): void {
     this.initiativeSub$?.unsubscribe();
+    this.storeSub$?.unsubscribe();
   }
 
   subscribeToProgressTrackerData(): void {
@@ -49,11 +52,12 @@ export class ProgressTrackerService implements OnDestroy {
     });
   }
 
-  setEnrolledValues(): void {
-    const snap = this.store.selectSnapshot((state) => state.appData);
-    const tu = snap?.agencies?.transunion as TransunionInput;
-    this.enrolledOn = tu.enrolledOn;
-    this.enrolledScore = tu.enrollVantageScore?.serviceProductValue;
+  subscribeToStoreValues(): void {
+    this.storeSub$ = this.store.subscribe((state) => {
+      const tu = state?.appData?.agencies?.transunion as TransunionInput;
+      this.enrolledOn = tu.enrolledOn;
+      this.enrolledScore = tu.enrollVantageScore?.serviceProductValue;
+    });
   }
 
   findFutureScore(): number | undefined {
