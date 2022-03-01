@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 export interface IGoalInfo {
   programId: string;

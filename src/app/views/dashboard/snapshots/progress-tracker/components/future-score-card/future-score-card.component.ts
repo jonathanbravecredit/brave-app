@@ -28,8 +28,8 @@ export class FutureScoreCardComponent implements OnInit {
   }
 
   getScoreReview(): string {
-    switch (this.futureScore) {
-      case 622:
+    switch (true) {
+      case this.futureScore < 800:
         return 'Good';
     }
     return ''; //! wont be needed

@@ -18,12 +18,12 @@ import { shuffle } from 'lodash';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IMergeReport } from '@shared/interfaces';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
-import { ProgressTrackerSelectors, ProgressTrackerStateModel } from '@store/progress-tracker';
 import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
-import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
+import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -52,14 +52,14 @@ export class DashboardEnrolledComponent implements OnDestroy {
   // sub to router
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
-  // initiative: Initiative | null = null;
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
-  initiative: Initiative = this.store.selectSnapshot((state) => state.ProgressTracker).data;
+
+  initiative: Initiative | null = null;
   enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
     ?.enrollVantageScore.serviceProductValue;
-  private initiativeSub$: Subscription | undefined;
-  initiativeSteps: IProgressStep[] = [];
+  // private initiativeSub$: Subscription | undefined;
+  initiativeSteps: ICircleProgressStep[] = [];
   futureScore: number = 0;
 
   constructor(
@@ -69,19 +69,19 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     private store: Store,
+    public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
     this.subscribeToRouteData();
+    this.initiative = progressTracker.initiative;
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
-    this.createSteps();
-    this.findFutureScore();
+    this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
-    this.initiativeSub$?.unsubscribe();
   }
 
   subscribeToReportData(): void {
@@ -99,45 +99,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
   setProgressTrackerDataInDashboardService() {
     if (this.initiative) {
       this.dashboardService.progressTrackerData$.next(this.initiative);
-    }
-  }
-
-  createSteps() {
-    this.initiativeSteps = [];
-    if (this.initiative?.initiativeTasks && this.initiative?.initiativeTasks.length > 1) {
-      this.initiative?.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
-        this.initiativeSteps.push({
-          id: i,
-          active: true,
-          complete: primaryTask.taskStatus === 'complete',
-          name: primaryTask.taskLabel,
-        });
-      });
-    } else {
-      if (this.initiative?.initiativeTasks) {
-        this.initiative?.initiativeTasks[0]?.subTasks?.forEach((subTask: InitiativeSubTask, i: number) => {
-          this.initiativeSteps.push({
-            id: i,
-            active: true,
-            complete: subTask.taskStatus === 'complete',
-            name: subTask.taskLabel,
-          });
-        });
-      }
-    }
-  }
-
-  findFutureScore() {
-    this.initiative?.initiativeTasks?.forEach((initiativeTasks: InitiativeTask) => {
-      let res = initiativeTasks.subTasks?.reduce((total: number, subTask: InitiativeSubTask) => {
-        return total + +subTask.taskCard?.metric;
-      }, 0);
-      this.futureScore += res ? res : 0;
-    });
-    if (this.enrolledScore) {
-      this.futureScore += +this.enrolledScore;
-    } else {
-      this.futureScore = 0;
     }
   }
 

@@ -3,6 +3,7 @@ import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-o
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 import { InitiativePatchBody, InitiativeSubTask } from '@shared/interfaces/progress-tracker.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'brave-progress-tracker-goal-card',
@@ -33,7 +34,9 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() taskCompleted: boolean = false;
   patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
-  hideQuestion: boolean = false;
+  showQuestion: boolean = false;
+  metric: string = '-';
+  link: string | undefined;
   config: IFilledOnlyTextButtonConfig = {
     buttonSize: 'lg',
     backgroundColor: 'bg-indigo-800',
@@ -42,7 +45,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
     full: false,
   };
 
-  constructor(private progressTrackerService: ProgressTrackerService) {}
+  constructor(private progressTrackerService: ProgressTrackerService, private router: Router) {}
 
   ngOnInit(): void {
     this.patchBody = {
@@ -50,6 +53,11 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       taskId: this.subTask?.taskId,
       taskStatus: this.subTask?.taskStatus,
     };
+    if (!this.taskCompleted && this.subTask?.taskCard?.questionHeader && !this.showQuestion) {
+      this.showQuestion = true;
+    }
+    this.link = this.subTask?.taskCard.link;
+    this.metric = this.getMetric();
   }
 
   clickYes() {
@@ -58,6 +66,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       this.patchBody.taskStatus = 'complete';
       this.progressTrackerService.updateProgressTrackerData(this.patchBody);
     }
+    this.showQuestion = false;
   }
 
   clickNo() {
@@ -66,6 +75,32 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       this.patchBody.taskStatus = 'in_progress';
       this.progressTrackerService.updateProgressTrackerData(this.patchBody);
     }
-    this.hideQuestion = true;
+    this.showQuestion = false;
+  }
+
+  clickButton() {
+    if (!this.taskCompleted && !this.showQuestion) {
+      this.clickYes();
+    }
+
+    if (this.link?.startsWith('http')) {
+      window.open(this.link);
+    } else {
+      this.router.navigate([this.link]);
+    }
+  }
+
+  getMetric(): string {
+    if (this.subTask?.taskCard.metric) {
+      if (+this.subTask?.taskCard.metric === 0) {
+        return this.subTask?.taskCard.metric;
+      }
+      if (+this.subTask?.taskCard.metric > 0) {
+        return `+${this.subTask?.taskCard.metric}`;
+      } else {
+        return `-${this.subTask?.taskCard.metric}`;
+      }
+    }
+    return '';
   }
 }

@@ -9,7 +9,7 @@
       [creditUtilizationStatus]="creditUtilizationStatus"
       [creditUtilizationPerc]="creditUtilizationPerc"
       [initiative]="initiative"
-      [initiativeSteps]="initiativeSteps"
+      [initiativeSteps]="(progressTracker.initiativeSteps$ | async) || []"
       [futureScore]="futureScore"
       (negativeItemsClicked)="onNegativeItemsClicked()"
       (forbearanceItemsClicked)="onForbearanceItemsClicked()"

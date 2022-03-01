@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+
 export interface ICircleProgressStep {
   id: number;
-  active: boolean;
-  complete: boolean;
-  name: string;
+  stepId?: string;
+  stepActive: boolean;
+  stepComplete: boolean;
+  stepLabel: string;
 }
 export interface ICircleChecktextProgressbarConfig {
   size: string;

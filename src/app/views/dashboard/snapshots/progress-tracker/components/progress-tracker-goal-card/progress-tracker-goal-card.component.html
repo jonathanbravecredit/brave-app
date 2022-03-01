@@ -8,16 +8,22 @@
     </span>
     <div class="text-center mx-6 font-semibold text-lg">{{ subTask?.taskCard?.header }}</div>
     <div>
-      <span class="text-2xl text-blue-900 font-bold">{{ subTask?.taskCard?.metric }}</span>
-      <p class="text-sm text-gray-500">Points*</p>
+      <span *ngIf="subTask?.taskCard?.metric" class="text-2xl text-blue-900 font-bold">{{
+        metric
+      }}</span>
+      <p *ngIf="subTask?.taskCard?.metric" class="text-sm text-gray-500">Points*</p>
     </div>
   </div>
 
   <div [@openClose]="expanded ? 'open' : 'closed'" class="flex flex-col justify-evenly items-center overflow-hidden">
-    <p class="mt-6 mx-10" [innerHTML]="subTask?.taskCard?.textOne | linkify"></p>
-    <a *ngIf="subTask?.taskCard?.textButton" [href]="subTask?.taskCard?.link" class="my-6 mx-10">
-      <brave-filled-onlytext-button [config]="config">{{ subTask?.taskCard?.textButton }}</brave-filled-onlytext-button>
-    </a>
+    <p class="mt-6 mx-10 mb-6" [innerHTML]="subTask?.taskCard?.textOne | linkify"></p>
+    <brave-filled-onlytext-button
+      (click)="clickButton()"
+      *ngIf="subTask?.taskCard?.textButton && link"
+      class="mx-10 mb-6"
+      [config]="config"
+      >{{ subTask?.taskCard?.textButton }}</brave-filled-onlytext-button
+    >
     <p class="mb-6 mx-10" [innerHTML]="subTask?.taskCard?.textTwo | linkify"></p>
 
     <div
@@ -29,7 +35,7 @@
     </div>
 
     <div
-      *ngIf="!taskCompleted && subTask?.taskCard?.questionHeader && !hideQuestion"
+      *ngIf="showQuestion"
       class="bg-gray-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
     >
       <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.questionHeader }}</h4>

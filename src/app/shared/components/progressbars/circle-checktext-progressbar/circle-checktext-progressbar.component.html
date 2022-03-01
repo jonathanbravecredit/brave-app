@@ -8,7 +8,7 @@
         ></div>
         <div class="flex items-center text-white relative">
           <div
-            [ngClass]="step.complete ? 'bg-lightBlue-200' : 'bg-coolGray-200'"
+            [ngClass]="step.stepComplete ? 'bg-lightBlue-200' : 'bg-coolGray-200'"
             class="
               flex
               justify-center
@@ -23,14 +23,14 @@
               -ml-0.5
             "
           >
-            <span class="material-icons text-coolGray-700" *ngIf="step.complete">done</span>
+            <span class="material-icons text-coolGray-700" *ngIf="step.stepComplete">done</span>
           </div>
           <div
             class="absolute top-0 -ml-12 text-center w-32 mt-9 font-sans text-xs text-black px-4"
-            [ngClass]="step.complete ? 'font-semibold' : ''"
+            [ngClass]="step.stepComplete ? 'font-semibold' : ''"
           >
             <!-- {{ config.steps.length }} -->
-            {{ step.name }}
+            {{ step.stepLabel }}
           </div>
         </div>
         <div

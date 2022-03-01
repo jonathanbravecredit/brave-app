@@ -19,7 +19,6 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
     } else {
       try {
         const data = await this.progressTrackerService.getProgressTrackerData();
-        await this.setProgressTracker(data);
         return data;
       } catch {
         return null;
@@ -27,19 +26,4 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
     }
   }
 
-  async setProgressTracker(data: Initiative | null = null): Promise<void> {
-    const payload = { data };
-    await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new ProgressTrackerActions.Add(payload))
-        .toPromise()
-        .then((res) => {
-          console.log('dispatch progressTrackerData: ', res);
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  }
 }
