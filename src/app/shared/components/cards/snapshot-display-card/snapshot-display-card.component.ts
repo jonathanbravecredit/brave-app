@@ -29,6 +29,8 @@ export class SnapshotDisplayCardComponent implements OnInit {
   @Input() preview: boolean = false;
   @Input() rating: string | undefined;
   @Input() color: string | undefined;
+  @Input() backGroundColor: string = 'white'
+  @Input() useBubble = true;
 
   constructor() {}
 

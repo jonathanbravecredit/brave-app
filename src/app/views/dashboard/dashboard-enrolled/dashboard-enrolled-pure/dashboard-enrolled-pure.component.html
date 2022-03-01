@@ -1,5 +1,11 @@
 <ng-container *ngIf="dashboardData$ | async as data">
   <h2 class="text-lg font-semibold">{{ welcome }}</h2>
+
+  <div *ngIf="initiative" class="bg-gray-50 p-4 cursor-pointer" (click)="onProgressTrackerClicked.emit()">
+    <h5 class="text-sm">{{ initiative?.initiativeTitle }}</h5>
+    <brave-circle-checktext-progressbar [steps]="initiativeSteps"></brave-circle-checktext-progressbar>
+  </div>
+
   <div
     *ngIf="(data.dashScore !== 1 && data.dashScore !== 4) || (data.dashScore === 4 && !data.dashScoreSuppressed)"
     class="my-4 flex justify-center"
@@ -14,6 +20,16 @@
 
   <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
   <p *ngIf="updatedAt" class="text-xs mb-1">{{ content.p1 }}: {{ updatedAt | date: 'shortDate' }}</p>
+  <div *ngIf="initiative" class="mt-6 hover:cursor-pointer">
+    <brave-snapshot-display-card
+      title="Claim Your FutureScore:"
+      typeOfSnapshot="time"
+      [value]="futureScore"
+      (click)="onProgressTrackerClicked.emit()"
+      [useBubble]="false"
+      backGroundColor="#ffd683"
+    ></brave-snapshot-display-card>
+  </div>
   <div *ngIf="data.dashSnapshots as cards" class="mb-4">
     <div class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
@@ -119,7 +135,20 @@
     <p class="text-sm mb-4">Refer your friends to Brave Credit so you both earn rewards on your credit journey</p>
 
     <div
-      class="flex flex-col justify-evenly items-center align-center py-6 mb-4 cursor-pointer shadow rounded-lg border border-blueGray-300 bg-indigo-800 text-white"
+      class="
+        flex flex-col
+        justify-evenly
+        items-center
+        align-center
+        py-6
+        mb-4
+        cursor-pointer
+        shadow
+        rounded-lg
+        border border-blueGray-300
+        bg-indigo-800
+        text-white
+      "
       (click)="referralsClicked.emit()"
     >
       <h3 class="mb-5">Friends referred this campaign:</h3>

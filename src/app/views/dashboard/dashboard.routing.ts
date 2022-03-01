@@ -23,6 +23,7 @@ import { ReferralDashboardView } from '@views/dashboard/snapshots/referral-dashb
 import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
+import { ProgressTrackerComponent } from '@views/dashboard/snapshots/progress-tracker/progress-tracker/progress-tracker.component';
 const dashboard = routes.root.dashboard;
 const snapshot = routes.root.dashboard.report.snapshot;
 
@@ -30,7 +31,8 @@ const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+    resolve: { dashboard: DashboardResolver },
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: `${dashboard.init.segment}`,
@@ -95,6 +97,11 @@ const DashboardRoutes: Routes = [
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.referrals.segment}`,
         component: ReferralDashboardView,
         resolve: { referral: ReferralResolver },
+        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+      },
+      {
+        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.progressTracker.segment}`,
+        component: ProgressTrackerComponent,
         canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
       },
       {

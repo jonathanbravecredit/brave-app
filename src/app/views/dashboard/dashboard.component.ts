@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { Observable } from 'rxjs';
+import { BraveUtil } from '@shared/utils/brave/brave';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-dashboard',
@@ -10,7 +13,9 @@ import { Observable } from 'rxjs';
 export class DashboardComponent implements OnInit {
   securityFreeze$: Observable<boolean>;
   showBack: boolean = false;
+  routeSub$: Subscription | undefined;
   constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute) {
+    this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -23,5 +28,15 @@ export class DashboardComponent implements OnInit {
 
   goToLink(link: string) {
     this.router.navigate([`./${link}`], { relativeTo: this.route });
+  }
+
+  subscribeToRouteData(): void {
+    this.routeSub$ = this.route.data.subscribe((resp: any) => {
+      const { snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
+      if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
+      if (trends) this.dashboardService.dashTrends$.next(trends);
+      if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
+      if (referral) this.dashboardService.dashReferral$.next(referral);
+    });
   }
 }

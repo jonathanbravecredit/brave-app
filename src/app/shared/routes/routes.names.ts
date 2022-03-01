@@ -107,6 +107,10 @@ export const ROUTE_NAMES = {
             segment: 'referrals',
             full: '/dashboard/report/snapshot/referrals',
           },
+          progressTracker: {
+            segment: 'progresstracker',
+            full: '/dashboard/report/snapshot/progresstracker',
+          }
         },
         tradeline: {
           segment: 'tradeline',
@@ -185,6 +189,10 @@ export const ROUTE_NAMES = {
       name: {
         segment: 'name',
         full: '/onboarding/name',
+      },
+      goalChoice: {
+        segment: 'goalchoice',
+        full: '/onboarding/goalchoice',
       },
       address: {
         segment: 'address',
