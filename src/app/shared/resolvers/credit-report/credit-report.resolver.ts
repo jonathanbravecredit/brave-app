@@ -36,7 +36,6 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
         .dispatch(new CreditReportActions.Add(payload))
         .toPromise()
         .then((res) => {
-          console.log('dispatch report: ', res);
           resolve(res); //the report
         })
         .catch((err) => {

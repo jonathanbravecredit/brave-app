@@ -2,7 +2,7 @@
   <ng-container *ngIf="report">
     <brave-dashboard-enrolled-pure
       [adsData]="adsData"
-      [referral]="referral"
+      [referral]="dashboardService.dashReferral$ | async"
       [rating]="rating"
       [creditMix]="creditMix"
       [creditMixStatus]="creditMixStatus"

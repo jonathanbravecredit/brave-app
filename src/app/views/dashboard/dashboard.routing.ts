@@ -29,6 +29,7 @@ const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    resolve: { dashboard: DashboardResolver },
     canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
