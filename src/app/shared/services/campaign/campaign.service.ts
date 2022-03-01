@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { ICampaign } from '@shared/interfaces/campaign.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { IamService } from '@shared/services/auth/iam.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class CampaignService {
   isActive$ = new BehaviorSubject<boolean>(false);
   isActiveSub$: Subscription | undefined;
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService, private iam: IamService) {
     this.getCampaign().then((campaign) => {
       const isActive = campaign.campaign !== 'NO_CAMPAIGN';
       this.isActive = isActive;
@@ -32,5 +33,11 @@ export class CampaignService {
       Authorization: `${idToken}`,
     });
     return await this.http.get<any>(url, { headers }).toPromise();
+  }
+
+  async getCampaignPublic(): Promise<Response> {
+    const url = `${environment.api}/campaigns/public`;
+    let signedReq = await this.iam.signRequest(url, 'GET', {}, '');
+    return await fetch(signedReq);
   }
 }

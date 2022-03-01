@@ -10,6 +10,7 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { environment } from '@environments/environment';
 import { IamService } from '@shared/services/auth/iam.service';
+import { CampaignService } from '@shared/services/campaign/campaign.service';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -32,11 +33,13 @@ export class SignupComponent implements OnInit {
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
+    private campaign: CampaignService,
     private iam: IamService,
   ) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('referralCode')) {
+          this.checkCampaign();
           this.hasReferralCode = true;
           this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
           this.checkReferralCode();
@@ -46,6 +49,11 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  async checkCampaign() {
+    const res = await this.campaign.getCampaignPublic()
+    console.log('HERE', res)
+  }
 
   async checkReferralCode() {
     let referralValidationRequest = await this.iam.signRequest(
