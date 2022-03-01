@@ -52,6 +52,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   // sub to router
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
+
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
 
@@ -65,14 +66,13 @@ export class DashboardEnrolledComponent implements OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private dashboardService: DashboardService,
+    public dashboardService: DashboardService,
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     private store: Store,
     public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
-    this.subscribeToRouteData();
     this.initiative = progressTracker.initiative;
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
@@ -92,6 +92,15 @@ export class DashboardEnrolledComponent implements OnDestroy {
         if (this.report) {
           this.dashboardService.dashReport$.next(this.report);
           this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
+          const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
+          this.creditMixSummary = this.creditMixService.getTradelineSummary(tradelines);
+          this.creditMix = this.creditMixService.getRecommendations(this.creditMixSummary);
+          this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
+          this.rating = this.creditMixService.getRecommendations(this.creditMixSummary)?.rating;
+          // for the credit utilization
+          const creditUtilSnapshotObj = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
+          this.creditUtilizationStatus = creditUtilSnapshotObj.status;
+          this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
         }
       });
   }
@@ -101,31 +110,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
       this.dashboardService.progressTrackerData$.next(this.initiative);
     }
   }
-
-  subscribeToRouteData(): void {
-    this.routeSub$ = this.route.data.subscribe((resp: any) => {
-      // these are key data sources
-      const { snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
-
-      if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
-      if (trends) this.dashboardService.dashTrends$.next(trends);
-      if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
-
-      // check referral progress if active
-      this.referral = referral;
-      // for the credit mix
-      const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
-      this.creditMixSummary = this.creditMixService.getTradelineSummary(tradelines);
-      this.creditMix = this.creditMixService.getRecommendations(this.creditMixSummary);
-      this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
-      this.rating = this.creditMixService.getRecommendations(this.creditMixSummary)?.rating;
-      // for the credit utilization
-      const creditUtilSnapshotObj = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
-      this.creditUtilizationStatus = creditUtilSnapshotObj.status;
-      this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
-    });
-  }
-
   setAdData(): void {
     this.dashboardService.getAdData().then((resp: any) => {
       this.adsData = shuffle(resp);
