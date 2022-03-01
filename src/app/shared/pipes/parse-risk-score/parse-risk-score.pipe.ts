@@ -13,19 +13,5 @@ export class ParseRiskScorePipe implements PipeTransform {
     const _score = Math.round(score as number);
     if (isNaN(_score)) return -1;
     return _score;
-    // if (creditScore instanceof Array) {
-    // } else {
-    //   const score = creditScore?.riskScore;
-    //   const _score = Math.round(score as number);
-    //   if (isNaN(_score)) return -1;
-    //   return _score;
-    // }
-    // const creditScore = report?.TrueLinkCreditReportType?.Borrower?.CreditScore.find(
-    //   (ele) => ele.scoreName?.toLowerCase() === 'vantagescore3',
-    // );
-    // const score = creditScore?.riskScore;
-    // const _score = Math.round(score as number);
-    // if (isNaN(_score)) return -1;
-    // return _score;
   }
 }
