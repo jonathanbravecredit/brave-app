@@ -1,9 +1,8 @@
 <brave-progress-tracker-pure
-[initiative]="initiative"
-[steps]="(progressTracker.initiativeSteps$ | async) || []"
-[initiativeTasks]="initiativeTasks"
-[goalId]="goalId"
-[enrolledScore]="enrolledScore"
-[enrolledOn]="enrolledOn"
-[futureScore]="futureScore"
+  [initiative]="initiative"
+  [steps]="(initiativeSteps$ | async) || []"
+  [initiativeTasks]="initiativeTasks"
+  [enrolledScore]="enrolledScore"
+  [enrolledOn]="enrolledOn"
+  [futureScore]="futureScore"
 ></brave-progress-tracker-pure>

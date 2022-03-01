@@ -1,4 +1,4 @@
-import { ProgressTrackerStateModel } from "@store/progress-tracker";
+import { ProgressTrackerStateModel } from '@store/progress-tracker/progress-tracker.model';
 
 export class Add {
   static readonly type = '[ProgressTracker] Add';
