@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
-import { Initiative, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
+import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
+
 
 @Component({
   selector: 'brave-progress-tracker-pure',
@@ -9,14 +10,17 @@ import { Initiative, InitiativeTask } from '@shared/interfaces/progress-tracker.
 export class ProgressTrackerPureComponent implements OnInit {
   @Input() initiative: Initiative | null = null;
   @Input() goalId: string = '';
-  @Input() steps: IProgressStep[] = [];
+  @Input() steps: ICircleProgressStep[]  = [];
   @Input() initiativeTasks: InitiativeTask[] = [];
   @Input() futureScore: number = 0;
   @Input() enrolledScore: string | undefined;
   @Input() enrolledOn: string | undefined;
 
+  @Output() updateTask: EventEmitter<InitiativeSubTask | InitiativeTask> = new EventEmitter<
+    InitiativeSubTask | InitiativeTask
+  >();
+
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

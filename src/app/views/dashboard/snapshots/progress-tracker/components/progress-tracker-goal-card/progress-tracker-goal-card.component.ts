@@ -35,6 +35,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
   showQuestion: boolean = false;
+  metric: string = '-';
   link: string | undefined;
   config: IFilledOnlyTextButtonConfig = {
     buttonSize: 'lg',
@@ -56,6 +57,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       this.showQuestion = true;
     }
     this.link = this.subTask?.taskCard.link;
+    this.metric = this.getMetric();
   }
 
   clickYes() {
@@ -86,5 +88,19 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
     } else {
       this.router.navigate([this.link]);
     }
+  }
+
+  getMetric(): string {
+    if (this.subTask?.taskCard.metric) {
+      if (+this.subTask?.taskCard.metric === 0) {
+        return this.subTask?.taskCard.metric;
+      }
+      if (+this.subTask?.taskCard.metric > 0) {
+        return `+${this.subTask?.taskCard.metric}`;
+      } else {
+        return `-${this.subTask?.taskCard.metric}`;
+      }
+    }
+    return '';
   }
 }

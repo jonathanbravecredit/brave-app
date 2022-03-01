@@ -22,9 +22,8 @@ import { Select, Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
 import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
-import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
-import { ProgressTrackerStateModel } from '@store/progress-tracker';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -60,7 +59,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
     ?.enrollVantageScore.serviceProductValue;
   // private initiativeSub$: Subscription | undefined;
-  initiativeSteps: IProgressStep[] = [];
+  initiativeSteps: ICircleProgressStep[] = [];
   futureScore: number = 0;
 
   constructor(
@@ -70,15 +69,14 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     private store: Store,
-    private progressTracker: ProgressTrackerService,
+    public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
     this.subscribeToRouteData();
     this.initiative = progressTracker.initiative;
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
-    this.createSteps();
-    this.findFutureScore();
+    this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
   }
 
   ngOnDestroy(): void {
@@ -101,45 +99,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
   setProgressTrackerDataInDashboardService() {
     if (this.initiative) {
       this.dashboardService.progressTrackerData$.next(this.initiative);
-    }
-  }
-
-  createSteps() {
-    this.initiativeSteps = [];
-    if (this.initiative?.initiativeTasks && this.initiative?.initiativeTasks.length > 1) {
-      this.initiative?.initiativeTasks?.forEach((primaryTask: InitiativeTask, i: number) => {
-        this.initiativeSteps.push({
-          id: i,
-          active: true,
-          complete: primaryTask.taskStatus === 'complete',
-          name: primaryTask.taskLabel,
-        });
-      });
-    } else {
-      if (this.initiative?.initiativeTasks) {
-        this.initiative?.initiativeTasks[0]?.subTasks?.forEach((subTask: InitiativeSubTask, i: number) => {
-          this.initiativeSteps.push({
-            id: i,
-            active: true,
-            complete: subTask.taskStatus === 'complete',
-            name: subTask.taskLabel,
-          });
-        });
-      }
-    }
-  }
-
-  findFutureScore() {
-    this.initiative?.initiativeTasks?.forEach((initiativeTasks: InitiativeTask) => {
-      let res = initiativeTasks.subTasks?.reduce((total: number, subTask: InitiativeSubTask) => {
-        return total + +subTask.taskCard?.metric;
-      }, 0);
-      this.futureScore += res ? res : 0;
-    });
-    if (this.enrolledScore) {
-      this.futureScore += +this.enrolledScore;
-    } else {
-      this.futureScore = 0;
     }
   }
 

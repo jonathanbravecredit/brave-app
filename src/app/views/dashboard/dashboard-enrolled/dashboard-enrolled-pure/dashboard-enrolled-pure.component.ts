@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 import { IProgressStep } from '@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { Initiative } from '@shared/interfaces/progress-tracker.interface';
@@ -24,7 +25,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() creditUtilizationStatus: string | undefined;
   @Input() creditUtilizationPerc: number | undefined;
   @Input() initiative: Initiative | null = null;
-  @Input() initiativeSteps: IProgressStep[] = [];
+  @Input() initiativeSteps: ICircleProgressStep[] = [];
   @Input() futureScore: number = 0;
 
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
