@@ -19,6 +19,7 @@ import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { IReferral } from '@shared/interfaces/referrals.interface';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -39,6 +40,7 @@ export class DashboardService implements OnDestroy {
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
   tuReportSub$: Subscription | undefined;
   // data to pass to child components
+  dashReferral$ = new BehaviorSubject<IReferral | null>(null);
   dashReport$ = new BehaviorSubject<IMergeReport | null>(null);
   dashSnapshots$ = new BehaviorSubject<DashboardStateModel | null>(null);
   dashTrends$ = new BehaviorSubject<IGetTrendingData | null>(null);
