@@ -10,8 +10,6 @@ export class RenderedDirective {
   ngAfterViewInit() {
     const tag = this.el.nativeElement.id || null;
     const el = this.el;
-    console.log('tag: ', tag);
-    console.log('el: ', el);
     this.rendered.track({ tag, el });
   }
 }
