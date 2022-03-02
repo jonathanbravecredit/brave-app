@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit {
   referralCode: string | undefined;
   validReferralCode: boolean = false;
   fetchingFinished: boolean = false;
-  campaignExpired: boolean = false; //true is campaign still active
+  campaignActive: boolean = false; //true is campaign still active
 
   constructor(
     private router: Router,
@@ -54,7 +54,7 @@ export class SignupComponent implements OnInit {
 
   async checkCampaign() {
     const res = await this.campaign.getCampaignPublic();
-    this.campaignExpired = dayjs(res?.endDate).isBefore(new Date()) || res?.campaign === 'NO_CAMPAIGN';
+    this.campaignActive = dayjs(res?.endDate).isAfter(new Date()) && res?.campaign !== 'NO_CAMPAIGN';
   }
 
   async checkReferralCode() {
