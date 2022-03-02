@@ -11,6 +11,7 @@ import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { environment } from '@environments/environment';
 import { IamService } from '@shared/services/auth/iam.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
+import * as dayjs from 'dayjs';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -25,6 +26,7 @@ export class SignupComponent implements OnInit {
   referralCode: string | undefined;
   validReferralCode: boolean = false;
   fetchingFinished: boolean = false;
+  campaignExpired: boolean = false; //true is campaign still active
 
   constructor(
     private router: Router,
@@ -36,7 +38,7 @@ export class SignupComponent implements OnInit {
     private campaign: CampaignService,
     private iam: IamService,
   ) {
-    router.events.subscribe((event) => {
+    router.events.subscribe(async (event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('referralCode')) {
           this.checkCampaign();
@@ -51,8 +53,8 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   async checkCampaign() {
-    const res = await this.campaign.getCampaignPublic()
-    console.log('HERE', res)
+    const res = await this.campaign.getCampaignPublic();
+    this.campaignExpired = dayjs(res?.endDate).isBefore(new Date()) || res?.campaign === 'NO_CAMPAIGN';
   }
 
   async checkReferralCode() {

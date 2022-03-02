@@ -16,7 +16,7 @@
         </div>
 
         <div
-          *ngIf="hasReferralCode"
+          *ngIf="hasReferralCode && !campaignExpired"
           class="my-2 rounded-lg text-center p-4"
           [ngClass]="validReferralCode ? 'bg-teal-100' : 'bg-fuchsia-500'"
         >
@@ -26,9 +26,20 @@
             Take control of your scores & earn a referral bonus for joining with friends!
           </p>
           <p *ngIf="!validReferralCode" class="text-sm text-white">
-            The code you’re using is not valid for any campaign or referral bonuses
+            The code you’re using is not valid for any campaign or referral bonuses.
           </p>
         </div>
+
+        <div
+        *ngIf="hasReferralCode && campaignExpired"
+        class="my-2 rounded-lg text-center p-4"
+        [ngClass]="'bg-fuchsia-500'"
+      >
+        <h3 *ngIf="!validReferralCode" class="mb-2 font-semibold text-sm text-white">Campaign No Longer Active</h3>
+        <p *ngIf="!validReferralCode" class="text-sm text-white">
+          The campaign associated with that referral code has ended, but you can still sign up for Brave Credit.
+        </p>
+      </div>
 
         <!-- <div class="btn-wrapper text-center">
           <div class="mb-1">

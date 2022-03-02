@@ -15,8 +15,8 @@ export class CampaignService {
   isActiveSub$: Subscription | undefined;
 
   constructor(private http: HttpClient, private auth: AuthService, private iam: IamService) {
-    this.getCampaign().then((campaign) => {
-      const isActive = campaign.campaign !== 'NO_CAMPAIGN';
+    this.getCampaignPublic().then((campaign) => {
+      const isActive = campaign?.campaign !== 'NO_CAMPAIGN';
       this.isActive = isActive;
       this.isActive$.next(isActive);
     });
@@ -35,9 +35,14 @@ export class CampaignService {
     return await this.http.get<any>(url, { headers }).toPromise();
   }
 
-  async getCampaignPublic(): Promise<Response> {
-    const url = `${environment.api}/campaigns/public`;
-    let signedReq = await this.iam.signRequest(url, 'GET', {}, '');
-    return await fetch(signedReq);
+  async getCampaignPublic(): Promise<ICampaign | null> {
+    try {
+
+      let signedReq = await this.iam.signRequest(`${environment.api}/campaigns/public`, 'GET', {});
+      let res = await fetch(signedReq);
+      return await res.json()
+    } catch (err) {
+      return null
+    }
   }
 }
