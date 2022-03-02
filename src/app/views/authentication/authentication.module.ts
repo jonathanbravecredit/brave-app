@@ -19,6 +19,7 @@ import { SigninForgotPureComponent } from './signin-forgot/signin-forgot-pure/si
 import { SigninRedirectNewuserComponent } from './signin-redirect-newuser/signin-redirect-newuser/signin-redirect-newuser.component';
 import { SigninRedirectNewuserPureComponent } from './signin-redirect-newuser/signin-redirect-newuser-pure/signin-redirect-newuser-pure.component';
 import { DeactivatedComponent } from './deactivated/deactivated.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const components = [
   AuthenticationComponent,
@@ -42,7 +43,7 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, SharedComponentsModule, AuthenticationRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedDirectivesModule, AuthenticationRoutingModule],
   exports: [...components],
 })
 export class AuthenticationModule {}

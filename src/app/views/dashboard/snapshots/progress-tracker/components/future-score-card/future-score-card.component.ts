@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 
 @Component({
   selector: 'brave-future-score-card',
