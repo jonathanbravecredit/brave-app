@@ -10,16 +10,13 @@ const ComplianceRoutes: Routes = [
   {
     path: '',
     component: ComplianceComponent,
-    canActivate: [IpAddressGuard],
     children: [
       {
         path: `${routes.root.compliance.tos.segment}`,
-        canActivate: [IpAddressGuard],
         component: ComplianceTosComponent,
       },
       {
         path: `${routes.root.compliance.privacy.segment}`,
-        canActivate: [IpAddressGuard],
         component: CompliancePrivacyComponent,
       },
     ],
