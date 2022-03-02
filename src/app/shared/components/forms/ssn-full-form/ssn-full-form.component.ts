@@ -11,7 +11,7 @@ import { HiddenAsteriskInputComponent } from '@shared/components/inputs/hidden-a
 export class SsnFullFormComponent extends BaseFormComponent {
   @ViewChildren(HiddenAsteriskInputComponent)
   hiddenFields: QueryList<HiddenAsteriskInputComponent> | undefined;
-
+  timeoutRef: any;
   childName: string = 'input';
 
   constructor(fb: FormBuilder) {

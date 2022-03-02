@@ -34,7 +34,7 @@ const OnboardingRoutes: Routes = [
       {
         path: `${onboarding.goalChoice.segment}`,
         component: KycGoalChoiceComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${onboarding.name.segment}`,

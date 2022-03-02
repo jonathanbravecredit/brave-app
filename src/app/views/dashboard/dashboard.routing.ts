@@ -36,7 +36,7 @@ const DashboardRoutes: Routes = [
       {
         path: `${dashboard.init.segment}`,
         component: DashboardEnrolledComponent,
-        resolve: { dashboard: DashboardResolver },
+        // resolve: { dashboard: DashboardResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
@@ -101,7 +101,7 @@ const DashboardRoutes: Routes = [
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.progressTracker.segment}`,
         component: ProgressTrackerComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.tradeline.segment}`,
