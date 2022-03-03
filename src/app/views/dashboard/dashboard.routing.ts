@@ -31,7 +31,8 @@ const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+    resolve: { dashboard: DashboardResolver },
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: `${dashboard.init.segment}`,

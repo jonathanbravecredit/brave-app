@@ -15,6 +15,7 @@ import { ProgressTrackerState, ProgressTrackerStateModel } from '@store/progress
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
+import { TransunionInput } from '@shared/services/aws/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,62 +27,58 @@ export class ProgressTrackerService implements OnDestroy {
   initiativeSteps: ICircleProgressStep[] = [];
   initiativeSteps$: BehaviorSubject<ICircleProgressStep[]> = new BehaviorSubject<ICircleProgressStep[]>([]);
 
+  enrolledOn: string | null | undefined;
+  enrolledScore: string | null | undefined;
+
+  storeSub$: Subscription | undefined;
+
   constructor(private http: HttpClient, private auth: AuthService, private store: Store) {
     this.subscribeToProgressTrackerData();
+    this.subscribeToStoreValues();
+  }
+
+  ngOnDestroy(): void {
+    this.initiativeSub$?.unsubscribe();
+    this.storeSub$?.unsubscribe();
+  }
+
+  subscribeToProgressTrackerData(): void {
+    this.initiativeSub$ = this.initiative$.pipe(filter((res) => res !== undefined)).subscribe((res) => {
+      if (res.data) {
+        this.createInitiativeSteps(res.data);
+        this.initiativeSteps$.next(this.initiativeSteps);
+      }
+      this.initiative = res.data;
+    });
+  }
+
+  subscribeToStoreValues(): void {
+    this.storeSub$ = this.store.subscribe((state) => {
+      const tu = state?.appData?.agencies?.transunion as TransunionInput;
+      this.enrolledOn = tu.enrolledOn;
+      this.enrolledScore = tu.enrollVantageScore?.serviceProductValue;
+    });
   }
 
   findFutureScore(): number | undefined {
-    return this.initiative?.initiativeTasks?.reduce((total: number, initiativeTasks: InitiativeTask) => {
-      const subTasks = initiativeTasks.subTasks;
-      if (!subTasks) return total + 0;
+    const tasks = this.initiative?.initiativeTasks || [];
+    return tasks.reduce((acc, item: InitiativeTask) => {
+      if (!item) return acc;
+      const subTasks = item.subTasks;
+      if (!subTasks) return acc;
       return (
-        total +
         subTasks.reduce((a, b) => {
           return b.taskCard.metric ? a + +b.taskCard?.metric : a;
-        }, 0)
+        }, 0) + acc
       );
     }, 0);
   }
 
-  subscribeToProgressTrackerData(): void {
-    this.initiativeSub$ = this.initiative$
-      .pipe(
-        filter((res) => {
-          return res !== undefined;
-        }),
-      )
-      .subscribe((res) => {
-        if (res.data) {
-          this.createInitiativeSteps(res.data);
-          this.initiativeSteps$.next(this.initiativeSteps);
-        }
-        this.initiative = res.data;
-      });
-  }
-
-  createInitiativeSteps(initInitiative: Initiative) {
-    if (initInitiative?.initiativeTasks && initInitiative?.initiativeTasks.length > 1) {
-      this.initiativeSteps = initInitiative?.initiativeTasks?.map((primaryTask: InitiativeTask, i: number) => {
-        return {
-          id: i,
-          stepId: primaryTask.taskId,
-          stepActive: true,
-          stepComplete: primaryTask.taskStatus === 'complete',
-          stepLabel: primaryTask.taskLabel,
-        };
-      });
-    } else {
-      this.initiativeSteps =
-        initInitiative?.initiativeTasks[0].subTasks?.map((subTask: InitiativeSubTask, i: number) => {
-          return {
-            id: i,
-            stepId: subTask.taskId,
-            stepActive: true,
-            stepComplete: subTask.taskStatus === 'complete',
-            stepLabel: subTask.taskLabel,
-          };
-        }) || [];
-    }
+  createInitiativeSteps(initiative: Initiative) {
+    const initTaskLen = initiative?.initiativeTasks?.length || 0;
+    const tasks = initiative?.initiativeTasks || [];
+    const subTasks = initiative?.initiativeTasks[0].subTasks || [];
+    this.initiativeSteps = initTaskLen > 1 ? tasks.map(mapTask) : subTasks.map(mapTask);
   }
 
   updateSteps(task: InitiativeSubTask | InitiativeTask): void {
@@ -90,10 +87,6 @@ export class ProgressTrackerService implements OnDestroy {
         step.stepComplete = task.taskStatus === 'complete';
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.initiativeSub$?.unsubscribe();
   }
 
   updateProgressTrackerState(progressTrackerData: Initiative) {
@@ -143,3 +136,14 @@ export class ProgressTrackerService implements OnDestroy {
     return await this.http.post<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise();
   }
 }
+
+const mapTask = (task: InitiativeTask | InitiativeSubTask, i: number) => {
+  const { taskId, taskStatus, taskLabel } = task;
+  return {
+    id: i,
+    stepId: taskId,
+    stepActive: true,
+    stepComplete: taskStatus === 'complete',
+    stepLabel: taskLabel,
+  };
+};

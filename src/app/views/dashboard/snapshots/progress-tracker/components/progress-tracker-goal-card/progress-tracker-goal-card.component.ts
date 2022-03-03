@@ -10,20 +10,8 @@ import { Router } from '@angular/router';
   templateUrl: './progress-tracker-goal-card.component.html',
   animations: [
     trigger('openClose', [
-      state(
-        'closed',
-        style({
-          // transform: 'translateY(-100%)',
-          height: '0',
-        }),
-      ),
-      state(
-        'open',
-        style({
-          // transform: 'translateY(0%)',
-          height: '*',
-        }),
-      ),
+      state('closed', style({ height: '0' })),
+      state('open', style({ height: '*' })),
       transition('closed => open', [animate('0.3s linear')]),
       transition('open => closed', [animate('0.3s linear')]),
     ]),
@@ -61,11 +49,11 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   }
 
   clickYes() {
-    this.taskCompleted = true;
     if (this.patchBody) {
       this.patchBody.taskStatus = 'complete';
       this.progressTrackerService.updateProgressTrackerData(this.patchBody);
     }
+    this.taskCompleted = true;
     this.showQuestion = false;
   }
 

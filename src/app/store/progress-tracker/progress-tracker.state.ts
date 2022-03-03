@@ -1,12 +1,12 @@
 import { State, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import * as ProgressTrackerActions from './progress-tracker.actions';
-import { ProgressTrackerStateModel } from '@store/progress-tracker';
+import { ProgressTrackerStateModel } from '@store/progress-tracker/progress-tracker.model';
 
 @State<ProgressTrackerStateModel>({
   name: 'ProgressTracker',
   defaults: {
-    data: null
+    data: null,
   },
 })
 @Injectable()
@@ -21,7 +21,10 @@ export class ProgressTrackerState {
   }
 
   @Action(ProgressTrackerActions.Update)
-  updateProgressTracker(ctx: StateContext<ProgressTrackerStateModel>, { payload }: ProgressTrackerActions.Update): void {
+  updateProgressTracker(
+    ctx: StateContext<ProgressTrackerStateModel>,
+    { payload }: ProgressTrackerActions.Update,
+  ): void {
     ctx.patchState({
       ...payload,
     });

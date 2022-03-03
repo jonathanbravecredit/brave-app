@@ -1,5 +1,6 @@
 import { Selector } from '@ngxs/store';
-import { ProgressTrackerState, ProgressTrackerStateModel } from '@store/progress-tracker';
+import { ProgressTrackerStateModel } from '@store/progress-tracker/progress-tracker.model';
+import { ProgressTrackerState } from '@store/progress-tracker/progress-tracker.state';
 
 export class ProgressTrackerSelectors {
   @Selector([ProgressTrackerState])
