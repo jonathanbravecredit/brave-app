@@ -48,7 +48,7 @@ describe('ProgressTrackerComponent', () => {
   it('should set futureScore to 0 if FindFutureScore and enrolledScore are falsy', () => {
     progressTrackerMock.findFutureScore.and.returnValue(undefined);
 
-    component.enrolledScore = undefined;
+    Object.defineProperties(component, {enrolledScore: {value: undefined}})
 
     component.ngOnInit();
 
@@ -58,7 +58,7 @@ describe('ProgressTrackerComponent', () => {
   it('should set futureScore to 123 if FindFutureScore returns 123 and enrolledScore is falsy', () => {
     progressTrackerMock.findFutureScore.and.returnValue(123);
 
-    component.enrolledScore = undefined;
+    Object.defineProperties(component, {enrolledScore: {value: undefined}})
 
     component.ngOnInit();
 
@@ -68,7 +68,7 @@ describe('ProgressTrackerComponent', () => {
   it('should set futureScore to 50 if FindFutureScore returns 25 and enrolledScore is 25', () => {
     progressTrackerMock.findFutureScore.and.returnValue(25);
 
-    component.enrolledScore = '25';
+    Object.defineProperties(component, {enrolledScore: {value: '25'}})
 
     component.ngOnInit();
 
