@@ -15,19 +15,19 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let dashboardServiceMock: any;
   let routeMock: any;
-  class RouterMock {
-    events = of();
-  }
+  let routerMock: any;
+
 
   beforeEach(async () => {
     dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['isCreditFreezeEnabled']);
-    routeMock = jasmine.createSpyObj('ActivatedRoute', ['navigate']);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', [''], {data: of()});
+    routerMock = jasmine.createSpyObj('Router', ['navigate'], {events: of()});
     await TestBed.configureTestingModule({
       declarations: [DashboardComponent],
       providers: [
         { provide: DashboardService, useValue: dashboardServiceMock },
         { provide: ActivatedRoute, useValue: routeMock },
-        { provide: Router, useClass: RouterMock },
+        { provide: Router, useValue: routerMock },
       ],
     }).compileComponents();
   });

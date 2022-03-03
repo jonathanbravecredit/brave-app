@@ -7,6 +7,7 @@ export interface IGoalInfo {
   programId: string;
   reason: string;
   header: string;
+  iconLink: string;
 }
 
 @Component({
@@ -15,8 +16,8 @@ export interface IGoalInfo {
 })
 export class KycGoalChoiceComponent implements OnInit {
   goalItems: IGoalInfo[] = [
-    { programId: '1', reason: 'buy_house', header: 'Buy a house' },
-    { programId: '1', reason: 'credit_card', header: 'Get a credit card' },
+    { programId: '1', reason: 'buy_house', header: 'Buy a house', iconLink: 'https://d3e1i93f88eoxl.cloudfront.net/small-house-icon.svg' },
+    { programId: '1', reason: 'credit_card', header: 'Get a credit card', iconLink: 'https://d3e1i93f88eoxl.cloudfront.net/small-credit-card-icon.svg' },
   ];
 
   constructor(private progressTrackerService: ProgressTrackerService, private router: Router) {}
