@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() subTask: InitiativeSubTask | undefined;
   @Input() taskCompleted: boolean = false;
+  @Input() hasSelfLoan: boolean = false;
   patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
   showQuestion: boolean = false;
@@ -36,6 +37,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   constructor(private progressTrackerService: ProgressTrackerService, private router: Router) {}
 
   ngOnInit(): void {
+    console.log('HERE', this.subTask?.taskId)
     this.patchBody = {
       parentId: this.subTask?.parentId,
       taskId: this.subTask?.taskId,

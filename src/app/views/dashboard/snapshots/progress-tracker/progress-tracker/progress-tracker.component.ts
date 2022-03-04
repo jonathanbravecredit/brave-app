@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 import { Initiative, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
@@ -13,8 +12,9 @@ export class ProgressTrackerComponent implements OnInit {
   futureScore: number = 0;
   initiative: Initiative | null = null;
   initiativeTasks: InitiativeTask[] = [];
+  hasSelfLoan: boolean = false;
 
-  constructor(public progressTracker: ProgressTrackerService, private store: Store) {
+  constructor(public progressTracker: ProgressTrackerService) {
     this.initiative = progressTracker.initiative;
   }
 

@@ -16,6 +16,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 import { TransunionInput } from '@shared/services/aws/api.service';
+import { IMergeReport, ISubscriber } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -29,12 +30,10 @@ export class ProgressTrackerService implements OnDestroy {
 
   enrolledOn: string | null | undefined;
   enrolledScore: string | null | undefined;
-
   storeSub$: Subscription | undefined;
 
   constructor(private http: HttpClient, private auth: AuthService, private store: Store) {
-    this.subscribeToProgressTrackerData();
-    this.subscribeToStoreValues();
+
   }
 
   ngOnDestroy(): void {
@@ -52,13 +51,14 @@ export class ProgressTrackerService implements OnDestroy {
     });
   }
 
-  subscribeToStoreValues(): void {
-    this.storeSub$ = this.store.subscribe((state) => {
-      const tu = state?.appData?.agencies?.transunion as TransunionInput;
-      this.enrolledOn = tu.enrolledOn;
-      this.enrolledScore = tu.enrollVantageScore?.serviceProductValue;
-    });
-  }
+  // subscribeToStoreValues(): void {
+  //   this.storeSub$ = this.store.subscribe((state) => {
+  //     const tu = state?.appData?.agencies?.transunion as TransunionInput;
+  //     this.enrolledOn = tu.enrolledOn;
+  //     this.enrolledScore = tu.enrollVantageScore?.serviceProductValue;
+  //     this.hasSelfLoan = this.hasSelfLoans(state.CreditReport.report);
+  //   });
+  // }
 
   findFutureScore(): number | undefined {
     const tasks = this.initiative?.initiativeTasks || [];
@@ -91,6 +91,43 @@ export class ProgressTrackerService implements OnDestroy {
 
   updateProgressTrackerState(progressTrackerData: Initiative) {
     this.store.dispatch(new ProgressTrackerActions.Add({ data: progressTrackerData }));
+  }
+
+  hasSelfLoans(report: IMergeReport | null): boolean {
+    return !!report?.TrueLinkCreditReportType.Subscriber?.find((s) => {
+      const name = s.name?.toLowerCase();
+      if (!name) return;
+      let found = false;
+      switch (name) {
+        case 'sbnaselflndr':
+          found = true;
+          break;
+        case 'ftself lender inc.':
+          found = true;
+          break;
+        case 'lead bank':
+          found = true;
+          break;
+        case 'sf lead bank':
+          found = true;
+          break;
+        case 'sf/lead bank':
+          found = true;
+          break;
+        case 'atlantic cap bkselflendr':
+          found = true;
+          break;
+        case 'atlantic capital bank self':
+          found = true;
+          break;
+        case 'sbna self':
+          found = true;
+          break;
+        default:
+          break;
+      }
+      return found;
+    });
   }
 
   async getProgressTrackerData(): Promise<Initiative | null> {

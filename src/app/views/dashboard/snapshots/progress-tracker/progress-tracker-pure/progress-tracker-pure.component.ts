@@ -14,6 +14,7 @@ export class ProgressTrackerPureComponent implements OnInit {
   @Input() futureScore: number = 0;
   @Input() enrolledScore: string | null | undefined;
   @Input() enrolledOn: string | null | undefined;
+  @Input() hasSelfLoan: boolean = false
 
   @Output() updateTask: EventEmitter<InitiativeSubTask | InitiativeTask> = new EventEmitter<
     InitiativeSubTask | InitiativeTask
