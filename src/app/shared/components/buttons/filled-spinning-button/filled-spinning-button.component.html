@@ -10,12 +10,12 @@
     #content
     *ngIf="!(spinning && clicked); else spinner"
     style="min-width: 8rem"
-    class="flex justify-center text-center items-center align-center whitespace-nowrap"
+    class="h-7 flex justify-center text-center items-center align-center whitespace-nowrap"
   >
     <ng-content></ng-content>
   </div>
   <ng-template #spinner>
-    <div style="min-width: 8rem" class="h-7 -my-1 flex flex-col justify-center text-center items-center align-center">
+    <div style="min-width: 8rem" class="h-7 flex flex-col justify-center text-center items-center align-center">
       <svg
         class="animate-spin stroke-1 h-full text-white"
         xmlns="http://www.w3.org/2000/svg"

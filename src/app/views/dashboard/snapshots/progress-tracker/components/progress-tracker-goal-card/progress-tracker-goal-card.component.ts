@@ -44,7 +44,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
     if (!this.taskCompleted && this.subTask?.taskCard?.questionHeader && !this.showQuestion) {
       this.showQuestion = true;
     }
-    this.link = this.subTask?.taskCard.link;
+    this.link = this.subTask?.taskCard?.link;
     this.metric = this.getMetric();
   }
 
@@ -79,14 +79,14 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   }
 
   getMetric(): string {
-    if (this.subTask?.taskCard.metric) {
-      if (+this.subTask?.taskCard.metric === 0) {
-        return this.subTask?.taskCard.metric;
+    if (this.subTask?.taskCard?.metric) {
+      if (+this.subTask?.taskCard?.metric === 0) {
+        return this.subTask?.taskCard?.metric;
       }
-      if (+this.subTask?.taskCard.metric > 0) {
-        return `+${this.subTask?.taskCard.metric}`;
+      if (+this.subTask?.taskCard?.metric > 0) {
+        return `+${this.subTask?.taskCard?.metric}`;
       } else {
-        return `-${this.subTask?.taskCard.metric}`;
+        return `-${this.subTask?.taskCard?.metric}`;
       }
     }
     return '';
