@@ -7,6 +7,8 @@ import * as dayjs from 'dayjs';
 })
 export class FutureScoreCardComponent implements OnInit {
   @Input() futureScore: number = 0;
+  @Input() dashScore: number | null = 0;
+  @Input() dashDelta: number | null = 0;
   @Input() enrolledScore: string | null | undefined = '0';
   @Input() enrolledOn: string | null | undefined;
   scoreReview: string = '';

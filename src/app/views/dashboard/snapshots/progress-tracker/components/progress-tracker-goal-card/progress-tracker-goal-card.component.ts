@@ -37,7 +37,6 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   constructor(private progressTrackerService: ProgressTrackerService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('HERE', this.subTask?.taskId)
     this.patchBody = {
       parentId: this.subTask?.parentId,
       taskId: this.subTask?.taskId,

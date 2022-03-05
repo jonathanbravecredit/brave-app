@@ -1,24 +1,69 @@
-<div class="flex justify-center items-center flex-col mt-6 rounded-lg p-4 bg-blue-300 text-white">
-  <h1 class="text-2xl font-semibold font-headings">Your FutureScore:</h1>
-  <p class="text-5xl mt-2 font-headings">{{ futureScore }}</p>
-  <p>{{ scoreReview }}</p>
-  <div class="flex mt-2 items-center">
-    <span
-      class="text-4xl material-icons align-bottom transform mr-4 mt-1"
-      [ngClass]="
-        pointsDiff && pointsDiff !== 0
-          ? pointsDiff < 0
-            ? 'rotate-90 text-red-500'
-            : '-rotate-90 text-emerald-600'
-          : ''
-      "
-    >
-      play_arrow
-    </span>
-    <div class="text-2xl font-semibold">
-      <span>{{ pointsDiff > 0 ? '+' : '' }}{{ pointsDiff }}</span>
-      points*
+<div class="flex justify-center items-center flex-col mt-6 rounded-lg p-4 bg-blue-300">
+  <div class="flex justify-between">
+    <div class="flex items-center flex-col mr-2" style="max-width: 50%">
+      <h1 class="text-2xl text-center">Your Current Score:</h1>
+      <p class="text-5xl mt-4 font-headings">{{ dashScore }}</p>
+      <p>{{ scoreReview }}</p>
+      <div class="flex mt-2 items-center">
+        <span
+          class="text-2xl material-icons align-bottom transform mr-2 mt-1"
+          [ngClass]="
+            dashDelta && dashDelta !== 0
+              ? dashDelta < 0
+                ? 'rotate-90 text-red-500'
+                : '-rotate-90 text-emerald-600'
+              : ''
+          "
+        >
+          play_arrow
+        </span>
+        <div class="text-1xl text-white">
+          <span>{{ dashDelta && dashDelta > 0 ? '+' : '' }}{{ dashDelta }}</span>
+          points*
+        </div>
+      </div>
+      <p class="text-sm text-center">
+        <span *ngIf="dashDelta && dashDelta > 0"
+          >Your score has improved {{ dashDelta }} points since the last update. Keep up the good work!</span
+        >
+        <span *ngIf="dashDelta === 0"
+          >Your score has not changed since the last update. Having a variety of accounts can help you grow your
+          score!</span
+        >
+        <span *ngIf="dashDelta && dashDelta < 0"
+          >Your score has decreased {{ dashDelta }} points. Making on-time payments is the biggest way to get back on
+          track.</span
+        >
+      </p>
+    </div>
+
+    <div class="flex text-white items-center flex-col ml-2" style="max-width: 50%">
+      <h1 class="text-2xl text-center">Your FutureScore Goal:</h1>
+      <p class="text-5xl mt-4 font-headings">{{ futureScore }}</p>
+      <p>{{ scoreReview }}</p>
+      <div class="flex mt-2 items-center">
+        <span
+          class="text-2xl material-icons align-bottom transform mr-4 mt-1"
+          [ngClass]="
+            pointsDiff && pointsDiff !== 0
+              ? pointsDiff < 0
+                ? 'rotate-90 text-red-500'
+                : '-rotate-90 text-emerald-600'
+              : ''
+          "
+        >
+          play_arrow
+        </span>
+        <div class="text-1xl">
+          <span>{{ pointsDiff > 0 ? '+' : '' }}{{ pointsDiff }}</span>
+          points*
+        </div>
+      </div>
+      <p class="text-sm text-center">
+        Follow our suggestions below and make on-time payments to your current accounts to reach your goal!
+      </p>
     </div>
   </div>
-  <p class="text-xs">Based on initial {{ monthYear }} score of {{ enrolledScore }}</p>
+
+  <!-- <p class="text-xs">Based on initial {{ monthYear }} score of {{ enrolledScore }}</p> -->
 </div>

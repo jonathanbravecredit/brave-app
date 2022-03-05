@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KycGoalChoicePureComponent } from './kyc-goal-choice-pure.component';
+import { GoalChoiceParentComponent } from './goal-choice-parent.component';
 
-describe('KycGoalChoicePureComponent', () => {
-  let component: KycGoalChoicePureComponent;
-  let fixture: ComponentFixture<KycGoalChoicePureComponent>;
+describe('GoalChoiceParentComponent', () => {
+  let component: GoalChoiceParentComponent;
+  let fixture: ComponentFixture<GoalChoiceParentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KycGoalChoicePureComponent ]
+      declarations: [ GoalChoiceParentComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KycGoalChoicePureComponent);
+    fixture = TestBed.createComponent(GoalChoiceParentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

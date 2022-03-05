@@ -57,6 +57,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
   private reportSub$: Subscription | undefined;
 
   initiative: Initiative | null = null;
+  initiative$: Subscription | undefined;
+
   enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
     ?.enrollVantageScore.serviceProductValue;
   // private initiativeSub$: Subscription | undefined;
@@ -73,7 +75,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
     public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
-    this.initiative = progressTracker.initiative;
+    this.initiative$ = progressTracker.initiative$.subscribe((v) => {
+      this.initiative = v.data;
+    });
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
     this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
@@ -82,6 +86,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
+    this.initiative$?.unsubscribe();
   }
 
   subscribeToReportData(): void {
