@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
+const dayjs = require('dayjs');
 import { Hub } from '@aws-amplify/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -64,7 +64,7 @@ export class SessionService {
     try {
       const lastSession = (await this.getLastestSession())[0];
       if (lastSession) {
-        const expired = moment(new Date()).isAfter(lastSession.sessionExpirationDate);
+        const expired = dayjs(new Date()).isAfter(lastSession.sessionExpirationDate);
         expired ? this.settingHelper() : this.sessionData$.next(lastSession);
       } else {
         this.settingHelper();

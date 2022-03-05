@@ -22,7 +22,6 @@ const routes: Routes = [
   },
   {
     path: 'legal',
-    canActivate: [IpAddressGuard],
     loadChildren: () => import('./views/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
   {
