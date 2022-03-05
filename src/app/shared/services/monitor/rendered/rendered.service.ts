@@ -12,9 +12,8 @@ export enum RenderedViews {
 @Injectable({
   providedIn: 'root',
 })
-export class RenderedService implements OnDestroy {
+export class RenderedService {
   tracker: Set<string> = new Set();
-  appSub$: Subscription | undefined;
   checked: boolean = false;
 
   constructor(private zone: NgZone) {
@@ -24,10 +23,6 @@ export class RenderedService implements OnDestroy {
     this.zone.onMicrotaskEmpty.subscribe((val) => {
       if (!this.checked) this.checkStatus();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.appSub$?.unsubscribe();
   }
 
   track({ tag, el }: { tag: RenderedViews | null; el: any }) {
