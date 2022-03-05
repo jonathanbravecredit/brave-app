@@ -1,6 +1,6 @@
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import * as _ from 'lodash';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';

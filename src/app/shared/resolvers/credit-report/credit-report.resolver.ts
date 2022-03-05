@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 import * as CreditReportActions from '@store/credit-report/credit-report.actions';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';

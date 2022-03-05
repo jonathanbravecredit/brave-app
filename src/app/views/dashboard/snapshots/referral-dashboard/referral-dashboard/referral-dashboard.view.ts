@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@shared/interfaces/campaign.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment';
+const dayjs = require('dayjs');
 
 @Component({
   selector: 'brave-referral-dashboard',
@@ -24,7 +24,7 @@ export class ReferralDashboardView implements OnInit, OnDestroy {
       this.referral = resp.referral.referral;
       this.payments = resp.referral.payments;
       this.campaign = resp.referral.campaign;
-      this.disabled = moment(now).isAfter(this.campaign?.endDate);
+      this.disabled = dayjs(now).isAfter(this.campaign?.endDate);
     });
   }
 
