@@ -77,16 +77,20 @@ export class DashboardEnrolledComponent implements OnDestroy {
     this.subscribeToReportData();
     this.initiative$ = progressTracker.initiative$.subscribe((v) => {
       this.initiative = v.data;
+      this.refreshFutureScore();
     });
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
-    this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
     this.initiative$?.unsubscribe();
+  }
+
+  refreshFutureScore() {
+    this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
   }
 
   subscribeToReportData(): void {

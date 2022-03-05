@@ -179,6 +179,13 @@
       </div>
     </div>
   </ng-container>
+
+  <brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative && data.dashScore && data.dashScore <= 675">
+    <div class="w-full max-w-xs p-6">
+      <brave-goal-choice-header></brave-goal-choice-header>
+      <brave-goal-choice-parent [getInitiative]="true" (goalClick)="toggleGoalChoiceModel()"></brave-goal-choice-parent>
+    </div>
+  </brave-base-modal>
 </ng-container>
 
 <ng-template #noCreditData>
@@ -186,10 +193,3 @@
     <p>We are having difficulty displaying your report. Please try again at a later time.</p>
   </div>
 </ng-template>
-
-<brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative">
-  <div class="w-full max-w-xs p-6">
-    <brave-goal-choice-header></brave-goal-choice-header>
-      <brave-goal-choice-parent [getInitiative]="true" (goalClick)="toggleGoalChoiceModel()"></brave-goal-choice-parent>
-  </div>
-</brave-base-modal>
