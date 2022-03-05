@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
+import { RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -12,8 +12,9 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   securityFreeze$: Observable<boolean>;
-  showBack: boolean = false;
   routeSub$: Subscription | undefined;
+  showBack: boolean = false;
+  public tag = RenderedViews.Dashboard;
   constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute) {
     this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();

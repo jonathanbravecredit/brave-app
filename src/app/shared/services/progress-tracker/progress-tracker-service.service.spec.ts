@@ -14,7 +14,7 @@ describe('ProgressTrackerServiceService', () => {
   let authMock: any
 
   beforeEach(() => {
-    storeMock = jasmine.createSpyObj('Store', [''])
+    storeMock = jasmine.createSpyObj('Store', ['subscribe'])
     authMock = jasmine.createSpyObj('AuthService', [''])
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

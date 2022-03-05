@@ -2,6 +2,7 @@
   <brave-kyc-welcome-pure
     (formSubmit)="goToNext($event)"
     (formError)="handleError($event)"
+    (backClick)="goBack()"
     [hasError]="hasError"
   ></brave-kyc-welcome-pure>
 </div>

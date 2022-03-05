@@ -1,14 +1,14 @@
-<div>
-  <div *ngIf="onboarding$ | async as data" class="container mx-auto max-w-xs h-full">
-    <brave-filled-checktext-progressbar
-      [steps]="steps"
-      [activatedStep]="data.lastActive"
-      [completedStep]="data.lastComplete"
-    ></brave-filled-checktext-progressbar>
-  </div>
-  <main>
-    <section class="relative w-full h-full min-h-screen p-2">
-      <router-outlet></router-outlet>
-    </section>
-  </main>
+<div braveRendered [id]="tag">
+  <section>
+    <div *ngIf="onboarding$ | async as data" class="container mx-auto max-w-xs h-full">
+      <brave-filled-checktext-progressbar
+        [steps]="steps"
+        [activatedStep]="data.lastActive"
+        [completedStep]="data.lastComplete"
+      ></brave-filled-checktext-progressbar>
+    </div>
+  </section>
+  <section class="relative w-full h-full min-h-screen p-2">
+    <router-outlet></router-outlet>
+  </section>
 </div>

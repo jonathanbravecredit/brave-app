@@ -13,67 +13,54 @@ import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/s
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
 import { DeactivatedComponent } from '@views/authentication/deactivated/deactivated.component';
 import { ROUTE_NAMES as routes } from '../../shared/routes/routes.names';
-import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
 
 const AuthenticationRoutes: Routes = [
   {
     path: '',
-    canActivate: [IpAddressGuard],
     component: AuthenticationComponent,
     children: [
       {
         path: `${routes.root.auth.signup.segment}`,
-        canActivate: [IpAddressGuard],
         component: SignupComponent,
       },
       {
         path: `${routes.root.auth.signin.segment}`,
-        canActivate: [IpAddressGuard],
         component: SigninComponent,
       },
       {
         path: `${routes.root.auth.forgot.segment}`,
-        canActivate: [IpAddressGuard],
         component: SigninForgotComponent,
       },
       {
         path: `${routes.root.auth.redirect.segment}`,
-        canActivate: [IpAddressGuard],
         component: SigninRedirectComponent,
       },
       {
         path: `${routes.root.auth.created.segment}`,
-        canActivate: [IpAddressGuard],
         component: SigninRedirectNewuserComponent,
       },
       {
         path: `${routes.root.auth.thankyou.segment}`,
-        canActivate: [IpAddressGuard],
         component: SignupThankyouComponent,
       },
       {
         path: `${routes.root.auth.name.segment}`,
-        canActivate: [IpAddressGuard],
         component: SignupKnowyouComponent,
       },
       {
         path: `${routes.root.auth.error.segment}`,
-        canActivate: [IpAddressGuard],
         component: SignupErrorComponent,
       },
       {
         path: `${routes.root.auth.invalid.segment}`,
-        canActivate: [IpAddressGuard],
         component: SignupErrorValidationComponent,
       },
       {
         path: `${routes.root.auth.resend.segment}`,
-        canActivate: [IpAddressGuard],
         component: SignupResendComponent,
       },
       {
         path: `${routes.root.auth.deactivated.segment}`,
-        canActivate: [IpAddressGuard],
         component: DeactivatedComponent,
       },
       {

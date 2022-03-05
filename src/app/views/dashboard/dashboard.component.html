@@ -1,18 +1,20 @@
-<brave-simple-banner></brave-simple-banner>
-<brave-security-freeze *ngIf="securityFreeze$ | async as securityFreeze"></brave-security-freeze>
-<div class="mt-2">
-  <ng-container *ngIf="showBack; else spacer">
-    <brave-simple-back-button>Back</brave-simple-back-button>
-  </ng-container>
-  <ng-template #spacer>
-    <div class="h-6">&nbsp;</div>
-  </ng-template>
-</div>
-<main>
+<div braveRendered [id]="tag">
+  <brave-simple-banner></brave-simple-banner>
+  <brave-security-freeze *ngIf="securityFreeze$ | async as securityFreeze"></brave-security-freeze>
+  <section>
+    <div class="mt-2">
+      <ng-container *ngIf="showBack; else spacer">
+        <brave-simple-back-button>Back</brave-simple-back-button>
+      </ng-container>
+      <ng-template #spacer>
+        <div class="h-6">&nbsp;</div>
+      </ng-template>
+    </div>
+  </section>
   <section class="relative flex flex-col justify-start items-center w-full h-full min-h-screen min-w-screen">
     <div class="container max-w-screen sm:max-w-screen md:max-w-md" style="min-width: 320px">
       <router-outlet></router-outlet>
     </div>
   </section>
-</main>
-<brave-bottom-navbar (navigationTo)="goToLink($event)"></brave-bottom-navbar>
+  <brave-bottom-navbar (navigationTo)="goToLink($event)"></brave-bottom-navbar>
+</div>
