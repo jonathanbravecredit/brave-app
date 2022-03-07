@@ -23,7 +23,7 @@ describe('DisputesOverviewInitialView', () => {
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj('', ['navigate']);
-    interstitialMock = jasmine.createSpyObj('', ['openInterstitial', 'closeInterstitial']);
+    interstitialMock = jasmine.createSpyObj('', ['openInterstitial', 'closeInterstitial', 'changeMessage']);
     disputeServiceMock = jasmine.createSpyObj('', [''], {
       currentDispute$: new BehaviorSubject<IDispute>({} as IDispute),
     });
@@ -68,9 +68,9 @@ describe('DisputesOverviewInitialView', () => {
   // }); //todo figure out how to fix this
 
   it('should run interstitial.openInterstitial if dispute.disputeStatus does not match', () => {
-    component.onViewDetailsClick(({
+    component.onViewDetailsClick({
       dispute: { disputeId: 1, disputeStatus: 'test' },
-    } as unknown) as IDisputeHistorical);
+    } as unknown as IDisputeHistorical);
 
     expect(interstitialMock.openInterstitial).toHaveBeenCalled();
   });
@@ -78,9 +78,9 @@ describe('DisputesOverviewInitialView', () => {
   it('should run getInvestigationResults if dispute.disputeStatus does not matches', fakeAsync(() => {
     transunionMock.getInvestigationResults.and.returnValue({ success: true, error: '', data: '' });
 
-    component.onViewDetailsClick(({
+    component.onViewDetailsClick({
       dispute: { disputeId: 1, disputeStatus: 'completedispute' },
-    } as unknown) as IDisputeHistorical);
+    } as unknown as IDisputeHistorical);
 
     tick();
 
@@ -90,9 +90,9 @@ describe('DisputesOverviewInitialView', () => {
   it('should run router.navigate if unsucessful resp from getInvestigationResults', fakeAsync(() => {
     transunionMock.getInvestigationResults.and.returnValue({ success: false, error: '', data: '' });
 
-    component.onViewDetailsClick(({
+    component.onViewDetailsClick({
       dispute: { disputeId: 1, disputeStatus: 'completedispute' },
-    } as unknown) as IDisputeHistorical);
+    } as unknown as IDisputeHistorical);
 
     tick();
 
