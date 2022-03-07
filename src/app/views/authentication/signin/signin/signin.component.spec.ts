@@ -6,13 +6,15 @@ import { SigninComponent } from './signin.component';
 import { ISignInCognitoUser } from './interfaces';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedServicesModule } from '@shared/services/shared-services.module';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 //    private route: ActivatedRoute,
 // private analytics: AnalyticsService,
+//    private auth: AuthService,
+// private interstitial: InterstitialService,
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -27,7 +29,9 @@ describe('SigninComponent', () => {
 
   beforeEach(async () => {
     authServiceMock = jasmine.createSpyObj('AuthService', ['signIn', 'socialSignIn']);
-    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', ['fetching$']);
+    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', [''], {
+      fetching$: new BehaviorSubject<boolean>(false),
+    });
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
     analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
 
