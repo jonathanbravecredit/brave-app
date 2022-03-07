@@ -11,7 +11,7 @@ import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { environment } from '@environments/environment';
 import { IamService } from '@shared/services/auth/iam.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 
 export type SignupState = 'init' | 'invalid';
 

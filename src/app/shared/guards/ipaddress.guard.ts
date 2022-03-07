@@ -15,7 +15,12 @@ export class IpAddressGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.resolver()
       .then((res) => {
-        return res;
+        if (!res) {
+          this.router.navigate([routes.root.suspended.unauthorized.full]);
+          return false;
+        } else {
+          return res;
+        }
       })
       .catch((err) => {
         this.router.navigate([routes.root.suspended.unauthorized.full]);
