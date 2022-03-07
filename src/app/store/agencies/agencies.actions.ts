@@ -21,6 +21,14 @@ export class EditTransunion {
   constructor(public payload: TransunionInput | Partial<TransunionInput>) {}
 }
 
+export class EditAcknowledgeDisputeTerms {
+  static readonly type = '[Agencies] EditAcknowledgeDisputeTerms'
+  constructor(public payload: TransunionInput | {
+    acknowledgedDisputeTerms: boolean;
+    acknowledgedDisputeTermsOn: string;
+  }) {}
+}
+
 export class IncrementTransunionAuthAttempts {
   static readonly type = '[Agencies] IncrementTransunionAuthAttempts';
   constructor() {}
