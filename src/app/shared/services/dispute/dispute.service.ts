@@ -188,9 +188,12 @@ export class DisputeService implements OnDestroy {
     try {
       // acknowledge the user has read and accepted the terms
       // you have to acknowledge in order to get to this point
-      await this.acknowledgeDisputeTerms(this.state);
+      if (!this.acknowledged) {
+        await this.acknowledgeDisputeTerms();
+        this.acknowledged = true;
+      }
       const preflight = await this.sendDisputePreflightCheck();
-      if (preflight.success) {
+      if (preflight?.success) {
         this.analytics.fireClickEvent(AnalyticClickEvents.DisputeEnrollment, {
           google: true,
           mixpanel: true,
@@ -205,24 +208,27 @@ export class DisputeService implements OnDestroy {
   }
   /**
    * Updates the state and db to reflect the users acknowledgement
+   * - do not need to sync back to db as already in sync
    * @param state
    */
-  async acknowledgeDisputeTerms(state: AppDataStateModel): Promise<void> {
-    const date = new Date().toISOString();
-    const acknowledged = {
-      ...state.agencies,
-      transunion: {
-        ...state.agencies?.transunion,
-        acknowledgedDisputeTerms: true,
-        acknowledgedDisputeTermsOn: date,
-      },
-    } as AgenciesStateModel;
-    await this.statesvc.updateAgenciesAsync(acknowledged);
+  async acknowledgeDisputeTerms(): Promise<ITUServiceResponse<null | undefined>> {
+    try {
+      const results = await this.transunion.sendTransunionAPICall<null>('AcknowledgeDisputeTerms', JSON.stringify({}));
+      if (results.success) {
+        await this.statesvc.updateAcknowledgeDisputeTerms({
+          acknowledgedDisputeTerms: true,
+          acknowledgedDisputeTermsOn: new Date().toISOString(),
+        });
+      }
+      return results;
+    } catch (err) {
+      return { success: false, error: err as IErrorResponse, data: null };
+    }
   }
 
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
     const res = await this.transunion.sendDisputePreflightCheck();
-    if (!res.data || !res.data.report) return res;
+    if (!res || !res?.data || !res?.data?.report) return { success: false };
     await this.creditReportService.updateCreditReportStateAsync(res.data.report);
     return res;
   }
