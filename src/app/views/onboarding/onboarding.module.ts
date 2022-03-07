@@ -76,7 +76,7 @@ const services = [OnboardingService];
 
 @NgModule({
   declarations: [...components, ...pipes],
-  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, SharedDirectivesModule, OnboardingRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, OnboardingRoutingModule],
   exports: [...components, ...pipes],
   providers: [...services],
 })
