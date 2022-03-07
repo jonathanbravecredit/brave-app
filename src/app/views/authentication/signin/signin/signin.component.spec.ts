@@ -25,7 +25,7 @@ describe('SigninComponent', () => {
   let interstitialServiceMock: any;
   let routerMock: any;
   let analyticsMock: any;
-  class RouteMock {}
+  let routeMock: any;
 
   beforeEach(async () => {
     authServiceMock = jasmine.createSpyObj('AuthService', ['signIn', 'socialSignIn']);
@@ -34,11 +34,7 @@ describe('SigninComponent', () => {
     });
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
     analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
-
-    authServiceMock.signIn.and.returnValue({} as ISignInCognitoUser);
-    authServiceMock.socialSignIn.and.returnValue(null);
-    interstitialServiceMock.fetching$.and.returnValue(new BehaviorSubject<boolean>(false));
-    routerMock.navigate.and.returnValue(null);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
@@ -48,7 +44,7 @@ describe('SigninComponent', () => {
         { provide: InterstitialService, useValue: interstitialServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: AnalyticsService, useValue: analyticsMock },
-        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: ActivatedRoute, useValue: routeMock },
       ],
     }).compileComponents();
   });
@@ -59,6 +55,10 @@ describe('SigninComponent', () => {
     fixture.detectChanges();
     dh = new DOMHelper(fixture);
     h = new Helper(component);
+
+    authServiceMock.signIn.and.returnValue({} as ISignInCognitoUser);
+    authServiceMock.socialSignIn.and.returnValue(null);
+    routerMock.navigate.and.returnValue(null);
   });
 
   it('should create', () => {
