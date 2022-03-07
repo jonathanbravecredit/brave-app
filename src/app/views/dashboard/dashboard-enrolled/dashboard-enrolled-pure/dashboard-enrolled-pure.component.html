@@ -1,7 +1,11 @@
 <ng-container *ngIf="dashboardData$ | async as data">
   <h2 class="text-lg font-semibold">{{ welcome }}</h2>
 
-  <div *ngIf="initiative" class="bg-gray-50 p-4 cursor-pointer" (click)="onProgressTrackerClicked.emit()">
+  <div
+    *ngIf="initiative && data.dashScore && data.dashScore <= 675"
+    class="bg-gray-50 p-4 cursor-pointer"
+    (click)="onProgressTrackerClicked.emit()"
+  >
     <h5 class="text-sm">{{ initiative?.initiativeTitle }}</h5>
     <brave-circle-checktext-progressbar [steps]="initiativeSteps"></brave-circle-checktext-progressbar>
   </div>
@@ -20,7 +24,7 @@
 
   <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
   <p *ngIf="updatedAt" class="text-xs mb-1">{{ content.p1 }}: {{ updatedAt | date: 'shortDate' }}</p>
-  <div *ngIf="initiative" class="mt-6 hover:cursor-pointer">
+  <div *ngIf="initiative && data.dashScore && data.dashScore <= 675" class="mt-6 hover:cursor-pointer">
     <brave-snapshot-display-card
       title="Claim Your FutureScore:"
       typeOfSnapshot="time"
@@ -175,6 +179,13 @@
       </div>
     </div>
   </ng-container>
+
+  <brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative && data.dashScore && data.dashScore <= 675">
+    <div class="w-full max-w-xs p-6">
+      <brave-goal-choice-header></brave-goal-choice-header>
+      <brave-goal-choice-parent [getInitiative]="true" (goalClick)="toggleGoalChoiceModel()"></brave-goal-choice-parent>
+    </div>
+  </brave-base-modal>
 </ng-container>
 
 <ng-template #noCreditData>

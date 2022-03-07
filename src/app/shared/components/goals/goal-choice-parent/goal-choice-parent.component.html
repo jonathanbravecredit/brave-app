@@ -1,0 +1,5 @@
+<brave-goal-choice-card
+  *ngFor="let goalInfo of goalItems"
+  [goalInfo]="goalInfo"
+  (click)="onClick(goalInfo)"
+></brave-goal-choice-card>

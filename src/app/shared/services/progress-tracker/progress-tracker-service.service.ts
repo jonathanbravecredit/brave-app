@@ -29,7 +29,7 @@ export class ProgressTrackerService implements OnDestroy {
 
   enrolledOn: string | null | undefined;
   enrolledScore: string | null | undefined;
-
+  currentScore: string | null | undefined;
   storeSub$: Subscription | undefined;
 
   constructor(private http: HttpClient, private auth: AuthService, private store: Store) {
@@ -55,8 +55,9 @@ export class ProgressTrackerService implements OnDestroy {
   subscribeToStoreValues(): void {
     this.storeSub$ = this.store.subscribe((state) => {
       const tu = state?.appData?.agencies?.transunion as TransunionInput;
-      this.enrolledOn = tu.enrolledOn;
-      this.enrolledScore = tu.enrollVantageScore?.serviceProductValue;
+      this.enrolledOn = tu?.enrolledOn;
+      this.enrolledScore = tu?.enrollVantageScore?.serviceProductValue;
+      this.currentScore = tu?.fulfillMergeReport?.serviceProductValue;
     });
   }
 
@@ -134,6 +135,22 @@ export class ProgressTrackerService implements OnDestroy {
     };
 
     return await this.http.post<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise();
+  }
+
+  async postThenGetUserGoal(goalInfo: IGoalInfo) {
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+    const patchBody = {
+      programId: goalInfo.programId,
+      reason: goalInfo.reason,
+    };
+
+    await this.http.post<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise();
+    let res = await this.http.get<Initiative>(environment.api + '/initiatives', { headers }).toPromise();
+    this.updateProgressTrackerState(res);
+    return res
   }
 }
 

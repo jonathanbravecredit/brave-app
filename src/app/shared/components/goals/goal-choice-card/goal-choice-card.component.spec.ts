@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KycGoalChoiceCardComponent } from './kyc-goal-choice-card.component';
+import { GoalChoiceCardComponent } from './goal-choice-card.component';
 
-describe('KycGoalChoiceCardComponent', () => {
-  let component: KycGoalChoiceCardComponent;
-  let fixture: ComponentFixture<KycGoalChoiceCardComponent>;
+describe('GoalChoiceCardComponent', () => {
+  let component: GoalChoiceCardComponent;
+  let fixture: ComponentFixture<GoalChoiceCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KycGoalChoiceCardComponent ]
+      declarations: [ GoalChoiceCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KycGoalChoiceCardComponent);
+    fixture = TestBed.createComponent(GoalChoiceCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
