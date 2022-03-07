@@ -3236,11 +3236,6 @@ select {
   color: rgba(24, 24, 27, var(--tw-text-opacity));
 }
 
-.text-coolGray-200 {
-  --tw-text-opacity: 1;
-  color: rgba(229, 231, 235, var(--tw-text-opacity));
-}
-
 .text-coolGray-700 {
   --tw-text-opacity: 1;
   color: rgba(55, 65, 81, var(--tw-text-opacity));

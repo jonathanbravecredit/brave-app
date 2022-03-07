@@ -45,6 +45,19 @@ export class AgenciesState {
     });
   }
 
+  @Action(AgenciesActions.EditAcknowledgeDisputeTerms)
+  updateAcknowledgeDisputeTerms(ctx: StateContext<AgenciesStateModel>, { payload }: AgenciesActions.EditAcknowledgeDisputeTerms) {
+    const state = ctx.getState();
+    ctx.patchState({
+      ...state,
+      transunion: {
+        ...state.transunion,
+        ...payload,
+      },
+    });
+  }
+
+
   @Action(AgenciesActions.IncrementTransunionAuthAttempts)
   incrementTransunionAuthAttempt(ctx: StateContext<AgenciesStateModel>) {
     const state = ctx.getState();

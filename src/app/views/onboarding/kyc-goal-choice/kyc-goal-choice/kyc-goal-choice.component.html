@@ -1,3 +1,9 @@
 <div class="container mx-auto max-w-xs h-full mt-6">
-  <brave-kyc-goal-choice-pure [goalItems]="goalItems" (buttonClick)="buttonClick($event)"></brave-kyc-goal-choice-pure>
+  <div class="w-full max-w-xs mt-6">
+    <brave-goal-choice-header></brave-goal-choice-header>
+
+    <div class="h-full flex flex-col justify-apart">
+      <brave-goal-choice-parent (goalClick)="(routeChangeClick())"></brave-goal-choice-parent>
+    </div>
+  </div>
 </div>

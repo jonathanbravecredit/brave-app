@@ -91,8 +91,6 @@ import { ProgressTrackerDisclaimerComponent } from './snapshots/progress-tracker
 import { ProgressTrackerGoalCardComponent } from './snapshots/progress-tracker/components/progress-tracker-goal-card/progress-tracker-goal-card.component';
 import { DashboardReportMissingComponent } from './dashboard-enrolled/components/dashboard-report-missing/dashboard-report-missing.component';
 
-import { OnboardingModule } from '@views/onboarding/onboarding.module';
-
 const modules = [
   CommonModule,
   SharedComponentsModule,
@@ -102,9 +100,6 @@ const modules = [
   CreditReportModule,
   DashboardRoutingModule,
   SharedDirectivesModule,
-
-  OnboardingModule //! Remove after testing
-
 ];
 const components = [
   DashboardComponent,
@@ -179,11 +174,6 @@ const components = [
   ProgressTrackerDisclaimerComponent,
   ProgressTrackerGoalCardComponent,
   DashboardReportMissingComponent,
-
-
-
-
-
 ];
 
 const pipes = [AccountStatusPipe];

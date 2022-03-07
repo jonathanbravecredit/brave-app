@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() subTask: InitiativeSubTask | undefined;
   @Input() taskCompleted: boolean = false;
+  @Input() hasSelfLoan: boolean = false;
   patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
   showQuestion: boolean = false;
