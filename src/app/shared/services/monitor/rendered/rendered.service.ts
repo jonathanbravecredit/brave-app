@@ -20,7 +20,9 @@ export class RenderedService {
     // this is good enough for now. Some library has pending macrotasks I can't identify
     // once the micro tasks empty at least once the app should rendered already
     // so by then we should know if something went wrong
-    if (!this.checked) this.checkStatus();
+    this.zone.onMicrotaskEmpty.subscribe((val) => {
+      if (!this.checked) this.checkStatus();
+    });
   }
 
   track({ tag, el }: { tag: RenderedViews | null; el: any }) {

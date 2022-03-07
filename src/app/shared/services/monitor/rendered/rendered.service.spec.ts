@@ -9,7 +9,7 @@ describe('RenderedService', () => {
   let zoneMock: any;
 
   beforeEach(() => {
-    zoneMock = jasmine.createSpyObj('NgZone', { onMicrotaskEmpty: new EventEmitter<any>() });
+    zoneMock = jasmine.createSpyObj('NgZone', [''], { onMicrotaskEmpty: new EventEmitter<any>() });
 
     TestBed.configureTestingModule({
       providers: [{ provide: NgZone, useValue: zoneMock }],
