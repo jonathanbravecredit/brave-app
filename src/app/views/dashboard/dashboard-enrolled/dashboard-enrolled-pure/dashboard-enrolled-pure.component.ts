@@ -16,6 +16,8 @@ import { skip } from 'rxjs/operators';
   templateUrl: './dashboard-enrolled-pure.component.html',
 })
 export class DashboardEnrolledPureComponent implements OnDestroy {
+  modalOpen: boolean = true
+
   @Input() adsData: IAdData[] | undefined;
   @Input() referral: IReferral | null | undefined;
   @Input() rating: string | undefined;
@@ -76,5 +78,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
 
   setWelcomeMessage(): void {
     this.welcome = this.dashboardService.getWelcomeMessage();
+  }
+
+  toggleGoalChoiceModel() {
+    this.modalOpen = !this.modalOpen
   }
 }

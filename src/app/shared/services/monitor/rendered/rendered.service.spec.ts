@@ -1,4 +1,4 @@
-import { NgZone } from '@angular/core';
+import { EventEmitter, NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
@@ -9,7 +9,7 @@ describe('RenderedService', () => {
   let zoneMock: any;
 
   beforeEach(() => {
-    zoneMock = jasmine.createSpyObj('NgZone', { onMicrotaskEmpry: of(null) });
+    zoneMock = jasmine.createSpyObj('NgZone', [''], { onMicrotaskEmpty: new EventEmitter<any>() });
 
     TestBed.configureTestingModule({
       providers: [{ provide: NgZone, useValue: zoneMock }],

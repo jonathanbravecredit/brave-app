@@ -60,6 +60,8 @@ describe('DisputesPublicView', () => {
   });
 
   it('should run sendStartDispute if isFinished is truthy', () => {
+    disputeServiceMock.sendStartDispute.and.returnValue({ success: true, error: false, data: {} });
+
     component.onProcessResult({
       result: { isFinished: true },
       publicItem: { PublicRecord: {} },

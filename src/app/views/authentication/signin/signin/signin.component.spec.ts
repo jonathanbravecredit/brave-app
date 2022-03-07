@@ -6,13 +6,15 @@ import { SigninComponent } from './signin.component';
 import { ISignInCognitoUser } from './interfaces';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedServicesModule } from '@shared/services/shared-services.module';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 
 //    private route: ActivatedRoute,
 // private analytics: AnalyticsService,
+//    private auth: AuthService,
+// private interstitial: InterstitialService,
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -23,18 +25,16 @@ describe('SigninComponent', () => {
   let interstitialServiceMock: any;
   let routerMock: any;
   let analyticsMock: any;
-  class RouteMock {}
+  let routeMock: any;
 
   beforeEach(async () => {
     authServiceMock = jasmine.createSpyObj('AuthService', ['signIn', 'socialSignIn']);
-    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', ['fetching$']);
+    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', [''], {
+      fetching$: new BehaviorSubject<boolean>(false),
+    });
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
     analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
-
-    authServiceMock.signIn.and.returnValue({} as ISignInCognitoUser);
-    authServiceMock.socialSignIn.and.returnValue(null);
-    interstitialServiceMock.fetching$.and.returnValue(new BehaviorSubject<boolean>(false));
-    routerMock.navigate.and.returnValue(null);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
@@ -44,7 +44,7 @@ describe('SigninComponent', () => {
         { provide: InterstitialService, useValue: interstitialServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: AnalyticsService, useValue: analyticsMock },
-        { provide: ActivatedRoute, useClass: RouteMock },
+        { provide: ActivatedRoute, useValue: routeMock },
       ],
     }).compileComponents();
   });
@@ -55,6 +55,10 @@ describe('SigninComponent', () => {
     fixture.detectChanges();
     dh = new DOMHelper(fixture);
     h = new Helper(component);
+
+    authServiceMock.signIn.and.returnValue({} as ISignInCognitoUser);
+    authServiceMock.socialSignIn.and.returnValue(null);
+    routerMock.navigate.and.returnValue(null);
   });
 
   it('should create', () => {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KycGoalChoicePureComponent } from './kyc-goal-choice-pure.component';
+import { GoalChoiceHeaderComponent } from './goal-choice-header.component';
 
-describe('KycGoalChoicePureComponent', () => {
-  let component: KycGoalChoicePureComponent;
-  let fixture: ComponentFixture<KycGoalChoicePureComponent>;
+describe('GoalChoiceHeaderComponent', () => {
+  let component: GoalChoiceHeaderComponent;
+  let fixture: ComponentFixture<GoalChoiceHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KycGoalChoicePureComponent ]
+      declarations: [ GoalChoiceHeaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KycGoalChoicePureComponent);
+    fixture = TestBed.createComponent(GoalChoiceHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -122,6 +122,9 @@ import { TwitterShareComponent } from './share-buttons/twitter-share/twitter-sha
 import { AdCardComponent } from './cards/ad-card/ad-card.component';
 import { NotificationBadgeComponent } from './badges/notification-badge/notification-badge.component';
 import { CircleChecktextProgressbarComponent } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
+import { GoalChoiceParentComponent } from './goals/goal-choice-parent/goal-choice-parent.component';
+import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-card/goal-choice-card.component';
+import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
 
 const components = [
   BaseFormComponent,
@@ -217,7 +220,7 @@ const components = [
   PercentageGaugeComponent,
   CreditUtilizationFillBarComponent,
   NotificationBadgeComponent,
-  CircleChecktextProgressbarComponent
+  CircleChecktextProgressbarComponent,
 ];
 
 // component specific pipes only
@@ -238,6 +241,9 @@ const pipes = [
   FacebookShareComponent,
   TwitterShareComponent,
   AdCardComponent,
+  GoalChoiceParentComponent,
+  GoalChoiceCardComponent,
+  GoalChoiceHeaderComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
