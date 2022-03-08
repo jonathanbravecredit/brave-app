@@ -50,12 +50,14 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   }
 
   clickYes() {
-    if (this.patchBody) {
-      this.patchBody.taskStatus = 'complete';
-      this.progressTrackerService.updateProgressTrackerData(this.patchBody);
+    if (this.subTask?.taskId !== 'open_self_loan') { //! PLACEHOLDER SOLUTION
+      if (this.patchBody) {
+        this.patchBody.taskStatus = 'complete';
+        this.progressTrackerService.updateProgressTrackerData(this.patchBody);
+      }
+      this.taskCompleted = true;
+      this.showQuestion = false;
     }
-    this.taskCompleted = true;
-    this.showQuestion = false;
   }
 
   clickNo() {
