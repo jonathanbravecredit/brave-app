@@ -181,9 +181,12 @@
   </ng-container>
 
   <brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative && data.dashScore && data.dashScore <= 675">
-    <div class="w-full max-w-xs p-6">
+    <div class="w-full max-w-xs">
       <brave-goal-choice-header></brave-goal-choice-header>
       <brave-goal-choice-parent [getInitiative]="true" (goalClick)="toggleGoalChoiceModel()"></brave-goal-choice-parent>
+      <div class="mt-16">
+        <brave-goal-choice-disclaimer></brave-goal-choice-disclaimer>
+      </div>
     </div>
   </brave-base-modal>
 </ng-container>
