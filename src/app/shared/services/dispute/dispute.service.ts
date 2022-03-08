@@ -186,12 +186,7 @@ export class DisputeService implements OnDestroy {
    */
   async onUserConfirmed(): Promise<ITUServiceResponse<any>> {
     try {
-      // acknowledge the user has read and accepted the terms
-      // you have to acknowledge in order to get to this point
-      if (!this.acknowledged) {
-        await this.acknowledgeDisputeTerms();
-        this.acknowledged = true;
-      }
+      await this.acknowledgeDisputeTerms();
       const preflight = await this.sendDisputePreflightCheck();
       if (preflight?.success) {
         this.analytics.fireClickEvent(AnalyticClickEvents.DisputeEnrollment, {
@@ -226,11 +221,20 @@ export class DisputeService implements OnDestroy {
     }
   }
 
+  /**
+   * dispute preflight checks user eligibility to enroll and start disputes
+   * @returns
+   * ITUServiceResponse and a refreshed report if refresh was required.
+   */
   async sendDisputePreflightCheck(): Promise<ITUServiceResponse<any>> {
-    const res = await this.transunion.sendDisputePreflightCheck();
-    if (!res || !res?.data || !res?.data?.report) return { success: false };
-    await this.creditReportService.updateCreditReportStateAsync(res.data.report);
-    return res;
+    try {
+      const res = await this.transunion.sendDisputePreflightCheck();
+      if (!res?.data || !res?.data?.report) return res; // no data to sync
+      await this.creditReportService.updateCreditReportStateAsync(res.data.report);
+      return res;
+    } catch (err) {
+      return { success: false, error: err as IErrorResponse };
+    }
   }
 
   /**
