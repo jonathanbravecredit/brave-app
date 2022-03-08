@@ -16,6 +16,7 @@ export interface IOutlineInputeConfig {
   unmask?: string;
   maxLength?: number;
   minLength?: number;
+  hideIcon?: boolean;
 }
 
 @Component({
@@ -27,6 +28,8 @@ export class OutlineInputComponent implements OnInit {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
   private _minLength: number | undefined;
+  hide: boolean = true;
+  @Input() hideIcon: boolean | undefined = false;
 
   /**
    * @param Config Object to pass in component params

@@ -3,6 +3,7 @@
     <brave-outline-input
       [config]="config"
       [required]="config.required"
+      [hideIcon]="config.hideIcon"
       (onComponentReady)="addChild(config.name || formatInputName(idx), $event)"
     >
     </brave-outline-input>
@@ -16,12 +17,12 @@
 
   <div>
     <div class="flex justify-end items-end">
-      <brave-links-onlytext-button *ngIf="buttonOneText" (click)="buttonOneClick.emit()">{{
+      <brave-filled-spinning-button *ngIf="buttonOneText" (click)="buttonOneClick.emit()">{{
         buttonOneText
-      }}</brave-links-onlytext-button>
-      <brave-filled-onlytext-button *ngIf="buttonTwoText" (click)="submitForm()">{{
+      }}</brave-filled-spinning-button>
+      <brave-filled-spinning-button *ngIf="buttonTwoText" (click)="submitForm()">{{
         buttonTwoText
-      }}</brave-filled-onlytext-button>
+      }}</brave-filled-spinning-button>
     </div>
   </div>
 </form>
