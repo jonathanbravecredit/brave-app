@@ -38,6 +38,7 @@ import { OnboardingService } from '@views/onboarding/onboarding.service';
 // PIPES
 import { KycKbaquestionsPipe } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { KycGoalChoiceComponent } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
 
 const components = [
   OnboardingComponent,
@@ -66,6 +67,7 @@ const components = [
   KycWelcomebackPureComponent,
   KycRetryComponent,
   KycRetryPureComponent,
+  KycGoalChoiceComponent,
 ];
 
 const pipes = [KycKbaquestionsPipe];

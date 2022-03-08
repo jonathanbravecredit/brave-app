@@ -65,12 +65,7 @@ export class SigninForgotComponent {
     alertBody: `Success! You've changed your password. Redirecting you back to login.`,
   };
 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private interstitial: InterstitialService
-
-  ) {}
+  constructor(private auth: AuthService, private router: Router, private interstitial: InterstitialService) {}
 
   onSubmitEmailClick(form: FormGroup): void {
     const email = form.value.email.input;

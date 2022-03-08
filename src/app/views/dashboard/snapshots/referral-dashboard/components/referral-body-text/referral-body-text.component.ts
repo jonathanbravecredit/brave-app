@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICampaign } from '@shared/interfaces/campaign.interface';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
-import * as timezone from 'dayjs/plugin/timezone';
-import * as advancedFormat from 'dayjs/plugin/advancedFormat';
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+const advancedFormat = require('dayjs/plugin/advancedFormat');
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);

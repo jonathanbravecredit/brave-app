@@ -27,11 +27,8 @@
             >
           </div>
           <div
-            [ngClass]="{
-              'text-coolGray-700': i <= completedStep,
-              'text-coolGray-200': i > completedStep
-            }"
-            class="absolute top-0 -ml-12 text-center mt-9 w-32 font-sans text-xs"
+            
+            class="absolute top-0 -ml-12 text-center mt-9 w-32 font-sans text-xs text-coolGray-700"
           >
             <!-- {{ config.steps.length }} -->
             {{ step.name }}

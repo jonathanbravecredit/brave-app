@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 import { IAdData } from '@shared/interfaces/ads.interface';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { DashboardService, IDashboardData } from '@shared/services/dashboard/dashboard.service';
@@ -14,6 +16,8 @@ import { skip } from 'rxjs/operators';
   templateUrl: './dashboard-enrolled-pure.component.html',
 })
 export class DashboardEnrolledPureComponent implements OnDestroy {
+  modalOpen: boolean = true
+
   @Input() adsData: IAdData[] | undefined;
   @Input() referral: IReferral | null | undefined;
   @Input() rating: string | undefined;
@@ -21,6 +25,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() creditMixStatus: string | undefined;
   @Input() creditUtilizationStatus: string | undefined;
   @Input() creditUtilizationPerc: number | undefined;
+  @Input() initiative: Initiative | null = null;
+  @Input() initiativeSteps: ICircleProgressStep[] = [];
+  @Input() futureScore: number = 0;
 
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
@@ -30,6 +37,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Output() creditUtilizationClicked: EventEmitter<void> = new EventEmitter();
   @Output() creditMixClicked: EventEmitter<void> = new EventEmitter();
   @Output() referralsClicked: EventEmitter<void> = new EventEmitter();
+  @Output() onProgressTrackerClicked: EventEmitter<void> = new EventEmitter();
 
   public score: number = 4;
   public welcome: string = '';
@@ -70,5 +78,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
 
   setWelcomeMessage(): void {
     this.welcome = this.dashboardService.getWelcomeMessage();
+  }
+
+  toggleGoalChoiceModel() {
+    this.modalOpen = !this.modalOpen
   }
 }

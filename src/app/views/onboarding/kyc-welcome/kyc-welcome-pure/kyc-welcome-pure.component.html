@@ -8,13 +8,14 @@
 
       <!-- header -->
       <div class="py-3">
-        <h4 class="brave-h4 text-indigo-800">Welcome!</h4>
+        <h4 class="brave-h4 text-indigo-800">Basic Information</h4>
       </div>
 
       <!-- subheader -->
       <div class="py-3">
         <div class="text-base">
-          <p class="mb-6 text-blueGray-600">Let's start with some basic info</p>
+          <p class="mb-6 text-blueGray-600">Thank you for sharing your goal!</p>
+          <p class="mb-6 text-blueGray-600">Let’s start with some basic info to get your TransUnion® credit report & plan</p>
         </div>
       </div>
 
@@ -43,12 +44,16 @@
 
       <!-- can place error messages here maybe? -->
 
-      <div>
-        <div class="flex justify-end items-center">
-          <brave-filled-spinning-button (onClick)="form.submitForm()">
-            <span class="flex items-center">I Accept<span class="material-icons px-1">arrow_forward</span></span>
-          </brave-filled-spinning-button>
-        </div>
+      <div class="flex justify-between items-center w-full">
+        <brave-links-onlytext-button
+          (click)="backClick.emit()"
+          [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+        >
+          <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
+        </brave-links-onlytext-button>
+        <brave-filled-spinning-button (onClick)="form.submitForm()">
+          <span class="flex items-center">I Accept<span class="material-icons px-1">arrow_forward</span></span>
+        </brave-filled-spinning-button>
       </div>
     </div>
   </div>

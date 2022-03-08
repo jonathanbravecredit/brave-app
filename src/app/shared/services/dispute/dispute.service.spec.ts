@@ -349,11 +349,11 @@ describe('DisputeService', () => {
         disputeService.onUserConfirmed();
         expect(disputeService.acknowledgeDisputeTerms).not.toHaveBeenCalled();
       });
-      it(`Should call sendDisputePreflightCheck`, () => {
+      it(`Should call sendDisputePreflightCheck`, async () => {
         const { disputeService } = setup();
         spyOn(disputeService, 'sendDisputePreflightCheck');
         disputeService.acknowledged = true;
-        disputeService.onUserConfirmed();
+        await disputeService.onUserConfirmed();
         expect(disputeService.sendDisputePreflightCheck).toHaveBeenCalled();
       });
     });

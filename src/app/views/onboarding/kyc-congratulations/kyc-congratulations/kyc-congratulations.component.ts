@@ -9,8 +9,7 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -19,6 +18,6 @@ export class KycCongratulationsComponent implements OnInit, AfterViewInit {
   }
 
   goToNext(): void {
-    this.router.navigate([routes.root.dashboard.init.full]);
+    // this.router.navigate([routes.root.dashboard.init.full]);
   }
 }

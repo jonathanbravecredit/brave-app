@@ -22,6 +22,7 @@ import { CreditMixResolver } from '@shared/resolvers/credit-mix/credit-mix.resol
 import { ReferralDashboardView } from '@views/dashboard/snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
 import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { ProgressTrackerComponent } from '@views/dashboard/snapshots/progress-tracker/progress-tracker/progress-tracker.component';
 const dashboard = routes.root.dashboard;
 const snapshot = routes.root.dashboard.report.snapshot;
 
@@ -35,7 +36,7 @@ const DashboardRoutes: Routes = [
       {
         path: `${dashboard.init.segment}`,
         component: DashboardEnrolledComponent,
-        resolve: { dashboard: DashboardResolver },
+        // resolve: { dashboard: DashboardResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
@@ -95,6 +96,11 @@ const DashboardRoutes: Routes = [
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.referrals.segment}`,
         component: ReferralDashboardView,
         resolve: { referral: ReferralResolver },
+        canActivate: [ActiveGuard, AuthGuard],
+      },
+      {
+        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.progressTracker.segment}`,
+        component: ProgressTrackerComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

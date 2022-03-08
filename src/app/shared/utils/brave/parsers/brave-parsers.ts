@@ -2,7 +2,7 @@ import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { TransunionInput } from '@shared/services/aws/api.service';
 import { BraveBase } from '@shared/utils/brave/brave-base';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 
 export class BraveParsers extends BraveBase {
   constructor() {

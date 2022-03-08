@@ -8,6 +8,9 @@
       [creditMixStatus]="creditMixStatus"
       [creditUtilizationStatus]="creditUtilizationStatus"
       [creditUtilizationPerc]="creditUtilizationPerc"
+      [initiative]="initiative"
+      [initiativeSteps]="(progressTracker.initiativeSteps$ | async) || []"
+      [futureScore]="futureScore"
       (negativeItemsClicked)="onNegativeItemsClicked()"
       (forbearanceItemsClicked)="onForbearanceItemsClicked()"
       (databreachItemsClicked)="onDatabreachItemsClicked()"
@@ -16,6 +19,7 @@
       (creditUtilizationClicked)="onCreditUtilizationClicked()"
       (creditMixClicked)="onCreditMixClicked()"
       (referralsClicked)="onReferralsClicked()"
+      (onProgressTrackerClicked)="onProgressTrackerClicked()"
     ></brave-dashboard-enrolled-pure>
   </ng-container>
   <brave-dashboard-report-missing *ngIf="!report"></brave-dashboard-report-missing>

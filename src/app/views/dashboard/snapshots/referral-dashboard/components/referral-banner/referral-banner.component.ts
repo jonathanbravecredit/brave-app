@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { ICampaign } from '@shared/interfaces/campaign.interface';
-import * as moment from 'moment';
+const dayjs = require('dayjs');
 
 @Component({
   selector: 'brave-referral-banner',
@@ -17,7 +17,7 @@ export class ReferralBannerComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.endMonth = moment(this.campaign?.endDate).format('MM');
-    this.endDay = moment(this.campaign?.endDate).format('DD');
+    this.endMonth = dayjs(this.campaign?.endDate).format('MM');
+    this.endDay = dayjs(this.campaign?.endDate).format('DD');
   }
 }

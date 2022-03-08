@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IReferral } from '@shared/interfaces/referrals.interface';
-import * as dayjs from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
-import * as timezone from 'dayjs/plugin/timezone';
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 

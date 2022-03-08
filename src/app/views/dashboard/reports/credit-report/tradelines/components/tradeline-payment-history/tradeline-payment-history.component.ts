@@ -7,8 +7,7 @@ import {
 } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/constants';
 import { ITradelinePaymentHistory } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/interfaces';
 import { TradelinePaymentIconKeyComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-icon-key/tradeline-payment-icon-key.component';
-import * as dayjs from 'dayjs';
-import * as moment from 'moment';
+const dayjs = require('dayjs');
 
 @Component({
   selector: 'brave-tradeline-payment-history',
@@ -84,7 +83,7 @@ export class TradelinePaymentHistoryComponent implements OnInit {
           },
           years: [0, 1, 2].map((item, i) => {
             const badDate = history.startDate?.substring(0, 10);
-            const goodDate = moment(badDate, 'YYYY-MM-DD').toDate();
+            const goodDate = dayjs(badDate, 'YYYY-MM-DD').toDate();
             let dte = history.startDate === undefined ? new Date() : goodDate;
             let year = dte.getFullYear() - i;
             let monthlyStatus: IMonthyPayStatusItem[];
