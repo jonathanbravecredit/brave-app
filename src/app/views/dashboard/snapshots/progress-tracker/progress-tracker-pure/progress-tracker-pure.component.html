@@ -1,0 +1,28 @@
+<div class="bg-gray-50 p-4">
+  <h5 class="text-sm">{{ initiative?.initiativeTitle }}</h5>
+  <brave-circle-checktext-progressbar [steps]="steps"></brave-circle-checktext-progressbar>
+</div>
+
+<brave-future-score-card [dashDelta]="dashDelta" [dashScore]="dashScore" [futureScore]="futureScore" [enrolledScore]="enrolledScore"></brave-future-score-card>
+
+<p style="font-size: 10px;" class="text-center mt-2">Results are not guaranteed. Estimates are based on behaviors of similar users. Healthy credit habits like making on-time payments are critical to improving your credit profile.</p>
+
+<div *ngFor="let initiativeTask of initiativeTasks">
+  <div>
+    <brave-progress-tracker-header [initiativeTask]="initiativeTask"></brave-progress-tracker-header>
+  </div>
+
+  <div class="mt-1 mb-4">
+    <div *ngFor="let subTask of initiativeTask?.subTasks">
+      <brave-progress-tracker-goal-card
+        [taskCompleted]="subTask.taskStatus === 'complete'"
+        [subTask]="subTask"
+        [hasSelfLoan]="hasSelfLoan"
+      ></brave-progress-tracker-goal-card>
+    </div>
+  </div>
+</div>
+
+<div>
+  <brave-progress-tracker-disclaimer></brave-progress-tracker-disclaimer>
+</div>

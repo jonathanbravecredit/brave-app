@@ -18,9 +18,12 @@ import { shuffle } from 'lodash';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IMergeReport } from '@shared/interfaces';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
+import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
+import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 
 @Component({
   selector: 'brave-dashboard-enrolled',
@@ -53,6 +56,15 @@ export class DashboardEnrolledComponent implements OnDestroy {
   private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
   private reportSub$: Subscription | undefined;
 
+  initiative: Initiative | null = null;
+  initiative$: Subscription | undefined;
+
+  enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
+    ?.enrollVantageScore.serviceProductValue;
+  // private initiativeSub$: Subscription | undefined;
+  initiativeSteps: ICircleProgressStep[] = [];
+  futureScore: number = 0;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -60,14 +72,25 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     private store: Store,
+    public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
+    this.initiative$ = progressTracker.initiative$.subscribe((v) => {
+      this.initiative = v.data;
+      this.refreshFutureScore();
+    });
+    this.setProgressTrackerDataInDashboardService();
     this.setAdData();
   }
 
   ngOnDestroy(): void {
     this.routeSub$?.unsubscribe();
     this.reportSub$?.unsubscribe();
+    this.initiative$?.unsubscribe();
+  }
+
+  refreshFutureScore() {
+    this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
   }
 
   subscribeToReportData(): void {
@@ -91,6 +114,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
       });
   }
 
+  setProgressTrackerDataInDashboardService() {
+    if (this.initiative) {
+      this.dashboardService.progressTrackerData$.next(this.initiative);
+    }
+  }
   setAdData(): void {
     this.dashboardService.getAdData().then((resp: any) => {
       this.adsData = shuffle(resp);
@@ -138,5 +166,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   onReferralsClicked() {
     this.router.navigate([routes.root.dashboard.report.snapshot.referrals.full]);
+  }
+
+  onProgressTrackerClicked() {
+    this.router.navigate([routes.root.dashboard.report.snapshot.progressTracker.full]);
   }
 }

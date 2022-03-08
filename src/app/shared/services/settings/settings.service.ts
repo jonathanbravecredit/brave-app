@@ -6,7 +6,7 @@ import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import * as _ from 'lodash';
-import * as moment from 'moment';
+const dayjs = require('dayjs');
 
 @Injectable({
   providedIn: 'root',
@@ -115,8 +115,8 @@ export class SettingsService {
           await this.handleDeactivation();
         } else {
           const youngest = _.orderBy(complete, ['closedOn'], ['desc'])[0]; // youngest disputes
-          const thirtDaysAgo = moment(new Date().toISOString()).add(-30, 'days');
-          const test = moment(youngest.closedOn).isBefore(thirtDaysAgo);
+          const thirtDaysAgo = dayjs(new Date().toISOString()).add(-30, 'days');
+          const test = dayjs(youngest.closedOn).isBefore(thirtDaysAgo);
           if (test) {
             await this.handleDeactivation();
           } else {

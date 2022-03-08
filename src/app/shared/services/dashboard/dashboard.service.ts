@@ -1,6 +1,6 @@
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import * as _ from 'lodash';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
@@ -19,6 +19,7 @@ import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 
 export interface IDashboardData {
@@ -46,9 +47,11 @@ export class DashboardService implements OnDestroy {
   dashTrends$ = new BehaviorSubject<IGetTrendingData | null>(null);
   dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null);
   dashScore$ = new BehaviorSubject<number | null>(null);
+  dashDelta$ = new BehaviorSubject<number | null>(null);
   dashScoreSuppressed$ = new BehaviorSubject(false);
   // subscriptions to dash
   dashScoresSub$: Subscription | undefined;
+  progressTrackerData$ = new BehaviorSubject<Initiative | null>(null);
 
   welcome: string = '';
   name: string | undefined;
@@ -76,7 +79,9 @@ export class DashboardService implements OnDestroy {
 
     this.dashScoresSub$ = this.dashScores$.subscribe((scores) => {
       const score = this.getCurrentScore(scores);
+      const delta = this.calculateDelta(scores);
       this.dashScore$.next(score || 4);
+      this.dashDelta$.next(delta || 0);
     });
   }
 
@@ -84,6 +89,16 @@ export class DashboardService implements OnDestroy {
     this.stateSub$?.unsubscribe();
     this.dashScoresSub$?.unsubscribe();
     this.tuReportSub$?.unsubscribe();
+  }
+
+  calculateDelta(scores: IProductTrendingData[] | null): number {
+    if (scores && scores.length > 1) {
+      let latestScore = +scores[scores.length - 1].AttributeValue;
+      let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
+      return isNaN(latestScore) || isNaN(lastMonthsScore) ? 0 : latestScore - lastMonthsScore;
+    } else {
+      return 0;
+    }
   }
 
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {

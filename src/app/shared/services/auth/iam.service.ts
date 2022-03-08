@@ -25,7 +25,7 @@ export class IamService {
     url: string,
     method: string,
     headers: Record<string, any>,
-    body: string,
+    body?: string,
     queryParams?: any,
   ): Promise<any> {
     return Auth.currentCredentials()
