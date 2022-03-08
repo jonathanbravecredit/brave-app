@@ -31,7 +31,6 @@ describe('DisputesOverviewInitialView', () => {
     routeMock = jasmine.createSpyObj('', [''], {
       data: of(),
     });
-
     await TestBed.configureTestingModule({
       declarations: [DisputesOverviewInitialView, DisputesToDisputesHistoricalPipe, DisputesToDisputesOverviewPipe],
       providers: [

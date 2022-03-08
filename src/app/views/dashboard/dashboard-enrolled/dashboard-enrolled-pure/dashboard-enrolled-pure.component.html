@@ -15,6 +15,7 @@
     class="my-4 flex justify-center"
   >
     <brave-dashboard-carousel [dashData]="data" [updatedAt]="updatedAt"></brave-dashboard-carousel>
+
   </div>
   <div *ngIf="data.dashScore === 1 || data.dashScore === 4" class="my-4 flex justify-center">
     <brave-dashboard-credit-score-error
