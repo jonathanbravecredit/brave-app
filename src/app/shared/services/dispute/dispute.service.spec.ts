@@ -328,21 +328,21 @@ describe('DisputeService', () => {
     });
 
     describe('onUserConfirmed', () => {
-      it(`Should call acknowledgeDisputeTerms when acknowledged is false`, () => {
+      it(`Should call acknowledgeDisputeTerms ALWAYS (don't ever change)`, () => {
         const { disputeService } = setup();
         spyOn(disputeService, 'acknowledgeDisputeTerms');
-        disputeService.acknowledged = false;
+        disputeService.acknowledged = true;
         disputeService.onUserConfirmed();
         expect(disputeService.acknowledgeDisputeTerms).toHaveBeenCalled();
       });
-      it(`Should set acknowledged to true when calling onUserConfirmed and previously false`, async () => {
+      xit(`Should set acknowledged to true when calling onUserConfirmed and previously false`, async () => {
         const { disputeService, transunionMock } = setup();
         transunionMock.sendTransunionAPICall.and.returnValue({ success: false });
         disputeService.acknowledged = false;
         await disputeService.onUserConfirmed();
         expect(disputeService.acknowledged).toBeTrue();
       });
-      it(`Should NOT call acknowledgeDisputeTerms when acknowledged is true`, () => {
+      xit(`Should NOT call acknowledgeDisputeTerms when acknowledged is true`, () => {
         const { disputeService } = setup();
         spyOn(disputeService, 'acknowledgeDisputeTerms');
         disputeService.acknowledged = true;
