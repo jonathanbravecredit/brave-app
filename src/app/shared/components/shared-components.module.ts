@@ -125,6 +125,7 @@ import { CircleChecktextProgressbarComponent } from '@shared/components/progress
 import { GoalChoiceParentComponent } from './goals/goal-choice-parent/goal-choice-parent.component';
 import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-card/goal-choice-card.component';
 import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
+import { GoalChoiceDisclaimerComponent } from './goals/goal-choice-disclaimer/goal-choice-disclaimer.component';
 
 const components = [
   BaseFormComponent,
@@ -244,6 +245,7 @@ const pipes = [
   GoalChoiceParentComponent,
   GoalChoiceCardComponent,
   GoalChoiceHeaderComponent,
+  GoalChoiceDisclaimerComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
