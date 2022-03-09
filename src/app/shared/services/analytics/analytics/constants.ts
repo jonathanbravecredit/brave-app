@@ -17,6 +17,8 @@ export enum AnalyticPageViewEvents {
   DashboardReportSnapshotCreditUtilization = 'dashboard_report_snapshot_credit_utilization',
   DashboardReportSnapshotCreditMix = 'dashboard_report_snapshot_credit_mix',
   DashboardDisputeFinding = 'dashboard_dispute_findings',
+  ProgressTracker = 'progress_tracker',
+  OnboardingGoalChoice = 'onboarding_goal_choice',
 }
 
 export enum AnalyticClickEvents {
