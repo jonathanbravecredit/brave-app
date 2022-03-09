@@ -3,57 +3,38 @@
     <label for="input_field" class="block mb-2.5 brave-body2-semibold whitespace-nowrap"
       >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
-    <div class="relative">
-      <input
-        #inputField
-        name="input_field"
-        [type]="hide ? config?.type || 'text' : 'text'"
-        formControlName="input"
-        [maxlength]="config?.maxLength || 255"
-        [minlength]="config?.minLength || 0"
-        [placeholder]="config?.placeholder || ''"
-        [autocomplete]="config?.autocomplete || 'off'"
-        (change)="onChange($event.target)"
-        [ngClass]="{
-          'border-red-500':
-            required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
-          'border-blueGray-300': !(
-            required &&
-            componentFormGroup.controls.input.touched &&
-            !componentFormGroup.controls.input.valid
-          )
-        }"
-        class="
-          text-sm text-blueGray-600
-          px-3
-          py-1
-          placeholder-blueGray-300
-          relative
-          bg-white
-          rounded
-          border
-          outline-none
-          focus:ring-0 focus:ring-indigo-800
-          w-full
-        "
-      />
-      <span
-        *ngIf="hideIcon"
-        class="
-          material-icons-outlined
-          absolute
-          top-0.5
-          right-1
-          w-6
-          text-xl
-          h-full
-          rounded
-          text-blueGray-400
-          hover:cursor-pointer
-        "
-        (click)="hide = !hide"
-        >{{ hide ? 'visibility_off' : 'visibility' }}</span
-      >
-    </div>
+    <input
+      #inputField
+      name="input_field"
+      [type]="config?.type || 'text'"
+      formControlName="input"
+      [maxlength]="config?.maxLength || 255"
+      [minlength]="config?.minLength || 0"
+      [placeholder]="config?.placeholder || ''"
+      [autocomplete]="config?.autocomplete || 'off'"
+      (change)="onChange($event.target)"
+      [ngClass]="{
+        'border-red-500':
+          required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
+        'border-blueGray-300': !(
+          required &&
+          componentFormGroup.controls.input.touched &&
+          !componentFormGroup.controls.input.valid
+        )
+      }"
+      class="
+        text-sm text-blueGray-600
+        px-3
+        py-1
+        placeholder-blueGray-300
+        relative
+        bg-white
+        rounded
+        border
+        outline-none
+        focus:ring-0 focus:ring-indigo-800
+        w-full
+      "
+    />
   </div>
 </form>

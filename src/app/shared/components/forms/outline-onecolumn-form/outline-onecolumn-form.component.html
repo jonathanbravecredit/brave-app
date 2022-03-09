@@ -1,12 +1,20 @@
 <form [formGroup]="parentForm">
   <ng-container *ngFor="let config of configs; index as idx">
     <brave-outline-input
+      *ngIf="config.name !== 'password'; else password"
       [config]="config"
       [required]="config.required"
-      [hideIcon]="config.hideIcon"
       (onComponentReady)="addChild(config.name || formatInputName(idx), $event)"
     >
     </brave-outline-input>
+    <ng-template #password>
+      <brave-outline-input-hidden
+        [config]="config"
+        [required]="config.required"
+        (onComponentReady)="addChild(config.name || formatInputName(idx), $event)"
+      >
+      </brave-outline-input-hidden>
+    </ng-template>
   </ng-container>
 
   <!-- subheader -->

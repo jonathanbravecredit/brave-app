@@ -46,7 +46,6 @@ export class SigninForgotComponent {
       placeholder: 'New Password',
       autocomplete: 'off',
       required: true,
-      hideIcon: true,
     },
     {
       size: 'base',
