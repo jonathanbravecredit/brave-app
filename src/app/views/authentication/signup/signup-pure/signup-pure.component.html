@@ -1,23 +1,23 @@
 <div
-  *ngIf="fetchingFinished"
-  class="flex content-center items-center justify-center h-full p-2"
+class="flex content-center items-center justify-center h-full p-2"
 >
-  <div class="w-full max-w-xs">
-    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
-      <!-- logo -->
-      <div class="flex justify-center">
-        <img class="w-24 h-24 mb-3" src="https://d3e1i93f88eoxl.cloudfront.net/logo-only.png" />
+<div class="w-full max-w-xs">
+  <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
+    <!-- logo -->
+    <div class="flex justify-center">
+      <img class="w-24 h-24 mb-3" src="https://d3e1i93f88eoxl.cloudfront.net/logo-only.png" />
+    </div>
+
+    <div class="flex justify-center">
+      <img class="w-64" src="https://d3e1i93f88eoxl.cloudfront.net/logo-text-only-blurple.svg" />
+    </div>
+    <!-- Social sign up buttons -->
+    <div class="rounded-t mb-0 mt-6">
+      <div class="text-center mb-3">
+        <h5 class="brave-h5-semibold">Create your new account!</h5>
       </div>
 
-      <div class="flex justify-center">
-        <img class="w-64" src="https://d3e1i93f88eoxl.cloudfront.net/logo-text-only-blurple.svg" />
-      </div>
-      <!-- Social sign up buttons -->
-      <div class="rounded-t mb-0 mt-6">
-        <div class="text-center mb-3">
-          <h5 class="brave-h5-semibold">Create your new account!</h5>
-        </div>
-
+      <ng-container *ngIf="fetchingFinished">
         <ng-container *ngIf="campaignActive; else expired">
           <ng-container *ngIf="hasReferralCode">
             <ng-container *ngIf="validReferralCode; else invalid">
@@ -46,6 +46,7 @@
             <p class="text-sm text-white">The code you're using is not valid for any campaign or referral bonuses.</p>
           </div>
         </ng-template>
+      </ng-container>
 
         <!-- <div class="btn-wrapper text-center">
           <div class="mb-1">

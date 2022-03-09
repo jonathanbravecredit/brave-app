@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
           await this.checkCampaign();
           this.hasReferralCode = true;
           this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
-          this.checkReferralCode();
+          await this.checkReferralCode();
         } else {
           this.fetchingFinished = true;
         }
@@ -56,7 +56,6 @@ export class SignupComponent implements OnInit {
 
   async checkCampaign() {
     const res = await this.campaign.getCampaignPublic();
-    if (res) res.campaign = 'test';
     this.campaignActive = dayjs(res?.endDate).isAfter(new Date()) && res?.campaign !== 'NO_CAMPAIGN';
   }
 
@@ -73,9 +72,8 @@ export class SignupComponent implements OnInit {
     let referralValidation: { valid: boolean } = await referralValidationData.json();
 
     if (referralValidation.valid) {
+      this.validReferralCode = true;
     }
-
-    this.validReferralCode = true;
 
     this.fetchingFinished = true;
   }
