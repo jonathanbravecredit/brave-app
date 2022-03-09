@@ -41,10 +41,12 @@ export class SignupComponent implements OnInit {
     router.events.subscribe(async (event) => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('referralCode')) {
-          this.checkCampaign();
+          await this.checkCampaign();
           this.hasReferralCode = true;
           this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
-          this.checkReferralCode();
+          await this.checkReferralCode();
+        } else {
+          this.fetchingFinished = true;
         }
       }
     });
