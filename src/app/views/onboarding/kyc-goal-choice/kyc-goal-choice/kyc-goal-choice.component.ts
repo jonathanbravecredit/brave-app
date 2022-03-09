@@ -14,7 +14,6 @@ export interface IGoalInfo {
   templateUrl: './kyc-goal-choice.component.html',
 })
 export class KycGoalChoiceComponent implements OnInit {
-
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
@@ -22,5 +21,4 @@ export class KycGoalChoiceComponent implements OnInit {
   routeChangeClick() {
     this.router.navigate([routes.root.onboarding.name.full]);
   }
-
 }
