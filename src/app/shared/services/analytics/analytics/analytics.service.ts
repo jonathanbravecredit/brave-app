@@ -60,6 +60,9 @@ export class AnalyticsService {
           case '/dashboard/report/snapshot/creditmix':
             this.firePageViewEvent(AnalyticPageViewEvents.DashboardReportSnapshotCreditMix);
             break;
+          case '/dashboard/report/snapshot/progresstracker':
+            this.firePageViewEvent(AnalyticPageViewEvents.ProgressTracker);
+            break;
           case '/dashboard/report':
             this.firePageViewEvent(AnalyticPageViewEvents.DashboardReport);
             break;
@@ -74,6 +77,7 @@ export class AnalyticsService {
             break;
           case '/onboarding/congratulations':
             this.firePageViewEvent(AnalyticPageViewEvents.OnboardingCongratulations);
+            break;
         }
       }
     });
