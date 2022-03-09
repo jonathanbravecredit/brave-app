@@ -18,9 +18,7 @@ export interface IGoalInfo {
 export class KycGoalChoiceComponent implements OnInit {
   constructor(private router: Router, private analytics: AnalyticsService) {}
 
-  ngOnInit(): void {
-    this.analytics.firePageViewEvent(AnalyticPageViewEvents.OnboardingGoalChoice);
-  }
+  ngOnInit(): void {}
 
   routeChangeClick() {
     this.router.navigate([routes.root.onboarding.name.full]);

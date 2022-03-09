@@ -78,6 +78,9 @@ export class AnalyticsService {
           case '/onboarding/congratulations':
             this.firePageViewEvent(AnalyticPageViewEvents.OnboardingCongratulations);
             break;
+          case '/onboarding/goalchoice':
+            this.firePageViewEvent(AnalyticPageViewEvents.OnboardingGoalChoice);
+            break;
         }
       }
     });
