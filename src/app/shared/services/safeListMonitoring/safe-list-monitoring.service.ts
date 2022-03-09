@@ -17,19 +17,22 @@ export class SafeListMonitoringService {
           case '/dashboard/report/snapshot/negative':
             this.firePageView(MonitorViewEvents.KeyPageView);
             break;
-          case '/dashboard/report/snapshot/creditmix':
+          case '/dashboard/report/snapshot/forbearance':
+            this.firePageView(MonitorViewEvents.KeyPageView);
+            break;
+          case '/dashboard/report/snapshot/databreach':
             this.firePageView(MonitorViewEvents.KeyPageView);
             break;
           case '/dashboard/report/snapshot/creditutilization':
             this.firePageView(MonitorViewEvents.KeyPageView);
             break;
+          case '/dashboard/report/snapshot/creditmix':
+            this.firePageView(MonitorViewEvents.KeyPageView);
+            break;
           case '/dashboard/report':
             this.firePageView(MonitorViewEvents.KeyPageView);
             break;
-          case '/dashboard/report/snapshot/forbearance':
-            this.firePageView(MonitorViewEvents.KeyPageView);
-            break;
-          case '/dashboard/report/snapshot/databreach':
+          case '/dashboard/disputes/findings':
             this.firePageView(MonitorViewEvents.KeyPageView);
             break;
         }
