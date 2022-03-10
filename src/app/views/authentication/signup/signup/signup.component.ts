@@ -28,7 +28,7 @@ export class SignupComponent implements OnDestroy {
   campaignActive: boolean = false; //true is campaign still active
 
   paramsSub$: Subscription | undefined;
-  campaignSub$: Subscription | undefined;
+  validateSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -51,7 +51,7 @@ export class SignupComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.paramsSub$?.unsubscribe();
-    this.campaignSub$?.unsubscribe();
+    this.validateSub$?.unsubscribe();
   }
 
   handleParams(params: Params): void {
@@ -63,7 +63,7 @@ export class SignupComponent implements OnDestroy {
     this.hasReferralCode = true;
     this.referralCode = code;
     const codeValid$ = from(this.referral.validateReferralCode(this.referralCode));
-    combineLatest([this.campaign.isActive$, codeValid$]).subscribe(([active, validation]) => {
+    this.validateSub$ = combineLatest([this.campaign.isActive$, codeValid$]).subscribe(([active, validation]) => {
       this.campaignActive = active;
       this.validReferralCode = validation.valid;
       this.cleanUp();
