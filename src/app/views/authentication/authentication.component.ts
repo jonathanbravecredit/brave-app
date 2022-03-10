@@ -17,7 +17,7 @@ export class AuthenticationComponent implements OnDestroy {
       const { referralCode } = params;
       if (!referralCode) return;
       this.referrals.referredByCode$.next(referralCode);
-      this.referrals.checkCodeValidity(referralCode);
+      this.referrals.validateReferralCode(referralCode);
     });
   }
 
