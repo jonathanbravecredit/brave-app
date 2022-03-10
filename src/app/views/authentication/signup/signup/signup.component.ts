@@ -54,7 +54,7 @@ export class SignupComponent implements OnDestroy {
     this.campaignSub$?.unsubscribe();
   }
 
-  async handleParams(params: Params): Promise<void> {
+  handleParams(params: Params): void {
     const { referralCode } = params;
     referralCode ? this.validate(referralCode) : this.cleanUp();
   }
