@@ -9,7 +9,8 @@ import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverb
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
-import { Subscription } from 'rxjs';
+import { combineLatest, from, of, Subscription } from 'rxjs';
+import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -56,30 +57,21 @@ export class SignupComponent implements OnDestroy {
   async handleParams(params: Params): Promise<void> {
     const { referralCode } = params;
     if (referralCode) {
-      this.setReferralCodeParams(referralCode);
-      this.setCampaignActive();
-      await this.setValidReferralCode();
-      this.cleanUp();
+      this.validate(referralCode);
     } else {
       this.cleanUp();
     }
   }
 
-  setReferralCodeParams(code: string): void {
+  validate(code: string): void {
     this.hasReferralCode = true;
     this.referralCode = code;
-  }
-
-  setCampaignActive(): void {
-    this.campaignSub$ = this.campaign.isActive$.subscribe((val) => {
-      this.campaignActive = val;
+    const codeValid$ = from(this.referral.validateReferralCode(this.referralCode));
+    combineLatest([this.campaign.isActive$, codeValid$]).subscribe(([active, validation]) => {
+      this.campaignActive = active;
+      this.validReferralCode = validation.valid;
+      this.cleanUp();
     });
-  }
-
-  async setValidReferralCode(): Promise<void> {
-    if (!this.referralCode) return;
-    const { valid } = await this.referral.validateReferralCode(this.referralCode);
-    this.validReferralCode = valid;
   }
 
   cleanUp(): void {
