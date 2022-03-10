@@ -37,6 +37,14 @@ export class SignupComponent implements OnDestroy {
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
   ) {
+    this.subscribeToRouteDate();
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub$?.unsubscribe();
+  }
+
+  subscribeToRouteDate(): void {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
       const { referralCode, hasReferralCode, validReferralCode, campaignActive } = resp.data as AuthResolverResults;
       this.hasReferralCode = hasReferralCode;
@@ -44,10 +52,6 @@ export class SignupComponent implements OnDestroy {
       this.validReferralCode = validReferralCode;
       this.campaignActive = campaignActive;
     });
-  }
-
-  ngOnDestroy(): void {
-    this.routeSub$?.unsubscribe();
   }
 
   /**
