@@ -56,11 +56,7 @@ export class SignupComponent implements OnDestroy {
 
   async handleParams(params: Params): Promise<void> {
     const { referralCode } = params;
-    if (referralCode) {
-      this.validate(referralCode);
-    } else {
-      this.cleanUp();
-    }
+    referralCode ? this.validate(referralCode) : this.cleanUp();
   }
 
   validate(code: string): void {
