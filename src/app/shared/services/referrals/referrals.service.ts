@@ -34,7 +34,8 @@ export class ReferralsService implements OnDestroy {
     this.isActiveSub$?.unsubscribe();
   }
 
-  async validateReferralCode(referralCode: string): Promise<{ valid: boolean }> {
+  async validateReferralCode(referralCode: string | undefined): Promise<{ valid: boolean }> {
+    if (referralCode) return { valid: false };
     const url = `${environment.api}/referral/validation/${referralCode}`;
     const referralValidationRequest = await this.iam.signRequest(url, 'POST', {}, JSON.stringify({}));
     const data = await fetch(referralValidationRequest);
