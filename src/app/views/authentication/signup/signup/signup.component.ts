@@ -9,8 +9,8 @@ import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverb
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
-import { combineLatest, from, of, Subscription } from 'rxjs';
-import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { forkJoin, combineLatest, Subscription } from 'rxjs';
+import { AuthResolverResults } from '@shared/resolvers/auth/auth.resolver';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -22,13 +22,11 @@ export class SignupComponent implements OnDestroy {
   viewState: SignupState = 'init';
   message: string = '';
   hasReferralCode: boolean = false;
-  referralCode: string | undefined;
+  referralCode: string | null | undefined;
   validReferralCode: boolean = false;
-  fetchingFinished: boolean = false;
   campaignActive: boolean = false; //true is campaign still active
 
-  paramsSub$: Subscription | undefined;
-  validateSub$: Subscription | undefined;
+  routeSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -38,40 +36,18 @@ export class SignupComponent implements OnDestroy {
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
-    private campaign: CampaignService,
   ) {
-    router.events.subscribe(async (event) => {
-      if (event instanceof NavigationEnd) {
-        this.paramsSub$ = this.route.queryParams.subscribe((params) => {
-          this.handleParams(params);
-        });
-      }
+    this.routeSub$ = this.route.data.subscribe((resp: any) => {
+      const { referralCode, hasReferralCode, validReferralCode, campaignActive } = resp.data as AuthResolverResults;
+      this.hasReferralCode = hasReferralCode;
+      this.referralCode = referralCode;
+      this.validReferralCode = validReferralCode;
+      this.campaignActive = campaignActive;
     });
   }
 
   ngOnDestroy(): void {
-    this.paramsSub$?.unsubscribe();
-    this.validateSub$?.unsubscribe();
-  }
-
-  handleParams(params: Params): void {
-    const { referralCode } = params;
-    referralCode ? this.validate(referralCode) : this.cleanUp();
-  }
-
-  validate(code: string): void {
-    this.hasReferralCode = true;
-    this.referralCode = code;
-    const codeValid$ = from(this.referral.validateReferralCode(this.referralCode));
-    this.validateSub$ = combineLatest([this.campaign.isActive$, codeValid$]).subscribe(([active, validation]) => {
-      this.campaignActive = active;
-      this.validReferralCode = validation.valid;
-      this.cleanUp();
-    });
-  }
-
-  cleanUp(): void {
-    this.fetchingFinished = true;
+    this.routeSub$?.unsubscribe();
   }
 
   /**
