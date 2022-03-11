@@ -37,12 +37,19 @@ export class CampaignService {
 
   async getCampaignPublic(): Promise<ICampaign | null> {
     try {
-
       let signedReq = await this.iam.signRequest(`${environment.api}/campaigns/public`, 'GET', {});
       let res = await fetch(signedReq);
-      return await res.json()
+      return await res.json();
     } catch (err) {
-      return null
+      return null;
     }
+  }
+
+  async setCampaignActive(): Promise<boolean> {
+    const campaign = await this.getCampaignPublic();
+    const isActive = campaign?.campaign !== 'NO_CAMPAIGN';
+    this.isActive = isActive;
+    this.isActive$.next(isActive);
+    return isActive;
   }
 }

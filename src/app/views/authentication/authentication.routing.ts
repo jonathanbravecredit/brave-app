@@ -13,6 +13,7 @@ import { SignupThankyouComponent } from '@views/authentication/signup-thankyou/s
 import { SignupComponent } from '@views/authentication/signup/signup/signup.component';
 import { DeactivatedComponent } from '@views/authentication/deactivated/deactivated.component';
 import { ROUTE_NAMES as routes } from '../../shared/routes/routes.names';
+import { AuthResolver } from '@shared/resolvers/auth/auth.resolver';
 
 const AuthenticationRoutes: Routes = [
   {
@@ -21,6 +22,7 @@ const AuthenticationRoutes: Routes = [
     children: [
       {
         path: `${routes.root.auth.signup.segment}`,
+        resolve: { data: AuthResolver },
         component: SignupComponent,
       },
       {

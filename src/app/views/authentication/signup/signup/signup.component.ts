@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -8,10 +8,8 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { environment } from '@environments/environment';
-import { IamService } from '@shared/services/auth/iam.service';
-import { CampaignService } from '@shared/services/campaign/campaign.service';
-const dayjs = require('dayjs');
+import { Subscription } from 'rxjs';
+import { AuthResolverResults } from '@shared/resolvers/auth/auth.resolver';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -19,63 +17,40 @@ export type SignupState = 'init' | 'invalid';
   selector: 'brave-signup',
   templateUrl: './signup.component.html',
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnDestroy {
   viewState: SignupState = 'init';
   message: string = '';
   hasReferralCode: boolean = false;
-  referralCode: string | undefined;
+  referralCode: string | null | undefined;
   validReferralCode: boolean = false;
-  fetchingFinished: boolean = false;
   campaignActive: boolean = false; //true is campaign still active
+
+  routeSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private auth: AuthService,
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
-    private campaign: CampaignService,
-    private iam: IamService,
   ) {
-    router.events.subscribe(async (event) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url.includes('referralCode')) {
-          await this.checkCampaign();
-          this.hasReferralCode = true;
-          this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
-          await this.checkReferralCode();
-        } else {
-          this.fetchingFinished = true;
-        }
-      }
+    this.subscribeToRouteDate();
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub$?.unsubscribe();
+  }
+
+  subscribeToRouteDate(): void {
+    this.routeSub$ = this.route.data.subscribe((resp: any) => {
+      const { referralCode, hasReferralCode, validReferralCode, campaignActive } = resp.data as AuthResolverResults;
+      this.hasReferralCode = hasReferralCode;
+      this.referralCode = referralCode;
+      this.validReferralCode = validReferralCode;
+      this.campaignActive = campaignActive;
     });
-  }
-
-  ngOnInit(): void {}
-
-  async checkCampaign() {
-    const res = await this.campaign.getCampaignPublic();
-    this.campaignActive = dayjs(res?.endDate).isAfter(new Date()) && res?.campaign !== 'NO_CAMPAIGN';
-  }
-
-  async checkReferralCode() {
-    let referralValidationRequest = await this.iam.signRequest(
-      `${environment.api}/referral/validation/${this.referralCode}`,
-      'POST',
-      {},
-      JSON.stringify({}),
-    );
-
-    let referralValidationData = await fetch(referralValidationRequest);
-
-    let referralValidation: { valid: boolean } = await referralValidationData.json();
-
-    if (referralValidation.valid) {
-      this.validReferralCode = true;
-    }
-
-    this.fetchingFinished = true;
   }
 
   /**
