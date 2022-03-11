@@ -63,28 +63,19 @@ export class SignupComponent implements OnDestroy {
     let isValid: boolean = false;
     try {
       const resp: Response = await this.neverBounce.validateEmail(user.username);
-      console.log('resp: ', resp);
       const body: NeverBounceResponse = await resp.json();
-      console.log('neverbounce body: ', body);
       isValid = body.result.toLowerCase() === 'valid' ? true : false;
-      console.log('neverbounce isValid: ', isValid);
     } catch (err) {
-      console.log('neverbounce error: ', err);
       isValid = false;
     }
 
     if (isValid) {
       try {
         const { userSub: sub } = await this.auth.signUp(user);
-        console.log('cognito sub: ', sub);
-        // this.analytics.fireCompleteRegistration(0.0, 'USD');
-        // this.analytics.fireUserTrackingEvent(sub);
-        // this.analytics.addToCohort();
-        console.log('here 1');
         this.createReferrals(sub);
+        this.handleAnalytics(sub);
         this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
-        console.log('err in signup: ', err);
         if (err.code === SignUpErrors.UsernameExistsException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
         } else if (err.code === SignUpErrors.NotAuthorizedException) {
@@ -92,10 +83,10 @@ export class SignupComponent implements OnDestroy {
         } else if (err.code === SignUpErrors.InvalidPasswordException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]);
         } else {
-          this.handleSignupError('invalid', 'Invalid sign up credentials');
+          console.log('unknown error', err);
+          this.handleSignupError('invalid', 'Unknown signup error');
         }
       }
-      this.interstitial.fetching$.next(false);
     } else {
       this.interstitial.fetching$.next(false);
       this.handleSignupError('invalid', 'Invalid sign up credentials');
@@ -111,18 +102,23 @@ export class SignupComponent implements OnDestroy {
     this.message = message || `Invalid sign up credentials`;
   }
 
+  handleAnalytics(sub: string): void {
+    try {
+      this.analytics.fireCompleteRegistration(0.0, 'USD');
+      this.analytics.fireUserTrackingEvent(sub);
+      this.analytics.addToCohort();
+    } catch (err) {
+      console.log('mixpanel error: ', err);
+    }
+  }
+
   createReferrals(sub: string): void {
-    const code = this.referralCode;
-    console.log('here 2');
-    this.referral
-      .createReferral(sub, code)
-      .then((res) => {
-        console.log('createReferral res', res);
-      })
-      .catch((err) => {
-        console.log('createReferral err', err);
-      });
-    console.log('here 3');
+    try {
+      const code = this.referralCode;
+      this.referral.createReferral(sub, code);
+    } catch (err) {
+      console.log('create referral error');
+    }
   }
   /**
    * Method to sign user up/in with Facebook
