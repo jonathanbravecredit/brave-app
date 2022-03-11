@@ -62,13 +62,21 @@ export class ReferralsService implements OnDestroy {
    */
 
   async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
+    console.log('here 1');
     if (!this.isActive) return;
-    const url = `${environment.api}/referral`;
-    let body = { id: sub, campaign: this.campaign } as {id: string, campaign: string, referredByCode?: string};
-    body = referredByCode ? { ...body, referredByCode } : body;
-    let headers = {};
-    let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
-    return await fetch(signedReq);
+    try {
+      console.log('here 2');
+      const url = `${environment.api}/referral`;
+      let body = { id: sub, campaign: this.campaign } as { id: string; campaign: string; referredByCode?: string };
+      body = referredByCode ? { ...body, referredByCode } : body;
+      console.log('body: ', body);
+      let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
+      console.log('signedReq: ', signedReq);
+      return await fetch(signedReq);
+    } catch (err) {
+      console.log('createReferral: ', err);
+      throw err;
+    }
   }
 
   /**
