@@ -89,7 +89,7 @@ export class SignupComponent implements OnDestroy {
       }
     } else {
       this.interstitial.fetching$.next(false);
-      this.handleSignupError('invalid', 'Invalid sign up credentials');
+      this.handleSignupError('invalid', 'Please use a valid email');
     }
   }
 
