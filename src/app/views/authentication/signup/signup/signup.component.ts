@@ -24,7 +24,6 @@ export class SignupComponent implements OnDestroy {
   referralCode: string | null | undefined;
   validReferralCode: boolean = false;
   campaignActive: boolean = false; //true is campaign still active
-
   routeSub$: Subscription | undefined;
 
   constructor(
