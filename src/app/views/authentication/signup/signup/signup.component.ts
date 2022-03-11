@@ -75,7 +75,7 @@ export class SignupComponent implements OnDestroy {
         this.analytics.fireCompleteRegistration(0.0, 'USD');
         this.analytics.fireUserTrackingEvent(sub);
         this.analytics.addToCohort();
-        const code = this.referral.referredByCode$.value;
+        const code = this.referralCode;
         await this.referral.createReferral(sub, code);
         this.interstitial.fetching$.next(false);
         this.router.navigate([routes.root.auth.thankyou.full]);
