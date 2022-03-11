@@ -19,8 +19,8 @@
 <!-- WHEN IS IT PAID OUT -->
 <h3 class="text-lg font-bold mt-8 mb-5">When Is it Paid Out?</h3>
 <p class="mb-5">
-  If you succesfully refer {{ maxReferrals || 10 }} people, your ${{ maxEarnings || '--' }} gift card will be sent to
-  the email on record
+  If you succesfully refer {{ maxReferrals || 10 }} people, your ${{ maxEarnings + bonusAmount || '--' }} gift card will
+  be sent to the email on record
   <span class="font-bold"> the Tuesday after the full week the {{ maxReferrals || 10 }}th person enrolls.</span>
 </p>
 <p>
