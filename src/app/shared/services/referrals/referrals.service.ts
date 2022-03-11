@@ -14,6 +14,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 export class ReferralsService implements OnDestroy {
   campaign = CURRENT_CAMPAIGN;
   referredByCode$ = new BehaviorSubject<string | null>(null);
+  referredByCodeValid$ = new BehaviorSubject<boolean>(true);
   isActive: boolean = false;
   isActive$ = new BehaviorSubject<boolean>(false);
   isActiveSub$: Subscription | undefined;
@@ -34,8 +35,14 @@ export class ReferralsService implements OnDestroy {
     this.isActiveSub$?.unsubscribe();
   }
 
-  checkCodeValidity(referralCode: string): void {
-    let referral = this.getReferralByReferralCode(referralCode); //TODO
+  async validateReferralCode(referralCode: string | undefined): Promise<{ valid: boolean }> {
+    if (!referralCode) return { valid: false };
+    const url = `${environment.api}/referral/validation/${referralCode}`;
+    const referralValidationRequest = await this.iam.signRequest(url, 'POST', {}, JSON.stringify({}));
+    const data = await fetch(referralValidationRequest);
+    const parsed: { valid: boolean } = await data.json();
+    this.referredByCodeValid$.next(parsed.valid);
+    return parsed;
   }
 
   /**
@@ -56,11 +63,15 @@ export class ReferralsService implements OnDestroy {
 
   async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
     if (!this.isActive) return;
-    const url = `${environment.api}/referral`;
-    let body = { id: sub, campaign: this.campaign, referredByCode };
-    let headers = {};
-    let signedReq = await this.iam.signRequest(url, 'POST', headers, JSON.stringify(body));
-    return await fetch(signedReq);
+    try {
+      const url = `${environment.api}/referral`;
+      let body = { id: sub, campaign: this.campaign } as { id: string; campaign: string; referredByCode?: string };
+      body = referredByCode ? { ...body, referredByCode } : body;
+      let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
+      return await fetch(signedReq);
+    } catch (err) {
+      throw err;
+    }
   }
 
   /**
