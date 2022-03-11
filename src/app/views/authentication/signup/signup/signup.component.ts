@@ -66,7 +66,7 @@ export class SignupComponent implements OnDestroy {
       console.log('resp: ', resp);
       const body: NeverBounceResponse = await resp.json();
       console.log('neverbounce body: ', body);
-      isValid = body.result === 'valid' ? true : false;
+      isValid = body.result.toLowerCase() === 'valid' ? true : false;
       console.log('neverbounce isValid: ', isValid);
     } catch (err) {
       console.log('neverbounce error: ', err);
@@ -77,13 +77,14 @@ export class SignupComponent implements OnDestroy {
       try {
         const { userSub: sub } = await this.auth.signUp(user);
         console.log('cognito sub: ', sub);
-        this.analytics.fireCompleteRegistration(0.0, 'USD');
-        this.analytics.fireUserTrackingEvent(sub);
-        this.analytics.addToCohort();
-        console.log('here 1')
+        // this.analytics.fireCompleteRegistration(0.0, 'USD');
+        // this.analytics.fireUserTrackingEvent(sub);
+        // this.analytics.addToCohort();
+        console.log('here 1');
         this.createReferrals(sub);
         this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
+        console.log('err in signup: ', err);
         if (err.code === SignUpErrors.UsernameExistsException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
         } else if (err.code === SignUpErrors.NotAuthorizedException) {
@@ -112,13 +113,16 @@ export class SignupComponent implements OnDestroy {
 
   createReferrals(sub: string): void {
     const code = this.referralCode;
-    console.log('here 2')
-    this.referral.createReferral(sub, code).then(res => {
-      console.log('createReferral res', res);
-    }).catch(err => {
-      console.log('createReferral err', err);
-    });
-    console.log('here 3')
+    console.log('here 2');
+    this.referral
+      .createReferral(sub, code)
+      .then((res) => {
+        console.log('createReferral res', res);
+      })
+      .catch((err) => {
+        console.log('createReferral err', err);
+      });
+    console.log('here 3');
   }
   /**
    * Method to sign user up/in with Facebook
