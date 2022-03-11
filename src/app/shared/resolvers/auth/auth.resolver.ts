@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 
@@ -15,7 +15,7 @@ export interface AuthResolverResults {
 })
 export class AuthResolver implements Resolve<AuthResolverResults> {
   constructor(private referrals: ReferralsService, private campaign: CampaignService) {}
-  async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<AuthResolverResults> {
+  async resolve(route: ActivatedRouteSnapshot): Promise<AuthResolverResults> {
     const { referralCode } = route.queryParams;
     this.referrals.referredByCode$.next(referralCode);
     const hasReferralCode = !!referralCode;

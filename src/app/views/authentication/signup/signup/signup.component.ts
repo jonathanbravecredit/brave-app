@@ -8,8 +8,7 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { CampaignService } from '@shared/services/campaign/campaign.service';
-import { forkJoin, combineLatest, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthResolverResults } from '@shared/resolvers/auth/auth.resolver';
 
 export type SignupState = 'init' | 'invalid';
