@@ -5,6 +5,11 @@
   successfully enrolls and checks their credit scores here. There's a {{ maxReferrals || 10 }} person referral limit a
   month.
 </p>
+<!-- OPTIONAL: BONUS -->
+<p *ngIf="bonusThreshold > 0" class="mb-5">
+  BONUS: get an <span class="font-bold">additional ${{ bonusAmount || '--' }}</span> if
+  {{ bonusThreshold || '--' }} friends successfully enroll!
+</p>
 <p>
   The {{ maxReferrals || 10 }} person limit resets every month, and no referrals roll over to new campaigns. See the
   full terms
@@ -21,12 +26,6 @@
 <p>
   If you have under {{ maxReferrals || 10 }} people referred for a month, you'll get the payout the first Tuesday of the
   following month.
-</p>
-
-<!-- OPTIONAL: BONUS -->
-<p *ngIf="bonusThreshold > 0" class="mb-5">
-  BONUS: get an <span class="font-bold">additional ${{ bonusAmount || '--' }}</span> if
-  {{ bonusThreshold || '--' }} friends successfully enroll!
 </p>
 
 <!-- GIFTCARD INFO -->
