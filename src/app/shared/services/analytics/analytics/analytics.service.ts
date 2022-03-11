@@ -12,6 +12,8 @@ import { FacebookService } from '@shared/services/analytics/facebook/facebook.se
 import { GoogleService } from '@shared/services/analytics/google/google.service';
 import { MixpanelService } from '@shared/services/analytics/mixpanel/mixpanel.service';
 const dayjs = require('dayjs');
+const weekOfYear = require('dayjs/plugin/weekOfYear');
+dayjs.extend(weekOfYear);
 import { filter, pairwise } from 'rxjs/operators';
 
 @Injectable({
@@ -148,7 +150,7 @@ export class AnalyticsService {
       return;
     }
     const now = new Date();
-    const week = dayjs(new Date()).format('ww');
+    const week = dayjs(new Date()).week();
     const year = now.getFullYear();
     const cohort = `${year}${week}`;
     this.mixpanel.addToCohort(cohort);
