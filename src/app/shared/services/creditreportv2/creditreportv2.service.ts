@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { ICreditReport } from '@shared/models/CreditReports.model';
 import { Store } from '@ngxs/store';
-import { IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import * as CreditReportActions from '../../../store/credit-report/credit-report.actions';
 
@@ -23,18 +22,22 @@ export class Creditreportv2Service {
     return report;
   }
 
-  updateCreditReportState(report: IMergeReport) {
+  updateCreditReportState(creditReport: ICreditReport) {
+    const { report, modifiedOn } = creditReport;
     const payload = {
-      report: report,
+      report,
       updatedOn: new Date().toISOString(),
+      modifiedOn,
     };
     this.store.dispatch(new CreditReportActions.Add(payload));
   }
 
-  async updateCreditReportStateAsync(report: IMergeReport) {
+  async updateCreditReportStateAsync(creditReport: ICreditReport) {
+    const { report, modifiedOn } = creditReport;
     const payload = {
-      report: report,
+      report,
       updatedOn: new Date().toISOString(),
+      modifiedOn,
     };
     await new Promise((resolve, reject) => {
       this.store
