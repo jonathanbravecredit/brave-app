@@ -99,6 +99,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
       .subscribe((creditReportData: CreditReportStateModel) => {
         this.report = creditReportData.report;
         if (this.report) {
+          this.dashboardService.updatedOn$.next(creditReportData.modifiedOn);
           this.dashboardService.dashReport$.next(this.report);
           this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
           const tradelines = TransunionUtil.queries.report.listTradelines(this.report);

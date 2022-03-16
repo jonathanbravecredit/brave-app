@@ -31,6 +31,7 @@ import { AuthService } from '@shared/services/auth/auth.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import * as CreditReportActions from '@store/credit-report/credit-report.actions';
+import { ICreditReport } from '@shared/models/CreditReports.model';
 
 export enum KYCResponse {
   Failed = 'failed',
@@ -539,8 +540,9 @@ export class KycService {
   /*                STATE
   /*
   /*=====================================*/
-  async setCreditReport(report: IMergeReport | null = null): Promise<void> {
-    const payload = { report, updatedOn: new Date().toISOString() };
+  async setCreditReport(creditReport: ICreditReport): Promise<void> {
+    const { report, modifiedOn } = creditReport;
+    const payload = { report, updatedOn: new Date().toISOString(), modifiedOn };
     await this.store.dispatch(new CreditReportActions.Add(payload)).toPromise();
   }
 
