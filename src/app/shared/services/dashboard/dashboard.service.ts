@@ -76,12 +76,6 @@ export class DashboardService implements OnDestroy {
         this.tuReport = report;
       });
 
-    this.updatedOnSub$ = this.reportService.creditReport$
-      .pipe(filter((report) => report !== undefined))
-      .subscribe((val) => {
-        this.setLastUpdated(val.modifiedOn);
-      });
-
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state$.next(state.appData);
       this.state = state.appData;

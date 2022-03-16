@@ -95,11 +95,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   subscribeToReportData(): void {
     this.reportSub$ = this.report$
-      .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
-      .subscribe((creditReportData: CreditReportStateModel) => {
-        this.report = creditReportData.report;
+      .pipe(filter((report) => report !== undefined))
+      .subscribe((creditReport: CreditReportStateModel) => {
+        this.report = creditReport.report;
         if (this.report) {
-          this.dashboardService.updatedOn$.next(creditReportData.modifiedOn);
+          this.dashboardService.updatedOn$.next(creditReport.modifiedOn);
           this.dashboardService.dashReport$.next(this.report);
           this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
           const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
