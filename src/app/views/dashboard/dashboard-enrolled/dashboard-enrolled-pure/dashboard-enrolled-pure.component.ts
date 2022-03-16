@@ -17,6 +17,7 @@ import { filter, skip } from 'rxjs/operators';
 })
 export class DashboardEnrolledPureComponent implements OnDestroy {
   modalOpen: boolean = true;
+  updatedOnSub$: Subscription | undefined;
 
   @Input() adsData: IAdData[] | undefined;
   @Input() referral: IReferral | null | undefined;
@@ -68,7 +69,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
       });
     });
 
-    this.dashboardService.updatedOn$.pipe(filter((u) => !u)).subscribe((u) => {
+    this.updatedOnSub$ = this.dashboardService.updatedOn$.subscribe((u) => {
       this.updatedAt = u || new Date().toISOString();
     });
   }

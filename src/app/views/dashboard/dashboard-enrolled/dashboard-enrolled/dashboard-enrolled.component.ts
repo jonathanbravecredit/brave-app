@@ -66,12 +66,12 @@ export class DashboardEnrolledComponent implements OnDestroy {
   futureScore: number = 0;
 
   constructor(
+    private store: Store,
     private router: Router,
     private route: ActivatedRoute,
-    public dashboardService: DashboardService,
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
-    private store: Store,
+    public dashboardService: DashboardService,
     public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();

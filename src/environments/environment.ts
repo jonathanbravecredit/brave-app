@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://k8yolkr65j.execute-api.us-east-2.amazonaws.com/prod',
+  api: 'https://yxd90lcrja.execute-api.us-east-2.amazonaws.com/dev',
 };
 
 /*
