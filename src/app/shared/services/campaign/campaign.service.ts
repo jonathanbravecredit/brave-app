@@ -48,10 +48,16 @@ export class CampaignService {
 
   async setCampaignActive(): Promise<boolean> {
     const campaign = await this.getCampaignPublic();
-    const now = dayjs(new Date());
-    const isActive = campaign?.campaign !== 'NO_CAMPAIGN' || now.isAfter(dayjs(campaign.endDate));
-    this.isActive = isActive;
-    this.isActive$.next(isActive);
-    return isActive;
+    if (!campaign) {
+      this.isActive = false;
+      this.isActive$.next(false);
+      return false;
+    } else {
+      const now = dayjs(new Date());
+      const isActive = campaign.campaign !== 'NO_CAMPAIGN' && now.isBefore(dayjs(campaign.endDate));
+      this.isActive = isActive;
+      this.isActive$.next(isActive);
+      return isActive;
+    }
   }
 }
