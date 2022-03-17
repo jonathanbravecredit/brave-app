@@ -53,9 +53,12 @@ export class DashboardService implements OnDestroy {
   dashScoresSub$: Subscription | undefined;
   progressTrackerData$ = new BehaviorSubject<Initiative | null>(null);
 
+  updatedOn: string | undefined;
+  updatedOn$ = new BehaviorSubject<string | null>(null);
+  updatedOnSub$: Subscription | undefined;
+
   welcome: string = '';
   name: string | undefined;
-  updatedOn: string | undefined;
 
   constructor(
     private api: APIService,
@@ -72,6 +75,7 @@ export class DashboardService implements OnDestroy {
         this.tuReport$.next(report);
         this.tuReport = report;
       });
+
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state$.next(state.appData);
       this.state = state.appData;
@@ -89,6 +93,7 @@ export class DashboardService implements OnDestroy {
     this.stateSub$?.unsubscribe();
     this.dashScoresSub$?.unsubscribe();
     this.tuReportSub$?.unsubscribe();
+    this.updatedOnSub$?.unsubscribe();
   }
 
   calculateDelta(scores: IProductTrendingData[] | null): number {
@@ -125,11 +130,9 @@ export class DashboardService implements OnDestroy {
   getLastUpdated(): string | undefined {
     return this.updatedOn;
   }
-  setLastUpdated(): void {
-    const fullfilled = _.find(this.state, 'fulfilledOn') as string;
-    if (fullfilled) {
-      this.updatedOn = new Date(fullfilled).toLocaleDateString();
-    }
+
+  setLastUpdated(val: string | null): void {
+    this.updatedOn = val ? new Date(val).toLocaleDateString() : new Date().toLocaleDateString();
   }
 
   setUserName(): void {

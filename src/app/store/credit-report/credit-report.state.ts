@@ -8,6 +8,7 @@ import { CreditReportStateModel } from '@store/credit-report/credit-report.model
   defaults: {
     report: null,
     updatedOn: null,
+    modifiedOn: null,
   },
 })
 @Injectable()
