@@ -9,14 +9,15 @@ import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { skip } from 'rxjs/operators';
+import { filter, skip } from 'rxjs/operators';
 
 @Component({
   selector: 'brave-dashboard-enrolled-pure',
   templateUrl: './dashboard-enrolled-pure.component.html',
 })
 export class DashboardEnrolledPureComponent implements OnDestroy {
-  modalOpen: boolean = true
+  modalOpen: boolean = true;
+  updatedOnSub$: Subscription | undefined;
 
   @Input() adsData: IAdData[] | undefined;
   @Input() referral: IReferral | null | undefined;
@@ -41,7 +42,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
 
   public score: number = 4;
   public welcome: string = '';
-  public updatedAt: string;
+  public updatedAt: string = new Date().toISOString();
   public content = dashboardEnrolledContent;
   public forbearanceClicked: boolean = false;
   public showDisclaimer: boolean = false;
@@ -67,7 +68,10 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
         dashScoreSuppressed: val[5],
       });
     });
-    this.updatedAt = this.dashboardService.getLastUpdated() || new Date().toISOString();
+
+    this.updatedOnSub$ = this.dashboardService.updatedOn$.subscribe((u) => {
+      this.updatedAt = u || new Date().toISOString();
+    });
   }
 
   ngOnInit(): void {}
@@ -81,6 +85,6 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   }
 
   toggleGoalChoiceModel() {
-    this.modalOpen = !this.modalOpen
+    this.modalOpen = !this.modalOpen;
   }
 }
