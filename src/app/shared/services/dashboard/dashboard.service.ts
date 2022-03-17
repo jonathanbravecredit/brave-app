@@ -69,6 +69,17 @@ export class DashboardService implements OnDestroy {
     private reportService: CreditreportService,
     private transunion: TransunionService,
   ) {
+    this.subscribeToObservables();
+  }
+
+  ngOnDestroy() {
+    this.stateSub$?.unsubscribe();
+    this.dashScoresSub$?.unsubscribe();
+    this.tuReportSub$?.unsubscribe();
+    this.updatedOnSub$?.unsubscribe();
+  }
+
+  subscribeToObservables(): void {
     this.tuReportSub$ = this.reportService.tuReport$
       .pipe(filter((report) => report !== undefined))
       .subscribe((report) => {
@@ -93,13 +104,6 @@ export class DashboardService implements OnDestroy {
       this.dashScore$.next(score || 4);
       this.dashDelta$.next(delta || 0);
     });
-  }
-
-  ngOnDestroy() {
-    this.stateSub$?.unsubscribe();
-    this.dashScoresSub$?.unsubscribe();
-    this.tuReportSub$?.unsubscribe();
-    this.updatedOnSub$?.unsubscribe();
   }
 
   calculateDelta(scores: IProductTrendingData[] | null): number {
