@@ -1,4 +1,4 @@
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
+import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
 
 export const FORBEARANCE_TYPE: Record<any, boolean> = {
   i: true,

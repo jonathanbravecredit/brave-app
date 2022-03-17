@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { DashboardSelectors } from '@store/dashboard/dashboard.selectors';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
+import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

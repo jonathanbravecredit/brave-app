@@ -1,6 +1,6 @@
 import { DataBreaches } from '@shared/utils/constants';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
+import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
 
 export class Add {
   static readonly type = '[Dashboard] Add';
