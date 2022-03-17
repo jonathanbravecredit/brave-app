@@ -5,6 +5,7 @@ import { ICampaign } from '@shared/interfaces/campaign.interface';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IamService } from '@shared/services/auth/iam.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import dayjs from 'dayjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,8 @@ export class CampaignService {
 
   async setCampaignActive(): Promise<boolean> {
     const campaign = await this.getCampaignPublic();
-    const isActive = campaign?.campaign !== 'NO_CAMPAIGN';
+    const now = dayjs(new Date());
+    const isActive = campaign?.campaign !== 'NO_CAMPAIGN' || now.isAfter(dayjs(campaign.endDate));
     this.isActive = isActive;
     this.isActive$.next(isActive);
     return isActive;
