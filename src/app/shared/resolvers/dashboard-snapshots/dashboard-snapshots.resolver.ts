@@ -39,7 +39,6 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
       this.store
         .dispatch(new DashboardActions.Edit({ isLoaded: true, isFresh: true }))
         .subscribe((data: { appData: AppDataStateModel }) => {
-          console.log('appData', data.appData);
           this.statesvc.updateStateDBSync(data.appData);
           resolve(null);
         });
