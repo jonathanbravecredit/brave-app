@@ -19,6 +19,7 @@ describe('DashboardSnapshotsResolver', () => {
     stateMock = jasmine.createSpyObj('StateService', ['updateStateDBSync']);
     storeMock.dispatch.and.returnValue(of({ appData: {} }));
     storeMock.selectOnce.and.returnValue(of({ report: {}, isLoaded: true, isFresh: true }));
+    stateMock.updateStateDBSync.and.returnValue(null);
     TestBed.configureTestingModule({
       providers: [
         { provide: Store, useValue: storeMock },
@@ -99,9 +100,17 @@ describe('DashboardSnapshotsResolver', () => {
       resolver.processDataAndSync(mockReport);
       expect(spy).toHaveBeenCalledWith(mockReport);
     });
-    it('should call selectOnce', () => {
+    it('should call dispatch twice', () => {
       resolver.processDataAndSync(mockReport);
-      expect(storeMock.selectOnce).toHaveBeenCalled;
+      expect(storeMock.dispatch).toHaveBeenCalledTimes(2);
+    });
+    it('should call updateStateDBSync twice', () => {
+      resolver.processDataAndSync(mockReport);
+      expect(stateMock.updateStateDBSync).toHaveBeenCalled();
+    });
+    it('should call selectOnce', async () => {
+      await resolver.processDataAndSync(mockReport);
+      expect(storeMock.selectOnce).toHaveBeenCalled();
     });
   });
 
