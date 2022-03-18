@@ -11,7 +11,7 @@ import { CreditUtilizationTotalComponent } from '../components/credit-utilizatio
 import { CreditUtilizationPercentagesComponent } from '../components/credit-utilization-percentages/credit-utilization-percentages.component';
 import { PercentageBadgeComponent } from '@shared/components/badges/percentage-badge/percentage-badge.component';
 import { CreditUtilizationAvailableComponent } from '../components/credit-utilization-available/credit-utilization-available.component';
-import { AccountStatusPipe } from '../components/credit-utilization-card/account-status.pipe';
+import { AccountStatusPipe } from '../../../../shared/pipes/accountStatus/account-status.pipe';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
 import { CreditUtilizationNoCardsHeaderComponent } from '../components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component';

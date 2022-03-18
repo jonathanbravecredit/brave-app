@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'brave-data-breaches',
   templateUrl: './data-breaches.component.html',
 })
-export class DataBreachesComponent {
+export class DataBreachesParentComponent {
   constructor() {}
 }

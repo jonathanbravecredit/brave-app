@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'brave-progress-tracker',
   templateUrl: './progress-tracker.component.html',
 })
-export class ProgressTrackerComponent {
+export class ProgressTrackerParentComponent {
   constructor() {}
 }

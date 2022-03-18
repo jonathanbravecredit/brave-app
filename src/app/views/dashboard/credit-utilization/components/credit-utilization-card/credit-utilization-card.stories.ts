@@ -2,7 +2,7 @@ import { APP_BASE_HREF, CurrencyPipe } from "@angular/common";
 import { Story, Meta } from "@storybook/angular/types-6-0";
 import { componentWrapperDecorator, moduleMetadata } from "@storybook/angular";
 import { CreditUtilizationCardComponent } from "./credit-utilization-card.component";
-import { AccountStatusPipe } from "./account-status.pipe";
+import { AccountStatusPipe } from "../../../../../shared/pipes/accountStatus/account-status.pipe";
 import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
 import { SharedComponentsModule } from "@shared/components/shared-components.module";
 import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/tradeline-to-details.pipe";

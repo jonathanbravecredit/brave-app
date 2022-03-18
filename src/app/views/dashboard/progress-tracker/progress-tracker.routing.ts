@@ -3,19 +3,19 @@ import { NgModule } from '@angular/core';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { ProgressTrackerComponent } from '@views/dashboard/progress-tracker/progress-tracker.component';
+import { ProgressTrackerParentComponent } from '@views/dashboard/progress-tracker/progress-tracker.component';
 const dashboard = routes.root.dashboard;
 const snapshot = routes.root.dashboard.report.snapshot;
 
 const ProgressTrackerRoutes: Routes = [
   {
     path: '',
-    component: ProgressTrackerComponent,
+    component: ProgressTrackerParentComponent,
     canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.progressTracker.segment}`,
-        component: ProgressTrackerComponent,
+        component: ProgressTrackerParentComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
     ],

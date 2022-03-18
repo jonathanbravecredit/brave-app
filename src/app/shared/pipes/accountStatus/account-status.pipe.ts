@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { TCreditUtilizationStatus } from "./interfaces";
 
 @Pipe({
   name: "accountStatus",
