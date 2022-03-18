@@ -106,13 +106,6 @@ export class DashboardService implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.stateSub$?.unsubscribe();
-    this.dashScoresSub$?.unsubscribe();
-    this.tuReportSub$?.unsubscribe();
-    this.updatedOnSub$?.unsubscribe();
-  }
-
   calculateDelta(scores: IProductTrendingData[] | null): number {
     if (scores && scores.length > 1) {
       let latestScore = +scores[scores.length - 1].AttributeValue;
