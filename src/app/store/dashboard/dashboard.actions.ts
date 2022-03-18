@@ -27,6 +27,11 @@ export class DecrementNegativeCardCount {
   constructor() {}
 }
 
+export class ResetNegativeCardCount {
+  static readonly type = '[Dashboard] ResetNegativeCardCount';
+  constructor() {}
+}
+
 export class FlagNegativeSnapshot {
   static readonly type = '[Dashboard] FlagNegativeSnapshot';
   constructor() {}
@@ -60,6 +65,11 @@ export class UnflagDatabreachSnapshot {
 export class AddDatabreachCards {
   static readonly type = '[Dashboard] AddDatabreachCards';
   constructor(public payload: IBreachCard[]) {}
+}
+
+export class ResetDatabreachCards {
+  static readonly type = '[Dashboard] ResetDatabreachCards';
+  constructor() {}
 }
 
 export class MarkDatabreachAsReviewed {

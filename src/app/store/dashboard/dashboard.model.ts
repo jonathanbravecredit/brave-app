@@ -2,6 +2,7 @@ import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components
 
 export class DashboardStateModel {
   isLoaded: boolean = false;
+  isFresh: boolean = false;
   negativeFlagged?: boolean;
   negativeCardCount?: number;
   negativeCardStatus?: string;
