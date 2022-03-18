@@ -26,6 +26,7 @@ describe('DashboardService', () => {
     stateMock = jasmine.createSpyObj('StateService', [''], { state$: of({}) });
     reportServiceMock = jasmine.createSpyObj('CreditreportService', [''], {
       tuReport$: of({}),
+      creditReport$: of({}),
     });
     transunionMock = jasmine.createSpyObj('TransunionService', ['refreshCreditReports']);
 
