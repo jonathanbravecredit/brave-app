@@ -9,3 +9,8 @@ export class Update {
   static readonly type = '[ProgressTracker] Update';
   constructor(public payload: ProgressTrackerStateModel) {}
 }
+
+export class Delete {
+  static readonly type = '[ProgressTracker] Delete';
+  constructor() {}
+}
