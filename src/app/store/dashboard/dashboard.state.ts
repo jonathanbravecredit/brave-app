@@ -153,6 +153,16 @@ export class DashboardState {
     });
   }
 
+  @Action(DashboardActions.ResetDatabreachCards)
+  resetDatabreachCards(ctx: StateContext<DashboardStateModel>) {
+    const state = ctx.getState();
+    const databreachCards: IBreachCard[] = [];
+    ctx.patchState({
+      ...state,
+      databreachCards,
+    });
+  }
+
   @Action(DashboardActions.AddDatabreachCards)
   addDatabreachCards(ctx: StateContext<DashboardStateModel>, { payload }: DashboardActions.AddDatabreachCards) {
     const state = ctx.getState();
