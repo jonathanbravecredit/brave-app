@@ -7,7 +7,7 @@ import { DashboardStateModel } from '@store/dashboard/dashboard.model';
 import { of } from 'rxjs';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { DashboardSnapshotsResolver } from './dashboard-snapshots.resolver';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 
 describe('DashboardSnapshotsResolver', () => {
   let resolver: DashboardSnapshotsResolver;
