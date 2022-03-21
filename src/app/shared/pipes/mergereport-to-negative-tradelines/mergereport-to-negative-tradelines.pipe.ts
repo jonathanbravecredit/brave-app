@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { ITradeLinePartition, IMergeReport, ISubscriber } from '@shared/interfaces/merge-report.interface';
-import { DEFAULT_TRADELINE } from '@views/dashboard/snapshots/negative-account/negative-account-initial/constants';
+import { DEFAULT_TRADELINE } from '@views/dashboard/negative-account/negative-account-initial/constants';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({

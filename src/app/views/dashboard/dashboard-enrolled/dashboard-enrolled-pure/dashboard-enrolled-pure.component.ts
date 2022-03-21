@@ -7,7 +7,7 @@ import { AnalyticClickEvents } from '@shared/services/analytics/analytics/consta
 import { DashboardService, IDashboardData } from '@shared/services/dashboard/dashboard.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
-import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
+import { IRecommendationText } from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { filter, skip } from 'rxjs/operators';
 
