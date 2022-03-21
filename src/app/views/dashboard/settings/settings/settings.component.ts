@@ -9,6 +9,7 @@ import { ISettingsViews, SettingsOptions } from '@views/dashboard/settings/setti
 import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/settings-pure.component';
 import { ALERT_CONFIG } from '@views/dashboard/settings/settings/constants';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { CleanUpService } from '@shared/services/clean-up/clean-up.service';
 
 @Component({
   selector: 'brave-settings',
@@ -33,6 +34,7 @@ export class SettingsComponent implements OnInit {
     private router: Router,
     private settings: SettingsService,
     private interstitial: InterstitialService,
+    private cleanUp: CleanUpService,
   ) {}
 
   ngOnInit(): void {}
@@ -103,6 +105,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onLogoutClick() {
+    this.cleanUp.clearAllState();
     this.settings.signOut();
   }
 

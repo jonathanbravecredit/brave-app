@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
+import { CreditMixService } from '@views/dashboard/credit-mix/credit-mix-service/credit-mix-service.service';
 import {
   ICreditMixTLSummary,
   IRecommendationText,
-} from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
+} from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';

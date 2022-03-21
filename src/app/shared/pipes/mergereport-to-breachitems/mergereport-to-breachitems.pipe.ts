@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 import { IMergeReport } from '@shared/interfaces/merge-report.interface';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
