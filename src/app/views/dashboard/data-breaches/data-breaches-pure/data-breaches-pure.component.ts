@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 import { DataBreachListComponent } from '@views/dashboard/data-breaches/components/data-breach-list/data-breach-list.component';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';

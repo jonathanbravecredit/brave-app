@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
-import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
 
 export interface IMergereportToDashboardOutput {
   negativecard: {

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 
 @Component({
   selector: 'brave-data-breaches',

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { IBreachCard } from '@views/dashboard/data-breaches/components/data-breach-card/interfaces';
 import { dataBreachListContent } from '@views/dashboard/data-breaches/components/data-breach-list/content';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 
 @Component({
   selector: 'brave-data-breach-list',
