@@ -3,6 +3,7 @@ import { IBreachCard } from "@shared/interfaces/breach-card.interface";
 
 export class DashboardStateModel {
   isLoaded: boolean = false;
+  isFresh: boolean = false;
   negativeFlagged?: boolean;
   negativeCardCount?: number;
   negativeCardStatus?: string;

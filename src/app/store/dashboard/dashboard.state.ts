@@ -9,6 +9,7 @@ import { DashboardStateModel } from '@store/dashboard/dashboard.model';
   name: 'dashboard',
   defaults: {
     isLoaded: false,
+    isFresh: false,
   },
 })
 @Injectable()
@@ -69,6 +70,16 @@ export class DashboardState {
       negativeFlagged,
       negativeCardStatus,
       negativeReviewed,
+    });
+  }
+
+  @Action(DashboardActions.ResetNegativeCardCount)
+  resetNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
+    const state = ctx.getState();
+    const negativeCardCount = 0;
+    ctx.patchState({
+      ...state,
+      negativeCardCount,
     });
   }
 
