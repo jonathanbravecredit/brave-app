@@ -12,7 +12,7 @@
     <div class="border-t border-blueGray-300 py-2"></div>
     <brave-negative-account-card
       [showDisputeButton]="true"
-
+      [tradelinedispute]="tradeline | tradelineToDetails"
       (confirmed)="confirmed.emit(tradeline)"
     >
     </brave-negative-account-card>
