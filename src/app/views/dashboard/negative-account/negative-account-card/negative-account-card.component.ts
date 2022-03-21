@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { INegativeAccountCardInputs } from '@views/dashboard/negative-account/negative-account-card/interfaces';
 import {
-  IOnboardingEvent,
   OnboardingDisputeComponent,
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
+import { NegativeAccountServiceService } from '@views/dashboard/negative-account/negative-account-service/negative-account-service.service';
 
 @Component({
   selector: 'brave-negative-account-card',
@@ -20,9 +20,9 @@ export class NegativeAccountCardComponent {
 
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
-  constructor() {}
+  constructor(private negAccService: NegativeAccountServiceService) {}
 
   onDisputeClick() {
-    this.confirmed.emit();
+    // this.negAccService.onConfirmed()
   }
 }
