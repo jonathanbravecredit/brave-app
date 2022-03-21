@@ -9,3 +9,8 @@ export class Update {
   static readonly type = '[CreditReport] Update';
   constructor(public payload: CreditReportStateModel) {}
 }
+
+export class Delete {
+  static readonly type = '[CreditReport] Delete';
+  constructor() {}
+}

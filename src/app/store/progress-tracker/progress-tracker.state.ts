@@ -29,4 +29,13 @@ export class ProgressTrackerState {
       ...payload,
     });
   }
+
+  @Action(ProgressTrackerActions.Delete)
+  deleteAppData(ctx: StateContext<ProgressTrackerStateModel>, {}: ProgressTrackerActions.Delete): void {
+    const state = ctx.getState();
+    const payload = new ProgressTrackerStateModel();
+    ctx.setState({
+      ...payload,
+    });
+  }
 }

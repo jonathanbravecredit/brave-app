@@ -28,4 +28,13 @@ export class CreditReportState {
       ...payload,
     });
   }
+
+  @Action(CreditReportActions.Delete)
+  deleteAppData(ctx: StateContext<CreditReportStateModel>, {}: CreditReportActions.Delete): void {
+    const state = ctx.getState();
+    const payload = new CreditReportStateModel();
+    ctx.setState({
+      ...payload,
+    });
+  }
 }

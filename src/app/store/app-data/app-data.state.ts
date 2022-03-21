@@ -38,7 +38,6 @@ export class AppDataState {
     const state = ctx.getState();
     const payload = new AppDataStateModel();
     ctx.setState({
-      ...state,
       ...payload,
     });
   }
