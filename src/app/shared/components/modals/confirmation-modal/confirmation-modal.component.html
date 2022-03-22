@@ -1,8 +1,18 @@
 <brave-base-modal #baseModal [hideCloseButton]="true">
-  <ng-content></ng-content>
   <div class="flex flex-col items-center mt-4">
+    <ng-content></ng-content>
+    <div>&nbsp;</div>
     <brave-filled-onlytext-button (click)="confirm(true)">{{ btnTextConfirm }}</brave-filled-onlytext-button>
     <p>OR</p>
-    <brave-filled-onlytext-button (click)="confirm(false)" [config]="{'color': 'text-indigo-800', 'buttonSize': 'lg', 'backgroundColor': 'bg-transparent', 'activeColor': 'bg-transparent'}">{{ btnTextCancel }}</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button
+      (click)="confirm(false)"
+      [config]="{
+        color: 'text-indigo-800',
+        buttonSize: 'lg',
+        backgroundColor: 'bg-transparent',
+        activeColor: 'bg-transparent'
+      }"
+      >{{ btnTextCancel }}</brave-filled-onlytext-button
+    >
   </div>
 </brave-base-modal>
