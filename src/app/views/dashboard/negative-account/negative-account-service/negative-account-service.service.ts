@@ -10,7 +10,7 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 @Injectable({
   providedIn: 'root',
 })
-export class NegativeAccountServiceService {
+export class NegativeAccountService {
   constructor(
     private interstitial: InterstitialService,
     private disputeService: DisputeService,

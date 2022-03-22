@@ -4,7 +4,7 @@
       [tradelines]="report | mergereportToNegativeTradelines"
       [subscribers]="report | mergereportToSubscribers"
       [acknowledged]="acknowledged"
-      (confirmed)="onConfirmed($event)"
+      (confirmed)="negAccService.onConfirmed($event)"
       (goToDashboardClick)="onGoToDashboardClick()"
       (goToReportClick)="onGoToReportClick()"
     ></brave-negative-account-initial-pure>
