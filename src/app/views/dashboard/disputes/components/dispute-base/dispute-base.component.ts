@@ -46,6 +46,9 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   confirmed: boolean = false;
   customInput: string = '';
   customInputSelected = false;
+  needsComment: boolean = false;
+  hasComment: boolean | null = null;
+
   reasonCards: IDisputeReasonCard[] = [];
   selections: IDisputeReasonCard[] = [];
   // template content
@@ -101,6 +104,20 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.cardSelected$) this.cardSelected$.unsubscribe();
     if (this.confirmSub$) this.confirmSub$.unsubscribe();
     if (this.paramsSub$) this.paramsSub$.unsubscribe();
+  }
+
+  checkForCommentNeeded(): void {
+    this.needsComment = this.selections.reduce((res: boolean, ele): boolean => {
+      if (res) return res; // if true already
+      return +ele.reason.id === 1 ? true : false;
+    }, false);
+    if (this.needsComment) {
+      this.hasComment = this.selections.reduce((res: boolean, ele): boolean => {
+        if (res) return res; // if true already
+        if (!ele.customInput) return false;
+        return ele.customInput?.length > 0 ? true : false;
+      }, false);
+    }
   }
 
   addSelection(reason: IDisputeReasonCard | undefined): void {
@@ -173,6 +190,11 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   onTextChange(event: string, idx: number): void {
     this.customInput = event;
     this.selections[idx]['customInput'] = event;
+    if (this.customInput.length > 0) {
+      this.hasComment = true;
+    } else {
+      this.hasComment = false;
+    }
   }
 
   goToReasons(): void {
@@ -182,6 +204,7 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goToSummary(): void {
     const url = this.router.createUrlTree([], { queryParams: { step: 'summary' } }).toString();
+    this.checkForCommentNeeded();
     this.router.navigateByUrl(url);
   }
 
