@@ -130,6 +130,7 @@ import { DisputesHeaderComponent } from './headers/disputes-header/disputes-head
 import { DisputesHeaderPersonalitemComponent } from './headers/disputes-header-personalitem/disputes-header-personalitem.component';
 import { DisputesHeaderPublicitemComponent } from './headers/disputes-header-publicitem/disputes-header-publicitem.component';
 import { DisputesHeaderTradelineComponent } from '@shared/components/headers/brave-dispute-header-tradeline/disputes-header-tradeline.component';
+import { DisputesDetailComponent } from './details/disputes-detail/disputes-detail.component';
 
 const components = [
   BaseFormComponent,
@@ -270,7 +271,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes, ...directives, DisputesDetailComponent],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
