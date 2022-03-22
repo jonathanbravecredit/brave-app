@@ -190,11 +190,7 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   onTextChange(event: string, idx: number): void {
     this.customInput = event;
     this.selections[idx]['customInput'] = event;
-    if (this.customInput.length > 0) {
-      this.hasComment = true;
-    } else {
-      this.hasComment = false;
-    }
+    this.hasComment = this.customInput.length > 0;
   }
 
   goToReasons(): void {
