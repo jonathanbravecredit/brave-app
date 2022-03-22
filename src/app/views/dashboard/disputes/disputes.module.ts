@@ -16,10 +16,6 @@ import {
   DisputeCardStatusPipe,
 } from '@views/dashboard/disputes/components/cards';
 import { DisputeHeaderCardComponent } from '@views/dashboard/disputes/components/cards/dispute-header-card/dispute-header-card.component';
-import { DisputeHeaderPersonalitemComponent } from '@views/dashboard/disputes/components/dispute-header-personalitem/dispute-header-personalitem.component';
-import { DisputeHeaderPublicitemComponent } from '@views/dashboard/disputes/components/dispute-header-publicitem/dispute-header-publicitem.component';
-import { DisputeHeaderTradelineComponent } from '@views/dashboard/disputes/components/dispute-header-tradeline/dispute-header-tradeline.component';
-import { DisputesDetailComponent } from '@views/dashboard/disputes/components/disputes-detail/disputes-detail.component';
 import { DisputesListComponent } from '@views/dashboard/disputes/components/disputes-list/disputes-list.component';
 import { DisputeFindingsClosingParagraphComponent } from '@views/dashboard/disputes/components/findings/dispute-findings-closing-paragraph/dispute-findings-closing-paragraph.component';
 import { DisputeFindingsContactInfoComponent } from '@views/dashboard/disputes/components/findings/dispute-findings-contact-info/dispute-findings-contact-info.component';
@@ -51,7 +47,6 @@ import { DisputesTradelinePureView } from '@views/dashboard/disputes/disputes-tr
 import { DisputesTradelineView } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline/disputes-tradeline.view';
 import { ReasonCardComponent } from '@views/dashboard/disputes/components/cards/reason-card/reason-card.component';
 import { DisputesComponent } from '@views/dashboard/disputes/disputes.component';
-import { DisputeHeaderComponent } from '@views/dashboard/disputes/components/dispute-header/dispute-header.component';
 import { DisputeConditionalTermsComponent } from './components/dispute-conditional-terms/dispute-conditional-terms.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisputeBaseComponent } from './components/dispute-base/dispute-base.component';
@@ -101,7 +96,6 @@ const components = [
   DisputeFindingsPureView,
   DisputesOverviewInitialPureView,
   DisputesOverviewInitialView,
-  DisputesDetailComponent,
   DisputesListComponent,
   ReasonCardComponent,
   DisputeConditionalTermsComponent,
@@ -116,9 +110,6 @@ const components = [
   DisputeFindingsClosingParagraphComponent,
   DisputeFindingsContactInfoComponent,
   DisputeFindingsYourRightsComponent,
-  DisputeHeaderTradelineComponent,
-  DisputeHeaderPublicitemComponent,
-  DisputeHeaderPersonalitemComponent,
   DisputeHeaderCardComponent,
   DisputeRegularCardComponent,
   DisputeHistoryCardComponent,
@@ -133,7 +124,6 @@ const components = [
   DisputeOverviewCardComponent,
   DisputesHistoricalView,
   DisputesHistoricalPureView,
-  DisputeHeaderComponent,
   DisputeReasonPageComponent,
   DisputeFindingsTradelineDetailsComponent,
   DisputesEmptyPureComponent,

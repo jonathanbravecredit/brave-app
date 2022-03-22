@@ -1,6 +1,6 @@
 <div *ngIf="viewDisplay === 'not-sent'">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
-  <brave-dispute-header class="mt-4" [personaldispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
+  <brave-disputes-header class="mt-4" [personaldispute]="dispute" [showDisputeButton]="false"></brave-disputes-header>
   <brave-dispute-base
     [initialStepId]="'reason'"
     [disputeType]="'not-mine'"

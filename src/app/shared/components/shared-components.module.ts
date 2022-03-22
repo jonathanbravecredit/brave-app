@@ -255,6 +255,7 @@ const pipes = [
   DisputesHeaderPersonalitemComponent,
   DisputesHeaderPublicitemComponent,
   DisputesHeaderTradelineComponent,
+  DisputesDetailComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
@@ -271,7 +272,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives, DisputesDetailComponent],
+  declarations: [...components, ...pipes, ...directives],
   exports: [...components, ...pipes, ...directives],
 })
 export class SharedComponentsModule {}
