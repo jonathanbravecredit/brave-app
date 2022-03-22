@@ -4,10 +4,10 @@ import { IDisputePersonalItem } from '@shared/interfaces/dispute.interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Component({
-  selector: 'brave-dispute-header-personalitem',
-  templateUrl: './dispute-header-personalitem.component.html',
+  selector: 'brave-disputes-header-personalitem',
+  templateUrl: './disputes-header-personalitem.component.html',
 })
-export class DisputeHeaderPersonalitemComponent implements OnInit {
+export class DisputesHeaderPersonalitemComponent implements OnInit {
   @Input() dispute: IDisputePersonalItem | undefined = {} as IDisputePersonalItem;
   missing = tu.bcMissing;
   value: string = tu.bcMissing;

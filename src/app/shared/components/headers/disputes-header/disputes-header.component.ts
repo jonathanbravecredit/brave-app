@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.component';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import {
@@ -18,10 +18,10 @@ import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credi
 import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
 @Component({
-  selector: 'brave-dispute-header',
-  templateUrl: './dispute-header.component.html',
+  selector: 'brave-disputes-header',
+  templateUrl: './disputes-header.component.html',
 })
-export class DisputeHeaderComponent {
+export class DisputesHeaderComponent {
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
   @ViewChild(OnboardingDisputeComponent)

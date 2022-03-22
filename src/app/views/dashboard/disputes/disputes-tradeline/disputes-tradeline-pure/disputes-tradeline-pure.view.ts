@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { IDisputeTradelineItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputeTradelineItem } from '@shared/interfaces/dispute.interfaces';
 import { disputeViewState } from '@views/dashboard/disputes/components/dispute-base/dispute-base.component';
 import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
 import {

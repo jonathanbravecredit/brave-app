@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IPublicPartition } from '@shared/interfaces';
-import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
 import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
 import {
   DEFAULT_TRADELINE_DISPUTE_PROCESS_PUBLIC_RECORDS_REASONS,

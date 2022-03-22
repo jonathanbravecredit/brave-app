@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { BaseModalSmallComponent } from "@shared/components/modals/base-modal-small/base-modal-small.component";
-import { IDisputeTradelineItem } from "@shared/services/dispute/dispute.interfaces";
+import { IDisputeTradelineItem } from "@shared/interfaces/dispute.interfaces";
 import { ModalService } from "@shared/services/modal/modal.service";
 import { TransunionUtil } from "@shared/utils/transunion/transunion";
 

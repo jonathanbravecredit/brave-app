@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { IDisputePersonalItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputePersonalItem } from '@shared/interfaces/dispute.interfaces';
 import { IDisputeReasonCard } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
 import { DisputeBaseComponent } from '@views/dashboard/disputes/components/dispute-base/dispute-base.component';
 import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';

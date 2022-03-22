@@ -126,6 +126,10 @@ import { GoalChoiceParentComponent } from './goals/goal-choice-parent/goal-choic
 import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-card/goal-choice-card.component';
 import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
 import { GoalChoiceDisclaimerComponent } from './goals/goal-choice-disclaimer/goal-choice-disclaimer.component';
+import { DisputesHeaderComponent } from './headers/disputes-header/disputes-header.component';
+import { DisputesHeaderPersonalitemComponent } from './headers/disputes-header-personalitem/disputes-header-personalitem.component';
+import { DisputesHeaderPublicitemComponent } from './headers/disputes-header-publicitem/disputes-header-publicitem.component';
+import { DisputesHeaderTradelineComponent } from '@shared/components/headers/brave-dispute-header-tradeline/disputes-header-tradeline.component';
 
 const components = [
   BaseFormComponent,
@@ -246,6 +250,10 @@ const pipes = [
   GoalChoiceCardComponent,
   GoalChoiceHeaderComponent,
   GoalChoiceDisclaimerComponent,
+  DisputesHeaderComponent,
+  DisputesHeaderPersonalitemComponent,
+  DisputesHeaderPublicitemComponent,
+  DisputesHeaderTradelineComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
