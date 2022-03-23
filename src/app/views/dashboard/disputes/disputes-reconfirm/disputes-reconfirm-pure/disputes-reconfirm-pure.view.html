@@ -10,12 +10,12 @@
 >
   <div *ngFor="let tradeline of tradelines">
     <div class="border-t border-blueGray-300 py-2"></div>
-    <brave-disputes-header
+    <brave-account-summary-with-details
       [showConfirmButton]="true"
       [tradelinedispute]="tradeline | tradelineToDetails"
       (confirmed)="disputeTradelineClick.emit(tradeline)"
     >
-    </brave-disputes-header>
+    </brave-account-summary-with-details>
   </div>
 
   <!-- personal items -->

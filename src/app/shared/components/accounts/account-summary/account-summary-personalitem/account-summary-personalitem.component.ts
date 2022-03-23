@@ -8,7 +8,7 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
   templateUrl: './account-summary-personalitem.component.html',
 })
 export class AccountSummaryPersonalitemComponent implements OnInit {
-  @Input() dispute: IDisputePersonalItem | undefined = {} as IDisputePersonalItem;
+  @Input() personalItem: IDisputePersonalItem | undefined = {} as IDisputePersonalItem;
   missing = tu.bcMissing;
   value: string = tu.bcMissing;
   icon: string = 'perm_identity';
@@ -16,38 +16,38 @@ export class AccountSummaryPersonalitemComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (!this.dispute) {
+    if (!this.personalItem) {
       this.value = tu.bcMissing;
     }
-    switch (this.dispute?.key) {
+    switch (this.personalItem?.key) {
       case 'name':
         this.icon = 'face';
         this.label = 'Name';
-        const name = this.dispute.value as IBorrowerName;
+        const name = this.personalItem.value as IBorrowerName;
         this.value = tu.parsers.report.unparseName(name) || tu.bcMissing;
         break;
       case 'aka':
         this.icon = 'face';
         this.label = 'Name';
-        const aka = this.dispute.value as IBorrowerName;
+        const aka = this.personalItem.value as IBorrowerName;
         this.value = tu.parsers.report.unparseName(aka) || tu.bcMissing;
         break;
       case 'curraddress':
         this.icon = 'home';
         this.label = 'Address';
-        const curraddress = this.dispute.value as IBorrowerAddress;
+        const curraddress = this.personalItem.value as IBorrowerAddress;
         this.value = tu.parsers.report.unparseAddress(curraddress.CreditAddress) || tu.bcMissing;
         break;
       case 'prevaddress':
         this.icon = 'home';
         this.label = 'Address';
-        const prevaddress = this.dispute.value as IBorrowerAddress;
+        const prevaddress = this.personalItem.value as IBorrowerAddress;
         this.value = tu.parsers.report.unparseAddress(prevaddress.CreditAddress) || tu.bcMissing;
         break;
       case 'employer':
         this.icon = 'badge';
         this.label = 'Employer';
-        const employer = this.dispute.value as IEmployer;
+        const employer = this.personalItem.value as IEmployer;
         this.value = tu.parsers.report.unparseEmployer(employer) || tu.bcMissing;
         break;
       default:

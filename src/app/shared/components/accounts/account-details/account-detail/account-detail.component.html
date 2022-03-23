@@ -1,1 +1,26 @@
-<brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
+<ng-container *ngIf="disputeable">
+  <div *ngIf="viewDetail?.open$ | async as open" class="flex justify-center">
+    <div class="my-4 w-3/5">
+      <brave-filled-spinning-button #spinnerBtn [full]="true" (click)="showModal = !showModal; this.disputeClicked()"
+        >Dispute in a few clicks</brave-filled-spinning-button
+      >
+    </div>
+    <brave-onboarding-dispute
+      [showModal]="showModal && !acknowledged"
+      (confirmation)="actionForDispute($event)"
+    ></brave-onboarding-dispute>
+  </div>
+</ng-container>
+
+<div class="flex flex-col items-start mt-3">
+  <p class="ml-1">Account Details</p>
+  <ng-container *ngIf="tradeline">
+    <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
+  </ng-container>
+  <ng-container *ngIf="publicItem">
+    <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
+  </ng-container>
+  <ng-container *ngIf="personalItem">
+    <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
+  </ng-container>
+</div>

@@ -2,39 +2,36 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.component';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import {
-  OnboardingDisputeComponent,
   IOnboardingEvent,
+  OnboardingDisputeComponent,
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IDisputeTradelineItem, IDisputePersonalItem, IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
+import { ITradeLinePartition } from '@shared/interfaces';
+import { IDisputePersonalItem, IDisputePublicItem, IDisputeTradelineItem } from '@shared/interfaces/dispute.interfaces';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
 @Component({
-  selector: 'brave-account-summary',
-  templateUrl: './account-summary.component.html',
+  selector: 'brave-account-summary-with-details',
+  templateUrl: './account-summary-with-details.component.html',
 })
-export class AccountSummaryComponent {
+export class AccountSummaryWithDetailsComponent {
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
   @ViewChild(OnboardingDisputeComponent)
   disputeTermsModal: OnboardingDisputeComponent | undefined;
-  @Input() showConfirmButton = false;
-
-
-
-  @Input() publicItem: IDisputePublicItem | undefined;
-  @Input() personalItem: IDisputePersonalItem | undefined;
-  @Input() tradeline: IDisputeTradelineItem | undefined;
-
-
-
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
-  @Output() confirmed: EventEmitter<void> = new EventEmitter();
+
+  @Output() confirmed: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Input() showDisputeButton = false;
+  @Input() showConfirmButton = false;
+  @Input() public: IDisputePublicItem | undefined;
+  @Input() personal: IDisputePersonalItem | undefined;
+  @Input() tradeline: ITradeLinePartition | undefined;
 
   /**
    * Flag to indicate they need to still acknowledge dispute terms
@@ -60,4 +57,19 @@ export class AccountSummaryComponent {
 
   constructor(public featureFlags: FeatureFlagsService) {}
 
+  disputeClicked() {
+    // when clicked and do not need acknowledgment
+    if (this.acknowledged) {
+      this.confirmed.emit();
+    }
+  }
+
+  actionForDispute(e: IOnboardingEvent) {
+    if (e.isConfirmed) {
+      this.showModal = false;
+      this.confirmed.emit();
+    } else {
+      this.spinnerBtn?.toggleSpinner();
+    }
+  }
 }

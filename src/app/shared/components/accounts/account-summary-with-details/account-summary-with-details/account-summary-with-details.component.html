@@ -1,0 +1,16 @@
+<brave-account-summary
+  [showDisputeButton]="true"
+  [tradeline]="tradeline | tradelineToDetails"
+  (confirmed)="confirmed.emit(tradeline)"
+></brave-account-summary>
+
+<div
+  *ngIf="viewDetail?.open$ | async as open"
+  class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
+>
+  <brave-account-detail></brave-account-detail>
+</div>
+
+<div class="flex justify-center py-3">
+  <brave-viewdetail-button #viewDetail size="full">View Detail</brave-viewdetail-button>
+</div>

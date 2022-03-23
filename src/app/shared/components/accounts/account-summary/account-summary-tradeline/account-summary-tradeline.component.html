@@ -6,22 +6,22 @@
       </div>
       <div class="ml-2 mb-4">
         <p class="text-sm font-semibold">
-          {{ dispute?.creditorName || '' | decode }}
+          {{ tradeline?.creditorName || '' | decode }}
           {{
-            dispute?.openClosed?.toLowerCase() === 'c'
+            tradeline?.openClosed?.toLowerCase() === 'c'
               ? '(Closed)'
-              : dispute?.openClosed?.toLowerCase() === 'o'
+              : tradeline?.openClosed?.toLowerCase() === 'o'
               ? '(Open)'
               : ''
           }}
         </p>
-        <p class="text-sm font-semibold">{{ dispute?.accountTypeDescription || '' }}</p>
+        <p class="text-sm font-semibold">{{ tradeline?.accountTypeDescription || '' }}</p>
       </div>
     </div>
     <div class="mb-1">
       <brave-base-table-row
         [label]="'Last Reported Payment to Creditor:'"
-        [value]="dispute?.lastReported"
+        [value]="tradeline?.lastReported"
         [enableSeparator]="false"
         [valueType]="'date'"
         [nowrapLabel]="true"
@@ -31,7 +31,7 @@
     <div class="mb-1">
       <brave-base-table-row
         [label]="'Amount Past Due:'"
-        [value]="dispute?.amountPastDue"
+        [value]="tradeline?.amountPastDue"
         [enableSeparator]="false"
         [valueType]="'currency'"
         [nowrapLabel]="true"
@@ -41,7 +41,7 @@
     <div class="mb-1">
       <brave-base-table-row
         [label]="'Remaining Balance:'"
-        [value]="dispute?.currentBalance"
+        [value]="tradeline?.currentBalance"
         [enableSeparator]="false"
         [valueType]="'currency'"
         [nowrapLabel]="true"
@@ -51,7 +51,7 @@
     <div class="mb-1">
       <brave-base-table-row
         [label]="'Original Creditor:'"
-        [value]="dispute?.originalCreditor"
+        [value]="tradeline?.originalCreditor"
         [enableSeparator]="false"
         [nowrapLabel]="true"
         [tooltip]="true"

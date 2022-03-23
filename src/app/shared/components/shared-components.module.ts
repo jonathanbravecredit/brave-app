@@ -126,11 +126,14 @@ import { GoalChoiceParentComponent } from './goals/goal-choice-parent/goal-choic
 import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-card/goal-choice-card.component';
 import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
 import { GoalChoiceDisclaimerComponent } from './goals/goal-choice-disclaimer/goal-choice-disclaimer.component';
-import { AccountSummaryComponent } from './accounts/account-summary/account-summary/account-summary.component';
-import { DisputesHeaderPersonalitemComponent } from './accounts/account-summary/account-summary-personalitem/account-summary-personalitem.component';
-import { DisputesHeaderPublicitemComponent } from './accounts/account-summary/account-summary-publicitem/disputes-header-publicitem.component';
-import { DisputesHeaderTradelineComponent } from '@shared/components/accounts/account-summary/account-summary-tradeline/disputes-header-tradeline.component';
+
+import { AccountSummaryPersonalitemComponent } from './accounts/account-summary/account-summary-personalitem/account-summary-personalitem.component';
+import { AccountSummaryPublicitemComponent } from './accounts/account-summary/account-summary-publicitem/account-summary-publicitem.component';
+import { AccountSummaryTradelineComponent } from '@shared/components/accounts/account-summary/account-summary-tradeline/account-summary-tradeline.component';
 import { AccountDetailComponent } from '@shared/components/accounts/account-details/account-detail/account-detail.component';
+
+import { AccountSummaryComponent } from '@shared/components/accounts/account-summary/account-summary/account-summary.component';
+import { AccountSummaryWithDetailsComponent } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.component';
 
 const components = [
   BaseFormComponent,
@@ -253,9 +256,10 @@ const pipes = [
   GoalChoiceHeaderComponent,
   GoalChoiceDisclaimerComponent,
   AccountSummaryComponent,
-  DisputesHeaderPersonalitemComponent,
-  DisputesHeaderPublicitemComponent,
-  DisputesHeaderTradelineComponent,
+  AccountSummaryPersonalitemComponent,
+  AccountSummaryPublicitemComponent,
+  AccountSummaryTradelineComponent,
+  AccountSummaryWithDetailsComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

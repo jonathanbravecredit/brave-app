@@ -3,11 +3,11 @@ import { IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Component({
-  selector: 'brave-disputes-header-publicitem',
-  templateUrl: './disputes-header-publicitem.component.html',
+  selector: 'brave-account-summary-publicitem',
+  templateUrl: './account-summary-publicitem.component.html',
 })
-export class DisputesHeaderPublicitemComponent implements OnInit {
-  @Input() dispute: IDisputePublicItem = {} as IDisputePublicItem;
+export class AccountSummaryPublicitemComponent implements OnInit {
+  @Input() publicItem: IDisputePublicItem = {} as IDisputePublicItem;
   missing = TransunionUtil.bcMissing;
   constructor() {}
 

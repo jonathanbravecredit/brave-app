@@ -5,11 +5,11 @@ import { ModalService } from '@shared/services/modal/modal.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Component({
-  selector: 'brave-disputes-header-tradeline',
-  templateUrl: './disputes-header-tradeline.component.html',
+  selector: 'brave-account-summary-tradeline',
+  templateUrl: './account-summary-tradeline.component.html',
 })
-export class DisputesHeaderTradelineComponent implements OnInit {
-  @Input() dispute: IDisputeTradelineItem | undefined = {} as IDisputeTradelineItem;
+export class AccountSummaryTradelineComponent implements OnInit {
+  @Input() tradeline: IDisputeTradelineItem | undefined = {} as IDisputeTradelineItem;
   missing = TransunionUtil.bcMissing;
 
   constructor(private modalService: ModalService) {}
