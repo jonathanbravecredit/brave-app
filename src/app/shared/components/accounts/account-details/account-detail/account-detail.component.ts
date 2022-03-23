@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'brave-disputes-detail',
-  templateUrl: './disputes-detail.component.html',
+  selector: 'brave-account-detail',
+  templateUrl: './account-detail.component.html',
 })
-export class DisputesDetailComponent implements OnInit {
+export class AccountDetailComponent implements OnInit {
   @Input() pages: any[] = [];
   @Input() data: any[] = [];
 

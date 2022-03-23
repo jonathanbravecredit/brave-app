@@ -18,10 +18,10 @@ import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credi
 import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
 @Component({
-  selector: 'brave-disputes-header',
-  templateUrl: './disputes-header.component.html',
+  selector: 'brave-account-summary',
+  templateUrl: './account-summary.component.html',
 })
-export class DisputesHeaderComponent {
+export class AccountSummaryComponent {
   @ViewChild(ViewdetailButtonComponent)
   viewDetail: ViewdetailButtonComponent | undefined;
   @ViewChild(OnboardingDisputeComponent)
