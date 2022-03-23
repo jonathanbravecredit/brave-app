@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
+import { Injectable, OnDestroy, Renderer2, RendererFactory2 } from '@angular/core';
 import { Store } from '@ngxs/store';
 import * as AppDataActions from '@store/app-data/app-data.actions';
 import * as CreditReportActions from '@store/credit-report/credit-report.actions';
@@ -9,8 +9,11 @@ import * as ProgressTrackerActions from '@store/progress-tracker/progress-tracke
 })
 export class CleanUpService implements OnDestroy {
   listener: any;
+  renderer: Renderer2 | undefined;
 
-  constructor(private store: Store, private renderer: Renderer2) {}
+  constructor(private store: Store, rendererFactory: RendererFactory2) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
 
   clearAllState(): void {
     this.store.dispatch(new AppDataActions.Delete());
@@ -19,11 +22,13 @@ export class CleanUpService implements OnDestroy {
   }
 
   runOnAppClose(callback: Function): void {
-    this.listener = this.renderer.listen(window, 'beforeunload', (event: BeforeUnloadEvent) => {
-      callback();
+    if (this.renderer) {
+      this.listener = this.renderer.listen(window, 'beforeunload', (event: BeforeUnloadEvent) => {
+        callback();
 
-      event.returnValue = false;
-    });
+        event.returnValue = false;
+      });
+    }
   }
 
   ngOnDestroy(): void {
