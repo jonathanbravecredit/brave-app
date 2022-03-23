@@ -1,8 +1,5 @@
 <div class="w-full p-2">
     <brave-negative-account-initial-pure
-      [tradelines]="report | mergereportToNegativeTradelines"
-      [subscribers]="report | mergereportToSubscribers"
-      [acknowledged]="acknowledged"
       (goToDashboardClick)="onGoToDashboardClick()"
       (goToReportClick)="onGoToReportClick()"
     ></brave-negative-account-initial-pure>
