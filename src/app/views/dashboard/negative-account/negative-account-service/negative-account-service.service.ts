@@ -21,37 +21,5 @@ export class NegativeAccountService {
    * Listens for the Dispute confirmation and refreshes the report
    * @param card
    */
-  async onConfirmed(tradeline: ITradeLinePartition): Promise<void> {
-    const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
-    this.interstitial.changeMessage('checking eligibility');
-    this.interstitial.openInterstitial();
-    this.disputeService
-      .onUserConfirmed()
-      .then((resp) => {
-        const { success, error } = resp;
-        if (success) {
-          const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
-            queryParams: {
-              type: filter,
-            },
-          });
-        } else {
-          const code = `${error?.Code}`;
-          this.handleError(code);
-        }
-      })
-      .catch((err) => {
-        this.handleError();
-      });
-  }
 
-  handleError(code: string = '197'): void {
-    this.interstitial.closeInterstitial();
-    this.router.navigate([routes.root.dashboard.disputes.error.full], {
-      queryParams: {
-        code: code,
-      },
-    });
-  }
 }
