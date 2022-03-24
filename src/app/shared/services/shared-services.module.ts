@@ -20,6 +20,7 @@ import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.ser
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
+import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 const services = [
   InitService,
@@ -42,6 +43,7 @@ const services = [
   ReferralsService,
   IpaddressService,
   CampaignService,
+  SharedPipesModule,
 ];
 
 @NgModule({

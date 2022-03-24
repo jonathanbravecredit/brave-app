@@ -9,13 +9,14 @@ import { noNegativeAccountInitialContent } from '@views/dashboard/negative-accou
 export class NegativeAccountInitialPureComponent implements OnInit {
   @Input() tradelines: ITradeLinePartition[] = [];
   @Input() subscribers: ISubscriber[] = [];
-  @Input() acknowledged: boolean = false;
-  @Output() confirmed: EventEmitter<ITradeLinePartition> = new EventEmitter();
+  @Input() hasTradelines: boolean = false;
   @Output() goToReportClick: EventEmitter<void> = new EventEmitter();
   @Output() goToDashboardClick: EventEmitter<void> = new EventEmitter();
 
   content = noNegativeAccountInitialContent;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('HERE', this.hasTradelines);
+  }
 }

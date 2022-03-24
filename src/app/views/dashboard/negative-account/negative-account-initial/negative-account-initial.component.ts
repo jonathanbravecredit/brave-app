@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IMergeReport } from '@shared/interfaces/merge-report.interface';
-import { StateService } from '@shared/services/state/state.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { AccountService } from '@shared/services/account/account.service';
 
@@ -11,14 +10,15 @@ import { AccountService } from '@shared/services/account/account.service';
 })
 export class NegativeAccountInitialComponent implements OnInit {
   report: IMergeReport | undefined;
+  hasTradelines: boolean = false;
 
-  constructor(
-    private router: Router,
-    public account: AccountService,
-  ) {
+  constructor(private router: Router, private account: AccountService) {
+    // this.hasTradelines = this.account.tradelines ? this.account.tradelines.length > 0 : false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('HERE', this.hasTradelines);
+  }
 
   /**
    * Listens for the Dispute confirmation and refreshes the report

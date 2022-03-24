@@ -5,7 +5,10 @@ import {
   OnboardingDisputeComponent,
   IOnboardingEvent,
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
+import { ITradeLinePartition } from '@shared/interfaces';
 import { IDisputeTradelineItem, IDisputePersonalItem, IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
+import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
+import { AccountService } from '@shared/services/account/account.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
@@ -24,13 +27,10 @@ export class AccountSummaryComponent {
   disputeTermsModal: OnboardingDisputeComponent | undefined;
   @Input() showConfirmButton = false;
 
-
-
   @Input() publicItem: IDisputePublicItem | undefined;
   @Input() personalItem: IDisputePersonalItem | undefined;
-  @Input() tradeline: IDisputeTradelineItem | undefined;
-
-
+  @Input() tradeline: ITradeLinePartition | undefined;
+  tradelineDetails: IDisputeTradelineItem | undefined;
 
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
   @Output() confirmed: EventEmitter<void> = new EventEmitter();
@@ -58,6 +58,11 @@ export class AccountSummaryComponent {
 
   showModal = false;
 
-  constructor(public featureFlags: FeatureFlagsService) {}
-
+  constructor(
+    public featureFlags: FeatureFlagsService,
+    public account: AccountService,
+    private tradelineToDetails: TradelineToDetailsPipe,
+  ) {
+    this.tradelineDetails = this.tradelineToDetails.transform(this.tradeline);
+  }
 }

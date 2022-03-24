@@ -1,8 +1,6 @@
-<brave-account-summary
-  [showDisputeButton]="true"
-  [tradeline]="tradeline | tradelineToDetails"
-  (confirmed)="confirmed.emit(tradeline)"
-></brave-account-summary>
+<div *ngFor="let tradeline of tradelines">
+  <brave-account-summary [showDisputeButton]="true" [tradeline]="tradeline"></brave-account-summary>
+</div>
 
 <div
   *ngIf="viewDetail?.open$ | async as open"

@@ -6,12 +6,11 @@ import {
   OnboardingDisputeComponent,
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { ITradeLinePartition } from '@shared/interfaces';
-import { IDisputePersonalItem, IDisputePublicItem, IDisputeTradelineItem } from '@shared/interfaces/dispute.interfaces';
+import { AccountService } from '@shared/services/account/account.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
@@ -29,9 +28,6 @@ export class AccountSummaryWithDetailsComponent {
   @Output() confirmed: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Input() showDisputeButton = false;
   @Input() showConfirmButton = false;
-  @Input() public: IDisputePublicItem | undefined;
-  @Input() personal: IDisputePersonalItem | undefined;
-  @Input() tradeline: ITradeLinePartition | undefined;
 
   /**
    * Flag to indicate they need to still acknowledge dispute terms
@@ -55,7 +51,11 @@ export class AccountSummaryWithDetailsComponent {
 
   showModal = false;
 
-  constructor(public featureFlags: FeatureFlagsService) {}
+  tradelines: ITradeLinePartition[] | undefined | null;
+
+  constructor(public featureFlags: FeatureFlagsService, public account: AccountService) {
+    this.tradelines = account.tradelines;
+  }
 
   disputeClicked() {
     // when clicked and do not need acknowledgment

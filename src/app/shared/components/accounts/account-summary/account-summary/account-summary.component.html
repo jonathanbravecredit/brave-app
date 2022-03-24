@@ -1,6 +1,6 @@
 <!-- ======= account cards ====== -->
 <ng-container *ngIf="tradeline">
-  <brave-account-summary-tradeline [tradeline]="tradeline"></brave-account-summary-tradeline>
+  <brave-account-summary-tradeline [tradeline]="tradelineDetails"></brave-account-summary-tradeline>
 </ng-container>
 <ng-container *ngIf="publicItem">
   <brave-account-summary-publicitem [publicItem]="publicItem"></brave-account-summary-publicitem>
@@ -12,7 +12,7 @@
 <!-- ======= Confirmation button ======== -->
 <div *ngIf="showConfirmButton" class="flex justify-center">
   <div class="my-4 w-3/5">
-    <brave-filled-spinning-button [full]="true" (click)="confirmed.emit()"
+    <brave-filled-spinning-button [full]="true" (click)="tradeline && account.onConfirmed(tradeline)"
       ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
     >
   </div>
