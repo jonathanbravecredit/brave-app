@@ -8,6 +8,9 @@ import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/dispute-c
 export class DisputeConditionalTermsComponent implements OnInit {
   @Output() accepted: EventEmitter<void> = new EventEmitter();
 
+  @Input() needsComment: boolean = false;
+  @Input() hasComment: boolean | null = null;
+
   confirmed: boolean = false;
   content = TERMS_CONDITIONS;
 
@@ -20,7 +23,7 @@ export class DisputeConditionalTermsComponent implements OnInit {
   }
 
   submitAcceptance(): void {
-    if (this.confirmed) {
+    if (this.needsComment ? this.confirmed || this.hasComment : this.confirmed) {
       this.accepted.emit();
     }
   }
