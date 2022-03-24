@@ -7,10 +7,21 @@
     <input #checkbox type="checkbox" name="condition-approval" (change)="setValue($event)" />
     <label for="condition-approval" class="ml-2 text-xs">{{ content.termDescription }}</label>
   </div>
+
+  <p *ngIf="needsComment && !hasComment" class="text-red-500 text-lg mb-4 text-center">Please add a comment to your selection.</p>
+
   <div class="flex justify-center">
     <brave-filled-spinning-button
-      [backgroundColor]="!confirmed ? 'bg-black' : 'bg-indigo-800'"
-      [disabled]="!confirmed"
+      [backgroundColor]="
+        needsComment
+          ? !confirmed || !hasComment
+            ? 'bg-black'
+            : 'bg-indigo-800'
+          : !confirmed
+          ? 'bg-black'
+          : 'bg-indigo-800'
+      "
+      [disabled]="needsComment ? !confirmed || !hasComment : !confirmed"
       (click)="submitAcceptance()"
       >Submit my dispute</brave-filled-spinning-button
     >
