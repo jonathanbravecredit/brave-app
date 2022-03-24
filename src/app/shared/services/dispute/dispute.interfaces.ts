@@ -1,4 +1,4 @@
-import { INegativeAccountCardInputs } from '@views/dashboard/snapshots/negative-account/negative-account-card/interfaces';
+import { INegativeAccountCardInputs } from '@views/dashboard/negative-account/negative-account-card/interfaces';
 import { ICreditBureau } from '@shared/interfaces/credit-bureau.interface';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';

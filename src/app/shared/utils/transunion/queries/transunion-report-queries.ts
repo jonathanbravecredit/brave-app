@@ -1,5 +1,6 @@
 import { BRAVE_ACCOUNT_TYPE, NEGATIVE_PAY_STATUS_CODES, POSITIVE_PAY_STATUS_CODES } from '@shared/constants';
 import { AccountTypes, ACCOUNT_TYPES } from '@shared/constants/account-types';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 import {
   IBorrower,
   IBorrowerAddress,
@@ -12,7 +13,6 @@ import {
 import { DataBreaches, DateBreachCard, FORBEARANCE_TYPE } from '@shared/utils/constants';
 import { DataBreachConditions } from '@shared/utils/transunion/queries/utils';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 export class TransunionReportQueries extends TransunionBase {
   constructor() {

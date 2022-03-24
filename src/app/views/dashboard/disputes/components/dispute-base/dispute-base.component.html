@@ -25,7 +25,22 @@
 <div class="w-full py-4" *ngIf="currentView === 'reason'">
   <div
     *ngIf="showMaxError"
-    class="mb-4 text-white bg-red-600 font-bold text-sm text-center px-6 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+    class="
+      mb-4
+      text-white
+      bg-red-600
+      font-bold
+      text-sm text-center
+      px-6
+      rounded
+      shadow
+      hover:shadow-lg
+      outline-none
+      focus:outline-none
+      ease-linear
+      transition-all
+      duration-150
+    "
   >
     <p>{{ maxSelections === 2 ? content.p5 : content.p8 }}</p>
   </div>
@@ -60,17 +75,19 @@
 <div *ngIf="currentView === 'summary'">
   <div class="py-4">
     <p class="text-lg font-bold mb-6">{{ content.p6 }}</p>
-    <div class="mt-4" *ngFor="let selection of selections">
+    <div class="mt-4" *ngFor="let selection of selections; index as idx">
       <brave-reason-card
+        #selectionCard
         [selected]="true"
         [label]="selection?.reason?.text || ''"
-        [input]="selection?.customInput || ''"
         [showInput]="true"
         [allowInput]="selection?.allowInput || false"
+        (textChange)="onTextChange($event, idx)"
+        (toggleClick)="removeSelection(idx)"
       ></brave-reason-card>
     </div>
   </div>
-  <brave-dispute-conditional-terms (accepted)="sendDispute()">
+  <brave-dispute-conditional-terms (accepted)="sendDispute()" [needsComment]="needsComment" [hasComment]="hasComment">
     <p class="text-sm">{{ content.p7 }}</p>
   </brave-dispute-conditional-terms>
 </div>
