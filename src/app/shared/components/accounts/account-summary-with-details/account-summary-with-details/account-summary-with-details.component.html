@@ -7,7 +7,11 @@
   *ngIf="viewDetail?.open$ | async as open"
   class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
 >
-  <brave-account-detail [pages]="tradelinepages" [tradeline]="tradeline | tradelineToDetails">
+  <brave-account-detail
+    [data]="tradeline | tradelineToPages"
+    [pages]="tradelinepages"
+    [tradeline]="tradeline | tradelineToDetails"
+  >
   </brave-account-detail>
 </div>
 
