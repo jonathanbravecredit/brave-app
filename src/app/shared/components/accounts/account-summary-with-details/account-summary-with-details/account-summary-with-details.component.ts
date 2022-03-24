@@ -7,7 +7,6 @@ import {
 } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { ITradeLinePartition } from '@shared/interfaces';
 import { AccountService } from '@shared/services/account/account.service';
-import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
@@ -25,7 +24,6 @@ export class AccountSummaryWithDetailsComponent {
   disputeTermsModal: OnboardingDisputeComponent | undefined;
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
 
-  @Output() confirmed: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Input() showDisputeButton = false;
   @Input() showConfirmButton = false;
 
@@ -33,6 +31,7 @@ export class AccountSummaryWithDetailsComponent {
    * Flag to indicate they need to still acknowledge dispute terms
    */
   @Input() acknowledged: boolean = false;
+  @Input() tradeline: ITradeLinePartition | undefined;
 
   /*============================================*/
   // pass the components to form the carousel
@@ -51,23 +50,22 @@ export class AccountSummaryWithDetailsComponent {
 
   showModal = false;
 
-  tradelines: ITradeLinePartition[] | undefined | null;
-
-  constructor(public featureFlags: FeatureFlagsService, public account: AccountService) {
-    this.tradelines = account.tradelines;
+  constructor(
+    public account: AccountService
+  ) {
   }
 
   disputeClicked() {
     // when clicked and do not need acknowledgment
     if (this.acknowledged) {
-      this.confirmed.emit();
+      // this.account.onConfirmed();
     }
   }
 
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
       this.showModal = false;
-      this.confirmed.emit();
+      // this.account.onConfirmed();
     } else {
       this.spinnerBtn?.toggleSpinner();
     }

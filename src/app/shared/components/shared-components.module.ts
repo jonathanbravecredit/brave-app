@@ -134,6 +134,7 @@ import { AccountDetailComponent } from '@shared/components/accounts/account-deta
 
 import { AccountSummaryComponent } from '@shared/components/accounts/account-summary/account-summary/account-summary.component';
 import { AccountSummaryWithDetailsComponent } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.component';
+import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
 
 const components = [
   BaseFormComponent,

@@ -3,6 +3,7 @@ import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { IDisputePersonalItem, IDisputePublicItem, IDisputeTradelineItem } from '@shared/interfaces/dispute.interfaces';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 
 @Component({
   selector: 'brave-account-detail',
@@ -15,9 +16,9 @@ export class AccountDetailComponent implements OnInit {
 
   viewDetail: ViewdetailButtonComponent | undefined;
 
-  tradeline: IDisputeTradelineItem | undefined;
-  publicItem: IDisputePublicItem | undefined;
-  personalItem: IDisputePersonalItem | undefined;
+  @Input() tradeline: ITradelineDetailsConfig | undefined;
+  @Input() publicItem: IDisputePublicItem | undefined;
+  @Input() personalItem: IDisputePersonalItem | undefined;
 
   @Input() acknowledged: boolean = false;
   @Input() confirmed: EventEmitter<void> = new EventEmitter();

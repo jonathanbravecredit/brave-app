@@ -9,7 +9,6 @@ import { noNegativeAccountInitialContent } from '@views/dashboard/negative-accou
 export class NegativeAccountInitialPureComponent implements OnInit {
   @Input() tradelines: ITradeLinePartition[] = [];
   @Input() subscribers: ISubscriber[] = [];
-  @Input() hasTradelines: boolean = false;
   @Output() goToReportClick: EventEmitter<void> = new EventEmitter();
   @Output() goToDashboardClick: EventEmitter<void> = new EventEmitter();
 
@@ -17,6 +16,6 @@ export class NegativeAccountInitialPureComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('HERE', this.hasTradelines);
+    console.log(this.tradelines)
   }
 }

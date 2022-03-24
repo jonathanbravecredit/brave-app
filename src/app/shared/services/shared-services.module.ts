@@ -8,7 +8,6 @@ import { APIService } from '@shared/services/aws/api.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
 import { NavigationService } from '@shared/services/navigation/navigation.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
@@ -21,6 +20,8 @@ import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { MergereportToSubscribersPipe } from '@shared/pipes/mergereport-to-subscribers/mergereport-to-subscribers.pipe';
+import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
 
 const services = [
   InitService,
@@ -43,7 +44,8 @@ const services = [
   ReferralsService,
   IpaddressService,
   CampaignService,
-  SharedPipesModule,
+  MergereportToNegativeTradelinesPipe,
+  MergereportToSubscribersPipe,
 ];
 
 @NgModule({

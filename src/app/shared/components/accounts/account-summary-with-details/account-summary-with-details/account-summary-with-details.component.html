@@ -1,12 +1,14 @@
-<div *ngFor="let tradeline of tradelines">
-  <brave-account-summary [showDisputeButton]="true" [tradeline]="tradeline"></brave-account-summary>
-</div>
+<brave-account-summary
+  [showDisputeButton]="true"
+  [tradelineDetails]="tradeline | tradelineToDetails"
+></brave-account-summary>
 
 <div
   *ngIf="viewDetail?.open$ | async as open"
   class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
 >
-  <brave-account-detail></brave-account-detail>
+  <brave-account-detail [pages]="tradelinepages" [tradeline]="tradeline | tradelineToDetails">
+  </brave-account-detail>
 </div>
 
 <div class="flex justify-center py-3">
