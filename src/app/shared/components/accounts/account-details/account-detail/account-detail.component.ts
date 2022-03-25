@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'brave-account-detail',
   templateUrl: './account-detail.component.html',
+  providers: [AccountDetailService],
 })
 export class AccountDetailComponent implements OnInit, OnDestroy {
   @Input() pages: any[] = [];
@@ -20,6 +21,8 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   @Input() publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
   @Input() personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
 
+  @Input() detailsOpen: boolean = false;
+
   showModal: boolean = false;
   showModalSub$: Subscription;
   acknowledged: boolean = false;
@@ -27,9 +30,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
 
-  constructor(
-    public accountDetailService: AccountDetailService
-  ) {
+  constructor(public accountDetailService: AccountDetailService) {
     this.showModalSub$ = this.accountDetailService.showModal$.subscribe((v) => {
       this.showModal = v;
     });

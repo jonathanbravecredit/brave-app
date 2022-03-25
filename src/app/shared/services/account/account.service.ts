@@ -13,6 +13,7 @@ import { MergereportToTradelinesPipe } from '@shared/pipes/mergereport-to-tradel
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
+import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class AccountService implements OnDestroy {
 
   constructor(
     private creditReportService: CreditreportService,
-    private mergereportToNegativeTradelinesPipe: MergereportToTradelinesPipe,
+    private mergereportToNegativeTradelinesPipe: MergereportToNegativeTradelinesPipe,
     private MergereportToPersonalitemsPipe: MergereportToPersonalitemsPipe,
     private MergereportToPublicitemsPipe: MergereportToPublicitemsPipe,
     private mergereportToSubscribers: MergereportToSubscribersPipe,

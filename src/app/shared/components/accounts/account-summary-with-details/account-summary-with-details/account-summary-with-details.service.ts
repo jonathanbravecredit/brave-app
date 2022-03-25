@@ -16,6 +16,7 @@ export class AccountSummaryWithDetailsService {
   publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
   personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
 
+
   constructor(
     private interstitial: InterstitialService,
     private disputeService: DisputeService,
@@ -55,4 +56,5 @@ export class AccountSummaryWithDetailsService {
       },
     });
   }
+
 }

@@ -14,6 +14,7 @@ import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-repor
 @Component({
   selector: 'brave-account-summary-with-details',
   templateUrl: './account-summary-with-details.component.html',
+  providers: [AccountSummaryWithDetailsService],
 })
 export class AccountSummaryWithDetailsComponent {
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
@@ -22,6 +23,8 @@ export class AccountSummaryWithDetailsComponent {
   @Input() showConfirmButton = false;
 
   acknowledged: boolean = false;
+
+  detailsOpen: boolean = false;
 
   @Input() tradelineDetailsConfig: ITradelineDetailsConfig | null = null;
   @Input() publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
@@ -54,5 +57,9 @@ export class AccountSummaryWithDetailsComponent {
     } else {
       this.spinnerBtn?.toggleSpinner();
     }
+  }
+
+  toggleViewDetails(): void {
+    this.detailsOpen = !this.detailsOpen;
   }
 }
