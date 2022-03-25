@@ -15,7 +15,7 @@
   <brave-account-summary [showDisputeButton]="true" [publicDetailsConfig]="publicDetailsConfig"></brave-account-summary>
   <brave-account-detail
     *ngIf="publicDetailsConfig"
-    [data]="publicDetailsConfig | tradelineToPages"
+    [data]="[{ config: publicDetailsConfig }]"
     [pages]="publicitempages"
     [publicDetailsConfig]="publicDetailsConfig"
   >
@@ -29,7 +29,7 @@
   ></brave-account-summary>
   <brave-account-detail
     *ngIf="personalDetailsConfig"
-    [data]="personalDetailsConfig | tradelineToPages"
+    [data]="[{ config: publicDetailsConfig }]"
     [pages]="personalitempages"
     [personalDetailsConfig]="personalDetailsConfig"
   >
