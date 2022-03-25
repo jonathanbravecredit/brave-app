@@ -17,22 +17,6 @@
     >
     </brave-account-summary-with-details>
   </div>
-  <div *ngFor="let publicItem of account.publicItems">
-    <brave-account-summary-with-details
-      [showConfirmButton]="true"
-      [showDisputeButton]="true"
-      [publicDetailsConfig]="publicItem"
-    >
-    </brave-account-summary-with-details>
-  </div>
-  <div *ngFor="let personalItem of account.personalItems">
-    <brave-account-summary-with-details
-      [showConfirmButton]="true"
-      [showDisputeButton]="true"
-      [personalDetailsConfig]="personalItem"
-    >
-    </brave-account-summary-with-details>
-  </div>
 </ng-container>
 
 <ng-template #noNegative>
