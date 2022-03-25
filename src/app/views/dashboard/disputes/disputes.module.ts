@@ -66,6 +66,7 @@ import { DisputesEmptyErrorTextComponent } from './disputes-empty/components/dis
 import { DisputesEmptySubTitleComponent } from './disputes-empty/components/disputes-empty-sub-title/disputes-empty-sub-title.component';
 import { DisputesEmptyPureComponent } from '@views/dashboard/disputes/disputes-empty/disputes-empty-pure/disputes-empty-pure.component';
 import { DisputesEmptyTitleComponent } from '@views/dashboard/disputes/disputes-empty/components/disputes-empty-title/disputes-empty-title.component';
+import { AccountsModule } from '@shared/components/accounts/accounts.module';
 
 const modules = [
   CommonModule,
@@ -79,6 +80,7 @@ const modules = [
   PublicitemsModule,
   PersonalitemsModule,
   DisputesRoutingModule,
+  AccountsModule,
 ];
 
 const components = [

@@ -38,20 +38,19 @@ export class AccountSummaryWithDetailsComponent {
     TradelineRemarksComponent,
   ];
 
-  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) {
-  }
+  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) {}
 
   disputeClicked() {
     // when clicked and do not need acknowledgment
-    if (this.acknowledged) {
-      // this.account.onConfirmed();
+    if (this.acknowledged && this.tradelineDetailsConfig) {
+      this.accountSummaryWithDetailsService.onConfirmed(this.tradelineDetailsConfig.tradeline);
     }
   }
 
   actionForDispute(e: IOnboardingEvent) {
-    if (e.isConfirmed) {
+    if (e.isConfirmed && this.tradelineDetailsConfig) {
       this.showModal = false;
-      // this.account.onConfirmed();
+      this.accountSummaryWithDetailsService.onConfirmed(this.tradelineDetailsConfig.tradeline);
     } else {
       this.spinnerBtn?.toggleSpinner();
     }

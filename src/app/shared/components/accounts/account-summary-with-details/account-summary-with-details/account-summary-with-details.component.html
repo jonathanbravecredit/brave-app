@@ -3,6 +3,20 @@
     [showDisputeButton]="true"
     [tradelineDetailsConfig]="tradelineDetailsConfig"
   ></brave-account-summary>
+  <p>tradeline</p>
+
+  <!-- <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4 w-3/5">
+      <brave-filled-spinning-button
+        [full]="true"
+        (click)="
+          tradelineDetailsConfig && accountSummaryWithDetailsService.onConfirmed(tradelineDetailsConfig.tradeline)
+        "
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div> -->
+
   <brave-account-detail
     [data]="tradelineDetailsConfig.tradeline | tradelineToPages"
     [pages]="tradelinepages"
@@ -13,6 +27,9 @@
 
 <div *ngIf="publicDetailsConfig">
   <brave-account-summary [showDisputeButton]="true" [publicDetailsConfig]="publicDetailsConfig"></brave-account-summary>
+
+  <p>public</p>
+
   <brave-account-detail
     *ngIf="publicDetailsConfig"
     [data]="[{ config: publicDetailsConfig }]"
@@ -25,11 +42,14 @@
 <div *ngIf="personalDetailsConfig">
   <brave-account-summary
     [showDisputeButton]="true"
-    [tradelineDetailsConfig]="tradelineDetailsConfig"
+    [personalDetailsConfig]="personalDetailsConfig"
   ></brave-account-summary>
+
+  <p>personal</p>
+
   <brave-account-detail
     *ngIf="personalDetailsConfig"
-    [data]="[{ config: publicDetailsConfig }]"
+    [data]="[{ config: personalDetailsConfig!.transformed }]"
     [pages]="personalitempages"
     [personalDetailsConfig]="personalDetailsConfig"
   >

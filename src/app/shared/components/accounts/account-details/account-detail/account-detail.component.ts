@@ -27,7 +27,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
 
-  constructor(public accountDetailService: AccountDetailService) {
+  constructor(
+    public accountDetailService: AccountDetailService
+  ) {
     this.showModalSub$ = this.accountDetailService.showModal$.subscribe((v) => {
       this.showModal = v;
     });

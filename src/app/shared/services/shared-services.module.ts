@@ -19,9 +19,10 @@ import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.ser
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
-import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { MergereportToSubscribersPipe } from '@shared/pipes/mergereport-to-subscribers/mergereport-to-subscribers.pipe';
-import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
+import { MergereportToPersonalitemsPipe } from '@shared/pipes/mergereport-to-personalitems/mergereport-to-personalitems.pipe';
+import { MergereportToPublicitemsPipe } from '@shared/pipes/mergereport-to-publicitems/mergereport-to-publicitems.pipe';
+import { MergereportToTradelinesPipe } from '@shared/pipes/mergereport-to-tradelines/mergereport-to-tradelines.pipe';
 
 const services = [
   InitService,
@@ -44,8 +45,10 @@ const services = [
   ReferralsService,
   IpaddressService,
   CampaignService,
-  MergereportToNegativeTradelinesPipe,
+  MergereportToTradelinesPipe,
   MergereportToSubscribersPipe,
+  MergereportToPublicitemsPipe,
+  MergereportToPersonalitemsPipe,
 ];
 
 @NgModule({

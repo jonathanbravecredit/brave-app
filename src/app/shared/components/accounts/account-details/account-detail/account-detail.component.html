@@ -28,13 +28,13 @@
 
   <div class="flex flex-col items-start mt-3">
     <p class="ml-1">Account Details</p>
-    <ng-container *ngIf="tradelineDetails">
+    <ng-container *ngIf="tradelineDetailsConfig">
       <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
     </ng-container>
-    <ng-container *ngIf="publicItemDetails">
+    <ng-container *ngIf="publicDetailsConfig">
       <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
     </ng-container>
-    <ng-container *ngIf="personalItemDetails">
+    <ng-container *ngIf="personalDetailsConfig">
       <brave-basic-carousel [pages]="pages" [data]="data"></brave-basic-carousel>
     </ng-container>
   </div>

@@ -13,7 +13,9 @@ export class NegativeAccountInitialPureComponent implements OnInit {
   @Output() goToDashboardClick: EventEmitter<void> = new EventEmitter();
 
   content = noNegativeAccountInitialContent;
-  constructor(public account: AccountService) {}
+  constructor(
+    public account: AccountService
+  ) { }
 
   ngOnInit(): void {}
 }

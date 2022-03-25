@@ -36,6 +36,7 @@ import { ForbearanceModule } from '@views/dashboard/forbearance/forbearance.modu
 import { NegativeAccountModule } from '@views/dashboard/negative-account/negative-account.module';
 import { ProgressTrackerModule } from '@views/dashboard/progress-tracker/progress-tracker.module';
 import { ReferralDashboardModule } from '@views/dashboard/referral-dashboard/referral-dashboard.module';
+import { AccountsModule } from '@shared/components/accounts/accounts.module';
 
 const modules = [
   CommonModule,

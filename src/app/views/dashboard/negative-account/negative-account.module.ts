@@ -9,6 +9,7 @@ import { NegativeAccountInitialPureComponent } from '@views/dashboard/negative-a
 import { NegativeAccountInitialComponent } from '@views/dashboard/negative-account/negative-account-initial/negative-account-initial.component';
 import { DisputesModule } from '@views/dashboard/disputes/disputes.module';
 import { TradelinesModule } from '@views/dashboard/reports/credit-report/tradelines/tradelines.module';
+import { AccountsModule } from '@shared/components/accounts/accounts.module';
 
 const modules = [
   CommonModule,
@@ -17,12 +18,9 @@ const modules = [
   NegativeAccountRoutingModule,
   DisputesModule,
   TradelinesModule,
+  AccountsModule,
 ];
-const components = [
-  NegativeAccountComponent,
-  NegativeAccountInitialComponent,
-  NegativeAccountInitialPureComponent,
-];
+const components = [NegativeAccountComponent, NegativeAccountInitialComponent, NegativeAccountInitialPureComponent];
 
 const pipes: [] = [];
 

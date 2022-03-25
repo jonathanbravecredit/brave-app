@@ -127,15 +127,6 @@ import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-ca
 import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
 import { GoalChoiceDisclaimerComponent } from './goals/goal-choice-disclaimer/goal-choice-disclaimer.component';
 
-import { AccountSummaryPersonalitemComponent } from './accounts/account-summary/account-summary-personalitem/account-summary-personalitem.component';
-import { AccountSummaryPublicitemComponent } from './accounts/account-summary/account-summary-publicitem/account-summary-publicitem.component';
-import { AccountSummaryTradelineComponent } from '@shared/components/accounts/account-summary/account-summary-tradeline/account-summary-tradeline.component';
-import { AccountDetailComponent } from '@shared/components/accounts/account-details/account-detail/account-detail.component';
-
-import { AccountSummaryComponent } from '@shared/components/accounts/account-summary/account-summary/account-summary.component';
-import { AccountSummaryWithDetailsComponent } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.component';
-import { TradelineToDetailsPipe } from '@shared/pipes/tradeline-to-details/tradeline-to-details.pipe';
-
 const components = [
   BaseFormComponent,
   SignInComponent,
@@ -231,7 +222,6 @@ const components = [
   CreditUtilizationFillBarComponent,
   NotificationBadgeComponent,
   CircleChecktextProgressbarComponent,
-  AccountDetailComponent,
 ];
 
 // component specific pipes only
@@ -256,11 +246,6 @@ const pipes = [
   GoalChoiceCardComponent,
   GoalChoiceHeaderComponent,
   GoalChoiceDisclaimerComponent,
-  AccountSummaryComponent,
-  AccountSummaryPersonalitemComponent,
-  AccountSummaryPublicitemComponent,
-  AccountSummaryTradelineComponent,
-  AccountSummaryWithDetailsComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

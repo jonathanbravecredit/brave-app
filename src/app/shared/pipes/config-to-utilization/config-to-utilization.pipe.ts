@@ -7,7 +7,7 @@ import { ICreditUtilization } from "@views/dashboard/credit-utilization/componen
 })
 export class ConfigToUtilizationPipe implements PipeTransform {
   transform(
-    config: ITradelineDetailsConfig | undefined,
+    config: ITradelineDetailsConfig | null,
     ...args: unknown[]
   ): ICreditUtilization | undefined {
     if (!config) {
