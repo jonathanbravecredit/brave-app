@@ -6,6 +6,14 @@
     [tradelineDetailsConfig]="tradelineDetailsConfig"
   ></brave-account-summary>
 
+  <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4 w-3/5">
+      <brave-filled-spinning-button [full]="true" (click)="accountSummaryWithDetailsService.onConfirmed(tradelineDetailsConfig.tradeline)"
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div>
+
   <brave-account-detail
     [data]="tradelineDetailsConfig.tradeline | tradelineToPages"
     [pages]="tradelinepages"

@@ -23,6 +23,7 @@ export class AccountSummaryWithDetailsComponent {
   @Input() showConfirmButton = false;
 
   acknowledged: boolean = false;
+  confirmed: boolean = false;
 
   detailsOpen: boolean = false;
 
