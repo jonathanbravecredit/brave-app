@@ -9,7 +9,6 @@
   *ngIf="tradelines?.length || publicItems?.length || (personalItems | filterPersonal: tu.queries.dispute.isDisputeable)?.length; else noneFound"
 >
   <div *ngFor="let tradeline of tradelines">
-    <div class="border-t border-blueGray-300 py-2"></div>
     <brave-account-summary-with-details
       [showConfirmButton]="true"
       [showDisputeButton]="false"

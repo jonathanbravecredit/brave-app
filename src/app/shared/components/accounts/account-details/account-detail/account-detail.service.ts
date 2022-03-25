@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AccountDetailService {
   acknowledged: boolean = false;
   acknowledged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  confirmed: EventEmitter<void> = new EventEmitter();
+
   showModal: boolean = false;
   showModal$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -15,7 +15,6 @@ export class AccountDetailService {
   actionForDispute(e: IOnboardingEvent) {
     if (e.isConfirmed) {
       this.showModal = false;
-      this.confirmed.emit();
       return true
     } else {
       return false
@@ -25,7 +24,6 @@ export class AccountDetailService {
   disputeClicked() {
     // when clicked and do not need acknowledgment
     if (this.acknowledged) {
-      this.confirmed.emit();
     }
   }
 

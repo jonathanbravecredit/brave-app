@@ -10,7 +10,7 @@
   <p class="text-sm mb-6">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>
   <div *ngFor="let tradeline of account.tradelines">
     <brave-account-summary-with-details
-      [showConfirmButton]="true"
+      [showConfirmButton]="false"
       [showDisputeButton]="true"
       [tradelineDetailsConfig]="tradeline | tradelineToDetails"
     >

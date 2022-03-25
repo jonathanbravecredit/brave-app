@@ -1,8 +1,9 @@
 <ng-container *ngIf="detailsOpen">
-  <div class="flex justify-center">
+  <div class="flex justify-center" *ngIf="showDisputeButton">
     <div class="my-4 w-3/5">
       <brave-filled-spinning-button #spinnerBtn [full]="true" (click)="toggleModal(); disputeClicked()"
-        >Dispute in a few clicks</brave-filled-spinning-button>
+        >Dispute in a few clicks</brave-filled-spinning-button
+      >
     </div>
   </div>
   <div class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full">
@@ -22,7 +23,6 @@
 </ng-container>
 
 <brave-onboarding-dispute
-  *ngIf="showDisputeButton"
   [showModal]="showModal && !acknowledged"
   (confirmation)="handleActionForDispute($event)"
 ></brave-onboarding-dispute>

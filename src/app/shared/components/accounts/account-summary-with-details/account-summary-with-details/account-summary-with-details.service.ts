@@ -9,6 +9,7 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { DisputeReconfirmFilter } from '@views/dashboard/disputes/disputes-reconfirm/types/dispute-reconfirm-filters';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
+import { StateService } from '@shared/services/state/state.service';
 
 @Injectable()
 export class AccountSummaryWithDetailsService {
@@ -16,36 +17,48 @@ export class AccountSummaryWithDetailsService {
   publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
   personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
 
-
   constructor(
     private interstitial: InterstitialService,
     private disputeService: DisputeService,
     private router: Router,
+    private statesvc: StateService,
   ) {}
 
-  async onConfirmed(tradeline: ITradeLinePartition): Promise<void> {
-    const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
-    this.interstitial.changeMessage('checking eligibility');
-    this.interstitial.openInterstitial();
-    this.disputeService
-      .onUserConfirmed()
-      .then((resp) => {
-        const { success, error } = resp;
-        if (success) {
-          const filter: DisputeReconfirmFilter = accountType;
-          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
-            queryParams: {
-              type: filter,
-            },
-          });
-        } else {
-          const code = `${error?.Code}`;
-          this.handleError(code);
-        }
-      })
-      .catch((err) => {
-        this.handleError();
-      });
+  async onConfirmed(
+    tradeline: ITradeLinePartition | null,
+    personal: IPersonalItemsDetailsConfig | null,
+    publicPart: IPublicPartition | null,
+  ): Promise<void> {
+    // const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
+    // this.interstitial.changeMessage('checking eligibility');
+    // this.interstitial.openInterstitial();
+    // this.disputeService
+    //   .onUserConfirmed()
+    //   .then((resp) => {
+    //     const { success, error } = resp;
+    //     if (success) {
+    //       const filter: DisputeReconfirmFilter = accountType;
+    //       this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
+    //         queryParams: {
+    //           type: filter,
+    //         },
+    //       });
+    //     } else {
+    //       const code = `${error?.Code}`;
+    //       this.handleError(code);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     this.handleError();
+    //   });
+
+    if (tradeline) {
+      this.onDisputeTradelineClick(tradeline);
+    } else if (personal) {
+      this.onDisputePersonalClick(personal);
+    } else if (publicPart) {
+      this.onDisputePublicClick(publicPart);
+    }
   }
 
   handleError(code: string = '197'): void {
@@ -57,4 +70,48 @@ export class AccountSummaryWithDetailsService {
     });
   }
 
+  onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {
+    const id = this.statesvc.state?.appData.id;
+    if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
+    this.disputeService.setPersonalItem(personalItem);
+    this.router.navigate([routes.root.dashboard.disputes.personalitem.full], {
+      queryParams: {
+        step: 'summary',
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  onDisputePublicClick(publicItem: IPublicPartition): void {
+    const id = this.statesvc.state?.appData.id;
+    if (!id) throw `reconfirm:onDisputePublicClick=Missing id:${id}`;
+    this.disputeService.setPublicItem(publicItem);
+    this.router.navigate([routes.root.dashboard.disputes.publicitem.full], {
+      queryParams: {
+        step: 'select',
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  /**
+   * Sets the current dispute in the service based on the tradeline clicked
+   * - TODO...reevaluate when you understand the process better
+   * @param {ITradeLinePartition} tradeline
+   * @returns {void}
+   */
+  onDisputeTradelineClick(tradeline: ITradeLinePartition): void {
+    const id = this.statesvc.state?.appData.id;
+    if (!id) throw `reconfirm:onDisputeTradelineClick=Missing id:${id}`;
+    this.disputeService.setTradelineItem(tradeline);
+    this.router.navigate([routes.root.dashboard.disputes.tradeline.full], {
+      queryParams: {
+        step: 'select',
+        type: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
 }

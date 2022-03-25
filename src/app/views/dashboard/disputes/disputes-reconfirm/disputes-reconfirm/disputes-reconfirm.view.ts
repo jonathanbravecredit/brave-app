@@ -24,47 +24,6 @@ export class DisputesReconfirmView {
     private disputeService: DisputeService,
   ) {}
 
-  onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig): void {
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `reconfirm:onDisputePersonalClick=Missing id:${id}`;
-    this.disputeService.setPersonalItem(personalItem);
-    this.router.navigate([routes.root.dashboard.disputes.personalitem.full], {
-      queryParams: {
-        step: 'summary',
-        type: null,
-      },
-      queryParamsHandling: 'merge',
-    });
-  }
 
-  onDisputePublicClick(publicItem: IPublicPartition): void {
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `reconfirm:onDisputePublicClick=Missing id:${id}`;
-    this.disputeService.setPublicItem(publicItem);
-    this.router.navigate([routes.root.dashboard.disputes.publicitem.full], {
-      queryParams: {
-        step: 'select',
-        type: null,
-      },
-      queryParamsHandling: 'merge',
-    });
-  }
-  /**
-   * Sets the current dispute in the service based on the tradeline clicked
-   * - TODO...reevaluate when you understand the process better
-   * @param {ITradeLinePartition} tradeline
-   * @returns {void}
-   */
-  onDisputeTradelineClick(tradeline: ITradeLinePartition): void {
-    const id = this.statesvc.state?.appData.id;
-    if (!id) throw `reconfirm:onDisputeTradelineClick=Missing id:${id}`;
-    this.disputeService.setTradelineItem(tradeline);
-    this.router.navigate([routes.root.dashboard.disputes.tradeline.full], {
-      queryParams: {
-        step: 'select',
-        type: null,
-      },
-      queryParamsHandling: 'merge',
-    });
-  }
+
 }

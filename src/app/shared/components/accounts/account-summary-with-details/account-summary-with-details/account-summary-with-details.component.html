@@ -8,7 +8,9 @@
 
   <div *ngIf="showConfirmButton" class="flex justify-center">
     <div class="my-4 w-3/5">
-      <brave-filled-spinning-button [full]="true" (click)="accountSummaryWithDetailsService.onConfirmed(tradelineDetailsConfig.tradeline)"
+      <brave-filled-spinning-button
+        [full]="true"
+        (click)="accountSummaryWithDetailsService.onConfirmed(tradelineDetailsConfig.tradeline, null, null)"
         ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
       >
     </div>
@@ -26,6 +28,17 @@
 
 <div *ngIf="publicDetailsConfig">
   <brave-account-summary [showDisputeButton]="true" [publicDetailsConfig]="publicDetailsConfig"></brave-account-summary>
+
+  <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4 w-3/5">
+      <brave-filled-spinning-button
+        [full]="true"
+        (click)="accountSummaryWithDetailsService.onConfirmed(null, null, publicDetailsConfig.publicPartition)"
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div>
+
   <brave-account-detail
     *ngIf="publicDetailsConfig"
     [data]="[{ config: publicDetailsConfig }]"
@@ -42,6 +55,17 @@
     [showDisputeButton]="true"
     [personalDetailsConfig]="personalDetailsConfig"
   ></brave-account-summary>
+
+  <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4 w-3/5">
+      <brave-filled-spinning-button
+        [full]="true"
+        (click)="accountSummaryWithDetailsService.onConfirmed(null, personalDetailsConfig, null)"
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div>
+
   <brave-account-detail
     *ngIf="personalDetailsConfig"
     [data]="[{ config: personalDetailsConfig!.transformed }]"

@@ -40,7 +40,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('here', this.showDisputeButton)
+  }
 
   ngOnDestroy(): void {
     this.showModalSub$.unsubscribe();

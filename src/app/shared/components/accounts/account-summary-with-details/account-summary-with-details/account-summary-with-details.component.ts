@@ -46,22 +46,6 @@ export class AccountSummaryWithDetailsComponent {
     console.log('HERE', this.publicDetailsConfig);
   }
 
-  disputeClicked() {
-    // when clicked and do not need acknowledgment
-    if (this.acknowledged && this.tradelineDetailsConfig) {
-      this.accountSummaryWithDetailsService.onConfirmed(this.tradelineDetailsConfig.tradeline);
-    }
-  }
-
-  actionForDispute(e: IOnboardingEvent) {
-    if (e.isConfirmed && this.tradelineDetailsConfig) {
-      this.showModal = false;
-      this.accountSummaryWithDetailsService.onConfirmed(this.tradelineDetailsConfig.tradeline);
-    } else {
-      this.spinnerBtn?.toggleSpinner();
-    }
-  }
-
   toggleViewDetails(): void {
     this.detailsOpen = !this.detailsOpen;
   }
