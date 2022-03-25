@@ -8,6 +8,7 @@ import {
   DISPUTE_REASONS_INACCURATE,
   DISPUTE_REASONS_NOTMINE,
 } from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/constants';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 
 type viewDisplay = 'sent' | 'not-sent';
 
@@ -23,7 +24,7 @@ export interface IProcessDisputeTradelineResult {
 export class DisputesTradelinePureView {
   @Input() viewDisplay: viewDisplay = 'not-sent';
   @Input() disputeViewState: disputeViewState = 'select';
-  @Input() dispute: IDisputeTradelineItem | undefined;
+  @Input() dispute: ITradelineDetailsConfig | null = null;
   @Output() processResult: EventEmitter<IProcessDisputeTradelineResult> = new EventEmitter();
 
   reasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
