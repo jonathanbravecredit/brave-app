@@ -41,7 +41,9 @@ export class AccountSummaryWithDetailsComponent {
     TradelineRemarksComponent,
   ];
 
-  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) {}
+  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) {
+    console.log('HERE', this.publicDetailsConfig);
+  }
 
   disputeClicked() {
     // when clicked and do not need acknowledgment

@@ -12,7 +12,9 @@
     <div class="border-t border-blueGray-300 py-2"></div>
     <brave-account-summary-with-details
       [showConfirmButton]="true"
+      [showDisputeButton]="false"
       (confirmed)="disputeTradelineClick.emit(tradeline)"
+      [tradelineDetailsConfig]="tradeline | tradelineToDetails"
     >
     </brave-account-summary-with-details>
   </div>

@@ -22,6 +22,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   @Input() personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
 
   @Input() detailsOpen: boolean = false;
+  @Input() showDisputeButton: boolean = false;
 
   showModal: boolean = false;
   showModalSub$: Subscription;

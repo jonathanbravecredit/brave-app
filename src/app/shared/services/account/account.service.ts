@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { IMergeReport, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
-import { IDisputePersonalItem, IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
 
 import { BehaviorSubject, Subscription } from 'rxjs';
 

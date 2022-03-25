@@ -22,6 +22,7 @@
 </ng-container>
 
 <brave-onboarding-dispute
+  *ngIf="showDisputeButton"
   [showModal]="showModal && !acknowledged"
   (confirmation)="handleActionForDispute($event)"
 ></brave-onboarding-dispute>
