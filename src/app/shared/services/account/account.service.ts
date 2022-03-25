@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { IMergeReport, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 import { IDisputePersonalItem, IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
 
@@ -17,10 +17,7 @@ import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/
 @Injectable({
   providedIn: 'root',
 })
-export class AccountService {
-  accountType: 'tradeline' | 'personalItem' | 'publicItem' | undefined;
-  personalItem$: BehaviorSubject<IDisputePersonalItem | null> = new BehaviorSubject<IDisputePersonalItem | null>(null);
-  publicItem$: BehaviorSubject<IDisputePublicItem | null> = new BehaviorSubject<IDisputePublicItem | null>(null);
+export class AccountService implements OnDestroy {
   acknowledged: boolean = false;
   creditReport$: Subscription;
   tradelines: ITradeLinePartition[] | null = null; //!The other two needed
@@ -47,5 +44,9 @@ export class AccountService {
       this.subscribers = this.mergereportToSubscribers.transform(this.report);
     }
     this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
+  }
+
+  ngOnDestroy(): void {
+    this.creditReport$.unsubscribe()
   }
 }

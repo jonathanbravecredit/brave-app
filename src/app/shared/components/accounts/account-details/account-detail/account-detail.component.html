@@ -12,19 +12,6 @@
 </div>
 <!-- </ng-container> -->
 <div class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full">
-  <ng-container *ngIf="disputeable">
-    <div class="flex justify-center">
-      <div class="my-4 w-3/5">
-        <brave-filled-spinning-button #spinnerBtn [full]="true" (click)="toggleModal(); disputeClicked()"
-          >Dispute in a few clicks</brave-filled-spinning-button
-        >
-      </div>
-      <brave-onboarding-dispute
-        [showModal]="showModal && !acknowledged"
-        (confirmation)="handleActionForDispute($event)"
-      ></brave-onboarding-dispute>
-    </div>
-  </ng-container>
 
   <div class="flex flex-col items-start mt-3">
     <p class="ml-1">Account Details</p>
