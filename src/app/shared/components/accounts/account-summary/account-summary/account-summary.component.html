@@ -12,8 +12,8 @@
 <!-- ======= Confirmation button ======== -->
 <div *ngIf="showConfirmButton" class="flex justify-center">
   <div class="my-4 w-3/5">
-    <!-- <brave-filled-spinning-button [full]="true" (click)="tradeline && account.onConfirmed(tradeline)"
-      ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button -->
+    <brave-filled-spinning-button [full]="true" (click)="tradelineDetails && account.onConfirmed(tradelineDetails)"
+      ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
     >
   </div>
 </div>

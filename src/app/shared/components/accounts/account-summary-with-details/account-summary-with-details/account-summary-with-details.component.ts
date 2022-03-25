@@ -1,15 +1,13 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { AccountSummaryWithDetailsService } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.service';
 import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.component';
-import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import {
-  IOnboardingEvent,
-  OnboardingDisputeComponent,
-} from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { ITradeLinePartition } from '@shared/interfaces';
-import { AccountService } from '@shared/services/account/account.service';
+import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';
 import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 
@@ -18,27 +16,19 @@ import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-repor
   templateUrl: './account-summary-with-details.component.html',
 })
 export class AccountSummaryWithDetailsComponent {
-  @ViewChild(ViewdetailButtonComponent)
-  viewDetail: ViewdetailButtonComponent | undefined;
-  @ViewChild(OnboardingDisputeComponent)
-  disputeTermsModal: OnboardingDisputeComponent | undefined;
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
 
   @Input() showDisputeButton = false;
   @Input() showConfirmButton = false;
 
-  /**
-   * Flag to indicate they need to still acknowledge dispute terms
-   */
-  @Input() acknowledged: boolean = false;
-  @Input() tradeline: ITradeLinePartition | undefined;
+  acknowledged: boolean = false;
 
-  /*============================================*/
-  // pass the components to form the carousel
-  //  - pass a single page/data array even if not
-  //    split
-  //  - Personal items does not have pages...one single items
-  /*============================================*/
+  @Input() tradelineDetailsConfig: ITradelineDetailsConfig | null = null;
+  @Input() publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
+  @Input() personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
+
+  showModal = false;
+
   publicitempages = [PublicitemsDetailsTableComponent];
   personalitempages = [PersonalitemsDetailsTableComponent];
   tradelinepages = [
@@ -48,11 +38,7 @@ export class AccountSummaryWithDetailsComponent {
     TradelineRemarksComponent,
   ];
 
-  showModal = false;
-
-  constructor(
-    public account: AccountService
-  ) {
+  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) {
   }
 
   disputeClicked() {

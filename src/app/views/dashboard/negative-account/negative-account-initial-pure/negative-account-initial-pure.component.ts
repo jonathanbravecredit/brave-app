@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ISubscriber, ITradeLinePartition } from '@shared/interfaces';
+import { ISubscriber } from '@shared/interfaces';
+import { AccountService } from '@shared/services/account/account.service';
 import { noNegativeAccountInitialContent } from '@views/dashboard/negative-account/negative-account-initial-pure/content';
 
 @Component({
@@ -7,15 +8,12 @@ import { noNegativeAccountInitialContent } from '@views/dashboard/negative-accou
   templateUrl: './negative-account-initial-pure.component.html',
 })
 export class NegativeAccountInitialPureComponent implements OnInit {
-  @Input() tradelines: ITradeLinePartition[] = [];
   @Input() subscribers: ISubscriber[] = [];
   @Output() goToReportClick: EventEmitter<void> = new EventEmitter();
   @Output() goToDashboardClick: EventEmitter<void> = new EventEmitter();
 
   content = noNegativeAccountInitialContent;
-  constructor() {}
+  constructor(public account: AccountService) {}
 
-  ngOnInit(): void {
-    console.log(this.tradelines)
-  }
+  ngOnInit(): void {}
 }

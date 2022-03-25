@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IMergeReport, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { AccountService } from '@shared/services/account/account.service';
 
 @Component({
   selector: 'brave-negative-account-initial',
@@ -10,10 +9,8 @@ import { AccountService } from '@shared/services/account/account.service';
 })
 export class NegativeAccountInitialComponent implements OnInit {
   report: IMergeReport | undefined;
-  tradelines: ITradeLinePartition[] | null = null;
 
-  constructor(private router: Router, private account: AccountService) {
-    this.tradelines = this.account.tradelines;
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {}

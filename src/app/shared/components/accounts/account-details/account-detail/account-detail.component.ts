@@ -1,48 +1,57 @@
-import { Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AccountDetailService } from '@shared/components/accounts/account-details/account-detail/account-detail.service';
 import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.component';
-import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
-import { IDisputePersonalItem, IDisputePublicItem, IDisputeTradelineItem } from '@shared/interfaces/dispute.interfaces';
+import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
+import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-account-detail',
   templateUrl: './account-detail.component.html',
 })
-export class AccountDetailComponent implements OnInit {
+export class AccountDetailComponent implements OnInit, OnDestroy {
   @Input() pages: any[] = [];
   @Input() data: any[] = [];
-  @Input() disputeable: boolean = false;
+  @Input() disputeable: boolean = true;
 
-  viewDetail: ViewdetailButtonComponent | undefined;
+  @Input() tradelineDetailsConfig: ITradelineDetailsConfig | null = null;
+  @Input() publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
+  @Input() personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
 
-  @Input() tradeline: ITradelineDetailsConfig | undefined;
-  @Input() publicItem: IDisputePublicItem | undefined;
-  @Input() personalItem: IDisputePersonalItem | undefined;
-
-  @Input() acknowledged: boolean = false;
-  @Input() confirmed: EventEmitter<void> = new EventEmitter();
-  @Input() showModal: boolean = false;
+  showModal: boolean = false;
+  showModalSub$: Subscription;
+  acknowledged: boolean = false;
+  acknowledgedSub$: Subscription;
 
   @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
 
-  constructor() {}
+  constructor(public accountDetailService: AccountDetailService) {
+    this.showModalSub$ = this.accountDetailService.showModal$.subscribe((v) => {
+      this.showModal = v;
+    });
+    this.acknowledgedSub$ = this.accountDetailService.acknowledged$.subscribe((v) => {
+      this.acknowledged = v;
+    });
+  }
 
   ngOnInit(): void {}
 
-  actionForDispute(e: IOnboardingEvent) {
-    if (e.isConfirmed) {
-      this.showModal = false;
-      this.confirmed.emit();
-    } else {
-      this.spinnerBtn?.toggleSpinner();
-    }
+  ngOnDestroy(): void {
+    this.showModalSub$.unsubscribe();
+    this.acknowledgedSub$.unsubscribe();
   }
 
-  disputeClicked() {
-    // when clicked and do not need acknowledgment
-    if (this.acknowledged) {
-      this.confirmed.emit();
-    }
+  toggleModal(): void {
+    this.accountDetailService.toggleModal();
+  }
+
+  disputeClicked(): void {
+    this.accountDetailService.disputeClicked();
+  }
+
+  handleActionForDispute(event: IOnboardingEvent): void {
+    if (!this.accountDetailService.actionForDispute(event)) this.spinnerBtn?.toggleSpinner();
   }
 }

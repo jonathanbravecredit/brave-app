@@ -1,16 +1,37 @@
-<brave-account-summary
-  [showDisputeButton]="true"
-  [tradelineDetails]="tradeline | tradelineToDetails"
-></brave-account-summary>
-
-<div
-  *ngIf="viewDetail?.open$ | async as open"
-  class="flex flex-col items-center border border-blueGray-300 rounded-lg shadow w-full"
->
+<div *ngIf="tradelineDetailsConfig">
+  <brave-account-summary
+    [showDisputeButton]="true"
+    [tradelineDetailsConfig]="tradelineDetailsConfig"
+  ></brave-account-summary>
   <brave-account-detail
-    [data]="tradeline | tradelineToPages"
+    [data]="tradelineDetailsConfig.tradeline | tradelineToPages"
     [pages]="tradelinepages"
-    [tradeline]="tradeline | tradelineToDetails"
+    [tradelineDetailsConfig]="tradelineDetailsConfig"
+  >
+  </brave-account-detail>
+</div>
+
+<div *ngIf="publicDetailsConfig">
+  <brave-account-summary [showDisputeButton]="true" [publicDetailsConfig]="publicDetailsConfig"></brave-account-summary>
+  <brave-account-detail
+    *ngIf="publicDetailsConfig"
+    [data]="publicDetailsConfig | tradelineToPages"
+    [pages]="publicitempages"
+    [publicDetailsConfig]="publicDetailsConfig"
+  >
+  </brave-account-detail>
+</div>
+
+<div *ngIf="personalDetailsConfig">
+  <brave-account-summary
+    [showDisputeButton]="true"
+    [tradelineDetailsConfig]="tradelineDetailsConfig"
+  ></brave-account-summary>
+  <brave-account-detail
+    *ngIf="personalDetailsConfig"
+    [data]="personalDetailsConfig | tradelineToPages"
+    [pages]="personalitempages"
+    [personalDetailsConfig]="personalDetailsConfig"
   >
   </brave-account-detail>
 </div>

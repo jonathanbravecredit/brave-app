@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BaseModalSmallComponent } from '@shared/components/modals/base-modal-small/base-modal-small.component';
-import { IDisputeTradelineItem } from '@shared/interfaces/dispute.interfaces';
 import { ModalService } from '@shared/services/modal/modal.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 
 @Component({
   selector: 'brave-account-summary-tradeline',
   templateUrl: './account-summary-tradeline.component.html',
 })
 export class AccountSummaryTradelineComponent implements OnInit {
-  @Input() tradeline: IDisputeTradelineItem | undefined = {} as IDisputeTradelineItem;
+  @Input() tradeline: ITradelineDetailsConfig | undefined = {} as ITradelineDetailsConfig;
   missing = TransunionUtil.bcMissing;
 
   constructor(private modalService: ModalService) {}
