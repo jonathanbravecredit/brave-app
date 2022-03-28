@@ -1,4 +1,4 @@
-<div *ngIf="hasReferralCode ? fetchingFinished : true" class="flex content-center items-center justify-center h-full p-2">
+<div class="flex content-center items-center justify-center h-full p-2">
   <div class="w-full max-w-xs">
     <div class="relative flex flex-col min-w-0 break-words w-full mb-6 border-0">
       <!-- logo -->
@@ -15,20 +15,36 @@
           <h5 class="brave-h5-semibold">Create your new account!</h5>
         </div>
 
-        <div
-          *ngIf="hasReferralCode"
-          class="my-2 rounded-lg text-center p-4"
-          [ngClass]="validReferralCode ? 'bg-teal-100' : 'bg-fuchsia-500'"
-        >
-          <h3 *ngIf="validReferralCode" class="mb-2 font-semibold text-sm">Conquer your credit scores and earn!*</h3>
-          <h3 *ngIf="!validReferralCode" class="mb-2 font-semibold text-sm text-white">Invalid Referral Code</h3>
-          <p *ngIf="validReferralCode" class="text-sm">
-            Take control of your scores & earn a referral bonus for joining with friends!
-          </p>
-          <p *ngIf="!validReferralCode" class="text-sm text-white">
-            The code you’re using is not valid for any campaign or referral bonuses
-          </p>
-        </div>
+        <ng-container *ngIf="hasReferralCode">
+          <ng-container *ngIf="campaignActive; else expired">
+            <ng-container *ngIf="validReferralCode; else invalid">
+              <div class="my-2 rounded-lg text-center p-4 bg-teal-100">
+                <h3 class="mb-2 font-semibold text-sm">Conquer your credit scores and earn!*</h3>
+                <p class="text-sm">Take control of your scores & earn a referral bonus for joining with friends!</p>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #expired>
+          <ng-container>
+            <div class="my-2 rounded-lg text-center p-4 bg-fuchsia-500">
+              <h3 class="mb-2 font-semibold text-sm text-white">Campaign No Longer Active</h3>
+              <p class="text-sm text-white">
+                The campaign associated with that referral code has ended, but you can still sign up for Brave Credit.
+              </p>
+            </div>
+          </ng-container>
+        </ng-template>
+
+        <ng-template #invalid>
+          <div class="my-2 rounded-lg text-center p-4 bg-fuchsia-500">
+            <h3 class="mb-2 font-semibold text-sm text-white">Invalid Referral Code</h3>
+            <p class="text-sm text-white">The code you're using is not valid for any campaign or referral bonuses.</p>
+          </div>
+        </ng-template>
+        <!-- <ng-container *ngIf="fetchingFinished">
+      </ng-container> -->
 
         <!-- <div class="btn-wrapper text-center">
           <div class="mb-1">

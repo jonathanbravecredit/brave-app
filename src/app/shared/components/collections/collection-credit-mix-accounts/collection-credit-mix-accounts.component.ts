@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICreditCard, ILoan, IBaseCreditUtilization } from '@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces';
+import { ICreditCard, ILoan, IBaseCreditUtilization } from '@views/dashboard/credit-utilization/components/credit-utilization-card/interfaces';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 type TFinantialMechanismCollectionType = 'credit' | 'loan' | 'closed';

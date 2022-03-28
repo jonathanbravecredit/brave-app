@@ -8,6 +8,7 @@ import { CreditReportStateModel } from '@store/credit-report/credit-report.model
   defaults: {
     report: null,
     updatedOn: null,
+    modifiedOn: null,
   },
 })
 @Injectable()
@@ -24,6 +25,15 @@ export class CreditReportState {
   @Action(CreditReportActions.Update)
   updateCreditReport(ctx: StateContext<CreditReportStateModel>, { payload }: CreditReportActions.Update): void {
     ctx.patchState({
+      ...payload,
+    });
+  }
+
+  @Action(CreditReportActions.Delete)
+  deleteAppData(ctx: StateContext<CreditReportStateModel>, {}: CreditReportActions.Delete): void {
+    const state = ctx.getState();
+    const payload = new CreditReportStateModel();
+    ctx.setState({
       ...payload,
     });
   }

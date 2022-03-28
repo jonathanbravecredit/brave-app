@@ -126,9 +126,11 @@ export class TransunionMappers extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  private static getFirstFields(
-    partition: ITradeLinePartition | undefined,
-  ): { firstFieldName: string; firstFieldValue: string | number; firstFieldType: ReportCardFieldTypes } {
+  private static getFirstFields(partition: ITradeLinePartition | undefined): {
+    firstFieldName: string;
+    firstFieldValue: string | number;
+    firstFieldType: ReportCardFieldTypes;
+  } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
     if (!sym) return { firstFieldName: 'Unknown', firstFieldValue: 'Unknown', firstFieldType: 'string' };
     const group: CreditReportGroups = CREDIT_REPORT_GROUPS[sym]['group'];
@@ -157,9 +159,11 @@ export class TransunionMappers extends TransunionBase {
    * @param {ITradeLinePartition | undefined} partition
    * @returns
    */
-  private static getSecondFields(
-    partition: ITradeLinePartition | undefined,
-  ): { secondFieldName: string; secondFieldValue: string | number; secondFieldType: ReportCardFieldTypes } {
+  private static getSecondFields(partition: ITradeLinePartition | undefined): {
+    secondFieldName: string;
+    secondFieldValue: string | number;
+    secondFieldType: ReportCardFieldTypes;
+  } {
     const sym = partition?.accountTypeSymbol?.toLowerCase();
     if (!sym) return { secondFieldName: 'Unknown', secondFieldValue: 'Unknown', secondFieldType: 'string' };
     const group = CREDIT_REPORT_GROUPS[sym]['group'];

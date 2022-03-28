@@ -6,7 +6,7 @@ import {
   ActivatedRouteSnapshot,
 } from "@angular/router";
 import { IMergeReport, ITradeLinePartition } from "@shared/interfaces";
-import { CreditMixService } from "@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service";
+import { CreditMixService } from "@views/dashboard/credit-mix/credit-mix-service/credit-mix-service.service";
 
 @Injectable({
   providedIn: "root",

@@ -1,6 +1,6 @@
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import * as _ from 'lodash';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { IMergeReport } from '@shared/interfaces';
@@ -19,6 +19,8 @@ import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
+import { IReferral } from '@shared/interfaces/referrals.interface';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -39,18 +41,24 @@ export class DashboardService implements OnDestroy {
   tuReport$: BehaviorSubject<IMergeReport> = new BehaviorSubject({} as IMergeReport);
   tuReportSub$: Subscription | undefined;
   // data to pass to child components
+  dashReferral$ = new BehaviorSubject<IReferral | null>(null);
   dashReport$ = new BehaviorSubject<IMergeReport | null>(null);
   dashSnapshots$ = new BehaviorSubject<DashboardStateModel | null>(null);
   dashTrends$ = new BehaviorSubject<IGetTrendingData | null>(null);
   dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null);
   dashScore$ = new BehaviorSubject<number | null>(null);
+  dashDelta$ = new BehaviorSubject<number | null>(null);
   dashScoreSuppressed$ = new BehaviorSubject(false);
   // subscriptions to dash
   dashScoresSub$: Subscription | undefined;
+  progressTrackerData$ = new BehaviorSubject<Initiative | null>(null);
+
+  updatedOn: string | undefined;
+  updatedOn$ = new BehaviorSubject<string | null>(null);
+  updatedOnSub$: Subscription | undefined;
 
   welcome: string = '';
   name: string | undefined;
-  updatedOn: string | undefined;
 
   constructor(
     private api: APIService,
@@ -61,12 +69,30 @@ export class DashboardService implements OnDestroy {
     private reportService: CreditreportService,
     private transunion: TransunionService,
   ) {
+    this.subscribeToObservables();
+  }
+
+  ngOnDestroy() {
+    this.stateSub$?.unsubscribe();
+    this.dashScoresSub$?.unsubscribe();
+    this.tuReportSub$?.unsubscribe();
+    this.updatedOnSub$?.unsubscribe();
+  }
+
+  subscribeToObservables(): void {
     this.tuReportSub$ = this.reportService.tuReport$
       .pipe(filter((report) => report !== undefined))
       .subscribe((report) => {
         this.tuReport$.next(report);
         this.tuReport = report;
       });
+
+    this.updatedOnSub$ = this.reportService.creditReport$
+      .pipe(filter((report) => report !== undefined))
+      .subscribe((val) => {
+        this.setLastUpdated(val.modifiedOn);
+      });
+
     this.stateSub$ = this.statesvc.state$.subscribe((state: { appData: AppDataStateModel }) => {
       this.state$.next(state.appData);
       this.state = state.appData;
@@ -74,14 +100,20 @@ export class DashboardService implements OnDestroy {
 
     this.dashScoresSub$ = this.dashScores$.subscribe((scores) => {
       const score = this.getCurrentScore(scores);
+      const delta = this.calculateDelta(scores);
       this.dashScore$.next(score || 4);
+      this.dashDelta$.next(delta || 0);
     });
   }
 
-  ngOnDestroy() {
-    this.stateSub$?.unsubscribe();
-    this.dashScoresSub$?.unsubscribe();
-    this.tuReportSub$?.unsubscribe();
+  calculateDelta(scores: IProductTrendingData[] | null): number {
+    if (scores && scores.length > 1) {
+      let latestScore = +scores[scores.length - 1].AttributeValue;
+      let lastMonthsScore = +scores[scores.length - 2].AttributeValue;
+      return isNaN(latestScore) || isNaN(lastMonthsScore) ? 0 : latestScore - lastMonthsScore;
+    } else {
+      return 0;
+    }
   }
 
   getCurrentScore(scores: IProductTrendingData[] | null): number | null {
@@ -108,11 +140,9 @@ export class DashboardService implements OnDestroy {
   getLastUpdated(): string | undefined {
     return this.updatedOn;
   }
-  setLastUpdated(): void {
-    const fullfilled = _.find(this.state, 'fulfilledOn') as string;
-    if (fullfilled) {
-      this.updatedOn = new Date(fullfilled).toLocaleDateString();
-    }
+
+  setLastUpdated(val: string | null): void {
+    this.updatedOn = val ? new Date(val).toLocaleDateString() : new Date().toLocaleDateString();
   }
 
   setUserName(): void {

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import { patch, updateItem } from '@ngxs/store/operators';
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 @State<DashboardStateModel>({
   name: 'dashboard',
   defaults: {
     isLoaded: false,
+    isFresh: false,
   },
 })
 @Injectable()
@@ -69,6 +70,16 @@ export class DashboardState {
       negativeFlagged,
       negativeCardStatus,
       negativeReviewed,
+    });
+  }
+
+  @Action(DashboardActions.ResetNegativeCardCount)
+  resetNegativeCardCount(ctx: StateContext<DashboardStateModel>) {
+    const state = ctx.getState();
+    const negativeCardCount = 0;
+    ctx.patchState({
+      ...state,
+      negativeCardCount,
     });
   }
 
@@ -139,6 +150,16 @@ export class DashboardState {
       databreachFlagged,
       databreachCardStatus,
       databreachReviewed,
+    });
+  }
+
+  @Action(DashboardActions.ResetDatabreachCards)
+  resetDatabreachCards(ctx: StateContext<DashboardStateModel>) {
+    const state = ctx.getState();
+    const databreachCards: IBreachCard[] = [];
+    ctx.patchState({
+      ...state,
+      databreachCards,
     });
   }
 

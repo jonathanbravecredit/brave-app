@@ -7,7 +7,7 @@ import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 import { IDashboardData } from '@shared/services/dashboard/dashboard.service';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 
 @Component({
   selector: 'brave-dashboard-carousel',

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { ITradelineDetailsConfig } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces";
-import { ICreditUtilization } from "@views/dashboard/snapshots/credit-utilization/components/credit-utilization-card/interfaces";
+import { ICreditUtilization } from "@views/dashboard/credit-utilization/components/credit-utilization-card/interfaces";
 
 @Pipe({
   name: "configToUtilization",

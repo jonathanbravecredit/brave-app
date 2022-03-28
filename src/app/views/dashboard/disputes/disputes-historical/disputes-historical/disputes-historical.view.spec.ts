@@ -28,7 +28,7 @@ describe('DisputesHistoricalView', () => {
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj('', ['navigate']);
-    interstitialMock = jasmine.createSpyObj('', ['openInterstitial']);
+    interstitialMock = jasmine.createSpyObj('', ['openInterstitial', 'changeMessage']);
     disputeServiceMock = jasmine.createSpyObj('', [''], {
       currentDispute$: new BehaviorSubject<IDispute>({} as IDispute),
     });

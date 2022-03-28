@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
@@ -8,8 +8,8 @@ import { AnalyticsService } from '@shared/services/analytics/analytics/analytics
 import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { environment } from '@environments/environment';
-import { IamService } from '@shared/services/auth/iam.service';
+import { Subscription } from 'rxjs';
+import { AuthResolverResults } from '@shared/resolvers/auth/auth.resolver';
 
 export type SignupState = 'init' | 'invalid';
 
@@ -17,53 +17,39 @@ export type SignupState = 'init' | 'invalid';
   selector: 'brave-signup',
   templateUrl: './signup.component.html',
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnDestroy {
   viewState: SignupState = 'init';
   message: string = '';
   hasReferralCode: boolean = false;
-  referralCode: string | undefined;
+  referralCode: string | null | undefined;
   validReferralCode: boolean = false;
-  fetchingFinished: boolean = false;
+  campaignActive: boolean = false; //true is campaign still active
+  routeSub$: Subscription | undefined;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private auth: AuthService,
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
     private referral: ReferralsService,
-    private iam: IamService,
   ) {
-    router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        if (event.url.includes('referralCode')) {
-          this.hasReferralCode = true;
-          this.referralCode = event.url.slice(event.url.indexOf('=') + 1);
-          this.checkReferralCode();
-        }
-      }
-    });
+    this.subscribeToRouteDate();
   }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.routeSub$?.unsubscribe();
+  }
 
-  async checkReferralCode() {
-    let referralValidationRequest = await this.iam.signRequest(
-      `${environment.api}/referral/validation/${this.referralCode}`,
-      'POST',
-      {},
-      JSON.stringify({}),
-    );
-
-    let referralValidationData = await fetch(referralValidationRequest);
-
-    let referralValidation: { valid: boolean } = await referralValidationData.json();
-
-    if (referralValidation.valid) {
-      this.validReferralCode = true;
-    }
-
-    this.fetchingFinished = true;
+  subscribeToRouteDate(): void {
+    this.routeSub$ = this.route.data.subscribe((resp: any) => {
+      const { referralCode, hasReferralCode, validReferralCode, campaignActive } = resp.data as AuthResolverResults;
+      this.hasReferralCode = hasReferralCode;
+      this.referralCode = referralCode;
+      this.validReferralCode = validReferralCode;
+      this.campaignActive = campaignActive;
+    });
   }
 
   /**
@@ -78,7 +64,7 @@ export class SignupComponent implements OnInit {
     try {
       const resp: Response = await this.neverBounce.validateEmail(user.username);
       const body: NeverBounceResponse = await resp.json();
-      isValid = body.result === 'valid' ? true : false;
+      isValid = body.result.toLowerCase() === 'valid' ? true : false;
     } catch (err) {
       isValid = false;
     }
@@ -86,12 +72,8 @@ export class SignupComponent implements OnInit {
     if (isValid) {
       try {
         const { userSub: sub } = await this.auth.signUp(user);
-        this.analytics.fireCompleteRegistration(0.0, 'USD');
-        this.analytics.fireUserTrackingEvent(sub);
-        this.analytics.addToCohort();
-        const code = this.referral.referredByCode$.value;
-        await this.referral.createReferral(sub, code);
-        this.interstitial.fetching$.next(false);
+        this.createReferrals(sub);
+        this.handleAnalytics(sub);
         this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
@@ -101,13 +83,13 @@ export class SignupComponent implements OnInit {
         } else if (err.code === SignUpErrors.InvalidPasswordException) {
           this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]);
         } else {
-          this.handleSignupError('invalid', 'Invalid sign up credentials');
+          console.log('unknown error', err);
+          this.handleSignupError('invalid', 'Unknown signup error');
         }
       }
-      this.interstitial.fetching$.next(false);
     } else {
       this.interstitial.fetching$.next(false);
-      this.handleSignupError('invalid', 'Invalid sign up credentials');
+      this.handleSignupError('invalid', 'Please use a valid email');
     }
   }
 
@@ -120,6 +102,24 @@ export class SignupComponent implements OnInit {
     this.message = message || `Invalid sign up credentials`;
   }
 
+  handleAnalytics(sub: string): void {
+    try {
+      this.analytics.fireCompleteRegistration(0.0, 'USD');
+      this.analytics.fireUserTrackingEvent(sub);
+      this.analytics.addToCohort();
+    } catch (err) {
+      console.log('mixpanel error: ', err);
+    }
+  }
+
+  createReferrals(sub: string): void {
+    try {
+      const code = this.referralCode;
+      this.referral.createReferral(sub, code);
+    } catch (err) {
+      console.log('create referral error');
+    }
+  }
   /**
    * Method to sign user up/in with Facebook
    */

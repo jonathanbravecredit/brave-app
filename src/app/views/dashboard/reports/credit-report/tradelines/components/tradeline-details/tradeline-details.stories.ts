@@ -31,9 +31,9 @@ export default {
 
 const revolvingPartition = REVOLVING_PARTITION as ITradeLinePartition;
 const revolvingSubscriber = REVOLVING_SUBSCRIBER as ISubscriber;
-const installmentPartition = INSTALLMENT_PARTITION as ITradeLinePartition;
+// const installmentPartition = INSTALLMENT_PARTITION as ITradeLinePartition;
 const installmentSubscriber = INSTALLMENT_SUBSCRIBER as ISubscriber;
-const collectionPartition = COLLECTION_PARTITION as ITradeLinePartition;
+// const collectionPartition = COLLECTION_PARTITION as ITradeLinePartition;
 const collectionSubscriber = COLLECTION_SUBSCRIBER as ISubscriber;
 
 const Template: Story<TradelineDetailsComponent> = (args: any) => ({
@@ -49,14 +49,14 @@ Revolving.args = {
   subscriber: revolvingSubscriber,
 };
 
-export const Installment = Template.bind({});
-Installment.args = {
-  tradeline: installmentPartition,
-  subscriber: installmentSubscriber,
-};
+// export const Installment = Template.bind({});
+// Installment.args = {
+//   tradeline: installmentPartition,
+//   subscriber: installmentSubscriber,
+// };
 
-export const Collections = Template.bind({});
-Collections.args = {
-  tradeline: collectionPartition,
-  subscriber: collectionSubscriber,
-};
+// export const Collections = Template.bind({});
+// Collections.args = {
+//   tradeline: collectionPartition,
+//   subscriber: collectionSubscriber,
+// };

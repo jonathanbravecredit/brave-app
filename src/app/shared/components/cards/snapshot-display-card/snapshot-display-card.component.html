@@ -1,12 +1,18 @@
 <!-- no-purge for component -->
 <div
-  class="text-brave-danger bg-brave-danger bg-brave-critical bg-brave-safe text-brave-danger text-brave-critical text-brave-safe mt-4"
+  class="
+    text-brave-danger
+    bg-brave-danger bg-brave-critical bg-brave-safe
+    text-brave-danger text-brave-critical text-brave-safe
+    mt-4
+  "
   *ngIf="false"
 ></div>
 
 <div
   class="relative flex break-words w-full py-2 shadow rounded-sm border border-blueGray-300 min-h-14 max-h-14 mt-3"
   [ngClass]="{ 'opacity-40': preview }"
+  [ngStyle]="{ 'background-color': backGroundColor }"
 >
   <!-- tag div: Display of current type of snapshot -->
   <div *ngIf="label !== undefined" class="absolute -mt-5 ml-3 px-1 font-semibold bg-white text-sm font-headings">
@@ -20,7 +26,7 @@
     </div>
   </div> -->
   <!-- CIRCLE VERSION -->
-  <div class="flex items-center ml-3 mr-6">
+  <div *ngIf="useBubble" class="flex items-center ml-3 mr-6">
     <div
       *ngIf="!color"
       class="rounded-full border-none w-4 h-4"
@@ -28,6 +34,9 @@
     ></div>
     <div *ngIf="color" class="rounded-full border-none w-4 h-4" [ngStyle]="{ 'background-color': color }"></div>
   </div>
+
+  <div *ngIf="!useBubble" class="mr-4"></div>
+
   <div class="flex flex-col mr-auto justify-center">
     <!--  center column section 2: Display of snapshot card information -->
     <div class="flex flex-row items-center">

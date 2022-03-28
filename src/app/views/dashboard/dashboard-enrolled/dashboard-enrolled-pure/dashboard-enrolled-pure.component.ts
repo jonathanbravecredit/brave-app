@@ -1,19 +1,24 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 import { IAdData } from '@shared/interfaces/ads.interface';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { DashboardService, IDashboardData } from '@shared/services/dashboard/dashboard.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
-import { IRecommendationText } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
+import { IRecommendationText } from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { skip } from 'rxjs/operators';
+import { filter, skip } from 'rxjs/operators';
 
 @Component({
   selector: 'brave-dashboard-enrolled-pure',
   templateUrl: './dashboard-enrolled-pure.component.html',
 })
 export class DashboardEnrolledPureComponent implements OnDestroy {
+  modalOpen: boolean = true;
+  updatedOnSub$: Subscription | undefined;
+
   @Input() adsData: IAdData[] | undefined;
   @Input() referral: IReferral | null | undefined;
   @Input() rating: string | undefined;
@@ -21,6 +26,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() creditMixStatus: string | undefined;
   @Input() creditUtilizationStatus: string | undefined;
   @Input() creditUtilizationPerc: number | undefined;
+  @Input() initiative: Initiative | null = null;
+  @Input() initiativeSteps: ICircleProgressStep[] = [];
+  @Input() futureScore: number = 0;
 
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
@@ -30,10 +38,11 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Output() creditUtilizationClicked: EventEmitter<void> = new EventEmitter();
   @Output() creditMixClicked: EventEmitter<void> = new EventEmitter();
   @Output() referralsClicked: EventEmitter<void> = new EventEmitter();
+  @Output() onProgressTrackerClicked: EventEmitter<void> = new EventEmitter();
 
   public score: number = 4;
   public welcome: string = '';
-  public updatedAt: string;
+  public updatedAt: string = new Date().toISOString();
   public content = dashboardEnrolledContent;
   public forbearanceClicked: boolean = false;
   public showDisclaimer: boolean = false;
@@ -59,7 +68,10 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
         dashScoreSuppressed: val[5],
       });
     });
-    this.updatedAt = this.dashboardService.getLastUpdated() || new Date().toISOString();
+
+    this.updatedOnSub$ = this.dashboardService.updatedOn$.subscribe((u) => {
+      this.updatedAt = u || new Date().toISOString();
+    });
   }
 
   ngOnInit(): void {}
@@ -70,5 +82,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
 
   setWelcomeMessage(): void {
     this.welcome = this.dashboardService.getWelcomeMessage();
+  }
+
+  toggleGoalChoiceModel() {
+    this.modalOpen = !this.modalOpen;
   }
 }

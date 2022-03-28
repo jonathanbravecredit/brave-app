@@ -1,6 +1,6 @@
+import { IBreachCard } from '@shared/interfaces/breach-card.interface';
 import { DataBreaches } from '@shared/utils/constants';
 import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
 
 export class Add {
   static readonly type = '[Dashboard] Add';
@@ -24,6 +24,11 @@ export class IncrementNegativeCardCount {
 
 export class DecrementNegativeCardCount {
   static readonly type = '[Dashboard] DecrementNegativeCardCount';
+  constructor() {}
+}
+
+export class ResetNegativeCardCount {
+  static readonly type = '[Dashboard] ResetNegativeCardCount';
   constructor() {}
 }
 
@@ -60,6 +65,11 @@ export class UnflagDatabreachSnapshot {
 export class AddDatabreachCards {
   static readonly type = '[Dashboard] AddDatabreachCards';
   constructor(public payload: IBreachCard[]) {}
+}
+
+export class ResetDatabreachCards {
+  static readonly type = '[Dashboard] ResetDatabreachCards';
+  constructor() {}
 }
 
 export class MarkDatabreachAsReviewed {

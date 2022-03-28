@@ -328,34 +328,33 @@ describe('DisputeService', () => {
     });
 
     describe('onUserConfirmed', () => {
-      it(`Should call acknowledgeDisputeTerms everytime`, () => {
+      it(`Should call acknowledgeDisputeTerms ALWAYS (don't ever change)`, () => {
         const { disputeService } = setup();
         spyOn(disputeService, 'acknowledgeDisputeTerms');
+        disputeService.acknowledged = true;
         disputeService.onUserConfirmed();
-        expect(disputeService.acknowledgeDisputeTerms).toHaveBeenCalledWith(disputeService.state);
+        expect(disputeService.acknowledgeDisputeTerms).toHaveBeenCalled();
       });
-      xit(`Should call sendDisputePreflightCheck`, () => {
+      xit(`Should set acknowledged to true when calling onUserConfirmed and previously false`, async () => {
         const { disputeService, transunionMock } = setup();
-        spyOn(disputeService, 'sendDisputePreflightCheck');
-        disputeService.state = {
-          agencies: {
-            transunion: {},
-          },
-        } as AppDataStateModel;
-        transunionMock.sendDisputePreflightCheck.and.returnValue({ success: true, data: {} });
-        disputeService.onUserConfirmed();
-        expect(disputeService.sendDisputePreflightCheck).toHaveBeenCalled();
+        transunionMock.sendTransunionAPICall.and.returnValue({ success: false });
+        disputeService.acknowledged = false;
+        await disputeService.onUserConfirmed();
+        expect(disputeService.acknowledged).toBeTrue();
       });
-      xit(`Should call analytics fireClickEvent safeMonitor click events if preflight response is true`, () => {
-        const { disputeService, transunionMock, analyticsMock, safeMonitorMock } = setup();
-        transunionMock.sendDisputePreflightCheck.and.returnValue({ sucess: true, data: {} });
+      xit(`Should NOT call acknowledgeDisputeTerms when acknowledged is true`, () => {
+        const { disputeService } = setup();
+        spyOn(disputeService, 'acknowledgeDisputeTerms');
+        disputeService.acknowledged = true;
         disputeService.onUserConfirmed();
-        expect(analyticsMock.fireClickEvent).toHaveBeenCalledWith(AnalyticClickEvents.DisputeEnrollment, {
-          google: true,
-          mixpanel: true,
-          brave: true,
-        });
-        expect(safeMonitorMock.fireClickEvent).toHaveBeenCalledWith(MonitorClickEvents.DisputesEnroll);
+        expect(disputeService.acknowledgeDisputeTerms).not.toHaveBeenCalled();
+      });
+      it(`Should call sendDisputePreflightCheck`, async () => {
+        const { disputeService } = setup();
+        spyOn(disputeService, 'sendDisputePreflightCheck');
+        disputeService.acknowledged = true;
+        await disputeService.onUserConfirmed();
+        expect(disputeService.sendDisputePreflightCheck).toHaveBeenCalled();
       });
     });
 

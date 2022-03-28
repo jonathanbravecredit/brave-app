@@ -8,6 +8,7 @@ import { DashboardService } from './dashboard.service';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 
 describe('DashboardService', () => {
   let service: DashboardService;
@@ -25,10 +26,12 @@ describe('DashboardService', () => {
     stateMock = jasmine.createSpyObj('StateService', [''], { state$: of({}) });
     reportServiceMock = jasmine.createSpyObj('CreditreportService', [''], {
       tuReport$: of({}),
+      creditReport$: of({}),
     });
     transunionMock = jasmine.createSpyObj('TransunionService', ['refreshCreditReports']);
 
     TestBed.configureTestingModule({
+      declarations: [ParseRiskScorePipe],
       imports: [HttpClientTestingModule],
       providers: [
         { provide: APIService, useValue: apiMock },

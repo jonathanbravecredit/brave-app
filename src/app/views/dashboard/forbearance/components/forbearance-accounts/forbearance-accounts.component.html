@@ -1,0 +1,30 @@
+<div class="my-8">
+  <ng-content></ng-content>
+  <!-- cards go here -->
+  <ng-container *ngIf="accounts.length; else noAccounts">
+      <ng-container *ngFor="let card of cards">
+        <brave-credit-report-card
+          [creditorName]="card.creditorName"
+          [isOpen]="card.isOpen"
+          [firstFieldName]="card.firstFieldName"
+          [firstFieldValue]="card.firstFieldValue.toString()"
+          [firstFieldType]="card.firstFieldType"
+          [secondFieldName]="card.secondFieldName"
+          [secondFieldValue]="card.secondFieldValue.toString()"
+          [secondFieldType]="card.secondFieldType"
+          [thirdFieldName]="card.thirdFieldName"
+          [thirdFieldValue]="card.thirdFieldValue.toString()"
+          [status]="card.status"
+          (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
+        ></brave-credit-report-card>
+      </ng-container>
+  </ng-container>
+
+  <ng-template #noAccounts>
+    <div class="mb-12 py-2.5 px-14">
+      <p class="brave-body2 text-center">{{ content.p1 }}</p>
+    </div>
+  </ng-template>
+
+  <div class="border-t border-blueGray-300 my-4"></div>
+</div>

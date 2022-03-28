@@ -1,14 +1,12 @@
-import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injectable, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injectable, Inject, InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { environment } from '@environments/environment';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppDataState } from '@store/app-data/app-data.state';
 
 /* Add Amplify imports */
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
@@ -17,39 +15,13 @@ import awsconfig from '../aws-exports';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
 
-// /* social sign in configuration */
-// const isLocalhost = Boolean(
-//   window.location.hostname === 'localhost' ||
-//     window.location.hostname === '[::1]' ||
-//     window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/),
-// );
-
-// // for two redirects (local host and production)
-// const [localRedirectSignIn, productionRedirectSignIn] = awsconfig.oauth.redirectSignIn.split(',');
-// const [localRedirectSignOut, productionRedirectSignOut] = awsconfig.oauth.redirectSignOut.split(',');
-
-// const updatedAwsConfig = {
-//   ...awsconfig,
-//   oauth: {
-//     ...awsconfig.oauth,
-//     redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,
-//     redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
-//   },
-// };
-
-// declare global {
-//   interface Window {
-//     LOG_LEVEL: any;
-//   }
-// }
-// window.LOG_LEVEL = 'DEBUG'; // amplify sucks
-
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
 
 /* Add HammerJs for gesture support */
 import * as Hammer from 'hammerjs';
 import { HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import Rollbar from 'rollbar';
 
 /* shared modules */
 import { ChartsModule } from 'ng2-charts';
@@ -63,7 +35,7 @@ import { OnboardingModule } from '@views/onboarding/onboarding.module';
 import { braveState } from '@store/index';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
+// import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServerErrorInterceptor } from '@shared/interceptors/server-error.interceptor';
 import { HttpInterceptorService } from '@shared/interceptors/http-interceptor.service';
@@ -75,6 +47,27 @@ export class MyHammerConfig extends HammerGestureConfig {
     swipe: { direction: Hammer.DIRECTION_ALL },
   } as any;
 }
+
+const rollbarConfig = {
+  accessToken: '9e101810b0324ace8ac669db610f528f',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+};
+
+@Injectable()
+export class RollbarErrorHandler implements ErrorHandler {
+  constructor(@Inject(RollbarService) private rollbar: Rollbar) {}
+
+  handleError(err: any): void {
+    this.rollbar.error(err.originalError || err);
+  }
+}
+
+export function rollbarFactory() {
+  return new Rollbar(rollbarConfig);
+}
+
+export const RollbarService = new InjectionToken<Rollbar>('rollbar');
 
 @NgModule({
   declarations: [AppComponent],
@@ -105,11 +98,9 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: MyHammerConfig,
-    },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
+    { provide: ErrorHandler, useClass: RollbarErrorHandler },
+    { provide: RollbarService, useFactory: rollbarFactory },
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
   ],

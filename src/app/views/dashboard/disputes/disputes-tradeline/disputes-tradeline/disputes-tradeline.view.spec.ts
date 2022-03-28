@@ -62,6 +62,8 @@ describe('DisputesTradelineView', () => {
   });
 
   it('should run pushDispute when onProcessResult is called', () => {
+    disputeServiceMock.sendStartDispute.and.returnValue({ success: true, error: false, data: {} });
+
     component.onProcessResult({
       result: { isFinished: false } as IDisputeProcessResult,
       tradeline: {},
@@ -71,6 +73,8 @@ describe('DisputesTradelineView', () => {
   });
 
   it('should run sendStartDispute when onProcessResult is called and result.isFinished is truthy', () => {
+    disputeServiceMock.sendStartDispute.and.returnValue({ success: true, error: false, data: {} });
+
     component.onProcessResult({
       result: { isFinished: true } as IDisputeProcessResult,
       tradeline: {},
@@ -113,7 +117,7 @@ describe('DisputesTradelineView', () => {
       tradeline: {},
     } as IProcessDisputeTradelineResult);
 
-    tick()
+    tick();
 
     expect(routerMock.navigate).toHaveBeenCalled();
   }));

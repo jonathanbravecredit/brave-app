@@ -1,7 +1,9 @@
-import { IBreachCard } from '@views/dashboard/snapshots/data-breaches/components/data-breach-card/interfaces';
+import { IBreachCard } from "@shared/interfaces/breach-card.interface";
+
 
 export class DashboardStateModel {
   isLoaded: boolean = false;
+  isFresh: boolean = false;
   negativeFlagged?: boolean;
   negativeCardCount?: number;
   negativeCardStatus?: string;

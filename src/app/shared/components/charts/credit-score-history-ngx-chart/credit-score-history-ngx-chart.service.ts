@@ -5,8 +5,7 @@ import {
   IProductTrendingAttribute,
   IProductTrendingData,
 } from '@shared/interfaces/get-trending-data.interface';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import * as dayjs from 'dayjs';
+const dayjs = require('dayjs');
 
 @Injectable({
   providedIn: 'root',

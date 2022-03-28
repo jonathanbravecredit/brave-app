@@ -10,6 +10,7 @@ import { filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { OnboardingService } from '@views/onboarding/onboarding.service';
+import { RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 
 // const terminationEvent = 'onpagehide' in self ? 'pagehide' : 'unload';
 
@@ -34,6 +35,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
     { id: 3, active: false, complete: false, name: 'Verify' },
   ];
   listener: any;
+  public tag = RenderedViews.Onboarding;
 
   constructor(private store: Store, private renderer: Renderer2, private onboardingService: OnboardingService) {
     this.onboardingSub$ = this.onboarding$
