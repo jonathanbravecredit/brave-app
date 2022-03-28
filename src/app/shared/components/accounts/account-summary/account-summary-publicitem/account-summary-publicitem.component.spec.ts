@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DecodePipe } from '@shared/pipes/decode/decode.pipe';
 
 import { AccountSummaryPublicitemComponent } from './account-summary-publicitem.component';
 
@@ -8,7 +9,7 @@ describe('AccountSummaryPublicitemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountSummaryPublicitemComponent],
+      declarations: [AccountSummaryPublicitemComponent, DecodePipe],
     }).compileComponents();
   });
 

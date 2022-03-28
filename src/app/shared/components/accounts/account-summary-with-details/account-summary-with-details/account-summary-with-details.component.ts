@@ -42,9 +42,7 @@ export class AccountSummaryWithDetailsComponent {
     TradelineRemarksComponent,
   ];
 
-  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) {
-    console.log('HERE', this.publicDetailsConfig);
-  }
+  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) { }
 
   toggleViewDetails(): void {
     this.detailsOpen = !this.detailsOpen;

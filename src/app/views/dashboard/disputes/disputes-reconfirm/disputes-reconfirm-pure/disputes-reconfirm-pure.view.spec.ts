@@ -29,10 +29,10 @@ describe('DisputesReconfirmPureView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show the brave-dispute-header if there are tradelines', () => {
+  it('should show the brave-account-summary-with-details if there are tradelines', () => {
     component.tradelines = [1, 2] as unknown as ITradeLinePartition[];
     fixture.detectChanges();
-    expect(dh.count('brave-dispute-header')).toEqual(2);
+    expect(dh.count('brave-account-summary-with-details')).toEqual(2);
   });
 
   it('should show the Personal Information span if there are personalItems', () => {

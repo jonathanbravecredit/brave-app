@@ -32,13 +32,7 @@ export class AccountDetailService {
     }
   }
 
-  disputeClicked() {
-    // when clicked and do not need acknowledgment
-    if (this.acknowledged) {
-    }
-  }
-
-  onCofirm(tradeline: ITradeLinePartition) {
+  onConfirm(tradeline: ITradeLinePartition) {
     const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
     this.interstitial.changeMessage('checking eligibility');
     this.interstitial.openInterstitial();

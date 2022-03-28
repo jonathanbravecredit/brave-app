@@ -41,7 +41,6 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('here', this.showDisputeButton);
   }
 
   ngOnDestroy(): void {
@@ -53,13 +52,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     this.accountDetailService.toggleModal();
   }
 
-  disputeClicked(): void {
-    this.accountDetailService.disputeClicked();
-  }
-
   handleActionForDispute(event: IOnboardingEvent): void {
     if (!this.accountDetailService.actionForDispute(event)) this.spinnerBtn?.toggleSpinner();
     if (this.tradelineDetailsConfig?.tradeline)
-      this.accountDetailService.onCofirm(this.tradelineDetailsConfig?.tradeline);
+      this.accountDetailService.onConfirm(this.tradelineDetailsConfig?.tradeline);
   }
 }

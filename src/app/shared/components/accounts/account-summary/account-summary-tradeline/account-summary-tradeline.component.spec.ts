@@ -1,25 +1,33 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DecodePipe } from '@shared/pipes/decode/decode.pipe';
 
 import { AccountSummaryTradelineComponent } from './account-summary-tradeline.component';
 
+//private modalService: ModalService
+
+const setup = () => {
+  const ModalServiceMock = jasmine.createSpyObj('ModalService', ['appendModalToBody']);
+
+  const component = new AccountSummaryTradelineComponent(
+    ModalServiceMock
+  );
+
+  return { component, ModalServiceMock };
+};
+
 describe('AccountSummaryTradelineComponent', () => {
-  let component: AccountSummaryTradelineComponent;
-  let fixture: ComponentFixture<AccountSummaryTradelineComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AccountSummaryTradelineComponent ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AccountSummaryTradelineComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    const { component, ModalServiceMock } = setup();
 
   it('should create', () => {
+
     expect(component).toBeTruthy();
+
   });
+
+  it('should run modalService.appendModalToBody when openModal is called', () => {
+    component.openModal()
+
+    expect(ModalServiceMock.appendModalToBody).toHaveBeenCalled()
+  })
 });

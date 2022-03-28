@@ -28,11 +28,11 @@ export class AccountService implements OnDestroy {
 
   constructor(
     private creditReportService: CreditreportService,
+    private statesvc: StateService,
     private mergereportToNegativeTradelinesPipe: MergereportToNegativeTradelinesPipe,
     private MergereportToPersonalitemsPipe: MergereportToPersonalitemsPipe,
     private MergereportToPublicitemsPipe: MergereportToPublicitemsPipe,
     private mergereportToSubscribers: MergereportToSubscribersPipe,
-    private statesvc: StateService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable().subscribe((v) => {
       this.report = v;
