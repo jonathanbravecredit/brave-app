@@ -32,6 +32,7 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
 
   async processDataAndSync(report: IMergeReport): Promise<DashboardStateModel> {
     this.store.dispatch(new DashboardActions.ResetNegativeCardCount());
+    this.store.dispatch(new DashboardActions.ResetDatabreachCards());
     const trades = _nest.find<ITradeLinePartition[]>(report, 'TradeLinePartition') || [];
     this.flagTradelines(trades);
     this.flagDatabreaches(report);
