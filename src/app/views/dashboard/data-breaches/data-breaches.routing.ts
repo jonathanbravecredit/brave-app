@@ -2,12 +2,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { ActiveGuard } from '@shared/guards/active.guard';
-import { DashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { SnapshotDatabreachesResolver } from '@shared/resolvers/snapshot-databreaches/snapshot-databreaches.resolver';
 import { DataBreachesParentComponent } from '@views/dashboard/data-breaches/data-breaches.component';
-const dashboard = routes.root.dashboard;
-const snapshot = routes.root.dashboard.report.snapshot;
+import { DataBreachesComponent } from '@views/dashboard/data-breaches/data-breaches/data-breaches.component';
+
+const databreach = routes.root.dashboard.databreach;
 
 const DataBreachesRoutes: Routes = [
   {
@@ -16,8 +16,13 @@ const DataBreachesRoutes: Routes = [
     canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.databreach.segment}`,
-        component: DataBreachesParentComponent,
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full',
+      },
+      {
+        path: `${databreach.overview.segment}`,
+        component: DataBreachesComponent,
         resolve: { breaches: SnapshotDatabreachesResolver },
         canActivate: [ActiveGuard, AuthGuard],
       },

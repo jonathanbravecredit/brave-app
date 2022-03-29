@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { INegativeAccountCardInputs } from '@views/dashboard/negative-account/negative-account-card/interfaces';
+import { INegativeAccountCardInputs } from '@views/dashboard/negative-account/components/negative-account-card/interfaces';
 import {
   IOnboardingEvent,
   OnboardingDisputeComponent,

@@ -23,8 +23,9 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
   async resolve(): Promise<DashboardStateModel | null> {
     this.creditReport = await this.store.selectOnce(CreditReportSelectors.getCreditReport).toPromise();
     this.dashboard = await this.store.selectOnce(DashboardSelectors.getDashboard).toPromise();
-    const { report } = this.creditReport;
-    const { isLoaded, isFresh } = this.dashboard;
+    const report = this.creditReport.report;
+    const isLoaded = this.dashboard?.isLoaded || false;
+    const isFresh = this.dashboard?.isFresh || false;
     if (!report) return Promise.resolve(null);
     const results = isLoaded && isFresh ? Promise.resolve(this.dashboard) : this.processDataAndSync(report);
     return results;
@@ -32,6 +33,7 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
 
   async processDataAndSync(report: IMergeReport): Promise<DashboardStateModel> {
     this.store.dispatch(new DashboardActions.ResetNegativeCardCount());
+    this.store.dispatch(new DashboardActions.ResetDatabreachCards());
     const trades = _nest.find<ITradeLinePartition[]>(report, 'TradeLinePartition') || [];
     this.flagTradelines(trades);
     this.flagDatabreaches(report);
@@ -65,8 +67,10 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
   flagTradelines(tradelines: ITradeLinePartition[]): void {
     const flags = { negative: false, forbearance: false };
     tradelines.forEach((trade) => {
-      flags.negative = this.handleNegative(trade) || false;
-      flags.forbearance = this.handleForbearance(trade) || false;
+      const isNegative = this.handleNegative(trade) || false;
+      const isForbearance = this.handleForbearance(trade) || false;
+      flags.negative = !flags.negative ? isNegative : flags.negative;
+      flags.forbearance = !flags.forbearance ? isForbearance : flags.forbearance;
     });
     if (flags.negative) this.store.dispatch(new DashboardActions.FlagNegativeSnapshot());
     if (flags.forbearance) this.store.dispatch(new DashboardActions.FlagForbearanceSnapshot());

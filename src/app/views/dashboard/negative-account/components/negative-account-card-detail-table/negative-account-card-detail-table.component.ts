@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INegativeAccountCardDetails } from '@views/dashboard/negative-account/negative-account-card/interfaces';
+import { INegativeAccountCardDetails } from '@views/dashboard/negative-account/components/negative-account-card/interfaces';
 
 @Component({
   selector: 'brave-negative-account-card-detail-table',

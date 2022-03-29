@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { CreditUtilizationView } from '@views/dashboard/credit-utilization/credit-utilization/credit-utilization.view';
-import { CreditMixRoutingModule } from '@views/dashboard/credit-mix/credit-mix.routing';
 import { CreditUtilizationNoCardsTextComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component';
 import { CreditUtilizationColorPercentComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-color-percent/credit-utilization-color-percent.component';
 import { CreditUtilizationNoCardsHeaderComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component';
@@ -16,10 +15,12 @@ import { CreditUtilizationHeaderComponent } from '@views/dashboard/credit-utiliz
 import { CreditUtilizationCardComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-card/credit-utilization-card.component';
 import { CreditUtilizationPureView } from '@views/dashboard/credit-utilization/credit-utilization-pure/credit-utilization-pure.view';
 import { CreditUtilizationAssessmentComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component';
-import { AccountStatusPipe } from '@shared/pipes/accountStatus/account-status.pipe';
+import { CreditUtilizationComponent } from '@views/dashboard/credit-utilization/credit-utilization.component';
+import { CreditUtilizationRoutingModule } from '@views/dashboard/credit-utilization/credit-utilization.routing';
 
-const modules = [CommonModule, SharedComponentsModule, SharedPipesModule, CreditMixRoutingModule];
+const modules = [CommonModule, SharedComponentsModule, SharedPipesModule, CreditUtilizationRoutingModule];
 const components = [
+  CreditUtilizationComponent,
   CreditUtilizationView,
   CreditUtilizationPureView,
   CreditUtilizationCardComponent,
@@ -34,7 +35,7 @@ const components = [
   CreditUtilizationAssessmentComponent,
 ];
 
-const pipes: []= [];
+const pipes: [] = [];
 
 @NgModule({
   declarations: [...components, ...pipes],
