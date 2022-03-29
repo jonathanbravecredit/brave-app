@@ -5,8 +5,8 @@ import { ActiveGuard } from '@shared/guards/active.guard';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ForbearanceComponent } from '@views/dashboard/forbearance/forbearance.component';
 import { ForbearanceView } from '@views/dashboard/forbearance/forbearance/forbearance.view';
-const dashboard = routes.root.dashboard;
-const snapshot = routes.root.dashboard.report.snapshot;
+
+const forbearance = routes.root.dashboard.forbearance;
 
 const ForbearanceRoutes: Routes = [
   {
@@ -15,7 +15,12 @@ const ForbearanceRoutes: Routes = [
     canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.forbearance.segment}`,
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full',
+      },
+      {
+        path: `${forbearance.overview.segment}`,
         component: ForbearanceView,
         canActivate: [ActiveGuard, AuthGuard],
       },

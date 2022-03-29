@@ -66,7 +66,6 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
           }),
         )
         .toPromise();
-      console.log('resolver res: ', res);
       return Promise.resolve(res);
     } catch (err) {
       console.error(err);
