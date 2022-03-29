@@ -26,7 +26,6 @@ import { SharedDirectivesModule } from '@shared/directives/shared-directives.mod
     ComplianceModule,
     DashboardModule,
     OnboardingModule,
-    DataBreachesModule,
     RouterModule,
   ],
   exports: [],
