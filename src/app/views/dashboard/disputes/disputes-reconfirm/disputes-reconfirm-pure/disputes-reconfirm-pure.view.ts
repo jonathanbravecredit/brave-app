@@ -21,7 +21,6 @@ export class DisputesReconfirmPureView implements OnInit {
   @Input() type: DisputeReconfirmFilter = 'all';
   @Output() disputeTradelineClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
   @Output() disputePersonalClick: EventEmitter<IPersonalItemsDetailsConfig> = new EventEmitter();
-  @Output() disputePublicClick: EventEmitter<IPublicPartition> = new EventEmitter();
   tu = TransunionUtil;
   p1 = PARAGRAPH_1;
   p2 = PARAGRAPH_2;

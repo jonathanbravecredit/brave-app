@@ -41,7 +41,6 @@
   <div *ngFor="let publicItem of publicItems">
     <brave-dispute-public-card
       [publicItem]="publicItem"
-      (disputeClick)="disputePublicClick.emit(publicItem.publicPartition)"
     ></brave-dispute-public-card>
   </div>
 </ng-container>

@@ -1,12 +1,10 @@
 <div class="border-t border-blueGray-300 py-2"></div>
 <!-- ======= Public Dispute Header ======== -->
-<brave-account-summary-publicitem> </brave-account-summary-publicitem>
+<brave-account-summary-publicitem [publicItem]="publicItem"> </brave-account-summary-publicitem>
 
 <!-- ======= Confirmation button ======== -->
 <div class="flex justify-center my-4">
-  <brave-filled-onlytext-button (click)="disputeClick.emit()"
-    >&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button
-  >
+  <brave-filled-onlytext-button>&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</brave-filled-onlytext-button>
 </div>
 
 <!-- ======= Public Details ======== -->
