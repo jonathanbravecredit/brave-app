@@ -29,9 +29,6 @@ import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/d
 import { DashboardCreditScoreErrorComponent } from './dashboard-enrolled/components/dashboard-credit-score-error/dashboard-credit-score-error.component';
 import { DashboardReportMissingComponent } from './dashboard-enrolled/components/dashboard-report-missing/dashboard-report-missing.component';
 import { NegativeAccountModule } from '@views/dashboard/negative-account/negative-account.module';
-import { ProgressTrackerModule } from '@views/dashboard/progress-tracker/progress-tracker.module';
-import { ReferralDashboardModule } from '@views/dashboard/referral-dashboard/referral-dashboard.module';
-import { AccountsModule } from '@shared/components/accounts/accounts.module';
 
 const modules = [
   CommonModule,
