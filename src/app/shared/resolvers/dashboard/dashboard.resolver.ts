@@ -43,27 +43,40 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
 
     const report = await this.creditReportResolver.resolve();
     // keep this ordering
-    return forkJoin([
-      this.initResolver.resolve(),
-      this.snapshotsResolver.resolve(),
-      this.scoreTrendsResolver.resolve(),
-      this.referralResolver.resolve(),
-      this.progressTrackerResolver.resolve(),
-    ])
-      .pipe(
-        map(([init, snapshots, trends, referrals, progressTrackerData]) => {
-          return {
-            report: report, // snapshots depends on this so wait
-            snapshots: snapshots,
-            trends: trends,
-            referral: referrals.referral,
-            progressTrackerData: progressTrackerData,
-          };
-        }),
-        finalize(() => {
-          this.interstitial.closeInterstitial();
-        }),
-      )
-      .toPromise();
+    try {
+      const res = await forkJoin([
+        this.initResolver.resolve(),
+        this.snapshotsResolver.resolve(),
+        this.scoreTrendsResolver.resolve(),
+        this.referralResolver.resolve(),
+        this.progressTrackerResolver.resolve(),
+      ])
+        .pipe(
+          map(([init, snapshots, trends, referrals, progressTrackerData]) => {
+            return {
+              report: report, // snapshots depends on this so wait
+              snapshots: snapshots,
+              trends: trends,
+              referral: referrals.referral,
+              progressTrackerData: progressTrackerData,
+            };
+          }),
+          finalize(() => {
+            this.interstitial.closeInterstitial();
+          }),
+        )
+        .toPromise();
+      console.log('resolver res: ', res);
+      return Promise.resolve(res);
+    } catch (err) {
+      console.error(err);
+      return Promise.resolve({
+        report: null,
+        snapshots: null,
+        trends: null,
+        referral: null,
+        progressTrackerData: null,
+      });
+    }
   }
 }

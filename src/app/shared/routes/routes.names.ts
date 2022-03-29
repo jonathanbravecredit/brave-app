@@ -95,14 +95,7 @@ export const ROUTE_NAMES = {
             segment: 'databreach',
             full: '/dashboard/report/snapshot/databreach',
           },
-          creditutilization: {
-            segment: 'creditutilization',
-            full: '/dashboard/report/snapshot/creditutilization',
-          },
-          creditmix: {
-            segment: 'creditmix',
-            full: '/dashboard/report/snapshot/creditmix',
-          },
+
           referrals: {
             segment: 'referrals',
             full: '/dashboard/report/snapshot/referrals',
@@ -110,7 +103,7 @@ export const ROUTE_NAMES = {
           progressTracker: {
             segment: 'progresstracker',
             full: '/dashboard/report/snapshot/progresstracker',
-          }
+          },
         },
         tradeline: {
           segment: 'tradeline',
@@ -127,6 +120,22 @@ export const ROUTE_NAMES = {
         error: {
           segment: 'error',
           full: '/dashboard/report/error',
+        },
+      },
+      creditutilization: {
+        segment: 'creditutilization',
+        full: '/dashboard/creditutilization',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/creditutilization/overview',
+        },
+      },
+      creditmix: {
+        segment: 'creditmix',
+        full: '/dashboard/creditmix',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/creditmix/overview',
         },
       },
       disputes: {

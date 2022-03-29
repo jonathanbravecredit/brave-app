@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { AuthGuard } from '@shared/guards/auth.guard';
 import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
@@ -39,6 +39,7 @@ const routes: Routes = [
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'enabled',
       enableTracing: false, //!environment.production,
+      preloadingStrategy: PreloadAllModules,
     }),
   ],
   exports: [RouterModule],

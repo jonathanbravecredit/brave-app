@@ -15,10 +15,9 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Observable, Subscription } from 'rxjs';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { shuffle } from 'lodash';
-import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IMergeReport } from '@shared/interfaces';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
 import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
@@ -158,7 +157,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate([routes.root.dashboard.report.snapshot.creditutilization.full]);
+    this.router.navigate([routes.root.dashboard.creditutilization.full]);
   }
 
   onCreditMixClicked() {
