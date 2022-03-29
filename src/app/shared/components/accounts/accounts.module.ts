@@ -8,10 +8,7 @@ import { AccountSummaryPersonalitemComponent } from '@shared/components/accounts
 import { AccountSummaryPublicitemComponent } from '@shared/components/accounts/account-summary/account-summary-publicitem/account-summary-publicitem.component';
 import { AccountSummaryTradelineComponent } from '@shared/components/accounts/account-summary/account-summary-tradeline/account-summary-tradeline.component';
 import { AccountSummaryWithDetailsComponent } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.component';
-import { AccountSummaryWithDetailsService } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.service';
-import { TradelineToPagesPipe } from '@shared/pipes/tradeline-to-pages/tradeline-to-pages.pipe';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { AccountDetailService } from '@shared/components/accounts/account-details/account-detail/account-detail.service';
 
 const components = [
   AccountDetailComponent,
@@ -25,7 +22,7 @@ const components = [
 // component specific pipes only
 
 @NgModule({
-  providers: [AccountSummaryWithDetailsService, AccountDetailService],
+  providers: [],
   imports: [CommonModule, SharedPipesModule, SharedDirectivesModule, SharedComponentsModule],
   declarations: [...components],
   exports: [...components],

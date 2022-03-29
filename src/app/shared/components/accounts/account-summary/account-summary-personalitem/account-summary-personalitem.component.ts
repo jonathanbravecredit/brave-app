@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IBorrowerName, IBorrowerAddress, IEmployer } from '@shared/interfaces';
-import { IDisputePersonalItem } from '@shared/interfaces/dispute.interfaces';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 
 @Component({
-  selector: 'account-summary-header-personalitem',
+  selector: 'account-summary-personalitem',
   templateUrl: './account-summary-personalitem.component.html',
 })
 export class AccountSummaryPersonalitemComponent implements OnInit {

@@ -1,7 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { AccountSummaryWithDetailsService } from '@shared/components/accounts/account-summary-with-details/account-summary-with-details/account-summary-with-details.service';
 import { FilledSpinningButtonComponent } from '@shared/components/buttons/filled-spinning-button/filled-spinning-button.component';
-import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { PersonalitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details-table/personalitems-details-table.component';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { PublicitemsDetailsTableComponent } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details-table/publicitems-details-table.component';
@@ -14,24 +12,17 @@ import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-repor
 @Component({
   selector: 'brave-account-summary-with-details',
   templateUrl: './account-summary-with-details.component.html',
-  providers: [AccountSummaryWithDetailsService],
 })
 export class AccountSummaryWithDetailsComponent {
-  @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
-
   @Input() showDisputeButton = false;
   @Input() showConfirmButton = false;
-
-  acknowledged: boolean = false;
-  confirmed: boolean = false;
-
-  detailsOpen: boolean = false;
-
   @Input() tradelineDetailsConfig: ITradelineDetailsConfig | null = null;
   @Input() publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
   @Input() personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
 
-  showModal = false;
+  @ViewChild(FilledSpinningButtonComponent) spinnerBtn: FilledSpinningButtonComponent | undefined;
+
+  detailsOpen: boolean = false;
 
   publicitempages = [PublicitemsDetailsTableComponent];
   personalitempages = [PersonalitemsDetailsTableComponent];
@@ -42,7 +33,7 @@ export class AccountSummaryWithDetailsComponent {
     TradelineRemarksComponent,
   ];
 
-  constructor(public accountSummaryWithDetailsService: AccountSummaryWithDetailsService) { }
+  constructor() {}
 
   toggleViewDetails(): void {
     this.detailsOpen = !this.detailsOpen;

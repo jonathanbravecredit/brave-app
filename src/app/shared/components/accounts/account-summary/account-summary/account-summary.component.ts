@@ -15,13 +15,11 @@ import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-repor
 })
 export class AccountSummaryComponent {
   @Input() showConfirmButton = false;
+  @Input() showDisputeButton = false;
 
   @Input() tradelineDetailsConfig: ITradelineDetailsConfig | null = null;
   @Input() publicDetailsConfig: IPublicItemsDetailsConfig | null = null;
   @Input() personalDetailsConfig: IPersonalItemsDetailsConfig | null = null;
-
-  @Output() confirmed: EventEmitter<void> = new EventEmitter();
-  @Input() showDisputeButton = false;
 
   /*============================================*/
   // pass the components to form the carousel
@@ -37,8 +35,6 @@ export class AccountSummaryComponent {
     TradelinePaymentHistoryComponent,
     TradelineRemarksComponent,
   ];
-
-  showModal = false;
 
   constructor() {}
 }
