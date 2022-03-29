@@ -14,6 +14,7 @@ export class TransunionScrubbers extends TransunionBase {
    */
   static scrubBackendData(data: any): AppDataStateModel {
     let clean = deleteKeyNestedObject(data, '__typename');
+    clean = deleteKeyNestedObject(data, 'isFresh');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field

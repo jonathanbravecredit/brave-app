@@ -27,8 +27,8 @@ import { DataBreachesModule } from '@views/dashboard/data-breaches/data-breaches
     ComplianceModule,
     DashboardModule,
     OnboardingModule,
+    DataBreachesModule,
     RouterModule,
-    DataBreachesModule
   ],
   exports: [],
   providers: [],

@@ -22,7 +22,7 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
     } else {
       try {
         const report = await this.creditReportV2.getCurrentCreditReport();
-        this.setCreditReport(report);
+        await this.setCreditReport(report);
         const { report: mergeReport } = report;
         return mergeReport;
       } catch {

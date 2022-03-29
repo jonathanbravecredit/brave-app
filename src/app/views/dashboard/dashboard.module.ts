@@ -29,31 +29,22 @@ import { SettingsWarningComponent } from './settings/components/settings-warning
 import { DashboardAdsCarouselComponent } from './dashboard-enrolled/components/dashboard-ads-carousel/dashboard-ads-carousel.component';
 import { DashboardCreditScoreErrorComponent } from './dashboard-enrolled/components/dashboard-credit-score-error/dashboard-credit-score-error.component';
 import { DashboardReportMissingComponent } from './dashboard-enrolled/components/dashboard-report-missing/dashboard-report-missing.component';
-import { CreditMixModule } from '@views/dashboard/credit-mix/credit-mix.module';
+// import { CreditMixModule } from '@views/dashboard/credit-mix/credit-mix.module';
 import { CreditUtilizationModule } from '@views/dashboard/credit-utilization/credit-utilization.module';
-import { DataBreachesModule } from '@views/dashboard/data-breaches/data-breaches.module';
-import { ForbearanceModule } from '@views/dashboard/forbearance/forbearance.module';
-import { NegativeAccountModule } from '@views/dashboard/negative-account/negative-account.module';
-import { ProgressTrackerModule } from '@views/dashboard/progress-tracker/progress-tracker.module';
-import { ReferralDashboardModule } from '@views/dashboard/referral-dashboard/referral-dashboard.module';
+// import { DataBreachesModule } from '@views/dashboard/data-breaches/data-breaches.module';
+// import { ForbearanceModule } from '@views/dashboard/forbearance/forbearance.module';
+// import { NegativeAccountModule } from '@views/dashboard/negative-account/negative-account.module';
+// import { ProgressTrackerModule } from '@views/dashboard/progress-tracker/progress-tracker.module';
+// import { ReferralDashboardModule } from '@views/dashboard/referral-dashboard/referral-dashboard.module';
 
 const modules = [
   CommonModule,
   SharedComponentsModule,
   SharedPipesModule,
   NgxMaskModule,
-  DisputesModule,
   CreditReportModule,
-  DashboardRoutingModule,
   SharedDirectivesModule,
-  CreditMixModule,
-  CreditUtilizationModule,
-  DataBreachesModule,
-  DisputesModule,
-  ForbearanceModule,
-  NegativeAccountModule,
-  ProgressTrackerModule,
-  ReferralDashboardModule,
+  DashboardRoutingModule,
 ];
 const components = [
   DashboardComponent,
