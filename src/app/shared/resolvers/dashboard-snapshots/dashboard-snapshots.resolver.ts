@@ -67,8 +67,10 @@ export class DashboardSnapshotsResolver implements Resolve<DashboardStateModel |
   flagTradelines(tradelines: ITradeLinePartition[]): void {
     const flags = { negative: false, forbearance: false };
     tradelines.forEach((trade) => {
-      flags.negative = this.handleNegative(trade) || false;
-      flags.forbearance = this.handleForbearance(trade) || false;
+      const isNegative = this.handleNegative(trade) || false;
+      const isForbearance = this.handleForbearance(trade) || false;
+      flags.negative = !flags.negative ? isNegative : flags.negative;
+      flags.forbearance = !flags.forbearance ? isForbearance : flags.forbearance;
     });
     if (flags.negative) this.store.dispatch(new DashboardActions.FlagNegativeSnapshot());
     if (flags.forbearance) this.store.dispatch(new DashboardActions.FlagForbearanceSnapshot());

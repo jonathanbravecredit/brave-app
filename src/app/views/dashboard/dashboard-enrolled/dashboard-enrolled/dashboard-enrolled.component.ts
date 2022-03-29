@@ -129,7 +129,6 @@ export class DashboardEnrolledComponent implements OnDestroy {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    console.log('going to route: ', routes.root.dashboard.negativeaccounts.full);
     this.router.navigate([routes.root.dashboard.negativeaccounts.full]);
   }
 
