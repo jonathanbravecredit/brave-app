@@ -11,7 +11,6 @@ import { DashboardModule } from '@views/dashboard/dashboard.module';
 import { OnboardingModule } from '@views/onboarding/onboarding.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
-import { DataBreachesModule } from '@views/dashboard/data-breaches/data-breaches.module';
 
 @NgModule({
   declarations: [],
@@ -28,7 +27,6 @@ import { DataBreachesModule } from '@views/dashboard/data-breaches/data-breaches
     DashboardModule,
     OnboardingModule,
     RouterModule,
-    DataBreachesModule
   ],
   exports: [],
   providers: [],

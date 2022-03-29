@@ -12,7 +12,6 @@ import { DataBreachCardComponent } from '@views/dashboard/data-breaches/componen
 import { DataBreachNoneComponent } from '@views/dashboard/data-breaches/components/data-breach-none/data-breach-none.component';
 import { DataBreachShareComponent } from '@views/dashboard/data-breaches/components/data-breach-share/data-breach-share.component';
 import { DataBreachesComponent } from '@views/dashboard/data-breaches/data-breaches/data-breaches.component';
-import { AnalyticsDirective } from '@shared/directives/analytics/analytics.directive';
 import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const modules = [

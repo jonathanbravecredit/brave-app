@@ -15,10 +15,10 @@ const modules = [
   CommonModule,
   SharedComponentsModule,
   SharedPipesModule,
-  NegativeAccountRoutingModule,
   DisputesModule,
   TradelinesModule,
   AccountsModule,
+  NegativeAccountRoutingModule,
 ];
 const components = [NegativeAccountComponent, NegativeAccountInitialComponent, NegativeAccountInitialPureComponent];
 

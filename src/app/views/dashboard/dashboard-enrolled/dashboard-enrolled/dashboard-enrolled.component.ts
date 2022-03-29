@@ -8,20 +8,18 @@ import {
   ICreditMixTLSummary,
   IRecommendationText,
 } from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { BraveUtil } from '@shared/utils/brave/brave';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { Observable, Subscription } from 'rxjs';
 import { IAdData } from '@shared/interfaces/ads.interface';
 import { shuffle } from 'lodash';
-import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { IMergeReport } from '@shared/interfaces';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { filter } from 'rxjs/operators';
-import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
 
@@ -95,11 +93,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   subscribeToReportData(): void {
     this.reportSub$ = this.report$
-      .pipe(filter((creditReportData: CreditReportStateModel) => creditReportData !== undefined))
-      .subscribe((creditReportData: CreditReportStateModel) => {
-        this.report = creditReportData.report;
+      .pipe(filter((report) => report !== undefined))
+      .subscribe((creditReport: CreditReportStateModel) => {
+        this.report = creditReport.report;
         if (this.report) {
-          this.dashboardService.updatedOn$.next(creditReportData.modifiedOn);
+          this.dashboardService.updatedOn$.next(creditReport.modifiedOn);
           this.dashboardService.dashReport$.next(this.report);
           this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
           const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
@@ -131,7 +129,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
       negativeReviewed: true,
       negativeStatus: DashboardStatus.Stale,
     });
-    this.router.navigate([routes.root.dashboard.report.snapshot.negative.full]);
+    console.log('going to route: ', routes.root.dashboard.negativeaccounts.full);
+    this.router.navigate([routes.root.dashboard.negativeaccounts.full]);
   }
 
   onForbearanceItemsClicked() {
@@ -139,14 +138,14 @@ export class DashboardEnrolledComponent implements OnDestroy {
       forbearanceReviewed: true,
       forbearanceStatus: DashboardStatus.Stale,
     });
-    this.router.navigate([routes.root.dashboard.report.snapshot.forbearance.full]);
+    this.router.navigate([routes.root.dashboard.forbearance.full]);
   }
 
   onDatabreachItemsClicked() {
     this.dashboardService.syncDashboardStateToDB({
       databreachStatus: DashboardStatus.Stale,
     }); // not updating reviewed bc user needs to review all cards
-    this.router.navigate([routes.root.dashboard.report.snapshot.databreach.full]);
+    this.router.navigate([routes.root.dashboard.databreach.full]);
   }
 
   onFullReportClicked() {
@@ -158,18 +157,18 @@ export class DashboardEnrolledComponent implements OnDestroy {
   }
 
   onCreditUtilizationClicked() {
-    this.router.navigate([routes.root.dashboard.report.snapshot.creditutilization.full]);
+    this.router.navigate([routes.root.dashboard.creditutilization.full]);
   }
 
   onCreditMixClicked() {
-    this.router.navigate([routes.root.dashboard.report.snapshot.creditmix.full]);
+    this.router.navigate([routes.root.dashboard.creditmix.full]);
   }
 
   onReferralsClicked() {
-    this.router.navigate([routes.root.dashboard.report.snapshot.referrals.full]);
+    this.router.navigate([routes.root.dashboard.referrals.full]);
   }
 
   onProgressTrackerClicked() {
-    this.router.navigate([routes.root.dashboard.report.snapshot.progressTracker.full]);
+    this.router.navigate([routes.root.dashboard.progresstracker.full]);
   }
 }
