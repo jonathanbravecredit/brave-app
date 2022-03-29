@@ -12,9 +12,9 @@ import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/ba
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { DashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { NegativeAccountInitialComponent } from '@views/dashboard/negative-account/negative-account-initial/negative-account-initial.component';
 
 const dashboard = routes.root.dashboard;
-const snapshot = routes.root.dashboard.report.snapshot;
 
 const DashboardRoutes: Routes = [
   {
@@ -54,17 +54,29 @@ const DashboardRoutes: Routes = [
         loadChildren: () => import('./disputes/disputes.module').then((m) => m.DisputesModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.negative.segment}`,
+        path: `${dashboard.negativeaccounts.segment}`,
         canActivate: [ActiveGuard, AuthGuard],
-        loadChildren: () => import('./negative-account/negative-account.module').then((m) => m.NegativeAccountModule),
+        children: [
+          {
+            path: '',
+            redirectTo: 'overview',
+            pathMatch: 'full',
+          },
+          {
+            path: `${dashboard.negativeaccounts.overview.segment}`,
+            component: NegativeAccountInitialComponent,
+            canActivate: [ActiveGuard, AuthGuard],
+          },
+        ],
+        // loadChildren: () => import('./negative-account/negative-account.module').then((m) => m.NegativeAccountModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.forbearance.segment}`,
+        path: `${dashboard.forbearance.segment}`,
         canActivate: [ActiveGuard, AuthGuard],
         loadChildren: () => import('./forbearance/forbearance.module').then((m) => m.ForbearanceModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.databreach.segment}`,
+        path: `${dashboard.databreach.segment}`,
         canActivate: [ActiveGuard, AuthGuard],
         loadChildren: () => import('./data-breaches/data-breaches.module').then((m) => m.DataBreachesModule),
       },
@@ -80,13 +92,13 @@ const DashboardRoutes: Routes = [
         loadChildren: () => import('./credit-mix/credit-mix.module').then((m) => m.CreditMixModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.referrals.segment}`,
+        path: `${dashboard.referrals.segment}`,
         canActivate: [ActiveGuard, AuthGuard],
         loadChildren: () =>
           import('./referral-dashboard/referral-dashboard.module').then((m) => m.ReferralDashboardModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.progressTracker.segment}`,
+        path: `${dashboard.progresstracker.segment}`,
         canActivate: [ActiveGuard, AuthGuard],
         loadChildren: () => import('./progress-tracker/progress-tracker.module').then((m) => m.ProgressTrackerModule),
       },

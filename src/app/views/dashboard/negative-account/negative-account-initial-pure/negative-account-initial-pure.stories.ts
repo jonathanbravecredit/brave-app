@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { NegativeAccountInitialPureComponent } from '@views/dashboard/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
-import { INegativeAccountCardInputs } from '@views/dashboard/negative-account/negative-account-card/interfaces';
+import { INegativeAccountCardInputs } from '@views/dashboard/negative-account/components/negative-account-card/interfaces';
 import {
   REVOLVING_PARTITION,
   REVOLVING_SUBSCRIBER,

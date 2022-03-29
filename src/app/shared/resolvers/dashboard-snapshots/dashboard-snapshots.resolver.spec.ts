@@ -100,9 +100,9 @@ describe('DashboardSnapshotsResolver', () => {
       resolver.processDataAndSync(mockReport);
       expect(spy).toHaveBeenCalledWith(mockReport);
     });
-    it('should call dispatch twice', () => {
+    it('should call dispatch 3 times', () => {
       resolver.processDataAndSync(mockReport);
-      expect(storeMock.dispatch).toHaveBeenCalledTimes(2);
+      expect(storeMock.dispatch).toHaveBeenCalledTimes(3);
     });
     it('should call updateStateDBSync twice', () => {
       resolver.processDataAndSync(mockReport);
