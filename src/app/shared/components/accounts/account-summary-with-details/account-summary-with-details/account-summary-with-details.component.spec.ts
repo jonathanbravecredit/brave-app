@@ -5,17 +5,13 @@ import { AccountSummaryWithDetailsComponent } from './account-summary-with-detai
 //public accountSummaryWithDetailsService: AccountSummaryWithDetailsService
 
 const setup = () => {
-  const accountSummaryWithDetailsServiceMock = jasmine.createSpyObj('AccountSummaryWithDetailsService', ['']);
+  const component = new AccountSummaryWithDetailsComponent();
 
-  const component = new AccountSummaryWithDetailsComponent(
-    accountSummaryWithDetailsServiceMock,
-  );
-
-  return { component, accountSummaryWithDetailsServiceMock };
+  return { component };
 };
 
 describe('AccountSummaryWithDetailsComponent', () => {
-  const { component, accountSummaryWithDetailsServiceMock } = setup();
+  const { component } = setup();
 
   it('should create', () => {
     expect(component).toBeTruthy();
