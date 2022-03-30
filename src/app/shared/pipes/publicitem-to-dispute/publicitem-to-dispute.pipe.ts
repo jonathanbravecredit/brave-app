@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IPublicPartition } from '@shared/interfaces';
-import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
 
 @Pipe({
   name: 'publicitemToDispute'

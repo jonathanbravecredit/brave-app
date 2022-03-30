@@ -1,4 +1,4 @@
-<ng-container *ngIf="tradelines.length > 0; else noNegative">
+<ng-container *ngIf="account.tradelines && account.tradelines.length > 0; else noNegative">
   <div class="mb-2">
     <h2 class="font-semibold text-lg">New Negative Accounts</h2>
     <p class="text-brave-critical text-xs">High Score Impact</p>
@@ -8,14 +8,13 @@
     payments.
   </p>
   <p class="text-sm mb-6">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>
-  <div *ngFor="let tradeline of tradelines">
-    <div class="border-t border-blueGray-300 py-2"></div>
-    <brave-dispute-header
+  <div *ngFor="let tradeline of account.tradelines">
+    <brave-account-summary-with-details
+      [showConfirmButton]="false"
       [showDisputeButton]="true"
-      [tradelinedispute]="tradeline | tradelineToDetails"
-      (confirmed)="confirmed.emit(tradeline)"
+      [tradelineDetailsConfig]="tradeline | tradelineToDetails"
     >
-    </brave-dispute-header>
+    </brave-account-summary-with-details>
   </div>
 </ng-container>
 

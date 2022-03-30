@@ -7,8 +7,8 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
   name: 'tradelineToDetails',
 })
 export class TradelineToDetailsPipe implements PipeTransform {
-  transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | undefined {
-    if (!tradeline) return;
+  transform(tradeline: ITradeLinePartition | undefined | null): ITradelineDetailsConfig | null {
+    if (!tradeline) return null;
     const remarks = tu.parsers.report.parseRemarks(tradeline?.Tradeline?.Remark);
     const originalCreditor = tu.queries.report.getOriginalCreditor(tradeline);
     const mapped = {

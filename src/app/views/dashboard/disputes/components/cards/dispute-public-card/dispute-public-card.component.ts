@@ -7,7 +7,6 @@ import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-repor
 })
 export class DisputePublicCardComponent implements OnInit {
   @Input() publicItem: IPublicItemsDetailsConfig = {} as IPublicItemsDetailsConfig; // bring the unmapped public item foreward
-  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}

@@ -17,59 +17,8 @@ export class PublicitemsView {
    * Raw tradline partition directly from Merge Report
    */
   publicItem$: Observable<IPublicPartition>;
-  /**
-   * Flag to indicate that dispute terms have been acknowledged
-   */
-  _acknowledged: boolean = false;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private statesvc: StateService,
-    private disputeService: DisputeService,
-    private creditReportServices: CreditreportService,
-  ) {
+  constructor(private creditReportServices: CreditreportService) {
     this.publicItem$ = this.creditReportServices.tuPublicItem$.asObservable();
-    this.acknowledged = this.statesvc.state?.appData.agencies?.transunion?.acknowledgedDisputeTerms || false;
-  }
-
-  set acknowledged(value: boolean) {
-    this._acknowledged = value;
-  }
-  get acknowledged(): boolean {
-    return this._acknowledged;
-  }
-  /**
-   * Sets the current dispute in the service based on the public item clicked
-   * - TODO...refactor to be DRY
-   * @returns {void}
-   */
-  async onDisputeClick(): Promise<void> {
-    this.disputeService
-      .sendDisputePreflightCheck()
-      .then((resp) => {
-        const { success, error } = resp;
-        if (success) {
-          const filter: DisputeReconfirmFilter = 'public';
-          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
-            queryParams: {
-              type: filter,
-            },
-          });
-        } else {
-          this.router.navigate([routes.root.dashboard.disputes.error.full], {
-            queryParams: {
-              code: error?.Code || '197',
-            },
-          });
-        }
-      })
-      .catch((err) => {
-        this.router.navigate([routes.root.dashboard.disputes.error.full], {
-          queryParams: {
-            code: '197',
-          },
-        });
-      });
   }
 }

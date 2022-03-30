@@ -126,6 +126,7 @@ import { GoalChoiceParentComponent } from './goals/goal-choice-parent/goal-choic
 import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-card/goal-choice-card.component';
 import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
 import { GoalChoiceDisclaimerComponent } from './goals/goal-choice-disclaimer/goal-choice-disclaimer.component';
+import { OnboardingDisputeV2Component } from './modals/onboarding-dispute-v2/onboarding-dispute-v2.component';
 
 const components = [
   BaseFormComponent,
@@ -222,6 +223,7 @@ const components = [
   CreditUtilizationFillBarComponent,
   NotificationBadgeComponent,
   CircleChecktextProgressbarComponent,
+  OnboardingDisputeV2Component,
 ];
 
 // component specific pipes only

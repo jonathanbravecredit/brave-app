@@ -16,10 +16,5 @@
   [creditLimit]="config?.creditLimit"
 ></brave-credit-utilization-fill-bar>
 <div class="mt-6">
-  <brave-tradeline-details
-    [tradeline]="tradeline"
-    [subscriber]="subscriber"
-    [acknowledged]="acknowledged"
-    (disputeClick)="disputeClick.emit(tradeline)"
-  ></brave-tradeline-details>
+  <brave-tradeline-details [tradeline]="tradeline" [subscriber]="subscriber"></brave-tradeline-details>
 </div>
