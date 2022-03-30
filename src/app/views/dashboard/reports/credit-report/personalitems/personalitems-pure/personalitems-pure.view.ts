@@ -17,31 +17,6 @@ export class PersonalitemsPureView {
    * Config parameters with parsed tradeline data
    */
   @Input() config: IPersonalItemsDetailsTable = {} as IPersonalItemsDetailsTable;
-  /**
-   * Flag to indicate they need to still acknowledge dispute terms
-   */
-  @Input() acknowledged: boolean = false;
-  /**
-   * Event emitter when dispute button clicked on tradeline detail
-   * - Pass up the tradlinePartition clicked on from here
-   */
-  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
-
-  showModal: boolean = false;
 
   constructor(public featureFlags: FeatureFlagsService) {}
-
-  disputeClicked(): void {
-    // when clicked and do not need acknowledgment
-    if (this.acknowledged) {
-      this.disputeClick.emit();
-    }
-  }
-
-  actionForDispute(e: IOnboardingEvent): void {
-    if (e.isConfirmed) {
-      this.showModal = false;
-      this.disputeClick.emit();
-    }
-  }
 }

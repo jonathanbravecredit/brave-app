@@ -1,0 +1,89 @@
+<div class="border-t border-blueGray-300 py-2"></div>
+
+<div *ngIf="tradelineDetailsConfig">
+  <brave-account-summary
+    [showDisputeButton]="true"
+    [tradelineDetailsConfig]="tradelineDetailsConfig"
+  ></brave-account-summary>
+
+  <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4">
+      <brave-filled-spinning-button
+        braveDisputeButton
+        [action]="'confirming'"
+        [type]="'tradeline'"
+        [tradeline]="tradelineDetailsConfig.tradeline"
+        [full]="true"
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div>
+
+  <brave-account-detail
+    [data]="tradelineDetailsConfig.tradeline | tradelineToPages"
+    [pages]="tradelinepages"
+    [tradelineDetailsConfig]="tradelineDetailsConfig"
+    [detailsOpen]="detailsOpen"
+    [showDisputeButton]="showDisputeButton"
+  >
+  </brave-account-detail>
+</div>
+
+<div *ngIf="publicDetailsConfig">
+  <brave-account-summary [showDisputeButton]="true" [publicDetailsConfig]="publicDetailsConfig"></brave-account-summary>
+
+  <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4">
+      <brave-filled-spinning-button
+        braveDisputeButton
+        [action]="'confirming'"
+        [type]="'publicitem'"
+        [publicItem]="publicDetailsConfig.publicPartition"
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div>
+
+  <brave-account-detail
+    *ngIf="publicDetailsConfig"
+    [data]="[{ config: publicDetailsConfig }]"
+    [pages]="publicitempages"
+    [detailsOpen]="detailsOpen"
+    [showDisputeButton]="showDisputeButton"
+    [publicDetailsConfig]="publicDetailsConfig"
+  >
+  </brave-account-detail>
+</div>
+
+<div *ngIf="personalDetailsConfig">
+  <brave-account-summary
+    [showDisputeButton]="true"
+    [personalDetailsConfig]="personalDetailsConfig"
+  ></brave-account-summary>
+
+  <div *ngIf="showConfirmButton" class="flex justify-center">
+    <div class="my-4">
+      <brave-filled-spinning-button
+        braveDisputeButton
+        [action]="'confirming'"
+        [type]="'personalitem'"
+        [personalItem]="personalDetailsConfig"
+        ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
+      >
+    </div>
+  </div>
+
+  <brave-account-detail
+    *ngIf="personalDetailsConfig"
+    [data]="[{ config: personalDetailsConfig!.transformed }]"
+    [pages]="personalitempages"
+    [detailsOpen]="detailsOpen"
+    [showDisputeButton]="showDisputeButton"
+    [personalDetailsConfig]="personalDetailsConfig"
+  >
+  </brave-account-detail>
+</div>
+
+<div class="flex justify-center py-3">
+  <brave-viewdetail-button (click)="toggleViewDetails()" size="full">View Detail</brave-viewdetail-button>
+</div>

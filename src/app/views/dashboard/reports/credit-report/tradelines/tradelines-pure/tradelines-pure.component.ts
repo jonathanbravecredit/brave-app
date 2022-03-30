@@ -19,16 +19,6 @@ export class TradelinesPureComponent {
    * The matching subscriber (creditor data) to the tradeline detail
    */
   @Input() subscriber: ISubscriber | undefined | null = {} as ISubscriber;
-  /**
-   * Flag to indicate they need to still acknowledge dispute terms
-   */
-  @Input() acknowledged: boolean = false;
-
-  /**
-   * Event emitter when dispute button clicked on tradeline detail
-   * - Pass up the tradlinePartition clicked on from here
-   */
-  @Output() disputeClick: EventEmitter<ITradeLinePartition | undefined | null> = new EventEmitter();
 
   constructor() {}
 }
