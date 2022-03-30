@@ -30,6 +30,5 @@ export class DisputesPublicPureView implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('HERE 2', this.dispute)
   }
 }
