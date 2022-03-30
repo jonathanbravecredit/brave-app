@@ -22,34 +22,6 @@ export default {
   ],
 } as Meta;
 
-// const cards: INegativeAccountCardInputs[] = [
-// {
-//   tradeline: REVOLVING_PARTITION,
-//   subscriber: REVOLVING_SUBSCRIBER,
-//   creditorName: 'Negative Nelly',
-//   lastReported: '2020-01-01',
-//   accountTypeDescription: 'Revolving',
-//   accountTypeDescriptionValue: 'Predators R Us',
-//   originalCreditor: 'Original Creditor',
-//   originalCreditorValue: 'Bank of America',
-//   disputeFlag: 'Previously Disputed',
-//   disputeFlagValue: 'No',
-//   consumerStatement: 'None',
-// } as INegativeAccountCardInputs,
-// {
-//   tradeline: REVOLVING_PARTITION,
-//   subscriber: REVOLVING_SUBSCRIBER,
-//   creditorName: 'Negative Nelly Two',
-//   lastReported: '2020-01-01',
-//   accountTypeDescription: 'Revolving',
-//   accountTypeDescriptionValue: 'Loans R Us',
-//   originalCreditor: 'Original Creditor',
-//   originalCreditorValue: 'Bank of America',
-//   disputeFlag: 'Previously Disputed',
-//   disputeFlagValue: 'No',
-//   consumerStatement: 'None',
-// } as INegativeAccountCardInputs,
-// ];
 const Template: Story<NegativeAccountInitialPureComponent> = (args: any) => ({
   component: NegativeAccountInitialPureComponent,
   props: {
