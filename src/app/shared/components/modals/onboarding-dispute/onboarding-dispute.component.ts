@@ -64,7 +64,6 @@ export class OnboardingDisputeComponent implements OnInit {
   ngOnInit(): void {}
 
   close() {
-    // this.confirmation.emit({ isConfirmed: false });
     this.showModal = false;
   }
 
