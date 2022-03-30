@@ -27,14 +27,6 @@ export class TradelineDetailsComponent {
    */
   @Input() subscriber: ISubscriber | undefined | null = {} as ISubscriber;
   /**
-   * Flag to indicate they need to still acknowledge dispute terms
-   */
-  @Input() acknowledged: boolean = false; // TODO replace with a config value
-  /**
-   * Event emitter when dispute button clicked on tradeline detail
-   */
-  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
-  /**
    * Flag to disable the dispute capabilities of component
    */
   @Input() disableDispute: boolean = false;
@@ -42,10 +34,7 @@ export class TradelineDetailsComponent {
    * Flag to start with the payment history open and not show the show payment button
    */
   @Input() overrideOpen: boolean = false;
-  /**
-   * Toggle to open dispute disclaimer modal
-   */
-  showModal: boolean = false;
+
   public tu = TransunionUtil;
 
   constructor(public featureFlags: FeatureFlagsService) {}

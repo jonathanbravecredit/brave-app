@@ -1,6 +1,9 @@
 <ng-container *ngIf="detailsOpen">
   <div class="flex justify-center items-center my-4 w-full" *ngIf="showDisputeButton">
-    <brave-filled-onlytext-button braveDisputeButton [tradeline]="tradelineDetailsConfig?.tradeline"
+    <brave-filled-onlytext-button
+      braveDisputeButton
+      [type]="'tradeline'"
+      [tradeline]="tradelineDetailsConfig?.tradeline"
       >Dispute in a few clicks</brave-filled-onlytext-button
     >
   </div>

@@ -20,7 +20,7 @@ export interface IProcessDisputePersonalResult {
 })
 export class DisputesPersonalPureView implements OnInit {
   @Input() viewDisplay: viewDisplay = 'not-sent';
-  @Input() dispute: IDisputePersonalItem | undefined;
+  @Input() dispute: IDisputePersonalItem = {} as IDisputePersonalItem;
   @Output() processResult: EventEmitter<IProcessDisputePersonalResult> = new EventEmitter();
   @ViewChild(DisputeBaseComponent) base: DisputeBaseComponent | undefined;
 

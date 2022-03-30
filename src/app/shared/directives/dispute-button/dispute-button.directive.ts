@@ -37,7 +37,6 @@ export class DisputeButtonDirective implements OnDestroy {
   }
   @HostListener('click')
   onClick(): void {
-    if (!this.tradeline) console.error('no tradeline partition input');
     if (this.action === 'confirming') {
       this.onUserConfirmation();
     } else if (this.action === 'acknowledging') {
@@ -56,6 +55,7 @@ export class DisputeButtonDirective implements OnDestroy {
 
   closeModal(): void {
     if (!this.compRef) return;
+    this.interstitial.fetching$.next(false);
     this.modalService.removeModalFromBody(this.compRef);
     this.compRef = undefined;
   }
@@ -66,15 +66,12 @@ export class DisputeButtonDirective implements OnDestroy {
     });
 
     this.confirmClick$ = this.compRef?.instance.confirmClick.subscribe((event) => {
-      if (this.tradeline) {
-        this.onUserAcknowledgement(this.tradeline);
-      }
+      this.onUserAcknowledgement();
     });
   }
 
   // only support for tradeline right now
-  onUserAcknowledgement(tradeline: ITradeLinePartition) {
-    const accountType = tu.queries.report.getTradelineTypeDescription(tradeline);
+  onUserAcknowledgement() {
     this.interstitial.changeMessage('checking eligibility');
     this.interstitial.openInterstitial();
     this.closeModal();
@@ -83,7 +80,7 @@ export class DisputeButtonDirective implements OnDestroy {
       .then((resp) => {
         const { success, error } = resp;
         if (success) {
-          const filter: DisputeReconfirmFilter = accountType;
+          const filter: DisputeReconfirmFilter = this.getFilters();
           this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
             queryParams: {
               type: filter,
@@ -99,16 +96,31 @@ export class DisputeButtonDirective implements OnDestroy {
       });
   }
 
+  getFilters(): DisputeReconfirmFilter {
+    if (this.type === 'tradeline') {
+      const test = tu.queries.report.getTradelineTypeDescription(this.tradeline);
+      console.log('getFilters', test);
+      if (!this.tradeline) return 'all';
+      return tu.queries.report.getTradelineTypeDescription(this.tradeline);
+    } else if (this.type === 'publicitem') {
+      return 'public';
+    } else if (this.type === 'personalitem') {
+      return 'personal';
+    } else {
+      return 'all';
+    }
+  }
+
   onUserConfirmation(): void {
     switch (this.type) {
       case 'tradeline':
-        this.onDisputeTradelineClick(this.tradeline);
+        this.onConfirmTradelineClick(this.tradeline);
         break;
       case 'publicitem':
-        this.onDisputePublicClick(this.publicItem);
+        this.onConfirmPublicClick(this.publicItem);
         break;
       case 'personalitem':
-        this.onDisputePersonalClick(this.personalItem);
+        this.onConfirmPersonalClick(this.personalItem);
         break;
       default:
         break;
@@ -124,7 +136,7 @@ export class DisputeButtonDirective implements OnDestroy {
     });
   }
 
-  onDisputePersonalClick(personalItem: IPersonalItemsDetailsConfig | undefined): void {
+  onConfirmPersonalClick(personalItem: IPersonalItemsDetailsConfig | undefined): void {
     if (!personalItem) return;
     this.disputeService.setPersonalItem(personalItem);
     this.router.navigate([routes.root.dashboard.disputes.personalitem.full], {
@@ -136,7 +148,7 @@ export class DisputeButtonDirective implements OnDestroy {
     });
   }
 
-  onDisputePublicClick(publicItem: IPublicPartition | undefined): void {
+  onConfirmPublicClick(publicItem: IPublicPartition | undefined): void {
     if (!publicItem) return;
     this.disputeService.setPublicItem(publicItem);
     this.router.navigate([routes.root.dashboard.disputes.publicitem.full], {
@@ -154,7 +166,7 @@ export class DisputeButtonDirective implements OnDestroy {
    * @param {ITradeLinePartition} tradeline
    * @returns {void}
    */
-  onDisputeTradelineClick(tradeline: ITradeLinePartition | undefined): void {
+  onConfirmTradelineClick(tradeline: ITradeLinePartition | undefined): void {
     if (!tradeline) return;
     this.disputeService.setTradelineItem(tradeline);
     this.router.navigate([routes.root.dashboard.disputes.tradeline.full], {

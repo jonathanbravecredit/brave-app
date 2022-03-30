@@ -7,7 +7,7 @@
   ></brave-account-summary>
 
   <div *ngIf="showConfirmButton" class="flex justify-center">
-    <div class="my-4 w-3/5">
+    <div class="my-4">
       <brave-filled-spinning-button
         braveDisputeButton
         [action]="'confirming'"
@@ -33,7 +33,7 @@
   <brave-account-summary [showDisputeButton]="true" [publicDetailsConfig]="publicDetailsConfig"></brave-account-summary>
 
   <div *ngIf="showConfirmButton" class="flex justify-center">
-    <div class="my-4 w-3/5">
+    <div class="my-4">
       <brave-filled-spinning-button
         braveDisputeButton
         [action]="'confirming'"
@@ -62,13 +62,12 @@
   ></brave-account-summary>
 
   <div *ngIf="showConfirmButton" class="flex justify-center">
-    <div class="my-4 w-3/5">
+    <div class="my-4">
       <brave-filled-spinning-button
         braveDisputeButton
         [action]="'confirming'"
         [type]="'personalitem'"
         [personalItem]="personalDetailsConfig"
-        [full]="true"
         ><p class="text-center">&nbsp;&nbsp;&nbsp;Confirm&nbsp;&nbsp;&nbsp;</p></brave-filled-spinning-button
       >
     </div>
