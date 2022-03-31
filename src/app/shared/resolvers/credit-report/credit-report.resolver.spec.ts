@@ -1,7 +1,8 @@
 import { fakeAsync, tick } from '@angular/core/testing';
-import { ITrueLinkCreditReportType } from '@shared/interfaces';
+import { IMergeReport, ITrueLinkCreditReportType } from '@shared/interfaces';
 import { ICreditReport } from '@shared/models/CreditReports.model';
 import { CreditReportStateModel } from '@store/credit-report';
+import dayjs from 'dayjs';
 import { CreditReportResolver } from './credit-report.resolver';
 
 const setup = () => {
@@ -79,4 +80,30 @@ describe('CreditReportResolver', () => {
 
     expect(creditReportResolver.setCreditReport).toHaveBeenCalled();
   }));
+
+  it('should run store.dispatch when setCreditReport is called', () => {
+    creditReportResolver.setCreditReport({} as ICreditReport);
+
+    expect(storeMock.dispatch).toHaveBeenCalled();
+  });
+
+  it('should return false if report or updated on are null when isFresh is called', async () => {
+    let res = await creditReportResolver.isFresh({ report: null } as CreditReportStateModel);
+
+    expect(res).toBeFalse();
+  });
+
+  it('should return false if report or updated on are not null and updated on is 24 hours older than now when isFresh is called', async () => {
+    let date = dayjs(new Date()).subtract(7, 'day').toISOString();
+    let res = await creditReportResolver.isFresh({ report: {}, updatedOn: date } as CreditReportStateModel);
+
+    expect(res).toBeFalse();
+  });
+
+  it('should return true if report or updated on are not null and updated on is not 24 hours older than now when isFresh is called', async () => {
+    let date = new Date().toISOString();
+    let res = await creditReportResolver.isFresh({ report: {}, updatedOn: date } as CreditReportStateModel);
+
+    expect(res).toBeTrue();
+  });
 });
