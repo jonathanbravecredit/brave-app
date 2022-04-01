@@ -29,6 +29,5 @@ export class DisputesPublicPureView implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
