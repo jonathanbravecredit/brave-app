@@ -19,13 +19,8 @@
   </div>
 
   <div class="flex justify-center mb-2">
-    <brave-filled-spinning-button (click)="showModal = !showModal; this.disputeClicked()"
+    <brave-filled-spinning-button braveDisputeButton [type]="'publicitem'" [action]="'acknowledging'"
       >Dispute in a few clicks</brave-filled-spinning-button
     >
   </div>
-
-  <brave-onboarding-dispute
-    [showModal]="showModal && !acknowledged"
-    (confirmation)="actionForDispute($event)"
-  ></brave-onboarding-dispute>
 </ng-container>

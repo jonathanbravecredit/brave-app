@@ -36,6 +36,7 @@ import { FilterPersonalPipe } from './filterPersonal/filter-personal.pipe';
 import { FindingsTransformerPipe } from './findingsTransformer/findings-transformer.pipe';
 import { ConfigToUtilizationPipe } from './config-to-utilization/config-to-utilization.pipe';
 import { TradelineToFindingsPipe } from './tradeline-to-findings/tradeline-to-findings.pipe';
+import { AccountStatusPipe } from '@shared/pipes/accountStatus/account-status.pipe';
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -74,6 +75,7 @@ const pipes = [
   ReasonsToPagesPipe,
   FindingsTransformerPipe,
   ConfigToUtilizationPipe,
+  AccountStatusPipe,
 ];
 
 @NgModule({

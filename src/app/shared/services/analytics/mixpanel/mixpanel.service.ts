@@ -11,7 +11,7 @@ import mixpanel from 'mixpanel-browser';
   providedIn: 'root',
 })
 export class MixpanelService {
-  disable: boolean = !environment.production;
+  disable: boolean = true; //!environment.production;
   previousPage: string | undefined;
   currentPage: string = '/'; // start with the root
   constructor() {

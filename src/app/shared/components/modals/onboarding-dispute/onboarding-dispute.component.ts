@@ -64,11 +64,11 @@ export class OnboardingDisputeComponent implements OnInit {
   ngOnInit(): void {}
 
   close() {
-    this.confirmation.emit({ isConfirmed: false });
     this.showModal = false;
   }
 
   confirm() {
+    // TODO this confirmation needs to go direct to the service and update the acknowledgement
     if (this.currentStep === 0) {
       // call fulfill
       this.currentModalContent = this.modalContents[1];

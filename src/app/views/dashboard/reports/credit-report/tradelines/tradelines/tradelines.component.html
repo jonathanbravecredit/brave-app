@@ -3,7 +3,5 @@
     [config]="tradeline$ | async | tradelineToDetails"
     [tradeline]="tradeline$ | async"
     [subscriber]="subscriber$ | async"
-    [acknowledged]="acknowledged"
-    (disputeClick)="onDisputeClicked($event)"
   ></brave-tradelines-pure>
 </div>

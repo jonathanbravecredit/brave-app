@@ -21,7 +21,7 @@ export class NeverbounceService extends GuestBase {
   }
 
   async validateEmail(email: string): Promise<Response> {
-    const url = `${environment.validation}/validation`;
+    const url = `${environment.api}/validation`;
     let body = { email };
     let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
     return await fetch(signedReq);

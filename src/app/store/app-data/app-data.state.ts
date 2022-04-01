@@ -38,15 +38,18 @@ export class AppDataState {
     const state = ctx.getState();
     const payload = new AppDataStateModel();
     ctx.setState({
-      ...state,
       ...payload,
     });
   }
 
   @Action(AppDataActions.UpdateNavBar)
   UpdateNavBar(ctx: StateContext<AppDataStateModel>, { payload }: AppDataActions.UpdateNavBar): void {
+    const state = ctx.getState();
     ctx.patchState({
-      navBar: { disputes: { badge: payload } },
+      navBar: {
+        ...state.navBar,
+        ...payload,
+      },
     });
   }
 }

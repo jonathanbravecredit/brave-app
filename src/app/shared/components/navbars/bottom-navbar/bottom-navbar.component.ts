@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { NavBarInput } from '@shared/services/aws/api.service';
+import { NavBarInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { DEFAULT_BOTTOM_NAVIGATION_ITEMS as navigationItems } from './constants';
 import { IBottomNavbarItem } from './interfaces';
 import * as appDataActions from '@store/app-data/app-data.actions';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 
 @Component({
   selector: 'brave-bottom-navbar',
@@ -21,7 +22,12 @@ export class BottomNavbarComponent implements OnInit {
   clicked: string = '';
   navBarData: NavBarInput | null | undefined;
 
-  constructor(private state: StateService, private trans: TransunionService, private store: Store) {
+  constructor(
+    private state: StateService,
+    private trans: TransunionService,
+    private store: Store,
+    private interstitial: InterstitialService,
+  ) {
     this.state.state$.subscribe((r) => {
       this.navBarData = r.appData.navBar;
     });
@@ -37,20 +43,44 @@ export class BottomNavbarComponent implements OnInit {
     }
   }
 
+  /**
+   * @param item
+   * ex:
+   *  - home
+   *  - report
+   *  - disputes
+   *  - settings
+   */
   badgeClicked(item: IBottomNavbarItem): void {
-    switch (item.name.toLowerCase()) {
-      case 'disputes':
-        this.toggleDisputesBadge(false);
+    switch (item.id) {
+      case 'init':
+        this.toggleDisputesBadge({ home: { badge: false } });
         break;
-
+      case 'report':
+        this.toggleDisputesBadge({ report: { badge: false } });
+        break;
+      case 'disputes':
+        this.interstitial.changeMessage('');
+        this.interstitial.openInterstitial();
+        this.toggleDisputesBadge({ disputes: { badge: false } });
+        break;
+      case 'settings':
+        this.toggleDisputesBadge({ settings: { badge: false } });
+        break;
       default:
         break;
     }
   }
 
-  toggleDisputesBadge(toggle: boolean): void {
-    this.store.dispatch(new appDataActions.UpdateNavBar(toggle));
-    this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ toggle }));
+  toggleDisputesBadge(nav: Partial<NavBarInput>): void {
+    this.store
+      .dispatch(new appDataActions.UpdateNavBar(nav))
+      .toPromise()
+      .then((state: { appData: UpdateAppDataInput }) => {
+        //send all the nav bar data back
+        const navBar = state.appData.navBar;
+        this.trans.sendTransunionAPICall('UpdateNavBar', JSON.stringify({ navBar }));
+      });
   }
 
   pointerDownHandler(id: string) {

@@ -39,6 +39,11 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
     this.kycService.activateStep(this.stepID);
   }
 
+  goBack(): void {
+    this.kycService.inactivateStep(this.stepID);
+    this.router.navigate([routes.root.onboarding.goalChoice.full]);
+  }
+
   ngAfterViewInit(): void {
     const form = this.pure?.formComponent?.parentForm; //need to bring the form up from the pure component)
     if (form) this.form = form;

@@ -26,7 +26,7 @@ export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
         return {
           tradeline: {} as ITradeLinePartition,
           trade: {} as ITrade,
-          subscriber: subscriber,
+          subscriber: finding?.credit?.item?.subscriber,
           summaryItemKey: finding.itemKey,
           summaryItemType: CreditBureauFindingsType.Trade,
           summaryResult: finding.credit.result,
@@ -45,7 +45,7 @@ export class CreditbureauToTradelinedetailsPipe implements PipeTransform {
         return {
           tradeline: tradeline,
           trade: result,
-          subscriber: reportSubscriber,
+          subscriber: finding?.credit?.item?.subscriber,
           summaryItemKey: finding.itemKey,
           summaryItemType: CreditBureauFindingsType.Trade,
           summaryResult: finding.credit.result,

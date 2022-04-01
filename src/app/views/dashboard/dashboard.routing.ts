@@ -2,7 +2,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from '@views/dashboard/dashboard.component';
 import { AuthGuard } from '@shared/guards/auth.guard';
-import { NegativeAccountInitialComponent } from '@views/dashboard/snapshots/negative-account/negative-account-initial/negative-account-initial.component';
 import { CreditReportComponent } from '@views/dashboard/reports/credit-report/credit-report/credit-report.component';
 import { TradelinesComponent } from '@views/dashboard/reports/credit-report/tradelines/tradelines/tradelines.component';
 import { PublicitemsView } from '@views/dashboard/reports/credit-report/publicitems/publicitems/publicitems.view';
@@ -10,112 +9,118 @@ import { PersonalitemsView } from '@views/dashboard/reports/credit-report/person
 import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
 import { SettingsComponent } from '@views/dashboard/settings/settings/settings.component';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
-import { ForbearanceView } from '@views/dashboard/snapshots/forbearance/forbearance/forbearance.view';
-import { DataBreachesComponent } from '@views/dashboard/snapshots/data-breaches/data-breaches/data-breaches.component';
-import { SnapshotDatabreachesResolver } from '@shared/resolvers/snapshot-databreaches/snapshot-databreaches.resolver';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { DashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
-import { CreditUtilizationView } from '@views/dashboard/snapshots/credit-utilization/credit-utilization/credit-utilization.view';
-import { CreditUtilizationResolver } from '@shared/resolvers/credit-utilization/credit-utilization.resolver';
-import { CreditMixView } from './snapshots/credit-mix/credit-mix/credit-mix.view';
-import { CreditMixResolver } from '@shared/resolvers/credit-mix/credit-mix.resolver';
-import { ReferralDashboardView } from '@views/dashboard/snapshots/referral-dashboard/referral-dashboard/referral-dashboard.view';
-import { ReferralResolver } from '@shared/resolvers/referral/referral.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { IpAddressGuard } from '@shared/guards/ipaddress.guard';
+import { NegativeAccountInitialComponent } from '@views/dashboard/negative-account/negative-account-initial/negative-account-initial.component';
+
 const dashboard = routes.root.dashboard;
-const snapshot = routes.root.dashboard.report.snapshot;
 
 const DashboardRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+    resolve: { dashboard: DashboardResolver },
+    canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
         path: `${dashboard.init.segment}`,
         component: DashboardEnrolledComponent,
-        resolve: { dashboard: DashboardResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.settings.segment}`,
         component: SettingsComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.settings.segment}/${dashboard.settings.options.segment}`,
         component: SettingsComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}`,
         component: CreditReportComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
-      },
-      {
-        path: `${dashboard.disputes.segment}`,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
-        loadChildren: () => import('./disputes/disputes.module').then((m) => m.DisputesModule),
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.negative.segment}`,
-        component: NegativeAccountInitialComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        path: `${dashboard.disputes.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () => import('./disputes/disputes.module').then((m) => m.DisputesModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.forbearance.segment}`,
-        component: ForbearanceView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        path: `${dashboard.negativeaccounts.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        children: [
+          {
+            path: '',
+            redirectTo: 'overview',
+            pathMatch: 'full',
+          },
+          {
+            path: `${dashboard.negativeaccounts.overview.segment}`,
+            component: NegativeAccountInitialComponent,
+            canActivate: [ActiveGuard, AuthGuard],
+          },
+        ],
+        // loadChildren: () => import('./negative-account/negative-account.module').then((m) => m.NegativeAccountModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.databreach.segment}`,
-        component: DataBreachesComponent,
-        resolve: { breaches: SnapshotDatabreachesResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        path: `${dashboard.forbearance.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () => import('./forbearance/forbearance.module').then((m) => m.ForbearanceModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.creditutilization.segment}`,
-        component: CreditUtilizationView,
-        resolve: { creditReports: CreditUtilizationResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        path: `${dashboard.databreach.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () => import('./data-breaches/data-breaches.module').then((m) => m.DataBreachesModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.creditmix.segment}`,
-        component: CreditMixView,
-        resolve: { tradeLineParition: CreditMixResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        path: `${dashboard.creditutilization.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () =>
+          import('./credit-utilization/credit-utilization.module').then((m) => m.CreditUtilizationModule),
       },
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.referrals.segment}`,
-        component: ReferralDashboardView,
-        resolve: { referral: ReferralResolver },
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        path: `${dashboard.creditmix.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () => import('./credit-mix/credit-mix.module').then((m) => m.CreditMixModule),
+      },
+      {
+        path: `${dashboard.referrals.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () =>
+          import('./referral-dashboard/referral-dashboard.module').then((m) => m.ReferralDashboardModule),
+      },
+      {
+        path: `${dashboard.progresstracker.segment}`,
+        canActivate: [ActiveGuard, AuthGuard],
+        loadChildren: () => import('./progress-tracker/progress-tracker.module').then((m) => m.ProgressTrackerModule),
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.tradeline.segment}`,
         component: TradelinesComponent,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.publicitem.segment}`,
         component: PublicitemsView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.personalitem.segment}`,
         component: PersonalitemsView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
       {
         path: `${dashboard.report.segment}/${dashboard.report.error.segment}`,
         component: BaseExceptionView,
-        canActivate: [IpAddressGuard, ActiveGuard, AuthGuard],
+        canActivate: [ActiveGuard, AuthGuard],
       },
     ],
   },

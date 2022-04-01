@@ -8,11 +8,13 @@ import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 
 import { CreditReportPureComponent } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { CreditReportComponent } from '@views/dashboard/reports/credit-report/credit-report/credit-report.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const modules = [
   CommonModule,
   SharedComponentsModule,
   SharedPipesModule,
+  SharedDirectivesModule,
   TradelinesModule,
   PublicitemsModule,
   PersonalitemsModule,

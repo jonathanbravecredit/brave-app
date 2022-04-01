@@ -36,6 +36,8 @@ describe('DisputesPersonalView', () => {
     fixture = TestBed.createComponent(DisputesPersonalView);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    disputeServiceMock.sendStartDispute.and.returnValue({ success: true, error: false, data: {} });
   });
 
   it('should create', () => {

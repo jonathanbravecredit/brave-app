@@ -201,7 +201,16 @@ query GetAppData($id: ID!) {
       databreachStatus
     }
     navBar {
+      home {
+        badge
+      }
+      report {
+        badge
+      }
       disputes {
+        badge
+      }
+      settings {
         badge
       }
     }
@@ -420,7 +429,16 @@ query ListAppDatas(
         databreachStatus
       }
       navBar {
+        home {
+          badge
+        }
+        report {
+          badge
+        }
         disputes {
+          badge
+        }
+        settings {
           badge
         }
       }

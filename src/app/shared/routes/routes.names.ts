@@ -83,30 +83,6 @@ export const ROUTE_NAMES = {
         snapshot: {
           segment: 'snapshot',
           full: '/dashboard/report/snapshot',
-          negative: {
-            segment: 'negative',
-            full: '/dashboard/report/snapshot/negative',
-          },
-          forbearance: {
-            segment: 'forbearance',
-            full: '/dashboard/report/snapshot/forbearance',
-          },
-          databreach: {
-            segment: 'databreach',
-            full: '/dashboard/report/snapshot/databreach',
-          },
-          creditutilization: {
-            segment: 'creditutilization',
-            full: '/dashboard/report/snapshot/creditutilization',
-          },
-          creditmix: {
-            segment: 'creditmix',
-            full: '/dashboard/report/snapshot/creditmix',
-          },
-          referrals: {
-            segment: 'referrals',
-            full: '/dashboard/report/snapshot/referrals',
-          },
         },
         tradeline: {
           segment: 'tradeline',
@@ -123,6 +99,62 @@ export const ROUTE_NAMES = {
         error: {
           segment: 'error',
           full: '/dashboard/report/error',
+        },
+      },
+      negativeaccounts: {
+        segment: 'negativeaccounts',
+        full: '/dashboard/negativeaccounts',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/negativeaccounts/overview',
+        },
+      },
+      forbearance: {
+        segment: 'forbearance',
+        full: '/dashboard/forbearance',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/forbearance/overview',
+        },
+      },
+      databreach: {
+        segment: 'databreach',
+        full: '/dashboard/databreach',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/databreach/overview',
+        },
+      },
+      creditutilization: {
+        segment: 'creditutilization',
+        full: '/dashboard/creditutilization',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/creditutilization/overview',
+        },
+      },
+      creditmix: {
+        segment: 'creditmix',
+        full: '/dashboard/creditmix',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/creditmix/overview',
+        },
+      },
+      referrals: {
+        segment: 'referrals',
+        full: '/dashboard/referrals',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/referrals/overview',
+        },
+      },
+      progresstracker: {
+        segment: 'progresstracker',
+        full: '/dashboard/progresstracker',
+        overview: {
+          segment: 'overview',
+          full: '/dashboard/progresstracker/overview',
         },
       },
       disputes: {
@@ -185,6 +217,10 @@ export const ROUTE_NAMES = {
       name: {
         segment: 'name',
         full: '/onboarding/name',
+      },
+      goalChoice: {
+        segment: 'goalchoice',
+        full: '/onboarding/goalchoice',
       },
       address: {
         segment: 'address',

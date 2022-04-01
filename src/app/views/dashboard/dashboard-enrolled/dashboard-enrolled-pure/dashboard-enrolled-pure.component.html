@@ -1,140 +1,199 @@
-<h2 class="text-lg font-semibold">{{ welcomeMsg }}</h2>
-
-<div class="my-4 flex justify-center">
-  <brave-dashboard-carousel [trends]="trends" [report]="report" [scores]="scores"></brave-dashboard-carousel>
-</div>
-
-<h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
-<p *ngIf="lastUpdated" class="text-xs mb-1">{{ content.p1 }}: {{ lastUpdated | date: 'shortDate' }}</p>
-<div *ngIf="cards" class="mb-4">
-  <div class="mt-6 hover:cursor-pointer">
-    <brave-snapshot-display-card
-      tendency="up"
-      label="update"
-      [title]="content.negativeAccountsTitle"
-      typeOfSnapshot="time"
-      [value]="cards.negativeCardCount || 0"
-      [status]="cards.negativeCardStatus || 'safe'"
-      braveAnalytics
-      [analyticClickEvents]="AnalyticClickEvents.SnapshotNegativeItemsModule"
-      (click)="negativeItemsClicked.emit()"
-    ></brave-snapshot-display-card>
-  </div>
-  <div class="mt-6 hover:cursor-pointer">
-    <brave-snapshot-display-card
-      tendency="no-tendency"
-      [title]="content.forbearanceAccountsTitle"
-      [status]="
-        cards.forbearanceCardStatus !== 'safe'
-          ? cards.forbearanceReviewed
-            ? 'safe'
-            : cards.forbearanceCardStatus || 'safe'
-          : cards.forbearanceCardStatus
-      "
-      braveAnalytics
-      [analyticClickEvents]="AnalyticClickEvents.SnapshotForbearanceModule"
-      (click)="forbearanceItemsClicked.emit()"
-    ></brave-snapshot-display-card>
-  </div>
-  <div class="mt-6 hover:cursor-pointer">
-    <brave-snapshot-display-card
-      tendency="no-tendency"
-      [title]="content.databreachAccountsTitle"
-      [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
-      braveAnalytics
-      [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCard"
-      (click)="databreachItemsClicked.emit()"
-    ></brave-snapshot-display-card>
-  </div>
-  <div class="mt-6 hover:cursor-pointer">
-    <brave-snapshot-display-card
-      tendency="no-tendency"
-      [status]="creditUtilizationStatus || 'default'"
-      [rating]="creditUtilizationPerc?.toString() + '%'"
-      title="Credit Utilization"
-      braveAnalytics
-      [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
-      (click)="creditUtilizationClicked.emit()"
-    ></brave-snapshot-display-card>
-  </div>
-  <div class="mt-6 hover:cursor-pointer">
-    <brave-snapshot-display-card
-      tendency="no-tendency"
-      label="new"
-      [status]="creditMixStatus || 'default'"
-      title="Credit Mix"
-      [rating]="rating"
-      braveAnalytics
-      [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
-      (click)="creditMixClicked.emit()"
-    ></brave-snapshot-display-card>
-  </div>
-</div>
-
-<brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
-  content.b1
-}}</brave-links-onlytext-button>
-
-<h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
-<h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
-<div class="mt-2 flex flex-col justify-center items-center">
-  <brave-dashboard-ads-carousel
-    *ngIf="adsData"
-    [adsData]="adsData"
-    braveAnalytics
-    [analyticClickEvents]="AnalyticClickEvents.DashboardProduct"
-    [analyticConfig]="{ google: false, mixpanel: false, brave: true }"
-  ></brave-dashboard-ads-carousel>
-  <p
-    class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
-    (click)="showDisclaimer = !showDisclaimer"
-  >
-    {{ content.link1 }}
-  </p>
-  <ng-container *ngIf="showDisclaimer">
-    <p class="brave-body3 text-opacity-50 mb-2">{{ content.p2 }}</p>
-    <div
-      class="brave-body3 text-opacity-50 flex justify-center items-center align-center hover:cursor-pointer"
-      (click)="showDisclaimer = false"
-    >
-      <span class="material-icons" style="font-size: 12px">close</span>
-      <p>close</p>
-    </div>
-  </ng-container>
-</div>
-
-<!-- Referral Gauge -->
-<ng-container
-  *ngIf="(featureflags.referralsShow$ | async) && referral?.eligible && referral?.campaignActive !== 'NO_CAMPAIGN'"
->
-  <h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
-  <p class="text-sm mb-4">Refer your friends to Brave Credit so you both earn rewards on your credit journey</p>
+<ng-container *ngIf="dashboardData$ | async as data">
+  <h2 class="text-lg font-semibold">{{ welcome }}</h2>
 
   <div
-    class="flex flex-col justify-evenly items-center align-center py-6 mb-4 cursor-pointer shadow rounded-lg border border-blueGray-300 bg-indigo-800 text-white"
-    (click)="referralsClicked.emit()"
+    *ngIf="initiative && data.dashScore && data.dashScore <= 675"
+    class="bg-gray-50 p-4 cursor-pointer"
+    (click)="onProgressTrackerClicked.emit()"
   >
-    <h3 class="mb-5">Friends referred this month:</h3>
+    <h5 class="text-sm">{{ initiative?.initiativeTitle }}</h5>
+    <brave-circle-checktext-progressbar [steps]="initiativeSteps"></brave-circle-checktext-progressbar>
+  </div>
 
-    <div class="relative">
-      <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
-        <h1 class="text-white font-semibold text-center text-7xl mb-2">
-          {{ referral?.campaignActiveReferred || 0 }}/10
-        </h1>
-        <p class="text-center text-2xl" style="max-width: 50%">Referrals</p>
-      </div>
+  <div
+    *ngIf="(data.dashScore !== 1 && data.dashScore !== 4) || (data.dashScore === 4 && !data.dashScoreSuppressed)"
+    class="my-4 flex justify-center"
+  >
+    <brave-dashboard-carousel [dashData]="data" [updatedAt]="updatedAt"></brave-dashboard-carousel>
 
-      <brave-percentage-gauge
-        [percentageNumber]="[{ name: 'name', value: (referral?.campaignActiveReferred || 0) * 10 }]"
-        [startAngle]="180"
-        [runCalcColor]="false"
-        [view]="[350, 250]"
-      ></brave-percentage-gauge>
+  </div>
+  <div *ngIf="data.dashScore === 1 || data.dashScore === 4" class="my-4 flex justify-center">
+    <brave-dashboard-credit-score-error
+      [suppressed]="data.dashScoreSuppressed || false"
+    ></brave-dashboard-credit-score-error>
+  </div>
+
+  <h2 class="mb-1 text-lg font-semibold">{{ content.h1 }}</h2>
+  <p *ngIf="updatedAt" class="text-xs mb-1">{{ content.p1 }}: {{ updatedAt | date: 'shortDate' }}</p>
+  <div *ngIf="initiative && data.dashScore && data.dashScore <= 675" class="mt-6 hover:cursor-pointer">
+    <brave-snapshot-display-card
+      title="Claim Your FutureScore:"
+      typeOfSnapshot="time"
+      [value]="futureScore"
+      (click)="onProgressTrackerClicked.emit()"
+      [useBubble]="false"
+      backGroundColor="#ffd683"
+    ></brave-snapshot-display-card>
+  </div>
+  <div *ngIf="data.dashSnapshots as cards" class="mb-4">
+    <div class="mt-6 hover:cursor-pointer">
+      <brave-snapshot-display-card
+        tendency="up"
+        label="update"
+        [title]="content.negativeAccountsTitle"
+        typeOfSnapshot="time"
+        [value]="cards.negativeCardCount || 0"
+        [status]="cards.negativeCardStatus || 'safe'"
+        braveAnalytics
+        [analyticClickEvents]="AnalyticClickEvents.SnapshotNegativeItemsModule"
+        (click)="negativeItemsClicked.emit()"
+      ></brave-snapshot-display-card>
     </div>
-
-    <div class="flex justify-center items-center mt-5 mb-5">
-      <p class="text-lg font-bold">Learn More</p>
-      <span class="material-icons-outlined"> chevron_right </span>
+    <div class="mt-6 hover:cursor-pointer">
+      <brave-snapshot-display-card
+        tendency="no-tendency"
+        [title]="content.forbearanceAccountsTitle"
+        [status]="
+          cards.forbearanceCardStatus !== 'safe'
+            ? cards.forbearanceReviewed
+              ? 'safe'
+              : cards.forbearanceCardStatus || 'safe'
+            : cards.forbearanceCardStatus
+        "
+        braveAnalytics
+        [analyticClickEvents]="AnalyticClickEvents.SnapshotForbearanceModule"
+        (click)="forbearanceItemsClicked.emit()"
+      ></brave-snapshot-display-card>
+    </div>
+    <div class="mt-6 hover:cursor-pointer">
+      <brave-snapshot-display-card
+        tendency="no-tendency"
+        [title]="content.databreachAccountsTitle"
+        [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
+        braveAnalytics
+        [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCard"
+        (click)="databreachItemsClicked.emit()"
+      ></brave-snapshot-display-card>
+    </div>
+    <div class="mt-6 hover:cursor-pointer">
+      <brave-snapshot-display-card
+        tendency="no-tendency"
+        [status]="creditUtilizationStatus || 'default'"
+        [rating]="creditUtilizationPerc?.toString() + '%'"
+        title="Credit Utilization"
+        braveAnalytics
+        [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
+        (click)="creditUtilizationClicked.emit()"
+      ></brave-snapshot-display-card>
+    </div>
+    <div class="mt-6 hover:cursor-pointer">
+      <brave-snapshot-display-card
+        tendency="no-tendency"
+        label="new"
+        [status]="creditMixStatus || 'default'"
+        title="Credit Mix"
+        [rating]="rating"
+        braveAnalytics
+        [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
+        (click)="creditMixClicked.emit()"
+      ></brave-snapshot-display-card>
     </div>
   </div>
+
+  <brave-links-onlytext-button class="w-full" (click)="fullReportClicked.emit()">{{
+    content.b1
+  }}</brave-links-onlytext-button>
+
+  <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
+  <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
+  <div class="mt-2 flex flex-col justify-center items-center">
+    <brave-dashboard-ads-carousel
+      *ngIf="adsData"
+      [adsData]="adsData"
+      braveAnalytics
+      [analyticClickEvents]="AnalyticClickEvents.DashboardProduct"
+      [analyticConfig]="{ google: false, mixpanel: false, brave: true }"
+    ></brave-dashboard-ads-carousel>
+    <p
+      class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
+      (click)="showDisclaimer = !showDisclaimer"
+    >
+      {{ content.link1 }}
+    </p>
+    <ng-container *ngIf="showDisclaimer">
+      <p class="brave-body3 text-opacity-50 mb-2">{{ content.p2 }}</p>
+      <div
+        class="brave-body3 text-opacity-50 flex justify-center items-center align-center hover:cursor-pointer"
+        (click)="showDisclaimer = false"
+      >
+        <span class="material-icons" style="font-size: 12px">close</span>
+        <p>close</p>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Referral Gauge -->
+  <ng-container
+    *ngIf="(featureflags.referralsShow$ | async) && referral?.eligible && referral?.campaignActive !== 'NO_CAMPAIGN'"
+  >
+    <h3 class="mt-8 text-lg font-bold mb-1">Be a Credit Hero!</h3>
+    <p class="text-sm mb-4">Refer your friends to Brave Credit so you both earn rewards on your credit journey</p>
+
+    <div
+      class="
+        flex flex-col
+        justify-evenly
+        items-center
+        align-center
+        py-6
+        mb-4
+        cursor-pointer
+        shadow
+        rounded-lg
+        border border-blueGray-300
+        bg-indigo-800
+        text-white
+      "
+      (click)="referralsClicked.emit()"
+    >
+      <h3 class="mb-5">Friends referred this campaign:</h3>
+
+      <div class="relative">
+        <div class="absolute min-w-full min-h-full flex flex-col justify-center items-center">
+          <h1 class="text-white font-semibold text-center text-7xl mb-2">
+            {{ referral?.campaignActiveReferred || 0 }}/10
+          </h1>
+          <p class="text-center text-2xl" style="max-width: 50%">Referrals</p>
+        </div>
+
+        <brave-percentage-gauge
+          [percentageNumber]="[{ name: 'name', value: (referral?.campaignActiveReferred || 0) * 10 }]"
+          [startAngle]="180"
+          [runCalcColor]="false"
+          [view]="[350, 250]"
+        ></brave-percentage-gauge>
+      </div>
+
+      <div class="flex justify-center items-center mt-5 mb-5">
+        <p class="text-lg font-bold">Learn More</p>
+        <span class="material-icons-outlined"> chevron_right </span>
+      </div>
+    </div>
+  </ng-container>
+
+  <brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative && data.dashScore && data.dashScore <= 675">
+    <div class="w-full max-w-xs">
+      <brave-goal-choice-header></brave-goal-choice-header>
+      <brave-goal-choice-parent [getInitiative]="true" (goalClick)="toggleGoalChoiceModel()"></brave-goal-choice-parent>
+      <div class="mt-16">
+        <brave-goal-choice-disclaimer></brave-goal-choice-disclaimer>
+      </div>
+    </div>
+  </brave-base-modal>
 </ng-container>
+
+<ng-template #noCreditData>
+  <div class="flex flex-col justify-evenly items-center align-center py-6 mb-4">
+    <p>We are having difficulty displaying your report. Please try again at a later time.</p>
+  </div>
+</ng-template>

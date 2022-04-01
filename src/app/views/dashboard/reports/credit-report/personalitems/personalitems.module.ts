@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 import { PersonalitemsView } from '@views/dashboard/reports/credit-report/personalitems/personalitems/personalitems.view';
 import { PersonalitemsPureView } from '@views/dashboard/reports/credit-report/personalitems/personalitems-pure/personalitems-pure.view';
@@ -18,7 +19,7 @@ const components = [
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, NgxMaskModule],
+  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, SharedDirectivesModule, NgxMaskModule],
   exports: [...components],
 })
 export class PersonalitemsModule {}

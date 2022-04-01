@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { AuthService } from '../auth/auth.service';
 import { InterstitialService } from '../interstitial/interstitial.service';
-import * as moment from 'moment';
+const dayjs = require('dayjs');
 import { SettingsService } from './settings.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 
@@ -77,7 +77,7 @@ describe('SettingsService', () => {
     }));
 
     it(`DeactivateAccount should call handleDeactivation when disputes comes back success and data has NO open disputes and complete disputes that are older than 30 days`, fakeAsync(() => {
-      const thirtyOneDaysAgo = moment(new Date().toISOString()).add(-31, 'days');
+      const thirtyOneDaysAgo = dayjs(new Date().toISOString()).add(-31, 'days');
       const success = {
         success: true,
         error: null,
@@ -91,7 +91,7 @@ describe('SettingsService', () => {
     }));
 
     it(`DeactivateAccount should throw and error 'younger than 30 days' when disputes comes back success and data has NO open disputes and complete disputes that are younger than 30 days`, async () => {
-      const oneWeekAgo = moment(new Date().toISOString()).add(-7, 'days');
+      const oneWeekAgo = dayjs(new Date().toISOString()).add(-7, 'days');
       const success = {
         success: true,
         error: null,

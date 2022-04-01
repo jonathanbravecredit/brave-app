@@ -20,12 +20,12 @@ export class HttpInterceptorService implements HttpInterceptor {
       tap(
         (evt) => {
           if (evt instanceof HttpResponse) {
-            this.interstitial.fetching$.next(false)
+            // this.interstitial.fetching$.next(false)
           }
         },
         (error) => {
           if (error instanceof HttpErrorResponse) {
-            this.interstitial.fetching$.next(false)
+            // this.interstitial.fetching$.next(false)
           }
         },
       ),

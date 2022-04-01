@@ -6,13 +6,12 @@ import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-repor
   name: 'mergereportToPublicitems',
 })
 export class MergereportToPublicitemsPipe implements PipeTransform {
-  transform(report: IMergeReport): IPublicItemsDetailsConfig[] | undefined {
-    if (report === undefined) return;
+  transform(report: IMergeReport): IPublicItemsDetailsConfig[] | [] {
+    if (report === undefined) return [];
     const publicrecords = report.TrueLinkCreditReportType?.PulblicRecordPartition;
-    if (publicrecords === undefined) return;
+    if (publicrecords === undefined) return [];
     if (publicrecords instanceof Array) return publicrecords.map((item) => this.mapping(item));
-    if (!(publicrecords instanceof Array)) return [this.mapping(publicrecords)];
-    return;
+    return [];
   }
 
   mapping(item: IPublicPartition): IPublicItemsDetailsConfig {

@@ -24,14 +24,18 @@ export class TransunionReportParsers extends TransunionBase {
   static parseRemarks(remarks: IRemark | IRemark[] | undefined): string {
     if (remarks === undefined) return '';
     return remarks instanceof Array
-      ? remarks.map((r) => r.RemarkCode?.description || '').reduce((a, b) => `${a} \n ${b}`)
+      ? remarks
+          .map((r) => r.RemarkCode?.description || '')
+          .reduce((a, b) => {
+            return `${a} \n ${b}`;
+          }, '')
       : remarks.RemarkCode?.description || '';
   }
 
   /**
    * Flatten the credit statement provided by the borrower
    */
-  static parseBorrowerForCreditStatement(borrower: IBorrower | IBorrower[] | undefined): string | undefined {
+  static parseBorrowerForCreditStatement(borrower: IBorrower | undefined): string | null | undefined {
     if (!borrower) return;
     return borrower instanceof Array
       ? this.parseCreditStatement(borrower[0].CreditStatement)
@@ -41,11 +45,9 @@ export class TransunionReportParsers extends TransunionBase {
   /**
    * Flatten the credit statement provided by the borrower
    */
-  private static parseCreditStatement(
-    creditStatement: ICreditStatement[] | ICreditStatement | undefined,
-  ): string | undefined {
+  private static parseCreditStatement(creditStatement: ICreditStatement[] | undefined): string | null | undefined {
     if (!creditStatement) return;
-    return creditStatement instanceof Array ? creditStatement[0]?.statement : creditStatement?.statement;
+    return creditStatement[0]?.statement;
   }
 
   /**
@@ -100,7 +102,10 @@ export class TransunionReportParsers extends TransunionBase {
    * @param subscriber
    * @returns
    */
-  static unparseSubscriber(subscriber: ISubscriber | undefined, nameOverride?: string): [string?, string?, string?] {
+  static unparseSubscriber(
+    subscriber: ISubscriber | undefined | null,
+    nameOverride?: string,
+  ): [string?, string?, string?] {
     if (!subscriber) return [0, 0, 0].map((x) => this.bcMissing) as [string, string, string];
     const name = nameOverride ? nameOverride : subscriber.name;
     const address = this.unparseAddress(subscriber.CreditAddress);

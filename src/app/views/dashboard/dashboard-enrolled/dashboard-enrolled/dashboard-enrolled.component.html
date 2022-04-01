@@ -1,19 +1,16 @@
 <div class="w-full p-2">
   <ng-container *ngIf="report">
     <brave-dashboard-enrolled-pure
-      [report]="report"
-      [cards]="snapshots"
-      [scores]="sortedScores"
-      [trends]="trends"
-      [welcomeMsg]="welcomeMsg"
-      [lastUpdated]="lastUpdated"
+      [adsData]="adsData"
+      [referral]="dashboardService.dashReferral$ | async"
+      [rating]="rating"
       [creditMix]="creditMix"
       [creditMixStatus]="creditMixStatus"
-      [rating]="rating"
       [creditUtilizationStatus]="creditUtilizationStatus"
       [creditUtilizationPerc]="creditUtilizationPerc"
-      [referral]="referral"
-      [adsData]="adsData"
+      [initiative]="initiative"
+      [initiativeSteps]="(progressTracker.initiativeSteps$ | async) || []"
+      [futureScore]="futureScore"
       (negativeItemsClicked)="onNegativeItemsClicked()"
       (forbearanceItemsClicked)="onForbearanceItemsClicked()"
       (databreachItemsClicked)="onDatabreachItemsClicked()"
@@ -22,6 +19,8 @@
       (creditUtilizationClicked)="onCreditUtilizationClicked()"
       (creditMixClicked)="onCreditMixClicked()"
       (referralsClicked)="onReferralsClicked()"
+      (onProgressTrackerClicked)="onProgressTrackerClicked()"
     ></brave-dashboard-enrolled-pure>
   </ng-container>
+  <brave-dashboard-report-missing *ngIf="!report"></brave-dashboard-report-missing>
 </div>

@@ -155,7 +155,6 @@ export class KycKbaquestionsComponent implements OnInit {
             ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
             : await this.handleResponse(resp);
         } catch (err) {
-          console.log('error:kbaHandleSubmit ===> ', err);
           this.handleAPIError();
         }
       }
@@ -187,13 +186,13 @@ export class KycKbaquestionsComponent implements OnInit {
     try {
       await this.kycService.completeStep(this.stepID); // !IMPORTANT, needs to call before backend, otherwise state is stale
       await this.kycService.updateAuthenticatedOn(true, new Date().toISOString());
-      const { success, error } = await this.kycService.sendEnrollRequest();
+      const { success, error, data } = await this.kycService.sendEnrollRequest();
+      if (success) await this.kycService.setCreditReport(data);
       const sub = await this.kycService.getUserSub();
       success
         ? this.router.navigate([routes.root.onboarding.congratulations.full])
         : await this.handleSuspension(AppStatusReason.EnrollmentFailed);
     } catch (err) {
-      console.log('error:completeOnboarding ===> ', err);
       this.handleAPIError();
     }
   }

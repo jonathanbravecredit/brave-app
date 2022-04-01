@@ -18,6 +18,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { map } from 'rxjs/operators';
 import { IMergeReport } from '@shared/interfaces';
+import { UrlWithStringQuery } from 'url';
 
 @Injectable({
   providedIn: 'root',
@@ -375,6 +376,51 @@ export class StateService {
         .dispatch(
           new AgenciesActions.EditTransunion({
             currentRawAuthDetails: questions,
+          }),
+        )
+        .subscribe((state: { appData: AppDataStateModel }) => {
+          const input = { ...state.appData } as UpdateAppDataInput;
+          resolve(input);
+        });
+    });
+  }
+
+  /**
+   * (Asynchronous) Update the indicative enrichment states
+   * @param param0
+   */
+  updateAcknowledgeDisputeTerms({
+    acknowledgedDisputeTerms,
+    acknowledgedDisputeTermsOn,
+  }: {
+    acknowledgedDisputeTerms: boolean;
+    acknowledgedDisputeTermsOn: string;
+  }): void {
+    this.store.dispatch(
+      new AgenciesActions.EditAcknowledgeDisputeTerms({
+        acknowledgedDisputeTerms,
+        acknowledgedDisputeTermsOn,
+      }),
+    );
+  }
+
+  /**
+   * (Promise) Update the indicative enrichment states
+   * @param param0
+   */
+  async updateAcknowledgeDisputeTermsAsync({
+    acknowledgedDisputeTerms,
+    acknowledgedDisputeTermsOn,
+  }: {
+    acknowledgedDisputeTerms: boolean;
+    acknowledgedDisputeTermsOn: string;
+  }): Promise<UpdateAppDataInput> {
+    return new Promise((resolve, reject) => {
+      this.store
+        .dispatch(
+          new AgenciesActions.EditAcknowledgeDisputeTerms({
+            acknowledgedDisputeTerms,
+            acknowledgedDisputeTermsOn,
           }),
         )
         .subscribe((state: { appData: AppDataStateModel }) => {

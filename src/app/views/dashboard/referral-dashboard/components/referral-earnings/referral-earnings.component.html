@@ -1,0 +1,14 @@
+<h6 class="text-base text-white mb-4 mt-6 text-center">Your Campaign Earnings</h6>
+
+<h1 class="text-5xl text-white font-semibold text-center mb-3">
+  {{ earnings | currency: 'USD':'symbol':'1.0-0' }}
+</h1>
+<ng-container *ngIf="(referral?.campaignActiveReferred || 0) > 0; else noReferrals">
+  <p class="text-xs text-center text-white">
+    {{ "You'll get your gift card on " }}
+    <span class="font-bold">{{ paymentLongForm }}</span>
+  </p>
+</ng-container>
+<ng-template #noReferrals>
+  <p class="text-xs text-center text-white">Share your referral link to start earning!</p>
+</ng-template>

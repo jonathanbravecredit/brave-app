@@ -1,0 +1,47 @@
+<ng-container *ngIf="account.tradelines && account.tradelines.length > 0; else noNegative">
+  <div class="mb-2">
+    <h2 class="font-semibold text-lg">New Negative Accounts</h2>
+    <p class="text-brave-critical text-xs">High Score Impact</p>
+  </div>
+  <p class="text-sm mb-1">
+    These are new negative accounts in the last 30 days that are in collections, have been charged off, or have late
+    payments.
+  </p>
+  <p class="text-sm mb-6">Review the accounts for accuracy, and if you see an error, you can dispute them.</p>
+  <div *ngFor="let tradeline of account.tradelines">
+    <brave-account-summary-with-details
+      [showConfirmButton]="false"
+      [showDisputeButton]="true"
+      [tradelineDetailsConfig]="tradeline | tradelineToDetails"
+    >
+    </brave-account-summary-with-details>
+  </div>
+</ng-container>
+
+<ng-template #noNegative>
+  <div class="flex content-center items-center justify-center h-full">
+    <div class="w-full max-w-xs">
+      <div class="relative flex flex-col min-w-0 w-full mb-6 border-0">
+        <div class="flex justify-center mb-6">
+          <img class="h-64 w-64" src="https://d3e1i93f88eoxl.cloudfront.net/no_negative_accounts.svg" />
+        </div>
+        <div class="mb-10">
+          <p class="brave-body1-semibold text-center">{{ content.p1 }}</p>
+        </div>
+        <div class="mb-9">
+          <p class="brave-body1 text-center">{{ content.p2 }}</p>
+        </div>
+        <div class="mb-12">
+          <brave-links-onlytext-button (click)="goToReportClick.emit()">
+            <span class="brave-body1-semibold text-indigo-800">{{ content.b1 }}</span>
+          </brave-links-onlytext-button>
+        </div>
+        <div>
+          <brave-links-onlytext-button (click)="goToDashboardClick.emit()">
+            <span class="brave-body1-semibold">{{ content.b2 }}</span>
+          </brave-links-onlytext-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

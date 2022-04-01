@@ -1,0 +1,57 @@
+<div
+  class="border border-solid rounded-lg p-4 my-6"
+  [ngClass]="taskCompleted ? 'border-green-500' : 'border-slate-600'"
+>
+  <div class="flex justify-between items-center cursor-pointer" (click)="expanded = !expanded">
+    <span class="material-icons-outlined text-4xl" [ngClass]="taskCompleted ? 'text-green-500' : 'text-gray-300'">
+      check_circle
+    </span>
+    <div class="text-center mx-6 font-semibold text-lg">{{ subTask?.taskCard?.header }}</div>
+    <div>
+      <span *ngIf="subTask?.taskCard?.metric" class="text-2xl text-blue-900 font-bold">{{
+        metric
+      }}</span>
+      <p *ngIf="subTask?.taskCard?.metric" class="text-sm text-gray-500">Points*</p>
+    </div>
+  </div>
+
+  <div [@openClose]="expanded ? 'open' : 'closed'" class="flex flex-col justify-evenly items-center overflow-hidden">
+    <p class="mt-6 mx-10 mb-6" [innerHTML]="subTask?.taskCard?.textOne | linkify"></p>
+    <brave-filled-onlytext-button
+      (click)="clickButton()"
+      *ngIf="subTask?.taskCard?.textButton && link"
+      class="mx-10 mb-6"
+      [config]="config"
+      >{{ subTask?.taskCard?.textButton }}</brave-filled-onlytext-button
+    >
+    <p class="mb-6 mx-10" [innerHTML]="subTask?.taskCard?.textTwo | linkify"></p>
+
+    <div
+      *ngIf="taskCompleted"
+      class="bg-green-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
+    >
+      <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.successHeader }}</h4>
+      <p class="mb-2 text-center" [innerHTML]="subTask?.taskCard?.successText | linkify"></p>
+    </div>
+
+    <div
+      *ngIf="showQuestion"
+      class="bg-gray-200 flex flex-col items-center justify-evenly min-w-full p-2 rounded-lg mb-2"
+    >
+      <h4 class="font-bold mt-2 mb-4 text-center">{{ subTask?.taskCard?.questionHeader }}</h4>
+      <div class="text-white flex justify-center mb-2">
+        <div (click)="clickYes()" class="px-10 py-2 bg-gray-600 mr-6 cursor-pointer">Yes</div>
+        <div (click)="clickNo()" class="px-10 py-2 bg-gray-600 cursor-pointer">No</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex min-w-full justify-center items-center mt-2 cursor-pointer" (click)="expanded = !expanded">
+    <p class="text-sm">{{ expanded ? 'Close' : 'Learn More' }}</p>
+    <span class="material-icons-outlined ml-2 transform text-sm" [ngClass]="expanded ? '-rotate-90' : 'rotate-90'">
+      arrow_forward_ios
+    </span>
+  </div>
+
+  <!-- <brave-viewdetail-button (viewDetailClick)="expanded = !expanded"></brave-viewdetail-button> -->
+</div>

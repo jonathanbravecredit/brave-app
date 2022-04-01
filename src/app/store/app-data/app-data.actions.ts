@@ -1,3 +1,4 @@
+import { NavBarInput } from '@shared/services/aws/api.service';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 
 export class Fetch {
@@ -22,5 +23,5 @@ export class Delete {
 
 export class UpdateNavBar {
   static readonly type = '[AppData] UpdateNavBar';
-  constructor(public payload: boolean) {}
+  constructor(public payload: Partial<NavBarInput>) {}
 }

@@ -121,6 +121,12 @@ import { FacebookShareComponent } from './share-buttons/facebook-share/facebook-
 import { TwitterShareComponent } from './share-buttons/twitter-share/twitter-share.component';
 import { AdCardComponent } from './cards/ad-card/ad-card.component';
 import { NotificationBadgeComponent } from './badges/notification-badge/notification-badge.component';
+import { CircleChecktextProgressbarComponent } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
+import { GoalChoiceParentComponent } from './goals/goal-choice-parent/goal-choice-parent.component';
+import { GoalChoiceCardComponent } from '@shared/components/goals/goal-choice-card/goal-choice-card.component';
+import { GoalChoiceHeaderComponent } from './goals/goal-choice-header/goal-choice-header.component';
+import { GoalChoiceDisclaimerComponent } from './goals/goal-choice-disclaimer/goal-choice-disclaimer.component';
+import { OnboardingDisputeV2Component } from './modals/onboarding-dispute-v2/onboarding-dispute-v2.component';
 
 const components = [
   BaseFormComponent,
@@ -216,6 +222,8 @@ const components = [
   PercentageGaugeComponent,
   CreditUtilizationFillBarComponent,
   NotificationBadgeComponent,
+  CircleChecktextProgressbarComponent,
+  OnboardingDisputeV2Component,
 ];
 
 // component specific pipes only
@@ -236,6 +244,10 @@ const pipes = [
   FacebookShareComponent,
   TwitterShareComponent,
   AdCardComponent,
+  GoalChoiceParentComponent,
+  GoalChoiceCardComponent,
+  GoalChoiceHeaderComponent,
+  GoalChoiceDisclaimerComponent,
 ];
 
 const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];

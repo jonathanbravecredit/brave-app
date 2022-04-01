@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AuthService, NewUser } from '@shared/services/auth/auth.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
 import { SignupState } from '@views/authentication/signup/signup/signup.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { SignupComponent } from './signup.component';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -22,30 +22,31 @@ describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
   let routerMock: any;
+  let routeMock: any;
   let authMock: any;
   let analyticsMock: any;
   let interstitialMock: any;
   let neverBounceMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    routeMock = jasmine.createSpyObj('ActivatedRoute', [''], { data: of() });
+    routerMock = jasmine.createSpyObj('Router', ['navigate'], { events: of() });
     authMock = jasmine.createSpyObj('AuthService', ['socialSignIn', '']);
     analyticsMock = jasmine.createSpyObj('AnalyticsService', [
       'fireCompleteRegistration',
       'fireUserTrckingEvent',
       'addToCohort',
     ]);
-    interstitialMock = jasmine.createSpyObj(
-      'InterstitialService',
-      [''],
-      [{ fetching$: new BehaviorSubject<boolean>(false) }],
-    );
+    interstitialMock = jasmine.createSpyObj('InterstitialService', [''], {
+      fetching$: new BehaviorSubject<boolean>(false),
+    });
     neverBounceMock = jasmine.createSpyObj('NeverbounceService', ['validateEmail']);
 
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [SignupComponent],
       providers: [
+        { provide: ActivatedRoute, useValue: routeMock },
         { provide: Router, useValue: routerMock },
         { provide: AuthService, useValue: authMock },
         { provide: AnalyticsService, useValue: analyticsMock },
@@ -128,7 +129,7 @@ describe('SignupComponent', () => {
     });
 
     it('run neverBounce.validateEmail if the user is valid', () => {
-      let fakeUser: NewUser = {username: 'username', password: 'password'};
+      let fakeUser: NewUser = { username: 'username', password: 'password' };
 
       component.signUpWithCognito(fakeUser);
 
