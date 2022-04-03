@@ -9,7 +9,7 @@ import * as DashboardActions from '@store/dashboard/dashboard.actions';
 import { StateService } from '@shared/services/state/state.service';
 import { AppDataStateModel } from '@store/app-data';
 import { CreditReportSelectors } from '@store/credit-report/credit-report.selectors';
-import { Nested as _nest } from '@shared/utils/nested/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { CreditReportStateModel } from '@store/credit-report';
 
 @Injectable({

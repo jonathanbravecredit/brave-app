@@ -1,5 +1,5 @@
 import { BraveBase } from '@shared/utils/brave/brave-base';
-import { deleteKeyNestedObject } from '@shared/utils/utils';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { AppDataStateModel } from '@store/app-data';
 
 export class BraveScrubbers extends BraveBase {
@@ -13,7 +13,7 @@ export class BraveScrubbers extends BraveBase {
    * @returns
    */
   static scrubBackendData(data: any): AppDataStateModel {
-    let clean = deleteKeyNestedObject(data, '__typename');
+    let clean = _nest.delete(data, '__typename');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field

@@ -21,3 +21,11 @@ export const ALERT_CONFIG: IFilledClosingAlertConfig = {
   color: 'text-white',
   alertBody: `Success! You've changed your password.`,
 };
+
+export const SNAPSHOT_SORT_ORDER = {
+  negative_accounts: 0,
+  forbearance: 1,
+  databreaches: 2,
+  credit_utilization: 3,
+  credit_mix: 4,
+};

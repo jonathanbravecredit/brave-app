@@ -1,5 +1,5 @@
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
-import { deleteKeyNestedObject } from '@shared/utils/utils';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { AppDataStateModel } from '@store/app-data';
 
 export class TransunionScrubbers extends TransunionBase {
@@ -13,8 +13,8 @@ export class TransunionScrubbers extends TransunionBase {
    * @returns
    */
   static scrubBackendData(data: any): AppDataStateModel {
-    let clean = deleteKeyNestedObject(data, '__typename');
-    clean = deleteKeyNestedObject(data, 'isFresh');
+    let clean = _nest.delete(data, '__typename');
+    clean = _nest.delete(data, 'isFresh');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field
