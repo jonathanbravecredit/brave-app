@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { OutlineNamedobFormComponent } from '@shared/components/forms/outline-namedob-form/outline-namedob-form.component';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { KycService } from '@shared/services/kyc/kyc.service';
+import { BraveUtil } from '@shared/utils/brave/brave';
 import { DOMHelper } from '@testing/dom-helper';
 import { Helper } from '@testing/test-helper';
 import { KycWelcomePureComponent } from '@views/onboarding/kyc-welcome/kyc-welcome-pure/kyc-welcome-pure.component';
@@ -77,30 +78,70 @@ describe('KycWelcomeComponent', () => {
   });
 
   it('should set hasError to true when handleError is called', () => {
-    component.handleError({});
+    component.handleError();
 
     expect(component.hasError).toEqual(true);
   });
 
   it('should run fireClickEvent when goToNext is called', () => {
-    component.goToNext({} as FormGroup)
+    component.goToNext({} as FormGroup);
 
-    expect(analyticsMock.fireClickEvent).toHaveBeenCalled()
-  })
-
-  it('should run updateUserAttributesAsync when goToNext is called and form.valid is true', fakeAsync(() => {
-    component.goToNext({valid: true} as FormGroup)
-
-    tick()
-
-    expect(kycServiceMock.updateUserAttributesAsync).toHaveBeenCalled()
-  }))
+    expect(analyticsMock.fireClickEvent).toHaveBeenCalled();
+  });
 
   it('should run updateUserAttributesAsync when goToNext is called and form.valid is true', fakeAsync(() => {
-    component.goToNext({valid: true} as FormGroup)
+    component.goToNext({ valid: true } as FormGroup);
 
-    tick()
+    tick();
 
-    expect(kycServiceMock.suspendUser).toHaveBeenCalled()
-  }))
+    expect(kycServiceMock.updateUserAttributesAsync).toHaveBeenCalled();
+  }));
+
+  it('should run suspendUser when goToNext is called and form.valid is true and is not old enough', fakeAsync(() => {
+    let spy = spyOn(BraveUtil.queries, 'isUserValidAge');
+
+    spy.and.returnValue(false);
+
+    component.goToNext({ valid: true } as FormGroup);
+
+    tick();
+
+    expect(kycServiceMock.suspendUser).toHaveBeenCalled();
+  }));
+
+  it('should run router.navigate when goToNext is called and form.valid is true and is not old enough', fakeAsync(() => {
+    let spy = spyOn(BraveUtil.queries, 'isUserValidAge');
+
+    spy.and.returnValue(false);
+
+    component.goToNext({ valid: true } as FormGroup);
+
+    tick();
+
+    expect(routerMock.navigate).toHaveBeenCalled();
+  }));
+
+  it('should run completeStep when goToNext is called and form.valid is true and is old enough', fakeAsync(() => {
+    let spy = spyOn(BraveUtil.queries, 'isUserValidAge');
+
+    spy.and.returnValue(true);
+
+    component.goToNext({ valid: true } as FormGroup);
+
+    tick();
+
+    expect(kycServiceMock.completeStep).toHaveBeenCalled();
+  }));
+
+  it('should run router.navigate when goToNext is called and form.valid is true and is old enough', fakeAsync(() => {
+    let spy = spyOn(BraveUtil.queries, 'isUserValidAge');
+
+    spy.and.returnValue(true);
+
+    component.goToNext({ valid: true } as FormGroup);
+
+    tick();
+
+    expect(routerMock.navigate).toHaveBeenCalled();
+  }));
 });

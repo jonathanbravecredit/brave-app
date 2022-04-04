@@ -84,7 +84,7 @@ export class KycWelcomeComponent extends KycBaseComponent implements OnInit, Aft
     }
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
+  handleError(): void {
     this.hasError = true;
   }
 }
