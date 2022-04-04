@@ -1,25 +1,23 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { DecodePipe } from "@shared/pipes/decode/decode.pipe";
+import { TradelinePaymentIconKeyComponent } from './tradeline-payment-icon-key.component';
 
-import { TradelinePaymentIconKeyComponent } from "./tradeline-payment-icon-key.component";
+const setup = () => {
+  const modalServiceMock = jasmine.createSpyObj('ModalService', ['removeModalFromBody']);
 
-describe("TradelinePaymentIconKeyComponent", () => {
-  let component: TradelinePaymentIconKeyComponent;
-  let fixture: ComponentFixture<TradelinePaymentIconKeyComponent>;
+  const component = new TradelinePaymentIconKeyComponent(modalServiceMock);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [TradelinePaymentIconKeyComponent, DecodePipe],
-    }).compileComponents();
-  });
+  return { component, modalServiceMock };
+};
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TradelinePaymentIconKeyComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+describe('TradelinePaymentIconKeyComponent', () => {
+  const { component, modalServiceMock } = setup();
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should run modalService.removeModalFromBody when closeModal is called', () => {
+    component.closeModal();
+
+    expect(modalServiceMock.removeModalFromBody).toHaveBeenCalled();
   });
 });
