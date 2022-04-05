@@ -51,32 +51,35 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
   async goToNext(form: FormGroup): Promise<void> {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentity);
     if (form.valid) {
-      const { lastfour } = this.formatAttributes(form, this.ssnMap);
-      const attrs = { ssn: { lastfour: lastfour } } as UserAttributesInput;
-      this.ssnError = false;
+      const formattedAttributes = this.formatAttributes(form, this.ssnMap);
+      if (formattedAttributes) {
+        const lastFour = formattedAttributes.lastFour;
+        const attrs = { ssn: { lastfour: lastFour } } as UserAttributesInput;
+        this.ssnError = false;
 
-      try {
-        const data = await this.kycService.updateUserAttributesAsync(attrs);
-        const resp = await this.kycService.getIndicativeEnrichmentResults(data);
-        if (!resp.success || !resp.data) {
-          this.handleBailout<IIndicativeEnrichmentResult>(resp);
-        } else {
-          const enrichment = await this.kycService.processIndicativeEnrichmentResponse(resp.data);
-          const ssn = `${enrichment?.SSN}`;
-          const full = ssn ? ssn : undefined;
-          if (!full) {
+        try {
+          const data = await this.kycService.updateUserAttributesAsync(attrs);
+          const resp = await this.kycService.getIndicativeEnrichmentResults(data);
+          if (!resp.success || !resp.data) {
             this.handleBailout<IIndicativeEnrichmentResult>(resp);
           } else {
-            const newAttrs = {
-              ssn: { ...attrs.ssn, full },
-            } as UserAttributesInput;
-            await this.kycService.updateUserAttributesAsync(newAttrs);
-            this.kycService.completeStep(this.stepID);
-            this.router.navigate([routes.root.onboarding.verify.full]);
+            const enrichment = await this.kycService.processIndicativeEnrichmentResponse(resp.data);
+            const ssn = `${enrichment?.SSN}`;
+            const full = ssn ? ssn : undefined;
+            if (!full) {
+              this.handleBailout<IIndicativeEnrichmentResult>(resp);
+            } else {
+              const newAttrs = {
+                ssn: { ...attrs.ssn, full },
+              } as UserAttributesInput;
+              await this.kycService.updateUserAttributesAsync(newAttrs);
+              this.kycService.completeStep(this.stepID);
+              this.router.navigate([routes.root.onboarding.verify.full]);
+            }
           }
+        } catch {
+          this.handleBailout<IIndicativeEnrichmentResult>(); // generic api error
         }
-      } catch {
-        this.handleBailout<IIndicativeEnrichmentResult>(); // generic api error
       }
     }
   }

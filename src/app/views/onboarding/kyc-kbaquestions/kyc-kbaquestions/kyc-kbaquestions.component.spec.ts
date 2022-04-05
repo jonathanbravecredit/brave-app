@@ -2,7 +2,9 @@ import { KycKbaquestionsComponent } from './kyc-kbaquestions.component';
 
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { AgenciesStateModel } from '@store/agencies';
-import { ITUServiceResponse } from '@shared/interfaces';
+import { ITUServiceResponse, IVerifyAuthenticationQuestionsResult } from '@shared/interfaces';
+import { fakeAsync, tick } from '@angular/core/testing';
+import { AppStatusReason } from '@shared/utils/brave/constants';
 
 // private router: Router,
 // private interstitial: InterstitialService,
@@ -29,6 +31,7 @@ const setup = () => {
     'bailoutFromOnboarding',
     'updateGetAuthenticationQuestions',
     'bailoutFromOnboarding',
+    'sendEnrollRequest',
   ]);
   const analyticsMock = jasmine.createSpyObj('AnalyticsService', ['firePageViewEvent', 'fireClickEvent']);
   const storeMock = jasmine.createSpyObj('Store', ['snapshot', 'select']);
@@ -90,8 +93,162 @@ describe('KycKbaquestionsComponent', () => {
   });
 
   it('should run handleIncorrect on handleResponse if no data', () => {
-    spyOn(component, 'handleIncorrect')
+    spyOn(component, 'handleIncorrect');
     component.handleResponse({ data: undefined } as ITUServiceResponse<undefined>);
     expect(component.handleIncorrect).toHaveBeenCalled();
+  });
+
+  it('should run handleSuccess on handleResponse if data and type is "success" and status is "correct"', () => {
+    spyOn(component, 'handleSuccess');
+    component.handleResponse({
+      data: { ResponseType: 'success', AuthenticationStatus: 'correct' },
+    } as ITUServiceResponse<IVerifyAuthenticationQuestionsResult>);
+    expect(component.handleSuccess).toHaveBeenCalled();
+  });
+
+  it('should run handleIncorrect on handleResponse if data and type is "success" and status is "incorrect"', () => {
+    spyOn(component, 'handleIncorrect');
+    component.handleResponse({
+      data: { ResponseType: 'success', AuthenticationStatus: 'incorrect' },
+    } as ITUServiceResponse<IVerifyAuthenticationQuestionsResult>);
+    expect(component.handleIncorrect).toHaveBeenCalled();
+  });
+
+  it('should run handleInProgress on handleResponse if data and type is "success" and status is "inprogress"', () => {
+    spyOn(component, 'handleInProgress');
+    component.handleResponse({
+      data: { ResponseType: 'success', AuthenticationStatus: 'inprogress' },
+    } as ITUServiceResponse<IVerifyAuthenticationQuestionsResult>);
+    expect(component.handleInProgress).toHaveBeenCalled();
+  });
+
+  it('should run handleIncorrect on handleResponse if data and type is not "success"', () => {
+    spyOn(component, 'handleIncorrect');
+    component.handleResponse({
+      data: { ResponseType: 'test', AuthenticationStatus: 'test' },
+    } as ITUServiceResponse<IVerifyAuthenticationQuestionsResult>);
+    expect(component.handleIncorrect).toHaveBeenCalled();
+  });
+
+  it('should run completeStep on handleSuccess', () => {
+    component.handleSuccess();
+    expect(kycServiceMock.completeStep).toHaveBeenCalled();
+  });
+
+  it('should run updateAuthenticatedOn on handleSuccess', () => {
+    component.handleSuccess();
+    expect(kycServiceMock.updateAuthenticatedOn).toHaveBeenCalled();
+  });
+
+  it('should run sendEnrollRequest on handleSuccess', () => {
+    kycServiceMock.sendEnrollRequest.and.returnValue({ success: false, error: undefined, data: {} });
+    component.handleSuccess();
+    expect(kycServiceMock.sendEnrollRequest).toHaveBeenCalled();
+  });
+
+  it('should run setCreditReport on handleSuccess if success is truthy', fakeAsync(() => {
+    kycServiceMock.sendEnrollRequest.and.returnValue({ success: true, error: undefined, data: {} });
+    component.handleSuccess();
+    tick();
+    expect(kycServiceMock.setCreditReport).toHaveBeenCalled();
+  }));
+
+  it('should run getUserSub on handleSuccess', () => {
+    kycServiceMock.sendEnrollRequest.and.returnValue({ success: false, error: undefined, data: {} });
+    component.handleSuccess();
+    expect(kycServiceMock.getUserSub).toHaveBeenCalled();
+  });
+
+  it('should run navigate on handleSuccess if success is truthy', () => {
+    kycServiceMock.sendEnrollRequest.and.returnValue({ success: true, error: undefined, data: {} });
+    component.handleSuccess();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run handleSuspension on handleSuccess if success is falsy', fakeAsync(() => {
+    spyOn(component, 'handleSuspension');
+    kycServiceMock.sendEnrollRequest.and.returnValue({ success: false, error: undefined, data: {} });
+    component.handleSuccess();
+    tick();
+    expect(component.handleSuspension).toHaveBeenCalled();
+  }));
+
+  it('should run updateTransunion on handleIncorrect', () => {
+    component.handleIncorrect({ data: undefined } as ITUServiceResponse<undefined>);
+    expect(kycServiceMock.updateTransunion).toHaveBeenCalled();
+  });
+
+  it('should run handleSuspension on handleIncorrect', fakeAsync(() => {
+    spyOn(component, 'handleSuspension');
+    component.handleIncorrect({ data: undefined } as ITUServiceResponse<undefined>);
+    tick();
+    expect(component.handleSuspension).toHaveBeenCalled();
+  }));
+
+  it('should run fetching$.next on handleIncorrect', fakeAsync(() => {
+    spyOn(interstitialMock.fetching$, 'next');
+    component.handleIncorrect({ data: undefined } as ITUServiceResponse<undefined>);
+    tick();
+    expect(interstitialMock.fetching$.next).toHaveBeenCalled();
+  }));
+
+  it('should run handleVerificationInProgressFlow on handleInProgress', fakeAsync(() => {
+    component.handleInProgress({ data: undefined } as ITUServiceResponse<undefined>);
+    tick();
+    expect(kycServiceMock.handleVerificationInProgressFlow).toHaveBeenCalled();
+  }));
+
+  it('should run fetching$.next on handleInProgress', fakeAsync(() => {
+    spyOn(interstitialMock.fetching$, 'next');
+    component.handleInProgress({ data: undefined } as ITUServiceResponse<undefined>);
+    tick();
+    expect(interstitialMock.fetching$.next).toHaveBeenCalled();
+  }));
+
+  it('should run navigate on handleAPIError', () => {
+    component.handleAPIError();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run fetching$.next on handleAPIError', () => {
+    spyOn(interstitialMock.fetching$, 'next');
+    component.handleAPIError();
+    expect(interstitialMock.fetching$.next).toHaveBeenCalled();
+  });
+
+  it('should run handleSuspension on handleSuspension', fakeAsync(() => {
+    component.handleSuspension(AppStatusReason.Active);
+    tick();
+    expect(kycServiceMock.handleSuspension).toHaveBeenCalled();
+  }));
+
+  it('should run fetching$.next on handleSuspension', fakeAsync(() => {
+    spyOn(interstitialMock.fetching$, 'next');
+    component.handleSuspension(AppStatusReason.Active);
+    tick();
+    expect(interstitialMock.fetching$.next).toHaveBeenCalled();
+  }));
+
+  it('should run handleSuspension on bailOut', fakeAsync(() => {
+    spyOn(component, 'createTuPartial');
+    component.bailOut({ data: undefined } as ITUServiceResponse<undefined>);
+    tick();
+    expect(component.createTuPartial).toHaveBeenCalled();
+  }));
+
+  it('should run bailoutFromOnboarding on bailOut', fakeAsync(() => {
+    component.bailOut({ data: undefined } as ITUServiceResponse<undefined>);
+    tick();
+    expect(kycServiceMock.bailoutFromOnboarding).toHaveBeenCalled();
+  }));
+
+  it('should run updateGetAuthenticationQuestions on handleBailout', () => {
+    component.handleBailout({ data: undefined } as ITUServiceResponse<undefined>);
+    expect(kycServiceMock.updateGetAuthenticationQuestions).toHaveBeenCalled();
+  });
+
+  it('should run bailoutFromOnboarding on handleBailout', () => {
+    component.handleBailout({ data: undefined } as ITUServiceResponse<undefined>);
+    expect(kycServiceMock.bailoutFromOnboarding).toHaveBeenCalled();
   });
 });
