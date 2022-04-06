@@ -19,7 +19,6 @@ import { TUBundles } from '@shared/utils/transunion/constants';
 import { AppStatusReason } from '@shared/utils/brave/constants';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
-import { ReferralsService } from '@shared/services/referrals/referrals.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 export type KycIdverificationState = 'init' | 'sent' | 'error' | 'minimum';
@@ -37,8 +36,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     private store: Store,
     private kycService: KycService,
     private analytics: AnalyticsService,
-    private interstitial: InterstitialService,
-    private referral: ReferralsService,
+    private interstitial: InterstitialService
   ) {
     super();
   }
@@ -177,7 +175,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     }
   }
 
-  handleError(errors: { [key: string]: AbstractControl }): void {
+  handleError(): void {
     this.updateViewState('minimum');
     this.interstitial.fetching$.next(false);
   }

@@ -45,11 +45,10 @@ export class KycKbaquestionsComponent implements OnInit {
     private interstitial: InterstitialService,
     private kycService: KycService,
     private analytics: AnalyticsService,
-    private referral: ReferralsService,
     private store: Store,
   ) {
     this.agenciesSub$ = this.agencies$
-      .pipe(filter((agencies: AgenciesStateModel) => agencies !== undefined))
+      ?.pipe(filter((agencies: AgenciesStateModel) => agencies !== undefined))
       .subscribe((agencies: AgenciesStateModel) => {
         const rawQuestions = agencies.transunion?.currentRawQuestions;
         if (!rawQuestions) return;
