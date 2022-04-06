@@ -8,9 +8,8 @@ describe('CreditMixSubHeadersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreditMixSubHeadersComponent ]
-    })
-    .compileComponents();
+      declarations: [CreditMixSubHeadersComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +20,11 @@ describe('CreditMixSubHeadersComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set showmodal to opposite on toggleShowModal', () => {
+    component.showModal = true;
+    component.toggleShowModal();
+    expect(component.showModal).toBeFalse();
   });
 });
