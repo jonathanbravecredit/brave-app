@@ -44,7 +44,7 @@
     "@angular/platform-browser-dynamic": "~11.2.7",
     "@angular/router": "~11.2.7",
     "@aws-amplify/ui-angular": "^1.0.35",
-    "@bravecredit/brave-sdk": "^1.0.8",
+    "@bravecredit/brave-sdk": "^1.0.20",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@ngxs/devtools-plugin": "^3.7.3",
     "@ngxs/logger-plugin": "^3.7.3",
