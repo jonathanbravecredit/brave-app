@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 
 import { DashboardEnrolledPureComponent } from './dashboard-enrolled-pure.component';
 
@@ -34,4 +34,22 @@ describe('DashboardEnrolledPureComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should unsubscribe from dashboardDataSub$ on destroy', () => {
+    component.dashboardDataSub$ = new Subscription()
+    spyOn(component.dashboardDataSub$, 'unsubscribe')
+    component.ngOnDestroy()
+    expect(component.dashboardDataSub$.unsubscribe).toHaveBeenCalled()
+  })
+
+  it('should run getWelcomeMessage on setWelcomeMessage', () => {
+    component.setWelcomeMessage()
+    expect(dashboardServiceMock.getWelcomeMessage).toHaveBeenCalled()
+  })
+
+  it('should set modalOpen to !modalOpen on toggleGoalChoiceModel', () => {
+    component.modalOpen = true
+    component.toggleGoalChoiceModel()
+    expect(component.modalOpen).toBeFalse()
+  })
 });

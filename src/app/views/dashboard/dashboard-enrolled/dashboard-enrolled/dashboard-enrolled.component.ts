@@ -51,13 +51,13 @@ export class DashboardEnrolledComponent implements OnDestroy {
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
 
-  private report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
-  private reportSub$: Subscription | undefined;
+  report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
+  reportSub$: Subscription | undefined;
 
   initiative: Initiative | null = null;
   initiative$: Subscription | undefined;
 
-  enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData).agencies?.transunion
+  enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData)?.agencies?.transunion
     ?.enrollVantageScore.serviceProductValue;
   // private initiativeSub$: Subscription | undefined;
   initiativeSteps: ICircleProgressStep[] = [];
@@ -66,14 +66,13 @@ export class DashboardEnrolledComponent implements OnDestroy {
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute,
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     public dashboardService: DashboardService,
     public progressTracker: ProgressTrackerService,
   ) {
     this.subscribeToReportData();
-    this.initiative$ = progressTracker.initiative$.subscribe((v) => {
+    this.initiative$ = progressTracker.initiative$?.subscribe((v) => {
       this.initiative = v.data;
       this.refreshFutureScore();
     });
@@ -93,8 +92,8 @@ export class DashboardEnrolledComponent implements OnDestroy {
 
   subscribeToReportData(): void {
     this.reportSub$ = this.report$
-      .pipe(filter((report) => report !== undefined))
-      .subscribe((creditReport: CreditReportStateModel) => {
+      ?.pipe(filter((report) => report !== undefined))
+      ?.subscribe((creditReport: CreditReportStateModel) => {
         this.report = creditReport.report;
         if (this.report) {
           this.dashboardService.updatedOn$.next(creditReport.modifiedOn);
@@ -118,8 +117,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
       this.dashboardService.progressTrackerData$.next(this.initiative);
     }
   }
+  
   setAdData(): void {
-    this.dashboardService.getAdData().then((resp: any) => {
+    this.dashboardService.getAdData()?.then((resp: any) => {
       this.adsData = shuffle(resp);
     });
   }
