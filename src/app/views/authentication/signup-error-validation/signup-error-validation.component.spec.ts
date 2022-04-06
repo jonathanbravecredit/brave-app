@@ -29,9 +29,15 @@ describe('SignupErrorValidationComponent', () => {
     expect(component.initiateModal).toHaveBeenCalled();
   });
 
-  // it('', () => {
-  //   spyOn(component, 'initiateModal');
-  //   component.initiateModal(false);
-  //   expect(component.modal?.showModal).toEqual(false);  //TODO FIND OUT WHY THIS IS BREAKING OTHER FILES
-  // });
+  it('should set modal.showmodal to showModal if this.modal on initiateModal', () => {
+    component.modal = {showModal: false} as BaseModalSmallComponent
+    component.initiateModal(true)
+    expect(component.modal?.showModal).toBeTrue()
+  })
+
+  it('should set modal.showmodal to !modal.showmodal if this.modal on toggleShowModal', () => {
+    component.modal = {showModal: false} as BaseModalSmallComponent
+    component.toggleShowModal()
+    expect(component.modal?.showModal).toBeTrue()
+  })
 });

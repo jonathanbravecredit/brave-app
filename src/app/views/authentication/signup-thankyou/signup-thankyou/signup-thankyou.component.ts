@@ -9,8 +9,8 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
   templateUrl: './signup-thankyou.component.html',
 })
 export class SignupThankyouComponent implements OnInit, OnDestroy {
-  private emailSub$: Subscription;
-  private email: string | undefined;
+  emailSub$: Subscription;
+  email: string | undefined;
   constructor(private router: Router, private auth: AuthService) {
     this.emailSub$ = this.auth.email$.subscribe((email) => (this.email = email));
   }

@@ -79,8 +79,6 @@ describe('TradelinePaymentHistoryComponent', () => {
 
     let res = component.parseMonthlyPayments(2022, monthlyPaymentMock);
 
-    console.log('here', res);
-
     expect(res).toEqual(['u', 'u', 'teststatus', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u']);
   });
 });
