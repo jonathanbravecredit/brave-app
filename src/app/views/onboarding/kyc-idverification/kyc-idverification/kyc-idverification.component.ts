@@ -5,6 +5,7 @@ import { KycBaseComponent } from '@views/onboarding/kyc-base/kyc-base.component'
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { TransunionInput, UpdateAppDataInput } from '@shared/services/aws/api.service';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { returnNestedObject } from '@shared/utils/utils';
 import {
   ITransunionKBAChallengeAnswer,
@@ -230,7 +231,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     state: UpdateAppDataInput | AppDataStateModel | undefined,
   ): ITransunionKBAQuestion | undefined {
     if (!state) return;
-    const authXML = returnNestedObject(state, 'currentRawQuestions') || '';
+    const authXML = _nest.find<string>(state, 'currentRawQuestions') || '';
     const authQuestion = tu.parsers.onboarding.parseCurrentRawAuthXML<ITransunionKBAChallengeAnswer>(authXML);
     const authChallenge = this.createChallengeConfig(authQuestion);
     return authChallenge ? this.kycService.getPassCodeQuestion(authChallenge) : undefined;
@@ -243,7 +244,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    */
   createChallengeConfig(questions: ITransunionKBAChallengeAnswer | undefined): ITransunionKBAQuestions | undefined {
     if (!questions) return;
-    const config = returnNestedObject(questions, 'ChallengeConfiguration');
+    const config = _nest.find<any>(questions, 'ChallengeConfiguration');
     if (!config) return;
     return {
       ChallengeConfigurationType: {

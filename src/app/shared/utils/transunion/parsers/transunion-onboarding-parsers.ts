@@ -3,8 +3,8 @@ import { IGetAuthenticationQuestionsResult } from '@shared/interfaces/get-author
 import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { OTPQuestion, OTPReponse, PassCodeQuestion } from '@shared/utils/transunion/constants';
-import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionUtil as tu } from '@bravecredit/brave-sdk';
+import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 
 export class TransunionOnboardingParsers extends TransunionBase {
   constructor() {
@@ -41,7 +41,7 @@ export class TransunionOnboardingParsers extends TransunionBase {
    * @returns
    */
   static parseCurrentRawAuthXML<T>(xml: string): T {
-    return tu.parsers.onboarding.parseCurrentRawAuthXML(xml);
+    return tu.parsers.onboarding.parseCurrentRawAuthXML(xml); // moving to sdk parsers
   }
 
   /**

@@ -3,10 +3,10 @@ import * as CreditReportActions from '@store/credit-report/credit-report.actions
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { IMergeReport } from '@shared/interfaces';
 import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
 import { Creditreportv2Service } from '@shared/services/creditreportv2/creditreportv2.service';
 import { ICreditReport } from '@shared/models/CreditReports.model';
+import { IMergeReport } from '@bravecredit/brave-sdk';
 
 @Injectable({
   providedIn: 'root',
