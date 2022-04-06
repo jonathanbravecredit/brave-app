@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { IMergeReport } from '@shared/interfaces';
+import { IBorrower, IMergeReport, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { PreferencesStateModel } from '@store/preferences';
+import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { CreditReportComponent } from './credit-report.component';
@@ -23,8 +24,6 @@ describe('CreditReportComponent', () => {
   let creditReportServiceMock: any;
   let storeMock: any;
   let routerMock: any;
-  let routeMock: any;
-  let analyticsMock: any;
   let transunionMock: any;
 
   beforeEach(async () => {
@@ -36,8 +35,6 @@ describe('CreditReportComponent', () => {
     ]);
     storeMock = jasmine.createSpyObj('Store', ['dispatch']);
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
-    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
-    analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
     transunionMock = jasmine.createSpyObj('TransunionService', ['getCreditScores']);
 
     // returns
@@ -51,8 +48,6 @@ describe('CreditReportComponent', () => {
         { provide: CreditreportService, useValue: creditReportServiceMock },
         { provide: Store, useValue: storeMock },
         { provide: Router, useValue: routerMock },
-        { provide: ActivatedRoute, useValue: routeMock },
-        { provide: AnalyticsService, useValue: analyticsMock },
         { provide: TransunionService, useValue: transunionMock },
       ],
     }).compileComponents();
@@ -66,5 +61,56 @@ describe('CreditReportComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should run transunion.getCreditScores on init', () => {
+    component.ngOnInit();
+
+    expect(transunionMock.getCreditScores).toHaveBeenCalled();
+  });
+
+  it('should run store.dispatch when onHide is run', () => {
+    const testData = { showAllAccounts: {} };
+    creditReportServiceMock.tuPreferences = testData;
+
+    component.onHide({} as ICreditReportTradelinesCardGroup);
+
+    expect(storeMock.dispatch).toHaveBeenCalled();
+  });
+
+  it('should run creditReportService.setTradeline when onViewDetailClick is run', () => {
+    component.onViewDetailClick({} as ITradeLinePartition);
+
+    expect(creditReportServiceMock.setTradeline).toHaveBeenCalled();
+  });
+
+  it('should run creditReportService.setPublicItem when onViewDetailClick is run', () => {
+    component.onViewPublicItemDetailClick({} as IPublicPartition);
+
+    expect(creditReportServiceMock.setPublicItem).toHaveBeenCalled();
+  });
+
+  it('should run creditReportService.setPersonalItem when onViewDetailClick is run', () => {
+    component.onViewPersonalItemDetailClick({} as IBorrower);
+
+    expect(creditReportServiceMock.setPersonalItem).toHaveBeenCalled();
+  });
+
+  it('should run router.navigate when onViewDetailClick is run', () => {
+    component.onViewDetailClick({} as ITradeLinePartition);
+
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run router.navigate when onViewPublicItemDetailClick is run', () => {
+    component.onViewPublicItemDetailClick({} as IPublicPartition);
+
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run router.navigate when onViewPersonalItemDetailClick is run', () => {
+    component.onViewPersonalItemDetailClick({} as IBorrower);
+
+    expect(routerMock.navigate).toHaveBeenCalled();
   });
 });
