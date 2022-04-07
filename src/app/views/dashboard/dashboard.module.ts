@@ -45,7 +45,6 @@ const components = [
   DashboardEnrolledComponent,
   DashboardEnrolledPureComponent,
   DashboardCarouselComponent,
-  DashboardCarouselComponent,
   DashboardAdsCarouselComponent,
   DashboardCreditScoreErrorComponent,
   DashboardReportMissingComponent,
