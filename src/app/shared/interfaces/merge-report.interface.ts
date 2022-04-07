@@ -131,7 +131,7 @@ export interface ICreditScore {
 export interface ICreditScoreFactor {
   Factor: ICodeRef;
   FactorText: string[];
-  FactorType: 'Negative' | 'Positive';
+  FactorType: 'Negative' | 'Positive' | null;
   bureauCode: number | null;
 }
 export interface IEmployer extends IPartitionElements {
@@ -435,7 +435,7 @@ export interface ITradelineSummaryInfo {
 export interface IInquirySummary {
   Experian: IInquirySummaryInfo;
   Equifax: IInquirySummaryInfo;
-  Transunion: IInquirySummaryInfo;
+  TransUnion: IInquirySummaryInfo;
   Merge: IInquirySummaryInfo;
 }
 export interface IInquirySummaryInfo {
@@ -444,14 +444,14 @@ export interface IInquirySummaryInfo {
 export interface IPublicRecordSummary {
   Experian: IPublicRecordSummaryInfo;
   Equifax: IPublicRecordSummaryInfo;
-  Transunion: IPublicRecordSummaryInfo;
+  TransUnion: IPublicRecordSummaryInfo;
   Merge: IPublicRecordSummaryInfo;
 }
 export interface IPublicRecordSummaryInfo {
   NumberOfRecords: number | string | null;
 }
 export interface IPortfolioCreditSummary {
-  Transunion: IPortfolioCreditSummaryInfo;
+  TransUnion: IPortfolioCreditSummaryInfo;
 }
 export interface IPortfolioCreditSummaryInfo {
   SummaryType: ICodeRef;
@@ -463,7 +463,7 @@ export interface IPortfolioCreditSummaryInfo {
   BalanceAmount: number | string | null;
 }
 export interface IAccountHistorySummary {
-  Transunion: IAccountHistorySummaryInfo;
+  TransUnion: IAccountHistorySummaryInfo;
 }
 export interface IAccountHistorySummaryInfo {
   SummaryType: ICodeRef;

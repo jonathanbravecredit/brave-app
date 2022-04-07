@@ -2,7 +2,7 @@
   <brave-kyc-idverification-pure
     [viewState]="viewState"
     (formSubmit)="goToNext($event)"
-    (formError)="handleError($event)"
+    (formError)="handleError()"
     (backClick)="goBack()"
     (resendClick)="resendCode()"
   ></brave-kyc-idverification-pure>

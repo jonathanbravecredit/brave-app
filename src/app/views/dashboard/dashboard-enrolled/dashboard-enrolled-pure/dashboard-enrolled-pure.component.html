@@ -15,7 +15,6 @@
     class="my-4 flex justify-center"
   >
     <brave-dashboard-carousel [dashData]="data" [updatedAt]="updatedAt"></brave-dashboard-carousel>
-
   </div>
   <div *ngIf="data.dashScore === 1 || data.dashScore === 4" class="my-4 flex justify-center">
     <brave-dashboard-credit-score-error
@@ -30,47 +29,41 @@
       title="Claim Your FutureScore:"
       typeOfSnapshot="time"
       [value]="futureScore"
-      (click)="onProgressTrackerClicked.emit()"
       [useBubble]="false"
+      (click)="onProgressTrackerClicked.emit()"
       backGroundColor="#ffd683"
     ></brave-snapshot-display-card>
   </div>
-  <div *ngIf="data.dashSnapshots as cards" class="mb-4">
+  <div *ngIf="data.dashMetrics as metrics" class="mb-4">
     <div class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
+        braveAnalytics
         tendency="up"
         label="update"
-        [title]="content.negativeAccountsTitle"
         typeOfSnapshot="time"
-        [value]="cards.negativeCardCount || 0"
-        [status]="cards.negativeCardStatus || 'safe'"
-        braveAnalytics
+        [title]="content.negativeAccountsTitle"
+        [value]="metrics[0].metricValue || 0"
+        [status]="metrics[0].metricStatus || 'safe'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotNegativeItemsModule"
         (click)="negativeItemsClicked.emit()"
       ></brave-snapshot-display-card>
     </div>
     <div class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
+        braveAnalytics
         tendency="no-tendency"
         [title]="content.forbearanceAccountsTitle"
-        [status]="
-          cards.forbearanceCardStatus !== 'safe'
-            ? cards.forbearanceReviewed
-              ? 'safe'
-              : cards.forbearanceCardStatus || 'safe'
-            : cards.forbearanceCardStatus
-        "
-        braveAnalytics
+        [status]="metrics[1].metricStatus || 'safe'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotForbearanceModule"
         (click)="forbearanceItemsClicked.emit()"
       ></brave-snapshot-display-card>
     </div>
     <div class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
+        braveAnalytics
         tendency="no-tendency"
         [title]="content.databreachAccountsTitle"
-        [status]="cards.databreachReviewed ? 'safe' : cards.databreachCardStatus || 'safe'"
-        braveAnalytics
+        [status]="metrics[2].metricStatus || 'safe'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotBreachCard"
         (click)="databreachItemsClicked.emit()"
       ></brave-snapshot-display-card>
@@ -78,22 +71,22 @@
     <div class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
         tendency="no-tendency"
-        [status]="creditUtilizationStatus || 'default'"
-        [rating]="creditUtilizationPerc?.toString() + '%'"
         title="Credit Utilization"
-        braveAnalytics
+        [rating]="metrics[3].metricValue?.toString() + '%'"
+        [status]="metrics[3].metricStatus || 'default'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
         (click)="creditUtilizationClicked.emit()"
+        braveAnalytics
       ></brave-snapshot-display-card>
     </div>
     <div class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
+        braveAnalytics
+        title="Credit Mix"
         tendency="no-tendency"
         label="new"
-        [status]="creditMixStatus || 'default'"
-        title="Credit Mix"
-        [rating]="rating"
-        braveAnalytics
+        [rating]="metrics[4].metricValue"
+        [status]="metrics[4].metricStatus || 'default'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
         (click)="creditMixClicked.emit()"
       ></brave-snapshot-display-card>

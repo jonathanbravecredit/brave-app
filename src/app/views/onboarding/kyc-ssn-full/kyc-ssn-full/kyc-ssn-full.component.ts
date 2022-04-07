@@ -17,6 +17,9 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   @ViewChild(KycSsnFullPureComponent) pure: KycSsnFullPureComponent | undefined;
   stepID = 2;
   ssnError = false;
+  ssn: Record<string, any> = {
+    full: true,
+  };
   constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
   }
@@ -35,11 +38,11 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
     this.router.navigate([routes.root.onboarding.address.full]);
   }
 
-  goToNext(form: FormGroup): void {
+  async goToNext(form: FormGroup): Promise<void> {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentityFull);
     if (form.valid) {
       this.ssnError = false;
-      const { full } = this.formatAttributes(form, ssn);
+      const { full } = this.formatAttributes(form, this.ssn);
       if (full.length < 9) {
         this.handleError({});
       } else {
@@ -49,10 +52,9 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
             full: full,
           },
         } as UserAttributesInput;
-        this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
-          this.kycService.completeStep(this.stepID);
-          this.router.navigate([routes.root.onboarding.verify.full]);
-        });
+        await this.kycService.updateUserAttributesAsync(attrs)
+        this.kycService.completeStep(this.stepID);
+        this.router.navigate([routes.root.onboarding.verify.full]);
       }
     } else {
       this.handleError({});
@@ -68,16 +70,14 @@ export class KycSsnFullComponent extends KycBaseComponent implements OnInit, Aft
   }
 
   handleError(errors: { [key: string]: AbstractControl }): void {
-    const fullSsn = errors.full.value.input;
-    if (fullSsn.length < 9) {
+    const fullSsn = errors.full?.value?.input;
+    if (!fullSsn || fullSsn.length < 9) {
       this.ssnError = true;
     }
 
-    this.pure?.hasError === true;
-    this.pure?.showError === true;
+    if (this.pure) {
+      this.pure.hasError = true;
+      this.pure.showError = true;
+    }
   }
 }
-
-const ssn: Record<string, any> = {
-  full: true,
-};

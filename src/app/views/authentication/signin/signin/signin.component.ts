@@ -64,6 +64,7 @@ export class SigninComponent {
     this.viewState = viewState;
     this.message =
       message || `This doesn't appear to be a valid email address. Perhaps choose a new one and try again.`;
+    this.interstitial.fetching$.next(false);
   }
 
   /**
