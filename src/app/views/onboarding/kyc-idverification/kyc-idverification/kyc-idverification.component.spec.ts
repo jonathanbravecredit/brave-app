@@ -164,9 +164,9 @@ describe('KycIdverificationComponent', () => {
     let spy = spyOn(component, 'getAuthenticationQuestions');
     spy.and.returnValue({} as ITransunionKBAQuestion);
     kycServiceMock.sendVerifyAuthenticationQuestions.and.returnValue(
-      Promise.resolve(({ data: undefined, success: false } as ITUServiceResponse<
+      Promise.resolve({ data: undefined, success: false } as ITUServiceResponse<
         IVerifyAuthenticationQuestionsResult | undefined
-      >)),
+      >),
     );
     storeMock.snapshot.and.returnValue({
       appData: { agencies: { transunion: { pinCurrentAge: new Date().valueOf() + 10000, pinAttempts: 2 } } },
@@ -181,9 +181,9 @@ describe('KycIdverificationComponent', () => {
     let spy = spyOn(component, 'getAuthenticationQuestions');
     spy.and.returnValue({} as ITransunionKBAQuestion);
     kycServiceMock.sendVerifyAuthenticationQuestions.and.returnValue(
-      Promise.resolve(({ data: undefined, success: true } as ITUServiceResponse<
+      Promise.resolve({ data: undefined, success: true } as ITUServiceResponse<
         IVerifyAuthenticationQuestionsResult | undefined
-      >)),
+      >),
     );
     storeMock.snapshot.and.returnValue({
       appData: { agencies: { transunion: { pinCurrentAge: new Date().valueOf() + 10000, pinAttempts: 2 } } },
@@ -219,27 +219,27 @@ describe('KycIdverificationComponent', () => {
   }));
 
   it('should run processRequest on resendCose', () => {
-    spyOn(component, 'processRequest')
-    component.resendCode()
-    expect(component.processRequest).toHaveBeenCalled()
-  })
+    spyOn(component, 'processRequest');
+    component.resendCode();
+    expect(component.processRequest).toHaveBeenCalled();
+  });
 
   it('should run fireClickEvent on goToNext', () => {
-    component.goToNext({} as FormGroup)
-    expect(analyticsMock.fireClickEvent).toHaveBeenCalled()
-  })
+    component.goToNext({} as FormGroup);
+    expect(analyticsMock.fireClickEvent).toHaveBeenCalled();
+  });
 
   it('should run formatAttributes on goToNext', () => {
-    spyOn(component, 'formatAttributes')
-    component.goToNext({valid: true} as FormGroup)
-    expect(component.formatAttributes).toHaveBeenCalled()
-  })
+    spyOn(component, 'formatAttributes').and.returnValue({ code: '197' });
+    component.goToNext({ valid: true } as FormGroup);
+    expect(component.formatAttributes).toHaveBeenCalled();
+  });
 
   it('should run processRequest on goToNext', () => {
-    spyOn(component, 'processRequest')
-    component.goToNext({valid: true} as FormGroup)
-    expect(component.processRequest).toHaveBeenCalled()
-  })
+    spyOn(component, 'processRequest');
+    component.goToNext({ valid: true } as FormGroup);
+    expect(component.processRequest).toHaveBeenCalled();
+  });
 
   it('should run handleIncorrect on handleResponse if no data', () => {
     spyOn(component, 'handleIncorrect');
@@ -368,7 +368,7 @@ describe('KycIdverificationComponent', () => {
   }));
 
   it('should run updateViewState on handleError', () => {
-    spyOn(component, 'updateViewState')
+    spyOn(component, 'updateViewState');
     component.handleError();
     expect(component.updateViewState).toHaveBeenCalled();
   });
@@ -402,8 +402,6 @@ describe('KycIdverificationComponent', () => {
     tick();
     expect(kycServiceMock.bailoutFromOnboarding).toHaveBeenCalled();
   }));
-
-  
 });
 
 //START AT RESEND CODE AND GO DOWN
