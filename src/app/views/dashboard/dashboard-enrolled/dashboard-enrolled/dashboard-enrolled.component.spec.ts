@@ -119,5 +119,58 @@ describe('DashboardEnrolledComponent', () => {
     expect(dashboardServiceMock.progressTrackerData$.next).toHaveBeenCalled();
   });
 
-  //TODO START AT SET AD DATA
+  it('should run getAdData on setAdData', () => {
+    component.setAdData();
+    expect(dashboardServiceMock.getAdData).toHaveBeenCalled();
+  });
+
+  it('should run syncDashboardStateToDB on onNegativeItemsClicked', () => {
+    component.onNegativeItemsClicked();
+    expect(dashboardServiceMock.syncDashboardStateToDB).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onNegativeItemsClicked', () => {
+    component.onNegativeItemsClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run syncDashboardStateToDB on onDatabreachItemsClicked', () => {
+    component.onDatabreachItemsClicked();
+    expect(dashboardServiceMock.syncDashboardStateToDB).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onDatabreachItemsClicked', () => {
+    component.onDatabreachItemsClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onFullReportClicked', () => {
+    component.onFullReportClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onDisputesClicked', () => {
+    component.onDisputesClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onCreditUtilizationClicked', () => {
+    component.onCreditUtilizationClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onCreditMixClicked', () => {
+    component.onCreditMixClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onReferralsClicked', () => {
+    component.onReferralsClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onProgressTrackerClicked', () => {
+    component.onProgressTrackerClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 });
