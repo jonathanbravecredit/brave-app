@@ -231,9 +231,9 @@ describe('KycIdverificationComponent', () => {
 
   it('should run formatAttributes on goToNext', () => {
     spyOn(component, 'formatAttributes').and.returnValue({ code: '197' });
-    component.goToNext({ valid: true } as FormGroup);
-    expect(component.formatAttributes).toHaveBeenCalled();
-  });
+    component.goToNext({valid: true} as FormGroup);
+    expect(component.formatAttributes).toHaveBeenCalled()
+  })
 
   it('should run processRequest on goToNext', () => {
     spyOn(component, 'processRequest');
