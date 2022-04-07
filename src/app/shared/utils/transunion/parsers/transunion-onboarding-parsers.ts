@@ -3,17 +3,8 @@ import { IGetAuthenticationQuestionsResult } from '@shared/interfaces/get-author
 import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfaces/tu-kba-questions.interface';
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { OTPQuestion, OTPReponse, PassCodeQuestion } from '@shared/utils/transunion/constants';
+import { TransunionUtil as tu } from '@bravecredit/brave-sdk';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
-import * as parser from 'fast-xml-parser';
-const he = require('he');
-const parserOptions = {
-  attributeNamePrefix: '',
-  ignoreAttributes: false,
-  ignoreNameSpace: true,
-  parseAttributeValue: true,
-  attrValueProcessor: (val: any, attrName: any) => he.encode(val, { isAttributeValue: true }), //default is a=>a
-  tagValueProcessor: (val: any, tagName: any) => he.encode(val), //default is a=>a
-};
 
 export class TransunionOnboardingParsers extends TransunionBase {
   constructor() {
@@ -50,10 +41,7 @@ export class TransunionOnboardingParsers extends TransunionBase {
    * @returns
    */
   static parseCurrentRawAuthXML<T>(xml: string): T {
-    // need two decodes, encoded by TU and our default parser settings
-    const clean = he.decode(he.decode(xml));
-    const questions: T = parser.parse(clean, parserOptions);
-    return questions;
+    return tu.parsers.onboarding.parseCurrentRawAuthXML(xml); // moving to sdk parsers
   }
 
   /**

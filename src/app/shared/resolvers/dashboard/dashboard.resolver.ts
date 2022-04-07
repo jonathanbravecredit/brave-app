@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+import { CreditReportMetric, CreditReportMetrics, MergeReport } from '@bravecredit/brave-sdk';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { Initiative } from '@shared/interfaces/progress-tracker.interface';
@@ -21,6 +22,7 @@ export interface IDashboardResolver {
   trends: IGetTrendingData | null;
   referral: IReferral | null;
   progressTrackerData: Initiative | null;
+  metrics: CreditReportMetric<any, any>[] | null;
 }
 
 @Injectable({
@@ -42,6 +44,8 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
     this.interstitial.openInterstitial();
 
     const report = await this.creditReportResolver.resolve();
+    const metrics = new CreditReportMetrics(report as MergeReport).calculateMetrics();
+
     // keep this ordering
     try {
       const res = await forkJoin([
@@ -59,6 +63,7 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
               trends: trends,
               referral: referrals.referral,
               progressTrackerData: progressTrackerData,
+              metrics: metrics,
             };
           }),
           finalize(() => {
@@ -75,6 +80,7 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
         trends: null,
         referral: null,
         progressTrackerData: null,
+        metrics: null,
       });
     }
   }

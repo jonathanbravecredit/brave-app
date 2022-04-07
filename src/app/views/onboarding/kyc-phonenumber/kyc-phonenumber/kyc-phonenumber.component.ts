@@ -18,6 +18,9 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
   private stepID = 3;
   public hasError: boolean = false;
   phoneError = false;
+  phoneMap: Record<string, any> = {
+    phone: true,
+  };
 
   constructor(private router: Router, private analytics: AnalyticsService, private kycService: KycService) {
     super();
@@ -54,7 +57,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingPhone);
     if (form.valid) {
       this.phoneError = false;
-      const { phone } = this.formatAttributes(form, phoneMap);
+      const { phone } = this.formatAttributes(form, this.phoneMap);
       const attrs = {
         phone: {
           primary: phone,
@@ -81,7 +84,3 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
     this.hasError = true;
   }
 }
-
-const phoneMap: Record<string, any> = {
-  phone: true,
-};

@@ -21,6 +21,7 @@ import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-t
 import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
 import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
+import { CreditReportMetric } from '@bravecredit/brave-sdk';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -29,6 +30,7 @@ export interface IDashboardData {
   dashScores: IProductTrendingData[] | null;
   dashScore: number | null;
   dashScoreSuppressed: boolean | null;
+  dashMetrics: CreditReportMetric<any, any>[] | null;
 }
 
 @Injectable()
@@ -49,6 +51,7 @@ export class DashboardService implements OnDestroy {
   dashScore$ = new BehaviorSubject<number | null>(null);
   dashDelta$ = new BehaviorSubject<number | null>(null);
   dashScoreSuppressed$ = new BehaviorSubject(false);
+  dashMetrics$ = new BehaviorSubject<CreditReportMetric<any, any>[]>([]);
   // subscriptions to dash
   dashScoresSub$: Subscription | undefined;
   progressTrackerData$ = new BehaviorSubject<Initiative | null>(null);

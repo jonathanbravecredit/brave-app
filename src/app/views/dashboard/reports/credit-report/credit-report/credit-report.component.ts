@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import {
   IBorrower,
@@ -12,7 +12,6 @@ import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
 import { Observable } from 'rxjs';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
@@ -21,7 +20,7 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
   selector: 'brave-credit-report',
   templateUrl: './credit-report.component.html',
 })
-export class CreditReportComponent implements OnInit, AfterViewInit {
+export class CreditReportComponent implements OnInit {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
   scores: ICreditScoreTracking | undefined;
@@ -30,8 +29,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
     private creditReportService: CreditreportService,
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute,
-    private analytics: AnalyticsService,
     private transunion: TransunionService,
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
@@ -43,8 +40,6 @@ export class CreditReportComponent implements OnInit, AfterViewInit {
       this.scores = scores.data;
     });
   }
-
-  ngAfterViewInit(): void {}
 
   /**
    * Handle hide event emitter from pure...hides positive accounts

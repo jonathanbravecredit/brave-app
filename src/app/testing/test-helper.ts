@@ -8,6 +8,10 @@ export class Helper<T> {
   hasProperty(component: T, prop: string): boolean {
     return Object.keys(component).filter((key) => key === prop).length > 0;
   }
+
+  hasMethod(object: { [key: string]: any }, method: string): boolean {
+    return typeof object[method] == 'function';
+  }
 }
 
 // export const spyPropertyGetter = <T, K extends keyof T>(

@@ -6,10 +6,14 @@ import { IReferral } from '@shared/interfaces/referrals.interface';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
 import { DashboardService, IDashboardData } from '@shared/services/dashboard/dashboard.service';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
-import { dashboardEnrolledContent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
+import {
+  dashboardEnrolledContent,
+  SNAPSHOT_SORT_ORDER,
+} from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 import { IRecommendationText } from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { filter, skip } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, combineLatest, Subscription } from 'rxjs';
+import { filter, skip, tap } from 'rxjs/operators';
+import { CreditReportMetric } from '@bravecredit/brave-sdk';
 
 @Component({
   selector: 'brave-dashboard-enrolled-pure',
@@ -22,6 +26,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() adsData: IAdData[] | undefined;
   @Input() referral: IReferral | null | undefined;
   @Input() rating: string | undefined;
+  @Input() metrics: CreditReportMetric<any, any>[] = [];
   @Input() creditMix: IRecommendationText | undefined;
   @Input() creditMixStatus: string | undefined;
   @Input() creditUtilizationStatus: string | undefined;
@@ -58,16 +63,23 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
       this.dashboardService.dashScores$,
       this.dashboardService.dashScore$,
       this.dashboardService.dashScoreSuppressed$,
-    ]).subscribe((val) => {
-      this.dashboardData$?.next({
-        dashReport: val[0],
-        dashSnapshots: val[1],
-        dashTrends: val[2],
-        dashScores: val[3],
-        dashScore: val[4],
-        dashScoreSuppressed: val[5],
-      });
-    });
+      this.dashboardService.dashMetrics$,
+    ])
+      .pipe(
+        tap((val: any[]) => {
+          console.log('metrics: ', val[6]);
+          this.dashboardData$?.next({
+            dashReport: val[0],
+            dashSnapshots: val[1],
+            dashTrends: val[2],
+            dashScores: val[3],
+            dashScore: val[4],
+            dashScoreSuppressed: val[5],
+            dashMetrics: this.sortMetrics(val[6]),
+          });
+        }),
+      )
+      .subscribe();
 
     this.updatedOnSub$ = this.dashboardService.updatedOn$.subscribe((u) => {
       this.updatedAt = u || new Date().toISOString();
@@ -86,5 +98,12 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
 
   toggleGoalChoiceModel() {
     this.modalOpen = !this.modalOpen;
+  }
+
+  sortMetrics(metrics: CreditReportMetric<any, any>[] | null): CreditReportMetric<any, any>[] | null {
+    if (!metrics) return null;
+    return metrics.sort((a, b) => {
+      return SNAPSHOT_SORT_ORDER[a.metricId] - SNAPSHOT_SORT_ORDER[b.metricId];
+    });
   }
 }
