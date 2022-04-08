@@ -15,7 +15,6 @@ export class DataBreachesComponent implements OnInit {
   breaches: IBreachCard[] | undefined;
   AnalyticClickEvents = AnalyticClickEvents
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private store: Store,
     private api: APIService,

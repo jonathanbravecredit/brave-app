@@ -22,4 +22,9 @@ describe('CreditMixRecommendationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set show to false on closeBox', () => {
+    component.closeBox()
+    expect(component.show).toBeFalse()
+  })
 });

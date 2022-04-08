@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
@@ -10,7 +10,7 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'brave-dashboard',
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   securityFreeze$: Observable<boolean>;
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
@@ -40,5 +40,9 @@ export class DashboardComponent implements OnInit {
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
       if (referral) this.dashboardService.dashReferral$.next(referral);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub$?.unsubscribe()
   }
 }
