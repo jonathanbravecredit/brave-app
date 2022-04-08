@@ -7,7 +7,10 @@ import { CreditReportResolver } from './credit-report.resolver';
 
 const setup = () => {
   const storeMock = jasmine.createSpyObj('Store', ['selectOnce', 'dispatch']);
-  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', ['getCurrentCreditReport']);
+  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', [
+    'getCurrentCreditReport',
+    'updateCreditReportStateAsync',
+  ]);
   const creditReportResolver = new CreditReportResolver(storeMock, creditReportMock);
   return { creditReportResolver, storeMock, creditReportMock };
 };
