@@ -1,11 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces';
+import { Router } from '@angular/router';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { StateService } from '@shared/services/state/state.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import { NegativeAccountInitialComponent } from './negative-account-initial.component';
 
@@ -19,32 +15,17 @@ describe('NegativeAccountInitialComponent', () => {
   let component: NegativeAccountInitialComponent;
   let fixture: ComponentFixture<NegativeAccountInitialComponent>;
   let routerMock: any;
-  let statesvcMock: any;
-  let creditReportServiceMock: any;
-  let disputeServiceMock: any;
   class RouteMock {
     data = of();
   }
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('', ['']);
-    statesvcMock = jasmine.createSpyObj('', ['']);
-    creditReportServiceMock = jasmine.createSpyObj('', ['']);
-    disputeServiceMock = jasmine.createSpyObj('', ['']);
-
-    //props
-    creditReportServiceMock.tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
+    routerMock = jasmine.createSpyObj('', ['navigate']);
 
     await TestBed.configureTestingModule({
       declarations: [NegativeAccountInitialComponent],
       imports: [SharedPipesModule],
-      providers: [
-        { provide: Router, useValue: routerMock },
-        { provide: StateService, useValue: statesvcMock },
-        { provide: CreditreportService, useValue: creditReportServiceMock },
-        { provide: DisputeService, useValue: disputeServiceMock },
-        { provide: ActivatedRoute, useClass: RouteMock },
-      ],
+      providers: [{ provide: Router, useValue: routerMock }],
     }).compileComponents();
   });
 
@@ -56,5 +37,15 @@ describe('NegativeAccountInitialComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should run navigate on onGoToDashboardClick', () => {
+    component.onGoToDashboardClick();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onGoToReportClick', () => {
+    component.onGoToReportClick();
+    expect(routerMock.navigate).toHaveBeenCalled();
   });
 });

@@ -39,8 +39,8 @@ export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.percetangeUtilization = this.calculatePercentageUtilization(
-      this.creditUtilization!.currentBalance,
-      this.creditUtilization!.creditLimit,
+      this.creditUtilization?.currentBalance,
+      this.creditUtilization?.creditLimit,
     );
     this.creditStatus = this.calculateCreditStatus(this.percetangeUtilization);
   }

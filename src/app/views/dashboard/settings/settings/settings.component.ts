@@ -88,9 +88,9 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmitCodeClick(form: FormGroup): void {
-    const email = form.value.email.input;
-    const password = form.value.password.input;
-    const code = form.value.code.input;
+    const email = form.value?.email?.input;
+    const password = form.value?.password?.input;
+    const code = form.value?.code?.input;
     this.interstitial.fetching$.next(true);
     this.settings
       .forgotPasswordSubmit(email, code, password)

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMergeReport } from '@shared/interfaces';
+import { IMergeReport, ITradeLinePartition } from '@shared/interfaces';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { BehaviorSubject, of } from 'rxjs';
@@ -22,8 +22,8 @@ describe('ForbearanceView', () => {
 
   beforeEach(async () => {
     //methods
-    routerMock = jasmine.createSpyObj('Router', ['']);
-    creditReportServiceMock = jasmine.createSpyObj('APIService', ['']);
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    creditReportServiceMock = jasmine.createSpyObj('APIService', ['setTradeline']);
 
     //props
     creditReportServiceMock.tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
@@ -48,4 +48,20 @@ describe('ForbearanceView', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run setTradeline on onViewDetailClick', () => {
+    component.onViewDetailClick({} as ITradeLinePartition)
+    expect(creditReportServiceMock.setTradeline).toHaveBeenCalled()
+  })
+
+  it('should run navigate on onViewDetailClick', () => {
+    component.onViewDetailClick({} as ITradeLinePartition)
+    expect(routerMock.navigate).toHaveBeenCalled()
+  })
+
+  it('should run window.open on onInfoClick', () => {
+    spyOn(window, 'open')
+    component.onInfoClick()
+    expect(window.open).toHaveBeenCalled()
+  })
 });

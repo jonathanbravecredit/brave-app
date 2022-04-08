@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { Router } from "@angular/router";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
-import { DataBreachCardComponent } from "./data-breach-card.component";
+import { DataBreachCardComponent } from './data-breach-card.component';
 
-describe("DataBreachCardComponent", () => {
+describe('DataBreachCardComponent', () => {
   let component: DataBreachCardComponent;
   let fixture: ComponentFixture<DataBreachCardComponent>;
   let routerMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
       declarations: [DataBreachCardComponent],
@@ -23,7 +23,12 @@ describe("DataBreachCardComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('shound run navigate on goToReport', () => {
+    component.goToReport();
+    expect(routerMock.navigate).toHaveBeenCalled();
   });
 });

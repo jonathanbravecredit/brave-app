@@ -31,10 +31,7 @@ export class CreditMixService implements OnDestroy {
   }
 
   getTradeLinePartitions(): ITradeLinePartition[] {
-    if (!this.tuReport) return [{} as ITradeLinePartition];
-    const partitions = this.tuReport.TrueLinkCreditReportType.TradeLinePartition;
-    if (!partitions) return [{} as ITradeLinePartition];
-    return partitions;
+    return this.tuReport.TrueLinkCreditReportType.TradeLinePartition;
   }
 
   ngOnDestroy() {

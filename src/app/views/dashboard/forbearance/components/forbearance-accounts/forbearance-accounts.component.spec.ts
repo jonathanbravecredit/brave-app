@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 import { ForbearanceAccountsComponent } from './forbearance-accounts.component';
 
@@ -22,4 +23,10 @@ describe('ForbearanceAccountsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run mapTradelineToSummaryCard on init', () => {
+    spyOn(TransunionUtil.mappers, 'mapTradelineToSummaryCard')
+    component.ngOnInit()
+    expect(TransunionUtil.mappers.mapTradelineToSummaryCard).toHaveBeenCalled()
+  })
 });
