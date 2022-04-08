@@ -62,6 +62,7 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
   }
 
   onAddressClick(place: google.maps.places.PlaceResult): void {
+    console.log('REACHED HERE')
     let addressOne = '';
     let addressTwo;
     let city = '';
