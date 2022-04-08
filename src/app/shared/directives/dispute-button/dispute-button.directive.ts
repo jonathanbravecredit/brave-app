@@ -88,11 +88,11 @@ export class DisputeButtonDirective implements OnDestroy {
           });
         } else {
           const code = `${error?.Code}`;
-          // this.handleError(code);
+          this.handleError(code);
         }
       })
       .catch((err) => {
-        // this.handleError();
+        this.handleError();
       });
   }
 
@@ -128,12 +128,15 @@ export class DisputeButtonDirective implements OnDestroy {
   }
 
   handleError(code: string = '197'): void {
-    this.interstitial.closeInterstitial();
-    this.router.navigate([routes.root.dashboard.disputes.error.full], {
-      queryParams: {
-        code: code,
-      },
-    });
+    this.router
+      .navigate([routes.root.dashboard.disputes.error.full], {
+        queryParams: {
+          code: code,
+        },
+      })
+      .then(() => {
+        this.interstitial.closeInterstitial();
+      });
   }
 
   onConfirmPersonalClick(personalItem: IPersonalItemsDetailsConfig | undefined): void {

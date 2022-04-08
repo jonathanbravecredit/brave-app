@@ -239,9 +239,13 @@ export class DisputeService implements OnDestroy {
 
   /**
    * Initiate a new dispute. Cannot have one in progress.
+   *  - need to refresh the report because it is likely we had to call fulfill again
    */
   async sendStartDispute(): Promise<ITUServiceResponse<any>> {
-    return await this.transunion.sendStartDispute(this.disputeStack);
+    const res = await this.transunion.sendStartDispute(this.disputeStack);
+    const report = await this.creditReportService.getCurrentCreditReport();
+    await this.creditReportService.updateCreditReportStateAsync(report);
+    return res;
   }
 
   /**

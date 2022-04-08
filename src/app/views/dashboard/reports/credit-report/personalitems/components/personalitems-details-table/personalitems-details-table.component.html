@@ -1,8 +1,8 @@
 <!-- ============================== -->
-<!--       PUBLIC ACCOUNTS        -->
+<!--       PERSONAL ACCOUNTS        -->
 <!-- ============================== -->
 <div *ngIf="config" class="divide-y divide-blueGray-300">
-  <!-- Account Number -->
+  <!-- Social Security Number -->
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['ssn'] || 'Social Security Number'"
@@ -10,7 +10,7 @@
     ></brave-base-table-row>
   </div>
 
-  <!-- Court Name -->
+  <!-- Borrower Names -->
   <div class="py-2 px-1">
     <brave-base-table-row [label]="mapper['borrowerNames'] || 'Name'" [injected]="true">
       <div class="flex flex-col w-6/12">
@@ -31,7 +31,7 @@
     </brave-base-table-row>
   </div>
 
-  <!-- Date Filed -->
+  <!-- Current Address -->
   <div class="py-2 px-1">
     <brave-base-table-row
       [label]="mapper['currentAddress'] || 'Current Address'"
@@ -39,7 +39,7 @@
     ></brave-base-table-row>
   </div>
 
-  <!-- Date Paid -->
+  <!-- Previous Address -->
   <div class="py-2 px-1">
     <brave-base-table-row [label]="mapper['previousAddress'] || 'Previous Address(es)'" [injected]="true">
       <div class="flex flex-col w-6/12">
