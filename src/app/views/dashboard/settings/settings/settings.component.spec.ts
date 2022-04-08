@@ -103,4 +103,6 @@ describe('SettingsComponent', () => {
     tick();
     expect(interstitialMock.stopSpinner).toHaveBeenCalled();
   }));
+
+  //TODO onDeactivateClick next and then down
 });
