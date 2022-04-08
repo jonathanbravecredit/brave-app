@@ -32,4 +32,9 @@ describe('KycGoalChoiceComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run navigate on routeChangeClick', () => {
+    component.routeChangeClick();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 });

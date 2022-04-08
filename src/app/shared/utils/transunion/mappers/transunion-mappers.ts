@@ -1,5 +1,5 @@
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces';
-import { IDisputePublicItem } from '@shared/services/dispute/dispute.interfaces';
+import { IDisputePublicItem } from '@shared/interfaces/dispute.interfaces';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
 import { TransunionParsers } from '@shared/utils/transunion/parsers/transunion-parsers';
 import { TransunionQueries } from '@shared/utils/transunion/queries/transunion-queries';

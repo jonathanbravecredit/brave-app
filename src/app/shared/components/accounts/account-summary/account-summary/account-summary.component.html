@@ -1,0 +1,10 @@
+<!-- ======= account cards ====== -->
+<ng-container *ngIf="tradelineDetailsConfig">
+  <brave-account-summary-tradeline [tradeline]="tradelineDetailsConfig"></brave-account-summary-tradeline>
+</ng-container>
+<ng-container *ngIf="publicDetailsConfig">
+  <brave-account-summary-publicitem [publicItem]="publicDetailsConfig"></brave-account-summary-publicitem>
+</ng-container>
+<ng-container *ngIf="personalDetailsConfig">
+  <account-summary-personalitem [personalDetailsConfig]="personalDetailsConfig"></account-summary-personalitem>
+</ng-container>

@@ -1,0 +1,64 @@
+<div class="mb-9">
+  <div>
+    <div class="flex justify-start items-start content-start">
+      <div>
+        <span class="material-icons-outlined"> assignment </span>
+      </div>
+      <div class="ml-2 mb-4">
+        <p class="text-sm font-semibold">
+          {{ tradeline?.creditorName || '' | decode }}
+          {{
+            tradeline?.openClosed?.toLowerCase() === 'c'
+              ? '(Closed)'
+              : tradeline?.openClosed?.toLowerCase() === 'o'
+              ? '(Open)'
+              : ''
+          }}
+        </p>
+        <p class="text-sm font-semibold">{{ tradeline?.accountTypeDescription || '' }}</p>
+      </div>
+    </div>
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Last Reported Payment to Creditor:'"
+        [value]="tradeline?.lastReported"
+        [enableSeparator]="false"
+        [valueType]="'date'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Amount Past Due:'"
+        [value]="tradeline?.amountPastDue"
+        [enableSeparator]="false"
+        [valueType]="'currency'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Remaining Balance:'"
+        [value]="tradeline?.currentBalance"
+        [enableSeparator]="false"
+        [valueType]="'currency'"
+        [nowrapLabel]="true"
+      ></brave-base-table-row>
+    </div>
+
+    <div class="mb-1">
+      <brave-base-table-row
+        [label]="'Original Creditor:'"
+        [value]="tradeline?.originalCreditor"
+        [enableSeparator]="false"
+        [nowrapLabel]="true"
+        [tooltip]="true"
+        [icon]="'material-icons-outlined text-base'"
+        [iconStyle]="{'color': '#222c9d', 'cursor': 'pointer'}"
+        [tooltipAction]="openModal"
+      ></brave-base-table-row>
+    </div>
+  </div>
+</div>

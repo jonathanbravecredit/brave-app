@@ -33,8 +33,9 @@ export class DashboardComponent implements OnInit {
 
   subscribeToRouteData(): void {
     this.routeSub$ = this.route.data.subscribe((resp: any) => {
-      const { snapshots, trends, referral } = resp.dashboard as IDashboardResolver;
+      const { snapshots, trends, referral, metrics } = resp.dashboard as IDashboardResolver;
       if (snapshots) this.dashboardService.dashSnapshots$.next(snapshots);
+      if (metrics) this.dashboardService.dashMetrics$.next(metrics);
       if (trends) this.dashboardService.dashTrends$.next(trends);
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
       if (referral) this.dashboardService.dashReferral$.next(referral);

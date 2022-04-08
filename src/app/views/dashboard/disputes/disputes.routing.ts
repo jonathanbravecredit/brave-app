@@ -14,6 +14,7 @@ import { FindingsResolver } from '@shared/resolvers/findings/findings.resolver';
 import { DisputesResolver } from '@shared/resolvers/disputes/disputes.resolver';
 import { DisputesHistoricalView } from '@views/dashboard/disputes/disputes-historical/disputes-historical/disputes-historical.view';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+
 const disputes = routes.root.dashboard.disputes;
 
 const DisputeRoutes: Routes = [

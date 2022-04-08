@@ -25,22 +25,10 @@ export class TradelinePaymentIconKeyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.initiateModal(this.showModal);
   }
 
-  // initiateModal(showModal: boolean): void {
-  //   if (this.modal) {
-  //     this.modal.showModal = showModal;
-  //   }
-  // }
 
   closeModal(): void {
     this.modalService.removeModalFromBody();
-
-    // if (this.modal) {
-    //   this.modal.showModal = !this.modal.showModal;
-    //   if (!this.modal.showModal) {
-    //   }
-    // }
   }
 }

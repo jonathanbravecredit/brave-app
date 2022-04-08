@@ -123,11 +123,15 @@ export class TransunionReportParsers extends TransunionBase {
     if (!address) return '';
     let records: Record<string, any> = address;
     let creditAddress = '';
-    for (const key in ADDRESS_LINE_1) {
-      const str = !!records[key] ? `${records[key]} ` : '';
-      creditAddress = `${creditAddress}${str}`;
+    if (address.unparsedStreet?.length) {
+      creditAddress = address.unparsedStreet;
+    } else {
+      for (const key in ADDRESS_LINE_1) {
+        const str = !!records[key] ? `${records[key]} ` : '';
+        creditAddress = `${creditAddress}${str}`;
+      }
+      creditAddress = `${creditAddress.trimEnd()} \n`;
     }
-    creditAddress = `${creditAddress.trimEnd()} \n`;
     for (const key in ADDRESS_LINE_2) {
       let comma = key !== 'postalCode' ? ', ' : '';
       const str = !!records[key] ? `${records[key]}${comma}` : '';

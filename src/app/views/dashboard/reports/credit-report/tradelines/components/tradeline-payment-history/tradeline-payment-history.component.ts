@@ -60,8 +60,7 @@ export class TradelinePaymentHistoryComponent implements OnInit {
    * @returns {ITradelinePaymentHistory}
    */
   parsePaymentHistory(payments: IPayStatusHistory = {} as IPayStatusHistory): ITradelinePaymentHistory {
-    const history = payments === undefined || payments === null ? ({} as IPayStatusHistory) : payments;
-    const parsed = !Object.keys(history).length
+    const parsed = !Object.keys(payments).length
       ? {
           headers: {
             year: null,
@@ -82,17 +81,17 @@ export class TradelinePaymentHistoryComponent implements OnInit {
             months: MONTH_ABBREVIATIONS,
           },
           years: [0, 1, 2].map((item, i) => {
-            const badDate = history.startDate?.substring(0, 10);
+            const badDate = payments.startDate?.substring(0, 10);
             const goodDate = dayjs(badDate, 'YYYY-MM-DD').toDate();
-            let dte = history.startDate === undefined ? new Date() : goodDate;
+            let dte = payments.startDate === undefined ? new Date() : goodDate;
             let year = dte.getFullYear() - i;
             let monthlyStatus: IMonthyPayStatusItem[];
-            if (history.MonthlyPayStatus === undefined) {
+            if (payments.MonthlyPayStatus === undefined) {
               monthlyStatus = [{} as IMonthyPayStatusItem];
-            } else if (history.MonthlyPayStatus instanceof Array) {
-              monthlyStatus = history.MonthlyPayStatus;
+            } else if (payments.MonthlyPayStatus instanceof Array) {
+              monthlyStatus = payments.MonthlyPayStatus;
             } else {
-              monthlyStatus = [history.MonthlyPayStatus];
+              monthlyStatus = [payments.MonthlyPayStatus];
             }
             return {
               year: year.toString(),

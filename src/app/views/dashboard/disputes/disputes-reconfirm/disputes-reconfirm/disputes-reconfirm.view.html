@@ -4,11 +4,7 @@
       <!-- =========== personal items =========== -->
       <ng-container *ngIf="params.type === 'personal'">
         <ng-container *ngIf="report | mergereportToPersonalitems as personalItems">
-          <brave-disputes-reconfirm-pure
-            [report]="report"
-            [personalItems]="personalItems"
-            (disputePersonalClick)="onDisputePersonalClick($event)"
-          >
+          <brave-disputes-reconfirm-pure [report]="report" [personalItems]="personalItems">
           </brave-disputes-reconfirm-pure>
         </ng-container>
       </ng-container>
@@ -16,37 +12,24 @@
       <!-- =========== public items =========== -->
       <ng-container *ngIf="params.type === 'public'">
         <ng-container *ngIf="report | mergereportToPublicitems as publicItems">
-          <brave-disputes-reconfirm-pure
-            [report]="report"
-            [publicItems]="publicItems"
-            (disputePublicClick)="onDisputePublicClick($event)"
-          >
-          </brave-disputes-reconfirm-pure>
+          <brave-disputes-reconfirm-pure [report]="report" [publicItems]="publicItems"> </brave-disputes-reconfirm-pure>
         </ng-container>
       </ng-container>
 
       <!-- =========== tradeline items =========== -->
       <ng-container *ngIf="(params.type !== 'public' && params.type !== 'personal' && params.type !== 'all')">
         <ng-container *ngIf="report | mergereportToTradelines: params.type as tradelines">
-          <brave-disputes-reconfirm-pure
-            [report]="report"
-            [tradelines]="tradelines"
-            (disputeTradelineClick)="onDisputeTradelineClick($event)"
-          >
-          </brave-disputes-reconfirm-pure>
+          <brave-disputes-reconfirm-pure [report]="report" [tradelines]="tradelines"> </brave-disputes-reconfirm-pure>
         </ng-container>
       </ng-container>
 
-      <!-- =========== tradeline items =========== -->
+      <!-- =========== all items =========== -->
       <ng-container *ngIf="params.type === 'all'">
         <brave-disputes-reconfirm-pure
           [report]="report"
           [publicItems]="report | mergereportToPublicitems"
           [personalItems]="report | mergereportToPersonalitems"
           [tradelines]="report | mergereportToTradelines"
-          (disputePublicClick)="onDisputePublicClick($event)"
-          (disputePersonalClick)="onDisputePersonalClick($event)"
-          (disputeTradelineClick)="onDisputeTradelineClick($event)"
         >
         </brave-disputes-reconfirm-pure>
       </ng-container>

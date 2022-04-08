@@ -23,7 +23,6 @@ export class KycBaseComponent {
   constructor() {}
 
   canDeactivate(form: FormGroup): boolean {
-    if (form === undefined) return true;
     if (!form?.valid && !form?.touched) return true;
     if (!!form?.valid && !!form?.touched) return true;
     return false;
@@ -35,6 +34,7 @@ export class KycBaseComponent {
 
   flattenAttributes(formValues: any, mapObj: Record<string, any>, inputType: string): FlatForm {
     let values: FlatForm = {};
+    if (!formValues) return values
     Object.keys(formValues).forEach((key) => {
       if (mapObj[key]) {
         values[key] = formValues[key][`${inputType}`];
