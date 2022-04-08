@@ -81,10 +81,10 @@ describe('CreditReportResolver', () => {
     expect(creditReportResolver.setCreditReport).toHaveBeenCalled();
   }));
 
-  it('should run store.dispatch when setCreditReport is called', () => {
+  it('should run creditReportV2.updateCreditReportStateAsync when setCreditReport is called', () => {
     creditReportResolver.setCreditReport({} as ICreditReport);
 
-    expect(storeMock.dispatch).toHaveBeenCalled();
+    expect(creditReportMock.updateCreditReportStateAsync).toHaveBeenCalled();
   });
 
   it('should return false if report or updated on are null when isFresh is called', async () => {
