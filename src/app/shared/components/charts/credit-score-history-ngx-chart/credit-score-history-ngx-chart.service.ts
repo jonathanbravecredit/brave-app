@@ -21,7 +21,7 @@ export class CreditScoreHistoryNgxChartService {
       trendingData?.ProductAttributes.ProductTrendingAttribute instanceof Array
     ) {
       scores = trendingData?.ProductAttributes?.ProductTrendingAttribute?.filter(
-        (a: IProductTrendingAttribute) => a.AttributeName.indexOf('TUCVantageScore3V7') >= 0,
+        (a: IProductTrendingAttribute) => a.AttributeName?.indexOf('TUCVantageScore3V7') >= 0,
       )[0]?.ProductAttributeData?.ProductTrendingData;
     }
 
