@@ -3,9 +3,17 @@
   <brave-circle-checktext-progressbar [steps]="steps"></brave-circle-checktext-progressbar>
 </div>
 
-<brave-future-score-card [dashDelta]="dashDelta" [dashScore]="dashScore" [futureScore]="futureScore" [enrolledScore]="enrolledScore"></brave-future-score-card>
+<brave-future-score-card
+  [dashDelta]="dashDelta"
+  [dashScore]="dashScore"
+  [futureScore]="futureScore"
+  [enrolledScore]="enrolledScore ? +enrolledScore : 0"
+></brave-future-score-card>
 
-<p style="font-size: 10px;" class="text-center mt-2">Results are not guaranteed. Estimates are based on behaviors of similar users. Healthy credit habits like making on-time payments are critical to improving your credit profile.</p>
+<p style="font-size: 10px" class="text-center mt-2">
+  Results are not guaranteed. Estimates are based on behaviors of similar users. Healthy credit habits like making
+  on-time payments are critical to improving your credit profile.
+</p>
 
 <div *ngFor="let initiativeTask of initiativeTasks">
   <div>
