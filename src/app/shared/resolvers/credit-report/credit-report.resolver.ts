@@ -1,5 +1,4 @@
 const dayjs = require('dayjs');
-import * as CreditReportActions from '@store/credit-report/credit-report.actions';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Store } from '@ngxs/store';
@@ -32,19 +31,7 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
   }
 
   async setCreditReport(creditReport: ICreditReport): Promise<void> {
-    const { report, modifiedOn } = creditReport;
-    const payload = { report, updatedOn: new Date().toISOString(), modifiedOn };
-    await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new CreditReportActions.Add(payload))
-        .toPromise()
-        .then((res) => {
-          resolve(res); //the report
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    await this.creditReportV2.updateCreditReportStateAsync(creditReport);
   }
 
   async isFresh(state: CreditReportStateModel): Promise<boolean> {

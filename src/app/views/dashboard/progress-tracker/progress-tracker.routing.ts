@@ -4,6 +4,7 @@ import { AuthGuard } from '@shared/guards/auth.guard';
 import { ActiveGuard } from '@shared/guards/active.guard';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { ProgressTrackerParentComponent } from '@views/dashboard/progress-tracker/progress-tracker.component';
+import { ProgressTrackerComponent } from '@views/dashboard/progress-tracker/progress-tracker/progress-tracker.component';
 
 const progresstracker = routes.root.dashboard.progresstracker;
 
@@ -20,7 +21,7 @@ const ProgressTrackerRoutes: Routes = [
       },
       {
         path: `${progresstracker.overview.segment}`,
-        component: ProgressTrackerParentComponent,
+        component: ProgressTrackerComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
     ],
