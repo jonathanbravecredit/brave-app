@@ -19,13 +19,13 @@
       </div>
       <ng-container *ngIf="featureFlags.disputes$ | async">
         <div *ngIf="!disableDispute" class="flex justify-center mb-2">
-          <brave-filled-spinning-button (click)="showModal = !showModal; this.disputeClicked()"
+          <brave-filled-spinning-button
+            braveDisputeButton
+            [type]="'tradeline'"
+            [action]="'acknowledging'"
+            [tradeline]="config.tradeline"
             >Dispute in a few clicks</brave-filled-spinning-button
           >
-          <brave-onboarding-dispute
-            [showModal]="showModal && !acknowledged"
-            (confirmation)="actionForDispute($event)"
-          ></brave-onboarding-dispute>
         </div>
       </ng-container>
     </ng-container>

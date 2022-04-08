@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IOnboardingEvent } from '@shared/components/modals/onboarding-dispute/onboarding-dispute.component';
 import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
@@ -28,14 +27,6 @@ export class TradelineDetailsComponent {
    */
   @Input() subscriber: ISubscriber | undefined | null = {} as ISubscriber;
   /**
-   * Flag to indicate they need to still acknowledge dispute terms
-   */
-  @Input() acknowledged: boolean = false; // TODO replace with a config value
-  /**
-   * Event emitter when dispute button clicked on tradeline detail
-   */
-  @Output() disputeClick: EventEmitter<void> = new EventEmitter();
-  /**
    * Flag to disable the dispute capabilities of component
    */
   @Input() disableDispute: boolean = false;
@@ -43,25 +34,8 @@ export class TradelineDetailsComponent {
    * Flag to start with the payment history open and not show the show payment button
    */
   @Input() overrideOpen: boolean = false;
-  /**
-   * Toggle to open dispute disclaimer modal
-   */
-  showModal: boolean = false;
+
   public tu = TransunionUtil;
 
   constructor(public featureFlags: FeatureFlagsService) {}
-
-  disputeClicked() {
-    // when clicked and do not need acknowledgment
-    if (this.acknowledged) {
-      this.disputeClick.emit();
-    }
-  }
-
-  actionForDispute(e: IOnboardingEvent) {
-    if (e.isConfirmed) {
-      this.showModal = false;
-      this.disputeClick.emit();
-    }
-  }
 }

@@ -1,6 +1,10 @@
 <div *ngIf="viewDisplay === 'not-sent'">
   <p class="text-lg mt-4 mb-4">New Dispute</p>
-  <brave-dispute-header class="mt-4" [publicdispute]="dispute" [showDisputeButton]="false"></brave-dispute-header>
+  <brave-account-summary-with-details
+    class="mt-4"
+    [showDisputeButton]="false"
+    [publicDetailsConfig]="dispute"
+  ></brave-account-summary-with-details>
   <brave-dispute-base
     [initialStepId]="'select'"
     (disputeProcessResult)="processResult.emit({ result: $event, publicItem: dispute?.publicPartition })"

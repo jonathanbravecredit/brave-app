@@ -100,6 +100,7 @@ export class SignupComponent implements OnDestroy {
   handleSignupError(viewState: SignupState, message: string): void {
     this.viewState = viewState;
     this.message = message || `Invalid sign up credentials`;
+    this.interstitial.fetching$.next(false)
   }
 
   handleAnalytics(sub: string): void {

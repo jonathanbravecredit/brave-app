@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+import { CreditReportMetric, CreditReportMetrics, MergeReport } from '@bravecredit/brave-sdk';
 import { IMergeReport } from '@shared/interfaces';
 import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
 import { Initiative } from '@shared/interfaces/progress-tracker.interface';
@@ -21,6 +22,7 @@ export interface IDashboardResolver {
   trends: IGetTrendingData | null;
   referral: IReferral | null;
   progressTrackerData: Initiative | null;
+  metrics: CreditReportMetric<any, any>[] | null;
 }
 
 @Injectable({
@@ -42,28 +44,44 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
     this.interstitial.openInterstitial();
 
     const report = await this.creditReportResolver.resolve();
+    const metrics = new CreditReportMetrics(report as MergeReport).calculateMetrics();
+
     // keep this ordering
-    return forkJoin([
-      this.initResolver.resolve(),
-      this.snapshotsResolver.resolve(),
-      this.scoreTrendsResolver.resolve(),
-      this.referralResolver.resolve(),
-      this.progressTrackerResolver.resolve(),
-    ])
-      .pipe(
-        map(([init, snapshots, trends, referrals, progressTrackerData]) => {
-          return {
-            report: report, // snapshots depends on this so wait
-            snapshots: snapshots,
-            trends: trends,
-            referral: referrals.referral,
-            progressTrackerData: progressTrackerData,
-          };
-        }),
-        finalize(() => {
-          this.interstitial.closeInterstitial();
-        }),
-      )
-      .toPromise();
+    try {
+      const res = await forkJoin([
+        this.initResolver.resolve(),
+        this.snapshotsResolver.resolve(),
+        this.scoreTrendsResolver.resolve(),
+        this.referralResolver.resolve(),
+        this.progressTrackerResolver.resolve(),
+      ])
+        .pipe(
+          map(([init, snapshots, trends, referrals, progressTrackerData]) => {
+            return {
+              report: report, // snapshots depends on this so wait
+              snapshots: snapshots,
+              trends: trends,
+              referral: referrals.referral,
+              progressTrackerData: progressTrackerData,
+              metrics: metrics,
+            };
+          }),
+          finalize(() => {
+            this.interstitial.closeInterstitial();
+          }),
+        )
+        .toPromise();
+      return Promise.resolve(res);
+    } catch (err) {
+      console.error(err);
+      return Promise.resolve({
+        report: null,
+        snapshots: null,
+        trends: null,
+        referral: null,
+        progressTrackerData: null,
+        metrics: null,
+      });
+    }
   }
 }

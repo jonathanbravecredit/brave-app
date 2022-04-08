@@ -5,8 +5,8 @@ import { ActiveGuard } from '@shared/guards/active.guard';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { NegativeAccountComponent } from '@views/dashboard/negative-account/negative-account.component';
 import { NegativeAccountInitialComponent } from '@views/dashboard/negative-account/negative-account-initial/negative-account-initial.component';
-const dashboard = routes.root.dashboard;
-const snapshot = routes.root.dashboard.report.snapshot;
+
+const negativeaccounts = routes.root.dashboard.negativeaccounts;
 
 const NegativeAccountRoutes: Routes = [
   {
@@ -15,7 +15,12 @@ const NegativeAccountRoutes: Routes = [
     canActivate: [ActiveGuard, AuthGuard],
     children: [
       {
-        path: `${dashboard.report.segment}/${snapshot.segment}/${snapshot.negative.segment}`,
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full',
+      },
+      {
+        path: `${negativeaccounts.overview.segment}`,
         component: NegativeAccountInitialComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },

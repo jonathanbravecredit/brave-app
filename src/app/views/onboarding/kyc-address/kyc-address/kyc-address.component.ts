@@ -20,6 +20,13 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
   stepID = 1;
   hasError: boolean = false;
   listener: any;
+  address: Record<string, any> = {
+    addressOne: true,
+    addressTwo: true,
+    city: true,
+    state: true,
+    zip: true,
+  };
 
   constructor(private router: Router, private kycService: KycService, private analytics: AnalyticsService) {
     super();
@@ -39,13 +46,13 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
     this.router.navigate([routes.root.onboarding.name.full]);
   }
 
-  goToNext(form: FormGroup): void {
+  async goToNext(form: FormGroup): Promise<void> {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingAddress);
     // const clean = TransunionUtil.scrubbers.{ ...this.formatAttributes(form, address) };
     if (form.valid) {
       let attrs = {
         address: {
-          ...this.formatAttributes(form, address),
+          ...this.formatAttributes(form, this.address),
         },
       } as UserAttributesInput;
       attrs.address = {
@@ -56,10 +63,10 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
         zip: attrs.address?.zip || '',
       };
 
-      this.kycService.updateUserAttributesAsync(attrs).then((appData) => {
-        this.kycService.completeStep(this.stepID);
-        this.router.navigate([routes.root.onboarding.identity.full]);
-      });
+      await this.kycService.updateUserAttributesAsync(attrs)
+
+      this.kycService.completeStep(this.stepID);
+      this.router.navigate([routes.root.onboarding.identity.full]);
     }
   }
 
@@ -67,11 +74,3 @@ export class KycAddressComponent extends KycBaseComponent implements OnInit, Aft
     this.hasError = true;
   }
 }
-
-const address: Record<string, any> = {
-  addressOne: true,
-  addressTwo: true,
-  city: true,
-  state: true,
-  zip: true,
-};

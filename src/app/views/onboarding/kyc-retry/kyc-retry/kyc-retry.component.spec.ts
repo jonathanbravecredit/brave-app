@@ -26,4 +26,10 @@ describe('KycRetryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run resetOnboarding on init', () => {
+    component.ngOnInit();
+
+    expect(stateServiceMock.resetOnboarding).toBeTruthy();
+  });
 });
