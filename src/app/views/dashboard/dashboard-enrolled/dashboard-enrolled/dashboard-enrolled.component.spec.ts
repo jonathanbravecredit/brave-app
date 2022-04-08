@@ -1,210 +1,176 @@
-// import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-// import { ActivatedRoute, Data, Router } from '@angular/router';
-// import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
-// import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-// import { CreditMixService } from '@views/dashboard/snapshots/credit-mix/credit-mix-service/credit-mix-service.service';
-// import { BehaviorSubject, of } from 'rxjs';
-// import { IMergeReport } from '@shared/interfaces';
-// import { DashboardEnrolledComponent } from './dashboard-enrolled.component';
-// import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-// import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
-// import {
-//   IGetTrendingData,
-//   IProductAttributes,
-//   IProductTrendingData,
-// } from '@shared/interfaces/get-trending-data.interface';
-// import { ICreditMixTLSummary } from '@views/dashboard/snapshots/credit-mix/interfaces/credit-mix-calc-obj.interface';
+// private store: Store,
+// private router: Router,
+// private creditMixService: CreditMixService,
+// private creditUtilizationService: CreditUtilizationService,
+// public dashboardService: DashboardService,
+// public progressTracker: ProgressTrackerService,
 
-// describe('DashboardEnrolledComponent', () => {
-//   let component: DashboardEnrolledComponent;
-//   let fixture: ComponentFixture<DashboardEnrolledComponent>;
-//   let routerMock: any;
-//   let routeMock: any;
-//   class RouteMock {
-//     data = of({
-//       dashboard: {
-//         report: new MergeReportClass(),
-//         snapshots: new DashboardStateModel(),
-//         scores: new ScoresClass(),
-//         trends: new TrendsClass(),
-//       },
-//     });
-//   }
-//   let dashboardServiceMock: any;
-//   let creditMixServiceMock: any;
-//   let creditUtilizationServiceMock: any;
+import { IMergeReport } from '@bravecredit/brave-sdk';
+import { Initiative } from '@shared/interfaces/progress-tracker.interface';
+import { CreditReportStateModel } from '@store/credit-report';
+import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 
-//   class MergeReportClass implements IMergeReport {
-//     TrueLinkCreditReportType = {};
-//   }
+const setup = () => {
+  const storeMock = jasmine.createSpyObj('Store', ['select', 'selectSnapshot']);
+  const routerMock = jasmine.createSpyObj('Router', ['navigate']);
+  const creditMixServiceMock = jasmine.createSpyObj('CreditMixService', [
+    'getTradelineSummary',
+    'getRecommendations',
+    'mapCreditMixSnapshotStatus',
+    'getRecommendations',
+  ]);
+  const creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [
+    'getCreditUtilizationSnapshotStatus',
+  ]);
+  const dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['getAdData', 'syncDashboardStateToDB'], {
+    updatedOn$: new BehaviorSubject<string | null>(null),
+    dashReport$: new BehaviorSubject<IMergeReport | null>(null),
+    dashScoreSuppressed$: new BehaviorSubject<boolean>(false),
+    progressTrackerData$: new BehaviorSubject<Initiative | null>(null),
+  });
+  const progressTrackerMock = jasmine.createSpyObj('ProgressTrackerService', ['findFutureScore']);
 
-//   class ScoresClass implements ICreditScoreTracking {
-//     userId = '0';
-//     bureauId = '0';
-//     priorScore = null;
-//     currentScore = null;
-//     delta = null;
-//     createdOn = null;
-//     modifiedOn = null;
-//   }
+  const component = new DashboardEnrolledComponent(
+    storeMock,
+    routerMock,
+    creditMixServiceMock,
+    creditUtilizationServiceMock,
+    dashboardServiceMock,
+    progressTrackerMock,
+  );
 
-//   class TrendsClass implements IGetTrendingData {
-//     ProductAttributes = {} as IProductAttributes;
-//     AccountName = '';
-//     ErrorResponse = {
-//       nil: false,
-//     };
-//     RequestKey = '';
-//     ResponseType = '';
-//     ClientKey = '';
-//     PartnerAttributes = {
-//       nil: false,
-//     };
-//     ProductDisplayToken = '';
-//   }
+  return {
+    component,
+    storeMock,
+    routerMock,
+    creditMixServiceMock,
+    creditUtilizationServiceMock,
+    dashboardServiceMock,
+    progressTrackerMock,
+  };
+};
 
-//   class TradelineSummaryClass implements ICreditMixTLSummary {
-//     hasCreditCards = true;
-//     hasStudentLoans = true;
-//     hasAutoLoans = true;
-//     hasMortgages = true;
-//     hasOpenCreditCards = true;
-//     hasOpenStudentLoans = true;
-//     hasOpenAutoLoans = true;
-//     hasOpenMortgages = true;
-//     totalLineAmount = 0;
-//     creditCardAmount = 0;
-//     amountOfOpenCreditCards = 0;
-//     studentLoanAmount = 0;
-//     autoLoanAmount = 0;
-//     mortgageAmount = 0;
-//     amountOfClosed = 0;
-//   }
+describe('DashboardEnrolledComponent', () => {
+  const {
+    component,
+    storeMock,
+    routerMock,
+    creditMixServiceMock,
+    creditUtilizationServiceMock,
+    dashboardServiceMock,
+    progressTrackerMock,
+  } = setup();
 
-//   beforeEach(async () => {
-//     routerMock = jasmine.createSpyObj('Router', ['navigate']);
-//     dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['syncDashboardStateToDB'], {
-//       dashReport$: new BehaviorSubject<IMergeReport>({} as IMergeReport),
-//       dashSnapshots$: new BehaviorSubject<DashboardStateModel>({} as DashboardStateModel),
-//       dashTrends$: new BehaviorSubject<IGetTrendingData>({} as IGetTrendingData),
-//       dashScores$: new BehaviorSubject<IProductTrendingData[]>([] as IProductTrendingData[]),
-//     });
-//     creditMixServiceMock = jasmine.createSpyObj('CreditMixService', [
-//       'getTradelineSummary',
-//       'getRecommendations',
-//       'mapCreditMixSnapshotStatus',
-//     ]);
-//     creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [
-//       'getCreditUtilizationSnapshotStatus',
-//     ]);
-//     creditUtilizationServiceMock.getCreditUtilizationSnapshotStatus.and.returnValue({ status: 'safe', perc: 0 });
-//     routeMock = {
-//       data: {
-//         subscribe: (fn: (value: Data) => void) =>
-//           fn({
-//             dashboard: {
-//               report: new MergeReportClass(),
-//               snapshots: new DashboardStateModel(),
-//               scores: new ScoresClass(),
-//               trends: new TrendsClass(),
-//             },
-//           }),
-//       },
-//     };
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-//     await TestBed.configureTestingModule({
-//       declarations: [DashboardEnrolledComponent],
-//       providers: [
-//         { provide: Router, useValue: routerMock },
-//         { provide: ActivatedRoute, useValue: routeMock },
-//         { provide: DashboardService, useValue: dashboardServiceMock },
-//         { provide: CreditMixService, useValue: creditMixServiceMock },
-//         { provide: CreditUtilizationService, useValue: creditUtilizationServiceMock },
-//       ],
-//     }).compileComponents();
-//   });
+  it('should unsubscribe from routeSub$ on destroy', () => {
+    component.routeSub$ = new Subscription();
+    spyOn(component.routeSub$, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.routeSub$.unsubscribe).toHaveBeenCalled();
+  });
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(DashboardEnrolledComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  it('should unsubscribe from reportSub$ on destroy', () => {
+    component.reportSub$ = new Subscription();
+    spyOn(component.reportSub$, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.reportSub$.unsubscribe).toHaveBeenCalled();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
+  it('should unsubscribe from initiative$ on destroy', () => {
+    component.initiative$ = new Subscription();
+    spyOn(component.initiative$, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.initiative$.unsubscribe).toHaveBeenCalled();
+  });
 
-//   describe('Method calls', () => {
-//     it('should navigate to the negative items page when OnNegativeItemsClicks runs', () => {
-//       component.onNegativeItemsClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  it('should set futureScore to 0 when refreshFutureScore is run and findFutureScore returns falsky and enrolledScore is falsy', () => {
+    progressTrackerMock.findFutureScore.and.returnValue(undefined);
+    component.enrolledScore = undefined;
+    component.refreshFutureScore();
+    expect(component.futureScore).toEqual(0);
+  });
 
-//     it('should navigate to the forbearance items page when onForbearanceItemsClicked runs', () => {
-//       component.onForbearanceItemsClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  it('should set futureScore to 50 when refreshFutureScore is run and findFutureScore returns 25 and enrolledScore is 25', () => {
+    progressTrackerMock.findFutureScore.and.returnValue(25);
+    component.enrolledScore = '25';
+    component.refreshFutureScore();
+    expect(component.futureScore).toEqual(50);
+  });
 
-//     it('should navigate to the data breach page when onDatabreachItemsClicked runs', () => {
-//       component.onDatabreachItemsClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  // ----------------------------------------------------------------------------------
 
-//     it('should navigate to the full credit report page when onFullReportClicked runs', () => {
-//       component.onFullReportClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  it('should run subscribe on reportSub$ in subscribeToReportData', () => {
+    component.report$ = new Observable<CreditReportStateModel>();
+    spyOn(component.report$, 'subscribe');
+    component.subscribeToReportData();
+    expect(component.report$.subscribe).toHaveBeenCalled();
+  });
 
-//     it('should navigate to the dispute page when onDisputesClicked runs', () => {
-//       component.onDisputesClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  // ----------------------------------------------------------------------------------
 
-//     it('should navigate to the credit utilization page when onCreditUtilizationClicked runs', () => {
-//       component.onCreditUtilizationClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  it('should run progressTrackerData$.next on setProgressTrackerDataInDashboardService if intiative', () => {
+    component.initiative = {} as Initiative;
+    spyOn(dashboardServiceMock.progressTrackerData$, 'next');
+    component.setProgressTrackerDataInDashboardService();
+    expect(dashboardServiceMock.progressTrackerData$.next).toHaveBeenCalled();
+  });
 
-//     it('should navigate to the credit mix page when onCreditMixClicked runs', () => {
-//       component.onCreditMixClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
+  it('should run getAdData on setAdData', () => {
+    component.setAdData();
+    expect(dashboardServiceMock.getAdData).toHaveBeenCalled();
+  });
 
-//     it('should navigate to the referral dashboard page when onReferralsClicked runs', () => {
-//       component.onReferralsClicked();
-//       expect(routerMock.navigate).toHaveBeenCalled();
-//     });
-//   });
+  it('should run syncDashboardStateToDB on onNegativeItemsClicked', () => {
+    component.onNegativeItemsClicked();
+    expect(dashboardServiceMock.syncDashboardStateToDB).toHaveBeenCalled();
+  });
 
-//   describe('ActivatedRoute constructor', () => {
-//     it('Should assign report in constructor', () => {
-//       const test = component.report instanceof MergeReportClass;
-//       expect(test).toBeTrue();
-//     });
+  it('should run navigate on onNegativeItemsClicked', () => {
+    component.onNegativeItemsClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 
-//     it('Should assign snapshots in constructor', () => {
-//       let test = component.snapshots instanceof DashboardStateModel;
-//       expect(test).toBeTrue();
-//     });
+  it('should run syncDashboardStateToDB on onDatabreachItemsClicked', () => {
+    component.onDatabreachItemsClicked();
+    expect(dashboardServiceMock.syncDashboardStateToDB).toHaveBeenCalled();
+  });
 
-//     it('Should assign trends in constructor', () => {
-//       let test = component.trends instanceof TrendsClass;
-//       expect(test).toBeTrue();
-//     });
+  it('should run navigate on onDatabreachItemsClicked', () => {
+    component.onDatabreachItemsClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 
-//     xit('Should assign creditMix in constructor', () => {
-//       let test = component.creditMix instanceof TradelineSummaryClass;
-//       expect(test).toBeTrue();
-//     });
+  it('should run navigate on onFullReportClicked', () => {
+    component.onFullReportClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 
-//     xit('Should assign creditMixStatus in constructor', () => {
-//       let test = component.creditMixStatus;
-//       expect(test).toBeTrue();
-//     });
+  it('should run navigate on onDisputesClicked', () => {
+    component.onDisputesClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
 
-//     xit('Should assign rating in constructor', () => {
-//       let test = component.rating;
-//       expect(test).toBeTrue();
-//     });
-//   });
-// });
+  it('should run navigate on onCreditUtilizationClicked', () => {
+    component.onCreditUtilizationClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onCreditMixClicked', () => {
+    component.onCreditMixClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onReferralsClicked', () => {
+    component.onReferralsClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+
+  it('should run navigate on onProgressTrackerClicked', () => {
+    component.onProgressTrackerClicked();
+    expect(routerMock.navigate).toHaveBeenCalled();
+  });
+});

@@ -8,9 +8,8 @@ describe('DataBreachShareComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataBreachShareComponent ]
-    })
-    .compileComponents();
+      declarations: [DataBreachShareComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
