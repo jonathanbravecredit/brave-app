@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 
 import { ReferralDashboardView } from './referral-dashboard.view';
 
@@ -35,4 +35,13 @@ describe('ReferralDashboardView', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run isActiveSub$?.unsubscribe on destroy', () => {
+    component.isActiveSub$  = new Subscription()
+    spyOn(component.isActiveSub$, 'unsubscribe')
+    component.ngOnDestroy()
+    expect(component.isActiveSub$.unsubscribe).toHaveBeenCalled()
+  })
+
+  
 });

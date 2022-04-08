@@ -45,18 +45,18 @@ export class CreditMixCardComponent implements OnInit {
       this.creditUtilization?.config?.accountTypeSymbol?.toLowerCase() === "r";
 
     this.open =
-      this.creditUtilization?.openClosed?.toLowerCase() === "o" ? true : false;
+      this.creditUtilization?.openClosed?.toLowerCase() === "o";
 
     if (this.creditUtilization) {
       if (this.isCreditCard) {
         this.percetangeUtilization = this.calculatePercentageUtilization(
-          this.creditUtilization.currentBalance,
-          this.creditUtilization.creditLimit
+          this.creditUtilization?.currentBalance,
+          this.creditUtilization?.creditLimit
         );
       } else {
         this.percetangeUtilization = this.calculatePercentageUtilization(
-          this.creditUtilization.currentBalance,
-          this.creditUtilization.config.highestBalance
+          this.creditUtilization?.currentBalance,
+          this.creditUtilization?.config?.highestBalance
         );
       }
     }

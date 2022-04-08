@@ -53,7 +53,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   public showDisclaimer: boolean = false;
   public AnalyticClickEvents = AnalyticClickEvents;
   public dashboardData$ = new BehaviorSubject<IDashboardData | null>(null);
-  private dashboardDataSub$: Subscription | undefined;
+  public dashboardDataSub$: Subscription | undefined;
 
   constructor(private dashboardService: DashboardService, public featureflags: FeatureFlagsService) {
     this.dashboardDataSub$ = combineLatest([

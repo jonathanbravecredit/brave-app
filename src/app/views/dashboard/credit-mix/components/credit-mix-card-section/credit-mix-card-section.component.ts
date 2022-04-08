@@ -22,8 +22,4 @@ export class CreditMixCardSectionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  learnMoreButtonClick() {
-    // TODO Route to learnMoreLink
-  }
 }

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DOMHelper } from '@testing/dom-helper';
+import { IReferral } from '@shared/interfaces/referrals.interface';
+import dayjs from 'dayjs';
 
 import { ReferralEarningsComponent } from './referral-earnings.component';
 
 describe('ReferralEarningsComponent', () => {
   let component: ReferralEarningsComponent;
   let fixture: ComponentFixture<ReferralEarningsComponent>;
-  let dh: DOMHelper<ReferralEarningsComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ReferralEarningsComponent],
@@ -17,11 +17,9 @@ describe('ReferralEarningsComponent', () => {
     fixture = TestBed.createComponent(ReferralEarningsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    dh = new DOMHelper(fixture);
   });
 
   beforeEach(() => {
-
     fixture.detectChanges();
   });
 
@@ -29,9 +27,11 @@ describe('ReferralEarningsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have the correct dollar amount', () => {
-    const result = dh.countText('h1', '$10')
+  it('should set earnings to 50 if campaignActiveEarned is 30 and campaignActiveBonus is 20', () => {
+    component.referral = { campaignActiveBonus: 20, campaignActiveEarned: 30 } as IReferral;
+    component.ngOnInit()
+    expect(component.earnings).toEqual(50)
+  });
 
-    expect(result).toEqual(0) //TODO countText not working properly
-  })
+  
 });

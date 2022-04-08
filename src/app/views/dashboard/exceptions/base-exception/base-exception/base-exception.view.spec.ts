@@ -15,7 +15,7 @@ describe("BaseExceptionView", () => {
   }
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj("Router", [""]);
+    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
     await TestBed.configureTestingModule({
       declarations: [BaseExceptionView],
       providers: [
@@ -34,4 +34,9 @@ describe("BaseExceptionView", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it('should run navigate on onActionButtonClicked', () => {
+    component.onActionButtonClicked('')
+    expect(routerMock.navigate).toHaveBeenCalled()
+  })
 });

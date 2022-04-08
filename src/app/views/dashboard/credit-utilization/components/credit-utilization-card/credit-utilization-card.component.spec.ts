@@ -1,48 +1,40 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccountStatusPipe } from '@shared/pipes/accountStatus/account-status.pipe';
+import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
-import { ICreditUtilization } from '@views/dashboard/credit-utilization/components/credit-utilization-card/interfaces';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
+import { CreditUtilizationCardComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-card/credit-utilization-card.component';
+import { Subject } from 'rxjs';
 
-import { CreditMixCardComponent } from './credit-mix-card.component';
+const setup = () => {
+  const Mock = jasmine.createSpyObj('', ['']);
 
-describe('CreditMixCardComponent', () => {
-  let component: CreditMixCardComponent;
-  let fixture: ComponentFixture<CreditMixCardComponent>;
+  const component = new CreditUtilizationCardComponent();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [CreditMixCardComponent, AccountStatusPipe],
-    }).compileComponents();
-  });
+  return { component, Mock };
+};
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CreditMixCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+describe('CreditUtilizationCardComponent', () => {
+  const { component } = setup();
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set isCreditCard to true if accountTypeSymbol is R, on init', () => {
-    component.creditUtilization = { config: { accountTypeSymbol: 'R' } as ITradelineDetailsConfig };
-    component.ngOnInit();
-    expect(component.isCreditCard).toBeTrue();
-  });
-
-  it('should set open to true if openClosed is o, on init', () => {
-    component.creditUtilization = { openClosed: 'o' } as ICreditUtilization;
-    component.ngOnInit();
-    expect(component.open).toBeTrue();
-  });
-
-  it('should run calculatePercentageUtilization if creditUtilization is truthy on init', () => {
+  it('should run calculatePercentageUtilization on init', () => {
     spyOn(component, 'calculatePercentageUtilization');
-    component.creditUtilization = {} as ICreditUtilization;
     component.ngOnInit();
     expect(component.calculatePercentageUtilization).toHaveBeenCalled();
+  });
+
+  it('should run calculateCreditStatus on init', () => {
+    spyOn(component, 'calculateCreditStatus');
+    component.ngOnInit();
+    expect(component.calculateCreditStatus).toHaveBeenCalled();
+  });
+
+  it('should run viewDetail.open$.asObservable on AfterViewInit if viewDetail is truthy', () => {
+    component.viewDetail = {open$: new Subject<boolean>()} as ViewdetailButtonComponent;
+    let spy = spyOn(component.viewDetail.open$, 'asObservable');
+    component.ngAfterViewInit();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should run calculateCreditStatus on init', () => {
@@ -56,10 +48,16 @@ describe('CreditMixCardComponent', () => {
     expect(res).toBeUndefined();
   });
 
-  it('should return TransunionUtil.bcMissing on calculatePercentageUtilization if open is falsy', () => {
+  it('should return TransunionUtil.bcMissing on calculatePercentageUtilization if open is falsy and card limit is 0', () => {
     component.open = false;
-    let res = component.calculatePercentageUtilization('', '');
+    let res = component.calculatePercentageUtilization('', 0);
     expect(res).toEqual(TransunionUtil.bcMissing);
+  });
+
+  it('should return <1 on calculatePercentageUtilization if currentBalence 0.01 and creditLimit is 2', () => {
+    component.open = true;
+    let res = component.calculatePercentageUtilization(0.01, 2);
+    expect(res).toEqual('<1');
   });
 
   it('should return 200 on calculatePercentageUtilization if currentBalence 4 and creditLimit is 2', () => {
@@ -78,6 +76,12 @@ describe('CreditMixCardComponent', () => {
     component.open = true;
     let res = component.calculateCreditStatus(undefined);
     expect(res).toEqual("closed");
+  });
+
+  it('should return "excellent" on calculateCreditStatus if argument is <1', () => {
+    component.open = true;
+    let res = component.calculateCreditStatus('<1');
+    expect(res).toEqual("excellent");
   });
 
   it('should return "excellent" on calculateCreditStatus if argument is 8', () => {

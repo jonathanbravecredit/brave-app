@@ -22,4 +22,10 @@ describe('OptionDeactivateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set showWarning to false on onWarningCloseClick', () => {
+    component.showWarning = true
+    component.onWarningCloseClick()
+    expect(component.showWarning).toBeFalse()
+  })
 });

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { deactivatedContent } from '@views/authentication/deactivated/content';
 
 @Component({
@@ -8,7 +7,7 @@ import { deactivatedContent } from '@views/authentication/deactivated/content';
 })
 export class DeactivatedComponent implements OnInit {
   content = deactivatedContent;
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {
     setTimeout(() => {

@@ -3,12 +3,12 @@ import { AuthService } from '@shared/services/auth/auth.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Router } from '@angular/router';
-import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { Auth } from 'aws-amplify';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { async, Subscription } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { id } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'brave-signin-redirect',
@@ -61,16 +61,16 @@ export class SigninRedirectComponent implements OnDestroy {
         this.cleanUp();
       }
     } catch (err) {
-      let retries: string | null | number = window.sessionStorage.getItem('braveOAuthRetries');
+      let retries: string | null = window.sessionStorage.getItem('braveOAuthRetries');
       if (retries == null) {
-        retries = 3;
+        retries = '3';
         window.sessionStorage.setItem('braveOAuthRetries', `${retries}`);
       } else {
-        retries = +retries - 1;
+        retries = (+retries - 1).toString();
         window.sessionStorage.setItem('braveOAuthRetries', `${retries}`);
       }
 
-      if (retries > 0) {
+      if (+retries > 0) {
         const provider = window.sessionStorage.getItem('braveOAuthProvider') as CognitoHostedUIIdentityProvider;
         if (provider) {
           await this.auth.socialSignIn(provider);

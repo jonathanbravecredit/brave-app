@@ -9,43 +9,6 @@ describe('ReferralPureView', () => {
   let fixture: ComponentFixture<ReferralDashboardPureView>;
   let dh: DOMHelper<ReferralDashboardPureView>;
 
-  // const referralMock: IReferral = {
-  //   id = '',
-  //   referralCode = '',
-
-  //   referredByCode = '',
-  //   referredById = '',
-  //   referredByEmail = '',
-
-  //   eligible = 1,
-  //   suspended = false,
-  //   enrolled = false,
-
-  //   totalReferred = 0,
-  //   totalEarned = 0,
-  //   totalBonus = 0,
-  //   totalAddOn = 0,
-
-  //   campaignActive = '',
-  //   campaignActiveReferred = 0,
-  //   campaignActiveEarned = 0,
-  //   campaignActivePaid = 0,
-  //   campaignActiveAddOn = 0,
-  //   campaignActiveBonus = 0,
-
-  //   campaignPrior = '',
-  //   campaignPriorReferred = 0,
-  //   campaignPriorEarned = 0,
-  //   campaignPriorPaid = 0,
-  //   campaignPriorAddOn = 0,
-  //   campaignPriorBonus = 0,
-
-  //   nextPaymentDate = '',
-  //   notified = false,
-  //   createdOn = '',
-  //   modifiedOn = '',
-  // };
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ReferralDashboardPureView],
@@ -70,19 +33,15 @@ describe('ReferralPureView', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('check that all presentational changes are correct', () => {
-    it('visual changes based on api input', () => {
-      let divAmount = dh.count('div');
+  it('should set isSuspended to false if referral.suspended is falsy on init', () => {
+    component.referral = undefined
+    component.ngOnInit()
+    expect(component.isSuspended).toBeFalse()
+  })
 
-      expect(divAmount).toEqual(2);
-    });
-  });
-
-  // describe('confirm that all component are being passed correct data', () => {
-  //   it('should have metrics in referral amount link', () => {
-  //     let result = dh.hasPropValue('brave-referral-amount-link', 'referral', referralMock);
-
-  //     expect(result).toEqual(true);
-  //   });
-  // });
+  it('should set isSuspended to true if referral.suspended os true on init', () => {
+    component.referral = { suspended: true } as IReferral
+    component.ngOnInit()
+    expect(component.isSuspended).toBeTrue()
+  })
 });
