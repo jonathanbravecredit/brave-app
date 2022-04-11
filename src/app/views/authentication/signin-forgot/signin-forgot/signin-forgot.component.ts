@@ -68,7 +68,7 @@ export class SigninForgotComponent {
   constructor(private auth: AuthService, private router: Router, private interstitial: InterstitialService) {}
 
   onSubmitEmailClick(form: FormGroup): void {
-    const email = form.value.email.input;
+    const email = form.value.email.input.trim();
     this.interstitial.fetching$.next(true);
     this.auth
       .forgotPassword(email)
