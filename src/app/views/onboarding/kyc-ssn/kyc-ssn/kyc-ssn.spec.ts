@@ -87,7 +87,7 @@ describe('KycSsnComponent', () => {
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should set snnError to true if lastFour length less than 4', () => {
+  it('should set snnError to true if lastfour length less than 4', () => {
     component.handleError({ lastfour: { value: { input: '123' } } as AbstractControl });
 
     expect(component.ssnError).toEqual(true);
