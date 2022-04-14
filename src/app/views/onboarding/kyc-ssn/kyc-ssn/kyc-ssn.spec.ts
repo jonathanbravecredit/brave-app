@@ -126,6 +126,7 @@ describe('KycSsnComponent', () => {
   });
 
   it('should run updateUserAttributesAsync when goToNext is called and form is valid', () => {
+    spyOn(component, 'formatAttributes').and.returnValue({ lastfour: '1234' });
     component.goToNext({ valid: true, value: [] } as FormGroup);
 
     expect(kycServiceMock.updateUserAttributesAsync).toHaveBeenCalled();
@@ -133,7 +134,7 @@ describe('KycSsnComponent', () => {
 
   it('should run getIndicativeEnrichmentResults when goToNext is called and form is valid', fakeAsync(() => {
     kycServiceMock.updateUserAttributesAsync.and.returnValue({});
-
+    spyOn(component, 'formatAttributes').and.returnValue({ lastfour: '1234' });
     component.goToNext({ valid: true, value: [] } as FormGroup);
 
     tick();
@@ -155,7 +156,7 @@ describe('KycSsnComponent', () => {
 
   it('should run processIndicativeEnrichmentResponse when goToNext is called, form is valid and getIndicativeEnrichmentResults reponse is unsuccessful', fakeAsync(() => {
     kycServiceMock.getIndicativeEnrichmentResults.and.returnValue({ success: true, data: {} });
-
+    spyOn(component, 'formatAttributes').and.returnValue({ lastfour: '1234' });
     component.goToNext({ valid: true, value: [] } as FormGroup);
 
     tick();
@@ -179,9 +180,8 @@ describe('KycSsnComponent', () => {
 
   it('should run updateUserAttributesAsync when goToNext is called, form is valid, getIndicativeEnrichmentResults reponse is successful, and full is truthy', fakeAsync(() => {
     kycServiceMock.getIndicativeEnrichmentResults.and.returnValue({ success: true, data: {} });
-
     kycServiceMock.processIndicativeEnrichmentResponse.and.returnValue({ SSN: '1234' });
-
+    spyOn(component, 'formatAttributes').and.returnValue({ lastfour: '1234' });
     component.goToNext({ valid: true, value: [] } as FormGroup);
 
     tick();
@@ -191,9 +191,8 @@ describe('KycSsnComponent', () => {
 
   it('should run completeStep when goToNext is called, form is valid, getIndicativeEnrichmentResults reponse is successful, and full is truthy', fakeAsync(() => {
     kycServiceMock.getIndicativeEnrichmentResults.and.returnValue({ success: true, data: {} });
-
     kycServiceMock.processIndicativeEnrichmentResponse.and.returnValue({ SSN: '1234' });
-
+    spyOn(component, 'formatAttributes').and.returnValue({ lastfour: '1234' });
     component.goToNext({ valid: true, value: [] } as FormGroup);
 
     tick();
