@@ -36,7 +36,7 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
 
   async isFresh(state: CreditReportStateModel): Promise<boolean> {
     const { updatedOn, report } = state;
-    if (updatedOn === null || report === null) return false;
+    if (!updatedOn || !report) return false;
     const now = new Date().toISOString();
     return dayjs(now).diff(updatedOn, 'hour') < 24 ? true : false;
   }

@@ -36,7 +36,6 @@ export class SettingsComponent implements OnInit {
     private settings: SettingsService,
     private interstitial: InterstitialService,
     private cleanUp: CleanUpService,
-    private sync: SyncService
   ) {}
 
   ngOnInit(): void {}
@@ -108,8 +107,6 @@ export class SettingsComponent implements OnInit {
 
   onLogoutClick() {
     this.cleanUp.clearAllState();
-    this.cleanUp.clearAllApplicationStorage();
-    this.sync.unSubscribeToListeners();
     this.settings.signOut();
   }
 
