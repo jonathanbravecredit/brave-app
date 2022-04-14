@@ -84,6 +84,10 @@ export class SyncService implements OnDestroy {
     }
   }
 
+  async unSubscribeToListeners(): Promise<void> {
+    this.apiUpdateListener$?.unsubscribe()
+  }
+
   /**
    * Takes the user ID and queries the database for any records
    * - returns whether the user is brand new or not (no data)
