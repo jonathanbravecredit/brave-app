@@ -65,7 +65,7 @@ export class SessionService {
       const lastSession = (await this.getLastestSession())[0];
       if (lastSession) {
         const expired = dayjs(new Date()).isAfter(lastSession.sessionExpirationDate);
-        expired ? this.settingHelper() : this.sessionData$.next(lastSession);
+        expired ? this.settingHelper() : this.sessionData$?.next(lastSession);
       } else {
         this.settingHelper();
       }
@@ -76,7 +76,7 @@ export class SessionService {
 
   async settingHelper(): Promise<void> {
     const session = await this.createSessionData();
-    this.sessionData$.next(session);
+    this.sessionData$?.next(session);
   }
 
   async getLastestSession(): Promise<ISessionDB[]> {

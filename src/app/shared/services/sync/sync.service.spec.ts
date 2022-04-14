@@ -171,7 +171,10 @@ describe("SyncService", () => {
   })
 
   it('should run BraveUtil.generators.createNewUserData on initAppData', () => {
-    spyOn(BraveUtil.generators, 'createNewUserData')
+    let spy = spyOn(BraveUtil.generators, 'createNewUserData')
+    spy.and.returnValue({} as CreateAppDataInput)
+    apiMock.CreateAppData.and.returnValue({} as CreateAppDataMutation)
+    storeMock.dispatch.and.returnValue(of())
     service.initAppData('1')
     expect(BraveUtil.generators.createNewUserData).toHaveBeenCalled()
   })
@@ -179,6 +182,8 @@ describe("SyncService", () => {
   it('should run api.CreateAppData on initAppData', () => {
     let spy = spyOn(BraveUtil.generators, 'createNewUserData')
     spy.and.returnValue({} as CreateAppDataInput)
+    apiMock.CreateAppData.and.returnValue({} as CreateAppDataMutation)
+    storeMock.dispatch.and.returnValue(of())
     service.initAppData('1')
     expect(apiMock.CreateAppData).toHaveBeenCalled()
   })
@@ -200,7 +205,8 @@ describe("SyncService", () => {
   })
 
   it('should run Auth.currentAuthenticatedUser on syncDBDownToState if id = ""', () => {
-    spyOn(Auth, 'currentAuthenticatedUser')
+    let spy = spyOn(Auth, 'currentAuthenticatedUser')
+    spy.and.returnValue(Promise.resolve({} as CognitoUser))
     service.syncDBDownToState('')
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled()
   })
@@ -215,4 +221,6 @@ describe("SyncService", () => {
     tick()
     expect(Auth.userAttributes).toHaveBeenCalled()
   }))
+
+  
 });
