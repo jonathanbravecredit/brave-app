@@ -30,7 +30,7 @@ describe('SettingsComponent', () => {
 
   beforeEach(async () => {
     routerMock = jasmine.createSpyObj('Router', ['navigate']);
-    cleanUpMock = jasmine.createSpyObj('Router', ['clearAllState']);
+    cleanUpMock = jasmine.createSpyObj('Router', ['clearAllState', 'clearAllApplicationStorages']);
     settingsMock = jasmine.createSpyObj('SettingsService', [
       'getUserEmail',
       'forgotPassword',

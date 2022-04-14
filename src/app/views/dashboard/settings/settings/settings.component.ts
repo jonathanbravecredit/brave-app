@@ -106,6 +106,7 @@ export class SettingsComponent implements OnInit {
 
   onLogoutClick() {
     this.cleanUp.clearAllState();
+    this.cleanUp.clearAllApplicationStorage();
     this.settings.signOut();
   }
 
