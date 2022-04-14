@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return Auth.currentAuthenticatedUser({ bypassCache: true })
     .then((res) => {
-        debugger
         return true;
       })
       .catch((err) => {
