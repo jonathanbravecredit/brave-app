@@ -10,6 +10,7 @@ import { SettingsPureComponent } from '@views/dashboard/settings/settings-pure/s
 import { ALERT_CONFIG } from '@views/dashboard/settings/settings/constants';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { CleanUpService } from '@shared/services/clean-up/clean-up.service';
+import { SyncService } from '@shared/services/sync/sync.service';
 
 @Component({
   selector: 'brave-settings',
