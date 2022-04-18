@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ISessionDB, SessionService } from '@shared/services/session/session.service';
 import { of } from 'rxjs';
-import { MonitorViewEvents } from './constants';
+import { MonitorClickEvents, MonitorViewEvents } from './constants';
 
 import { SafeListMonitoringService } from './safe-list-monitoring.service';
 
@@ -30,6 +30,12 @@ describe('SafeListMonitoringService', () => {
   it('should run updateSessionData on firePageView if event === MonitorViewEvents.KeyPageView && this.sessionData', () => {
     service.sessionData =  {sessionId: ''} as ISessionDB
     service.firePageView(MonitorViewEvents.KeyPageView)
+    expect(sessionMock.updateSessionData).toHaveBeenCalled()
+  })
+
+  it('should run updateSessionData on fireClickEvent if event === MonitorViewEvents.DisputesEnroll && this.sessionData', () => {
+    service.sessionData =  {sessionId: ''} as ISessionDB
+    service.fireClickEvent(MonitorClickEvents.DisputesEnroll)
     expect(sessionMock.updateSessionData).toHaveBeenCalled()
   })
 });

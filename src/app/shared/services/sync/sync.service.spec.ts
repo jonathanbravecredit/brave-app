@@ -204,12 +204,15 @@ describe("SyncService", () => {
     expect(routerMock.navigate).toHaveBeenCalled()
   })
 
-  it('should run Auth.currentAuthenticatedUser on syncDBDownToState if id = ""', () => {
+  it('should run Auth.currentAuthenticatedUser on syncDBDownToState if id = ""', fakeAsync(() => {
     let spy = spyOn(Auth, 'currentAuthenticatedUser')
     spy.and.returnValue(Promise.resolve({} as CognitoUser))
+    let spy2 = spyOn(Auth, 'userAttributes')
+    spy2.and.returnValue(Promise.resolve([{} as CognitoUserAttribute]))
+    storeMock.dispatch.and.returnValue(of())
     service.syncDBDownToState('')
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled()
-  })
+  }))
 
   it('should run Auth.userAttributes on syncDBDownToState if id = ""', fakeAsync(() => {
     let spy = spyOn(Auth, 'currentAuthenticatedUser')

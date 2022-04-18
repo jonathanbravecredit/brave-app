@@ -159,7 +159,7 @@ export class SyncService implements OnDestroy {
    * @param {ICredentials} creds
    */
   async initAppData(id: string): Promise<AppDataStateModel | undefined> {
-    if (!id) return undefined;
+    if (!id) return;
     try {
       const input: CreateAppDataInput | undefined = BraveUtil.generators.createNewUserData(id);
       if (input === undefined) return;
@@ -220,7 +220,7 @@ export class SyncService implements OnDestroy {
         bypassCache: true,
       });
       const attrs = await Auth.userAttributes(creds);
-      userId = attrs.filter((a) => a?.Name === 'sub')[0]?.Value;
+      userId = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     } else {
       userId = id;
     }
