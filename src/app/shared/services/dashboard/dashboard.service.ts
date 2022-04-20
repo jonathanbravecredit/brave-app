@@ -156,7 +156,7 @@ export class DashboardService implements OnDestroy {
    * Refresh the users report if stale
    */
   async refreshReport(): Promise<void> {
-    const fulfilledOn = this.statesvc.state?.appData.agencies?.transunion?.fulfilledOn;
+    const fulfilledOn = this.statesvc?.state?.appData?.agencies?.transunion?.fulfilledOn;
     if (!fulfilledOn) {
       await this.transunion.getCreditReport();
       return;
