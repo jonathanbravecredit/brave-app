@@ -138,6 +138,7 @@ describe("KycService", () => {
   });
 
   it("should run auth.getUserEmail on getUserEmail", () => {
+    authMock.getUserEmail.and.returnValue(Promise.resolve("test"));
     service.getUserEmail();
     expect(authMock.getUserEmail).toHaveBeenCalled();
   });
