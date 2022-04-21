@@ -269,6 +269,11 @@ describe("AuthService", () => {
   });
 
   it("should call Auth.userAttributes on getUserEmail", fakeAsync(() => {
+    (Auth.currentAuthenticatedUser as any).and.returnValue(
+      Promise.resolve({
+        getSession: (cb, op) => {},
+      } as CognitoUser)
+    );
     service.getUserEmail();
     tick();
     expect(Auth.userAttributes).toHaveBeenCalled();
