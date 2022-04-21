@@ -1,11 +1,13 @@
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { ICredentials } from "@aws-amplify/core";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
 import { BehaviorSubject } from "rxjs";
 import { InterstitialService } from "../interstitial/interstitial.service";
 import { AuthService, NewUser } from "./auth.service";
+import { CognitoUserSession } from 'amazon-cognito-identity-js';
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -95,67 +97,78 @@ describe("AuthService", () => {
   });
 
   it("should call Auth.signOut on signOut", () => {
-    spyOn(Auth, "signOut");
+    let spy = spyOn(Auth, "signOut");
+    spy.and.returnValue(Promise.resolve({} as CognitoUser));
     service.signOut();
     expect(Auth.signOut).toHaveBeenCalled();
   });
 
   it("should call Auth.federatedSignIn on socialSignIn", () => {
-    spyOn(Auth, "federatedSignIn");
+    let spy = spyOn(Auth, "federatedSignIn");
+    spy.and.returnValue(Promise.resolve({} as ICredentials));
     service.socialSignIn({} as CognitoHostedUIIdentityProvider);
     expect(Auth.federatedSignIn).toHaveBeenCalled();
   });
 
   it("should call Auth.resendSignUp on resendSignUp", () => {
-    spyOn(Auth, "resendSignUp");
+    let spy = spyOn(Auth, "resendSignUp");
+    spy.and.returnValue(Promise.resolve({}));
     service.resendSignUp("test");
     expect(Auth.resendSignUp).toHaveBeenCalled();
   });
 
   it("should call Auth.forgotPassword on forgotPassword", () => {
-    spyOn(Auth, "forgotPassword");
+    let spy = spyOn(Auth, "forgotPassword");
+    spy.and.returnValue(Promise.resolve({}));
     service.forgotPassword("test");
     expect(Auth.forgotPassword).toHaveBeenCalled();
   });
 
   it("should call Auth.forgotPasswordSubmit on forgotPasswordSubmit", () => {
-    spyOn(Auth, "forgotPasswordSubmit");
+    let spy = spyOn(Auth, "forgotPasswordSubmit");
+    spy.and.returnValue(Promise.resolve('test'));
     service.forgotPasswordSubmit("test", "test", "test");
     expect(Auth.forgotPasswordSubmit).toHaveBeenCalled();
   });
 
   it("should call Auth.currentUserCredentials on getCurrentUserCredentials", () => {
-    spyOn(Auth, "currentUserCredentials");
+    let spy = spyOn(Auth, "currentUserCredentials");
+    spy.and.returnValue(Promise.resolve({} as ICredentials));
     service.getCurrentUserCredentials();
     expect(Auth.currentUserCredentials).toHaveBeenCalled();
   });
 
   it("should call Auth.currentAuthenticatedUser on getcurrentAuthenticatedUser", () => {
-    spyOn(Auth, "currentAuthenticatedUser");
+    let spy = spyOn(Auth, "currentAuthenticatedUser");
+    spy.and.returnValue(Promise.resolve({} as CognitoUser));
     service.getcurrentAuthenticatedUser();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   });
 
   it("should call Auth.currentSession on refreshSession", () => {
-    spyOn(Auth, "currentSession");
+    let spy = spyOn(Auth, "currentSession");
+    spy.and.returnValue(Promise.resolve({} as CognitoUserSession));
     service.refreshSession();
     expect(Auth.currentSession).toHaveBeenCalled();
   });
 
   it("should call Auth.currentSession on getAccessTokenJwtToken", () => {
-    spyOn(Auth, "currentSession");
+    let spy = spyOn(Auth, "currentSession");
+    spy.and.returnValue(Promise.resolve({} as CognitoUserSession));
     service.getAccessTokenJwtToken();
     expect(Auth.currentSession).toHaveBeenCalled();
   });
 
   it("should call Auth.currentAuthenticatedUser on getIdTokenJwtTokens", () => {
-    spyOn(Auth, "currentAuthenticatedUser");
+    let spy = spyOn(Auth, "currentAuthenticatedUser");
+    spy.and.returnValue(Promise.resolve({} as CognitoUser));
     service.getIdTokenJwtTokens();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   });
 
   it("should call user.getSignInUserSession on getIdTokenJwtTokens", fakeAsync(() => {
     let spy = spyOn(Auth, "currentAuthenticatedUser");
+    spy.and.returnValue(Promise.resolve({} as CognitoUser));
     let test = {
       getSignInUserSession: () => {},
     };
@@ -167,13 +180,15 @@ describe("AuthService", () => {
   }));
 
   it("should call Auth.currentUserCredentials on getAuthCredentials", () => {
-    spyOn(Auth, "currentUserCredentials");
+    let spy = spyOn(Auth, "currentUserCredentials");
+    spy.and.returnValue(Promise.resolve({} as ICredentials));
     service.getAuthCredentials();
     expect(Auth.currentUserCredentials).toHaveBeenCalled();
   });
 
   it("should call Auth.currentAuthenticatedUser on getUserEmail", () => {
-    spyOn(Auth, "currentAuthenticatedUser");
+    let spy = spyOn(Auth, "currentAuthenticatedUser");
+    spy.and.returnValue(Promise.resolve({} as CognitoUser));
     service.getUserEmail();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   });
@@ -181,7 +196,8 @@ describe("AuthService", () => {
   it("should call Auth.userAttributes on getUserEmail", fakeAsync(() => {
     let spy = spyOn(Auth, "currentAuthenticatedUser");
     spy.and.returnValue(Promise.resolve({} as CognitoUser));
-    spyOn(Auth, "userAttributes");
+    let spy2 = spyOn(Auth, "userAttributes");
+    spy2.and.returnValue(Promise.resolve([]));
     service.getUserEmail();
     tick();
     expect(Auth.userAttributes).toHaveBeenCalled();
