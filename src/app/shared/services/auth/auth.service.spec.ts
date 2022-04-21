@@ -189,6 +189,8 @@ describe("AuthService", () => {
   it("should call Auth.currentAuthenticatedUser on getUserEmail", () => {
     let spy = spyOn(Auth, "currentAuthenticatedUser");
     spy.and.returnValue(Promise.resolve({} as CognitoUser));
+    let spy2 = spyOn(Auth, "userAttributes");
+    spy2.and.returnValue(Promise.resolve([]));
     service.getUserEmail();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   });
