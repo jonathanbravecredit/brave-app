@@ -68,7 +68,7 @@ describe("AuthService", () => {
     _updateUserAttributes = Auth.updateUserAttributes;
     Auth.updateUserAttributes = jasmine
       .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
+      .and.returnValue(Promise.resolve("test"));
 
     _federatedSignIn = Auth.federatedSignIn;
     Auth.federatedSignIn = jasmine
@@ -280,18 +280,21 @@ describe("AuthService", () => {
   }));
 
   it("should call fetching$.next on updateUserEmail", () => {
+    (Auth.updateUserAttributes as any).and.returnValue(Promise.resolve("test"));
     spyOn(interstitialMock.fetching$, "next");
     service.updateUserEmail("");
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
   it("should call Auth.currentAuthenticatedUser on updateUserEmail", fakeAsync(() => {
+    (Auth.updateUserAttributes as any).and.returnValue(Promise.resolve("test"));
     service.updateUserEmail("");
     tick();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   }));
 
   it("should call Auth.updateUserAttributes on updateUserEmail", fakeAsync(() => {
+    (Auth.updateUserAttributes as any).and.returnValue(Promise.resolve("test"));
     service.updateUserEmail("");
     tick();
     expect(Auth.updateUserAttributes).toHaveBeenCalled();

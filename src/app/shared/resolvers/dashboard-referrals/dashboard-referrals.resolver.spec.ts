@@ -9,7 +9,7 @@ describe("DashboardReferralsResolver", () => {
 
   beforeEach(() => {
     referralServiceMock = jasmine.createSpyObj("ReferralsService", [
-      "getReferralMonthlyCampaignEarnings",
+      "getReferral",
     ]);
     TestBed.configureTestingModule({
       providers: [{ provide: ReferralsService, useValue: referralServiceMock }],
@@ -19,5 +19,10 @@ describe("DashboardReferralsResolver", () => {
 
   it("should be created", () => {
     expect(resolver).toBeTruthy();
+  });
+
+  it("should run referralService.getReferral on resolve", () => {
+    resolver.resolve();
+    expect(referralServiceMock.getReferral).toHaveBeenCalled();
   });
 });
