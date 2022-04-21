@@ -254,6 +254,8 @@ describe("AuthService", () => {
   }));
 
   it("should call fetching$.next on deactivateAccount", () => {
+    let spy = spyOn(Auth, "currentAuthenticatedUser");
+    spy.and.returnValue(Promise.resolve({} as CognitoUser));
     spyOn(interstitialMock.fetching$, "next");
     service.deactivateAccount();
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
