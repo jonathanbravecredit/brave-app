@@ -264,6 +264,11 @@ describe("AuthService", () => {
   });
 
   it("should call Auth.currentAuthenticatedUser on getUserEmail", () => {
+    (Auth.currentAuthenticatedUser as any).and.returnValue(
+      Promise.resolve({
+        getSession: (cb, op) => {},
+      } as CognitoUser)
+    );
     service.getUserEmail();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   });

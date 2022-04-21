@@ -20,6 +20,25 @@ describe("SyncService", () => {
   let storeMock: any;
   let routerMock: any;
   let statesvcMock: any;
+  let _currentAuthenticatedUser: any;
+  let _userAttributes: any;
+
+  beforeEach(() => {
+    _currentAuthenticatedUser = Auth.currentAuthenticatedUser;
+    Auth.currentAuthenticatedUser = jasmine
+      .createSpy()
+      .and.returnValue(Promise.resolve({}));
+
+    _userAttributes = Auth.userAttributes;
+    Auth.userAttributes = jasmine
+      .createSpy()
+      .and.returnValue(Promise.resolve([]));
+  });
+
+  afterEach(() => {
+    Auth.currentAuthenticatedUser = _currentAuthenticatedUser;
+    Auth.userAttributes = _userAttributes;
+  });
 
   beforeEach(() => {
     apiMock = jasmine.createSpyObj("APIService", ["GetAppData", 'CreateAppData']);
@@ -205,20 +224,12 @@ describe("SyncService", () => {
   })
 
   it('should run Auth.currentAuthenticatedUser on syncDBDownToState if id = ""', fakeAsync(() => {
-    let spy = spyOn(Auth, 'currentAuthenticatedUser')
-    spy.and.returnValue(Promise.resolve({} as CognitoUser))
-    let spy2 = spyOn(Auth, 'userAttributes')
-    spy2.and.returnValue(Promise.resolve([{} as CognitoUserAttribute]))
     storeMock.dispatch.and.returnValue(of())
     service.syncDBDownToState('')
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled()
   }))
 
   it('should run Auth.userAttributes on syncDBDownToState if id = ""', fakeAsync(() => {
-    let spy = spyOn(Auth, 'currentAuthenticatedUser')
-    spy.and.returnValue(Promise.resolve({} as CognitoUser))
-    let spy2 = spyOn(Auth, 'userAttributes')
-    spy2.and.returnValue(Promise.resolve([{} as CognitoUserAttribute]))
     storeMock.dispatch.and.returnValue(of())
     service.syncDBDownToState('')
     tick()
