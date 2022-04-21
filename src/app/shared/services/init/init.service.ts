@@ -18,13 +18,13 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 })
 export class InitService {
   private data: AppDataStateModel | undefined;
-  private onboarding: OnboardingStateModel = {} as OnboardingStateModel;
+  onboarding: OnboardingStateModel = {} as OnboardingStateModel;
   private onboarding$: Observable<OnboardingStateModel> = this.store.select(OnboardingSelectors.getOnboarding);
-  private onboardingSub$: Subscription;
+  onboardingSub$: Subscription;
 
   private agencies: AgenciesStateModel = {} as AgenciesStateModel;
   private agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
-  private agenciesSub$: Subscription;
+  agenciesSub$: Subscription;
 
   constructor(private store: Store, private sync: SyncService, private router: Router) {
     this.onboardingSub$ = this.onboarding$
@@ -43,7 +43,6 @@ export class InitService {
   ngOnDestroy(): void {
     if (this.onboardingSub$) this.onboardingSub$.unsubscribe();
     if (this.agenciesSub$) this.agenciesSub$.unsubscribe();
-    // if (this.transunionSub$) this.transunionSub$.unsubscribe();
   }
 
   async resolver(): Promise<boolean> {
@@ -123,7 +122,7 @@ export class InitService {
       bypassCache: true,
     });
     const attrs = await Auth.userAttributes(user);
-    const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    const id = attrs?.filter((a) => a.Name === 'sub')[0]?.Value;
     return id;
   }
 
