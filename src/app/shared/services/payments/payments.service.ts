@@ -26,6 +26,6 @@ export class PaymentsService {
     });
     let params = new HttpParams();
     params = params.append('campaign', this.campaign);
-    return await this.http.get<any>(url, { headers, params }).toPromise();
+    return await this.http.get<any>(url, { headers, params })?.toPromise();
   }
 }
