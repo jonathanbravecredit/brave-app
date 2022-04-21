@@ -7,7 +7,7 @@ import { Auth } from "aws-amplify";
 import { BehaviorSubject } from "rxjs";
 import { InterstitialService } from "../interstitial/interstitial.service";
 import { AuthService, NewUser } from "./auth.service";
-import { CognitoUserSession } from 'amazon-cognito-identity-js';
+import { CognitoUserSession } from "amazon-cognito-identity-js";
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -126,7 +126,7 @@ describe("AuthService", () => {
 
   it("should call Auth.forgotPasswordSubmit on forgotPasswordSubmit", () => {
     let spy = spyOn(Auth, "forgotPasswordSubmit");
-    spy.and.returnValue(Promise.resolve('test'));
+    spy.and.returnValue(Promise.resolve("test"));
     service.forgotPasswordSubmit("test", "test", "test");
     expect(Auth.forgotPasswordSubmit).toHaveBeenCalled();
   });
@@ -271,7 +271,9 @@ describe("AuthService", () => {
 
   it("should call fetching$.next on deactivateAccount", () => {
     let spy = spyOn(Auth, "currentAuthenticatedUser");
-    spy.and.returnValue(Promise.resolve({} as CognitoUser));
+    spy.and.returnValue(
+      Promise.resolve({ deleteUser: (cb) => {} } as CognitoUser)
+    );
     spyOn(interstitialMock.fetching$, "next");
     service.deactivateAccount();
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
