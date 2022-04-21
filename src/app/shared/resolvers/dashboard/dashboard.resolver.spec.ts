@@ -100,34 +100,4 @@ describe("DashboardResolver", () => {
     resolver.resolve();
     expect(creditReportResolverMock.resolve).toHaveBeenCalled();
   });
-
-  it("should call initResolver.resolve on resolve", fakeAsync(() => {
-    resolver.resolve();
-    tick();
-    expect(initResolverMock.resolve).toHaveBeenCalled();
-  }));
-
-  // it("should call snapshotsResolver.resolve on resolve", fakeAsync(() => {
-  //   resolver.resolve();
-  //   tick();
-  //   expect(snapshotsResolverMock.resolve).toHaveBeenCalled();
-  // }));
-
-  // it("should call scoreTrendsResolver.resolve on resolve", fakeAsync(() => {
-  //   resolver.resolve();
-  //   tick();
-  //   expect(scoreTrendsResolverMock.resolve).toHaveBeenCalled();
-  // }));
-
-  // it("should call referralResolver.resolve on resolve", fakeAsync(() => {
-  //   resolver.resolve();
-  //   tick();
-  //   expect(referralResolverMock.resolve).toHaveBeenCalled();
-  // }));
-
-  // it("should call progressTrackerResolver.resolve on resolve", fakeAsync(() => {
-  //   resolver.resolve();
-  //   tick();
-  //   expect(progressTrackerResolverMock.resolve).toHaveBeenCalled();
-  // }));
 });
