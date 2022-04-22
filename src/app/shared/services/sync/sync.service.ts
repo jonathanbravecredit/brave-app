@@ -120,7 +120,7 @@ export class SyncService implements OnDestroy {
       if (!data) return false;
       const clean = this.cleanBackendData(data);
       this.data$.next(clean);
-      return data.user?.onboarding?.lastComplete === 3;
+      return data?.user?.onboarding?.lastComplete === 3;
     } catch (err) {
       console.log('isUserOnboarded ==> ', err);
       return false;
@@ -144,7 +144,7 @@ export class SyncService implements OnDestroy {
    */
   async goToLastOnboarded(id: string): Promise<void> {
     const data = await this.syncDBDownToState(id);
-    const lastComplete = data.user?.onboarding?.lastComplete || -1;
+    const lastComplete = data?.user?.onboarding?.lastComplete || -1;
     this.routeUser(lastComplete);
   }
 

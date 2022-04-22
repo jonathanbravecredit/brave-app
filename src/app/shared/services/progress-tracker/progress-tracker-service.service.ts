@@ -22,7 +22,7 @@ import { TransunionInput } from '@shared/services/aws/api.service';
 })
 export class ProgressTrackerService implements OnDestroy {
   @Select(ProgressTrackerState) initiative$!: Observable<ProgressTrackerStateModel>;
-  private initiativeSub$: Subscription | undefined;
+  initiativeSub$: Subscription | undefined;
   initiative: Initiative | null = null;
   initiativeSteps: ICircleProgressStep[] = [];
   initiativeSteps$: BehaviorSubject<ICircleProgressStep[]> = new BehaviorSubject<ICircleProgressStep[]>([]);
@@ -146,7 +146,6 @@ export class ProgressTrackerService implements OnDestroy {
       programId: goalInfo.programId,
       reason: goalInfo.reason,
     };
-
     await this.http.post<Initiative>(environment.api + '/initiatives', patchBody, { headers }).toPromise();
     let res = await this.http.get<Initiative>(environment.api + '/initiatives', { headers }).toPromise();
     this.updateProgressTrackerState(res);

@@ -26,4 +26,9 @@ describe("PaymentsService", () => {
   it("should be created", () => {
     expect(service).toBeTruthy();
   });
+
+  it("should call getIdTokenJwtTokens on getPayments", () => {
+    service.getPayments()
+    expect(authMock.getIdTokenJwtTokens).toHaveBeenCalled();
+  });
 });

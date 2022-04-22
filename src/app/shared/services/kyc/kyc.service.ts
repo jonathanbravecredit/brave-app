@@ -101,7 +101,7 @@ export class KycService {
     started: boolean = true,
   ): OnboardingStateModel | undefined | void {
     const state = this.store.snapshot();
-    return { ...state.user?.onboarding, lastActive, lastComplete, started };
+    return { ...state?.user?.onboarding, lastActive, lastComplete, started };
   }
 
   /**
@@ -202,8 +202,6 @@ export class KycService {
     enrichment: IIndicativeEnrichmentResult,
     resp?: ITUServiceResponse<IIndicativeEnrichmentResult | undefined>,
   ): Promise<IIndicativeEnrichmentResult | undefined> {
-    const { appData } = this.statesvc.state$.value;
-    const transunion = appData.agencies?.transunion;
     if (enrichment.ResponseType.toLowerCase() === 'success') {
       const status = tu.generators.createOnboardingStatus(TUBundles.IndicativeEnrichment, true, resp);
       await this.updateIndicativeEnrichment({
@@ -248,7 +246,7 @@ export class KycService {
   async getGetAuthenticationQuestionsResults(
     appData: UpdateAppDataInput,
   ): Promise<ITUServiceResponse<IGetAuthenticationQuestionsResult | undefined>> {
-    const ssn = appData.user?.userAttributes?.ssn?.full;
+    const ssn = appData?.user?.userAttributes?.ssn?.full;
     if (!ssn) return bc.technicalError;
     try {
       return await this.sendGetAuthenticationQuestions(appData, ssn);
@@ -284,7 +282,7 @@ export class KycService {
     questions: IGetAuthenticationQuestionsResult,
   ): Promise<IGetAuthenticationQuestionsResult | undefined> {
     const { appData } = this.statesvc.state$.value;
-    const transunion = appData.agencies?.transunion;
+    const transunion = appData?.agencies?.transunion;
     if (questions.ResponseType.toLowerCase() === 'success') {
       const status = tu.generators.createOnboardingStatus(TUBundles.GetAuthenticationQuestions, true);
       await this.updateGetAuthenticationQuestions({
@@ -331,19 +329,19 @@ export class KycService {
         const otpQuestion = this.getOTPQuestion(authQuestions);
         if (otpQuestion) {
           const otpResp = await this.sendOTPResponse(otpQuestion);
-          if (!otpResp.success || !otpResp.data) {
+          if (!otpResp?.success || !otpResp?.data) {
             this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(otpResp);
           } else {
-            const codeQuestions = otpResp.data?.AuthenticationDetails;
+            const codeQuestions = otpResp?.data?.AuthenticationDetails;
             const pinData = await this.startPinClock();
             const questionData = await this.updateCurrentRawQuestionsAsync(codeQuestions);
-            await this.updateAgenciesAsync(questionData.agencies); // success, sync up to db
+            await this.updateAgenciesAsync(questionData?.agencies); // success, sync up to db
             this.router.navigate([routes.root.onboarding.code.full]);
           }
         } else {
           // since no otp question found, they are kba based and already save...start KBA countdown
           const kbaData = await this.startKbaClock();
-          await this.updateAgenciesAsync(kbaData.agencies);
+          await this.updateAgenciesAsync(kbaData?.agencies);
           this.router.navigate([routes.root.onboarding.kba.full]);
         }
       }
@@ -598,8 +596,8 @@ export class KycService {
     resp?: ITUServiceResponse<any | undefined>,
   ): Promise<void> {
     const appData = await this.incrementAuthAttempt();
-    const agencies = appData.agencies;
-    const transunion = appData.agencies?.transunion;
+    const agencies = appData?.agencies;
+    const transunion = appData?.agencies?.transunion;
     if (!resp || resp.error?.Code === -1 || !agencies || !transunion) {
       // technical error...api did not respond and error thrown (empty resp);
       this.analytics.fireErrorEvent(AnalyticErrorEvents.ApiTechnicalIssue);
@@ -608,7 +606,7 @@ export class KycService {
       const critical = tu.queries.exceptions.isErrorCritical(resp);
       const authAttempts = transunion.authAttempt || 0;
       await this.statesvc.updateAgenciesAsync({
-        ...appData.agencies,
+        ...appData?.agencies,
         transunion: {
           ...transunion,
           ...tuPartial,
