@@ -42,9 +42,22 @@ export class DashboardResolver implements Resolve<IDashboardResolver> {
   async resolve(): Promise<IDashboardResolver> {
     this.interstitial.changeMessage(' ');
     this.interstitial.openInterstitial();
-
-    const report = await this.creditReportResolver.resolve();
-    const metrics = new CreditReportMetrics(report as MergeReport).calculateMetrics();
+    let report: IMergeReport | null = null;
+    let metrics: CreditReportMetric<any, any>[] | null = null;
+    try{
+      report = await this.creditReportResolver.resolve();
+      metrics = new CreditReportMetrics(report as MergeReport).calculateMetrics();
+    } catch (error) {
+      console.error(error);
+      return Promise.resolve({
+        report: null,
+        snapshots: null,
+        trends: null,
+        referral: null,
+        progressTrackerData: null,
+        metrics: null,
+      });
+    }
 
     // keep this ordering
     try {

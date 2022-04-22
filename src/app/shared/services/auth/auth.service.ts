@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { ICredentials } from '@aws-amplify/core';
+import {Auth} from 'aws-amplify'
 import { BehaviorSubject } from 'rxjs';
 import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { Router } from '@angular/router';
@@ -23,35 +24,6 @@ export class AuthService {
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
   constructor(private router: Router, private interstitial: InterstitialService) {}
-
-  /**
-   * This method is designed to help reload the user if the ID ever goes null
-   * will perform the following:
-   *  1. Get current credentials (if the token is still valid)
-   *  2. If no token available, and on a different page...go back to login
-   *  3. If on sign in or sign up...do nothing
-   * @returns
-   */
-  async reloadCredentials(): Promise<void> {
-    const creds = await this.getCurrentUserCredentials();
-    if (creds) {
-      // await this.sync.hallmonitor(creds);
-    } else {
-      switch (this.router.url) {
-        case '/auth/signin':
-          break;
-        case '/auth/signup':
-          break;
-        case '/signin':
-          break;
-        case '/signin':
-          break;
-        default:
-          this.router.navigate([routes.root.auth.signin.full]);
-          break;
-      }
-    }
-  }
 
   /**
    * Cognito sign up method
@@ -179,7 +151,7 @@ export class AuthService {
   async getIdTokenJwtTokens(): Promise<string> {
     try {
       const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      let session = user.getSignInUserSession();
+      let session = user?.getSignInUserSession();
       return session ? session.getIdToken().getJwtToken() : '';
     } catch (err) {
       return '';

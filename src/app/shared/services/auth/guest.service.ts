@@ -7,7 +7,7 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GuestService {
-  private guestState: Subject<ICredentials | any> = new Subject<ICredentials | any>();
+  guestState: Subject<ICredentials | any> = new Subject<ICredentials | any>();
   guestState$: Observable<ICredentials | any> = this.guestState.asObservable();
 
   constructor() {

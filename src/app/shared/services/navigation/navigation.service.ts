@@ -6,7 +6,7 @@ import { NavigationEnd, Router } from '@angular/router';
   providedIn: 'root',
 })
 export class NavigationService {
-  private history: number = 0;
+  history: number = 0;
 
   constructor(private router: Router, private location: Location) {
     this.router.events.subscribe((event) => {
@@ -22,11 +22,7 @@ export class NavigationService {
       this.location.back();
     } else {
       const segments = this.router.url.split('/');
-      if (segments.length) {
-        this.router.navigate(segments.slice(0, -1));
-      } else {
-        this.router.navigateByUrl(`/`);
-      }
+      this.router.navigate(segments.slice(0, -1));
     }
   }
 }
