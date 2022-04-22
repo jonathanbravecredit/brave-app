@@ -65,7 +65,7 @@ export class SessionService {
       const lastSession = (await this.getLastestSession())[0];
       if (lastSession) {
         const expired = dayjs(new Date()).isAfter(lastSession.sessionExpirationDate);
-        expired ? this.settingHelper() : this.sessionData$.next(lastSession);
+        expired ? this.settingHelper() : this.sessionData$?.next(lastSession);
       } else {
         this.settingHelper();
       }
@@ -76,7 +76,7 @@ export class SessionService {
 
   async settingHelper(): Promise<void> {
     const session = await this.createSessionData();
-    this.sessionData$.next(session);
+    this.sessionData$?.next(session);
   }
 
   async getLastestSession(): Promise<ISessionDB[]> {
@@ -88,7 +88,7 @@ export class SessionService {
     params = params.append('limit', '1');
     params = params.append('sort', 'desc');
 
-    return this.http.get<ISessionDB[]>(`${this.url}/sessions`, { headers, params }).toPromise(); //TODO
+    return this.http.get<ISessionDB[]>(`${this.url}/sessions`, { headers, params })?.toPromise(); //TODO
   }
 
   async getSessionData(sessionId: string): Promise<ISessionDB> {
@@ -97,7 +97,7 @@ export class SessionService {
       Authorization: `${token}`,
     });
 
-    return this.http.get<ISessionDB>(`${this.url}/sessions/${sessionId}`, { headers }).toPromise(); //TODO
+    return this.http.get<ISessionDB>(`${this.url}/sessions/${sessionId}`, { headers })?.toPromise(); //TODO
   }
 
   async createSessionData(): Promise<ISessionDB> {
@@ -106,7 +106,7 @@ export class SessionService {
       Authorization: `${token}`,
     });
     const body = {};
-    return this.http.post<ISessionDB>(`${this.url}/sessions`, body, { headers }).toPromise(); //TODO
+    return this.http.post<ISessionDB>(`${this.url}/sessions`, body, { headers })?.toPromise(); //TODO
   }
 
   async updateSessionData(data: ISessionData, event: string): Promise<ISessionDB> {
@@ -119,6 +119,6 @@ export class SessionService {
       sessionId,
       event,
     };
-    return this.http.put<ISessionDB>(`${this.url}/sessions/${sessionId}`, body, { headers }).toPromise(); //TODO
+    return this.http.put<ISessionDB>(`${this.url}/sessions/${sessionId}`, body, { headers })?.toPromise(); //TODO
   }
 }

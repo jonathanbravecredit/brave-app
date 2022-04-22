@@ -3,7 +3,11 @@
   <div style="background-image: linear-gradient(#222c9d, #222c9d, white, white, white)" class="p-2 pb-10">
     <brave-referral-banner [campaign]="campaign" [referral]="referral" [disabled]="disabled"></brave-referral-banner>
     <brave-referral-earnings [referral]="referral"></brave-referral-earnings>
-    <brave-referral-amount-link [referral]="referral" [disabled]="disabled"></brave-referral-amount-link>
+    <brave-referral-amount-link
+      [referral]="referral"
+      [campaign]="campaign"
+      [disabled]="disabled"
+    ></brave-referral-amount-link>
     <h3 *ngIf="!disabled" class="text-lg mb-4 mt-10 text-white">Or, click to share your link via social media:</h3>
     <div *ngIf="!disabled" class="min-w-full flex justify-evenly">
       <brave-facebook-share [referralCode]="referral?.referralCode"></brave-facebook-share>

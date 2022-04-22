@@ -31,7 +31,24 @@
       </div>
       <ul
         *ngIf="isOpen"
-        class="absolute z-10 mt-2 -ml-1 w-full bg-white text-blueGray-600 shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+        class="
+          absolute
+          z-10
+          mt-2
+          -ml-1
+          w-full
+          bg-white
+          text-blueGray-600
+          shadow-lg
+          max-h-56
+          rounded-md
+          py-1
+          text-base
+          ring-1 ring-black ring-opacity-5
+          overflow-auto
+          focus:outline-none
+          sm:text-sm
+        "
       >
         <li
           *ngFor="let opt of config.options; index as i"

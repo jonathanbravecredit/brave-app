@@ -76,7 +76,7 @@ export class CreditUtilizationService implements OnDestroy {
 
   sumDebtAmount(account: ITradeLinePartition[]): number {
     return account.reduce<number>((acc: number, tradePart: ITradeLinePartition) => {
-      if (tradePart.Tradeline.OpenClosed.symbol === 'C') {
+      if (tradePart.Tradeline?.OpenClosed.symbol === 'C') {
         return acc;
       }
       if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {
@@ -91,7 +91,7 @@ export class CreditUtilizationService implements OnDestroy {
 
   sumTotalAmount(account: ITradeLinePartition[]): number {
     return account.reduce<number>((acc: number, tradePart: ITradeLinePartition) => {
-      if (tradePart.Tradeline.OpenClosed.symbol === 'C') {
+      if (tradePart.Tradeline?.OpenClosed.symbol === 'C') {
         return acc;
       }
       if (tradePart.accountTypeSymbol?.toLowerCase() !== 'r') {

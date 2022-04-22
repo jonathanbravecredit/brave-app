@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
           const sub = await this.init.getUserId();
           this.analytics.fireUserTrackingEvent(sub);
           this.analytics.fireLoginTrackingEvent();
-          await this.init.resolver();
+          await this.init.resolver();   
           break;
         case 'signOut':
           this.router.navigate([routes.root.auth.signin.full]);

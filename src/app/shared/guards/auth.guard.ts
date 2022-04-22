@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
     return Auth.currentAuthenticatedUser({ bypassCache: true })
-      .then((res) => {
+    .then((res) => {
         return true;
       })
       .catch((err) => {

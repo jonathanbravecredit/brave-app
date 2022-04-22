@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { ReferralsService } from "@shared/services/referrals/referrals.service";
 
 import { ReferralRecordResolver } from "./referral-record.resolver";
@@ -22,4 +22,10 @@ describe("ReferralRecordResolver", () => {
   it("should be created", () => {
     expect(resolver).toBeTruthy();
   });
+
+  it("should run referralService.getReferral on resolve", fakeAsync(() => {
+    resolver.resolve();
+    tick();
+    expect(referralsServiceMock.getReferral).toHaveBeenCalled();
+  }));
 });

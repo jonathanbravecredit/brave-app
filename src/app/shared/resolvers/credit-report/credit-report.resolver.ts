@@ -14,7 +14,7 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
   constructor(private store: Store, private creditReportV2: Creditreportv2Service) {}
 
   async resolve(): Promise<IMergeReport | null> {
-    const state = await this.store.selectOnce(CreditReportSelectors.getCreditReport).toPromise();
+    const state = await this.store.selectOnce(CreditReportSelectors.getCreditReport)?.toPromise();
     const fresh = await this.isFresh(state);
     if (fresh) {
       return state.report;
@@ -36,7 +36,7 @@ export class CreditReportResolver implements Resolve<IMergeReport | null> {
 
   async isFresh(state: CreditReportStateModel): Promise<boolean> {
     const { updatedOn, report } = state;
-    if (updatedOn === null || report === null) return false;
+    if (!updatedOn || !report) return false;
     const now = new Date().toISOString();
     return dayjs(now).diff(updatedOn, 'hour') < 24 ? true : false;
   }
