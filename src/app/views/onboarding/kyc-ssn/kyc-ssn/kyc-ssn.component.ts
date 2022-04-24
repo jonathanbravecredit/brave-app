@@ -51,9 +51,10 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
   async goToNext(form: FormGroup): Promise<void> {
     this.analytics.fireClickEvent(AnalyticClickEvents.OnboardingIdentity);
     if (form.valid) {
-      const { lastfour } = this.formatAttributes(form, this.ssnMap) as { lastfour: string };
-      if (lastfour) {
-        const attrs = { ssn: { lastfour } } as UserAttributesInput;
+      const formattedAttributes = this.formatAttributes(form, this.ssnMap) as { lastfour: string };
+      if (formattedAttributes) {
+        const lastFour = formattedAttributes.lastfour;
+        const attrs = { ssn: { lastfour: lastFour } } as UserAttributesInput;
         this.ssnError = false;
         try {
           const data = await this.kycService.updateUserAttributesAsync(attrs);
