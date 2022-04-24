@@ -22,7 +22,7 @@
     "amplify:PatchTransunionCustomResolver": "cd amplify/backend/function/PatchTransunionCustomResolver/ts && npm install && npm run tsc && cd -",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
     "testDev": "ng test",
-    "testHeadless": "ng test --browsers=ChromeHeadless --code-coverage",
+    "testHeadless": "ng test --browsers=ChromeHeadless",
     "testBig": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng test",
     "testCoverage": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng test --no-watch --code-coverage",
     "testCoverageAndWatch": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng test --code-coverage",
