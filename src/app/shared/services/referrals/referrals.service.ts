@@ -41,6 +41,7 @@ export class ReferralsService implements OnDestroy {
     const referralValidationRequest = await this.iam.signRequest(url, 'POST', {}, JSON.stringify({}));
     const data = await fetch(referralValidationRequest);
     const parsed: { valid: boolean } = await data.json();
+    console.log('HERE TEST')
     this.referredByCodeValid$.next(parsed.valid);
     return parsed;
   }
@@ -84,6 +85,6 @@ export class ReferralsService implements OnDestroy {
     const headers = new HttpHeaders({
       Authorization: `${idToken}`,
     });
-    return await this.http.get<any>(url, { headers }).toPromise();
+    return await this.http.get<any>(url, { headers })?.toPromise();
   }
 }

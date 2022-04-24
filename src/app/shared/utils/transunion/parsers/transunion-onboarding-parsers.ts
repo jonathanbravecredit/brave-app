@@ -68,9 +68,9 @@ export class TransunionOnboardingParsers extends TransunionBase {
         : new Array(questions?.ChallengeConfigurationType?.MultiChoiceQuestion);
     return series.find(
       (q) =>
-        q.FullQuestionText === OTPQuestion.FullText ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
-        q.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0,
+        q?.FullQuestionText === OTPQuestion.FullText ||
+        q?.FullQuestionText.indexOf(OTPQuestion.PartialOne) >= 0 ||
+        q?.FullQuestionText.indexOf(OTPQuestion.PartialTwo) >= 0,
     );
   }
 
@@ -84,7 +84,7 @@ export class TransunionOnboardingParsers extends TransunionBase {
       question?.AnswerChoice instanceof Array ? question?.AnswerChoice : new Array(question?.AnswerChoice);
 
     let answer = answerChoice.find(
-      (c) => c.AnswerChoiceText === OTPReponse.FullText || c.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0,
+      (c) => c?.AnswerChoiceText === OTPReponse.FullText || c?.AnswerChoiceText.indexOf(OTPReponse.PartialOne) >= 0,
     );
     return {
       VerifyChallengeAnswersRequestMultiChoiceQuestion: {
@@ -123,8 +123,8 @@ export class TransunionOnboardingParsers extends TransunionBase {
       question.AnswerChoice instanceof Array ? question.AnswerChoice : new Array(question.AnswerChoice);
     const answer = answerChoice.find(
       (c) =>
-        c.AnswerChoiceText === PassCodeQuestion.FullText ||
-        c.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0,
+        c?.AnswerChoiceText === PassCodeQuestion.FullText ||
+        c?.AnswerChoiceText.indexOf(PassCodeQuestion.PartialOne) >= 0,
     );
     return {
       VerifyChallengeAnswersRequestMultiChoiceQuestion: {

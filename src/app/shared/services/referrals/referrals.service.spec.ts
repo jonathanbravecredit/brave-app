@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { TestBed } from "@angular/core/testing";
-import { of } from "rxjs";
+import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { of, Subscription } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 import { IamService } from "../auth/iam.service";
 import { FeatureFlagsService } from "../featureflags/feature-flags.service";
@@ -39,4 +39,28 @@ describe("ReferralsService", () => {
   it("should be created", () => {
     expect(service).toBeTruthy();
   });
+
+  it('it should run isActiveSub$?.unsubscribe on destroy', () => {
+    service.isActiveSub$ = new Subscription()
+    spyOn(service.isActiveSub$, 'unsubscribe')
+    service.ngOnDestroy()
+    expect(service.isActiveSub$.unsubscribe).toHaveBeenCalled()
+  })
+
+  it('it should run iam.signRequest on validateReferralCode', () => {
+    service.validateReferralCode('test')
+    expect(iamMock.signRequest).toHaveBeenCalled()
+  })
+
+  it('it should run iam.signRequest on on createReferral if this.isActive', () => {
+    service.isActive = true
+    service.createReferral('test','test')
+    expect(iamMock.signRequest).toHaveBeenCalled()
+  })
+
+  it('it should run auth.getIdTokenJwtTokens on on getReferral', () => {
+    service.getReferral()
+    expect(authMock.getIdTokenJwtTokens).toHaveBeenCalled()
+  })
+
 });

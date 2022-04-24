@@ -14,7 +14,7 @@
     },
     "outDir": "./out-tsc/spec",
     "types": [
-      "jasmine", "node", "googlemaps"
+      "jasmine", "cypress", "node", "googlemaps"
     ],
   },
   "files": [

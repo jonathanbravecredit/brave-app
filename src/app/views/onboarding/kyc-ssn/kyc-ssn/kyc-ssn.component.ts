@@ -56,7 +56,6 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
         const lastFour = formattedAttributes.lastfour;
         const attrs = { ssn: { lastfour: lastFour } } as UserAttributesInput;
         this.ssnError = false;
-
         try {
           const data = await this.kycService.updateUserAttributesAsync(attrs);
           const resp = await this.kycService.getIndicativeEnrichmentResults(data);
@@ -80,6 +79,8 @@ export class KycSsnComponent extends KycBaseComponent implements OnInit, AfterVi
         } catch {
           this.handleBailout<IIndicativeEnrichmentResult>(); // generic api error
         }
+      } else {
+        this.handleBailout<IIndicativeEnrichmentResult>(); // generic api error
       }
     }
   }
