@@ -11,145 +11,34 @@ describe("AuthService", () => {
   let service: AuthService;
   let routerMock: any;
   let interstitialMock: any;
-  let _currentAuthenticatedUser: any;
-
-  let _signIn: any;
-
-  let _signUp: any;
-
-  let _signOut: any;
-
-  let _userAttributes: any;
-
-  let _updateUserAttributes: any;
-
-  let _federatedSignIn: any;
-
-  let _resendSignUp: any;
-
-  let _forgotPassword: any;
-
-  let _forgotPasswordSubmit: any;
-
-  let _currentUserCredentials: any;
-
-  let _currentSession: any;
-
-  let _verifyCurrentUserAttributeSubmit: any;
-
-  let _changePassword: any;
-
-  beforeEach(() => {
-    _currentAuthenticatedUser = Auth.currentAuthenticatedUser;
-    Auth.currentAuthenticatedUser = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({}));
-
-    _signIn = Auth.signIn;
-    Auth.signIn = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _signUp = Auth.signUp;
-    Auth.signUp = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _signOut = Auth.signOut;
-    Auth.signOut = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _userAttributes = Auth.userAttributes;
-    Auth.userAttributes = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _updateUserAttributes = Auth.updateUserAttributes;
-    Auth.updateUserAttributes = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _federatedSignIn = Auth.federatedSignIn;
-    Auth.federatedSignIn = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _resendSignUp = Auth.resendSignUp;
-    Auth.resendSignUp = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _forgotPassword = Auth.forgotPassword;
-    Auth.forgotPassword = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _forgotPasswordSubmit = Auth.forgotPasswordSubmit;
-    Auth.forgotPasswordSubmit = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _currentUserCredentials = Auth.currentUserCredentials;
-    Auth.currentUserCredentials = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _currentSession = Auth.currentSession;
-    Auth.currentSession = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
-
-    _verifyCurrentUserAttributeSubmit = Auth.verifyCurrentUserAttributeSubmit;
-    Auth.verifyCurrentUserAttributeSubmit = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve("test"));
-
-    _changePassword = Auth.changePassword;
-    Auth.changePassword = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve("SUCCESS"));
-  });
-
-  afterEach(() => {
-    Auth.currentAuthenticatedUser = _currentAuthenticatedUser;
-
-    Auth.signIn = _signIn;
-
-    Auth.signUp = _signUp;
-
-    Auth.signOut = _signOut;
-
-    Auth.userAttributes = _userAttributes;
-
-    Auth.updateUserAttributes = _updateUserAttributes;
-
-    Auth.federatedSignIn = _federatedSignIn;
-
-    Auth.resendSignUp = _resendSignUp;
-
-    Auth.forgotPassword = _forgotPassword;
-
-    Auth.forgotPasswordSubmit = _forgotPasswordSubmit;
-
-    Auth.currentUserCredentials = _currentUserCredentials;
-
-    Auth.currentSession = _currentSession;
-
-    Auth.verifyCurrentUserAttributeSubmit = _verifyCurrentUserAttributeSubmit;
-
-    Auth.changePassword = _changePassword;
-  });
+  let AuthMock: any;
 
   beforeEach(() => {
     routerMock = jasmine.createSpyObj("Router", ["navigate"], { url: "test" });
     interstitialMock = jasmine.createSpyObj("", [""], {
       fetching$: new BehaviorSubject<boolean>(false),
     });
+    AuthMock = jasmine.createSpyObj("Auth", [
+      "currentAuthenticatedUser",
+      "signIn",
+      "signUp",
+      "signOut",
+      "userAttributes",
+      "updateUserAttributes",
+      "federatedSignIn",
+      "resendSignUp",
+      "forgotPassword",
+      "forgotPasswordSubmit",
+      "currentUserCredentials",
+      "currentSession",
+      "verifyCurrentUserAttributeSubmit",
+      "changePassword",
+    ]);
     TestBed.configureTestingModule({
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: InterstitialService, useValue: interstitialMock },
+        { provide: Auth, useValue: AuthMock },
       ],
     });
     service = TestBed.inject(AuthService);
@@ -171,9 +60,9 @@ describe("AuthService", () => {
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.signUp on signUp", () => {
+  it("should call AuthMock.signUp on signUp", () => {
     service.signUp({} as NewUser);
-    expect(Auth.signUp).toHaveBeenCalled();
+    expect(AuthMock.signUp).toHaveBeenCalled();
   });
 
   it("should call fetching$.next on signIn", () => {
@@ -182,10 +71,11 @@ describe("AuthService", () => {
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.signIn on signIn", fakeAsync(() => {
+  it("should call AuthMock.signIn on signIn", fakeAsync(() => {
+    AuthMock.signIn.and.returnValue(Promise.resolve());
     service.signIn("test", "test").then(() => {
       tick();
-      expect(Auth.signIn).toHaveBeenCalled();
+      expect(AuthMock.signIn).toHaveBeenCalled();
     });
   }));
 
@@ -195,61 +85,61 @@ describe("AuthService", () => {
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.signOut on signOut", () => {
+  it("should call AuthMock.signOut on signOut", () => {
     service.signOut();
-    expect(Auth.signOut).toHaveBeenCalled();
+    expect(AuthMock.signOut).toHaveBeenCalled();
   });
 
-  it("should call Auth.federatedSignIn on socialSignIn", () => {
+  it("should call AuthMock.federatedSignIn on socialSignIn", () => {
     service.socialSignIn({} as CognitoHostedUIIdentityProvider);
-    expect(Auth.federatedSignIn).toHaveBeenCalled();
+    expect(AuthMock.federatedSignIn).toHaveBeenCalled();
   });
 
-  it("should call Auth.resendSignUp on resendSignUp", () => {
+  it("should call AuthMock.resendSignUp on resendSignUp", () => {
     service.resendSignUp("test");
-    expect(Auth.resendSignUp).toHaveBeenCalled();
+    expect(AuthMock.resendSignUp).toHaveBeenCalled();
   });
 
-  it("should call Auth.forgotPassword on forgotPassword", () => {
+  it("should call AuthMock.forgotPassword on forgotPassword", () => {
     service.forgotPassword("test");
-    expect(Auth.forgotPassword).toHaveBeenCalled();
+    expect(AuthMock.forgotPassword).toHaveBeenCalled();
   });
 
-  it("should call Auth.forgotPasswordSubmit on forgotPasswordSubmit", () => {
+  it("should call AuthMock.forgotPasswordSubmit on forgotPasswordSubmit", () => {
     service.forgotPasswordSubmit("test", "test", "test");
-    expect(Auth.forgotPasswordSubmit).toHaveBeenCalled();
+    expect(AuthMock.forgotPasswordSubmit).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentUserCredentials on getCurrentUserCredentials", () => {
+  it("should call AuthMock.currentUserCredentials on getCurrentUserCredentials", () => {
     service.getCurrentUserCredentials();
-    expect(Auth.currentUserCredentials).toHaveBeenCalled();
+    expect(AuthMock.currentUserCredentials).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentAuthenticatedUser on getcurrentAuthenticatedUser", () => {
+  it("should call AuthMock.currentAuthenticatedUser on getcurrentAuthenticatedUser", () => {
     service.getcurrentAuthenticatedUser();
-    expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
+    expect(AuthMock.currentAuthenticatedUser).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentSession on refreshSession", () => {
+  it("should call AuthMock.currentSession on refreshSession", () => {
     service.refreshSession();
-    expect(Auth.currentSession).toHaveBeenCalled();
+    expect(AuthMock.currentSession).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentSession on getAccessTokenJwtToken", () => {
+  it("should call AuthMock.currentSession on getAccessTokenJwtToken", () => {
     service.getAccessTokenJwtToken();
-    expect(Auth.currentSession).toHaveBeenCalled();
+    expect(AuthMock.currentSession).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentAuthenticatedUser on getIdTokenJwtTokens", () => {
+  it("should call AuthMock.currentAuthenticatedUser on getIdTokenJwtTokens", () => {
     service.getIdTokenJwtTokens();
-    expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
+    expect(AuthMock.currentAuthenticatedUser).toHaveBeenCalled();
   });
 
   it("should call user.getSignInUserSession on getIdTokenJwtTokens", fakeAsync(() => {
     let test = {
       getSignInUserSession: () => {},
     };
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve(test as unknown as CognitoUser)
     );
     spyOn(test, "getSignInUserSession");
@@ -258,43 +148,54 @@ describe("AuthService", () => {
     expect(test.getSignInUserSession).toHaveBeenCalled();
   }));
 
-  it("should call Auth.currentUserCredentials on getAuthCredentials", () => {
+  it("should call AuthMock.currentUserCredentials on getAuthCredentials", () => {
     service.getAuthCredentials();
-    expect(Auth.currentUserCredentials).toHaveBeenCalled();
+    expect(AuthMock.currentUserCredentials).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentAuthenticatedUser on getUserEmail", () => {
+  it("should call AuthMock.currentAuthenticatedUser on getUserEmail", () => {
     service.getUserEmail();
-    expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
+    expect(AuthMock.currentAuthenticatedUser).toHaveBeenCalled();
   });
 
-  it("should call Auth.userAttributes on getUserEmail", fakeAsync(() => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
+  it("should call AuthMock.currentAuthenticatedUser on getUserEmail", () => {
+    service.getUserEmail();
+    expect(true).toBeTruthy();
+  });
+
+  it("should call AuthMock.userAttributes on getUserEmail", fakeAsync(() => {
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({
         getSession: (cb, op) => {},
       } as CognitoUser)
     );
     service.getUserEmail();
     tick();
-    expect(Auth.userAttributes).toHaveBeenCalled();
+    expect(AuthMock.userAttributes).toHaveBeenCalled();
   }));
 
   it("should call fetching$.next on updateUserEmail", () => {
+    AuthMock.updateUserAttributes.and.returnValue(Promise.resolve("test"));
     spyOn(interstitialMock.fetching$, "next");
     service.updateUserEmail("");
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentAuthenticatedUser on updateUserEmail", fakeAsync(() => {
+  it("should call AuthMock.currentAuthenticatedUser on updateUserEmail", fakeAsync(() => {
+    AuthMock.currentAuthenticatedUser.and.returnValue(
+      Promise.resolve({
+        getSession: (cb, op) => {},
+      } as CognitoUser)
+    );
     service.updateUserEmail("");
     tick();
-    expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
+    expect(AuthMock.currentAuthenticatedUser).toHaveBeenCalled();
   }));
 
-  it("should call Auth.updateUserAttributes on updateUserEmail", fakeAsync(() => {
+  it("should call AuthMock.updateUserAttributes on updateUserEmail", fakeAsync(() => {
     service.updateUserEmail("");
     tick();
-    expect(Auth.updateUserAttributes).toHaveBeenCalled();
+    expect(AuthMock.updateUserAttributes).toHaveBeenCalled();
   }));
 
   it("should call fetching$.next on verifyUserEmail", () => {
@@ -303,10 +204,10 @@ describe("AuthService", () => {
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.verifyCurrentUserAttributeSubmit on verifyUserEmail", fakeAsync(() => {
+  it("should call AuthMock.verifyCurrentUserAttributeSubmit on verifyUserEmail", fakeAsync(() => {
     service.verifyUserEmail("");
     tick();
-    expect(Auth.verifyCurrentUserAttributeSubmit).toHaveBeenCalled();
+    expect(AuthMock.verifyCurrentUserAttributeSubmit).toHaveBeenCalled();
   }));
 
   it("should call fetching$.next on resetPassword", () => {
@@ -315,20 +216,25 @@ describe("AuthService", () => {
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentAuthenticatedUser on resetPassword", fakeAsync(() => {
+  it("should call AuthMock.currentAuthenticatedUser on resetPassword", fakeAsync(() => {
+    AuthMock.currentAuthenticatedUser.and.returnValue(
+      Promise.resolve({
+        getSession: (cb, op) => {},
+      } as CognitoUser)
+    );
     service.resetPassword("", "");
     tick();
-    expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
+    expect(AuthMock.currentAuthenticatedUser).toHaveBeenCalled();
   }));
 
-  it("should call Auth.changePassword on resetPassword", fakeAsync(() => {
+  it("should call AuthMock.changePassword on resetPassword", fakeAsync(() => {
     service.resetPassword("", "");
     tick();
-    expect(Auth.changePassword).toHaveBeenCalled();
+    expect(AuthMock.changePassword).toHaveBeenCalled();
   }));
 
   it("should call fetching$.next on deactivateAccount", () => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({ deleteUser: (cb) => {} } as CognitoUser)
     );
     spyOn(interstitialMock.fetching$, "next");
@@ -336,12 +242,12 @@ describe("AuthService", () => {
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
-  it("should call Auth.currentAuthenticatedUser on deactivateAccount", fakeAsync(() => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
+  it("should call AuthMock.currentAuthenticatedUser on deactivateAccount", fakeAsync(() => {
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({ deleteUser: (cb) => {} } as CognitoUser)
     );
     service.deactivateAccount();
     tick();
-    expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
+    expect(AuthMock.currentAuthenticatedUser).toHaveBeenCalled();
   }));
 });
