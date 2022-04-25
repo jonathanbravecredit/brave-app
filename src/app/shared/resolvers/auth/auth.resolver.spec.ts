@@ -1,18 +1,25 @@
-import { TestBed } from '@angular/core/testing';
-import { CampaignService } from '@shared/services/campaign/campaign.service';
-import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { of } from 'rxjs';
+import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ActivatedRouteSnapshot } from "@angular/router";
+import { CampaignService } from "@shared/services/campaign/campaign.service";
+import { ReferralsService } from "@shared/services/referrals/referrals.service";
+import { BehaviorSubject, of } from "rxjs";
 
-import { AuthResolver } from './auth.resolver';
+import { AuthResolver } from "./auth.resolver";
 
-describe('AuthResolver', () => {
+describe("AuthResolver", () => {
   let resolver: AuthResolver;
   let referralsMock: any;
   let campaignMock: any;
 
   beforeEach(() => {
-    referralsMock = jasmine.createSpyObj('ReferralsService', ['validateReferralCode'], { referredByCode: of('abc') });
-    campaignMock = jasmine.createSpyObj('CampaignService', ['setCampaignActive']);
+    referralsMock = jasmine.createSpyObj(
+      "ReferralsService",
+      ["validateReferralCode"],
+      { referredByCode$: new BehaviorSubject<string | null>(null) }
+    );
+    campaignMock = jasmine.createSpyObj("CampaignService", [
+      "setCampaignActive",
+    ]);
     TestBed.configureTestingModule({
       providers: [
         { provide: ReferralsService, useValue: referralsMock },
@@ -22,7 +29,33 @@ describe('AuthResolver', () => {
     resolver = TestBed.inject(AuthResolver);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(resolver).toBeTruthy();
   });
+
+  it("should run referredByCode$.next on resolve", () => {
+    let spy = spyOn(referralsMock.referredByCode$, "next");
+    resolver.resolve({
+      queryParams: { referralCode: "" },
+    } as unknown as ActivatedRouteSnapshot);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it("should run referrals.validateReferralCode on resolve", () => {
+    resolver.resolve({
+      queryParams: { referralCode: "" },
+    } as unknown as ActivatedRouteSnapshot);
+    expect(referralsMock.validateReferralCode).toHaveBeenCalled();
+  });
+
+  it("should run campaign.setCampaignActive on resolve", fakeAsync(() => {
+    referralsMock.validateReferralCode.and.returnValue(
+      Promise.resolve({ valide: true })
+    );
+    resolver.resolve({
+      queryParams: { referralCode: "" },
+    } as unknown as ActivatedRouteSnapshot);
+    tick();
+    expect(campaignMock.setCampaignActive).toHaveBeenCalled();
+  }));
 });

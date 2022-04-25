@@ -175,6 +175,7 @@ describe("AuthService", () => {
   }));
 
   it("should call fetching$.next on updateUserEmail", () => {
+    (Auth.updateUserAttributes as any).and.returnValue(Promise.resolve("test"));
     spyOn(interstitialMock.fetching$, "next");
     service.updateUserEmail("");
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();

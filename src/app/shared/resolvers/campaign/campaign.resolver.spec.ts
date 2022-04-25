@@ -13,7 +13,7 @@ describe('CampaignResolver', () => {
   let campaignServiceMock: any;
 
   beforeEach(() => {
-    campaignServiceMock = jasmine.createSpyObj('CampaignService', ['']);
+    campaignServiceMock = jasmine.createSpyObj('CampaignService', ['getCampaign']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [{ provide: CampaignService, useValue: campaignServiceMock }],
@@ -23,5 +23,10 @@ describe('CampaignResolver', () => {
 
   it('should be created', () => {
     expect(resolver).toBeTruthy();
+  });
+
+  it('should run campaignService.getCampaign on resolve', () => {
+    resolver.resolve()
+    expect(campaignServiceMock.getCampaign).toHaveBeenCalled();
   });
 });

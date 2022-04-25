@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IFilledClosingAlertConfig } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
+import { ICampaign } from '@shared/interfaces/campaign.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 
 @Component({
@@ -8,6 +9,7 @@ import { IReferral } from '@shared/interfaces/referrals.interface';
 })
 export class ReferralAmountLinkComponent implements OnInit {
   @Input() referral: IReferral | undefined;
+  @Input() campaign: ICampaign | undefined;
   @Input() disabled: boolean | undefined;
   referralLink: string = '';
   showAlert: boolean = false;
@@ -17,6 +19,14 @@ export class ReferralAmountLinkComponent implements OnInit {
     color: 'text-white',
     alertBody: 'Copied to Clipboard!',
   };
+
+  get percentage(): number {
+    const referred = this.referral?.campaignActiveReferred || 0;
+    const max = this.campaign?.maxReferrals || 0;
+    const perc = !max ? 0 : referred / max;
+    return perc * 100;
+  }
+
   constructor() {}
 
   ngOnInit(): void {
