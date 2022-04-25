@@ -139,7 +139,7 @@ describe("AuthService", () => {
     let test = {
       getSignInUserSession: () => {},
     };
-    (AuthMock.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve(test as unknown as CognitoUser)
     );
     spyOn(test, "getSignInUserSession");
@@ -164,7 +164,7 @@ describe("AuthService", () => {
   });
 
   it("should call AuthMock.userAttributes on getUserEmail", fakeAsync(() => {
-    (AuthMock.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({
         getSession: (cb, op) => {},
       } as CognitoUser)
@@ -175,14 +175,14 @@ describe("AuthService", () => {
   }));
 
   it("should call fetching$.next on updateUserEmail", () => {
-    (Auth.updateUserAttributes as any).and.returnValue(Promise.resolve("test"));
+    AuthMock.updateUserAttributes.and.returnValue(Promise.resolve("test"));
     spyOn(interstitialMock.fetching$, "next");
     service.updateUserEmail("");
     expect(interstitialMock.fetching$.next).toHaveBeenCalled();
   });
 
   it("should call AuthMock.currentAuthenticatedUser on updateUserEmail", fakeAsync(() => {
-    (AuthMock.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({
         getSession: (cb, op) => {},
       } as CognitoUser)
@@ -217,7 +217,7 @@ describe("AuthService", () => {
   });
 
   it("should call AuthMock.currentAuthenticatedUser on resetPassword", fakeAsync(() => {
-    (AuthMock.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({
         getSession: (cb, op) => {},
       } as CognitoUser)
@@ -234,7 +234,7 @@ describe("AuthService", () => {
   }));
 
   it("should call fetching$.next on deactivateAccount", () => {
-    (AuthMock.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({ deleteUser: (cb) => {} } as CognitoUser)
     );
     spyOn(interstitialMock.fetching$, "next");
@@ -243,7 +243,7 @@ describe("AuthService", () => {
   });
 
   it("should call AuthMock.currentAuthenticatedUser on deactivateAccount", fakeAsync(() => {
-    (AuthMock.currentAuthenticatedUser as any).and.returnValue(
+    AuthMock.currentAuthenticatedUser.and.returnValue(
       Promise.resolve({ deleteUser: (cb) => {} } as CognitoUser)
     );
     service.deactivateAccount();
