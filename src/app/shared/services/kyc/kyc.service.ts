@@ -541,7 +541,7 @@ export class KycService {
   async setCreditReport(creditReport: ICreditReport): Promise<void> {
     const { report, modifiedOn } = creditReport;
     const payload = { report, updatedOn: new Date().toISOString(), modifiedOn };
-    await this.store.dispatch(new CreditReportActions.Add(payload)).toPromise();
+    await this.store.dispatch(new CreditReportActions.Add(payload))?.toPromise();
   }
 
   /*=====================================*/
