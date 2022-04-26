@@ -1,4 +1,5 @@
-import { Injectable, OnDestroy } from "@angular/core";
+
+import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import {
@@ -34,7 +35,8 @@ export class SyncService implements OnDestroy {
     private api: APIService,
     private store: Store,
     private router: Router,
-    private statesvc: StateService
+    private statesvc: StateService,
+    @Inject(Auth) private auth: typeof Auth
   ) {}
 
   ngOnDestroy(): void {
@@ -183,7 +185,7 @@ export class SyncService implements OnDestroy {
       return await new Promise((resolve, reject) => {
         this.store
           .dispatch(new AppDataActions.Add(clean))
-          .subscribe((appData) => {
+          ?.subscribe((appData) => {
             this.data$.next(clean);
             return resolve(clean);
           });
@@ -235,11 +237,11 @@ export class SyncService implements OnDestroy {
   ): Promise<AppDataStateModel> {
     let userId: string;
     if (id === "") {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser({
+      const creds: CognitoUser = await this.auth.currentAuthenticatedUser({
         bypassCache: true,
       });
-      const attrs = await Auth.userAttributes(creds);
-      userId = attrs.filter((a) => a.Name === "sub")[0]?.Value;
+      const attrs = await this.auth.userAttributes(creds);
+      userId = attrs?.filter((a) => a.Name === "sub")[0]?.Value;
     } else {
       userId = id;
     }
@@ -252,7 +254,7 @@ export class SyncService implements OnDestroy {
       const raw = await this.api.GetAppData(userId);
       const clean = this.cleanBackendData(raw);
       return new Promise((resolve, reject) => {
-        this.store.dispatch(new AppDataActions.Edit(clean)).subscribe((_) => {
+        this.store.dispatch(new AppDataActions.Edit(clean))?.subscribe((_) => {
           this.data$.next(clean);
           resolve(clean);
         });

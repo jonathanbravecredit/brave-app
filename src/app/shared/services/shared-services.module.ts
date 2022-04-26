@@ -23,6 +23,7 @@ import { MergereportToSubscribersPipe } from '@shared/pipes/mergereport-to-subsc
 import { MergereportToPersonalitemsPipe } from '@shared/pipes/mergereport-to-personalitems/mergereport-to-personalitems.pipe';
 import { MergereportToPublicitemsPipe } from '@shared/pipes/mergereport-to-publicitems/mergereport-to-publicitems.pipe';
 import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
+import { Auth } from 'aws-amplify';
 
 const services = [
   InitService,
@@ -54,6 +55,6 @@ const services = [
 @NgModule({
   declarations: [],
   imports: [CommonModule],
-  providers: [...services],
+  providers: [...services, { provide: Auth, useValue: Auth }],
 })
 export class SharedServicesModule {}
