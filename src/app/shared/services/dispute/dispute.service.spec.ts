@@ -24,7 +24,7 @@ const setup = () => {
     'sendTransunionAPICall',
   ]);
   const safeMonitorMock = jasmine.createSpyObj('SafeListMonitoringService', ['fireClickEvent']);
-  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', ['updateCreditReportStateAsync']);
+  const creditReportMock = jasmine.createSpyObj('Creditreportv2Service', ['updateCreditReportStateAsync', 'getCurrentCreditReport']);
   const disputeService = new DisputeService(
     stateMock,
     analyticsMock,
