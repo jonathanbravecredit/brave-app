@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   title = 'brave-app';
   spinner$: Observable<boolean>;
   message$: Observable<string>;
+
   // inject app monitoring services and auth service
   constructor(
     private router: Router,
@@ -35,12 +36,10 @@ export class AppComponent implements OnInit {
       const { channel, payload } = data;
       switch (payload.event) {
         case 'signIn':
-          // const provider = window.sessionStorage.getItem('braveOAuthProvider');
-          // if (provider) return; // handled in redirect
           const sub = await this.init.getUserId();
           this.analytics.fireUserTrackingEvent(sub);
           this.analytics.fireLoginTrackingEvent();
-          await this.init.resolver();   
+          await this.init.resolver();
           break;
         case 'signOut':
           this.router.navigate([routes.root.auth.signin.full]);
