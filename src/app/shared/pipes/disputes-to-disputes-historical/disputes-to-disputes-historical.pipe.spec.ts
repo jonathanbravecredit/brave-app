@@ -17,10 +17,30 @@ describe("DisputesToDisputesHistoricalPipe", () => {
     expect(res).toEqual([]);
   });
 
+  it("should run parseHistoricalDisputeItems on transform if dispute", () => {
+    let spy = spyOn(pipe, "parseHistoricalDisputeItems");
+    spy.and.returnValue({} as IDisputeHistorical);
+    pipe.transform([true, { disputeItems: JSON.stringify([{}]) } as IDispute]);
+    expect(spy).toHaveBeenCalled();
+  });
+
   it("should return expected on transform if dispute", () => {
     let spy = spyOn(pipe, "parseHistoricalDisputeItems");
     spy.and.returnValue({} as IDisputeHistorical);
-    let res = pipe.transform([true, { disputeItems: "" } as IDispute]);
-    expect(res).toEqual([]);
+    let res = pipe.transform([
+      true,
+      { disputeItems: JSON.stringify([{}]) } as IDispute,
+    ]);
+    expect(res).toEqual([{}]);
+  });
+
+  it("should run mapHistoricalDisputeItem on parseHistoricalDisputeItems", () => {
+    let spy = spyOn(pipe, "mapHistoricalDisputeItem");
+    spy.and.returnValue({} as IDisputeHistorical);
+    pipe.parseHistoricalDisputeItems([
+      true,
+      { disputeItems: JSON.stringify([{}]) } as IDispute,
+    ]);
+    expect(spy).toHaveBeenCalled();
   });
 });
