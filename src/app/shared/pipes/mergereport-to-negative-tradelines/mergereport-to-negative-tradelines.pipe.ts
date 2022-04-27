@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { NEGATIVE_PAY_STATUS_CODES } from '@shared/constants';
-import { ITradeLinePartition, IMergeReport, ISubscriber } from '@shared/interfaces/merge-report.interface';
-import { DEFAULT_TRADELINE } from '@views/dashboard/negative-account/negative-account-initial/constants';
+import { ITradeLinePartition, IMergeReport } from '@shared/interfaces/merge-report.interface';
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 
 @Pipe({
@@ -12,7 +11,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
 
   transform(report: IMergeReport): ITradeLinePartition[] | [] {
     this.tradeLines = report?.TrueLinkCreditReportType?.TradeLinePartition;
-    if (!this.tradeLines) return [DEFAULT_TRADELINE.tradeline];
+    if (!this.tradeLines) return [{} as ITradeLinePartition];
     if (!(this.tradeLines instanceof Array)) {
       this.tradeLines = [this.tradeLines];
     }
