@@ -37,8 +37,6 @@ const services = [
   KycService,
   DashboardService,
   TransunionService,
-  BroadcastService,
-  NavigatorService,
   // DisputeService, // already in provided for in root
   CustomLineChartService,
   NavigationService,

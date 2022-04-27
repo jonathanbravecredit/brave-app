@@ -1,8 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { Injectable, OnDestroy } from '@angular/core';
 import { EventKeys } from '@shared/services/broadcast/broadcast.model';
 import { BroadcastService } from '@shared/services/broadcast/broadcast.service';
-import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
 @Injectable({
