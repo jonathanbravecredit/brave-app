@@ -1,5 +1,5 @@
-import { Injectable, NgZone, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
 
 export enum RenderedViews {
   Authentication = 'authentication',
@@ -26,6 +26,8 @@ export class RenderedService {
 
   checkStatus(): void {
     this.checked = true;
-    if (this.tracker.size === 0) throw new Error('Missing at least 1 critical view rendered');
+    if (environment.production) {
+      if (this.tracker.size === 0) throw new Error('Missing at least 1 critical view rendered');
+    }
   }
 }
