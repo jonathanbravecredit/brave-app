@@ -61,6 +61,8 @@ export class RollbarErrorHandler implements ErrorHandler {
   handleError(err: any): void {
     if (environment.production) {
       this.rollbar.error(err.originalError || err);
+    } else {
+      console.error(err.originalError || err);
     }
   }
 }

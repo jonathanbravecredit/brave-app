@@ -6,12 +6,13 @@ import { ComplianceComponent } from '@views/compliance/compliance.component';
 import { ComplianceRoutingModule } from '@views/compliance/compliance.routing';
 import { ComplianceTosComponent } from '@views/compliance/compliance-tos/compliance-tos.component';
 import { CompliancePrivacyComponent } from '@views/compliance/compliance-privacy/compliance-privacy.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const components = [ComplianceComponent, ComplianceTosComponent, CompliancePrivacyComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [CommonModule, SharedComponentsModule, ComplianceRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedDirectivesModule, ComplianceRoutingModule],
   exports: [...components],
 })
 export class ComplianceModule {}

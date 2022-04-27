@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private init: InitService,
     private interstitial: InterstitialService,
-    private safeListMonitoringService: SafeListMonitoringService
+    private safeListMonitoringService: SafeListMonitoringService,
   ) {
     this.spinner$ = this.interstitial.open$.asObservable();
     this.message$ = this.interstitial.message$.asObservable();
