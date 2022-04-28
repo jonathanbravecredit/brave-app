@@ -45,7 +45,6 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   };
 
   constructor(
-    private progressTrackerService: ProgressTrackerService,
     private router: Router,
     private progressTrackerViewService: ProgressTrackerViewService
   ) {}
@@ -74,7 +73,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       //! PLACEHOLDER SOLUTION
       if (this.patchBody) {
         this.patchBody.taskStatus = "complete";
-        this.progressTrackerService.updateProgressTrackerData(this.patchBody);
+        this.progressTrackerViewService.updateProgressTrackerData(this.patchBody);
       }
       this.taskCompleted = true;
       this.showQuestion = false;
@@ -85,7 +84,7 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
     if (this.subTask?.taskStatus === "complete" && this.patchBody) {
       this.taskCompleted = false;
       this.patchBody.taskStatus = "in_progress";
-      this.progressTrackerService.updateProgressTrackerData(this.patchBody);
+      this.progressTrackerViewService.updateProgressTrackerData(this.patchBody);
     }
     this.showQuestion = false;
   }

@@ -20,7 +20,6 @@ const modules = [
   SharedPipesModule,
   NgxMaskModule,
   ProgressTrackerRoutingModule,
-  SharedServicesModule,
 ];
 const components = [
   ProgressTrackerParentComponent,

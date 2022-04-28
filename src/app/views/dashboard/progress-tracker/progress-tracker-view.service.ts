@@ -11,6 +11,7 @@ import {
   InitiativeSubTask,
 } from "../../../shared/interfaces/progress-tracker.interface";
 import dayjs from "dayjs";
+import { InitiativePatchBody } from '../../../shared/interfaces/progress-tracker.interface';
 
 @Injectable({
   providedIn: "root",
@@ -109,5 +110,9 @@ export class ProgressTrackerViewService implements OnDestroy {
       }
     }
     return "";
+  }
+
+  updateProgressTrackerData(body: InitiativePatchBody) {
+    this.progressTrackerService.updateProgressTrackerData(body)
   }
 }
