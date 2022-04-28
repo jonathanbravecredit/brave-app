@@ -48,7 +48,7 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
           map((clean) => {
             const agencies = clean.agencies;
             if (!agencies) return null;
-            return bc.parsers.parseTransunionMergeReport(agencies.transunion);
+            return bc.parsers.parseTransunionMergeReport(agencies?.transunion);
           }),
         )
         .toPromise();
