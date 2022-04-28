@@ -19,6 +19,7 @@ import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { IMergeReport } from '@shared/interfaces';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Injectable({
   providedIn: 'root',
@@ -488,7 +489,7 @@ export class StateService {
     return new Promise((resolve, reject) => {
       this.store.dispatch(action).subscribe((state: { appData: AppDataStateModel }) => {
         const input = { ...state.appData } as UpdateAppDataInput;
-        const clean = BraveUtil.scrubbers.scrubBackendData(input) as UpdateAppDataInput;
+        const clean = TransunionUtil.scrubbers.scrubBackendData(input) as UpdateAppDataInput;
         if (!clean.id) {
           return;
         } else {
@@ -507,7 +508,7 @@ export class StateService {
 
   scrubAndUpdate(state: { appData: AppDataStateModel }): void {
     const input = { ...state.appData } as UpdateAppDataInput;
-    const clean = BraveUtil.scrubbers.scrubBackendData(input);
+    const clean = TransunionUtil.scrubbers.scrubBackendData(input);
     if (!clean.id) {
       console.log('failed to update state');
       return;
