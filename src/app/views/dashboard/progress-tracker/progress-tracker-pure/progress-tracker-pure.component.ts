@@ -1,23 +1,24 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import {
-  InitiativeSubTask,
-  InitiativeTask,
-} from "@shared/interfaces/progress-tracker.interface";
+import { Component, OnDestroy } from "@angular/core";
 import { PROGRESS_TRACKER_CONTENT } from "../progress-tracker.content";
 import { IProgressTrackerView } from "../progress-tracker.model";
+import { ProgressTrackerViewService } from "../progress-tracker-view.service";
+import { Subscription } from "rxjs";
 @Component({
   selector: "brave-progress-tracker-pure",
   templateUrl: "./progress-tracker-pure.component.html",
 })
-export class ProgressTrackerPureComponent implements OnInit {
-  public model: IProgressTrackerView = {} as IProgressTrackerView;
-
+export class ProgressTrackerPureComponent implements OnDestroy {
   PROGRESS_TRACKER_CONTENT = PROGRESS_TRACKER_CONTENT;
+  model: IProgressTrackerView = {} as IProgressTrackerView;
+  modelSub$: Subscription | undefined;
 
-  @Output() updateTask: EventEmitter<InitiativeSubTask | InitiativeTask> =
-    new EventEmitter<InitiativeSubTask | InitiativeTask>();
+  constructor(public progressTrackerViewService: ProgressTrackerViewService) {
+    this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
+      this.model = res;
+    });
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
+  }
 }

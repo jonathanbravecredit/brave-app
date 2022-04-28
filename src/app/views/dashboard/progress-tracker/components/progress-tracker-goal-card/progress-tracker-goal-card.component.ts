@@ -1,20 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
-import { InitiativePatchBody, InitiativeSubTask } from '@shared/interfaces/progress-tracker.interface';
-import { Router } from '@angular/router';
-import { IProgressTrackerView } from '../../progress-tracker.model';
+import { Component, Input, OnInit } from "@angular/core";
+import { IFilledOnlyTextButtonConfig } from "@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component";
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from "@angular/animations";
+import { ProgressTrackerService } from "@shared/services/progress-tracker/progress-tracker-service.service";
+import {
+  InitiativePatchBody,
+  InitiativeSubTask,
+} from "@shared/interfaces/progress-tracker.interface";
+import { Router } from "@angular/router";
+import { ProgressTrackerViewService } from "../../progress-tracker-view.service";
 
 @Component({
-  selector: 'brave-progress-tracker-goal-card',
-  templateUrl: './progress-tracker-goal-card.component.html',
+  selector: "brave-progress-tracker-goal-card",
+  templateUrl: "./progress-tracker-goal-card.component.html",
   animations: [
-    trigger('openClose', [
-      state('closed', style({ height: '0' })),
-      state('open', style({ height: '*' })),
-      transition('closed => open', [animate('0.3s linear')]),
-      transition('open => closed', [animate('0.3s linear')]),
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.3s linear")]),
+      transition("open => closed", [animate("0.3s linear")]),
     ]),
   ],
 })
@@ -25,17 +34,21 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
   showQuestion: boolean = false;
-  metric: string = '-';
+  metric: string = "-";
   link: string | undefined;
   config: IFilledOnlyTextButtonConfig = {
-    buttonSize: 'lg',
-    backgroundColor: 'bg-indigo-800',
-    activeColor: 'bg-indigo-900',
-    color: 'text-white',
+    buttonSize: "lg",
+    backgroundColor: "bg-indigo-800",
+    activeColor: "bg-indigo-900",
+    color: "text-white",
     full: false,
   };
 
-  constructor(private progressTrackerService: ProgressTrackerService, private router: Router) {}
+  constructor(
+    private progressTrackerService: ProgressTrackerService,
+    private router: Router,
+    private progressTrackerViewService: ProgressTrackerViewService
+  ) {}
 
   ngOnInit(): void {
     this.patchBody = {
@@ -43,17 +56,24 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       taskId: this.subTask?.taskId,
       taskStatus: this.subTask?.taskStatus,
     };
-    if (!this.taskCompleted && this.subTask?.taskCard?.questionHeader && !this.showQuestion) {
+    if (
+      !this.taskCompleted &&
+      this.subTask?.taskCard?.questionHeader &&
+      !this.showQuestion
+    ) {
       this.showQuestion = true;
     }
     this.link = this.subTask?.taskCard?.link;
-    this.metric = this.getMetric();
+    if (this.subTask) {
+      this.metric = this.progressTrackerViewService.getMetric(this.subTask);
+    }
   }
 
   clickYes() {
-    if (this.subTask?.taskId !== 'open_self_loan') { //! PLACEHOLDER SOLUTION
+    if (this.subTask?.taskId !== "open_self_loan") {
+      //! PLACEHOLDER SOLUTION
       if (this.patchBody) {
-        this.patchBody.taskStatus = 'complete';
+        this.patchBody.taskStatus = "complete";
         this.progressTrackerService.updateProgressTrackerData(this.patchBody);
       }
       this.taskCompleted = true;
@@ -62,9 +82,9 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
   }
 
   clickNo() {
-    if (this.subTask?.taskStatus === 'complete' && this.patchBody) {
+    if (this.subTask?.taskStatus === "complete" && this.patchBody) {
       this.taskCompleted = false;
-      this.patchBody.taskStatus = 'in_progress';
+      this.patchBody.taskStatus = "in_progress";
       this.progressTrackerService.updateProgressTrackerData(this.patchBody);
     }
     this.showQuestion = false;
@@ -75,24 +95,10 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
       this.clickYes();
     }
 
-    if (this.link?.startsWith('http')) {
+    if (this.link?.startsWith("http")) {
       window.open(this.link);
     } else {
       this.router.navigate([this.link]);
     }
-  }
-
-  getMetric(): string {
-    if (this.subTask?.taskCard?.metric) {
-      if (+this.subTask?.taskCard?.metric === 0) {
-        return this.subTask?.taskCard?.metric;
-      }
-      if (+this.subTask?.taskCard?.metric > 0) {
-        return `+${this.subTask?.taskCard?.metric}`;
-      } else {
-        return `-${this.subTask?.taskCard?.metric}`;
-      }
-    }
-    return '';
   }
 }

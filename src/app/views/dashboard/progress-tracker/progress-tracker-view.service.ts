@@ -6,7 +6,11 @@ import { ProgressTrackerService } from "../../../shared/services/progress-tracke
 import { DashboardService } from "../../../shared/services/dashboard/dashboard.service";
 import { Subscription } from "rxjs";
 import { ICircleProgressStep } from "../../../shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
-import { Initiative } from "../../../shared/interfaces/progress-tracker.interface";
+import {
+  Initiative,
+  InitiativeSubTask,
+} from "../../../shared/interfaces/progress-tracker.interface";
+import dayjs from "dayjs";
 
 @Injectable({
   providedIn: "root",
@@ -41,6 +45,8 @@ export class ProgressTrackerViewService implements OnDestroy {
       this.model.dashDelta = v;
     });
 
+    this.model.hasSelfLoan = false; //! WHERE DOES THIS COME FROM?
+
     this.model$.next(this.model);
   }
 
@@ -63,5 +69,45 @@ export class ProgressTrackerViewService implements OnDestroy {
 
   get enrolledScore(): string | null | undefined {
     return this.progressTrackerService.enrolledScore;
+  }
+
+  getScoreReview(): string {
+    switch (true) {
+      case this.model.futureScore <= 500:
+        return "Very Poor";
+      case this.model.futureScore <= 600:
+        return "Poor";
+      case this.model.futureScore <= 660:
+        return "Fair";
+      case this.model.futureScore <= 780:
+        return "Good";
+      default:
+        return "Excellent";
+    }
+  }
+
+  calculatePointsDiff() {
+    if (this.model.enrolledScore) {
+      return this.model.futureScore - +this.model.enrolledScore;
+    }
+    return 0;
+  }
+
+  calculateMonthYear() {
+    return dayjs(this.model.enrolledOn).format("MMMM YYYY");
+  }
+
+  getMetric(subTask: InitiativeSubTask): string {
+    if (subTask?.taskCard?.metric) {
+      if (+subTask?.taskCard?.metric === 0) {
+        return subTask?.taskCard?.metric;
+      }
+      if (+subTask?.taskCard?.metric > 0) {
+        return `+${subTask?.taskCard?.metric}`;
+      } else {
+        return `-${subTask?.taskCard?.metric}`;
+      }
+    }
+    return "";
   }
 }
