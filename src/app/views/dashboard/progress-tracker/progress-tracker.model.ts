@@ -1,6 +1,8 @@
-import { Initiative } from "@bravecredit/brave-sdk";
 import { ICircleProgressStep } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
-import { InitiativeTask } from "@shared/interfaces/progress-tracker.interface";
+import {
+  Initiative,
+  InitiativeTask,
+} from "@shared/interfaces/progress-tracker.interface";
 
 export interface IProgressTrackerView {
   initiative: Initiative | null;
