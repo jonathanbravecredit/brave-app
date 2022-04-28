@@ -22,6 +22,7 @@ import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-sc
 import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditReportMetric } from '@bravecredit/brave-sdk';
+import { BraveUtil } from '@shared/utils/brave/brave';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -184,15 +185,8 @@ export class DashboardService implements OnDestroy {
   }
 
   syncDashboardStateToDB(payload: Partial<DashboardStateModel>): void {
-    this.store.dispatch(new DashboardActions.Edit(payload)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        console.log('failed to update state');
-        return;
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    const action = new DashboardActions.Edit(payload);
+    this.statesvc.dispatch(action, true);
   }
 
   async getAdData(): Promise<IAdData[]> {

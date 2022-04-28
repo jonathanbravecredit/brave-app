@@ -67,7 +67,6 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     ])
       .pipe(
         tap((val: any[]) => {
-          console.log('metrics: ', val[6]);
           this.dashboardData$?.next({
             dashReport: val[0],
             dashSnapshots: val[1],
