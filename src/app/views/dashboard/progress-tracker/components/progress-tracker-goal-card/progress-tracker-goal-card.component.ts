@@ -4,6 +4,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
 import { InitiativePatchBody, InitiativeSubTask } from '@shared/interfaces/progress-tracker.interface';
 import { Router } from '@angular/router';
+import { IProgressTrackerView } from '../../progress-tracker.model';
 
 @Component({
   selector: 'brave-progress-tracker-goal-card',
@@ -20,7 +21,7 @@ import { Router } from '@angular/router';
 export class ProgressTrackerGoalCardComponent implements OnInit {
   @Input() subTask: InitiativeSubTask | undefined;
   @Input() taskCompleted: boolean = false;
-  @Input() hasSelfLoan: boolean = false;
+
   patchBody: InitiativePatchBody | undefined;
   expanded: boolean = false;
   showQuestion: boolean = false;

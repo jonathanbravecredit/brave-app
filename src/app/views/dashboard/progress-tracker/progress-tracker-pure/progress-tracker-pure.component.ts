@@ -1,26 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
-import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
-
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  InitiativeSubTask,
+  InitiativeTask,
+} from "@shared/interfaces/progress-tracker.interface";
+import { PROGRESS_TRACKER_CONTENT } from "../progress-tracker.content";
+import { IProgressTrackerView } from "../progress-tracker.model";
 @Component({
-  selector: 'brave-progress-tracker-pure',
-  templateUrl: './progress-tracker-pure.component.html',
+  selector: "brave-progress-tracker-pure",
+  templateUrl: "./progress-tracker-pure.component.html",
 })
 export class ProgressTrackerPureComponent implements OnInit {
-  @Input() initiative: Initiative | null = null;
-  @Input() goalId: string = '';
-  @Input() steps: ICircleProgressStep[] = [];
-  @Input() initiativeTasks: InitiativeTask[] = [];
-  @Input() futureScore: number = 0;
-  @Input() enrolledScore: string | null | undefined;
-  @Input() dashScore: number | null = 0;
-  @Input() dashDelta: number | null = 0;
-  @Input() enrolledOn: string | null | undefined;
-  @Input() hasSelfLoan: boolean = false
+  public model: IProgressTrackerView = {} as IProgressTrackerView;
 
-  @Output() updateTask: EventEmitter<InitiativeSubTask | InitiativeTask> = new EventEmitter<
-    InitiativeSubTask | InitiativeTask
-  >();
+  PROGRESS_TRACKER_CONTENT = PROGRESS_TRACKER_CONTENT;
+
+  @Output() updateTask: EventEmitter<InitiativeSubTask | InitiativeTask> =
+    new EventEmitter<InitiativeSubTask | InitiativeTask>();
 
   constructor() {}
 

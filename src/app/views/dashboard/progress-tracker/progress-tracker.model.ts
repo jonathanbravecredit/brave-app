@@ -1,5 +1,16 @@
-import { ITradeLinePartition } from '@bravecredit/brave-sdk/dist/types/merge-report';
+import { Initiative } from "@bravecredit/brave-sdk";
+import { ICircleProgressStep } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
+import { InitiativeTask } from "@shared/interfaces/progress-tracker.interface";
 
-export interface INegativeAccountView {
-  negativeAccounts: ITradeLinePartition[];
+export interface IProgressTrackerView {
+  initiative: Initiative | null;
+  goalId: string;
+  steps: ICircleProgressStep[];
+  initiativeTasks: InitiativeTask[];
+  futureScore: number;
+  enrolledScore: string | null | undefined;
+  dashScore: number | null;
+  dashDelta: number | null;
+  enrolledOn: string | null | undefined;
+  hasSelfLoan: boolean;
 }
