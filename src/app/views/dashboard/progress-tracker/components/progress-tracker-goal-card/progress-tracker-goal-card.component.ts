@@ -22,8 +22,8 @@ import { ProgressTrackerViewService } from "../../progress-tracker-view.service"
     trigger("openClose", [
       state("closed", style({ height: "0" })),
       state("open", style({ height: "*" })),
-      transition("closed => open", [animate("0.3s linear")]),
-      transition("open => closed", [animate("0.3s linear")]),
+      transition("closed => open", [animate("0.1s linear")]),
+      transition("open => closed", [animate("0.1s linear")]),
     ]),
   ],
 })

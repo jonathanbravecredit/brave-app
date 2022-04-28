@@ -8,7 +8,9 @@
       [campaign]="campaign"
       [disabled]="disabled"
     ></brave-referral-amount-link>
-    <h3 *ngIf="!disabled" class="text-lg mb-4 mt-10 text-white">Or, click to share your link via social media:</h3>
+    <h3 *ngIf="!disabled" class="text-lg mb-4 mt-10 text-white">
+      {{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralDashboardPure.h1}}
+    </h3>
     <div *ngIf="!disabled" class="min-w-full flex justify-evenly">
       <brave-facebook-share [referralCode]="referral?.referralCode"></brave-facebook-share>
       <brave-twitter-share [referralCode]="referral?.referralCode"></brave-twitter-share>
@@ -22,12 +24,12 @@
     <div class="h-32 w-32 mx-4">
       <img class="h-32 w-32" src="https://d3e1i93f88eoxl.cloudfront.net/undraw_access_denied_re_awnf.svg" />
     </div>
-    <h1 class="text-lg text-center font-semibold">Referring is Suspended</h1>
+    <h1 class="text-lg text-center font-semibold">{{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralDashboardPure.h2}}</h1>
     <p class="brave-body2-semibold text-center my-4">
-      Your account violated the terms of service, so you’re no longer able to take part in referral programs.
+      {{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralDashboardPure.p1}}
     </p>
     <p class="brave-body2 text-center my-4">
-      You will not be eligible for payouts, and your links are no longer valid.
+      {{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralDashboardPure.p2}}
     </p>
   </div>
 </ng-template>

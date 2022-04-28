@@ -7,7 +7,7 @@ import {
 export interface IProgressTrackerView {
   initiative: Initiative | null;
   goalId: string;
-  steps: ICircleProgressStep[];
+  initiativeSteps: ICircleProgressStep[];
   initiativeTasks: InitiativeTask[];
   futureScore: number;
   enrolledScore: string | null | undefined;
@@ -15,4 +15,7 @@ export interface IProgressTrackerView {
   dashDelta: number | null;
   enrolledOn: string | null | undefined;
   hasSelfLoan: boolean;
+  scoreReview: string;
+  pointsDiff: number;
+  monthYear: string;
 }

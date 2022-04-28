@@ -1,4 +1,4 @@
-<h6 class="text-base text-white mb-4 mt-6 text-center">Your Campaign Earnings</h6>
+<h6 class="text-base text-white mb-4 mt-6 text-center">{{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralEarnings.h1}}</h6>
 
 <h1 class="text-5xl text-white font-semibold text-center mb-3">
   {{ earnings | currency: 'USD':'symbol':'1.0-0' }}
@@ -10,5 +10,5 @@
   </p>
 </ng-container>
 <ng-template #noReferrals>
-  <p class="text-xs text-center text-white">Share your referral link to start earning!</p>
+  <p class="text-xs text-center text-white">{{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralEarnings.p1}}</p>
 </ng-template>

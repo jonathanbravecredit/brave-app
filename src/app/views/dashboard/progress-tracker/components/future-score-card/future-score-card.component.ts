@@ -11,9 +11,6 @@ const dayjs = require("dayjs");
 })
 export class FutureScoreCardComponent implements OnDestroy {
   PROGRESS_TRACKER_CONTENT = PROGRESS_TRACKER_CONTENT;
-  scoreReview: string = "";
-  pointsDiff: number = 0;
-  monthYear: string = "";
   model: IProgressTrackerView = {} as IProgressTrackerView;
   modelSub$: Subscription | undefined;
 
@@ -21,9 +18,6 @@ export class FutureScoreCardComponent implements OnDestroy {
     this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
       this.model = res;
     });
-    this.pointsDiff = this.progressTrackerViewService.calculatePointsDiff();
-    this.scoreReview = this.progressTrackerViewService.getScoreReview();
-    this.monthYear = this.progressTrackerViewService.calculateMonthYear();
   }
 
   ngOnDestroy(): void {

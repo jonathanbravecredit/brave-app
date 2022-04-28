@@ -1,23 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IFilledClosingAlertConfig } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
-import { ICampaign } from '@shared/interfaces/campaign.interface';
-import { IReferral } from '@shared/interfaces/referrals.interface';
+import { Component, Input, OnInit } from "@angular/core";
+import { IFilledClosingAlertConfig } from "@shared/components/alerts/filled-closing-alert/filled-closing-alert.component";
+import { ICampaign } from "@shared/interfaces/campaign.interface";
+import { IReferral } from "@shared/interfaces/referrals.interface";
+import { REFERRAL_DASHBOARD_CONTENT } from "../../referral-dashboard.content";
 
 @Component({
-  selector: 'brave-referral-amount-link',
-  templateUrl: './referral-amount-link.component.html',
+  selector: "brave-referral-amount-link",
+  templateUrl: "./referral-amount-link.component.html",
 })
 export class ReferralAmountLinkComponent implements OnInit {
+  REFERRAL_DASHBOARD_CONTENT = REFERRAL_DASHBOARD_CONTENT;
+
   @Input() referral: IReferral | undefined;
   @Input() campaign: ICampaign | undefined;
   @Input() disabled: boolean | undefined;
-  referralLink: string = '';
+  referralLink: string = "";
   showAlert: boolean = false;
   alertConfig: IFilledClosingAlertConfig = {
-    size: 'small',
-    backgroundColor: 'bg-indigo-800',
-    color: 'text-white',
-    alertBody: 'Copied to Clipboard!',
+    size: "small",
+    backgroundColor: "bg-indigo-800",
+    color: "text-white",
+    alertBody: "Copied to Clipboard!",
   };
 
   get percentage(): number {
@@ -41,7 +44,7 @@ export class ReferralAmountLinkComponent implements OnInit {
       this, (this.showAlert = false);
     }, 5000);
     el.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     el.setSelectionRange(0, 0);
   }
 }

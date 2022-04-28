@@ -6,7 +6,7 @@
     >
       <h1 class="text-2xl text-center">{{PROGRESS_TRACKER_CONTENT.progressTrackerInitial.futureScoreCard.h1}}</h1>
       <p class="text-5xl mt-4 font-headings">{{ model.dashScore }}</p>
-      <p>{{ scoreReview }}</p>
+      <p>{{model.scoreReview }}</p>
       <div class="flex mt-2 items-center">
         <span
           class="text-2xl material-icons align-bottom transform mr-2 mt-1"
@@ -46,13 +46,13 @@
     >
       <h1 class="text-2xl text-center">{{PROGRESS_TRACKER_CONTENT.progressTrackerInitial.futureScoreCard.h2}}</h1>
       <p class="text-5xl mt-4 font-headings">{{ model.futureScore }}</p>
-      <p>{{ scoreReview }}</p>
+      <p>{{ model.scoreReview }}</p>
       <div class="flex mt-2 items-center">
         <span
           class="text-2xl material-icons align-bottom transform mr-4 mt-1"
           [ngClass]="
-            pointsDiff && pointsDiff !== 0
-              ? pointsDiff < 0
+          model.pointsDiff && model.pointsDiff !== 0
+              ? model.pointsDiff < 0
                 ? 'rotate-90 text-red-500'
                 : '-rotate-90 text-emerald-600'
               : ''
@@ -61,7 +61,7 @@
           play_arrow
         </span>
         <div class="text-1xl">
-          <span>{{ pointsDiff > 0 ? '+' : '' }}{{ pointsDiff }}</span>
+          <span>{{ model.pointsDiff > 0 ? '+' : '' }}{{ model.pointsDiff }}</span>
           points*
         </div>
       </div>

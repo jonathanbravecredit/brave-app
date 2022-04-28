@@ -20,7 +20,9 @@ import { filter } from "rxjs/operators";
 import { ICircleProgressStep } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
 import { TransunionInput } from "@shared/services/aws/api.service";
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class ProgressTrackerService implements OnDestroy {
   @Select(ProgressTrackerState)
   initiative$!: Observable<ProgressTrackerStateModel>;

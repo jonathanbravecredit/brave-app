@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICampaign } from '@shared/interfaces/campaign.interface';
+import { REFERRAL_DASHBOARD_CONTENT } from '../../referral-dashboard.content';
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
@@ -15,6 +16,9 @@ dayjs.tz.setDefault('America/Los_Angeles');
   templateUrl: './referral-body-text.component.html',
 })
 export class ReferralBodyTextComponent implements OnInit {
+
+  REFERRAL_DASHBOARD_CONTENT = REFERRAL_DASHBOARD_CONTENT
+  
   @Input() campaign: ICampaign | undefined;
   paymentLongForm: string = '';
   bonusThreshold: number = 0;
