@@ -26,7 +26,7 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
   async resolve(): Promise<IMergeReport | null> {
     const id = this.statesvc.state?.appData.id;
     const sub = await this.auth.getUserSub();
-    const appData = await this.store.selectOnce(AppDataSelectors.getAppData).toPromise();
+    const appData = await this.store.selectOnce(AppDataSelectors.getAppData)?.toPromise();
     if (!id && !sub) {
       return new Promise((resolve) => resolve(null));
     } else if (appData.isLoaded) {
@@ -51,7 +51,7 @@ export class DashboardInitResolver implements Resolve<IMergeReport | null> {
             return bc.parsers.parseTransunionMergeReport(agencies?.transunion);
           }),
         )
-        .toPromise();
+        ?.toPromise();
     }
   }
 }

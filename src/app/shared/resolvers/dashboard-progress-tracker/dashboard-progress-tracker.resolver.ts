@@ -14,8 +14,8 @@ export class DashboardProgressTrackerResolver implements Resolve<Initiative | nu
   async resolve(): Promise<Initiative | null> {
     // const state = await this.store.selectOnce(ProgressTrackerSelectors.getProgressTracker).toPromise();
     const state = this.store.selectSnapshot((state) => state.ProgressTracker);
-    if (state.data) {
-      return state.data;
+    if (state?.data) {
+      return state .data;
     } else {
       try {
         const data = await this.progressTrackerService.getProgressTrackerData();
