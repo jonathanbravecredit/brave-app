@@ -1,24 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
+import * as _ from 'lodash';
+import * as AppDataActions from '@store/app-data/app-data.actions';
+import * as UserActions from '@store/user/user.actions';
+import * as AgenciesActions from '@store/agencies/agencies.actions';
+import * as OnboardingActions from '@store/onboarding/onboarding.actions';
 import {
   UserAttributesInput,
   UpdateAppDataInput,
   APIService,
   TUStatusRefInput,
   TransunionInput,
+  UpdateAppDataMutation,
 } from '@shared/services/aws/api.service';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { Injectable } from '@angular/core';
 import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
 import { AppDataStateModel } from '@store/app-data';
-import * as AppDataActions from '@store/app-data/app-data.actions';
-import * as UserActions from '@store/user/user.actions';
-import * as AgenciesActions from '@store/agencies/agencies.actions';
-import * as OnboardingActions from '@store/onboarding/onboarding.actions';
-import * as DashboardActions from '@store/dashboard/dashboard.actions';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { BraveUtil } from '@shared/utils/brave/brave';
-import { map } from 'rxjs/operators';
 import { IMergeReport } from '@shared/interfaces';
-import { UrlWithStringQuery } from 'url';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,7 @@ export class StateService {
   state: { appData: AppDataStateModel } | undefined;
   state$: BehaviorSubject<{ appData: AppDataStateModel }> = new BehaviorSubject({} as { appData: AppDataStateModel });
   constructor(private api: APIService, private store: Store) {
+    _.bindAll(this, 'scrubAndUpdate');
     this.store.subscribe((state: { appData: AppDataStateModel }) => {
       this.state = state;
       this.state$.next(state);
@@ -43,11 +45,9 @@ export class StateService {
    * @param appdata
    */
   async updateStateNoDBSyncAsync(appdata: AppDataStateModel): Promise<AppDataStateModel> {
-    return await new Promise((resolve, reject) => {
-      this.store.dispatch(new AppDataActions.Edit(appdata)).subscribe((state: { appData: AppDataStateModel }) => {
-        return resolve(state.appData);
-      });
-    });
+    const action = new AppDataActions.Edit(appdata);
+    const res = await this.dispatchAsync<AppDataActions.Edit>(action);
+    return { ...res, isLoaded: true };
   }
 
   /**
@@ -55,20 +55,9 @@ export class StateService {
    * @param appdata
    */
   async updateStateDBSyncAsync(appdata: AppDataStateModel): Promise<AppDataStateModel> {
-    return await new Promise((resolve, reject) => {
-      this.store.dispatch(new AppDataActions.Edit(appdata)).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          console.log('failed to update state');
-          return;
-        } else {
-          this.api
-            .UpdateAppData(input)
-            .then((res) => resolve({ ...res, isLoaded: true }))
-            .catch((err) => reject(err));
-        }
-      });
-    });
+    const action = new AppDataActions.Edit(appdata);
+    const res = await this.dispatchAsync<AppDataActions.Edit>(action, true);
+    return { ...res, isLoaded: true };
   }
 
   /**
@@ -76,15 +65,8 @@ export class StateService {
    * @param appdata
    */
   updateStateDBSync(appdata: AppDataStateModel): void {
-    this.store.dispatch(new AppDataActions.Edit(appdata)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        console.log('failed to update state');
-        return;
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    const action = new AppDataActions.Edit(appdata);
+    this.dispatch<AppDataActions.Edit>(action, true);
   }
 
   /*=====================================*/
@@ -97,54 +79,18 @@ export class StateService {
    * @param {UserAttributesInput} attributes
    */
   updateUserAttributes(attrs: UserAttributesInput): void {
-    this.store.dispatch(new UserActions.UpdateAttributes(attrs)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        throw new Error(`stateService:updateUserAttributes=No id provided ${input.id}`);
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    const action = new UserActions.UpdateAttributes(attrs);
+    this.dispatch<UserActions.UpdateAttributes>(action, true);
   }
 
   /**
    * Takes the attributes and updates the state with them
+   * - syncs with DB
    * @param {UserAttributesInput} attributes
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new UserActions.UpdateAttributes(attrs))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            throw new Error(`stateService:updateUserAttributesAsync=No id provided ${input.id}`);
-          } else {
-            this.api
-              .UpdateAppData(input)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          }
-        });
-    });
-  }
-
-  /*=====================================*/
-  /*
-  /*               DASHBOARD
-  /*
-  /*=====================================*/
-  /**
-   * (Promise) Generic helper to await an increment action
-   * @returns
-   */
-  async incrementActionAsync(Action: any): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.store.dispatch(new Action()).subscribe(
-        (res: any) => resolve(res),
-        (err: any) => reject(err),
-      );
-    });
+    const action = new UserActions.UpdateAttributes(attrs);
+    return await this.dispatchAsync<UserActions.UpdateAttributes>(action, true);
   }
 
   /*=====================================*/
@@ -155,19 +101,13 @@ export class StateService {
 
   /**
    * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
+   *   - Syncs with
    * @param agencies
    */
   updateAgencies(agencies: AgenciesStateModel): void {
     if (!agencies) return;
-    this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        throw new Error(`stateService:updateAgencies=No id provided ${input.id}`);
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    const action = new AgenciesActions.Edit(agencies);
+    return this.dispatch<AgenciesActions.Edit>(action, true);
   }
 
   /**
@@ -177,19 +117,8 @@ export class StateService {
    */
   async updateAgenciesAsync(agencies: AgenciesStateModel): Promise<UpdateAppDataInput | null | undefined> {
     if (!agencies) return;
-    return await new Promise((resolve, reject) => {
-      this.store.dispatch(new AgenciesActions.Edit(agencies)).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          throw new Error(`stateService:updateAgenciesAsync=No id provided ${input.id}`);
-        } else {
-          this.api
-            .UpdateAppData(input)
-            .then((res) => resolve(res))
-            .catch((err) => reject(err));
-        }
-      });
-    });
+    const action = new AgenciesActions.Edit(agencies);
+    return await this.dispatchAsync<AgenciesActions.Edit>(action, true);
   }
 
   /*=====================================*/
@@ -213,14 +142,8 @@ export class StateService {
    * @param param0
    */
   async updateTransunion(tuPartial: Partial<TransunionInput>): Promise<UpdateAppDataInput> {
-    return new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.EditTransunion(tuPartial))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.EditTransunion(tuPartial);
+    return await this.dispatchAsync<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -234,12 +157,11 @@ export class StateService {
     indicativeEnrichmentSuccess: boolean;
     indicativeEnrichmentStatus: TUStatusRefInput;
   }): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunion({
-        indicativeEnrichmentSuccess,
-        indicativeEnrichmentStatus,
-      }),
-    );
+    const action = new AgenciesActions.EditTransunion({
+      indicativeEnrichmentSuccess,
+      indicativeEnrichmentStatus,
+    });
+    return this.dispatch<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -253,19 +175,11 @@ export class StateService {
     indicativeEnrichmentSuccess: boolean;
     indicativeEnrichmentStatus: TUStatusRefInput;
   }): Promise<UpdateAppDataInput> {
-    return new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunion({
-            indicativeEnrichmentSuccess,
-            indicativeEnrichmentStatus,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
+    const action = new AgenciesActions.EditTransunion({
+      indicativeEnrichmentSuccess,
+      indicativeEnrichmentStatus,
     });
+    return await this.dispatchAsync<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -281,13 +195,12 @@ export class StateService {
     getAuthenticationQuestionsStatus: TUStatusRefInput;
     serviceBundleFulfillmentKey: string | null;
   }): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunion({
-        getAuthenticationQuestionsSuccess,
-        getAuthenticationQuestionsStatus,
-        serviceBundleFulfillmentKey,
-      }),
-    );
+    const action = new AgenciesActions.EditTransunion({
+      getAuthenticationQuestionsSuccess,
+      getAuthenticationQuestionsStatus,
+      serviceBundleFulfillmentKey,
+    });
+    return this.dispatch<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -303,20 +216,12 @@ export class StateService {
     getAuthenticationQuestionsStatus: TUStatusRefInput;
     serviceBundleFulfillmentKey: string | null;
   }): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunion({
-            getAuthenticationQuestionsSuccess,
-            getAuthenticationQuestionsStatus,
-            serviceBundleFulfillmentKey,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
+    const action = new AgenciesActions.EditTransunion({
+      getAuthenticationQuestionsSuccess,
+      getAuthenticationQuestionsStatus,
+      serviceBundleFulfillmentKey,
     });
+    return await this.dispatchAsync<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -325,11 +230,8 @@ export class StateService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   updateTransunionQuestions(questions: string): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunion({
-        currentRawQuestions: questions,
-      }),
-    );
+    const action = new AgenciesActions.EditTransunion({ currentRawQuestions: questions });
+    return this.dispatch<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -338,18 +240,8 @@ export class StateService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   async updateTransunionQuestionsAsync(questions: string): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunion({
-            currentRawQuestions: questions,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.EditTransunion({ currentRawQuestions: questions });
+    return await this.dispatchAsync<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -358,11 +250,8 @@ export class StateService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   updateTransunionAuthDetails(questions: string): void {
-    this.store.dispatch(
-      new AgenciesActions.EditTransunion({
-        currentRawAuthDetails: questions,
-      }),
-    );
+    const action = new AgenciesActions.EditTransunion({ currentRawAuthDetails: questions });
+    return this.dispatch<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -371,18 +260,8 @@ export class StateService {
    * @param {string} questions the string of xml questions returned by Transunion or other agency
    */
   async updateTransunionAuthDetailsAsync(questions: string): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditTransunion({
-            currentRawAuthDetails: questions,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.EditTransunion({ currentRawAuthDetails: questions });
+    return await this.dispatchAsync<AgenciesActions.EditTransunion>(action);
   }
 
   /**
@@ -396,12 +275,11 @@ export class StateService {
     acknowledgedDisputeTerms: boolean;
     acknowledgedDisputeTermsOn: string;
   }): void {
-    this.store.dispatch(
-      new AgenciesActions.EditAcknowledgeDisputeTerms({
-        acknowledgedDisputeTerms,
-        acknowledgedDisputeTermsOn,
-      }),
-    );
+    const action = new AgenciesActions.EditAcknowledgeDisputeTerms({
+      acknowledgedDisputeTerms,
+      acknowledgedDisputeTermsOn,
+    });
+    return this.dispatch<AgenciesActions.EditAcknowledgeDisputeTerms>(action);
   }
 
   /**
@@ -415,19 +293,11 @@ export class StateService {
     acknowledgedDisputeTerms: boolean;
     acknowledgedDisputeTermsOn: string;
   }): Promise<UpdateAppDataInput> {
-    return new Promise((resolve, reject) => {
-      this.store
-        .dispatch(
-          new AgenciesActions.EditAcknowledgeDisputeTerms({
-            acknowledgedDisputeTerms,
-            acknowledgedDisputeTermsOn,
-          }),
-        )
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
+    const action = new AgenciesActions.EditAcknowledgeDisputeTerms({
+      acknowledgedDisputeTerms,
+      acknowledgedDisputeTermsOn,
     });
+    return await this.dispatchAsync<AgenciesActions.EditAcknowledgeDisputeTerms>(action);
   }
 
   /*=====================================*/
@@ -439,21 +309,16 @@ export class StateService {
    * (Asynchronous) Increment the Auth attempts
    */
   incrementAuthAttempts(): void {
-    this.store.dispatch(new AgenciesActions.IncrementTransunionAuthAttempts());
+    const action = new AgenciesActions.IncrementTransunionAuthAttempts();
+    return this.dispatch<AgenciesActions.IncrementTransunionAuthAttempts>(action);
   }
 
   /**
    * (Promise) Increment the Auth attempts
    */
   async incrementAuthAttemptsAsync(): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.IncrementTransunionAuthAttempts())
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.IncrementTransunionAuthAttempts();
+    return await this.dispatchAsync<AgenciesActions.IncrementTransunionAuthAttempts>(action);
   }
 
   /**
@@ -461,7 +326,8 @@ export class StateService {
    * - does not store in the database
    */
   initiateTransunionPinDetails(): void {
-    this.store.dispatch(new AgenciesActions.InitiateTransunionPinDetails());
+    const action = new AgenciesActions.InitiateTransunionPinDetails();
+    this.dispatch<AgenciesActions.InitiateTransunionPinDetails>(action);
   }
 
   /**
@@ -469,14 +335,8 @@ export class StateService {
    * - does not store in the database
    */
   async initiateTransunionPinDetailsAsync(): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.InitiateTransunionPinDetails())
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.InitiateTransunionPinDetails();
+    return await this.dispatchAsync<AgenciesActions.InitiateTransunionPinDetails>(action);
   }
 
   /**
@@ -484,7 +344,8 @@ export class StateService {
    *   - Does not store in the database
    */
   incrementTransunionPinRequest(): void {
-    this.store.dispatch(new AgenciesActions.IncrementTransunionPinRequest());
+    const action = new AgenciesActions.IncrementTransunionPinRequest();
+    this.dispatch<AgenciesActions.IncrementTransunionPinRequest>(action);
   }
 
   /**
@@ -492,14 +353,8 @@ export class StateService {
    *   - Does not store in the database
    */
   async incrementTransunionPinRequestAsync(): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.IncrementTransunionPinRequest())
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.IncrementTransunionPinRequest();
+    return await this.dispatchAsync<AgenciesActions.IncrementTransunionPinRequest>(action);
   }
 
   /**
@@ -507,7 +362,8 @@ export class StateService {
    *   - Does not store in the database
    */
   incrementTransunionPinAttempts(): void {
-    this.store.dispatch(new AgenciesActions.IncrementTransunionPinAttempts());
+    const action = new AgenciesActions.IncrementTransunionPinAttempts();
+    this.dispatch<AgenciesActions.IncrementTransunionPinAttempts>(action);
   }
 
   /**
@@ -515,14 +371,8 @@ export class StateService {
    *   - Does not store in the database
    */
   async incrementTransunionPinAttemptsAsync(): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.IncrementTransunionPinAttempts())
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.IncrementTransunionPinAttempts();
+    return await this.dispatchAsync<AgenciesActions.IncrementTransunionPinAttempts>(action);
   }
 
   /**
@@ -530,7 +380,8 @@ export class StateService {
    * - Does not store in the database
    */
   initiateKBADetails(): void {
-    this.store.dispatch(new AgenciesActions.InitiateTransunionKBADetails());
+    const action = new AgenciesActions.InitiateTransunionKBADetails();
+    this.dispatch<AgenciesActions.InitiateTransunionKBADetails>(action);
   }
 
   /**
@@ -538,14 +389,8 @@ export class StateService {
    * - Does not store in the database
    */
   async initiateKBADetailsAsync(): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.InitiateTransunionKBADetails())
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          resolve(input);
-        });
-    });
+    const action = new AgenciesActions.InitiateTransunionKBADetails();
+    return await this.dispatchAsync<AgenciesActions.InitiateTransunionKBADetails>(action);
   }
 
   /*=====================================*/
@@ -559,16 +404,8 @@ export class StateService {
    * @param {number} step the progress step ID
    */
   updateLastComplete(step: number): void {
-    this.store
-      .dispatch(new OnboardingActions.UpdateLastComplete(step))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          throw new Error(`stateService:updateLastComplete=No id provided ${input.id}`);
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
+    const action = new OnboardingActions.UpdateLastComplete(step);
+    this.dispatch<OnboardingActions.UpdateLastComplete>(action, true);
   }
 
   /**
@@ -577,21 +414,8 @@ export class StateService {
    * @param {number} step the progress step ID
    */
   async updateLastCompleteAsync(step: number): Promise<UpdateAppDataInput | null | undefined> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new OnboardingActions.UpdateLastComplete(step))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            throw new Error(`stateService:updateLastCompleteAsync=No id provided ${input.id}`);
-          } else {
-            this.api
-              .UpdateAppData(input)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          }
-        });
-    });
+    const action = new OnboardingActions.UpdateLastComplete(step);
+    return await this.dispatchAsync<OnboardingActions.UpdateLastComplete>(action, true);
   }
 
   /**
@@ -599,25 +423,9 @@ export class StateService {
    * Then updates the state
    * @param {number} step the progress step ID
    */
-  async updateAuthenticatedOnAsync(
-    authenticated: boolean,
-    authenticatedOn: string,
-  ): Promise<UpdateAppDataInput | null | undefined> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new AgenciesActions.UpdateAuthentication({ authenticated, authenticatedOn }))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            throw new Error(`stateService:updateAuthenticatedOnAsync=No id provided ${input.id}`);
-          } else {
-            this.api
-              .UpdateAppData(input)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          }
-        });
-    });
+  async updateAuthenticatedOnAsync(authenticated: boolean, authenticatedOn: string): Promise<UpdateAppDataInput> {
+    const action = new AgenciesActions.UpdateAuthentication({ authenticated, authenticatedOn });
+    return await this.dispatchAsync<AgenciesActions.UpdateAuthentication>(action, true);
   }
 
   /**
@@ -626,69 +434,8 @@ export class StateService {
    * @param {number} step the progress step ID
    */
   updateLastActive(step: number): void {
-    this.store
-      .dispatch(new OnboardingActions.UpdateLastActive(step))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          return;
-          // throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
-  }
-
-  /**
-   * (Asynchronous) Update the onboarding when a user abandons the onboarding flow
-   */
-  updateAbandonedStatus(): void {
-    this.store
-      .dispatch(new OnboardingActions.AbandonOnboarding())
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          return;
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
-  }
-
-  /**
-   * (Promise) Update the onboarding when a user abandons the onboarding flow
-   */
-  async updateAbandonedStatusAsync(): Promise<UpdateAppDataInput> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new OnboardingActions.AbandonOnboarding())
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            return;
-          } else {
-            this.api
-              .UpdateAppData(input)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          }
-        });
-    });
-  }
-  /**
-   * (Asynchronous) Takes a progress step ID and sets the active status to true or false
-   * Then updates the state
-   */
-  resetOnboarding(): void {
-    this.store.dispatch(new OnboardingActions.ResetOnboarding()).subscribe((state: { appData: AppDataStateModel }) => {
-      const input = { ...state.appData } as UpdateAppDataInput;
-      if (!input.id) {
-        return;
-        // throw new Error(`stateService:updateLastActive=No id provided ${input.id}`);
-      } else {
-        this.api.UpdateAppData(input);
-      }
-    });
+    const action = new OnboardingActions.UpdateLastActive(step);
+    this.dispatch<OnboardingActions.UpdateLastActive>(action, true);
   }
 
   /**
@@ -697,21 +444,77 @@ export class StateService {
    * @param {number} step the progress step ID
    */
   async updateLastActiveAsync(step: number): Promise<UpdateAppDataInput | null | undefined> {
-    return await new Promise((resolve, reject) => {
-      this.store
-        .dispatch(new OnboardingActions.UpdateLastActive(step))
-        .subscribe((state: { appData: AppDataStateModel }) => {
-          const input = { ...state.appData } as UpdateAppDataInput;
-          if (!input.id) {
-            return;
-            // throw new Error(`stateService:updateLastActiveAsync=No id provided ${input.id}`);
-          } else {
+    const action = new OnboardingActions.UpdateLastActive(step);
+    return await this.dispatchAsync<OnboardingActions.UpdateLastActive>(action, true);
+  }
+
+  /**
+   * (Asynchronous) Update the onboarding when a user abandons the onboarding flow
+   */
+  updateAbandonedStatus(): void {
+    const action = new OnboardingActions.AbandonOnboarding();
+    this.dispatch<OnboardingActions.AbandonOnboarding>(action, true);
+  }
+
+  /**
+   * (Promise) Update the onboarding when a user abandons the onboarding flow
+   */
+  async updateAbandonedStatusAsync(): Promise<UpdateAppDataInput> {
+    const action = new OnboardingActions.AbandonOnboarding();
+    return await this.dispatchAsync<OnboardingActions.AbandonOnboarding>(action, true);
+  }
+  /**
+   * (Asynchronous) Takes a progress step ID and sets the active status to true or false
+   * Then updates the state
+   */
+  resetOnboarding(): void {
+    const action = new OnboardingActions.ResetOnboarding();
+    this.dispatch<OnboardingActions.ResetOnboarding>(action, true);
+  }
+
+  /**
+   *
+   * @param action NGXS store action
+   * @param sync flag to initiate a sync between the state and the DB
+   */
+  dispatch<T>(action: T, sync = false): void {
+    sync ? this.store.dispatch(action).subscribe(this.scrubAndUpdate) : this.store.dispatch(action);
+  }
+
+  /**
+   * (Promise) helper to dispatch an NGXS to a store
+   * @param action NGXS store action
+   * @param sync flag to initiate a sync between the state and the DB
+   */
+  async dispatchAsync<T>(action: T, sync = false): Promise<UpdateAppDataMutation | UpdateAppDataInput> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(action).subscribe((state: { appData: AppDataStateModel }) => {
+        const input = { ...state.appData } as UpdateAppDataInput;
+        const clean = TransunionUtil.scrubbers.scrubBackendData(input) as UpdateAppDataInput;
+        if (!clean.id) {
+          return;
+        } else {
+          if (sync) {
             this.api
-              .UpdateAppData(input)
+              .UpdateAppData(clean)
               .then((res) => resolve(res))
               .catch((err) => reject(err));
+          } else {
+            resolve(clean);
           }
-        });
+        }
+      });
     });
+  }
+
+  scrubAndUpdate(state: { appData: AppDataStateModel }): void {
+    const input = { ...state.appData } as UpdateAppDataInput;
+    const clean = TransunionUtil.scrubbers.scrubBackendData(input);
+    if (!clean.id) {
+      console.log('failed to update state');
+      return;
+    } else {
+      this.api.UpdateAppData(clean);
+    }
   }
 }
