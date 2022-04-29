@@ -1,12 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { IDispute } from '@shared/interfaces/disputes';
-import { IDisputeHistorical } from '@views/dashboard/disputes/components/cards/interfaces';
-import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
+import { Pipe, PipeTransform } from "@angular/core";
+import { IDispute } from "@shared/interfaces/disputes";
+import { IDisputeHistorical } from "@views/dashboard/disputes/components/cards/interfaces";
+import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
 
 const enum ParserTypes {
-  Tradeline = 'tradeline',
-  PersonalItem = 'personalItem',
-  PublicItem = 'publicItem',
+  Tradeline = "tradeline",
+  PersonalItem = "personalItem",
+  PublicItem = "publicItem",
 }
 
 const parsers = {
@@ -16,11 +16,14 @@ const parsers = {
 };
 
 @Pipe({
-  name: 'disputesToDisputesHistorical',
+  name: "disputesToDisputesHistorical",
 })
 export class DisputesToDisputesHistoricalPipe implements PipeTransform {
-  transform(disputes: (IDispute | undefined | null)[] | null | undefined): (IDisputeHistorical | undefined)[] {
-    if (!disputes || !disputes.length || !disputes.filter(Boolean).length) return [];
+  transform(
+    disputes: (IDispute | undefined | null)[] | null | undefined
+  ): (IDisputeHistorical | undefined)[] {
+    if (!disputes || !disputes.length || !disputes.filter(Boolean).length)
+      return [];
     // go through the dispute input arrays
     const sorted = [...disputes].sort((a, b) => {
       const openedA = new Date(a?.openedOn || 0);
@@ -37,9 +40,9 @@ export class DisputesToDisputesHistoricalPipe implements PipeTransform {
     return historical;
   }
 
-  private parseHistoricalDisputeItems(
+  parseHistoricalDisputeItems(
     items: any | any[] | undefined | null,
-    dispute: IDispute | undefined | null,
+    dispute: IDispute | undefined | null
   ): IDisputeHistorical | undefined {
     // Currently only allowing one item to dispute, but this could change in future
     if (!items) return;
@@ -48,8 +51,15 @@ export class DisputesToDisputesHistoricalPipe implements PipeTransform {
       : this.mapHistoricalDisputeItem(items, dispute);
   }
 
-  private mapHistoricalDisputeItem(item: any, dispute: IDispute | null | undefined): IDisputeHistorical {
-    const cases = [ParserTypes.Tradeline, ParserTypes.PersonalItem, ParserTypes.PublicItem];
+  mapHistoricalDisputeItem(
+    item: any,
+    dispute: IDispute | null | undefined
+  ): IDisputeHistorical {
+    const cases = [
+      ParserTypes.Tradeline,
+      ParserTypes.PersonalItem,
+      ParserTypes.PublicItem,
+    ];
     for (let i = 0; i < cases.length; i++) {
       if (item[cases[i]] !== undefined) {
         return parsers[cases[i]](item, dispute);

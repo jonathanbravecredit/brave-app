@@ -38,7 +38,7 @@ const getTransunionFromDB = (id) => {
         .then((res) => {
         var _a;
         const item = res.Item;
-        return item ? (_a = item.agencies) === null || _a === void 0 ? void 0 : _a.transunion : null;
+        return item ? (_a = item.agencies) === null || _a === void 0 ? void 0 : _a?.transunion : null;
     })
         .catch((err) => err);
 };
