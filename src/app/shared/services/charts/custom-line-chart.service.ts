@@ -12,8 +12,8 @@ export class CustomLineChartService {
 
   showDots(chart: any) {
     let index = 0;
-    const paths = chart.chartElement.nativeElement.getElementsByClassName('line-series');
-    const color = chart.chartElement.nativeElement.getElementsByClassName('line-highlight');
+    const paths = chart?.chartElement.nativeElement.getElementsByClassName('line-series');
+    const color = chart?.chartElement.nativeElement.getElementsByClassName('line-highlight');
 
     for (let path of paths) {
       const chrtColor = this.dotColor ? this.dotColor : color[index].getAttribute('ng-reflect-fill');
@@ -38,10 +38,10 @@ export class CustomLineChartService {
     const svg = chart.chartElement.nativeElement.getElementsByTagName('svg');
     var marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
     var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    svg[0].getElementsByTagName('defs')[0].append(marker);
-    marker.append(circle);
-    const m = svg[0].getElementsByTagName('marker')[0];
-    const c = svg[0].getElementsByTagName('circle')[0];
+    svg[0]?.getElementsByTagName('defs')[0]?.append(marker);
+    marker?.append(circle);
+    const m = svg[0]?.getElementsByTagName('marker')[0];
+    const c = svg[0]?.getElementsByTagName('circle')[0];
 
     const markerAttributes = {
       id: `dot${index}`,
@@ -58,7 +58,7 @@ export class CustomLineChartService {
       r: 5,
       fill: color,
     };
-    m.append(circle);
+    m?.append(circle);
 
     this.setAttributes(m, markerAttributes);
     this.setAttributes(c, circleAttributes);
@@ -69,7 +69,7 @@ export class CustomLineChartService {
    */
   setAttributes(element: any, attributes: any) {
     for (const key in attributes) {
-      element.setAttribute(key, attributes[key]);
+      element?.setAttribute(key, attributes[key]);
     }
   }
 }

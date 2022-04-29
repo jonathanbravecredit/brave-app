@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
-import Auth, { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { ICredentials } from '@aws-amplify/core';
-import { BehaviorSubject } from 'rxjs';
-import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
-import { Router } from '@angular/router';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { Inject, Injectable } from "@angular/core";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { ICredentials } from "@aws-amplify/core";
+import { Auth } from "aws-amplify";
+import { BehaviorSubject } from "rxjs";
+import {
+  CognitoUser,
+  CognitoUserSession,
+  ISignUpResult,
+} from "amazon-cognito-identity-js";
+import { Router } from "@angular/router";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 export interface NewUser {
   username: string;
@@ -13,45 +18,20 @@ export interface NewUser {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService {
-  public email$: BehaviorSubject<string> = new BehaviorSubject('');
-  public static SIGN_IN = 'signIn';
-  public static SIGN_OUT = 'signOut';
+  public email$: BehaviorSubject<string> = new BehaviorSubject("");
+  public static SIGN_IN = "signIn";
+  public static SIGN_OUT = "signOut";
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
-  constructor(private router: Router, private interstitial: InterstitialService) {}
-
-  /**
-   * This method is designed to help reload the user if the ID ever goes null
-   * will perform the following:
-   *  1. Get current credentials (if the token is still valid)
-   *  2. If no token available, and on a different page...go back to login
-   *  3. If on sign in or sign up...do nothing
-   * @returns
-   */
-  async reloadCredentials(): Promise<void> {
-    const creds = await this.getCurrentUserCredentials();
-    if (creds) {
-      // await this.sync.hallmonitor(creds);
-    } else {
-      switch (this.router.url) {
-        case '/auth/signin':
-          break;
-        case '/auth/signup':
-          break;
-        case '/signin':
-          break;
-        case '/signin':
-          break;
-        default:
-          this.router.navigate([routes.root.auth.signin.full]);
-          break;
-      }
-    }
-  }
+  constructor(
+    private router: Router,
+    private interstitial: InterstitialService,
+    @Inject(Auth) private auth: typeof Auth
+  ) {}
 
   /**
    * Cognito sign up method
@@ -62,7 +42,7 @@ export class AuthService {
   signUp(user: NewUser): Promise<ISignUpResult> {
     this.email$.next(user.username);
     this.interstitial.fetching$.next(true);
-    return Auth.signUp({
+    return this.auth.signUp({
       username: user.username,
       password: user.password,
       attributes: {
@@ -81,8 +61,9 @@ export class AuthService {
   signIn(username: string, password: string): Promise<CognitoUser | any> {
     this.interstitial.fetching$.next(true);
     return new Promise((resolve, reject) => {
-      Auth.signIn(username, password)
-        .then((user: CognitoUser | any) => {
+      this.auth
+        .signIn(username, password)
+        ?.then((user: CognitoUser | any) => {
           resolve(user);
         })
         .catch((error: any) => reject(error));
@@ -96,7 +77,7 @@ export class AuthService {
    */
   signOut(): Promise<any> {
     this.interstitial.fetching$.next(true);
-    return Auth.signOut();
+    return this.auth.signOut();
   }
 
   /**
@@ -104,9 +85,11 @@ export class AuthService {
    * @param {CognitoHostedUIIdentityProvider} provider
    * @returns
    */
-  socialSignIn(provider: CognitoHostedUIIdentityProvider): Promise<ICredentials> {
-    window.sessionStorage.setItem('braveOAuthProvider', provider); // save for redirect back...Angular does not persist params on bootstrap
-    return Auth.federatedSignIn({
+  socialSignIn(
+    provider: CognitoHostedUIIdentityProvider
+  ): Promise<ICredentials> {
+    window.sessionStorage.setItem("braveOAuthProvider", provider); // save for redirect back...Angular does not persist params on bootstrap
+    return this.auth.federatedSignIn({
       provider: provider,
     });
   }
@@ -117,14 +100,14 @@ export class AuthService {
    * @returns
    */
   resendSignUp(email: string): Promise<string> | undefined {
-    return email ? Auth.resendSignUp(email) : undefined;
+    return email ? this.auth.resendSignUp(email) : undefined;
   }
 
   /**
    * @param email users email address to send password reset code to
    */
   forgotPassword(email: string): Promise<any> | undefined {
-    return email ? Auth.forgotPassword(email) : undefined;
+    return email ? this.auth.forgotPassword(email) : undefined;
   }
   /**
    *
@@ -133,8 +116,14 @@ export class AuthService {
    * @param pw
    * @returns
    */
-  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<any> | undefined {
-    return email && code && pw ? Auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
+  forgotPasswordSubmit(
+    email: string,
+    code: string,
+    pw: string
+  ): Promise<any> | undefined {
+    return email && code && pw
+      ? this.auth.forgotPasswordSubmit(email.toLowerCase(), code, pw)
+      : undefined;
   }
 
   /**
@@ -142,7 +131,7 @@ export class AuthService {
    * @return - A promise resolves to be current user's credentials
    */
   getCurrentUserCredentials(): Promise<ICredentials> {
-    return Auth.currentUserCredentials();
+    return this.auth.currentUserCredentials();
   }
 
   /**
@@ -150,7 +139,7 @@ export class AuthService {
    * @return - A promise resolves to current authenticated CognitoUser if success
    */
   getcurrentAuthenticatedUser(): Promise<CognitoUser> {
-    return Auth.currentAuthenticatedUser({ bypassCache: true });
+    return this.auth.currentAuthenticatedUser({ bypassCache: true });
   }
 
   /**
@@ -158,7 +147,7 @@ export class AuthService {
    * @returns
    */
   refreshSession(): Promise<CognitoUserSession> {
-    return Auth.currentSession();
+    return this.auth.currentSession();
   }
 
   /**
@@ -167,7 +156,7 @@ export class AuthService {
    */
   async getAccessTokenJwtToken(): Promise<string | null> {
     try {
-      return (await Auth.currentSession()).getAccessToken().getJwtToken();
+      return (await this.auth.currentSession()).getAccessToken().getJwtToken();
     } catch (err) {
       return null;
     }
@@ -178,11 +167,13 @@ export class AuthService {
    */
   async getIdTokenJwtTokens(): Promise<string> {
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      let session = user.getSignInUserSession();
-      return session ? session.getIdToken().getJwtToken() : '';
+      const user: CognitoUser = await this.auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      let session = user?.getSignInUserSession();
+      return session ? session.getIdToken().getJwtToken() : "";
     } catch (err) {
-      return '';
+      return "";
     }
   }
 
@@ -191,7 +182,7 @@ export class AuthService {
    */
   async getAuthCredentials(): Promise<ICredentials | null> {
     try {
-      const creds: ICredentials = await Auth.currentUserCredentials();
+      const creds: ICredentials = await this.auth.currentUserCredentials();
       return creds;
     } catch (err) {
       return null;
@@ -205,12 +196,15 @@ export class AuthService {
    */
   async getUserEmail(): Promise<string> {
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      const attrs = await Auth.userAttributes(user);
-      const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
+      const user: CognitoUser = await this.auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      const attrs = await this.auth.userAttributes(user);
+      const email = attrs.filter((a) => a.Name.toLowerCase() === "email")[0]
+        ?.Value;
       return email;
     } catch (err) {
-      return '';
+      return "";
     }
   }
 
@@ -221,12 +215,15 @@ export class AuthService {
    */
   async getUserSub(): Promise<string> {
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      const attrs = await Auth.userAttributes(user);
-      const email = attrs.filter((a) => a.Name.toLowerCase() === 'sub')[0]?.Value;
+      const user: CognitoUser = await this.auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      const attrs = await this.auth.userAttributes(user);
+      const email = attrs.filter((a) => a.Name.toLowerCase() === "sub")[0]
+        ?.Value;
       return email;
     } catch (err) {
-      return '';
+      return "";
     }
   }
 
@@ -239,8 +236,10 @@ export class AuthService {
   async updateUserEmail(email: string): Promise<boolean> {
     this.interstitial.fetching$.next(true);
     try {
-      const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      await Auth.updateUserAttributes(user, { email: email });
+      const user = await this.auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      await this.auth.updateUserAttributes(user, { email: email });
       this.interstitial.fetching$.next(false);
       return true;
     } catch (err) {
@@ -258,7 +257,7 @@ export class AuthService {
   async verifyUserEmail(code: string): Promise<boolean> {
     this.interstitial.fetching$.next(true);
     try {
-      await Auth.verifyCurrentUserAttributeSubmit('email', code);
+      await this.auth.verifyCurrentUserAttributeSubmit("email", code);
       this.interstitial.fetching$.next(false);
       return true;
     } catch (err) {
@@ -274,11 +273,20 @@ export class AuthService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
+  async resetPassword(
+    oldPassword: string,
+    newPassword: string
+  ): Promise<string> {
     this.interstitial.fetching$.next(true);
     try {
-      const user = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      const resp = await Auth.changePassword(user, oldPassword, newPassword);
+      const user = await this.auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      const resp = await this.auth.changePassword(
+        user,
+        oldPassword,
+        newPassword
+      );
       this.interstitial.fetching$.next(false);
       return resp.toLowerCase();
     } catch (err: any) {
@@ -295,7 +303,9 @@ export class AuthService {
   async deactivateAccount(): Promise<string> {
     this.interstitial.fetching$.next(true);
     try {
-      const user: CognitoUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const user: CognitoUser = await this.auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
       return new Promise((resolve, reject) => {
         this.interstitial.fetching$.next(false);
         user.deleteUser((err, res) => {

@@ -13,7 +13,7 @@ export class DashboardScoreTrendsResolver implements Resolve<IGetTrendingData | 
     const now = new Date();
     now.setMonth(now.getMonth() - 12);
     const data = await this.transunion.getTrendingData(now.toISOString());
-    if (data.success) {
+    if (data?.success) {
       return data.data;
     } else {
       return null;

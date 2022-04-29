@@ -1,17 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { IMergeReport, ISubscriber, ITradeLinePartition } from '@shared/interfaces';
 
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
 import { MergereportToSubscribersPipe } from '@shared/pipes/mergereport-to-subscribers/mergereport-to-subscribers.pipe';
 import { StateService } from '@shared/services/state/state.service';
 import { MergereportToPersonalitemsPipe } from '@shared/pipes/mergereport-to-personalitems/mergereport-to-personalitems.pipe';
 import { MergereportToPublicitemsPipe } from '@shared/pipes/mergereport-to-publicitems/mergereport-to-publicitems.pipe';
-import { MergereportToTradelinesPipe } from '@shared/pipes/mergereport-to-tradelines/mergereport-to-tradelines.pipe';
 import { IPersonalItemsDetailsConfig } from '@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
-import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
 import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
 
 @Injectable({
