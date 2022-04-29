@@ -1,18 +1,20 @@
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { Injectable, OnDestroy } from '@angular/core';
-import { EventKeys } from '@shared/services/broadcast/broadcast.model';
-import { BroadcastService } from '@shared/services/broadcast/broadcast.service';
-import * as _ from 'lodash';
+import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
+import { Injectable, OnDestroy } from "@angular/core";
+import { EventKeys } from "@shared/services/broadcast/broadcast.model";
+import { BroadcastService } from "@shared/services/broadcast/broadcast.service";
+import * as _ from "lodash";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class NavigatorService implements OnDestroy {
   private eventSub$: Subscription;
   constructor(private router: Router, broadcastService: BroadcastService) {
-    _.bindAll(this, 'onNavigationEvent');
-    this.eventSub$ = broadcastService.on(EventKeys.NAVIGATION).subscribe(this.onNavigationEvent);
+    _.bindAll(this, "onNavigationEvent");
+    this.eventSub$ = broadcastService
+      .on(EventKeys.NAVIGATION)
+      .subscribe(this.onNavigationEvent);
   }
 
   onNavigationEvent(data: string) {

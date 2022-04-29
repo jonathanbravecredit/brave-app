@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { IReferral } from "@shared/interfaces/referrals.interface";
 import { REFERRAL_DASHBOARD_CONTENT } from "../../referral-dashboard.content";
+import { IReferralDashboardView } from "../../referral-dashboard.model";
+import { Subscription } from "rxjs";
+import { ReferralDashboardViewService } from "../../referral-dashboard-view.service";
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -13,20 +16,22 @@ dayjs.tz.setDefault("America/Los_Angeles");
   selector: "brave-referral-earnings",
   templateUrl: "./referral-earnings.component.html",
 })
-export class ReferralEarningsComponent implements OnInit {
+export class ReferralEarningsComponent implements OnDestroy {
   REFERRAL_DASHBOARD_CONTENT = REFERRAL_DASHBOARD_CONTENT;
+  model: IReferralDashboardView = {} as IReferralDashboardView;
+  modelSub$: Subscription | undefined;
 
-  @Input() referral: IReferral | undefined;
-  paymentLongForm: string = "";
-  earnings: number = 0;
+  constructor(
+    private referralDashboardViewService: ReferralDashboardViewService
+  ) {
+    this.modelSub$ = this.referralDashboardViewService.model$.subscribe(
+      (res) => {
+        this.model = res;
+      }
+    );
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {
-    const payDate = dayjs(this.referral?.nextPaymentDate).tz();
-    this.paymentLongForm = payDate.format("dddd, MMM DD");
-    this.earnings =
-      (this.referral?.campaignActiveEarned || 0) +
-      (this.referral?.campaignActiveBonus || 0);
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 }

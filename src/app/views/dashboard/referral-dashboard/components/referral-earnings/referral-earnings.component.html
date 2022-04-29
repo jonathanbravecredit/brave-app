@@ -1,12 +1,12 @@
 <h6 class="text-base text-white mb-4 mt-6 text-center">{{REFERRAL_DASHBOARD_CONTENT.referralDashboardInitial.referralEarnings.h1}}</h6>
 
 <h1 class="text-5xl text-white font-semibold text-center mb-3">
-  {{ earnings | currency: 'USD':'symbol':'1.0-0' }}
+  {{ model.earnings | currency: 'USD':'symbol':'1.0-0' }}
 </h1>
-<ng-container *ngIf="(referral?.campaignActiveReferred || 0) > 0; else noReferrals">
+<ng-container *ngIf="(model.referral?.campaignActiveReferred || 0) > 0; else noReferrals">
   <p class="text-xs text-center text-white">
     {{ "You'll get your gift card on " }}
-    <span class="font-bold">{{ paymentLongForm }}</span>
+    <span class="font-bold">{{ model.paymentLongForm }}</span>
   </p>
 </ng-container>
 <ng-template #noReferrals>
