@@ -5,7 +5,4 @@ export interface IDataBreachesView {
   unreviewed: IBreachCard[];
   reviewed: IBreachCard[];
   isEmpty: boolean;
-  subscriber: string | undefined;
-  paragraphs: string[] | undefined;
-  reason: string | undefined;
 }
