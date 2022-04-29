@@ -85,6 +85,7 @@ export class StateService {
 
   /**
    * Takes the attributes and updates the state with them
+   * - syncs with DB
    * @param {UserAttributesInput} attributes
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
@@ -100,7 +101,7 @@ export class StateService {
 
   /**
    * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
+   *   - Syncs with
    * @param agencies
    */
   updateAgencies(agencies: AgenciesStateModel): void {
@@ -438,6 +439,16 @@ export class StateService {
   }
 
   /**
+   * (Promise) Takes a progress step ID and sets the active status to true or false
+   * Then updates the state
+   * @param {number} step the progress step ID
+   */
+  async updateLastActiveAsync(step: number): Promise<UpdateAppDataInput | null | undefined> {
+    const action = new OnboardingActions.UpdateLastActive(step);
+    return await this.dispatchAsync<OnboardingActions.UpdateLastActive>(action, true);
+  }
+
+  /**
    * (Asynchronous) Update the onboarding when a user abandons the onboarding flow
    */
   updateAbandonedStatus(): void {
@@ -462,16 +473,6 @@ export class StateService {
   }
 
   /**
-   * (Promise) Takes a progress step ID and sets the active status to true or false
-   * Then updates the state
-   * @param {number} step the progress step ID
-   */
-  async updateLastActiveAsync(step: number): Promise<UpdateAppDataInput | null | undefined> {
-    const action = new OnboardingActions.UpdateLastActive(step);
-    return await this.dispatchAsync<OnboardingActions.UpdateLastActive>(action, true);
-  }
-
-  /**
    *
    * @param action NGXS store action
    * @param sync flag to initiate a sync between the state and the DB
@@ -488,32 +489,29 @@ export class StateService {
   async dispatchAsync<T>(action: T, sync = false): Promise<UpdateAppDataMutation | UpdateAppDataInput> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(action).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        const clean = TransunionUtil.scrubbers.scrubBackendData(input) as UpdateAppDataInput;
-        if (!clean.id) {
-          return;
+        const clean = this.scrub(state) as UpdateAppDataInput;
+        if (sync) {
+          this.update(clean)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
         } else {
-          if (sync) {
-            this.api
-              .UpdateAppData(clean)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          } else {
-            resolve(clean);
-          }
+          resolve(clean);
         }
       });
     });
   }
 
-  scrubAndUpdate(state: { appData: AppDataStateModel }): void {
+  scrub(state: { appData: AppDataStateModel }): UpdateAppDataInput {
     const input = { ...state.appData } as UpdateAppDataInput;
-    const clean = TransunionUtil.scrubbers.scrubBackendData(input);
-    if (!clean.id) {
-      console.log('failed to update state');
-      return;
-    } else {
-      this.api.UpdateAppData(clean);
-    }
+    return TransunionUtil.scrubbers.scrubBackendData(input);
+  }
+
+  update(input: UpdateAppDataInput): Promise<UpdateAppDataMutation> {
+    return this.api.UpdateAppData(input);
+  }
+
+  scrubAndUpdate(state: { appData: AppDataStateModel }): Promise<UpdateAppDataMutation | null> {
+    const clean = this.scrub(state);
+    return this.update(clean);
   }
 }
