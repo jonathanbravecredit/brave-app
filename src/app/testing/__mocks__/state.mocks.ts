@@ -13,10 +13,43 @@ export const MOCK_USER_UPDATEATTR_ACTION = new UserActions.UpdateAttributes(MOCK
 export const MOCK_AGENCIES_MODEL = {} as any;
 export const MOCK_AGENCIES_EDIT_ACTION = new AgenciesActions.Edit(MOCK_AGENCIES_MODEL);
 
-export const MOCK_TUPARTIAL_MODEL = {} as any;
+export const MOCK_TUPARTIAL_MODEL = {
+  indicativeEnrichmentSuccess: true,
+  indicativeEnrichmentStatus: {},
+  getAuthenticationQuestionsSuccess: true,
+  getAuthenticationQuestionsStatus: {},
+  serviceBundleFulfillmentKey: 'abc',
+  currentRawQuestions: 'questions',
+  currentRawAuthDetails: 'auth-details',
+} as any;
+const {
+  indicativeEnrichmentSuccess,
+  indicativeEnrichmentStatus,
+  getAuthenticationQuestionsSuccess,
+  getAuthenticationQuestionsStatus,
+  serviceBundleFulfillmentKey,
+  currentRawQuestions,
+  currentRawAuthDetails,
+} = MOCK_TUPARTIAL_MODEL;
+
 export const MOCK_AGENCIES_EDITTRANS_ACTION = new AgenciesActions.EditTransunion(MOCK_TUPARTIAL_MODEL);
 
-export const MOCK_AGENCIES_ACK_MODEL = {} as any;
+export const MOCK_AGENCIES_INDENRICH_ACTION = new AgenciesActions.EditTransunion({
+  indicativeEnrichmentSuccess,
+  indicativeEnrichmentStatus,
+});
+export const MOCK_AGENCIES_AUTHQUEST_ACTION = new AgenciesActions.EditTransunion({
+  getAuthenticationQuestionsSuccess,
+  getAuthenticationQuestionsStatus,
+  serviceBundleFulfillmentKey,
+});
+export const MOCK_AGENCIES_TRANSQUEST_ACTION = new AgenciesActions.EditTransunion({ currentRawQuestions });
+export const MOCK_AGENCIES_TRANSAUTH_ACTION = new AgenciesActions.EditTransunion({ currentRawAuthDetails });
+
+export const MOCK_AGENCIES_ACK_MODEL = {
+  acknowledgedDisputeTerms: true,
+  acknowledgedDisputeTermsOn: '1970-01-01',
+} as any;
 export const MOCK_AGENCIES_ACK_ACTION = new AgenciesActions.EditAcknowledgeDisputeTerms(MOCK_AGENCIES_ACK_MODEL);
 
 export const MOCK_AGENCIES_INCRAUTH_ACTION = new AgenciesActions.IncrementTransunionAuthAttempts();

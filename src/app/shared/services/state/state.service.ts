@@ -489,32 +489,29 @@ export class StateService {
   async dispatchAsync<T>(action: T, sync = false): Promise<UpdateAppDataMutation | UpdateAppDataInput> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(action).subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        const clean = TransunionUtil.scrubbers.scrubBackendData(input) as UpdateAppDataInput;
-        if (!clean.id) {
-          return;
+        const clean = this.scrub(state) as UpdateAppDataInput;
+        if (sync) {
+          this.update(clean)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
         } else {
-          if (sync) {
-            this.api
-              .UpdateAppData(clean)
-              .then((res) => resolve(res))
-              .catch((err) => reject(err));
-          } else {
-            resolve(clean);
-          }
+          resolve(clean);
         }
       });
     });
   }
 
-  scrubAndUpdate(state: { appData: AppDataStateModel }): void {
+  scrub(state: { appData: AppDataStateModel }): UpdateAppDataInput {
     const input = { ...state.appData } as UpdateAppDataInput;
-    const clean = TransunionUtil.scrubbers.scrubBackendData(input);
-    if (!clean.id) {
-      console.log('failed to update state');
-      return;
-    } else {
-      this.api.UpdateAppData(clean);
-    }
+    return TransunionUtil.scrubbers.scrubBackendData(input);
+  }
+
+  update(input: UpdateAppDataInput): Promise<UpdateAppDataMutation> {
+    return this.api.UpdateAppData(input);
+  }
+
+  scrubAndUpdate(state: { appData: AppDataStateModel }): Promise<UpdateAppDataMutation | null> {
+    const clean = this.scrub(state);
+    return this.update(clean);
   }
 }
