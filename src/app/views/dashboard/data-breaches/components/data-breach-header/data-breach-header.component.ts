@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { dataBreachHeaderContent } from '@views/dashboard/data-breaches/components/data-breach-header/content';
-
+import { Component } from "@angular/core";
+import { DATA_BREACHES_CONTENT } from "../../data-breaches.content";
 @Component({
-  selector: 'brave-data-breach-header',
-  templateUrl: './data-breach-header.component.html',
+  selector: "brave-data-breach-header",
+  templateUrl: "./data-breach-header.component.html",
 })
-export class DataBreachHeaderComponent implements OnInit {
-  content = dataBreachHeaderContent;
+export class DataBreachHeaderComponent {
+  DATA_BREACHES_CONTENT = DATA_BREACHES_CONTENT;
   constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -9,32 +9,32 @@
   </span>
   <div class="-mt-1 mb-1 flex">
     <span class="material-icons text-red-600"> gpp_maybe </span>
-    <p class="brave-body1-bold ml-2">{{ subscriber }}</p>
+    <p class="brave-body1-bold ml-2">{{ model.subscriber }}</p>
   </div>
   <div class="flex mb-1">
     <span class="material-icons" style="color: rgba(0, 0, 0, 0)">
       gpp_maybe
     </span>
-    <p class="brave-body3 ml-2">{{ reason }}</p>
+    <p class="brave-body3 ml-2">{{ model.reason }}</p>
   </div>
   <div *ngIf="viewDetail.open" class="brave-body3 my-4">
     <div
-      *ngFor="let paragraph of paragraphs"
+      *ngFor="let paragraph of model.paragraphs"
       [innerHTML]="paragraph | linkify"
     ></div>
     <p class="mb-5">
-      <span>{{ content.p1 }}</span>
-      <a class="hover:cursor-pointer text-blue-500" (click)="goToReport()">
-        <span>&nbsp;{{ content.link1 }}&nbsp;</span>
+      <span>{{ DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachCard.p1 }}</span>
+      <a class="hover:cursor-pointer text-blue-500" (click)="dataBreachesViewService.goToReport()">
+        <span>&nbsp;{{ DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachCard.link1 }}&nbsp;</span>
       </a>
-      <span>{{ content.p2 }}</span>
+      <span>{{ DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachCard.p2 }}</span>
       <a
         class="hover:cursor-pointer text-blue-500"
         href="https://www.transunion.com/credit-help"
       >
-        <span>&nbsp;{{ content.link2 }}&nbsp;</span>
+        <span>&nbsp;{{ DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachCard.link2 }}&nbsp;</span>
       </a>
-      <span>{{ content.p3 }}</span>
+      <span>{{ DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachCard.p3 }}</span>
     </p>
     <div class="flex justify-center -mx-2">
       <brave-data-breach-share></brave-data-breach-share>
@@ -42,7 +42,7 @@
   </div>
   <div class="flex justify-center">
     <brave-viewdetail-button #viewDetail>{{
-      content.b1
+      DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachCard.b1
     }}</brave-viewdetail-button>
   </div>
 </div>
