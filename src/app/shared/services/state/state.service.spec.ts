@@ -1,281 +1,313 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { TransunionInput, TUStatusRefInput, UserAttributesInput } from '@bravecredit/brave-sdk';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { Store } from '@ngxs/store';
-import { AgenciesStateModel } from '@store/agencies';
-import { AppDataStateModel } from '@store/app-data';
+import {
+  MOCK_AGENCIES_ACK_ACTION,
+  MOCK_AGENCIES_ACK_MODEL,
+  MOCK_AGENCIES_AUTHQUEST_ACTION,
+  MOCK_AGENCIES_AUTH_ACTION,
+  MOCK_AGENCIES_EDITTRANS_ACTION,
+  // MOCK_AGENCIES_EDITTRANS_ACTION,
+  MOCK_AGENCIES_EDIT_ACTION,
+  MOCK_AGENCIES_INCRAUTH_ACTION,
+  MOCK_AGENCIES_INCRPINATTMPT_ACTION,
+  MOCK_AGENCIES_INCRPIN_ACTION,
+  MOCK_AGENCIES_INDENRICH_ACTION,
+  MOCK_AGENCIES_INITKBA_ACTION,
+  MOCK_AGENCIES_INITPIN_ACTION,
+  MOCK_AGENCIES_MODEL,
+  MOCK_AGENCIES_TRANSAUTH_ACTION,
+  MOCK_AGENCIES_TRANSQUEST_ACTION,
+  MOCK_APPDATA_EDIT_ACTION,
+  MOCK_APPDATA_MODEL,
+  MOCK_ONBOARDING_ABAND_ACTION,
+  MOCK_ONBOARDING_LASTACT_ACTION,
+  MOCK_ONBOARDING_LASTACT_MODEL,
+  MOCK_ONBOARDING_LASTCOMP_ACTION,
+  MOCK_ONBOARDING_LASTCOMP_MODEL,
+  MOCK_ONBOARDING_RESET_ACTION,
+  MOCK_TUPARTIAL_MODEL,
+  MOCK_USER_ATTS_MODEL,
+  MOCK_USER_UPDATEATTR_ACTION,
+} from '@testing/__mocks__/state.mocks';
 import { of } from 'rxjs';
 import { APIService } from '../aws/api.service';
-
 import { StateService } from './state.service';
 
+const setup = () => {
+  const apiMock = jasmine.createSpyObj('ApiService', ['UpdateAppData']);
+  const storeMock = jasmine.createSpyObj('Store', ['subscribe', 'dispatch', 'selectOnce']);
+  const service = new StateService(apiMock, storeMock);
+  return { service, apiMock, storeMock };
+};
+
 describe('StateService', () => {
-  let service: StateService;
-  let apiMock: any;
-  let storeMock: any;
-
-  beforeEach(() => {
-    apiMock = jasmine.createSpyObj('ApiService', ['UpdateAppData']);
-    storeMock = jasmine.createSpyObj('Store', ['subscribe', 'dispatch', 'selectOnce']);
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: APIService, useValue: apiMock },
-        { provide: Store, useValue: storeMock },
-      ],
-    });
-    service = TestBed.inject(StateService);
-  });
-
+  const { service, apiMock, storeMock } = setup();
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call store.dispatch on updateStateNoDBSyncAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateStateNoDBSyncAsync({} as AppDataStateModel)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+  describe('State actions', () => {
+    let dispatchSpy: jasmine.Spy;
+    let dispatchAsyncSpy: jasmine.Spy;
+    beforeAll(() => {
+      dispatchSpy = spyOn(service, 'dispatch');
+      dispatchAsyncSpy = spyOn(service, 'dispatchAsync');
+    });
+    beforeEach(() => {
+      dispatchSpy.calls.reset();
+      dispatchAsyncSpy.calls.reset();
+      storeMock.dispatch.and.returnValue(of({}));
+    });
+    it('should call service.dispatchAsync on updateStateNoDBSyncAsync', async () => {
+      const res = await service.updateStateNoDBSyncAsync(MOCK_APPDATA_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_APPDATA_EDIT_ACTION);
+      expect(res).toEqual({ ...res, isLoaded: true });
+    });
 
-  it('should call store.dispatch on updateStateDBSyncAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateStateDBSyncAsync({} as AppDataStateModel)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateStateDBSyncAsync', async () => {
+      const res = await service.updateStateDBSyncAsync(MOCK_APPDATA_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_APPDATA_EDIT_ACTION, true);
+      expect(res).toEqual({ ...res, isLoaded: true });
+    });
 
-  it('should call store.dispatch on updateStateDBSyncAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateStateDBSyncAsync({} as AppDataStateModel)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateStateDBSync', () => {
+      service.updateStateDBSync(MOCK_APPDATA_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_APPDATA_EDIT_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateStateDBSync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateStateDBSync({} as AppDataStateModel)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateUserAttributes', () => {
+      service.updateUserAttributes(MOCK_USER_ATTS_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_USER_UPDATEATTR_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateUserAttributes', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateUserAttributes({} as UserAttributesInput)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateUserAttributesAsync', async () => {
+      service.updateUserAttributesAsync(MOCK_USER_ATTS_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_USER_UPDATEATTR_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateUserAttributesAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateUserAttributesAsync({} as UserAttributesInput)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateAgencies', () => {
+      service.updateAgencies(MOCK_AGENCIES_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_EDIT_ACTION, true);
+    });
 
-  it('should call store.dispatch on incrementActionAsync', fakeAsync(() => {
-    let classMock = class ClassMock {}
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementActionAsync(classMock)
-    tick()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  }))
+    it('should call service.dispatchAsync on updateAgenciesAsync', async () => {
+      await service.updateAgenciesAsync(MOCK_AGENCIES_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_EDIT_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateAgencies', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAgencies({} as AgenciesStateModel)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call store.selectOnce on getTransunion', () => {
+      storeMock.selectOnce.and.returnValue(of());
+      service.getTransunion();
+      expect(storeMock.selectOnce).toHaveBeenCalled();
+    });
 
-  it('should call store.dispatch on updateAgenciesAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAgenciesAsync({} as AgenciesStateModel)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateTransunion', async () => {
+      await service.updateTransunion(MOCK_TUPARTIAL_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_EDITTRANS_ACTION);
+    });
 
-  it('should call store.selectOnce on getTransunion', () => {
-    storeMock.selectOnce.and.returnValue(of())
-    service.getTransunion()
-    expect(storeMock.selectOnce).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateIndicativeEnrichment', () => {
+      service.updateIndicativeEnrichment(MOCK_TUPARTIAL_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INDENRICH_ACTION);
+    });
 
-  it('should call store.dispatch on updateTransunion', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateTransunion({} as Partial<TransunionInput>)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateIndicativeEnrichmentAsync', async () => {
+      await service.updateIndicativeEnrichmentAsync(MOCK_TUPARTIAL_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INDENRICH_ACTION);
+    });
 
-  it('should call store.dispatch on updateIndicativeEnrichment', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateIndicativeEnrichment({indicativeEnrichmentSuccess: true, indicativeEnrichmentStatus: {} as TUStatusRefInput})
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateGetAuthenticationQuestions', () => {
+      service.updateGetAuthenticationQuestions(MOCK_TUPARTIAL_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_AUTHQUEST_ACTION);
+    });
 
-  it('should call store.dispatch on updateIndicativeEnrichmentAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateIndicativeEnrichmentAsync({indicativeEnrichmentSuccess: true, indicativeEnrichmentStatus: {} as TUStatusRefInput})
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateGetAuthenticationQuestionsAsync', async () => {
+      await service.updateGetAuthenticationQuestionsAsync(MOCK_TUPARTIAL_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_AUTHQUEST_ACTION);
+    });
 
-  it('should call store.dispatch on updateGetAuthenticationQuestions', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateGetAuthenticationQuestions({
-      getAuthenticationQuestionsSuccess: true, 
-      getAuthenticationQuestionsStatus: {} as TUStatusRefInput,
-      serviceBundleFulfillmentKey: ''
-    })
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateTransunionQuestions', () => {
+      const { currentRawQuestions } = MOCK_TUPARTIAL_MODEL;
+      service.updateTransunionQuestions(currentRawQuestions);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_TRANSQUEST_ACTION);
+    });
 
-  it('should call store.dispatch on updateGetAuthenticationQuestionsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateGetAuthenticationQuestionsAsync({
-      getAuthenticationQuestionsSuccess: true, 
-      getAuthenticationQuestionsStatus: {} as TUStatusRefInput,
-      serviceBundleFulfillmentKey: ''
-    })
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateTransunionQuestionsAsync', async () => {
+      const { currentRawQuestions } = MOCK_TUPARTIAL_MODEL;
+      await service.updateTransunionQuestionsAsync(currentRawQuestions);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_TRANSQUEST_ACTION);
+    });
 
-  it('should call store.dispatch on updateTransunionQuestions', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateTransunionQuestions('')
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateTransunionAuthDetails', () => {
+      const { currentRawAuthDetails } = MOCK_TUPARTIAL_MODEL;
+      service.updateTransunionAuthDetails(currentRawAuthDetails);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_TRANSAUTH_ACTION);
+    });
 
-  it('should call store.dispatch on updateTransunionQuestionsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateTransunionQuestionsAsync('')
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateTransunionAuthDetailsAsync', async () => {
+      const { currentRawAuthDetails } = MOCK_TUPARTIAL_MODEL;
+      await service.updateTransunionAuthDetailsAsync(currentRawAuthDetails);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_TRANSAUTH_ACTION);
+    });
 
-  it('should call store.dispatch on updateTransunionAuthDetails', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateTransunionAuthDetails('')
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateAcknowledgeDisputeTerms', () => {
+      service.updateAcknowledgeDisputeTerms(MOCK_AGENCIES_ACK_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_ACK_ACTION);
+    });
 
-  it('should call store.dispatch on updateTransunionAuthDetailsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateTransunionAuthDetailsAsync('')
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateAcknowledgeDisputeTermsAsync', async () => {
+      await service.updateAcknowledgeDisputeTermsAsync(MOCK_AGENCIES_ACK_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_ACK_ACTION);
+    });
 
-  it('should call store.dispatch on updateAcknowledgeDisputeTerms', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAcknowledgeDisputeTerms({
-      acknowledgedDisputeTerms: true, 
-      acknowledgedDisputeTermsOn: ''
-    })
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on incrementAuthAttempts', () => {
+      service.incrementAuthAttempts();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INCRAUTH_ACTION);
+    });
 
-  it('should call store.dispatch on updateAcknowledgeDisputeTermsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAcknowledgeDisputeTermsAsync({
-      acknowledgedDisputeTerms: true, 
-      acknowledgedDisputeTermsOn: ''
-    })
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on incrementAuthAttemptsAsync', async () => {
+      await service.incrementAuthAttemptsAsync();
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INCRAUTH_ACTION);
+    });
 
-  it('should call store.dispatch on incrementAuthAttempts', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementAuthAttempts()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on initiateTransunionPinDetails', () => {
+      service.initiateTransunionPinDetails();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INITPIN_ACTION);
+    });
 
-  it('should call store.dispatch on incrementAuthAttemptsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementAuthAttemptsAsync()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on initiateTransunionPinDetailsAsync', async () => {
+      await service.initiateTransunionPinDetailsAsync();
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INITPIN_ACTION);
+    });
 
-  it('should call store.dispatch on initiateTransunionPinDetails', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.initiateTransunionPinDetails()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on incrementTransunionPinRequest', () => {
+      service.incrementTransunionPinRequest();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INCRPIN_ACTION);
+    });
 
-  it('should call store.dispatch on initiateTransunionPinDetailsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.initiateTransunionPinDetailsAsync()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on incrementTransunionPinRequestAsync', async () => {
+      await service.incrementTransunionPinRequestAsync();
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INCRPIN_ACTION);
+    });
 
-  it('should call store.dispatch on incrementTransunionPinRequest', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementTransunionPinRequest()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on incrementTransunionPinAttempts', () => {
+      service.incrementTransunionPinAttempts();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INCRPINATTMPT_ACTION);
+    });
 
-  it('should call store.dispatch on incrementTransunionPinRequestAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementTransunionPinRequestAsync()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on incrementTransunionPinAttemptsAsync', async () => {
+      await service.incrementTransunionPinAttemptsAsync();
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INCRPINATTMPT_ACTION);
+    });
 
-  it('should call store.dispatch on incrementTransunionPinAttempts', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementTransunionPinAttempts()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on initiateKBADetails', () => {
+      service.initiateKBADetails();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INITKBA_ACTION);
+    });
 
-  it('should call store.dispatch on incrementTransunionPinAttemptsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.incrementTransunionPinAttemptsAsync()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on initiateKBADetailsAsync', async () => {
+      await service.initiateKBADetailsAsync();
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_INITKBA_ACTION);
+    });
 
-  it('should call store.dispatch on initiateKBADetails', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.initiateKBADetails()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateLastComplete', () => {
+      service.updateLastComplete(MOCK_ONBOARDING_LASTCOMP_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_LASTCOMP_ACTION, true);
+    });
 
-  it('should call store.dispatch on initiateKBADetailsAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.initiateKBADetailsAsync()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateLastCompleteAsync', async () => {
+      await service.updateLastCompleteAsync(MOCK_ONBOARDING_LASTCOMP_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_LASTCOMP_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateLastComplete', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateLastComplete(1)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateAuthenticatedOnAsync', async () => {
+      await service.updateAuthenticatedOnAsync(true, '1970-01-01');
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_AGENCIES_AUTH_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateLastCompleteAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateLastCompleteAsync(1)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateLastActive', () => {
+      service.updateLastActive(MOCK_ONBOARDING_LASTACT_MODEL);
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_LASTACT_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateAuthenticatedOnAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAuthenticatedOnAsync(true, '')
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateLastActiveAsync', async () => {
+      await service.updateLastActiveAsync(MOCK_ONBOARDING_LASTACT_MODEL);
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_LASTACT_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateLastActive', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateLastActive(1)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on updateAbandonedStatus', () => {
+      service.updateAbandonedStatus();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_ABAND_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateAbandonedStatus', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAbandonedStatus()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatchAsync on updateAbandonedStatusAsync', async () => {
+      await service.updateAbandonedStatusAsync();
+      expect(dispatchAsyncSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_ABAND_ACTION, true);
+    });
 
-  it('should call store.dispatch on updateAbandonedStatusAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateAbandonedStatusAsync()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+    it('should call service.dispatch on resetOnboarding', () => {
+      service.resetOnboarding();
+      expect(dispatchSpy).toHaveBeenCalledWith(MOCK_ONBOARDING_RESET_ACTION, true);
+    });
+  });
 
-  it('should call store.dispatch on resetOnboarding', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.resetOnboarding()
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+  describe('dispatch', () => {
+    beforeEach(() => {
+      storeMock.dispatch.and.returnValue(of({}));
+    });
+    it('should call store.dispatch whether sync or not', () => {
+      service.dispatch<any>('action');
+      expect(storeMock.dispatch).toHaveBeenCalledWith('action');
+    });
+    it('should call service.scrubAndUpdate if sync set to true', fakeAsync(() => {
+      const spy = spyOn(service, 'scrubAndUpdate');
+      service.dispatch<any>('action', true);
+      tick(1);
+      expect(spy).toHaveBeenCalled();
+    }));
+    it('should NOT call service.scrubAndUpdate if sync is set to false', fakeAsync(() => {
+      const spy = spyOn(service, 'scrubAndUpdate');
+      service.dispatch<any>('action', false);
+      tick(1);
+      expect(spy).not.toHaveBeenCalled();
+    }));
+  });
 
-  it('should call store.dispatch on updateLastActiveAsync', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.updateLastActiveAsync(1)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+  describe('dispatchAsync', () => {
+    beforeEach(() => {
+      storeMock.dispatch.and.returnValue(of({}));
+    });
+    it('should call store.dispatch', async () => {
+      await service.dispatchAsync<any>('action');
+      expect(storeMock.dispatch).toHaveBeenCalledWith('action');
+    });
+  });
+
+  describe('scrub', () => {
+    it('should call TransunionUti.scrubbers.scrubBackendData', () => {
+      const spy = spyOn(TransunionUtil.scrubbers, 'scrubBackendData');
+      service.scrub({ appData: { data: 'scrub' } } as any);
+      expect(spy).toHaveBeenCalledWith({ data: 'scrub' });
+    });
+  });
+
+  describe('update', () => {
+    it('should call api.UpdateAppData', () => {
+      service.update('input' as any);
+      expect(apiMock.UpdateAppData).toHaveBeenCalledWith('input');
+    });
+  });
+
+  describe('scrubAndUpdate', () => {
+    it('should call service.scrub and service.update', () => {
+      const arg = 'state' as any;
+      const val = 'clean' as any;
+      const spy1 = spyOn(service, 'scrub').and.returnValue(val);
+      const spy2 = spyOn(service, 'update');
+      service.scrubAndUpdate(arg);
+      expect(spy1).toHaveBeenCalledWith(arg);
+      expect(spy2).toHaveBeenCalledWith(val);
+    });
+  });
 });

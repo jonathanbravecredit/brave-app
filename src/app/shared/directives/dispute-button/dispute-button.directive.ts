@@ -99,7 +99,6 @@ export class DisputeButtonDirective implements OnDestroy {
   getFilters(): DisputeReconfirmFilter {
     if (this.type === 'tradeline') {
       const test = tu.queries.report.getTradelineTypeDescription(this.tradeline);
-      console.log('getFilters', test);
       if (!this.tradeline) return 'all';
       return tu.queries.report.getTradelineTypeDescription(this.tradeline);
     } else if (this.type === 'publicitem') {
