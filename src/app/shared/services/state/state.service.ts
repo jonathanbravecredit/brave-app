@@ -85,6 +85,7 @@ export class StateService {
 
   /**
    * Takes the attributes and updates the state with them
+   * - syncs with DB
    * @param {UserAttributesInput} attributes
    */
   async updateUserAttributesAsync(attrs: UserAttributesInput): Promise<UpdateAppDataInput> {
@@ -100,7 +101,7 @@ export class StateService {
 
   /**
    * (Asynchronous) Takes the string of KBA questions returned by the agency service and stores them in state
-   *   - Does not store in the database as there is no need to.
+   *   - Syncs with
    * @param agencies
    */
   updateAgencies(agencies: AgenciesStateModel): void {
@@ -438,6 +439,16 @@ export class StateService {
   }
 
   /**
+   * (Promise) Takes a progress step ID and sets the active status to true or false
+   * Then updates the state
+   * @param {number} step the progress step ID
+   */
+  async updateLastActiveAsync(step: number): Promise<UpdateAppDataInput | null | undefined> {
+    const action = new OnboardingActions.UpdateLastActive(step);
+    return await this.dispatchAsync<OnboardingActions.UpdateLastActive>(action, true);
+  }
+
+  /**
    * (Asynchronous) Update the onboarding when a user abandons the onboarding flow
    */
   updateAbandonedStatus(): void {
@@ -459,16 +470,6 @@ export class StateService {
   resetOnboarding(): void {
     const action = new OnboardingActions.ResetOnboarding();
     this.dispatch<OnboardingActions.ResetOnboarding>(action, true);
-  }
-
-  /**
-   * (Promise) Takes a progress step ID and sets the active status to true or false
-   * Then updates the state
-   * @param {number} step the progress step ID
-   */
-  async updateLastActiveAsync(step: number): Promise<UpdateAppDataInput | null | undefined> {
-    const action = new OnboardingActions.UpdateLastActive(step);
-    return await this.dispatchAsync<OnboardingActions.UpdateLastActive>(action, true);
   }
 
   /**
