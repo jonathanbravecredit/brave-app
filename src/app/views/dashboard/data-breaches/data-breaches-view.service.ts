@@ -30,12 +30,10 @@ export class DataBreachesViewService {
 
     modelObject.breachCards = breaches;
     const { reviewed, unreviewed } = this.reviewCards(breaches);
-    modelObject.reviewed = reviewed
-    modelObject.unreviewed = unreviewed
-    modelObject.isEmpty = this.getIsEmpty(unreviewed)
-
-    
-
+    modelObject.reviewed = reviewed;
+    modelObject.unreviewed = unreviewed;
+    modelObject.isEmpty = this.getIsEmpty(unreviewed);
+    this.mergeModel(modelObject);
   }
 
   goToReport(): void {

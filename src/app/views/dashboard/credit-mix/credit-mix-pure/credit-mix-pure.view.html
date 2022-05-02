@@ -1,22 +1,8 @@
 <brave-credit-mix-header></brave-credit-mix-header>
-<brave-credit-mix-rating
-  [tradeLineSummary]="tradeLineSummary"
-  [rating]="recommendations?.rating"
-  [ratingColor]="recommendations?.color"
-></brave-credit-mix-rating>
-<brave-credit-mix-badges
-  [tradeLineSummary]="tradeLineSummary"
-  [selectedBadge]="recommendations?.rating"
-></brave-credit-mix-badges>
-<brave-credit-mix-icons
-  [hasCreditCards]="tradeLineSummary?.hasOpenCreditCards"
-  [hasStudentLoans]="tradeLineSummary?.hasOpenStudentLoans"
-  [hasAutoLoans]="tradeLineSummary?.hasOpenAutoLoans"
-  [hasMortgages]="tradeLineSummary?.hasOpenMortgages"
-></brave-credit-mix-icons>
+<brave-credit-mix-rating></brave-credit-mix-rating>
+<brave-credit-mix-badges></brave-credit-mix-badges>
+<brave-credit-mix-icons></brave-credit-mix-icons>
 <brave-credit-mix-recommendation
-  [tradeLineSum]="tradeLineSummary"
-  [recommendations]="recommendations"
   braveAnalytics
   [analyticClickEvents]="event.CreditMixProductRecommendation"
   [analyticConfig]="{google: false, mixpanel: false, brave: true}"
@@ -25,44 +11,44 @@
 <brave-credit-mix-card-section
   title="Credit Cards"
   icon="credit_card"
-  [populated]="tradeLineSummary?.hasCreditCards"
+  [populated]="model.tradeLineSummary?.hasCreditCards"
   populatedText="Your utilization, or usage, levels for each credit card is below:"
   emptyText="Working on your credit to open your first credit card? Do it quickly and affordably with our partners!"
 ></brave-credit-mix-card-section>
 <brave-credit-mix-card
   [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
-  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'credit card'"
+  *ngFor="let tradeline of model.tradeLineParition | creditMixFilterPipe: 'credit card'"
 ></brave-credit-mix-card>
 <brave-credit-mix-card-section
   title="Student Loans"
   icon="paid"
-  [populated]="tradeLineSummary?.hasStudentLoans"
+  [populated]="model.tradeLineSummary?.hasStudentLoans"
   populatedText="The remaining balance for each student loan you have is below:"
   emptyText="Working on your credit to get a student loan? Do it quickly and affordably with our partners!"
 ></brave-credit-mix-card-section>
 <brave-credit-mix-card
   [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
-  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'student loan'"
+  *ngFor="let tradeline of model.tradeLineParition | creditMixFilterPipe: 'student loan'"
 ></brave-credit-mix-card>
 <brave-credit-mix-card-section
   title="Auto Loans"
   icon="directions_car_filled"
-  [populated]="tradeLineSummary?.hasAutoLoans"
+  [populated]="model.tradeLineSummary?.hasAutoLoans"
   populatedText="The remaining balance for each car loan you have is below:"
   emptyText="Working on your credit to get an affordable car loan? Do it quickly and affordably with our partners!"
 ></brave-credit-mix-card-section>
 <brave-credit-mix-card
   [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
-  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'auto loan'"
+  *ngFor="let tradeline of model.tradeLineParition | creditMixFilterPipe: 'auto loan'"
 ></brave-credit-mix-card>
 <brave-credit-mix-card-section
   title="Mortgages"
   icon="cottage"
-  [populated]="tradeLineSummary?.hasMortgages"
+  [populated]="model.tradeLineSummary?.hasMortgages"
   populatedText="The remaining balance for each mortgage you have is below:"
   emptyText="Working on your credit to buy your first house? Do it quickly and affordably with our partners!"
 ></brave-credit-mix-card-section>
 <brave-credit-mix-card
   [creditUtilization]="tradeline | tradelineToDetails | configToUtilization"
-  *ngFor="let tradeline of tradeLineParition | creditMixFilterPipe: 'mortgage'"
+  *ngFor="let tradeline of model.tradeLineParition | creditMixFilterPipe: 'mortgage'"
 ></brave-credit-mix-card>

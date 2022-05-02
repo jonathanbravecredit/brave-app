@@ -9,17 +9,17 @@
   </span>
   <div class="-mt-1 mb-1 flex">
     <span class="material-icons text-red-600"> gpp_maybe </span>
-    <p class="brave-body1-bold ml-2">{{ model.subscriber }}</p>
+    <p class="brave-body1-bold ml-2">{{ subscriber }}</p>
   </div>
   <div class="flex mb-1">
     <span class="material-icons" style="color: rgba(0, 0, 0, 0)">
       gpp_maybe
     </span>
-    <p class="brave-body3 ml-2">{{ model.reason }}</p>
+    <p class="brave-body3 ml-2">{{ reason }}</p>
   </div>
   <div *ngIf="viewDetail.open" class="brave-body3 my-4">
     <div
-      *ngFor="let paragraph of model.paragraphs"
+      *ngFor="let paragraph of paragraphs"
       [innerHTML]="paragraph | linkify"
     ></div>
     <p class="mb-5">
