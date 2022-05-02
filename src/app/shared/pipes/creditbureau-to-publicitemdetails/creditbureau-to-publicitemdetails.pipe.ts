@@ -21,7 +21,7 @@ export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
 
     if (!publicRecordFindings.length) return []; // deleted record so need to return the line item summary section
     return publicRecordFindings.map((finding: ILineItem) => {
-      if (finding.credit.result.toLowerCase() === 'deleted') {
+      if (finding.credit?.result?.toLowerCase() === 'deleted') {
         const subscriber = tu.parsers.dispute.unparseSubscriber(finding.credit.item.subscriber);
         return {
           publicPartition: {} as IPublicPartition,
@@ -42,9 +42,9 @@ export class CreditbureauToPublicitemdetailsPipe implements PipeTransform {
           publicPartition: publicPartition,
           summaryItemKey: finding.itemKey,
           summaryItemType: CreditBureauFindingsType.PublicRecord,
-          summaryResult: finding.credit.result,
-          summaryResultCode: tu.queries.dispute.getResultCode(finding.credit.result),
-          summaryReason: finding.credit.reason || '',
+          summaryResult: finding.credit?.result,
+          summaryResultCode: tu.queries.dispute.getResultCode(finding.credit?.result),
+          summaryReason: finding.credit?.reason || '',
           itemKey: result?.itemKey,
           publicItemType: result?.source?.description,
           // courtType: result?.source?.description,

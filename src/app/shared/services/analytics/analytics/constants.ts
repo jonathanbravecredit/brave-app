@@ -44,6 +44,7 @@ export enum AnalyticClickEvents {
   DisputeSucessfullySubmited = 'dispute_sucessfully_submited',
   DisputeInvestigationResults = 'dispute_investigation_results',
   UserLogIn = 'user_log_in',
+  UnknownClickEvent = 'unknown_click_event',
 }
 
 export enum AnalyticErrorEvents {

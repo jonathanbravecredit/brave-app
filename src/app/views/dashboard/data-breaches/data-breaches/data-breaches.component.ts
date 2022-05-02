@@ -1,3 +1,4 @@
+
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
@@ -9,6 +10,7 @@ import { DataBreachesViewService } from '../data-breaches-view.service';
   selector: "brave-data-breaches",
   templateUrl: "./data-breaches.component.html",
 })
+
 export class DataBreachesComponent {
   AnalyticClickEvents = AnalyticClickEvents;
 
@@ -16,6 +18,7 @@ export class DataBreachesComponent {
     private route: ActivatedRoute,
     public dataBreachesViewService: DataBreachesViewService
   ) {
+
     this.route.data.subscribe((resp: any) => {
       this.dataBreachesViewService.initialModelMerge(resp.breaches)
     });
