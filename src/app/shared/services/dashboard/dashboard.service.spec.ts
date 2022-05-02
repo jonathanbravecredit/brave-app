@@ -28,7 +28,7 @@ describe('DashboardService', () => {
     apiMock = jasmine.createSpyObj('APIService', ['UpdateAppData']);
     authMock = jasmine.createSpyObj('AuthService', ['getIdTokenJwtTokens']);
     storeMock = jasmine.createSpyObj('Store', ['dispatch']);
-    stateMock = jasmine.createSpyObj('StateService', [''], { state$: of({}), state: {} });
+    stateMock = jasmine.createSpyObj('StateService', ['dispatch'], { state$: of({}), state: {} });
     Object.defineProperty(stateMock, 'state', { writable: true });
     reportServiceMock = jasmine.createSpyObj('CreditreportService', [''], {
       tuReport$: of({}),
@@ -57,127 +57,130 @@ describe('DashboardService', () => {
   });
 
   it('should run stateSub$?.unsubscribe on destroy', () => {
-    service.stateSub$ = new Subscriber()
-    spyOn(service.stateSub$, 'unsubscribe')
+    service.stateSub$ = new Subscriber();
+    spyOn(service.stateSub$, 'unsubscribe');
     service.ngOnDestroy();
-    expect(service.stateSub$.unsubscribe).toHaveBeenCalled()
-  })
+    expect(service.stateSub$.unsubscribe).toHaveBeenCalled();
+  });
 
   it('should run dashScoresSub$?.unsubscribe on destroy', () => {
-    service.dashScoresSub$ = new Subscriber()
-    spyOn(service.dashScoresSub$, 'unsubscribe')
+    service.dashScoresSub$ = new Subscriber();
+    spyOn(service.dashScoresSub$, 'unsubscribe');
     service.ngOnDestroy();
-    expect(service.dashScoresSub$.unsubscribe).toHaveBeenCalled()
-  })
+    expect(service.dashScoresSub$.unsubscribe).toHaveBeenCalled();
+  });
 
   it('should run tuReportSub$?.unsubscribe on destroy', () => {
-    service.tuReportSub$ = new Subscriber()
-    spyOn(service.tuReportSub$, 'unsubscribe')
+    service.tuReportSub$ = new Subscriber();
+    spyOn(service.tuReportSub$, 'unsubscribe');
     service.ngOnDestroy();
-    expect(service.tuReportSub$.unsubscribe).toHaveBeenCalled()
-  })
+    expect(service.tuReportSub$.unsubscribe).toHaveBeenCalled();
+  });
 
   it('should run updatedOnSub$?.unsubscribe on destroy', () => {
-    service.updatedOnSub$ = new Subscriber()
-    spyOn(service.updatedOnSub$, 'unsubscribe')
+    service.updatedOnSub$ = new Subscriber();
+    spyOn(service.updatedOnSub$, 'unsubscribe');
     service.ngOnDestroy();
-    expect(service.updatedOnSub$.unsubscribe).toHaveBeenCalled()
-  })
+    expect(service.updatedOnSub$.unsubscribe).toHaveBeenCalled();
+  });
 
   it('should run state$.subscribe on subscribeToObservables', () => {
-    spyOn(stateMock.state$, 'subscribe')
+    spyOn(stateMock.state$, 'subscribe');
     service.subscribeToObservables();
-    expect(stateMock.state$.subscribe).toHaveBeenCalled()
-  })
+    expect(stateMock.state$.subscribe).toHaveBeenCalled();
+  });
 
   it('should run dashScores$.subscribe on subscribeToObservables', () => {
-    service.dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null)
-    spyOn(service.dashScores$, 'subscribe')
+    service.dashScores$ = new BehaviorSubject<IProductTrendingData[] | null>(null);
+    spyOn(service.dashScores$, 'subscribe');
     service.subscribeToObservables();
-    expect(service.dashScores$.subscribe).toHaveBeenCalled()
-  })
+    expect(service.dashScores$.subscribe).toHaveBeenCalled();
+  });
 
   it('should return 0 if !scores.length > 0 or no scores on calculateDelta', () => {
-    let res = service.calculateDelta(null)
-    expect(res).toEqual(0)
-  })
+    let res = service.calculateDelta(null);
+    expect(res).toEqual(0);
+  });
 
   it('should return 50 if latestScore is 200 and lastMonthsScore is 150 on calculateDelta', () => {
-    let res = service.calculateDelta([{AttributeValue: 150} as IProductTrendingData, {AttributeValue: 200} as IProductTrendingData])
-    expect(res).toEqual(50)
-  })
+    let res = service.calculateDelta([
+      { AttributeValue: 150 } as IProductTrendingData,
+      { AttributeValue: 200 } as IProductTrendingData,
+    ]);
+    expect(res).toEqual(50);
+  });
 
   it('should run parseRiskScoreFromReport if !scores.length > 0 or no scores and tuReport on getCurrentScore', () => {
-    service.tuReport = {} as IMergeReport
-    spyOn(service, 'parseRiskScoreFromReport')
-    service.getCurrentScore(null)
-    expect(service.parseRiskScoreFromReport).toHaveBeenCalled()
-  })
+    service.tuReport = {} as IMergeReport;
+    spyOn(service, 'parseRiskScoreFromReport');
+    service.getCurrentScore(null);
+    expect(service.parseRiskScoreFromReport).toHaveBeenCalled();
+  });
 
   it('should run parseRiskScoreFromReport if scores.length > 0 and scores and tuReport on getCurrentScore', () => {
-    service.tuReport = {} as IMergeReport
-    spyOn(service, 'parseRiskScoreFromReport')
-    service.getCurrentScore([{AttributeValue: 'null'} as IProductTrendingData])
-    expect(service.parseRiskScoreFromReport).toHaveBeenCalled()
-  })
+    service.tuReport = {} as IMergeReport;
+    spyOn(service, 'parseRiskScoreFromReport');
+    service.getCurrentScore([{ AttributeValue: 'null' } as IProductTrendingData]);
+    expect(service.parseRiskScoreFromReport).toHaveBeenCalled();
+  });
 
   it('should return 100 if scores.length > 0 and scores and tuReport on getCurrentScore', () => {
-    service.tuReport = {} as IMergeReport
-    let res = service.getCurrentScore([{AttributeValue: '100'} as IProductTrendingData])
-    expect(res).toEqual(100)
-  })
+    service.tuReport = {} as IMergeReport;
+    let res = service.getCurrentScore([{ AttributeValue: '100' } as IProductTrendingData]);
+    expect(res).toEqual(100);
+  });
 
   it('should return "Welcome back, test" if service.name = "test" on getWelcomeMessage', () => {
-    service.name = 'test'
-    let res = service.getWelcomeMessage()
-    expect(res).toEqual('Welcome back, test')
-  })
+    service.name = 'test';
+    let res = service.getWelcomeMessage();
+    expect(res).toEqual('Welcome back, test');
+  });
 
   it('should return "" if service.name = undefined on getWelcomeMessage', () => {
-    service.name = undefined
-    let res = service.getWelcomeMessage()
-    expect(res).toEqual('')
-  })
+    service.name = undefined;
+    let res = service.getWelcomeMessage();
+    expect(res).toEqual('');
+  });
 
   it('should return updatedOn on getLastUpdated', () => {
-    service.updatedOn = 'test'
-    let res = service.getLastUpdated()
-    expect(res).toEqual('test')
-  })
+    service.updatedOn = 'test';
+    let res = service.getLastUpdated();
+    expect(res).toEqual('test');
+  });
 
   it('should set updatedOn to new Date().toLocaleDateString() without value on getLastUpdated', () => {
-    service.setLastUpdated(null)
-    expect(service.updatedOn).toEqual(new Date().toLocaleDateString())
-  })
+    service.setLastUpdated(null);
+    expect(service.updatedOn).toEqual(new Date().toLocaleDateString());
+  });
 
   it('should set name to state?.user?.userAttributes?.name?.first on setUserName', () => {
-    service.state = {user: {userAttributes: {name: {first: 'test'}} as UserAttributesInput}} as AppDataStateModel
-    service.setUserName()
-    expect(service.name).toEqual('test')
-  })
+    service.state = {
+      user: { userAttributes: { name: { first: 'test' } } as UserAttributesInput },
+    } as AppDataStateModel;
+    service.setUserName();
+    expect(service.name).toEqual('test');
+  });
 
   it('should run transunion.getCreditReport on refreshReport if !fulfilledOn', () => {
-    stateMock.state = {appData: {agencies: {transunion: {fulfilledOn: ''}}}as AppDataStateModel}
-    service.refreshReport()
-    expect(transunionMock.getCreditReport).toHaveBeenCalled()
-  })
+    stateMock.state = { appData: { agencies: { transunion: { fulfilledOn: '' } } } as AppDataStateModel };
+    service.refreshReport();
+    expect(transunionMock.getCreditReport).toHaveBeenCalled();
+  });
 
   it('should run tuReport$.pipe on isCreditFreezeEnabled', () => {
-    service.tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport)
-    spyOn(service.tuReport$, 'pipe')
-    service.isCreditFreezeEnabled()
-    expect(service.tuReport$.pipe).toHaveBeenCalled()
-  })
+    service.tuReport$ = new BehaviorSubject<IMergeReport>({} as IMergeReport);
+    spyOn(service.tuReport$, 'pipe');
+    service.isCreditFreezeEnabled();
+    expect(service.tuReport$.pipe).toHaveBeenCalled();
+  });
 
-  it('should run store.dispatch on syncDashboardStateToDB', () => {
-    storeMock.dispatch.and.returnValue(of())
-    service.syncDashboardStateToDB({} as Partial<DashboardStateModel>)
-    expect(storeMock.dispatch).toHaveBeenCalled()
-  })
+  it('should run statesvc.dispatch on syncDashboardStateToDB', () => {
+    service.syncDashboardStateToDB({} as Partial<DashboardStateModel>);
+    expect(stateMock.dispatch).toHaveBeenCalled();
+  });
 
   it('should run auth.getIdTokenJwtTokens on getAdData', () => {
-    service.getAdData()
-    expect(authMock.getIdTokenJwtTokens).toHaveBeenCalled()
-  })
-
+    service.getAdData();
+    expect(authMock.getIdTokenJwtTokens).toHaveBeenCalled();
+  });
 });

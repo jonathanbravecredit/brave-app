@@ -63,7 +63,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.auth
         .signIn(username, password)
-        .then((user: CognitoUser | any) => {
+        ?.then((user: CognitoUser | any) => {
           resolve(user);
         })
         .catch((error: any) => reject(error));

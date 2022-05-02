@@ -34,6 +34,9 @@ describe("AuthResolver", () => {
   });
 
   it("should run referredByCode$.next on resolve", () => {
+    referralsMock.validateReferralCode.and.returnValue(
+      Promise.resolve({ valide: true })
+    );
     let spy = spyOn(referralsMock.referredByCode$, "next");
     resolver.resolve({
       queryParams: { referralCode: "" },
@@ -42,6 +45,9 @@ describe("AuthResolver", () => {
   });
 
   it("should run referrals.validateReferralCode on resolve", () => {
+    referralsMock.validateReferralCode.and.returnValue(
+      Promise.resolve({ valide: true })
+    );
     resolver.resolve({
       queryParams: { referralCode: "" },
     } as unknown as ActivatedRouteSnapshot);

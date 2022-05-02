@@ -16,7 +16,7 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
       this.tradeLines = [this.tradeLines];
     }
 
-    this.filterTradelines(this.tradeLines).sortByAccountType(this.tradeLines).sortByDateOpened(this.tradeLines);
+    this.filterTradelines(this.tradeLines)?.sortByAccountType(this.tradeLines)?.sortByDateOpened(this.tradeLines);
 
     if (this.tradeLines === undefined) return [];
     return this.tradeLines;
