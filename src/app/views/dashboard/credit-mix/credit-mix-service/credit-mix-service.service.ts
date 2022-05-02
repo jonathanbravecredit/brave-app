@@ -13,6 +13,7 @@ import {
 } from "../interfaces/credit-mix-calc-obj.interface";
 import { ICreditMixView } from "../credit-mix.model";
 import * as _ from "lodash";
+import { IMergeReport } from "../../../../shared/interfaces/merge-report.interface";
 
 @Injectable({
   providedIn: "root",
@@ -24,10 +25,12 @@ export class CreditMixService implements OnDestroy {
     {} as ICreditMixView
   );
 
+  tuReport$ = new BehaviorSubject({} as IMergeReport);
   tuReportSub$: Subscription;
 
   constructor(private creditReport: CreditreportService) {
     this.tuReportSub$ = this.creditReport.tuReport$.subscribe((report) => {
+      this.tuReport$.next(report);
       this.model.tuReport = report;
     });
   }
