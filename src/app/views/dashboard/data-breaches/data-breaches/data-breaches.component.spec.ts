@@ -1,29 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngxs/store';
-import { APIService } from '@shared/services/aws/api.service';
-import { Observable, of } from 'rxjs';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
+import { of } from "rxjs";
 
-import { DataBreachesComponent } from './data-breaches.component';
+import { DataBreachesComponent } from "./data-breaches.component";
+import { DataBreachesViewService } from "../data-breaches-view.service";
 
-describe('DataBreachesComponent', () => {
+//   private route: ActivatedRoute,
+//   public dataBreachesViewService: DataBreachesViewService
+
+describe("DataBreachesComponent", () => {
   let component: DataBreachesComponent;
   let fixture: ComponentFixture<DataBreachesComponent>;
-  let storeMock: any;
-  let apiMock: any;
-  class RouteMock {
-    data = of();
-  }
+  let routeMock: any;
+  let dataBreachesViewServiceMock: any;
 
   beforeEach(async () => {
-    storeMock = jasmine.createSpyObj('Store', ['dispatch']);
-    apiMock = jasmine.createSpyObj('APIService', ['']);
+    routeMock = jasmine.createSpyObj("ActivatedRoute", [""], { data: of() });
+    dataBreachesViewServiceMock = jasmine.createSpyObj(
+      "dataBreachesViewService",
+      ["initialModelMerge"]
+    );
     await TestBed.configureTestingModule({
       declarations: [DataBreachesComponent],
       providers: [
-        { provide: Store, useValue: storeMock },
-        { provide: ActivatedRoute, useClass: RouteMock },
-        { provide: APIService, useValue: apiMock },
+        { provide: ActivatedRoute, useValue: routeMock },
+        {
+          provide: DataBreachesViewService,
+          useValue: dataBreachesViewServiceMock,
+        },
       ],
     }).compileComponents();
   });
@@ -34,13 +38,7 @@ describe('DataBreachesComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should store.run dispatch on onCardClick', () => {
-    storeMock.dispatch.and.returnValue(new Observable<any>());
-    component.onCardClick(1);
-    expect(storeMock.dispatch).toHaveBeenCalled();
   });
 });

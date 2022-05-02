@@ -1,5 +1,5 @@
 import { IProgressTrackerView } from "./../../progress-tracker.model";
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { PROGRESS_TRACKER_CONTENT } from "../../progress-tracker.content";
 import { ProgressTrackerViewService } from "../../progress-tracker-view.service";
 import { Subscription } from "rxjs";

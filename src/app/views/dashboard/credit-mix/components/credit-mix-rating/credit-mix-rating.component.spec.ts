@@ -1,16 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreditMixRatingComponent } from './credit-mix-rating.component';
+import { CreditMixRatingComponent } from "./credit-mix-rating.component";
+import { CreditMixService } from "../../credit-mix-service/credit-mix-service.service";
+import { BehaviorSubject } from 'rxjs';
+import { ICreditMixView } from '../../credit-mix.model';
 
-describe('CreditMixRatingComponent', () => {
+describe("CreditMixRatingComponent", () => {
   let component: CreditMixRatingComponent;
   let fixture: ComponentFixture<CreditMixRatingComponent>;
+  let creditMixServiceMock: any;
 
   beforeEach(async () => {
+    creditMixServiceMock = jasmine.createSpyObj("CreditMixService", [""], {model$: new BehaviorSubject<ICreditMixView>({} as ICreditMixView)});
     await TestBed.configureTestingModule({
-      declarations: [ CreditMixRatingComponent ]
-    })
-    .compileComponents();
+      declarations: [CreditMixRatingComponent],
+      providers: [
+        { provide: CreditMixService, useValue: creditMixServiceMock },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +26,7 @@ describe('CreditMixRatingComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

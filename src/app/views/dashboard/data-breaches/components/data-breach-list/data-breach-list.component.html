@@ -1,5 +1,5 @@
 <p class="brave-body2 mb-3">{{ DATA_BREACHES_CONTENT.dataBreachesInitial.dataBreachList.p1 }}</p>
-<div *ngIf="model.unreviewed.length; else noBreaches">
+<div *ngIf="model.unreviewed?.length; else noBreaches">
   <div *ngFor="let card of model.breachCards; index as idx" class="mb-4">
     <ng-container *ngIf="!card.reviewed">
       <brave-data-breach-card

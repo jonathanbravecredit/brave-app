@@ -1,16 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreditMixBadgesComponent } from './credit-mix-badges.component';
+import { CreditMixBadgesComponent } from "./credit-mix-badges.component";
+import { CreditMixService } from "../../credit-mix-service/credit-mix-service.service";
+import { ICreditMixView } from '../../credit-mix.model';
+import { BehaviorSubject } from 'rxjs';
 
-describe('CreditMixBadgesComponent', () => {
+//public creditMixService: CreditMixService
+
+describe("CreditMixBadgesComponent", () => {
   let component: CreditMixBadgesComponent;
   let fixture: ComponentFixture<CreditMixBadgesComponent>;
+  let creditMixServiceMock: any;
 
   beforeEach(async () => {
+    creditMixServiceMock = jasmine.createSpyObj("CreditMixService", [""], {model$: new BehaviorSubject<ICreditMixView>({} as ICreditMixView)});
     await TestBed.configureTestingModule({
-      declarations: [ CreditMixBadgesComponent ]
-    })
-    .compileComponents();
+      declarations: [CreditMixBadgesComponent],
+      providers: [
+        { provide: CreditMixService, useValue: creditMixServiceMock },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +28,7 @@ describe('CreditMixBadgesComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

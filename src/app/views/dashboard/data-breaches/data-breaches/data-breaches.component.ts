@@ -13,7 +13,7 @@ export class DataBreachesComponent {
   AnalyticClickEvents = AnalyticClickEvents;
 
   constructor(
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     public dataBreachesViewService: DataBreachesViewService
   ) {
     this.route.data.subscribe((resp: any) => {

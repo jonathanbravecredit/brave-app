@@ -22,12 +22,6 @@ describe('ReferralBannerComponent', () => {
     dh = new DOMHelper(fixture);
   });
 
-  beforeEach(() => {
-    component.disabled = false;
-
-    fixture.detectChanges();
-  });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
