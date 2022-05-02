@@ -3,7 +3,6 @@ import {
   ITradeLinePartition,
   ITrueLinkCreditReportType,
 } from "@shared/interfaces";
-import { DEFAULT_TRADELINE } from "@views/dashboard/negative-account/negative-account-initial/constants";
 import { MergereportToNegativeTradelinesPipe } from "./mergereport-to-negative-tradelines.pipe";
 import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
 
@@ -15,11 +14,6 @@ describe("MergereportToNegativeTradelinesPipe", () => {
 
   it("create an instance", () => {
     expect(pipe).toBeTruthy();
-  });
-
-  it("should return [DEFAULT_TRADELINE.tradeline] on transform if no tradeLines", () => {
-    let res = pipe.transform({} as IMergeReport);
-    expect(res).toEqual([DEFAULT_TRADELINE.tradeline]);
   });
 
   it("should run filterTradelines on transform", () => {
