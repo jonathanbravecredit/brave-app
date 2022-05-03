@@ -30,6 +30,7 @@ import { ConfigToUtilizationPipe } from "./config-to-utilization/config-to-utili
 import { TradelineToFindingsPipe } from "./tradeline-to-findings/tradeline-to-findings.pipe";
 import { AccountStatusToHexPipe } from "@shared/pipes/account-status-to-hex/account-status-to-hex.pipe";
 import { TradelineToAccountgroupPipe } from "./tradeline-to-accountgroup/tradeline-to-accountgroup.pipe";
+import { MergereportToTradelinesPipe } from "./mergereport-to-tradelines/mergereport-to-tradelines.pipe";
 
 const pipes = [
   TradelineToDetailsPipe,
@@ -62,6 +63,7 @@ const pipes = [
   FindingsTransformerPipe,
   ConfigToUtilizationPipe,
   AccountStatusToHexPipe,
+  MergereportToTradelinesPipe,
 ];
 
 @NgModule({
