@@ -13,8 +13,6 @@ import { MergereportToPublicitemsPipe } from "./mergereport-to-publicitems/merge
 import { MergereportToPersonalitemsPipe } from "./mergereport-to-personalitems/mergereport-to-personalitems.pipe";
 import { PublicitemToDetailsPipe } from "./publicitem-to-details/publicitem-to-details.pipe";
 import { PersonalitemsToDetailsPipe } from "./personalitem-to-details/personalitems-to-details.pipe";
-import { MergereportToTradelinesPipe } from "./mergereport-to-tradelines/mergereport-to-tradelines.pipe";
-import { MergereportToConsumerStatementsPipe } from "./mergereport-to-consumer-statements/mergereport-to-consumer-statements.pipe";
 import { AccountNumberMaskPipe } from "./account-number-mask/account-number-mask.pipe";
 import { SsnMaskPipe } from "./ssn-mask/ssn-mask.pipe";
 import { DisputesToDisputePipe } from "./disputes-to-dispute/disputes-to-dispute.pipe";
@@ -22,11 +20,8 @@ import { CreditbureauToTradelinedetailsPipe } from "./creditbureau-to-tradelined
 import { CreditbureauToPublicitemdetailsPipe } from "./creditbureau-to-publicitemdetails/creditbureau-to-publicitemdetails.pipe";
 import { TradelineToForbearancePipe } from "./tradeline-to-forbearance/tradeline-to-forbearance.pipe";
 import { MergereportToSubscribersPipe } from "./mergereport-to-subscribers/mergereport-to-subscribers.pipe";
-import { MergereportToBreachitemsPipe } from "./mergereport-to-breachitems/mergereport-to-breachitems.pipe";
 import { LinkifyPipe } from "./linkify/linkify.pipe";
 import { ParseRiskScorePipe } from "@shared/pipes/parse-risk-score/parse-risk-score.pipe";
-import { ReasonsToPagesPipe } from "./reasons-to-pages/reasons-to-pages.pipe";
-import { FilterSubscribersPipe } from "./filterSubscribers/filter-subscribers.pipe";
 import { CreditbureauToPersonalitemdetailsPipe } from "./creditbureau-to-personalitemdetails/creditbureau-to-personalitemdetails.pipe";
 import { DecodePipe } from "./decode/decode.pipe";
 import { FilterArrayPipe } from "./filterArray/filter-array.pipe";
@@ -51,10 +46,7 @@ const pipes = [
   PersonalitemsToDetailsPipe,
   MergereportToPublicitemsPipe,
   MergereportToPersonalitemsPipe,
-  MergereportToTradelinesPipe,
   MergereportToSubscribersPipe,
-  MergereportToConsumerStatementsPipe,
-  MergereportToBreachitemsPipe,
   CreditbureauToTradelinedetailsPipe,
   CreditbureauToPublicitemdetailsPipe,
   CreditbureauToPersonalitemdetailsPipe,
@@ -65,10 +57,8 @@ const pipes = [
   SsnMaskPipe,
   LinkifyPipe,
   DecodePipe,
-  FilterSubscribersPipe,
   FilterArrayPipe,
   ParseRiskScorePipe,
-  ReasonsToPagesPipe,
   FindingsTransformerPipe,
   ConfigToUtilizationPipe,
   AccountStatusToHexPipe,

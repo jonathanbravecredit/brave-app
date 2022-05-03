@@ -52,36 +52,4 @@ export class MergereportToNegativeTradelinesPipe implements PipeTransform {
     this.tradeLines = tu.sorters.report.sortTradelineByDateOpened(tradeLines);
     return this;
   }
-
-  // /**
-  //  * Map the tradeline object to the negative account object
-  //  * @param {ITradeLinePartition[]} tradeLines
-  //  * @returns
-  //  */
-  // mapTradeLineToAccount(
-  //   tradeLines: ITradeLinePartition[],
-  //   subscribers: ISubscriber[],
-  //   consumerStatement: string,
-  // ): INegativeAccountCardInputs[] {
-  //   const negativeAccounts = tradeLines.map((tradeline) => {
-  //     const subscriber = tu.queries.report.getTradelineSubscriberByKey(tradeline, subscribers) || ({} as ISubscriber);
-  //     const accountTypeDescription = tu.queries.report.getBraveTradelineDescription(tradeline);
-  //     const originalCreditorValue = tu.queries.report.getOriginalCreditor(tradeline);
-  //     const disputeFlagValue = tu.queries.report.getDisputeFlag(tradeline);
-  //     return {
-  //       tradeline: tradeline,
-  //       subscriber: subscriber,
-  //       creditorName: tradeline.Tradeline?.creditorName || '',
-  //       lastReported: tradeline.Tradeline?.dateReported || '',
-  //       accountTypeDescription: accountTypeDescription,
-  //       accountTypeDescriptionValue: tradeline.Tradeline?.OpenClosed?.description || '',
-  //       disputeFlag: 'Previously Disputed?',
-  //       originalCreditor: 'Original Creditor',
-  //       originalCreditorValue: originalCreditorValue,
-  //       disputeFlagValue: disputeFlagValue,
-  //       consumerStatement: consumerStatement,
-  //     };
-  //   });
-  //   return negativeAccounts;
-  // }
 }
