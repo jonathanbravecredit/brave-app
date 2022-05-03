@@ -24,17 +24,16 @@ import { TradelineToForbearancePipe } from "./tradeline-to-forbearance/tradeline
 import { MergereportToSubscribersPipe } from "./mergereport-to-subscribers/mergereport-to-subscribers.pipe";
 import { MergereportToBreachitemsPipe } from "./mergereport-to-breachitems/mergereport-to-breachitems.pipe";
 import { LinkifyPipe } from "./linkify/linkify.pipe";
-import { FilterTradelinesPipe } from "./filterTradelines/filter-tradelines.pipe";
 import { ParseRiskScorePipe } from "@shared/pipes/parse-risk-score/parse-risk-score.pipe";
 import { ReasonsToPagesPipe } from "./reasons-to-pages/reasons-to-pages.pipe";
 import { FilterSubscribersPipe } from "./filterSubscribers/filter-subscribers.pipe";
 import { CreditbureauToPersonalitemdetailsPipe } from "./creditbureau-to-personalitemdetails/creditbureau-to-personalitemdetails.pipe";
 import { DecodePipe } from "./decode/decode.pipe";
-import { FilterPersonalPipe } from "./filterPersonal/filter-personal.pipe";
+import { FilterArrayPipe } from "./filterArray/filter-array.pipe";
 import { FindingsTransformerPipe } from "./findingsTransformer/findings-transformer.pipe";
 import { ConfigToUtilizationPipe } from "./config-to-utilization/config-to-utilization.pipe";
 import { TradelineToFindingsPipe } from "./tradeline-to-findings/tradeline-to-findings.pipe";
-import { AccountStatusPipe } from "@shared/pipes/accountStatus/account-status.pipe";
+import { AccountStatusToHexPipe } from "@shared/pipes/account-status-to-hex/account-status-to-hex.pipe";
 import { TradelineToAccountgroupPipe } from "./tradeline-to-accountgroup/tradeline-to-accountgroup.pipe";
 
 const pipes = [
@@ -66,14 +65,13 @@ const pipes = [
   SsnMaskPipe,
   LinkifyPipe,
   DecodePipe,
-  FilterTradelinesPipe,
   FilterSubscribersPipe,
-  FilterPersonalPipe,
+  FilterArrayPipe,
   ParseRiskScorePipe,
   ReasonsToPagesPipe,
   FindingsTransformerPipe,
   ConfigToUtilizationPipe,
-  AccountStatusPipe,
+  AccountStatusToHexPipe,
 ];
 
 @NgModule({

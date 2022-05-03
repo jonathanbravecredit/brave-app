@@ -1,9 +1,9 @@
-import { AccountStatusPipe } from "./account-status.pipe";
+import { AccountStatusToHexPipe } from "./account-status-to-hex.pipe";
 
-describe("AccountStatusPipe", () => {
+describe("AccountStatusToHexPipe", () => {
   let pipe: any;
   beforeAll(() => {
-    pipe = new AccountStatusPipe();
+    pipe = new AccountStatusToHexPipe();
   });
 
   it("create an instance", () => {
