@@ -37,14 +37,12 @@
       <div class="py-2 flex-auto">
         <div class="tab-content tab-space">
           <ng-container *ngIf="openTab === 1">
-            <!-- <brave-credit-score-history-ngx-chart></brave-credit-score-history-ngx-chart> -->
             <brave-credit-score-history-chart
               [lineChartData]="lineChartData3Month"
               [lineChartLabels]="lineChartLabels3Month"
             ></brave-credit-score-history-chart>
           </ng-container>
           <ng-container *ngIf="openTab === 2">
-            <!-- <brave-credit-score-history-ngx-chart></brave-credit-score-history-ngx-chart> -->
             <brave-credit-score-history-chart
               [lineChartData]="lineChartData6Month"
               [lineChartLabels]="lineChartLabels6Month"
