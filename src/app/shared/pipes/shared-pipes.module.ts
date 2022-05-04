@@ -7,7 +7,6 @@ import { TradelineToPagesPipe } from "./tradeline-to-pages/tradeline-to-pages.pi
 import { DisputesToDisputesOverviewPipe } from "./disputes-to-disputes-overview/disputes-to-disputes-overview.pipe";
 import { DisputesToDisputesHistoricalPipe } from "@shared/pipes/disputes-to-disputes-historical/disputes-to-disputes-historical.pipe";
 import { DisputeToDisputeFindingPipe } from "./dispute-to-dispute-finding/dispute-to-dispute-finding.pipe";
-import { MergereportToDashboardPipe } from "@shared/pipes/mergereport-to-dashboard/mergereport-to-dashboard.pipe";
 import { PublicitemToDisputePipe } from "./publicitem-to-dispute/publicitem-to-dispute.pipe";
 import { MergereportToPublicitemsPipe } from "./mergereport-to-publicitems/mergereport-to-publicitems.pipe";
 import { MergereportToPersonalitemsPipe } from "./mergereport-to-personalitems/mergereport-to-personalitems.pipe";
@@ -41,7 +40,6 @@ const pipes = [
   DisputesToDisputesOverviewPipe,
   DisputesToDisputesHistoricalPipe,
   DisputeToDisputeFindingPipe,
-  MergereportToDashboardPipe,
   PublicitemToDisputePipe,
   PublicitemToDetailsPipe,
   PersonalitemsToDetailsPipe,
