@@ -1,41 +1,14 @@
-<!-- <ng-container *ngIf="route.queryParams | async as params">
-  <ng-container *ngIf="(disputes$ | async) as disputes">
-    <ng-container *ngIf="disputes | disputesToDispute : params.id as dispute">
-      <ng-container *ngIf="dispute | disputeToDisputeFinding as findings">
-        <brave-dispute-findings-pure
-          [findings]="findings"
-          [reportCreatedAt]="findings.reportCreatedAt"
-          [fileIdentificationNumber]="findings.fileIdentificationNumber"
-          [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"
-          [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails : findings.investigationResults"
-          [personalInfoConfig]="(findings.investigationResults?.Borrower || {}) | personalitemsToDetails"
-          [stateOfResidence]="stateOfResidence"
-        ></brave-dispute-findings-pure>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</ng-container> -->
-
 <ng-container *ngIf="investigationResults && creditBureauResults">
-  <ng-container *ngIf="(dispute$ | async) | disputeToDisputeFinding: creditBureauResults.creditBureau as findings">
+  <ng-container *ngIf="disputeService.transformDisputeToFindings(currentDispute, creditBureauResults.creditBureau) as findings">
     <brave-dispute-findings-pure
       [findings]="findings"
       [reportCreatedAt]="findings.reportCreatedAt"
       [fileIdentificationNumber]="findings.fileIdentificationNumber"
-      [tradelineAccountConfig]="creditBureauResults.creditBureau | creditbureauToTradelinedetails : investigationResults.trueLinkCreditReportType"
-      [publicRecordConfig]="creditBureauResults.creditBureau | creditbureauToPublicitemdetails : investigationResults.trueLinkCreditReportType"
-      [personalInfoConfig]="creditBureauResults.creditBureau | creditbureauToPersonalitemdetails: investigationResults.trueLinkCreditReportType"
+      [tradelineAccountConfig]="disputeService.transformCreditbureauToTradelineDetails(creditBureauResults.creditBureau, investigationResults.trueLinkCreditReportType)"
+      [publicRecordConfig]="disputeService.transformCreditbureauToPublicItemDetails(creditBureauResults.creditBureau, investigationResults.trueLinkCreditReportType)"
+      [personalInfoConfig]="disputeService.transformCreditbureauToPersonalItemDetails(creditBureauResults.creditBureau, investigationResults.trueLinkCreditReportType)"
       [stateOfResidence]="stateOfResidence"
     ></brave-dispute-findings-pure>
   </ng-container>
 </ng-container>
 
-<!-- <brave-dispute-findings-pure
-  [findings]="findings"
-  [reportCreatedAt]="findings.reportCreatedAt"
-  [fileIdentificationNumber]="findings.fileIdentificationNumber"
-  [tradelineAccountConfig]="findings.creditBureau | creditbureauToTradelinedetails : findings.investigationResults"
-  [publicRecordConfig]="findings.creditBureau | creditbureauToPublicitemdetails : findings.investigationResults"
-  [personalInfoConfig]="(findings.investigationResults?.Borrower || {}) | personalitemsToDetails"
-  [stateOfResidence]="stateOfResidence"
-></brave-dispute-findings-pure> -->

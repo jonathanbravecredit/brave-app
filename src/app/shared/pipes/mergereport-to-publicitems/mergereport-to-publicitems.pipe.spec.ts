@@ -3,12 +3,12 @@ import {
   IPublicPartition,
   ITrueLinkCreditReportType,
 } from "@shared/interfaces";
-import { MergereportToPublicitemsPipe } from "./mergereport-to-publicitems.pipe";
+import { MergereportToPublicitemDetailsPipe } from "./mergereport-to-publicitems.pipe";
 
-describe("MergereportToPublicitemsPipe", () => {
+describe("MergereportToPublicitemDetailsPipe", () => {
   let pipe: any;
   beforeAll(() => {
-    pipe = new MergereportToPublicitemsPipe();
+    pipe = new MergereportToPublicitemDetailsPipe();
   });
 
   it("create an instance", () => {

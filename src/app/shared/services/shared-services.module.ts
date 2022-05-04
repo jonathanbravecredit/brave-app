@@ -21,7 +21,7 @@ import { IpaddressService } from '@shared/services/ipaddress/ipaddress.service';
 import { CampaignService } from '@shared/services/campaign/campaign.service';
 import { MergereportToSubscribersPipe } from '@shared/pipes/mergereport-to-subscribers/mergereport-to-subscribers.pipe';
 import { MergereportToPersonalitemsPipe } from '@shared/pipes/mergereport-to-personalitems/mergereport-to-personalitems.pipe';
-import { MergereportToPublicitemsPipe } from '@shared/pipes/mergereport-to-publicitems/mergereport-to-publicitems.pipe';
+import { MergereportToPublicitemDetailsPipe } from '@shared/pipes/mergereport-to-publicitems/mergereport-to-publicitems.pipe';
 import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
 import { Auth } from 'aws-amplify';
 import { BroadcastService } from '@shared/services/broadcast/broadcast.service';
@@ -50,7 +50,7 @@ const services = [
   CampaignService,
   MergereportToNegativeTradelinesPipe,
   MergereportToSubscribersPipe,
-  MergereportToPublicitemsPipe,
+  MergereportToPublicitemDetailsPipe,
   MergereportToPersonalitemsPipe,
 ];
 
