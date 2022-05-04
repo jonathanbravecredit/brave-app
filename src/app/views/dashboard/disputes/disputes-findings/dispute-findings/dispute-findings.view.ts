@@ -6,7 +6,11 @@ import { ITrueLinkCreditReportType } from "@shared/interfaces/merge-report.inter
 import { DisputeService } from "@shared/services/dispute/dispute.service";
 import { TransunionQueries } from "@shared/utils/transunion/queries/transunion-queries";
 import { Subscription } from "rxjs";
-import { ITradelineCreditBureauConfig } from "../dispute-findings-pure/interfaces";
+import {
+  ITradelineCreditBureauConfig,
+  IPersonalInfoCreditBureauConfig,
+  IPublicRecordCreditBureauConfig,
+} from "../dispute-findings-pure/interfaces";
 import { CreditBureauFindingsType } from "../../../../../shared/utils/transunion/constants";
 import {
   ILineItem,
@@ -33,6 +37,12 @@ export class DisputeFindingsView implements OnInit, OnDestroy {
   disputeSub$: Subscription;
   routeSub$: Subscription | undefined;
   stateOfResidence: string = "";
+
+  tradelineAccountConfig: ITradelineCreditBureauConfig[] = [];
+  publicRecordConfig: IPublicRecordCreditBureauConfig[] = [];
+  personalInfoConfig: IPersonalInfoCreditBureauConfig[] = [];
+  findings: IDisputeToDisputeFindingOutput | undefined;
+
   investigationResults:
     | { trueLinkCreditReportType: ITrueLinkCreditReportType | undefined }
     | undefined;
@@ -52,6 +62,25 @@ export class DisputeFindingsView implements OnInit, OnDestroy {
     this.disputeSub$ = this.disputeService.currentDispute$.subscribe((r) => {
       this.currentDispute = r;
     });
+    this.tradelineAccountConfig =
+      disputeService.transformCreditbureauToTradelineDetails(
+        this.creditBureauResults?.creditBureau,
+        this.investigationResults?.trueLinkCreditReportType
+      );
+    this.publicRecordConfig =
+      disputeService.transformCreditbureauToPublicItemDetails(
+        this.creditBureauResults?.creditBureau,
+        this.investigationResults?.trueLinkCreditReportType
+      );
+    this.personalInfoConfig =
+      disputeService.transformCreditbureauToPersonalItemDetails(
+        this.creditBureauResults?.creditBureau,
+        this.investigationResults?.trueLinkCreditReportType
+      );
+    this.findings = disputeService.transformDisputeToFindings(
+      this.currentDispute,
+      this.creditBureauResults?.creditBureau
+    );
   }
 
   async ngOnInit(): Promise<void> {
@@ -61,5 +90,4 @@ export class DisputeFindingsView implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.routeSub$) this.routeSub$.unsubscribe();
   }
-
 }

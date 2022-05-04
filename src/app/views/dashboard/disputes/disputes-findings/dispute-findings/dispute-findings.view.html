@@ -1,12 +1,12 @@
 <ng-container *ngIf="investigationResults && creditBureauResults">
-  <ng-container *ngIf="disputeService.transformDisputeToFindings(currentDispute, creditBureauResults.creditBureau) as findings">
+  <ng-container *ngIf="findings">
     <brave-dispute-findings-pure
       [findings]="findings"
       [reportCreatedAt]="findings.reportCreatedAt"
       [fileIdentificationNumber]="findings.fileIdentificationNumber"
-      [tradelineAccountConfig]="disputeService.transformCreditbureauToTradelineDetails(creditBureauResults.creditBureau, investigationResults.trueLinkCreditReportType)"
-      [publicRecordConfig]="disputeService.transformCreditbureauToPublicItemDetails(creditBureauResults.creditBureau, investigationResults.trueLinkCreditReportType)"
-      [personalInfoConfig]="disputeService.transformCreditbureauToPersonalItemDetails(creditBureauResults.creditBureau, investigationResults.trueLinkCreditReportType)"
+      [tradelineAccountConfig]="tradelineAccountConfig"
+      [publicRecordConfig]="publicRecordConfig"
+      [personalInfoConfig]="personalInfoConfig"
       [stateOfResidence]="stateOfResidence"
     ></brave-dispute-findings-pure>
   </ng-container>
