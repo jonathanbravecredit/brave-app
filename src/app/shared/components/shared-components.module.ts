@@ -85,9 +85,8 @@ import { NotificationBadgeComponent } from "./badges/notification-badge/notifica
 import { CircleChecktextProgressbarComponent } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
 import { GoalChoiceParentComponent } from "./goals/goal-choice-parent/goal-choice-parent.component";
 import { GoalChoiceCardComponent } from "@shared/components/goals/goal-choice-card/goal-choice-card.component";
-import { GoalChoiceHeaderComponent } from "./goals/goal-choice-header/goal-choice-header.component";
-import { GoalChoiceDisclaimerComponent } from "./goals/goal-choice-disclaimer/goal-choice-disclaimer.component";
 import { OnboardingDisputeV2Component } from "./modals/onboarding-dispute-v2/onboarding-dispute-v2.component";
+import { SimpleChangePasswordFormComponent } from "./forms/simple-change-password-form/simple-change-password-form.component";
 
 const components = [
   BaseFormComponent,
@@ -149,6 +148,7 @@ const components = [
   NotificationBadgeComponent,
   CircleChecktextProgressbarComponent,
   OnboardingDisputeV2Component,
+  SimpleChangePasswordFormComponent,
 ];
 
 // component specific pipes only
@@ -171,8 +171,6 @@ const pipes = [
   AdCardComponent,
   GoalChoiceParentComponent,
   GoalChoiceCardComponent,
-  GoalChoiceHeaderComponent,
-  GoalChoiceDisclaimerComponent,
 ];
 
 @NgModule({
