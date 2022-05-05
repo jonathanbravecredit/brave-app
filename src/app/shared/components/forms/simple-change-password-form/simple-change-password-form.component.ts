@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 import { Observable } from 'rxjs';
+import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
 
 @Component({
   selector: 'brave-simple-change-password-form',

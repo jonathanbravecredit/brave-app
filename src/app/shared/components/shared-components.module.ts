@@ -31,31 +31,13 @@ import { SimpleSignupFormComponent } from "./forms/simple-signup-form/simple-sig
 import { SimpleSigninFormComponent } from "./forms/simple-signin-form/simple-signin-form.component";
 import { OutlineSelectInputComponent } from "./inputs/outline-select-input/outline-select-input.component";
 import { FilledClosingAlertComponent } from "@shared/components/alerts/filled-closing-alert/filled-closing-alert.component";
-import { IndexDropdownComponent } from "@shared/components/dropdowns/popdowns/index-dropdown/index-dropdown.component";
-import { MenuDropdownComponent } from "@shared/components/dropdowns/popdowns/menu-dropdown/menu-dropdown.component";
-import { NotificationDropdownComponent } from "@shared/components/dropdowns/popdowns/notification-dropdown/notification-dropdown.component";
-import { PagesDropdownComponent } from "@shared/components/dropdowns/popdowns/pages-dropdown/pages-dropdown.component";
-import { UserDropdownComponent } from "@shared/components/dropdowns/popdowns/user-dropdown/user-dropdown.component";
 import { OutlineAddressFormComponent } from "@shared/components/forms/outline-address-form/outline-address-form.component";
 import { OutlinePhoneFormComponent } from "@shared/components/forms/outline-phone-form/outline-phone-form.component";
 import { OutlineVerificationcodeFormComponent } from "@shared/components/forms/outline-verificationcode-form/outline-verificationcode-form.component";
-import { SsnFullFormComponent } from "@shared/components/forms/ssn-full-form/ssn-full-form.component";
-import { SsnLastfourFormComponent } from "@shared/components/forms/ssn-lastfour-form/ssn-lastfour-form.component";
-import { HiddenAsteriskInputComponent } from "@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.component";
-import { HiddenAsteriskInputDirective } from "@shared/components/inputs/hidden-asterisk-input/hidden-asterisk-input.directive";
-import { BaseModalRegularComponent } from "@shared/components/modals/base-modal-regular/base-modal-regular.component";
 import { BaseModalSmallComponent } from "@shared/components/modals/base-modal-small/base-modal-small.component";
-import { AdminNavbarComponent } from "@shared/components/navbars/admin-navbar/admin-navbar.component";
-import { AuthNavbarComponent } from "@shared/components/navbars/auth-navbar/auth-navbar.component";
-import { DashboardNavbarComponent } from "@shared/components/navbars/dashboard-navbar/dashboard-navbar.component";
-import { IndexNavbarComponent } from "@shared/components/navbars/index-navbar/index-navbar.component";
 import { OutlinePrevnextPaginationComponent } from "@shared/components/paginations/outline-prevnext-pagination/outline-prevnext-pagination.component";
 import { FilledChecktextProgressbarComponent } from "@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.component";
 import { FilledChecktextProgressbarPipe } from "@shared/components/progressbars/filled-checktext-progressbar/filled-checktext-progressbar.pipe";
-import { SidebarComponent } from "@shared/components/sidebar/sidebar.component";
-import { FilledOnlytextTabsComponent } from "@shared/components/tabs/filled-onlytext-tabs/filled-onlytext-tabs.component";
-import { OutlineTooltipComponent } from "@shared/components/tooltips/outline-tooltip/outline-tooltip.component";
-import { OutlineTooltipDirective } from "@shared/components/tooltips/outline-tooltip/outline-tooltip.directive";
 import { KbaquestionsFormComponent } from "./forms/kbaquestions-form/kbaquestions-form.component";
 import { OutlineNamedobFormComponent } from "./forms/outline-namedob-form/outline-namedob-form.component";
 import { BaseFormComponent } from "./forms/base-form/base-form.component";
@@ -64,7 +46,6 @@ import { OutlineNameFormComponent } from "./forms/outline-name-form/outline-name
 import { ViewdetailButtonComponent } from "./buttons/viewdetail-button/viewdetail-button.component";
 import { KbaMultiplechoiceInputComponent } from "./inputs/kba-multiplechoice-input/kba-multiplechoice-input.component";
 import { SnapshotDisplayCardComponent } from "./cards/snapshot-display-card/snapshot-display-card.component";
-import { NavigationTabsComponent } from "./tabs/navigation-tabs/navigation-tabs.component";
 import { CreditBuilderCardComponent } from "./cards/credit-builder-card/credit-builder-card.component";
 import { SpinnerComponent } from "./interstitials/spinner/spinner.component";
 import { CreditReportCardComponent } from "./cards/credit-report-card/credit-report-card.component";
@@ -73,11 +54,7 @@ import { CreditReportGraphicComponent } from "./graphics/credit-report-graphic/c
 import { BasePaginationComponent } from "./paginations/base-pagination/base-pagination.component";
 import { BaseModalComponent } from "./modals/base-modal/base-modal.component";
 import { ConfirmationModalComponent } from "./modals/confirmation-modal/confirmation-modal.component";
-import { ConditionalTermComponent } from "./terms/conditional-term/conditional-term.component";
-import { CreditScoreGraphicTabsComponent } from "./tabs/credit-score-graphic-tabs/credit-score-graphic-tabs.component";
-import { CreditScoreHistoryChartComponent } from "./charts/credit-score-history-chart/credit-score-history-chart.component";
 import { CreditScoreHistoryNgxChartComponent } from "./charts/credit-score-history-ngx-chart/credit-score-history-ngx-chart.component";
-import { CreditReportGraphicWithGraphComponent } from "./graphics/credit-report-graphic-with-graph/credit-report-graphic-with-graph.component";
 import { BaseExceptionComponent } from "./exceptions/base-exception/base-exception.component";
 import { BasicCarouselComponent } from "./carousels/basic-carousel/basic-carousel.component";
 import { BasicCarouselLoaderComponent } from "./carousels/basic-carousel-loader/basic-carousel-loader.component";
@@ -89,15 +66,11 @@ import { SimpleBackButtonComponent } from "./buttons/simple-back-button/simple-b
 import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
 import { BaseTableRowComponent } from "./tables/base-table-row/base-table-row.component";
 import { SecurityFreezeComponent } from "./messages/security-freeze/security-freeze.component";
-import { SimpleBannerComponent } from "./banners/simple-banner/simple-banner.component";
-import { SimpleChangePasswordFormComponent } from "./forms/simple-change-password-form/simple-change-password-form.component";
-import { SimpleDeactiveFormComponent } from "./forms/simple-deactive-form/simple-deactive-form.component";
 import { FilledSpinningButtonComponent } from "./buttons/filled-spinning-button/filled-spinning-button.component";
 import { OutlineSsnFullFormComponent } from "./forms/outline-ssn-full-form/outline-ssn-full-form.component";
 import { OutlineInputSsnComponent } from "./inputs/outline-input-ssn/outline-input-ssn.component";
 import { OutlineSsnLastfourFormComponent } from "./forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component";
 import { CreditReportGraphicNoGraphComponent } from "./graphics/credit-report-graphic-no-graph/credit-report-graphic-no-graph.component";
-import { HorizontalCreditscoreBarComponent } from "./graphics/horizontal-creditscore-bar/horizontal-creditscore-bar.component";
 import { HorizontalCreditscoreInvisiblebarComponent } from "./graphics/horizontal-creditscore-invisiblebar/horizontal-creditscore-invisiblebar.component";
 import { OutlineInputHiddenComponent } from "./inputs/outline-input-hidden/outline-input-hidden.component";
 import { PlacesAutocompleteInputComponent } from "./inputs/places-autocomplete-input/places-autocomplete-input.component";
@@ -128,30 +101,12 @@ const components = [
   OutlineSelectInputComponent,
   FilledClosingAlertComponent,
   FilledOnlytextBadgeComponent,
-  IndexDropdownComponent,
-  MenuDropdownComponent,
-  NotificationDropdownComponent,
-  PagesDropdownComponent,
-  UserDropdownComponent,
-  HiddenAsteriskInputComponent,
   OutlineAddressFormComponent,
   OutlinePhoneFormComponent,
   OutlineVerificationcodeFormComponent,
-  SsnFullFormComponent,
-  SsnLastfourFormComponent,
-  HiddenAsteriskInputComponent,
-  BaseModalRegularComponent,
   BaseModalSmallComponent,
-  AdminNavbarComponent,
-  AuthNavbarComponent,
-  DashboardNavbarComponent,
-  IndexNavbarComponent,
   OutlinePrevnextPaginationComponent,
   FilledChecktextProgressbarComponent,
-  SidebarComponent,
-  FilledOnlytextTabsComponent,
-  NavigationTabsComponent,
-  OutlineTooltipComponent,
   KbaquestionsFormComponent,
   OutlineNamedobFormComponent,
   SelectDobFormComponent,
@@ -165,14 +120,10 @@ const components = [
   SpinnerComponent,
   OnboardingDisputeComponent,
   CreditReportGraphicComponent,
-  CreditScoreGraphicTabsComponent,
-  CreditScoreHistoryChartComponent,
   CreditScoreHistoryNgxChartComponent,
-  CreditReportGraphicWithGraphComponent,
   BasePaginationComponent,
   BaseModalComponent,
   ConfirmationModalComponent,
-  ConditionalTermComponent,
   BaseExceptionComponent,
   BasicCarouselComponent,
   BasicCarouselLoaderComponent,
@@ -182,15 +133,11 @@ const components = [
   BaseTableRowComponent,
   SecurityFreezeComponent,
   SimpleBackButtonComponent,
-  SimpleBannerComponent,
-  SimpleDeactiveFormComponent,
-  SimpleChangePasswordFormComponent,
   FilledSpinningButtonComponent,
   CreditReportGraphicNoGraphComponent,
   OutlineSsnFullFormComponent,
   OutlineInputSsnComponent,
   OutlineSsnLastfourFormComponent,
-  HorizontalCreditscoreBarComponent,
   HorizontalCreditscoreInvisiblebarComponent,
   OutlineInputHiddenComponent,
   PlacesAutocompleteInputComponent,
@@ -228,8 +175,6 @@ const pipes = [
   GoalChoiceDisclaimerComponent,
 ];
 
-const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
-
 @NgModule({
   imports: [
     CommonModule,
@@ -242,7 +187,7 @@ const directives = [HiddenAsteriskInputDirective, OutlineTooltipDirective];
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes, ...directives],
-  exports: [...components, ...pipes, ...directives],
+  declarations: [...components, ...pipes],
+  exports: [...components, ...pipes],
 })
 export class SharedComponentsModule {}

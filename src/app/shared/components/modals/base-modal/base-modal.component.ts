@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Input, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'brave-base-modal',

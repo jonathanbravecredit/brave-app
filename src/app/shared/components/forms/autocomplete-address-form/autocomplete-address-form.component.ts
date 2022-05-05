@@ -90,13 +90,6 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
           break;
       }
     }
-
-    const address = {
-      addressOne: addressOne,
-      city: city,
-      state: state,
-      zip: zip,
-    };
     // need to use form array to flatten this
     this.parentForm.patchValue({
       addressOne: { input: addressOne },
