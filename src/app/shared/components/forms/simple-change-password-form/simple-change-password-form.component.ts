@@ -16,29 +16,6 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
   values$: Observable<any>;
   status$: Observable<any>;
   submitted: boolean = false;
-  passwordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Current Password',
-    type: 'password',
-    placeholder: 'Current Password',
-    autocomplete: 'off',
-  };
-
-  newPasswordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'New Password',
-    type: 'password',
-    placeholder: 'New Password',
-    autocomplete: 'off',
-  };
-
-  confirmPasswordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Confirm New Password',
-    type: 'password',
-    placeholder: 'Confirm New Password',
-    autocomplete: 'off',
-  };
 
   constructor(fb: FormBuilder) {
     super(fb, 'simple-change-password-form');
