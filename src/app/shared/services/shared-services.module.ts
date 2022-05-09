@@ -24,6 +24,8 @@ import { MergereportToPersonalitemsPipe } from '@shared/pipes/mergereport-to-per
 import { MergereportToPublicitemsPipe } from '@shared/pipes/mergereport-to-publicitems/mergereport-to-publicitems.pipe';
 import { MergereportToNegativeTradelinesPipe } from '@shared/pipes/mergereport-to-negative-tradelines/mergereport-to-negative-tradelines.pipe';
 import { Auth } from 'aws-amplify';
+import { BroadcastService } from '@shared/services/broadcast/broadcast.service';
+import { NavigatorService } from '@shared/services/navigator/navigator.service';
 
 const services = [
   InitService,

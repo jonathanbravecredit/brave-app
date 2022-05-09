@@ -23,10 +23,4 @@ describe('ReferralBodyTextComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should set addOn to 0 if addOnFlagOne is enrollment on init', () => {
-    component.campaign = { addOnFlagOne: 'enrollment' } as ICampaign
-    component.ngOnInit()
-    expect(component.addOn).toEqual(0)
-  })
 });

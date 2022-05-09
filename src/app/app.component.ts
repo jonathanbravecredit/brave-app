@@ -8,6 +8,8 @@ import { InitService } from '@shared/services/init/init.service';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
+import { NavigatorService } from '@shared/services/navigator/navigator.service';
+import { BroadcastService } from '@shared/services/broadcast/broadcast.service';
 
 @Component({
   selector: 'brave-root',
@@ -24,8 +26,10 @@ export class AppComponent implements OnInit {
     private router: Router,
     private analytics: AnalyticsService,
     private init: InitService,
+    private broadcast: BroadcastService,
+    private navigator: NavigatorService,
     private interstitial: InterstitialService,
-    private safeListMonitoringService: SafeListMonitoringService
+    private safeListMonitoringService: SafeListMonitoringService,
   ) {
     this.spinner$ = this.interstitial.open$.asObservable();
     this.message$ = this.interstitial.message$.asObservable();

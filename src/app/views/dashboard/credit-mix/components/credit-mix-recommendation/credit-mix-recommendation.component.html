@@ -3,16 +3,16 @@
   class="p-4 mb-8 mx-2 relative"
   style="background-color: #d714db; color: white; border-radius: 8px"
 >
-  <h1 class="text-sm font-semibold mb-4 text-center">Your Recommendations</h1>
+  <h1 class="text-sm font-semibold mb-4 text-center">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixRecommendation.h1}}</h1>
   <a
-    [href]="recommendations?.link"
+    [href]="model.recommendations?.link"
     target="_blank"
   >
     <p class="text-center text-sm mb-4">
-      {{ recommendations?.text }}
+      {{ model.recommendations?.text }}
     </p>
     <p class="text-center text-sm">
-      {{ recommendations?.subtext }}
+      {{ model.recommendations?.subtext }}
     </p>
   </a>
   <div class="absolute top-2 right-2" (click)="closeBox()">
