@@ -405,7 +405,8 @@ export class KycService {
   async sendOTPResponse(
     otpQuestion: ITransunionKBAQuestion,
   ): Promise<ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>> {
-    const state = this.store.snapshot()['appData']; // refresh state for new bundle key
+    const res = this.store.snapshot();
+    const state = res?.appData;
     const otpAnswer = this.getOTPSendTextAnswer(otpQuestion);
     try {
       const resp = await this.sendVerifyAuthenticationQuestions(state, [otpAnswer]);
