@@ -1,33 +1,45 @@
-import { Injectable } from '@angular/core';
-import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
+import { Injectable } from "@angular/core";
+import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
+import { MOCK_TRENDING_DATA_ONE_ATTR_MULTI_DATAPOINTS } from "../../../../testing/__mocks__/getTrendingData.mocks";
 import {
   IGetTrendingData,
   IProductTrendingAttribute,
   IProductTrendingData,
-} from '@shared/interfaces/get-trending-data.interface';
-const dayjs = require('dayjs');
+} from "@shared/interfaces/get-trending-data.interface";
+const dayjs = require("dayjs");
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CreditScoreHistoryNgxChartService {
   constructor() {}
 
-  transformTrendingData(trendingData: IGetTrendingData | null): any | undefined {
+  transformTrendingData(
+    trendingData: IGetTrendingData | null
+  ): IProductTrendingData | IProductTrendingData[] | undefined {
     let scores;
-    let monthlyScores: { [key: string]: IProductTrendingData } = Object.assign({});
+    let monthlyScores: { [key: string]: IProductTrendingData } = Object.assign(
+      {}
+    );
     if (
       trendingData?.ProductAttributes.ProductTrendingAttribute &&
       trendingData?.ProductAttributes.ProductTrendingAttribute instanceof Array
     ) {
-      scores = trendingData?.ProductAttributes?.ProductTrendingAttribute?.filter(
-        (a: IProductTrendingAttribute) => a.AttributeName?.indexOf('TUCVantageScore3V7') >= 0,
-      )[0]?.ProductAttributeData?.ProductTrendingData;
+      scores =
+        trendingData?.ProductAttributes?.ProductTrendingAttribute?.filter(
+          (a: IProductTrendingAttribute) =>
+            a.AttributeName?.indexOf("TUCVantageScore3V7") >= 0
+        )[0]?.ProductAttributeData?.ProductTrendingData;
+    } else {
+      scores = (
+        trendingData?.ProductAttributes
+          .ProductTrendingAttribute as IProductTrendingAttribute
+      ).ProductAttributeData.ProductTrendingData;
     }
 
     if (scores && scores instanceof Array) {
       scores.forEach((data) => {
-        let date = dayjs(data.AttributeDate).format('MMYYYY');
+        let date = dayjs(data.AttributeDate).format("MMYYYY");
         if (!monthlyScores[date]) {
           monthlyScores[date] = data;
         } else {
@@ -44,13 +56,19 @@ export class CreditScoreHistoryNgxChartService {
       });
     }
 
+    console.log('HERE', scores)
+
     return scores || undefined;
   }
 
   createChartCreditScoreData(
-    productAttributeData: IProductTrendingData[] | IProductTrendingData | null | undefined,
+    productAttributeData:
+      | IProductTrendingData[]
+      | IProductTrendingData
+      | null
+      | undefined,
     currentCreditScore: number | undefined,
-    lastUpdated: string | number | Date | undefined,
+    lastUpdated: string | number | Date | undefined
   ): IResultsData[] {
     const productAttribute = productAttributeData
       ? productAttributeData instanceof Array
@@ -59,16 +77,16 @@ export class CreditScoreHistoryNgxChartService {
       : [];
 
     const filteredProductAttributeDate = productAttribute.filter((data) => {
-      return data?.AttributeStatus !== 'Failure';
+      return data?.AttributeStatus !== "Failure";
     });
 
     if (!productAttributeData || filteredProductAttributeDate.length === 0) {
       return [
         {
-          name: 'Credit Score',
+          name: "Credit Score",
           series: [
             {
-              name: dayjs(lastUpdated).format('MMM'),
+              name: dayjs(lastUpdated).format("MMM"),
               value: currentCreditScore!,
             },
           ],
@@ -77,14 +95,14 @@ export class CreditScoreHistoryNgxChartService {
     }
 
     let creditScoreDataObj: IResultsData = {
-      name: 'Credit Score',
+      name: "Credit Score",
       series: [],
     };
 
     for (let productTrendingData of filteredProductAttributeDate) {
       if (productTrendingData) {
         let object = {
-          name: dayjs(productTrendingData.AttributeDate).format('MMM'),
+          name: dayjs(productTrendingData.AttributeDate).format("MMM"),
           value: +productTrendingData.AttributeValue,
         };
         creditScoreDataObj.series.push(object);
