@@ -56,8 +56,6 @@ export class CreditScoreHistoryNgxChartService {
       });
     }
 
-    console.log('HERE', scores)
-
     return scores || undefined;
   }
 
