@@ -1,6 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetails/viewdetail-button/viewdetail-button.component";
-import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: "brave-link-viewdetail-button",
@@ -14,6 +13,6 @@ export class LinkViewdetailButtonComponent extends ViewdetailButtonComponent {
   }
 
   navigate() {
-    this.navigatorService.
+    this.navigatorService.onNavigationEvent(this.route)
   }
 }

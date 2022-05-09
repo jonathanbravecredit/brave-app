@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { LinkViewdetailButtonComponent } from "./link-viewdetail-button.component";
 
-describe("HorizontalViewdetailButtonComponent", () => {
+describe("LinkViewdetailButtonComponent", () => {
   let component: LinkViewdetailButtonComponent;
   let fixture: ComponentFixture<LinkViewdetailButtonComponent>;
 
