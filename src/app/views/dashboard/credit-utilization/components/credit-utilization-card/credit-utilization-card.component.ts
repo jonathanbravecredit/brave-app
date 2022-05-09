@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild, Input, OnInit } from '@angular/core';
-import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
+import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetails/viewdetail-button/viewdetail-button.component';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { TradelineDetailsTableComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component';
 import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component';

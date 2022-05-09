@@ -1,0 +1,17 @@
+<button
+  type="button"
+  class="hover:cursor-pointer relative {{
+    size === 'full' ? 'w-full mx-auto' : ''
+  }} flex bg-transparent font-sans text-sm text-indigo-800 font-bold text-left hover:cursor-pointer focus:outline-none"
+  (click)="open = !open; open$.next(open); viewDetailClick.emit()"
+>
+  <span class="flex items-center mr-2">
+    <p *ngIf="!open"><ng-content></ng-content></p>
+    <p *ngIf="open">Close</p>
+  </span>
+
+  <ng-container>
+    <span *ngIf="!open" class="material-icons" style="font-size: 20px">expand_more</span>
+    <span *ngIf="open" class="material-icons" style="font-size: 20px; transform: rotate(180deg)">expand_more</span>
+  </ng-container>
+</button>

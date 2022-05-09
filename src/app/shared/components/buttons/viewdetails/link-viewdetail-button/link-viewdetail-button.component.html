@@ -1,0 +1,9 @@
+<button
+  type="button"
+  class="hover:cursor-pointer relative {{
+    size === 'full' ? 'w-full mx-auto' : ''
+  }} flex bg-transparent font-sans text-sm text-indigo-800 font-bold text-left hover:cursor-pointer focus:outline-none"
+  (click)="navigate()"
+>
+  <ng-content></ng-content>
+</button>

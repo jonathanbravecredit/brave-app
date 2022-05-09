@@ -1,4 +1,4 @@
-import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
+import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetails/viewdetail-button/viewdetail-button.component';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { CreditUtilizationCardComponent } from '@views/dashboard/credit-utilization/components/credit-utilization-card/credit-utilization-card.component';
 import { Subject } from 'rxjs';

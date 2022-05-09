@@ -43,7 +43,7 @@ import { OutlineNamedobFormComponent } from "./forms/outline-namedob-form/outlin
 import { BaseFormComponent } from "./forms/base-form/base-form.component";
 import { SelectDobFormComponent } from "./forms/select-dob-form/select-dob-form.component";
 import { OutlineNameFormComponent } from "./forms/outline-name-form/outline-name-form.component";
-import { ViewdetailButtonComponent } from "./buttons/viewdetail-button/viewdetail-button.component";
+import { ViewdetailButtonComponent } from "./buttons/viewdetails/viewdetail-button/viewdetail-button.component";
 import { KbaMultiplechoiceInputComponent } from "./inputs/kba-multiplechoice-input/kba-multiplechoice-input.component";
 import { SnapshotDisplayCardComponent } from "./cards/snapshot-display-card/snapshot-display-card.component";
 import { CreditBuilderCardComponent } from "./cards/credit-builder-card/credit-builder-card.component";
