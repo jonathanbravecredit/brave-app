@@ -30,11 +30,16 @@ export class CreditScoreHistoryNgxChartService {
           (a: IProductTrendingAttribute) =>
             a.AttributeName?.indexOf("TUCVantageScore3V7") >= 0
         )[0]?.ProductAttributeData?.ProductTrendingData;
-    } else {
-      scores = (
-        trendingData?.ProductAttributes
-          .ProductTrendingAttribute as IProductTrendingAttribute
-      ).ProductAttributeData.ProductTrendingData;
+    } else if (
+      trendingData?.ProductAttributes.ProductTrendingAttribute &&
+      !(
+        trendingData?.ProductAttributes.ProductTrendingAttribute instanceof
+        Array
+      )
+    ) {
+      scores =
+        trendingData?.ProductAttributes.ProductTrendingAttribute
+          .ProductAttributeData.ProductTrendingData;
     }
 
     if (scores && scores instanceof Array) {
