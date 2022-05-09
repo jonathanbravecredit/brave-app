@@ -14,6 +14,7 @@ import { IRecommendationText } from '@views/dashboard/credit-mix/interfaces/cred
 import { BehaviorSubject, forkJoin, combineLatest, Subscription } from 'rxjs';
 import { filter, skip, tap } from 'rxjs/operators';
 import { CreditReportMetric } from '@bravecredit/brave-sdk';
+import { IUpdatesMetrics } from '../../../../shared/interfaces/dashboard.interface';
 
 @Component({
   selector: 'brave-dashboard-enrolled-pure',
@@ -34,6 +35,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() initiative: Initiative | null = null;
   @Input() initiativeSteps: ICircleProgressStep[] = [];
   @Input() futureScore: number = 0;
+  @Input() updatesMetrics: IUpdatesMetrics | undefined
 
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();

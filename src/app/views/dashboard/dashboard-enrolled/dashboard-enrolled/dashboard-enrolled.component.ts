@@ -1,31 +1,41 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
-import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { CreditMixService } from '@views/dashboard/credit-mix/credit-mix-service/credit-mix-service.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { DashboardService } from "@shared/services/dashboard/dashboard.service";
+import {
+  DashboardStateModel,
+  DashboardStatus,
+} from "@store/dashboard/dashboard.model";
+import {
+  IGetTrendingData,
+  IProductTrendingData,
+} from "@shared/interfaces/get-trending-data.interface";
+import { CreditMixService } from "@views/dashboard/credit-mix/credit-mix-service/credit-mix-service.service";
 import {
   ICreditMixTLSummary,
   IRecommendationText,
-} from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-import { CreditUtilizationService } from '@shared/services/credit-utilization/credit-utilization.service';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { Observable, Subscription } from 'rxjs';
-import { IAdData } from '@shared/interfaces/ads.interface';
-import { shuffle } from 'lodash';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
-import { IMergeReport } from '@shared/interfaces';
-import { Store } from '@ngxs/store';
-import { CreditReportSelectors, CreditReportStateModel } from '@store/credit-report';
-import { filter } from 'rxjs/operators';
-import { Initiative } from '@shared/interfaces/progress-tracker.interface';
-import { ProgressTrackerService } from '@shared/services/progress-tracker/progress-tracker-service.service';
-import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
+} from "@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface";
+import { IReferral } from "@shared/interfaces/referrals.interface";
+import { CreditUtilizationService } from "@shared/services/credit-utilization/credit-utilization.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { Observable, Subscription } from "rxjs";
+import { IAdData } from "@shared/interfaces/ads.interface";
+import { shuffle } from "lodash";
+import { TransunionUtil } from "@shared/utils/transunion/transunion";
+import { IMergeReport } from "@shared/interfaces";
+import { Store } from "@ngxs/store";
+import {
+  CreditReportSelectors,
+  CreditReportStateModel,
+} from "@store/credit-report";
+import { filter } from "rxjs/operators";
+import { Initiative } from "@shared/interfaces/progress-tracker.interface";
+import { ProgressTrackerService } from "@shared/services/progress-tracker/progress-tracker-service.service";
+import { ICircleProgressStep } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
+import { IUpdatesMetrics } from "../../../../shared/interfaces/dashboard.interface";
 
 @Component({
-  selector: 'brave-dashboard-enrolled',
-  templateUrl: './dashboard-enrolled.component.html',
+  selector: "brave-dashboard-enrolled",
+  templateUrl: "./dashboard-enrolled.component.html",
 })
 export class DashboardEnrolledComponent implements OnDestroy {
   // is credit report suppressed
@@ -38,6 +48,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
   creditUtilizationStatus: string | undefined;
   creditUtilizationPerc: number | undefined;
   creditMixSummary: ICreditMixTLSummary | undefined;
+  updatesMetrics: IUpdatesMetrics | undefined;
   // tu data
   // report: IMergeReport | undefined;
   referral: IReferral | null | undefined;
@@ -51,14 +62,17 @@ export class DashboardEnrolledComponent implements OnDestroy {
   routeSub$: Subscription | undefined;
   report: IMergeReport | null = null;
 
-  report$: Observable<CreditReportStateModel> = this.store.select(CreditReportSelectors.getCreditReport);
+  report$: Observable<CreditReportStateModel> = this.store.select(
+    CreditReportSelectors.getCreditReport
+  );
   reportSub$: Subscription | undefined;
 
   initiative: Initiative | null = null;
   initiative$: Subscription | undefined;
 
-  enrolledScore: string | undefined = this.store.selectSnapshot((state) => state.appData)?.agencies?.transunion
-    ?.enrollVantageScore.serviceProductValue;
+  enrolledScore: string | undefined = this.store.selectSnapshot(
+    (state) => state.appData
+  )?.agencies?.transunion?.enrollVantageScore.serviceProductValue;
   // private initiativeSub$: Subscription | undefined;
   initiativeSteps: ICircleProgressStep[] = [];
   futureScore: number = 0;
@@ -69,7 +83,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
     private creditMixService: CreditMixService,
     private creditUtilizationService: CreditUtilizationService,
     public dashboardService: DashboardService,
-    public progressTracker: ProgressTrackerService,
+    public progressTracker: ProgressTrackerService
   ) {
     this.subscribeToReportData();
     this.initiative$ = progressTracker.initiative$?.subscribe((v) => {
@@ -87,7 +101,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
   }
 
   refreshFutureScore() {
-    this.futureScore = (this.progressTracker.findFutureScore() || 0) + +(this.enrolledScore || 0);
+    this.futureScore =
+      (this.progressTracker.findFutureScore() || 0) +
+      +(this.enrolledScore || 0);
   }
 
   subscribeToReportData(): void {
@@ -98,14 +114,29 @@ export class DashboardEnrolledComponent implements OnDestroy {
         if (this.report) {
           this.dashboardService.updatedOn$.next(creditReport.modifiedOn);
           this.dashboardService.dashReport$.next(this.report);
-          this.dashboardService.dashScoreSuppressed$.next(TransunionUtil.queries.report.isReportSupressed(this.report));
-          const tradelines = TransunionUtil.queries.report.listTradelines(this.report);
-          this.creditMixSummary = this.creditMixService.getTradelineSummary(tradelines);
-          this.creditMix = this.creditMixService.getRecommendations(this.creditMixSummary);
-          this.creditMixStatus = this.creditMixService.mapCreditMixSnapshotStatus(this.creditMix?.rating || 'fair');
-          this.rating = this.creditMixService.getRecommendations(this.creditMixSummary)?.rating;
+          this.dashboardService.dashScoreSuppressed$.next(
+            TransunionUtil.queries.report.isReportSupressed(this.report)
+          );
+          const tradelines = TransunionUtil.queries.report.listTradelines(
+            this.report
+          );
+          this.creditMixSummary =
+            this.creditMixService.getTradelineSummary(tradelines);
+          this.creditMix = this.creditMixService.getRecommendations(
+            this.creditMixSummary
+          );
+          this.creditMixStatus =
+            this.creditMixService.mapCreditMixSnapshotStatus(
+              this.creditMix?.rating || "fair"
+            );
+          this.rating = this.creditMixService.getRecommendations(
+            this.creditMixSummary
+          )?.rating;
           // for the credit utilization
-          const creditUtilSnapshotObj = this.creditUtilizationService.getCreditUtilizationSnapshotStatus(tradelines);
+          const creditUtilSnapshotObj =
+            this.creditUtilizationService.getCreditUtilizationSnapshotStatus(
+              tradelines
+            );
           this.creditUtilizationStatus = creditUtilSnapshotObj.status;
           this.creditUtilizationPerc = creditUtilSnapshotObj.perc;
         }
@@ -117,7 +148,11 @@ export class DashboardEnrolledComponent implements OnDestroy {
       this.dashboardService.progressTrackerData$.next(this.initiative);
     }
   }
-  
+
+  async setUpdateMetrics() {
+    this.updatesMetrics = await this.dashboardService.getUpdateMetrics();
+  }
+
   setAdData(): void {
     this.dashboardService.getAdData()?.then((resp: any) => {
       this.adsData = shuffle(resp);

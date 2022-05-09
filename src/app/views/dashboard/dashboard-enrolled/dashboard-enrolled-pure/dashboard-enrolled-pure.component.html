@@ -39,7 +39,7 @@
       <brave-snapshot-display-card
         braveAnalytics
         tendency="up"
-        label="update"
+        [label]="updatesMetrics?.negativeAccountChange ? 'update' : 'no-label'"
         typeOfSnapshot="time"
         [title]="content.negativeAccountsTitle"
         [value]="metrics[0].metricValue || 0"
@@ -72,6 +72,7 @@
       <brave-snapshot-display-card
         tendency="no-tendency"
         title="Credit Utilization"
+        [label]="updatesMetrics?.creditUtilChange ? 'update' : 'no-label'"
         [rating]="metrics[3].metricValue?.toString() + '%'"
         [status]="metrics[3].metricStatus || 'default'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
@@ -83,8 +84,8 @@
       <brave-snapshot-display-card
         braveAnalytics
         title="Credit Mix"
+        [label]="updatesMetrics?.creditMixChange ? 'update' : 'no-label'"
         tendency="no-tendency"
-        label="new"
         [rating]="metrics[4].metricValue"
         [status]="metrics[4].metricStatus || 'default'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
