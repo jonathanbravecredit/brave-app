@@ -1,18 +1,27 @@
-import { Component, ViewChild, AfterViewInit, Input, OnInit } from '@angular/core';
-import { ICreditScoreHistoryNgxChart } from '@shared/components/charts/credit-score-history-ngx-chart';
-import { IMergeReport } from '@shared/interfaces';
-import { IResultsData } from '@shared/interfaces/common-ngx-charts.interface';
-import { IGetTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { CustomLineChartService } from '@shared/services/charts/custom-line-chart.service';
-import { CreditScoreHistoryNgxChartService } from './credit-score-history-ngx-chart.service';
+import {
+  Component,
+  ViewChild,
+  AfterViewInit,
+  Input,
+  OnInit,
+} from "@angular/core";
+import { ICreditScoreHistoryNgxChart } from "@shared/components/charts/credit-score-history-ngx-chart";
+import { IMergeReport } from "@shared/interfaces";
+import { IResultsData } from "@shared/interfaces/common-ngx-charts.interface";
+import { IGetTrendingData } from "@shared/interfaces/get-trending-data.interface";
+import { CustomLineChartService } from "@shared/services/charts/custom-line-chart.service";
+import { CreditScoreHistoryNgxChartService } from "./credit-score-history-ngx-chart.service";
+import { MOCK_TRENDING_DATA_ONE_ATTR_MULTI_DATAPOINTS } from "../../../../testing/__mocks__/getTrendingData.mocks";
 
 @Component({
-  selector: 'brave-credit-score-history-ngx-chart',
-  templateUrl: './credit-score-history-ngx-chart.component.html',
-  styleUrls: ['./credit-score-history-ngx-chart.component.css'],
+  selector: "brave-credit-score-history-ngx-chart",
+  templateUrl: "./credit-score-history-ngx-chart.component.html",
+  styleUrls: ["./credit-score-history-ngx-chart.component.css"],
 })
-export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewInit, ICreditScoreHistoryNgxChart {
-  @ViewChild('chart') chart: any;
+export class CreditScoreHistoryNgxChartComponent
+  implements OnInit, AfterViewInit, ICreditScoreHistoryNgxChart
+{
+  @ViewChild("chart") chart: any;
   multi: IResultsData[] | undefined;
   // options
   @Input() view: [number, number] = [340, 140];
@@ -30,8 +39,8 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
   showYAxisLabel: boolean = false;
   showXAxisLabel: boolean = false;
   tooltipDisabled: boolean = false;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
+  xAxisLabel: string = "Year";
+  yAxisLabel: string = "Population";
   timeline: boolean = false;
   showRefLines: boolean = true;
   referenceLines: object[] = [];
@@ -39,14 +48,14 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
   trimXAxisTicks: boolean = false;
   data: {}[] | undefined;
   colorScheme = {
-    domain: ['#222C9D'],
+    domain: ["#222C9D"],
   };
 
   constructor(
     private customLineChartService: CustomLineChartService,
-    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService,
+    private creditScoreNgxChartService: CreditScoreHistoryNgxChartService
   ) {
-    this.customLineChartService.dotColor = '#222C9D';
+    this.customLineChartService.dotColor = "#222C9D";
   }
 
   ngOnInit(): void {
@@ -75,11 +84,12 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
       ? this.creditScoreNgxChartService.transformTrendingData(this.trends)
       : null;
 
-    const chartData = this.creditScoreNgxChartService.createChartCreditScoreData(
-      dataProductAttributes,
-      this.currentCreditScore,
-      this.lastUpdated,
-    );
+    const chartData =
+      this.creditScoreNgxChartService.createChartCreditScoreData(
+        dataProductAttributes,
+        this.currentCreditScore,
+        this.lastUpdated
+      );
 
     this.multi = chartData;
   }
@@ -102,6 +112,6 @@ export class CreditScoreHistoryNgxChartComponent implements OnInit, AfterViewIni
 
   formatYTickMarks(val: any) {
     if (val === 850) return val;
-    return (val / 10) % 2 === 0 ? val : '';
+    return (val / 10) % 2 === 0 ? val : "";
   }
 }
