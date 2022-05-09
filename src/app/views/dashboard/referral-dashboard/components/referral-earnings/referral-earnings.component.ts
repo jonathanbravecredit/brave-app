@@ -1,27 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-const timezone = require('dayjs/plugin/timezone');
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { IReferral } from "@shared/interfaces/referrals.interface";
+import { REFERRAL_DASHBOARD_CONTENT } from "../../referral-dashboard.content";
+import { IReferralDashboardView } from "../../referral-dashboard.model";
+import { Subscription } from "rxjs";
+import { ReferralDashboardViewService } from "../../referral-dashboard-view.service";
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-dayjs.tz.setDefault('America/Los_Angeles');
+dayjs.tz.setDefault("America/Los_Angeles");
 
 @Component({
-  selector: 'brave-referral-earnings',
-  templateUrl: './referral-earnings.component.html',
+  selector: "brave-referral-earnings",
+  templateUrl: "./referral-earnings.component.html",
 })
-export class ReferralEarningsComponent implements OnInit {
-  @Input() referral: IReferral | undefined;
-  paymentLongForm: string = '';
-  earnings: number = 0;
+export class ReferralEarningsComponent implements OnDestroy {
+  REFERRAL_DASHBOARD_CONTENT = REFERRAL_DASHBOARD_CONTENT;
+  model: IReferralDashboardView = {} as IReferralDashboardView;
+  modelSub$: Subscription | undefined;
 
-  constructor() {}
+  constructor(
+    private referralDashboardViewService: ReferralDashboardViewService
+  ) {
+    this.modelSub$ = this.referralDashboardViewService.model$.subscribe(
+      (res) => {
+        this.model = res;
+      }
+    );
+  }
 
-  ngOnInit(): void {
-    const payDate = dayjs(this.referral?.nextPaymentDate).tz();
-    this.paymentLongForm = payDate.format('dddd, MMM DD');
-    this.earnings = (this.referral?.campaignActiveEarned || 0) + (this.referral?.campaignActiveBonus || 0);
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 }

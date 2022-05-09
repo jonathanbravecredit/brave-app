@@ -35,13 +35,5 @@ describe('ReferralDashboardView', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should run isActiveSub$?.unsubscribe on destroy', () => {
-    component.isActiveSub$  = new Subscription()
-    spyOn(component.isActiveSub$, 'unsubscribe')
-    component.ngOnDestroy()
-    expect(component.isActiveSub$.unsubscribe).toHaveBeenCalled()
-  })
-
   
 });

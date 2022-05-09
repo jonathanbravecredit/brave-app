@@ -38,14 +38,4 @@ describe('NegativeAccountInitialComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should run navigate on onGoToDashboardClick', () => {
-    component.onGoToDashboardClick();
-    expect(routerMock.navigate).toHaveBeenCalled();
-  });
-
-  it('should run navigate on onGoToReportClick', () => {
-    component.onGoToReportClick();
-    expect(routerMock.navigate).toHaveBeenCalled();
-  });
 });

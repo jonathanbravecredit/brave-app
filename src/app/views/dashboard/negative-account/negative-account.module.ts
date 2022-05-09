@@ -10,6 +10,7 @@ import { NegativeAccountInitialComponent } from '@views/dashboard/negative-accou
 import { DisputesModule } from '@views/dashboard/disputes/disputes.module';
 import { TradelinesModule } from '@views/dashboard/reports/credit-report/tradelines/tradelines.module';
 import { AccountsModule } from '@shared/components/accounts/accounts.module';
+import { NegativeAccountService } from '@views/dashboard/negative-account/negative-account.service';
 
 const modules = [
   CommonModule,
@@ -23,10 +24,12 @@ const modules = [
 const components = [NegativeAccountComponent, NegativeAccountInitialComponent, NegativeAccountInitialPureComponent];
 
 const pipes: [] = [];
+const services = [NegativeAccountService];
 
 @NgModule({
   declarations: [...components, ...pipes],
   imports: [...modules],
   exports: [...components],
+  providers: [...services],
 })
 export class NegativeAccountModule {}
