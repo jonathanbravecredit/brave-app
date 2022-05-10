@@ -1,12 +1,12 @@
 import { AccountTypes, IMergeReport } from "@bravecredit/brave-sdk";
 import { ITradeLinePartition } from "@shared/interfaces";
 import { TransunionUtil as tu } from "@shared/utils/transunion/transunion";
-import { MergereportToTradelinesPipe } from "./mergereport-to-tradelines.pipe";
+import { MergereportToTradelinesFilterSortPipe } from "./mergereport-to-tradelines.pipe";
 
-describe("MergereportToTradelinesPipe", () => {
+describe("MergereportToTradelinesFilterSortPipe", () => {
   let pipe: any;
   beforeAll(() => {
-    pipe = new MergereportToTradelinesPipe();
+    pipe = new MergereportToTradelinesFilterSortPipe();
   });
 
   it("create an instance", () => {
