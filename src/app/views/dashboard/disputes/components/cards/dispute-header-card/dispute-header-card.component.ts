@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetails/viewdetail-button/viewdetail-button.component';
+import { ViewdetailButtonComponent } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import {
   OnboardingDisputeComponent,
   IOnboardingEvent,

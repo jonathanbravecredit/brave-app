@@ -27,7 +27,7 @@ import { BasePaginationPipe } from "@shared/components/paginations/base-paginati
 import { PercentageGaugeComponent } from "@shared/components/charts/percentage-gauge/percentage-gauge.component";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { CreditUtilizationAssessmentComponent } from "@views/dashboard/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component";
-import { ViewdetailButtonComponent } from '../../../../shared/components/buttons/viewdetails/viewdetail-button/viewdetail-button.component';
+import { ViewdetailButtonComponent } from "../../../../shared/components/buttons/viewdetail-button/viewdetail-button.component";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
