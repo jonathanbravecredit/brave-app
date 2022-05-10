@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 
 @Component({
   selector: 'brave-outline-verificationcode-form',

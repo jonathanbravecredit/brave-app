@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Inject, Input, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  Output,
+  OnInit,
+  HostListener,
+} from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup } from "@angular/forms";
 import { BehaviorSubject } from "rxjs";
 import { IOutlineInputeConfig } from "../../inputs/outline-input/outline-input.component";
@@ -13,12 +21,19 @@ interface ISubmitError {
   selector: "brave-base-form",
   template: "",
 })
-export class BaseFormComponent {
+export class BaseFormComponent implements OnInit {
   @Output() onChanges: EventEmitter<any> = new EventEmitter();
   @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter();
   @Output() onSubmitError: EventEmitter<ISubmitError> = new EventEmitter();
 
   @Input() hideHint: boolean = false;
+
+  @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    console.log('HERE', event)
+    this.submitForm();
+  }
+
+  eventListenerId: string = "";
 
   public addressOneConfig: IOutlineInputeConfig = {
     size: "sm",
@@ -76,21 +91,21 @@ export class BaseFormComponent {
     autocomplete: "family-name",
   };
   monthConfig: IOutlineSelectInputConfig = {
-    size: 'sm',
-    label: 'Month',
-    autocomplete: 'off',
+    size: "sm",
+    label: "Month",
+    autocomplete: "off",
     options: months,
   };
   dayConfig: IOutlineSelectInputConfig = {
-    size: 'sm',
-    label: 'Day',
-    autocomplete: 'off',
+    size: "sm",
+    label: "Day",
+    autocomplete: "off",
     options: this.addDays(31),
   };
   yearConfig: IOutlineSelectInputConfig = {
-    size: 'sm',
-    label: 'Year',
-    autocomplete: 'off',
+    size: "sm",
+    label: "Year",
+    autocomplete: "off",
     options: this.addYears(new Date().getFullYear()),
   };
   public kbaConfig: IKbaMultipleChoiceConfig = {
@@ -101,72 +116,71 @@ export class BaseFormComponent {
     autocomplete: "off",
   };
   public phoneConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'tel',
-    label: 'Phone Number',
-    placeholder: '(123) 456-7890',
-    autocomplete: 'phone',
+    size: "sm",
+    type: "tel",
+    label: "Phone Number",
+    placeholder: "(123) 456-7890",
+    autocomplete: "phone",
   };
   public full: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: '',
-    mask: 'XXX-XX-XXXX',
-    unmask: '000-00-0000',
+    size: "sm",
+    type: "text",
+    label: "",
+    mask: "XXX-XX-XXXX",
+    unmask: "000-00-0000",
     maxLength: 11,
     minLength: 9,
     hidden: true,
-    placeholder: 'XXX-XX-XXXX',
-    autocomplete: 'off',
+    placeholder: "XXX-XX-XXXX",
+    autocomplete: "off",
   };
   public lastfour: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: '',
-    mask: 'XXXX',
-    unmask: '0000',
+    size: "sm",
+    type: "text",
+    label: "",
+    mask: "XXXX",
+    unmask: "0000",
     maxLength: 4,
     minLength: 4,
     hidden: true,
-    placeholder: 'XXXX',
-    autocomplete: 'off',
+    placeholder: "XXXX",
+    autocomplete: "off",
   };
   public codeConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: 'Code',
-    placeholder: '5-digit Code',
-    autocomplete: 'off',
+    size: "sm",
+    type: "text",
+    label: "Code",
+    placeholder: "5-digit Code",
+    autocomplete: "off",
   };
   passwordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Current Password',
-    type: 'password',
-    placeholder: 'Current Password',
-    autocomplete: 'off',
+    size: "sm",
+    label: "Current Password",
+    type: "password",
+    placeholder: "Current Password",
+    autocomplete: "off",
   };
   newPasswordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'New Password',
-    type: 'password',
-    placeholder: 'New Password',
-    autocomplete: 'off',
+    size: "sm",
+    label: "New Password",
+    type: "password",
+    placeholder: "New Password",
+    autocomplete: "off",
   };
   confirmPasswordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Confirm New Password',
-    type: 'password',
-    placeholder: 'Confirm New Password',
-    autocomplete: 'off',
+    size: "sm",
+    label: "Confirm New Password",
+    type: "password",
+    placeholder: "Confirm New Password",
+    autocomplete: "off",
   };
   emailConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Email',
-    type: 'email',
-    placeholder: 'Email address',
-    autocomplete: 'email',
+    size: "sm",
+    label: "Email",
+    type: "email",
+    placeholder: "Email address",
+    autocomplete: "email",
   };
-
 
   haveError$ = new BehaviorSubject<boolean>(false);
   haveError: boolean = false;
@@ -184,6 +198,14 @@ export class BaseFormComponent {
     this.parentForm.valueChanges.subscribe((value) => {
       this.onChanges.emit(value);
     });
+  }
+
+  ngOnInit() {
+    // document.addEventListener("keypress", (e) => {
+    //   if (e.key === "Enter") {
+    //     this.submitForm();
+    //   }
+    // });
   }
 
   addChild(childName: string, childGroup: FormGroup) {
@@ -223,18 +245,18 @@ export class BaseFormComponent {
 }
 
 const months: string[] = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 // TODO ensure you have all states
