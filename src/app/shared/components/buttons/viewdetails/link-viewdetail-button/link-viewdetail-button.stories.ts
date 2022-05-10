@@ -3,6 +3,7 @@ import { Story, Meta } from "@storybook/angular/types-6-0";
 import { moduleMetadata } from "@storybook/angular";
 import { LinkViewdetailButtonComponent } from "./link-viewdetail-button.component";
 import { Router } from '@angular/router';
+import { NavigatorService } from '../../../../services/navigator/navigator.service';
 
 export default {
   title: "app/components/buttons/link-viewdetail-button",
@@ -11,7 +12,7 @@ export default {
     moduleMetadata({
       declarations: [],
       imports: [],
-      providers: [{ provide: APP_BASE_HREF, useValue: "/" }, { provide: Router, useValue: "/" }],
+      providers: [{ provide: APP_BASE_HREF, useValue: "/" }, { provide: NavigatorService, useValue: "/" }],
 
     }),
   ],
