@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccountStatusPipe } from '@shared/pipes/accountStatus/account-status.pipe';
+import { AccountStatusToHexPipe } from '@shared/pipes/account-status-to-hex/account-status-to-hex.pipe';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
 import { ICreditUtilization } from '@views/dashboard/credit-utilization/components/credit-utilization-card/interfaces';
 import { ITradelineDetailsConfig } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-details/interfaces';
@@ -12,7 +12,7 @@ describe('CreditMixCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreditMixCardComponent, AccountStatusPipe],
+      declarations: [CreditMixCardComponent, AccountStatusToHexPipe],
     }).compileComponents();
   });
 
