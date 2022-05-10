@@ -12,7 +12,6 @@ import { CreditUtilizationPercentagesComponent } from "../components/credit-util
 import { PercentageBadgeComponent } from "@shared/components/badges/percentage-badge/percentage-badge.component";
 import { CreditUtilizationAvailableComponent } from "../components/credit-utilization-available/credit-utilization-available.component";
 import { AccountStatusToHexPipe } from "../../../../shared/pipes/account-status-to-hex/account-status-to-hex.pipe";
-import { ViewdetailButtonComponent } from "@shared/components/buttons/viewdetail-button/viewdetail-button.component";
 import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/tradeline-to-details.pipe";
 import { CreditUtilizationNoCardsHeaderComponent } from "../components/credit-utilization-no-cards-header/credit-utilization-no-cards-header.component";
 import { CreditUtilizationNoCardsTextComponent } from "../components/credit-utilization-no-cards-text/credit-utilization-no-cards-text.component";
@@ -28,6 +27,7 @@ import { BasePaginationPipe } from "@shared/components/paginations/base-paginati
 import { PercentageGaugeComponent } from "@shared/components/charts/percentage-gauge/percentage-gauge.component";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { CreditUtilizationAssessmentComponent } from "@views/dashboard/credit-utilization/components/credit-utilization-assessment/credit-utilization-assessment.component";
+import { ViewdetailButtonComponent } from "../../../../shared/components/buttons/viewdetail-button/viewdetail-button.component";
 
 export default {
   title: "app/views/snapshots/credit-utilization",
