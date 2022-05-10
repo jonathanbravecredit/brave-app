@@ -1,10 +1,10 @@
 import { IPersonalItemsDetailsConfig } from "@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces";
-import { FilterPersonalPipe } from "./filter-personal.pipe";
+import { FilterArrayPipe } from "./filter-array.pipe";
 
-describe("FilterPersonalPipe", () => {
+describe("FilterArrayPipe", () => {
   let pipe: any;
   beforeAll(() => {
-    pipe = new FilterPersonalPipe();
+    pipe = new FilterArrayPipe();
   });
 
   it("create an instance", () => {

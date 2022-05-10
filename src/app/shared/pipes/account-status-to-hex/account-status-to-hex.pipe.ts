@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 @Pipe({
   name: "accountStatus",
 })
-export class AccountStatusPipe implements PipeTransform {
+export class AccountStatusToHexPipe implements PipeTransform {
   transform(value: string | undefined): string {
     return value ? statuses[value] : null;
   }
