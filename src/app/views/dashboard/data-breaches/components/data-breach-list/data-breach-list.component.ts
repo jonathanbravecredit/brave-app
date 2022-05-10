@@ -1,14 +1,9 @@
 import {
   Component,
   EventEmitter,
-  Input,
-  OnInit,
   Output,
   OnDestroy,
 } from "@angular/core";
-import { Router } from "@angular/router";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
-import { IBreachCard } from "@shared/interfaces/breach-card.interface";
 import { DATA_BREACHES_CONTENT } from "../../data-breaches.content";
 import { DataBreachesViewService } from "../../data-breaches-view.service";
 import { IDataBreachesView } from "../../data-breaches.model";
