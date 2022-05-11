@@ -35,7 +35,7 @@ export class BaseFormComponent {
     event: KeyboardEvent
   ) {
     this.submitForm();
-    if (this.parentForm.valid && this.spinner) {
+    if (this.parentForm.valid && this.spinner && this.valid) {
       this.spinner.clicked = true;
       this.spinner.spinning = true;
       this.spinner.refreshClass();
@@ -194,6 +194,7 @@ export class BaseFormComponent {
   haveError$ = new BehaviorSubject<boolean>(false);
   haveError: boolean = false;
   errorMessage: string = "";
+  valid: boolean = false;
 
   get formValues(): any {
     return this.parentForm.value;
@@ -218,10 +219,34 @@ export class BaseFormComponent {
   }
 
   submitForm(): void {
+    this.valid = this.validateForm(this.parentForm);
     this.parentForm.markAllAsTouched();
-    this.parentForm.valid
+    this.parentForm.valid && this.valid
       ? this.onSubmit.emit(this.parentForm)
       : this.onSubmitError.emit(this.parentForm.controls);
+  }
+
+  validateForm(parentForm: FormGroup): boolean {
+    if (parentForm.value.name === "namedob-form") {
+      return this.nameDobVerification(parentForm.value);
+    }
+    if (parentForm.value.name === 'address-form') {
+      return this.addressVerification(parentForm.value);
+    }
+    
+    return true;
+  }
+
+  addressVerification(value: any): boolean {
+    if (value.state.input === "State") return false;
+    return true;
+  }
+
+  nameDobVerification(value: any): boolean {
+    if (value.day.input === "Day") return false;
+    if (value.month.input === "Month") return false;
+    if (value.year.input === "Yeah") return false;
+    return true;
   }
 
   formatInputName(idx: number): string {

@@ -16,7 +16,6 @@ export class OutlineNamedobFormComponent
   }
 
   dayValidator(control: AbstractControl) {
-    console.log("here2");
     if (control.value.input === "Day") {
       return { invalidDay: true };
     }
