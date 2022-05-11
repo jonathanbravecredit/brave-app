@@ -23,7 +23,7 @@ interface ISubmitError {
   selector: "brave-base-form",
   template: "",
 })
-export class BaseFormComponent implements OnInit {
+export class BaseFormComponent {
   @Output() onChanges: EventEmitter<any> = new EventEmitter();
   @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter();
   @Output() onSubmitError: EventEmitter<ISubmitError> = new EventEmitter();
@@ -207,14 +207,6 @@ export class BaseFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    // document.addEventListener("keypress", (e) => {
-    //   if (e.key === "Enter") {
-    //     this.submitForm();
-    //   }
-    // });
-  }
-
   addChild(childName: string, childGroup: FormGroup) {
     this.parentForm.addControl(childName, childGroup);
   }
@@ -224,6 +216,7 @@ export class BaseFormComponent implements OnInit {
   }
 
   submitForm(): void {
+    console.log
     this.parentForm.markAllAsTouched();
     this.parentForm.valid
       ? this.onSubmit.emit(this.parentForm)

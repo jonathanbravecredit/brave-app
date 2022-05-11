@@ -5,8 +5,8 @@
     >
     <div
       [ngClass]="{
-        'border-indigo-800': !selected && isOpen,
-        'border-blueGray-300': selected || (!isOpen && !(required && componentFormGroup.controls.input.touched)),
+        'border-indigo-800': isOpen,
+        'border-blueGray-300': (selected && !isOpen) || (!isOpen && !(required && componentFormGroup.controls.input.touched)),
         'border-red-500': required && componentFormGroup.controls.input.touched && !selected && !isOpen
       }"
       class="relative text-sm px-1 py-1 bg-white rounded border outline-none w-full"

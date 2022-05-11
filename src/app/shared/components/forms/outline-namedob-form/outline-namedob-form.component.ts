@@ -1,20 +1,18 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
-import { BaseFormComponent } from "@shared/components/forms/base-form/base-form.component";
-import { FilledSpinningButtonComponent } from "../../buttons/filled-spinning-button/filled-spinning-button.component";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 
 @Component({
-  selector: "brave-outline-namedob-form",
-  templateUrl: "./outline-namedob-form.component.html",
-  providers: [{ provide: "name", useValue: "namedob-form" }],
+  selector: 'brave-outline-namedob-form',
+  templateUrl: './outline-namedob-form.component.html',
+  providers: [{ provide: 'name', useValue: 'namedob-form' }],
 })
 export class OutlineNamedobFormComponent
   extends BaseFormComponent
-  implements OnInit
-{
-  @ViewChild("spinner") spinner: FilledSpinningButtonComponent | undefined;
+  implements OnInit {
+
   constructor(fb: FormBuilder) {
-    super(fb, "namedob-form");
+    super(fb, 'namedob-form');
   }
 
   ngOnInit(): void {}
