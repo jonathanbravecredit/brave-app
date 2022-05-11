@@ -12,6 +12,8 @@ import { BehaviorSubject } from "rxjs";
 import { IOutlineInputeConfig } from "../../inputs/outline-input/outline-input.component";
 import { IOutlineSelectInputConfig } from "../../inputs/outline-select-input/outline-select-input.component";
 import { IKbaMultipleChoiceConfig } from "../../inputs/kba-multiplechoice-input/kba-multiplechoice-input.component";
+import { ViewChild } from '@angular/core';
+import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
 
 interface ISubmitError {
   [key: string]: AbstractControl;
@@ -25,12 +27,18 @@ export class BaseFormComponent implements OnInit {
   @Output() onChanges: EventEmitter<any> = new EventEmitter();
   @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter();
   @Output() onSubmitError: EventEmitter<ISubmitError> = new EventEmitter();
+  @ViewChild("spinner") spinner: FilledSpinningButtonComponent | undefined;
 
   @Input() hideHint: boolean = false;
 
-  // @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-  //   this.submitForm();
-  // }
+  @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    this.submitForm();
+    if (this.parentForm.valid && this.spinner) {
+      this.spinner.clicked = true;
+      this.spinner.spinning = true;
+      this.spinner.refreshClass();
+    }
+  }
 
   eventListenerId: string = "";
 

@@ -41,3 +41,20 @@
     </form>
   </span>
 </div>
+
+<div class="mt-5">
+  <div class="flex justify-between items-center">
+    <ng-content></ng-content>
+    <brave-filled-spinning-button
+    #spinner
+      [disabled]="!parentForm?.valid"
+      (click)="submitForm()"
+    >
+      <span class="flex items-center"
+        >Continue<span class="material-icons px-1"
+          >arrow_forward</span
+        ></span
+      >
+    </brave-filled-spinning-button>
+  </div>
+</div>

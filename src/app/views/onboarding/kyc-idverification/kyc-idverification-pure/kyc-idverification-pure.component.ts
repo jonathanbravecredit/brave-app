@@ -10,21 +10,9 @@ import { FilledSpinningButtonComponent } from '../../../../shared/components/but
 })
 export class KycIdverificationPureComponent extends KycBaseComponent {
   @ViewChild("form") formComponent: OutlineVerificationcodeFormComponent | undefined;
-  @ViewChild("spinner") spinner: FilledSpinningButtonComponent | undefined;
   @Input() viewState: KycIdverificationState = 'init';
   @Output() resendClick: EventEmitter<void> = new EventEmitter();
   constructor() {
     super();
-  }
-
-  @HostListener("document:keydown.enter", ["$event"]) onKeydownHandler(
-    event: KeyboardEvent
-  ) {
-    this.formComponent?.submitForm();
-    if (this.formComponent?.parentForm.valid && this.spinner) {
-      this.spinner.clicked = true;
-      this.spinner.spinning = true;
-      this.spinner.refreshClass();
-    }
   }
 }
