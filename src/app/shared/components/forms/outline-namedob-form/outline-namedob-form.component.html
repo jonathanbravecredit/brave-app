@@ -53,6 +53,7 @@
           [config]="monthConfig"
           (onComponentReady)="addChild('month', $event)"
           [required]="true"
+          [validators] = "[monthValidator]"
           [asteriskOverride]="true"
         >
         </brave-outline-select-input>
@@ -67,6 +68,7 @@
           [config]="dayConfig"
           (onComponentReady)="addChild('day', $event)"
           [required]="true"
+          [validators] = "[dayValidator]"
           [asteriskOverride]="true"
         >
         </brave-outline-select-input>
@@ -77,6 +79,7 @@
             [config]="yearConfig"
             (onComponentReady)="addChild('year', $event)"
             [required]="true"
+            [validators] = "[yearValidator]"
             [asteriskOverride]="true"
           >
           </brave-outline-select-input>

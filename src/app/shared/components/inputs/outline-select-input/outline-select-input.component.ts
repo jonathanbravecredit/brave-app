@@ -1,5 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+} from "@angular/forms";
 
 export interface IOutlineSelectInputConfig {
   size: string;
@@ -9,8 +14,8 @@ export interface IOutlineSelectInputConfig {
 }
 
 @Component({
-  selector: 'brave-outline-select-input',
-  templateUrl: './outline-select-input.component.html',
+  selector: "brave-outline-select-input",
+  templateUrl: "./outline-select-input.component.html",
 })
 export class OutlineSelectInputComponent implements OnInit {
   private _required: boolean = false;
@@ -25,11 +30,13 @@ export class OutlineSelectInputComponent implements OnInit {
    * @param config.options select options to choose from
    */
   @Input() config: IOutlineSelectInputConfig = {
-    size: 'base',
-    label: 'Input label',
-    autocomplete: 'off',
-    options: ['one', 'two', 'three'],
+    size: "base",
+    label: "Input label",
+    autocomplete: "off",
+    options: ["one", "two", "three"],
   };
+
+  @Input() validators: ValidatorFn[] = [];
 
   /**
    * @input Flag to make the input field required for form to be valid
@@ -58,7 +65,7 @@ export class OutlineSelectInputComponent implements OnInit {
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   public componentFormGroup: FormGroup = new FormBuilder().group({
-    input: [''],
+    input: [""],
   });
   public locked: boolean = false;
   public hidden: boolean = false;
@@ -66,13 +73,18 @@ export class OutlineSelectInputComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    const validators = [];
     if (this.required) {
-      validators.push(Validators.required);
+      this.validators.push(Validators.required);
     }
     this.componentFormGroup = this.fb.group({
-      input: [this.config.label, validators], // default to first item in array
+      input: [this.config.label, this.validators], // default to first item in array
     });
+    console.log(
+      "HERE",
+      this.config.label,
+      this.validators,
+      this.componentFormGroup
+    );
     this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
       this.selected = value;
       this.valueChanged.emit(value);

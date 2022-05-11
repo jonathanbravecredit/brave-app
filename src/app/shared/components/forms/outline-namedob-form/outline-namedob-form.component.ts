@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, AbstractControl } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
 
 @Component({
@@ -13,6 +13,28 @@ export class OutlineNamedobFormComponent
 
   constructor(fb: FormBuilder) {
     super(fb, 'namedob-form');
+  }
+
+  dayValidator(control: AbstractControl) {
+    console.log("here2");
+    if (control.value.input === "Day") {
+      return { invalidDay: true };
+    }
+    return null;
+  }
+
+  monthValidator(control: AbstractControl) {
+    if (control.value.input === "Month") {
+      return { invalidMonth: true };
+    }
+    return null;
+  }
+
+  yearValidator(control: AbstractControl) {
+    if (control.value.input === "Year") {
+      return { invalidYear: true };
+    }
+    return null;
   }
 
   ngOnInit(): void {}

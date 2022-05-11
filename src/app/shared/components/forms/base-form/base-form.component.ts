@@ -12,8 +12,8 @@ import { BehaviorSubject } from "rxjs";
 import { IOutlineInputeConfig } from "../../inputs/outline-input/outline-input.component";
 import { IOutlineSelectInputConfig } from "../../inputs/outline-select-input/outline-select-input.component";
 import { IKbaMultipleChoiceConfig } from "../../inputs/kba-multiplechoice-input/kba-multiplechoice-input.component";
-import { ViewChild } from '@angular/core';
-import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
+import { ViewChild } from "@angular/core";
+import { FilledSpinningButtonComponent } from "../../buttons/filled-spinning-button/filled-spinning-button.component";
 
 interface ISubmitError {
   [key: string]: AbstractControl;
@@ -31,7 +31,9 @@ export class BaseFormComponent {
 
   @Input() hideHint: boolean = false;
 
-  @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  @HostListener("document:keydown.enter", ["$event"]) onKeydownHandler(
+    event: KeyboardEvent
+  ) {
     this.submitForm();
     if (this.parentForm.valid && this.spinner) {
       this.spinner.clicked = true;
@@ -216,7 +218,6 @@ export class BaseFormComponent {
   }
 
   submitForm(): void {
-    console.log
     this.parentForm.markAllAsTouched();
     this.parentForm.valid
       ? this.onSubmit.emit(this.parentForm)
