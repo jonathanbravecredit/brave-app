@@ -28,10 +28,9 @@ export class BaseFormComponent implements OnInit {
 
   @Input() hideHint: boolean = false;
 
-  @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    console.log('HERE', event)
-    this.submitForm();
-  }
+  // @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  //   this.submitForm();
+  // }
 
   eventListenerId: string = "";
 
