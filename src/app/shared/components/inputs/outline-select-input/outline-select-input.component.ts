@@ -79,12 +79,6 @@ export class OutlineSelectInputComponent implements OnInit {
     this.componentFormGroup = this.fb.group({
       input: [this.config.label, this.validators], // default to first item in array
     });
-    console.log(
-      "HERE",
-      this.config.label,
-      this.validators,
-      this.componentFormGroup
-    );
     this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
       this.selected = value;
       this.valueChanged.emit(value);
