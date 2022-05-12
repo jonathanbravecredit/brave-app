@@ -1,43 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Store } from '@ngxs/store';
-import * as DashboardActions from '@store/dashboard/dashboard.actions';
-import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
-import { AppDataStateModel } from '@store/app-data';
-import { AnalyticClickEvents, AnalyticPageViewEvents } from '@shared/services/analytics/analytics/constants';
-import { IBreachCard } from '@shared/interfaces/breach-card.interface';
+
+import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import {
+  AnalyticClickEvents,
+} from "@shared/services/analytics/analytics/constants";
+import { DataBreachesViewService } from '../data-breaches-view.service';
 
 @Component({
-  selector: 'brave-data-breaches',
-  templateUrl: './data-breaches.component.html',
+  selector: "brave-data-breaches",
+  templateUrl: "./data-breaches.component.html",
 })
-export class DataBreachesComponent implements OnInit {
-  breaches: IBreachCard[] | undefined;
-  AnalyticClickEvents = AnalyticClickEvents
+
+export class DataBreachesComponent {
+  AnalyticClickEvents = AnalyticClickEvents;
+
   constructor(
-    private route: ActivatedRoute,
-    private store: Store,
-    private api: APIService,
+    public route: ActivatedRoute,
+    public dataBreachesViewService: DataBreachesViewService
   ) {
+
     this.route.data.subscribe((resp: any) => {
-      this.breaches = resp.breaches;
+      this.dataBreachesViewService.initialModelMerge(resp.breaches)
     });
-  }
-
-  ngOnInit(): void {
-  }
-
-  onCardClick(idx: number): void {
-    this.store
-      .dispatch(new DashboardActions.MarkDatabreachAsReviewed(idx))
-      .subscribe((state: { appData: AppDataStateModel }) => {
-        const input = { ...state.appData } as UpdateAppDataInput;
-        if (!input.id) {
-          console.log('failed to update state');
-          return;
-        } else {
-          this.api.UpdateAppData(input);
-        }
-      });
   }
 }

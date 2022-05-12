@@ -1,38 +1,38 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ICampaign } from '@shared/interfaces/campaign.interface';
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-const timezone = require('dayjs/plugin/timezone');
-const advancedFormat = require('dayjs/plugin/advancedFormat');
-dayjs.extend(advancedFormat);
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { REFERRAL_DASHBOARD_CONTENT } from "../../referral-dashboard.content";
+import { ReferralDashboardViewService } from "../../referral-dashboard-view.service";
+import { IReferralDashboardView } from "../../referral-dashboard.model";
+import { Subscription } from "rxjs";
 
-dayjs.tz.setDefault('America/Los_Angeles');
 
 @Component({
-  selector: 'brave-referral-body-text',
-  templateUrl: './referral-body-text.component.html',
+  selector: "brave-referral-body-text",
+  templateUrl: "./referral-body-text.component.html",
 })
-export class ReferralBodyTextComponent implements OnInit {
-  @Input() campaign: ICampaign | undefined;
-  paymentLongForm: string = '';
-  bonusThreshold: number = 0;
-  denomination: number = 0;
-  bonusAmount: number = 0;
-  maxEarnings: number = 0;
-  maxReferrals: number = 10;
+export class ReferralBodyTextComponent implements OnInit, OnDestroy {
+  REFERRAL_DASHBOARD_CONTENT = REFERRAL_DASHBOARD_CONTENT;
+  model: IReferralDashboardView = {} as IReferralDashboardView;
+  modelSub$: Subscription | undefined;
   addOn: number = 0;
-  constructor() {}
+  
+  constructor(
+    private referralDashboardViewService: ReferralDashboardViewService
+  ) {
+    this.modelSub$ = this.referralDashboardViewService.model$.subscribe(
+      (res) => {
+        this.model = res;
+      }
+    );
+  }
 
   ngOnInit(): void {
-    const payDate = dayjs(this.campaign?.endDate).tz();
-    this.paymentLongForm = payDate.format('MMMM Do');
-    this.bonusThreshold = this.campaign?.bonusThreshold || 0;
-    this.bonusAmount = this.campaign?.bonusAmount || 0;
-    this.denomination = this.campaign?.denomination || 0;
-    this.maxReferrals = this.campaign?.maxReferrals || 10;
-    this.addOn = this.campaign?.addOnFlagOne === 'enrollment' ? 0 : this.denomination;
-    this.maxEarnings = this.maxReferrals * this.denomination;
+    this.addOn =
+      this.model.campaign?.addOnFlagOne === "enrollment"
+        ? 0
+        : this.model.campaign?.denomination || 0;
+  }
+
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 }

@@ -11,14 +11,14 @@
 
       <!-- =========== public items =========== -->
       <ng-container *ngIf="params.type === 'public'">
-        <ng-container *ngIf="report | mergereportToPublicitems as publicItems">
+        <ng-container *ngIf="report | mergereportToPublicitemDetails as publicItems">
           <brave-disputes-reconfirm-pure [report]="report" [publicItems]="publicItems"> </brave-disputes-reconfirm-pure>
         </ng-container>
       </ng-container>
 
       <!-- =========== tradeline items =========== -->
       <ng-container *ngIf="(params.type !== 'public' && params.type !== 'personal' && params.type !== 'all')">
-        <ng-container *ngIf="report | mergereportToTradelines: params.type as tradelines">
+        <ng-container *ngIf="report | mergereportToTradelinesFilterSort: params.type as tradelines">
           <brave-disputes-reconfirm-pure [report]="report" [tradelines]="tradelines"> </brave-disputes-reconfirm-pure>
         </ng-container>
       </ng-container>
@@ -27,9 +27,9 @@
       <ng-container *ngIf="params.type === 'all'">
         <brave-disputes-reconfirm-pure
           [report]="report"
-          [publicItems]="report | mergereportToPublicitems"
+          [publicItems]="report | mergereportToPublicitemDetails"
           [personalItems]="report | mergereportToPersonalitems"
-          [tradelines]="report | mergereportToTradelines"
+          [tradelines]="report | mergereportToTradelinesFilterSort"
         >
         </brave-disputes-reconfirm-pure>
       </ng-container>

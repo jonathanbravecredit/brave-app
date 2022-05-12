@@ -1,14 +1,14 @@
-<ng-container *ngIf="!disabled; else inactive">
+<ng-container *ngIf="!model.disabled; else inactive">
   <!-- bonus active -->
-  <div *ngIf="campaign?.bonusThreshold" class="py-2 mx-3 mt-1 rounded-sm text-center" style="background-color: #d714db">
+  <div *ngIf="model.campaign?.bonusThreshold" class="py-2 mx-3 mt-1 rounded-sm text-center" style="background-color: #d714db">
     <!-- earned bonus -->
-    <h6 class="text-base" *ngIf="referral?.campaignActiveBonus">
-      🎉 You got the ${{ campaign?.bonusAmount || '--' }} bonus for referring
-      {{ campaign?.bonusThreshold || '--' }} friends!
+    <h6 class="text-base" *ngIf="model.referral?.campaignActiveBonus">
+      🎉 You got the ${{ model.campaign?.bonusAmount || '--' }} bonus for referring
+      {{ model.campaign?.bonusThreshold || '--' }} friends!
     </h6>
     <!-- did not earn bonus -->
-    <h6 class="text-base" *ngIf="!referral?.campaignActiveBonus">
-      😀 Get a ${{ campaign?.bonusAmount || '--' }} bonus if {{ campaign?.bonusThreshold || '--' }} new friends use your
+    <h6 class="text-base" *ngIf="!model.referral?.campaignActiveBonus">
+      😀 Get a ${{ model.campaign?.bonusAmount || '--' }} bonus if {{ model.campaign?.bonusThreshold || '--' }} new friends use your
       link to check their scores!
     </h6>
   </div>
@@ -17,7 +17,7 @@
 <ng-template #inactive>
   <div class="py-2 mx-3 mt-1 rounded-sm text-center" style="background-color: #d714db">
     <h6 class="text-base">
-      Thank you for your participation. The current referral campaign has ended as of {{ endMonth }}/{{ endDay }}. All
+      Thank you for your participation. The current referral campaign has ended as of {{ model.endMonth }}/{{ model.endDay }}. All
       remaining referral gift cards will be distributed at your next scheduled date.
     </h6>
   </div>

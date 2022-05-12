@@ -3,9 +3,9 @@ import { IMergeReport, IPublicPartition } from '@shared/interfaces';
 import { IPublicItemsDetailsConfig } from '@views/dashboard/reports/credit-report/publicitems/components/publicitems-details/interfaces';
 
 @Pipe({
-  name: 'mergereportToPublicitems',
+  name: 'mergereportToPublicitemDetails',
 })
-export class MergereportToPublicitemsPipe implements PipeTransform {
+export class MergereportToPublicitemDetailsPipe implements PipeTransform {
   transform(report: IMergeReport): IPublicItemsDetailsConfig[] | [] {
     if (report === undefined) return [];
     const publicrecords = report.TrueLinkCreditReportType?.PulblicRecordPartition;

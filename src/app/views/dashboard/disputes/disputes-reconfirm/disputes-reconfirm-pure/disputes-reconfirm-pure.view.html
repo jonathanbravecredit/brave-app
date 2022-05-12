@@ -6,7 +6,7 @@
 
 <!-- tradeline accounts -->
 <ng-container
-  *ngIf="tradelines?.length || publicItems?.length || (personalItems | filterPersonal: tu.queries.dispute.isDisputeable)?.length; else noneFound"
+  *ngIf="tradelines?.length || publicItems?.length || (personalItems | filterArray: tu.queries.dispute.isDisputeable)?.length; else noneFound"
 >
   <div *ngFor="let tradeline of tradelines">
     <brave-account-summary-with-details
@@ -19,14 +19,14 @@
 
   <!-- personal items -->
   <div
-    *ngIf="(personalItems | filterPersonal: tu.queries.dispute.isDisputeable)?.length"
+    *ngIf="(personalItems | filterArray: tu.queries.dispute.isDisputeable)?.length"
     class="flex items-center mb-3"
   >
     <span class="material-icons-outlined">perm_identity</span>
     <span>Personal Information</span>
   </div>
 
-  <div *ngFor="let personalItem of personalItems | filterPersonal: tu.queries.dispute.isDisputeable; index as idx">
+  <div *ngFor="let personalItem of personalItems | filterArray: tu.queries.dispute.isDisputeable; index as idx">
     <brave-account-summary-with-details
       [showConfirmButton]="true"
       [showDisputeButton]="false"
