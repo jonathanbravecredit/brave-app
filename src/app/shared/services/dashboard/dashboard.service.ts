@@ -22,7 +22,6 @@ import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-sc
 import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditReportMetric } from '@bravecredit/brave-sdk';
-import { BraveUtil } from '@shared/utils/brave/brave';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
