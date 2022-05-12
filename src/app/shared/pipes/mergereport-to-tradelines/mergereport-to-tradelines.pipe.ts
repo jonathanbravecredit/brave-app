@@ -4,9 +4,9 @@ import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { AccountTypes } from '@shared/constants/account-types';
 
 @Pipe({
-  name: 'mergereportToTradelines',
+  name: 'mergereportToTradelinesFilterSort',
 })
-export class MergereportToTradelinesPipe implements PipeTransform {
+export class MergereportToTradelinesFilterSortPipe implements PipeTransform {
   transform(report: IMergeReport, ...accountTypes: AccountTypes[]): ITradeLinePartition[] {
     const partition = report?.TrueLinkCreditReportType?.TradeLinePartition;
     if (!partition) return [{} as ITradeLinePartition];

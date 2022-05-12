@@ -9,14 +9,6 @@ import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/ou
   providers: [{ provide: 'name', useValue: 'phone-form' }],
 })
 export class OutlinePhoneFormComponent extends BaseFormComponent {
-  public phoneConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'tel',
-    label: 'Phone Number',
-    placeholder: '(123) 456-7890',
-    autocomplete: 'phone',
-  };
-
   constructor(fb: FormBuilder) {
     super(fb, 'phone-form');
   }

@@ -1,6 +1,6 @@
 <div style="min-width: 20rem" class="container px-4">
   <brave-disputes-overview-initial-pure
-    [overview]="allDisputes | disputesToDisputesOverview"
+    [overview]="transformDisputesToOverview()"
     (viewHistoricalClick)="onViewHistoricalClick()"
     (viewDetailsClick)="onViewDetailsClick($event)"
   ></brave-disputes-overview-initial-pure>

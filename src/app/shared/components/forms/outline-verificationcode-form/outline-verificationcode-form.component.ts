@@ -9,14 +9,6 @@ import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/ou
   providers: [{ provide: 'name', useValue: 'code-form' }],
 })
 export class OutlineVerificationcodeFormComponent extends BaseFormComponent {
-  public codeConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: 'Code',
-    placeholder: '5-digit Code',
-    autocomplete: 'off',
-  };
-
   constructor(fb: FormBuilder) {
     super(fb, 'code-form');
   }

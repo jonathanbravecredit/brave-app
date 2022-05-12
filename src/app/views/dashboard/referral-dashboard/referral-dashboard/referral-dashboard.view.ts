@@ -1,36 +1,35 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ICampaign } from '@shared/interfaces/campaign.interface';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-import { Subscription } from 'rxjs';
-const dayjs = require('dayjs');
+import { Component, OnDestroy } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ReferralDashboardViewService } from "../referral-dashboard-view.service";
+import { IReferralDashboardView } from "../referral-dashboard.model";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'brave-referral-dashboard',
-  templateUrl: './referral-dashboard.view.html',
+  selector: "brave-referral-dashboard",
+  templateUrl: "./referral-dashboard.view.html",
 })
-export class ReferralDashboardView implements OnInit, OnDestroy {
-  metrics = [];
-  referral: IReferral | undefined;
-  payments: null | undefined;
-  campaign: ICampaign | undefined;
-  disabled: boolean = false;
-  isActiveSub$: Subscription | undefined;
+export class ReferralDashboardView implements OnDestroy {
+  model: IReferralDashboardView = {} as IReferralDashboardView;
+  modelSub$: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private referralDashboardViewService: ReferralDashboardViewService
+  ) {
+    this.modelSub$ = this.referralDashboardViewService.model$.subscribe(
+      (res) => {
+        this.model = res;
+      }
+    );
     this.route.data.subscribe((resp: any) => {
-      const now = new Date();
-      this.metrics = resp.referral.metrics;
-      this.referral = resp.referral.referral;
-      this.payments = resp.referral.payments;
-      this.campaign = resp.referral.campaign;
-      this.disabled = dayjs(now).isAfter(this.campaign?.endDate);
+      this.referralDashboardViewService.mergeModel(
+        resp.referral.referral,
+        resp.referral.campaign
+      );
     });
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
-    this.isActiveSub$?.unsubscribe();
+    this.modelSub$?.unsubscribe();
   }
 }

@@ -11,18 +11,6 @@ import { Observable } from 'rxjs';
 export class OutlineSsnLastfourFormComponent extends BaseFormComponent {
   values$: Observable<any>;
   status$: Observable<any>;
-  public lastfour: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: '',
-    mask: 'XXXX',
-    unmask: '0000',
-    maxLength: 4,
-    minLength: 4,
-    hidden: true,
-    placeholder: 'XXXX',
-    autocomplete: 'off',
-  };
 
   constructor(fb: FormBuilder) {
     super(fb, 'lastfour-form');

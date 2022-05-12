@@ -1,19 +1,29 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NegativeAccountInitialPureComponent } from './negative-account-initial-pure.component';
+import { NegativeAccountInitialPureComponent } from "./negative-account-initial-pure.component";
+import { BehaviorSubject } from "rxjs";
+import { INegativeAccountView } from "../negative-account.model";
 
 //account: AccountService
 
 const setup = () => {
-  const accountMock = jasmine.createSpyObj('AccountService', ['']);
+  const negativeAccountServiceMock = jasmine.createSpyObj(
+    "NegativeAccountService",
+    [""],
+    {
+      model$: new BehaviorSubject<INegativeAccountView>(
+        {} as INegativeAccountView
+      ),
+    }
+  );
 
-  const component = new NegativeAccountInitialPureComponent(accountMock);
+  const component = new NegativeAccountInitialPureComponent(
+    negativeAccountServiceMock
+  );
 
-  return { component, accountMock };
+  return { component, negativeAccountServiceMock };
 };
 
-describe('NegativeAccountInitialPureComponent', () => {
-  it('should create', () => {
+describe("NegativeAccountInitialPureComponent", () => {
+  it("should create", () => {
     const { component } = setup();
 
     expect(component).toBeTruthy();

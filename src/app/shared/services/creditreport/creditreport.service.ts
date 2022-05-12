@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import {
   IBorrower,
   IMergeReport,
@@ -17,7 +17,7 @@ import { TransunionService } from '@shared/services/transunion/transunion.servic
 import { TransunionUtil as tu } from '@shared/utils/transunion/transunion';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { CreditReportState, CreditReportStateModel } from '@store/credit-report';
-import { filter } from 'rxjs/operators';
+import { NEGATIVE_PAY_STATUS_CODES } from '@bravecredit/brave-sdk';
 
 /**
  * Service to parse and pull information from credit reports
@@ -48,9 +48,11 @@ export class CreditreportService implements OnDestroy {
   // the currently selected tradeline (financial accounts, etc..)
   tuTradeline: ITradeLinePartition = {} as ITradeLinePartition;
   tuTradeline$: BehaviorSubject<ITradeLinePartition> = new BehaviorSubject({} as ITradeLinePartition);
+  tuTradelines: ITradeLinePartition[] = [];
   // the currently selected public item (bankruptcies, etc...)
   tuPublicItem: IPublicPartition = {} as IPublicPartition;
   tuPublicItem$: BehaviorSubject<IPublicPartition> = new BehaviorSubject({} as IPublicPartition);
+  tuPublicItems: IPublicPartition[] = [];
   // the currently selected personal item (name, address, etc...)
   tuPersonalItem: IBorrower = {} as IBorrower;
   tuPersonalItem$: BehaviorSubject<IBorrower> = new BehaviorSubject({} as IBorrower);
@@ -224,6 +226,13 @@ export class CreditreportService implements OnDestroy {
   setPersonalItem(personalItem: IBorrower): void {
     this.tuPersonalItem = personalItem;
     this.tuPersonalItem$.next(personalItem);
+  }
+
+  getNegativeItems(): ITradeLinePartition[] {
+    const trades = this.getTradeLinePartitions();
+    const negatives = tu.filters.filterTradelinesByStatusCodes(trades, NEGATIVE_PAY_STATUS_CODES);
+    const sorted = tu.sorters.report.sortTradelineByAccountType(negatives);
+    return sorted;
   }
 
   /**
