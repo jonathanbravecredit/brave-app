@@ -238,14 +238,14 @@ export class BaseFormComponent {
   }
 
   addressVerification(value: any): boolean {
-    if (value.state.input === "State") return false;
+    if (value.state?.input === "State") return false;
     return true;
   }
 
   nameDobVerification(value: any): boolean {
-    if (value.day.input === "Day") return false;
-    if (value.month.input === "Month") return false;
-    if (value.year.input === "Yeah") return false;
+    if (value.day?.input === "Day") return false;
+    if (value.month?.input === "Month") return false;
+    if (value.year?.input === "Yeah") return false;
     return true;
   }
 
