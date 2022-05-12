@@ -1,21 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
-import { of, Subscription } from 'rxjs';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { DashboardService } from "@shared/services/dashboard/dashboard.service";
+import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
+import { of, Subscription } from "rxjs";
 
-import { DashboardEnrolledPureComponent } from './dashboard-enrolled-pure.component';
+import { DashboardEnrolledPureComponent } from "./dashboard-enrolled-pure.component";
 
-describe('DashboardEnrolledPureComponent', () => {
+describe("DashboardEnrolledPureComponent", () => {
   let component: DashboardEnrolledPureComponent;
   let fixture: ComponentFixture<DashboardEnrolledPureComponent>;
   let dashboardServiceMock: any;
   let featureflagsMock: any;
 
   beforeEach(async () => {
-    dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['getLastUpdated', 'getWelcomeMessage'], {
-      updatedOn$: of({}),
-    });
-    featureflagsMock = jasmine.createSpyObj('FeatureFlagsService', ['']);
+    dashboardServiceMock = jasmine.createSpyObj(
+      "DashboardService",
+      ["getLastUpdated", "getWelcomeMessage", "setUserName"],
+      {
+        updatedOn$: of({}),
+      }
+    );
+    featureflagsMock = jasmine.createSpyObj("FeatureFlagsService", [""]);
     await TestBed.configureTestingModule({
       declarations: [DashboardEnrolledPureComponent],
       providers: [
@@ -31,25 +35,25 @@ describe('DashboardEnrolledPureComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should unsubscribe from dashboardDataSub$ on destroy', () => {
-    component.dashboardDataSub$ = new Subscription()
-    spyOn(component.dashboardDataSub$, 'unsubscribe')
-    component.ngOnDestroy()
-    expect(component.dashboardDataSub$.unsubscribe).toHaveBeenCalled()
-  })
+  it("should unsubscribe from dashboardDataSub$ on destroy", () => {
+    component.dashboardDataSub$ = new Subscription();
+    spyOn(component.dashboardDataSub$, "unsubscribe");
+    component.ngOnDestroy();
+    expect(component.dashboardDataSub$.unsubscribe).toHaveBeenCalled();
+  });
 
-  it('should run getWelcomeMessage on setWelcomeMessage', () => {
-    component.setWelcomeMessage()
-    expect(dashboardServiceMock.getWelcomeMessage).toHaveBeenCalled()
-  })
+  it("should run getWelcomeMessage on setWelcomeMessage", () => {
+    component.setWelcomeMessage();
+    expect(dashboardServiceMock.getWelcomeMessage).toHaveBeenCalled();
+  });
 
-  it('should set modalOpen to !modalOpen on toggleGoalChoiceModel', () => {
-    component.modalOpen = true
-    component.toggleGoalChoiceModel()
-    expect(component.modalOpen).toBeFalse()
-  })
+  it("should set modalOpen to !modalOpen on toggleGoalChoiceModel", () => {
+    component.modalOpen = true;
+    component.toggleGoalChoiceModel();
+    expect(component.modalOpen).toBeFalse();
+  });
 });
