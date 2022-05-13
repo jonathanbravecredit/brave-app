@@ -32,12 +32,6 @@ export class SimpleChangePasswordFormComponent extends BaseFormComponent {
   status$: Observable<any>;
   submitted: boolean = false;
 
-  @HostListener("document:keydown.enter", ["$event"]) onKeydownHandler(
-    event: KeyboardEvent
-  ) {
-    this.validatePasswords(this.parentForm);
-  }
-
   constructor(fb: FormBuilder) {
     super(fb, "simple-change-password-form");
     this.values$ = this.parentForm.valueChanges;
