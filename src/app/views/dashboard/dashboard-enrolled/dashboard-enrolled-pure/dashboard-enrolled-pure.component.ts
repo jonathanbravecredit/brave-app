@@ -85,7 +85,10 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dashboardService.setUserName()
+    this.setWelcomeMessage()
+  }
 
   ngOnDestroy(): void {
     this.dashboardDataSub$?.unsubscribe();
