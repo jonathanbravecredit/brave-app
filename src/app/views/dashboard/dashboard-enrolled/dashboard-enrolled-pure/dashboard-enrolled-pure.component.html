@@ -58,7 +58,7 @@
         (click)="forbearanceItemsClicked.emit()"
       ></brave-snapshot-display-card>
     </div>
-    <div class="mt-6 hover:cursor-pointer">
+    <div *ngIf="featureflags.dataBreaches$ | async" class="mt-6 hover:cursor-pointer">
       <brave-snapshot-display-card
         braveAnalytics
         tendency="no-tendency"

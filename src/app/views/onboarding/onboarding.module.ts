@@ -39,6 +39,7 @@ import { OnboardingService } from '@views/onboarding/onboarding.service';
 import { KycKbaquestionsPipe } from '@views/onboarding/kyc-kbaquestions/kyc-kbaquestions/kyc-kbaquestions.pipe';
 import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
 import { KycGoalChoiceComponent } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
+import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
 
 const components = [
   OnboardingComponent,
@@ -76,7 +77,7 @@ const services = [OnboardingService];
 
 @NgModule({
   declarations: [...components, ...pipes],
-  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, OnboardingRoutingModule],
+  imports: [CommonModule, SharedComponentsModule, SharedDirectivesModule, SharedPipesModule, OnboardingRoutingModule],
   exports: [...components, ...pipes],
   providers: [...services],
 })
