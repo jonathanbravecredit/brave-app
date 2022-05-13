@@ -7,13 +7,13 @@ import { AnalyticClickEvents } from '@shared/services/analytics/analytics/consta
   selector: '[braveAnalytics]',
 })
 export class AnalyticsDirective {
-  @Input() analyticClickEvents: AnalyticClickEvents | undefined;
-  @Input() analyticConfig?: IAnalyticsConfig | undefined;
+  @Input() analyticClickEvents: AnalyticClickEvents = AnalyticClickEvents.UnknownClickEvent;
+  @Input() analyticConfig: IAnalyticsConfig = { google: true, mixpanel: true, brave: false };
 
   constructor(private analytics: AnalyticsService) {}
 
   @HostListener('click')
   onClick(): void {
-    this.analytics.fireClickEvent(this.analyticClickEvents!, this.analyticConfig);
+    this.analytics.fireClickEvent(this.analyticClickEvents, this.analyticConfig);
   }
 }

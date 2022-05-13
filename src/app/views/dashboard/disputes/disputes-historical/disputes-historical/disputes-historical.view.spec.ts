@@ -1,7 +1,6 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDispute } from '@shared/interfaces/disputes';
-import { DisputesToDisputesHistoricalPipe } from '@shared/pipes/disputes-to-disputes-historical/disputes-to-disputes-historical.pipe';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
@@ -38,7 +37,7 @@ describe('DisputesHistoricalView', () => {
     })
 
     await TestBed.configureTestingModule({
-      declarations: [DisputesHistoricalView, DisputesToDisputesHistoricalPipe],
+      declarations: [DisputesHistoricalView],
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useValue: routeMock },

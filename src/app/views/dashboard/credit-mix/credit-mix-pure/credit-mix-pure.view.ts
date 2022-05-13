@@ -1,24 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ITradeLinePartition } from '@shared/interfaces';
-import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
-import {
-  ICreditMixTLSummary,
-  IRecommendationText,
-  TCreditMixCalcObj,
-} from '../interfaces/credit-mix-calc-obj.interface';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { AnalyticClickEvents } from "@shared/services/analytics/analytics/constants";
+import { CreditMixService } from "../credit-mix-service/credit-mix-service.service";
+import { Subscription } from "rxjs";
+import { ICreditMixView } from "../credit-mix.model";
 
 @Component({
-  selector: 'brave-credit-mix-pure',
-  templateUrl: './credit-mix-pure.view.html',
-  styleUrls: ['./credit-mix-pure.view.css'],
+  selector: "brave-credit-mix-pure",
+  templateUrl: "./credit-mix-pure.view.html",
+  styleUrls: ["./credit-mix-pure.view.css"],
 })
-export class CreditMixPureView implements OnInit {
-  @Input() tradeLineParition: ITradeLinePartition[] | undefined;
-  @Input() tradeLineSummary: ICreditMixTLSummary | undefined;
-  @Input() recommendations: IRecommendationText | undefined;
+export class CreditMixPureView implements OnDestroy {
   event = AnalyticClickEvents;
+  model: ICreditMixView = {} as ICreditMixView;
+  modelSub$: Subscription | undefined;
 
-  constructor() {}
+  constructor(public creditMixService: CreditMixService) {
+    this.modelSub$ = this.creditMixService.model$.subscribe((res) => {
+      this.model = res;
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
+  }
 }

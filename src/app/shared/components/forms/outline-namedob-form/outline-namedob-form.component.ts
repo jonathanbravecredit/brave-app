@@ -12,45 +12,6 @@ import { IOutlineSelectInputConfig } from '@shared/components/inputs/outline-sel
 export class OutlineNamedobFormComponent
   extends BaseFormComponent
   implements OnInit {
-  monthConfig: IOutlineSelectInputConfig = {
-    size: 'sm',
-    label: 'Month',
-    autocomplete: 'off',
-    options: months,
-  };
-  dayConfig: IOutlineSelectInputConfig = {
-    size: 'sm',
-    label: 'Day',
-    autocomplete: 'off',
-    options: this.addDays(31),
-  };
-  yearConfig: IOutlineSelectInputConfig = {
-    size: 'sm',
-    label: 'Year',
-    autocomplete: 'off',
-    options: this.addYears(new Date().getFullYear()),
-  };
-  firstNameConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'First Name',
-    type: 'text',
-    placeholder: 'First Name',
-    autocomplete: 'give-name',
-  };
-  middleNameConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Middle Name',
-    type: 'text',
-    placeholder: 'Middle',
-    autocomplete: 'additional-name',
-  };
-  lastNameConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Last Name',
-    type: 'text',
-    placeholder: 'Last Name',
-    autocomplete: 'family-name',
-  };
 
   constructor(fb: FormBuilder) {
     super(fb, 'namedob-form');

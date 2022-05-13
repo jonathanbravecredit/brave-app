@@ -1,23 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-import { ICampaign } from '@shared/interfaces/campaign.interface';
-const dayjs = require('dayjs');
+import { Component, Input, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+import { IReferralDashboardView } from "../../referral-dashboard.model";
+import { ReferralDashboardViewService } from "../../referral-dashboard-view.service";
+const dayjs = require("dayjs");
 
 @Component({
-  selector: 'brave-referral-banner',
-  templateUrl: './referral-banner.component.html',
+  selector: "brave-referral-banner",
+  templateUrl: "./referral-banner.component.html",
 })
-export class ReferralBannerComponent implements OnInit {
-  @Input() referral: IReferral | undefined;
-  @Input() campaign: ICampaign | undefined;
-  @Input() disabled: boolean | undefined;
-  referredBonus: boolean = false;
-  endMonth: string = '';
-  endDay: string = '';
-  constructor() {}
+export class ReferralBannerComponent implements OnDestroy {
+  model: IReferralDashboardView = {} as IReferralDashboardView;
+  modelSub$: Subscription | undefined;
 
-  ngOnInit(): void {
-    this.endMonth = dayjs(this.campaign?.endDate).format('MM');
-    this.endDay = dayjs(this.campaign?.endDate).format('DD');
+  constructor(
+    private referralDashboardViewService: ReferralDashboardViewService
+  ) {
+    this.modelSub$ = this.referralDashboardViewService.model$.subscribe(
+      (res) => {
+        this.model = res;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 }

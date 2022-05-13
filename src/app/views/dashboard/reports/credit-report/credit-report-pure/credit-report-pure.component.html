@@ -38,7 +38,7 @@
       *ngIf="
         report.hidden &&
         isLast &&
-        (report.tradelines | filterTradelines: tu.queries.report.isNegativeAccount).length === 0
+        (report.tradelines | filterArray: tu.queries.report.isNegativeAccount).length === 0
       "
       class="my-8"
     >
@@ -58,7 +58,7 @@
       <div class="mt-4">
         <brave-viewdetail-button
           id="fullcr-personal-detail-btn"
-          [horizontal]="true"
+          orientation="horizontal-right"
           (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
           ><span class="text-red-700">See an error?</span></brave-viewdetail-button
         >

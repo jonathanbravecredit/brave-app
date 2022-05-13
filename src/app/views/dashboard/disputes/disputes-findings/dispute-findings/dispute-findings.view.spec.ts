@@ -1,21 +1,29 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { IDispute } from '@shared/interfaces/disputes';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
+import { IDispute } from "@shared/interfaces/disputes";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { BehaviorSubject, of, Subscription } from "rxjs";
 
-import { DisputeFindingsView } from './dispute-findings.view';
+import { DisputeFindingsView } from "./dispute-findings.view";
 
-describe('DisputeFindingsView', () => {
+describe("DisputeFindingsView", () => {
   let component: DisputeFindingsView;
   let fixture: ComponentFixture<DisputeFindingsView>;
   let routeMock: any;
   let disputeServiceMock: any;
 
   beforeEach(async () => {
-    disputeServiceMock = jasmine.createSpyObj('DisputeService', ['getUserStateOfResidence']);
-    disputeServiceMock.currentDispute$ = new BehaviorSubject<IDispute>({} as IDispute);
-    routeMock = jasmine.createSpyObj('ActivatedRoute', [''], {
+    disputeServiceMock = jasmine.createSpyObj("DisputeService", [
+      "transformCreditbureauToTradelineDetails",
+      "transformCreditbureauToPublicItemDetails",
+      "transformCreditbureauToPersonalItemDetails",
+      "getUserStateOfResidence",
+      "transformDisputeToFindings",
+    ]);
+    disputeServiceMock.currentDispute$ = new BehaviorSubject<IDispute>(
+      {} as IDispute
+    );
+    routeMock = jasmine.createSpyObj("ActivatedRoute", [""], {
       data: of({
         reports: {
           investigationResults: {
@@ -43,18 +51,18 @@ describe('DisputeFindingsView', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should run disputeService.getUserStateOfResidence on init', () => {
+  it("should run disputeService.getUserStateOfResidence on init", () => {
     component.ngOnInit();
 
     expect(disputeServiceMock.getUserStateOfResidence).toHaveBeenCalled();
   });
 
-  it('should unsubscribe from routeSub$ ondestroy', () => {
-    spyOn(component.routeSub$!, 'unsubscribe')
+  it("should unsubscribe from routeSub$ ondestroy", () => {
+    spyOn(component.routeSub$!, "unsubscribe");
 
     component.ngOnDestroy();
 

@@ -9,7 +9,7 @@
           (viewPersonalItemDetailClick)="onViewPersonalItemDetailClick($event.borrower)"
           [preferences]="preferences"
           [scores]="scores"
-          [publicItems]="(creditReports | mergereportToPublicitems) || []"
+          [publicItems]="(creditReports | mergereportToPublicitemDetails) || []"
           [personalItems]="(creditReports | mergereportToPersonalitems) || []"
           [tradelines]="creditReports | mergereportToCreditreport: preferences"
           [creditReportScore]="creditReports | parseRiskScore"

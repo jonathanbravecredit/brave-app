@@ -1,13 +1,22 @@
 <div class="container mx-auto max-w-xs h-full mt-6">
   <div class="w-full max-w-xs mt-6">
-    <brave-goal-choice-header></brave-goal-choice-header>
+    <h1 class="text-brave-blurple brave-h4 mb-6">First, let's learn about your credit goals</h1>
+<p>Brave Credit users who take the actions we suggest can grow their scores <span class="font-bold text-lg">70 points or more*</span></p>
+<p class="mt-6"><span class="font-bold text-lg">Click on your goal</span> so we can create your personalized plan:</p>
+
 
     <div class="h-full flex flex-col justify-apart">
       <brave-goal-choice-parent (goalClick)="(routeChangeClick())"></brave-goal-choice-parent>
     </div>
 
     <div class="mt-20">
-      <brave-goal-choice-disclaimer></brave-goal-choice-disclaimer>
+      <p style="font-size: 0.65rem;">
+        *Individual results will vary. Based on results of Brave Credit customers who reviewed their credit reports and
+        submitted disputes on their credit report information, or successfully completed a 12 month Credit Builder Account
+        from Self from 1/1/2020 to 10/31/2021. Making on-time payments of other accounts is critical to credit wellness and
+        growth
+      </p>
+      
     </div>
   </div>
 </div>

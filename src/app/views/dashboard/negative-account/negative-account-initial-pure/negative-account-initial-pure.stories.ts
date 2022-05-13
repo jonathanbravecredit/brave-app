@@ -5,10 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedComponentsModule } from '@shared/components/shared-components.module';
 import { NegativeAccountInitialPureComponent } from '@views/dashboard/negative-account/negative-account-initial-pure/negative-account-initial-pure.component';
-import {
-  REVOLVING_PARTITION,
-  REVOLVING_SUBSCRIBER,
-} from '@views/dashboard/negative-account/negative-account-initial-pure/mocks';
 
 export default {
   title: 'app/views/negative-account/initial',

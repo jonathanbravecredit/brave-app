@@ -1,18 +1,74 @@
-<div
-  *ngIf="showAlert"
-  [ngClass]="config | filledClosingAlert"
-  class="font-sans text-sm text-white px-6 py-4 border-0 rounded relative mb-4"
->
-  <span *ngIf="config.alertTitle" class="font-sans text-sm text-white inline-block mr-5 align-middle">
-    {{ config.alertTitle }}
-  </span>
+
+<ng-container [ngSwitch]="position">
+  <ng-container *ngSwitchCase="'top-right'">
+    <div *ngIf="!fade" [@fade]  class="fixed right-0 top-0 mr-4 font-sans text-sm px-6 py-4 border-0 mb-4 text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'top-left'">
+    <div *ngIf="!fade" [@fade]  class="fixed left-0 top-0 ml-4 font-sans text-sm px-6 py-4 border-0 mb-4 text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'top-middle'">
+    <div *ngIf="!fade" [@fade]  class="fixed top-0 font-sans text-sm px-6 py-4 border-0 rounded mb-4 text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'bottom-right'">
+    <div *ngIf="!fade" [@fade]  class="fixed right-0 bottom-0 mb-20 mr-4 font-sans text-sm px-6 py-4 border-0 rounded text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'bottom-left'">
+    <div *ngIf="!fade" [@fade]  class="fixed bottom-0 left-0 ml-4 mb-20 font-sans text-sm px-6 py-4 border-0 rounded text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'bottom-middle'">
+    <div *ngIf="!fade" [@fade]  class="fixed bottom-0 font-sans mb-20 text-sm px-6 py-4 border-0 rounded text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'middle-middle'">
+    <div *ngIf="!fade" [@fade]  class="fixed inset-0 font-sans text-sm px-6 py-4 border-0 rounded mb-4 text-white bg-indigo-800">
+      <ng-container *ngTemplateOutlet="alertCore"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <div
+      *ngIf="showAlert"
+      [ngClass]="config | filledClosingAlert"
+      class="font-sans text-sm text-white px-6 py-4 border-0 rounded relative mb-4"
+    >
+      <span *ngIf="config.alertTitle" class="font-sans text-sm text-white inline-block mr-5 align-middle">
+        {{ config.alertTitle }}
+      </span>
+      <span class="inline-block align-left mr-8">
+        {{ config.alertBody }}
+      </span>
+      <button
+        class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-4 outline-none focus:outline-none"
+        (click)="showAlert = false; closeClick()"
+      >
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+  </ng-container>
+
+
+</ng-container> 
+
+
+
+<ng-template #alertCore>
   <span class="inline-block align-left mr-8">
-    {{ config.alertBody }}
+    {{ text }}
   </span>
   <button
     class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-4 outline-none focus:outline-none"
-    (click)="showAlert = false; closeClicked.emit()"
+    (click)="showAlert = false; closeClick()"
   >
     <span class="material-icons text-white">close</span>
   </button>
-</div>
+</ng-template>
