@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, ValidatorFn } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { autocompleteValidator } from '@shared/components/forms/autocomplete-address-form/autocomplete-address-form.validators';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { stateValidator } from '@shared/components/forms/outline-address-form/outline-address-form.validators';
 import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
 import { Observable } from 'rxjs';
 import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
@@ -22,7 +22,7 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
   status$: Observable<any>;
 
   constructor(fb: FormBuilder) {
-    super(fb, 'address-form', [stateValidator]);
+    super(fb, 'address-form', [autocompleteValidator]);
     this.values$ = this.parentForm.valueChanges;
     this.status$ = this.parentForm.statusChanges;
   }
