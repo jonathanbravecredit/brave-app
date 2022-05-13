@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
+import { RenderedService, RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 import { BraveUtil } from '@shared/utils/brave/brave';
 import { Observable, Subscription } from 'rxjs';
 
@@ -10,12 +10,17 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'brave-dashboard',
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements AfterViewInit, OnDestroy {
   securityFreeze$: Observable<boolean>;
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
   public tag = RenderedViews.Dashboard;
-  constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private rendered: RenderedService,
+    private dashboardService: DashboardService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
     this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
     this.router.events.subscribe((event) => {
@@ -25,7 +30,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.rendered.checkStatus();
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub$?.unsubscribe();
+  }
 
   goToLink(link: string) {
     this.router.navigate([`./${link}`], { relativeTo: this.route });
@@ -40,9 +51,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
       if (referral) this.dashboardService.dashReferral$.next(referral);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.routeSub$?.unsubscribe()
   }
 }
