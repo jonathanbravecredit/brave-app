@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashboardService } from '@shared/services/dashboard/dashboard.service';
 import { DashboardStateModel, DashboardStatus } from '@store/dashboard/dashboard.model';
 import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';

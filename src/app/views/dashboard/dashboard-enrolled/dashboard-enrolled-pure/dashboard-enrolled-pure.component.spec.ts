@@ -56,4 +56,15 @@ describe("DashboardEnrolledPureComponent", () => {
     component.toggleGoalChoiceModel();
     expect(component.modalOpen).toBeFalse();
   });
+
+  it('should run dashboardService.setUserName on init', () => {
+    component.ngOnInit()
+    expect(dashboardServiceMock.setUserName).toHaveBeenCalled()
+  })
+
+  it('should run setWelcomeMessage on init', () => {
+    let spy = spyOn(component, 'setWelcomeMessage')
+    component.ngOnInit()
+    expect(spy).toHaveBeenCalled()
+  })
 });
