@@ -11,10 +11,19 @@ import { DATA_BREACHES_CONTENT } from "../../data-breaches.content";
 import { DataBreachesViewService } from "../../data-breaches-view.service";
 import { IDataBreachesView } from "../../data-breaches.model";
 import { Subscription } from "rxjs";
+import { state, style, trigger, animate, transition } from '@angular/animations';
 
 @Component({
   selector: "brave-data-breach-card",
   templateUrl: "./data-breach-card.component.html",
+  animations: [
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.2s linear")]),
+      transition("open => closed", [animate("0.2s linear")]),
+    ]),
+  ],
 })
 export class DataBreachCardComponent implements OnDestroy {
   @Input() subscriber: string | undefined = "Unknown";
