@@ -2,12 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { APIService } from '@shared/services/aws/api.service';
 import { StateService } from '@shared/services/state/state.service';
+import { DataBreachesComponent } from '@views/dashboard/data-breaches/data-breaches/data-breaches.component';
 import { Observable, of } from 'rxjs';
 
 //   private route: ActivatedRoute,
 //   public dataBreachesViewService: DataBreachesViewService
 
-describe("DataBreachesComponent", () => {
+describe('DataBreachesComponent', () => {
   let component: DataBreachesComponent;
   let fixture: ComponentFixture<DataBreachesComponent>;
   let stateMock: any;
@@ -35,7 +36,7 @@ describe("DataBreachesComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
