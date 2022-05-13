@@ -1,0 +1,13 @@
+import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+
+export const stateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const state = control.get('state');
+  if (!state) return { missingState: true };
+  const { value } = state;
+  console.log('state: ', state);
+  console.log('value: ', value);
+
+  if (!value) return { missingStateValue: true };
+  if (value.input == 'State') return { defaultSelected: true };
+  return null;
+};
