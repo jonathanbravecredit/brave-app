@@ -30,9 +30,7 @@
           >
           </brave-outline-input>
           <div *ngIf="!hideHint" class="-mt-2">
-            <div
-              class="flex justify-start items-start text-xs text-blueGray-600"
-            >
+            <div class="flex justify-start items-start text-xs text-blueGray-600">
               <span class="-mt-1">&#42;</span>&nbsp;Required
             </div>
           </div>
@@ -53,7 +51,6 @@
           [config]="monthConfig"
           (onComponentReady)="addChild('month', $event)"
           [required]="true"
-          [validators] = "[monthValidator]"
           [asteriskOverride]="true"
         >
         </brave-outline-select-input>
@@ -68,7 +65,6 @@
           [config]="dayConfig"
           (onComponentReady)="addChild('day', $event)"
           [required]="true"
-          [validators] = "[dayValidator]"
           [asteriskOverride]="true"
         >
         </brave-outline-select-input>
@@ -79,7 +75,6 @@
             [config]="yearConfig"
             (onComponentReady)="addChild('year', $event)"
             [required]="true"
-            [validators] = "[yearValidator]"
             [asteriskOverride]="true"
           >
           </brave-outline-select-input>
@@ -91,16 +86,8 @@
   <div class="mt-5">
     <div class="flex justify-between items-center">
       <ng-content></ng-content>
-      <brave-filled-spinning-button
-      #spinner
-        [disabled]="!parentForm?.valid || !(validateForm(parentForm))"
-        (click)="submitForm()"
-      >
-        <span class="flex items-center"
-          >Continue<span class="material-icons px-1"
-            >arrow_forward</span
-          ></span
-        >
+      <brave-filled-spinning-button #spinner [disabled]="!parentForm?.valid" (click)="submitForm()">
+        <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
       </brave-filled-spinning-button>
     </div>
   </div>
