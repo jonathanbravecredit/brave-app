@@ -1,21 +1,32 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ISubscriber } from '@shared/interfaces';
-import { AccountService } from '@shared/services/account/account.service';
-import { noNegativeAccountInitialContent } from '@views/dashboard/negative-account/negative-account-initial-pure/content';
+import { Component, OnDestroy } from '@angular/core';
+import { ROUTE_NAMES } from '@shared/routes/routes.names';
+import { NEGATIVE_ACCOUNT_CONTENT } from '@views/dashboard/negative-account/negative-account.content';
+import { INegativeAccountView } from '@views/dashboard/negative-account/negative-account.model';
+import { NegativeAccountService } from '@views/dashboard/negative-account/negative-account.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-negative-account-initial-pure',
   templateUrl: './negative-account-initial-pure.component.html',
 })
-export class NegativeAccountInitialPureComponent implements OnInit {
-  @Input() subscribers: ISubscriber[] = [];
-  @Output() goToReportClick: EventEmitter<void> = new EventEmitter();
-  @Output() goToDashboardClick: EventEmitter<void> = new EventEmitter();
+export class NegativeAccountInitialPureComponent implements OnDestroy {
+  public routes = ROUTE_NAMES;
+  public content = NEGATIVE_ACCOUNT_CONTENT.negativeAccountInitial;
+  public model: INegativeAccountView = {} as INegativeAccountView;
 
-  content = noNegativeAccountInitialContent;
-  constructor(
-    public account: AccountService
-  ) { }
+  private negativeAccountServiceSub$: Subscription;
 
-  ngOnInit(): void {}
+  constructor(private negativeAccountService: NegativeAccountService) {
+    this.negativeAccountServiceSub$ = this.negativeAccountService.model$.subscribe((model) => {
+      this.model = model;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.negativeAccountServiceSub$.unsubscribe();
+  }
+
+  navigate(route: string): void {
+    this.negativeAccountService.navigate(route);
+  }
 }

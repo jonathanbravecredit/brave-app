@@ -1,10 +1,6 @@
 <div style="min-width: 20rem" class="container px-4">
   <brave-disputes-historical-pure
-    [disputes]="allDisputes | disputesToDisputesHistorical"
+    [disputes]="transformDisputesToHistorical()"
     (viewDetailsClick)="onViewDetailsClick($event)"
   ></brave-disputes-historical-pure>
 </div>
-
-<!-- [overview]="allDisputes | disputesToDisputesOverview"
-(viewHistoricalClick)="onViewHistoricalClick()"
-(viewDetailsClick)="onViewDetailsClick($event)" -->

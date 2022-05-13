@@ -1,28 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Initiative, InitiativeSubTask, InitiativeTask } from '@shared/interfaces/progress-tracker.interface';
-import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
-
+import { Component, OnDestroy } from "@angular/core";
+import { PROGRESS_TRACKER_CONTENT } from "../progress-tracker.content";
+import { IProgressTrackerView } from "../progress-tracker.model";
+import { ProgressTrackerViewService } from "../progress-tracker-view.service";
+import { Subscription } from "rxjs";
 @Component({
-  selector: 'brave-progress-tracker-pure',
-  templateUrl: './progress-tracker-pure.component.html',
+  selector: "brave-progress-tracker-pure",
+  templateUrl: "./progress-tracker-pure.component.html",
 })
-export class ProgressTrackerPureComponent implements OnInit {
-  @Input() initiative: Initiative | null = null;
-  @Input() goalId: string = '';
-  @Input() steps: ICircleProgressStep[] = [];
-  @Input() initiativeTasks: InitiativeTask[] = [];
-  @Input() futureScore: number = 0;
-  @Input() enrolledScore: string | null | undefined;
-  @Input() dashScore: number | null = 0;
-  @Input() dashDelta: number | null = 0;
-  @Input() enrolledOn: string | null | undefined;
-  @Input() hasSelfLoan: boolean = false
+export class ProgressTrackerPureComponent implements OnDestroy {
+  PROGRESS_TRACKER_CONTENT = PROGRESS_TRACKER_CONTENT;
+  model: IProgressTrackerView = {} as IProgressTrackerView;
+  modelSub$: Subscription | undefined;
 
-  @Output() updateTask: EventEmitter<InitiativeSubTask | InitiativeTask> = new EventEmitter<
-    InitiativeSubTask | InitiativeTask
-  >();
+  constructor(public progressTrackerViewService: ProgressTrackerViewService) {
+    this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
+      this.model = res;
+    });
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
+  }
 }

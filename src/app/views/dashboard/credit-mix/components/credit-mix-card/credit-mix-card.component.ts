@@ -4,6 +4,7 @@ import { TransunionUtil } from "@shared/utils/transunion/transunion";
 import { TradelineDetailsTableComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component";
 import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
 import { TradelineRemarksComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component";
+import { CREDIT_MIX_CONTENT } from "../../credit-mix.content";
 import {
   ICreditUtilization,
   TCreditUtilizationStatus,
@@ -14,6 +15,8 @@ import {
   templateUrl: "./credit-mix-card.component.html",
 })
 export class CreditMixCardComponent implements OnInit {
+  CREDIT_MIX_CONTENT = CREDIT_MIX_CONTENT;
+
   @Input() status: TCreditUtilizationStatus = "good";
 
   @Input() creditUtilization: ICreditUtilization | undefined;
@@ -44,8 +47,7 @@ export class CreditMixCardComponent implements OnInit {
     this.isCreditCard =
       this.creditUtilization?.config?.accountTypeSymbol?.toLowerCase() === "r";
 
-    this.open =
-      this.creditUtilization?.openClosed?.toLowerCase() === "o";
+    this.open = this.creditUtilization?.openClosed?.toLowerCase() === "o";
 
     if (this.creditUtilization) {
       if (this.isCreditCard) {

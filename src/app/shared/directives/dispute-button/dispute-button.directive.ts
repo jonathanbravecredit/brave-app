@@ -1,6 +1,6 @@
 import { ComponentRef, Directive, HostListener, Input, OnDestroy } from '@angular/core';
 import { OnboardingDisputeV2Component } from '@shared/components/modals/onboarding-dispute-v2/onboarding-dispute-v2.component';
-import { ITradeLinePartition, IBorrowerName, IBorrowerAddress, IEmployer, IPublicPartition } from '@shared/interfaces';
+import { ITradeLinePartition, IPublicPartition } from '@shared/interfaces';
 import { DisputeService } from '@shared/services/dispute/dispute.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { ModalService } from '@shared/services/modal/modal.service';
@@ -60,6 +60,7 @@ export class DisputeButtonDirective implements OnDestroy {
     this.compRef = undefined;
   }
 
+
   subcribeToEvents(): void {
     this.closeClick$ = this.compRef?.instance.closeClick.subscribe(() => {
       this.closeModal();
@@ -71,35 +72,31 @@ export class DisputeButtonDirective implements OnDestroy {
   }
 
   // only support for tradeline right now
-  onUserAcknowledgement() {
+  async onUserAcknowledgement() {
     this.interstitial.changeMessage('checking eligibility');
     this.interstitial.openInterstitial();
     this.closeModal();
-    this.disputeService
-      .onUserConfirmed()
-      .then((resp) => {
-        const { success, error } = resp;
-        if (success) {
-          const filter: DisputeReconfirmFilter = this.getFilters();
-          this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
-            queryParams: {
-              type: filter,
-            },
-          });
-        } else {
-          const code = `${error?.Code}`;
-          this.handleError(code);
-        }
-      })
-      .catch((err) => {
-        this.handleError();
-      });
+    try {
+      const resp = await this.disputeService.onUserConfirmed();
+      const { success, error } = resp;
+      if (success) {
+        const filter: DisputeReconfirmFilter = this.getFilters();
+        this.router.navigate([routes.root.dashboard.disputes.reconfirm.full], {
+          queryParams: {
+            type: filter,
+          },
+        });
+      } else {
+        const code = `${error?.Code}`;
+        this.handleError(code);
+      }
+    } catch (err) {
+      this.handleError();
+    }
   }
 
   getFilters(): DisputeReconfirmFilter {
     if (this.type === 'tradeline') {
-      const test = tu.queries.report.getTradelineTypeDescription(this.tradeline);
-      console.log('getFilters', test);
       if (!this.tradeline) return 'all';
       return tu.queries.report.getTradelineTypeDescription(this.tradeline);
     } else if (this.type === 'publicitem') {

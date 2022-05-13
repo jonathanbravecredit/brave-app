@@ -46,7 +46,7 @@
   </div>
   <p class="text-lg font-bold mb-2">{{ maxSelections === 2 ? content.p1 : content.p2 }}</p>
   <div class="w-full" style="min-width: 300px">
-    <ng-container *ngIf="reasonCards | reasonsToPages: (disputeType === 'not-mine' ? 5 : 4) as pages">
+    <ng-container *ngIf="reasonsToPages(reasonCards, (disputeType === 'not-mine' ? 5 : 4)) as pages">
       <brave-basic-carousel [pages]="pages.pages" [data]="pages.data"> </brave-basic-carousel>
     </ng-container>
   </div>

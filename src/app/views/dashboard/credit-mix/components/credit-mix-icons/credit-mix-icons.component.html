@@ -6,7 +6,7 @@
         height: 40px;
         width: 40px;
       "
-      [ngStyle]="{'background-color': hasCreditCards ? '#222C9D' : '#c4c4c4'}"
+      [ngStyle]="{'background-color': model.hasCreditCards ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -15,7 +15,7 @@
         credit_card
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px">Credit Cards</div>
+    <div class="font-semibold" style="font-size: 9px">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixIcons.div1}}</div>
   </div>
   <div class="flex flex-col justify-center items-center">
     <div
@@ -24,7 +24,7 @@
         height: 40px;
         width: 40px;
       "
-      [ngStyle]="{'background-color': hasStudentLoans ? '#222C9D' : '#c4c4c4'}"
+      [ngStyle]="{'background-color': model.hasStudentLoans ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -33,7 +33,7 @@
         paid
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px">Student Loans</div>
+    <div class="font-semibold" style="font-size: 9px">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixIcons.div2}}</div>
   </div>
   <div class="flex flex-col justify-center items-center">
     <div
@@ -42,7 +42,7 @@
         height: 40px;
         width: 40px;
       "
-      [ngStyle]="{'background-color': hasAutoLoans ? '#222C9D' : '#c4c4c4'}"
+      [ngStyle]="{'background-color':model.hasAutoLoans ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -51,7 +51,7 @@
         directions_car_filled
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px">Auto Loans</div>
+    <div class="font-semibold" style="font-size: 9px">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixIcons.div3}}</div>
   </div>
   <div class="flex flex-col justify-center items-center">
     <div
@@ -60,7 +60,7 @@
         height: 40px;
         width: 40px;
       "
-      [ngStyle]="{'background-color': hasMortgages ? '#222C9D' : '#c4c4c4'}"
+      [ngStyle]="{'background-color': model.hasMortgages ? '#222C9D' : '#c4c4c4'}"
     >
       <span
         class="material-icons-outlined text-2xl"
@@ -69,6 +69,6 @@
         cottage
       </span>
     </div>
-    <div class="font-semibold" style="font-size: 9px">Mortgages</div>
+    <div class="font-semibold" style="font-size: 9px">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixIcons.div4}}</div>
   </div>
 </div>

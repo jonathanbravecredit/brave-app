@@ -1,47 +1,45 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IFilledClosingAlertConfig } from '@shared/components/alerts/filled-closing-alert/filled-closing-alert.component';
-import { ICampaign } from '@shared/interfaces/campaign.interface';
-import { IReferral } from '@shared/interfaces/referrals.interface';
+import { Component, OnDestroy } from "@angular/core";
+import { REFERRAL_DASHBOARD_CONTENT } from "../../referral-dashboard.content";
+import { IReferralDashboardView } from "../../referral-dashboard.model";
+import { AlertsService } from "../../../../../shared/services/alerts/alerts.service";
+import { ReferralDashboardViewService } from "../../referral-dashboard-view.service";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'brave-referral-amount-link',
-  templateUrl: './referral-amount-link.component.html',
+  selector: "brave-referral-amount-link",
+  templateUrl: "./referral-amount-link.component.html",
 })
-export class ReferralAmountLinkComponent implements OnInit {
-  @Input() referral: IReferral | undefined;
-  @Input() campaign: ICampaign | undefined;
-  @Input() disabled: boolean | undefined;
-  referralLink: string = '';
-  showAlert: boolean = false;
-  alertConfig: IFilledClosingAlertConfig = {
-    size: 'small',
-    backgroundColor: 'bg-indigo-800',
-    color: 'text-white',
-    alertBody: 'Copied to Clipboard!',
-  };
+export class ReferralAmountLinkComponent implements OnDestroy {
+  REFERRAL_DASHBOARD_CONTENT = REFERRAL_DASHBOARD_CONTENT;
+  model: IReferralDashboardView = {} as IReferralDashboardView;
+  modelSub$: Subscription | undefined;
 
-  get percentage(): number {
-    const referred = this.referral?.campaignActiveReferred || 0;
-    const max = this.campaign?.maxReferrals || 0;
-    const perc = !max ? 0 : referred / max;
-    return perc * 100;
+  constructor(
+    private alertsService: AlertsService,
+    private referralDashboardViewService: ReferralDashboardViewService
+  ) {
+    this.modelSub$ = this.referralDashboardViewService.model$.subscribe((res) => {
+      this.model = res;
+    });
   }
 
-  constructor() {}
-
-  ngOnInit(): void {
-    if (this.referral) {
-      this.referralLink = `https://app.brave.credit/auth/signup?referralCode=${this.referral.referralCode}`;
-    }
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 
   copyUrl(el: HTMLInputElement) {
-    this.showAlert = true;
-    setTimeout(() => {
-      this, (this.showAlert = false);
-    }, 5000);
+    this.alertsService.onShowAlertEvent(
+      JSON.stringify({
+        name: 'referral-link-copy',
+        position: "bottom-right",
+        text: "Copied to Clipboard!",
+        timed: true,
+        timeout: 2000,
+      })
+    );
+
     el.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     el.setSelectionRange(0, 0);
   }
 }

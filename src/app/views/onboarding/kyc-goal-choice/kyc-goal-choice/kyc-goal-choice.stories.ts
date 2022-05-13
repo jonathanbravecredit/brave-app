@@ -4,7 +4,6 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { KycGoalChoiceComponent } from '@views/onboarding/kyc-goal-choice/kyc-goal-choice/kyc-goal-choice.component';
-import { KycGoalChoiceHeaderComponent } from '@views/onboarding/kyc-goal-choice/components/kyc-goal-choice-header/kyc-goal-choice-header.component';
 
 
 export default {
@@ -13,7 +12,6 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [
-        KycGoalChoiceHeaderComponent,
       ],
       imports: [HttpClientModule, RouterModule.forRoot([], { useHash: true })],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],

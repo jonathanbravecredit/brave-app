@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IConfirmPassword } from '@shared/components/forms/simple-change-password-form/interface';
 import { SimpleChangePasswordFormComponent } from '@shared/components/forms/simple-change-password-form/simple-change-password-form.component';
 import { CODES_CONFIG } from '@views/dashboard/settings/components/option-password-reset/constants';
 import { optionPasswordResetContents } from '@views/dashboard/settings/components/option-password-reset/contents';
