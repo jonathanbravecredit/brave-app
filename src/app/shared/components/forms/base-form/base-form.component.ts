@@ -71,7 +71,6 @@ export class BaseFormComponent {
   ) {
     this.parentForm = fb.group({ name: [name] }, { validators });
     this.parentForm.valueChanges.subscribe((value) => {
-      console.log(this.parentForm);
       this.onChanges.emit(value);
     });
   }
