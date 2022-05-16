@@ -45,7 +45,7 @@ export class OnboardingDisputeComponent implements OnInit {
       stepId: 1,
       title: 'Online Dispute',
       description: [
-        "Here's some important about about online online disputes you should know.",
+        "Here's some important information about online disputes you should know.",
         'Review the Terms and Conditions below to get started.',
       ],
       termsTitle: 'New Dispute Information',
