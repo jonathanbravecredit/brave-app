@@ -10,6 +10,7 @@
       formControlName="input"
       [placeholder]="config?.placeholder || ''"
       [autocomplete]="config?.autocomplete || 'off'"
+      (change)="onChange($event.target)"
       [ngClass]="{
         'border-red-500':
           required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
@@ -19,7 +20,20 @@
           !componentFormGroup.controls.input.valid
         )
       }"
-      class="Autocomplete text-sm text-blueGray-600 px-3 py-1 placeholder-blueGray-300 relative bg-white rounded border outline-none focus:ring-0 focus:ring-indigo-800 w-full"
+      class="
+        Autocomplete
+        text-sm text-blueGray-600
+        px-3
+        py-1
+        placeholder-blueGray-300
+        relative
+        bg-white
+        rounded
+        border
+        outline-none
+        focus:ring-0 focus:ring-indigo-800
+        w-full
+      "
     />
   </div>
 </form>
