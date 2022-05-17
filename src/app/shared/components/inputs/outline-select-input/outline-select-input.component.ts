@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 export interface IOutlineSelectInputConfig {
   size: string;
@@ -30,6 +30,8 @@ export class OutlineSelectInputComponent implements OnInit {
     autocomplete: 'off',
     options: ['one', 'two', 'three'],
   };
+
+  @Input() validators: ValidatorFn[] = [];
 
   /**
    * @input Flag to make the input field required for form to be valid
@@ -66,12 +68,11 @@ export class OutlineSelectInputComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    const validators = [];
     if (this.required) {
-      validators.push(Validators.required);
+      this.validators.push(Validators.required);
     }
     this.componentFormGroup = this.fb.group({
-      input: [this.config.label, validators], // default to first item in array
+      input: [this.config.label, this.validators], // default to first item in array
     });
     this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
       this.selected = value;

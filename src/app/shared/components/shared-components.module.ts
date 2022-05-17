@@ -41,7 +41,6 @@ import { FilledChecktextProgressbarPipe } from "@shared/components/progressbars/
 import { KbaquestionsFormComponent } from "./forms/kbaquestions-form/kbaquestions-form.component";
 import { OutlineNamedobFormComponent } from "./forms/outline-namedob-form/outline-namedob-form.component";
 import { BaseFormComponent } from "./forms/base-form/base-form.component";
-import { SelectDobFormComponent } from "./forms/select-dob-form/select-dob-form.component";
 import { OutlineNameFormComponent } from "./forms/outline-name-form/outline-name-form.component";
 import { ViewdetailButtonComponent } from "./buttons/viewdetail-button/viewdetail-button.component";
 import { KbaMultiplechoiceInputComponent } from "./inputs/kba-multiplechoice-input/kba-multiplechoice-input.component";
@@ -108,7 +107,6 @@ const components = [
   FilledChecktextProgressbarComponent,
   KbaquestionsFormComponent,
   OutlineNamedobFormComponent,
-  SelectDobFormComponent,
   OutlineNameFormComponent,
   ViewdetailButtonComponent,
   SnapshotDisplayCardComponent,

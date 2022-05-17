@@ -9,10 +9,19 @@ import {
   ICreditUtilization,
   TCreditUtilizationStatus,
 } from "@views/dashboard/credit-utilization/components/credit-utilization-card/interfaces";
+import { state, style, trigger, animate, transition } from '@angular/animations';
 
 @Component({
   selector: "brave-credit-mix-card",
   templateUrl: "./credit-mix-card.component.html",
+  animations: [
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.2s linear")]),
+      transition("open => closed", [animate("0.2s linear")]),
+    ]),
+  ],
 })
 export class CreditMixCardComponent implements OnInit {
   CREDIT_MIX_CONTENT = CREDIT_MIX_CONTENT;

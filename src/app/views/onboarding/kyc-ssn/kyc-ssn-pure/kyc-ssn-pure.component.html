@@ -49,6 +49,14 @@
           (onSubmit)="formSubmit.emit($event)"
           (onSubmitError)="formError.emit($event)"
         >
+        <brave-links-onlytext-button
+        (click)="backClick.emit()"
+        [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+      >
+        <span class="flex items-center">
+          <span class="material-icons px-1">arrow_back</span>&nbsp;Back
+        </span>
+      </brave-links-onlytext-button>
         </brave-outline-ssn-lastfour-form>
       </div>
 
@@ -56,28 +64,7 @@
         Please enter the last 4 digits of your social security number
       </h3>
 
-      <div class="mt-5">
-        <div class="flex justify-between items-center">
-          <brave-links-onlytext-button
-            (click)="backClick.emit()"
-            [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
-          >
-            <span class="flex items-center">
-              <span class="material-icons px-1">arrow_back</span>&nbsp;Back
-            </span>
-          </brave-links-onlytext-button>
-          <brave-filled-spinning-button
-            [disabled]="!form.parentForm?.valid"
-            (click)="form.submitForm()"
-          >
-            <span class="flex items-center"
-              >Continue<span class="material-icons px-1"
-                >arrow_forward</span
-              ></span
-            >
-          </brave-filled-spinning-button>
-        </div>
-      </div>
+      
     </div>
   </div>
 </div>

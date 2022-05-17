@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { QueryOne } from '@aws-amplify/datastore';
 
 export interface IOutlineInputeConfig {
@@ -44,6 +44,8 @@ export class OutlineInputComponent implements OnInit {
     autocomplete: 'off',
     value: '',
   };
+
+  @Input() validators: ValidatorFn[] = [];
 
   /**
    * @input Flag to make the input field required for form to be valid
@@ -91,15 +93,14 @@ export class OutlineInputComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    const validators = [];
     if (this.required) {
-      validators.push(Validators.required);
+      this.validators.push(Validators.required);
     }
     if (this.minLength) {
-      validators.push(Validators.minLength(this.minLength));
+      this.validators.push(Validators.minLength(this.minLength));
     }
     this.componentFormGroup = this.fb.group({
-      input: [this.config.value, validators],
+      input: [this.config.value, this.validators],
     });
     this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
       this.valueChanged.emit(value);

@@ -5,6 +5,8 @@ import { DataBreachCardComponent } from "./data-breach-card.component";
 import { BehaviorSubject } from "rxjs";
 import { IDataBreachesView } from "../../data-breaches.model";
 import { DataBreachesViewService } from '../../data-breaches-view.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LinkifyPipe } from '../../../../../shared/pipes/linkify/linkify.pipe';
 
 //public dataBreachesViewService: DataBreachesViewService
 
@@ -25,7 +27,8 @@ describe("DataBreachCardComponent", () => {
     );
 
     await TestBed.configureTestingModule({
-      declarations: [DataBreachCardComponent],
+      imports: [BrowserAnimationsModule],
+      declarations: [DataBreachCardComponent, LinkifyPipe],
       providers: [
         { provide: Router, useValue: routerMock },
         {
