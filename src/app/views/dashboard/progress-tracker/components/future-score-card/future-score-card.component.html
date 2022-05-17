@@ -4,15 +4,15 @@
       class="flex items-center flex-col pr-2 border border-t-0 border-b-0 border-l-0 border-solid border-black"
       style="max-width: 50%; border-right-width: 1px"
     >
-      <h1 class="text-2xl text-center">Your Current Score:</h1>
-      <p class="text-5xl mt-4 font-headings">{{ dashScore }}</p>
-      <p>{{ scoreReview }}</p>
+      <h1 class="text-2xl text-center">{{PROGRESS_TRACKER_CONTENT.progressTrackerInitial.futureScoreCard.h1}}</h1>
+      <p class="text-5xl mt-4 font-headings">{{ model.dashScore }}</p>
+      <p>{{model.scoreReview }}</p>
       <div class="flex mt-2 items-center">
         <span
           class="text-2xl material-icons align-bottom transform mr-2 mt-1"
           [ngClass]="
-            dashDelta && dashDelta !== 0
-              ? dashDelta < 0
+          model.dashDelta && model.dashDelta !== 0
+              ? model.dashDelta < 0
                 ? 'rotate-90 text-red-500'
                 : '-rotate-90 text-emerald-600'
               : ''
@@ -21,20 +21,20 @@
           play_arrow
         </span>
         <div class="text-1xl text-white">
-          <span>{{ dashDelta && dashDelta > 0 ? '+' : '' }}{{ dashDelta }}</span>
+          <span>{{ model.dashDelta && model.dashDelta > 0 ? '+' : '' }}{{ model.dashDelta }}</span>
           points
         </div>
       </div>
       <p class="text-sm text-center">
-        <span *ngIf="dashDelta && dashDelta > 0"
-          >Your score has improved {{ dashDelta }} points since the last update. Keep up the good work!</span
+        <span *ngIf="model.dashDelta && model.dashDelta > 0"
+          >Your score has improved {{ model.dashDelta }} points since the last update. Keep up the good work!</span
         >
-        <span *ngIf="dashDelta === 0"
+        <span *ngIf="model.dashDelta === 0"
           >Your score has not changed since the last update. Having a variety of accounts can help you grow your
           score!</span
         >
-        <span *ngIf="dashDelta && dashDelta < 0"
-          >Your score has decreased {{ dashDelta }} points. Making on-time payments is the biggest way to get back on
+        <span *ngIf="model.dashDelta && model.dashDelta < 0"
+          >Your score has decreased {{ model.dashDelta }} points. Making on-time payments is the biggest way to get back on
           track.</span
         >
       </p>
@@ -44,15 +44,15 @@
       class="flex text-white items-center flex-col pl-2 "
       style="max-width: 50%"
     >
-      <h1 class="text-2xl text-center">Your FutureScore Goal:</h1>
-      <p class="text-5xl mt-4 font-headings">{{ futureScore }}</p>
-      <p>{{ scoreReview }}</p>
+      <h1 class="text-2xl text-center">{{PROGRESS_TRACKER_CONTENT.progressTrackerInitial.futureScoreCard.h2}}</h1>
+      <p class="text-5xl mt-4 font-headings">{{ model.futureScore }}</p>
+      <p>{{ model.scoreReview }}</p>
       <div class="flex mt-2 items-center">
         <span
           class="text-2xl material-icons align-bottom transform mr-4 mt-1"
           [ngClass]="
-            pointsDiff && pointsDiff !== 0
-              ? pointsDiff < 0
+          model.pointsDiff && model.pointsDiff !== 0
+              ? model.pointsDiff < 0
                 ? 'rotate-90 text-red-500'
                 : '-rotate-90 text-emerald-600'
               : ''
@@ -61,12 +61,12 @@
           play_arrow
         </span>
         <div class="text-1xl">
-          <span>{{ pointsDiff > 0 ? '+' : '' }}{{ pointsDiff }}</span>
+          <span>{{ model.pointsDiff > 0 ? '+' : '' }}{{ model.pointsDiff }}</span>
           points*
         </div>
       </div>
       <p class="text-sm text-center">
-        Follow our suggestions below and make on-time payments to your current accounts to reach your goal!
+        {{PROGRESS_TRACKER_CONTENT.progressTrackerInitial.futureScoreCard.p1}}
       </p>
     </div>
   </div>

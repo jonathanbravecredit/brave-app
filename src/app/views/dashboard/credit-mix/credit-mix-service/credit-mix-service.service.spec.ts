@@ -24,27 +24,6 @@ describe('CreditMixService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should run subscribeToCreditReport on subscribeToCreditReport', () => {
-    spyOn(creditReportMock.tuReport$, 'subscribe');
-    service.subscribeToCreditReport();
-    expect(creditReportMock.tuReport$.subscribe).toHaveBeenCalled();
-  });
-
-  it('should run subscribeToCreditReport on subscribeToCreditReport', () => {
-    spyOn(service.tuReport$, 'next');
-    service.subscribeToCreditReport();
-    expect(service.tuReport$.next).toHaveBeenCalled();
-  });
-
-  it('should return the test array on getTradeLinePartitions', () => {
-    let array = [] as ITradeLinePartition[];
-    service.tuReport = {
-      TrueLinkCreditReportType: { TradeLinePartition: array } as ITrueLinkCreditReportType,
-    } as IMergeReport;
-    let res = service.getTradeLinePartitions();
-    expect(res).toEqual(array);
-  });
-
   it('should run tuReportSub$?.unsubscribe on destroy', () => {
     service.tuReportSub$ = new Subscription();
     spyOn(service.tuReportSub$, 'unsubscribe');

@@ -27,11 +27,5 @@ describe('ReferralEarningsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set earnings to 50 if campaignActiveEarned is 30 and campaignActiveBonus is 20', () => {
-    component.referral = { campaignActiveBonus: 20, campaignActiveEarned: 30 } as IReferral;
-    component.ngOnInit()
-    expect(component.earnings).toEqual(50)
-  });
-
   
 });

@@ -1,26 +1,48 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
-import { dataBreachCardContent } from '@views/dashboard/data-breaches/components/data-breach-card/content';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from "@angular/core";
+import { AnalyticClickEvents } from "@shared/services/analytics/analytics/constants";
+import { DATA_BREACHES_CONTENT } from "../../data-breaches.content";
+import { DataBreachesViewService } from "../../data-breaches-view.service";
+import { IDataBreachesView } from "../../data-breaches.model";
+import { Subscription } from "rxjs";
+import { state, style, trigger, animate, transition } from '@angular/animations';
 
 @Component({
-  selector: 'brave-data-breach-card',
-  templateUrl: './data-breach-card.component.html',
+  selector: "brave-data-breach-card",
+  templateUrl: "./data-breach-card.component.html",
+  animations: [
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.2s linear")]),
+      transition("open => closed", [animate("0.2s linear")]),
+    ]),
+  ],
 })
-export class DataBreachCardComponent implements OnInit {
-  @Input() subscriber: string | undefined = 'Unknown';
-  @Input() paragraphs: string[] | undefined = ['Unknown'];
-  @Input() reason: string | undefined = 'Unknown';
+export class DataBreachCardComponent implements OnDestroy {
+  @Input() subscriber: string | undefined = "Unknown";
+  @Input() paragraphs: string[] | undefined = ["Unknown"];
+  @Input() reason: string | undefined = "Unknown";
   @Output() closeClick: EventEmitter<void> = new EventEmitter();
   AnalyticClickEvents = AnalyticClickEvents;
 
-  content = dataBreachCardContent;
-  constructor(private router: Router) {}
+  DATA_BREACHES_CONTENT = DATA_BREACHES_CONTENT;
+  model: IDataBreachesView = {} as IDataBreachesView;
+  modelSub$: Subscription | undefined;
 
-  ngOnInit(): void {}
+  constructor(public dataBreachesViewService: DataBreachesViewService) {
+    this.modelSub$ = this.dataBreachesViewService.model$.subscribe((res) => {
+      this.model = res;
+    });
+  }
 
-  goToReport(): void {
-    this.router.navigate([routes.root.dashboard.report.full]);
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 }

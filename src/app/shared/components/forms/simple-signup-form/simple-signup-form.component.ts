@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 import { NewUser } from '@shared/services/auth/auth.service';
 import { SignupState } from '@views/authentication/signup/signup/signup.component';
+import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
 
 @Component({
   selector: 'brave-simple-signup-form',
@@ -43,6 +44,16 @@ export class SimpleSignupFormComponent {
    */
   addChild(childName: string, childGroup: FormGroup): void {
     this.parentForm.addControl(childName, childGroup);
+  }
+
+  
+  submit(spinner: FilledSpinningButtonComponent) {
+    if (this.parentForm.valid) {
+      this.signupClick.emit(this.signupUser(this.parentForm));
+      spinner.clicked = true;
+      spinner.spinning = true;
+      spinner.refreshClass();
+    }
   }
 
   /**

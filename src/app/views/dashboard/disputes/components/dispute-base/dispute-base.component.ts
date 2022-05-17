@@ -1,50 +1,71 @@
-import { OnInit, AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { IFilledOnlyTextButtonConfig } from '@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component';
-import { ConfirmationModalComponent } from '@shared/components/modals/confirmation-modal/confirmation-modal.component';
-import { IDisputeReasonCard, IDisputeReason } from '@views/dashboard/disputes/components/cards/reason-card/interfaces';
+import {
+  OnInit,
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { IFilledOnlyTextButtonConfig } from "@shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component";
+import { ConfirmationModalComponent } from "@shared/components/modals/confirmation-modal/confirmation-modal.component";
+import {
+  IDisputeReasonCard,
+  IDisputeReason,
+} from "@views/dashboard/disputes/components/cards/reason-card/interfaces";
 import {
   MODAL_CONFIRMATION_CONTENT,
   COMPONENT_CONTENT,
-} from '@views/dashboard/disputes/components/dispute-base/content';
-import { IDisputeProcessResult } from '@views/dashboard/disputes/components/dispute-base/interfaces';
-import { TERMS_CONDITIONS } from '@views/dashboard/disputes/components/dispute-conditional-terms/content';
-import { DisputeReasonPageService } from '@views/dashboard/disputes/components/dispute-reason-page/dispute-reason-page.service';
+} from "@views/dashboard/disputes/components/dispute-base/content";
+import { IDisputeProcessResult } from "@views/dashboard/disputes/components/dispute-base/interfaces";
+import { TERMS_CONDITIONS } from "@views/dashboard/disputes/components/dispute-conditional-terms/content";
+import { DisputeReasonPageService } from "@views/dashboard/disputes/components/dispute-reason-page/dispute-reason-page.service";
 import {
   DISPUTE_REASONS_NOTMINE,
   DISPUTE_REASONS_INACCURATE,
   DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
-} from '@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/constants';
-import { Subscription } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+} from "@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/constants";
+import { Subscription } from "rxjs";
+import { filter, tap } from "rxjs/operators";
+import { DisputeReasonPageComponent } from "../dispute-reason-page/dispute-reason-page.component";
 
-export type disputeViewState = 'select' | 'reason' | 'summary';
-export type SelectionTypes = 'not-mine' | 'inaccurate';
+export type disputeViewState = "select" | "reason" | "summary";
+export type SelectionTypes = "not-mine" | "inaccurate";
+
+export interface IReasonsToPage {
+  pages: DisputeReasonPageComponent[];
+  data: { reasonCards: IDisputeReasonCard[] }[];
+}
 
 @Component({
-  selector: 'brave-dispute-base',
-  templateUrl: './dispute-base.component.html',
+  selector: "brave-dispute-base",
+  templateUrl: "./dispute-base.component.html",
 })
 export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(ConfirmationModalComponent) modal: ConfirmationModalComponent | undefined;
+  @ViewChild(ConfirmationModalComponent) modal:
+    | ConfirmationModalComponent
+    | undefined;
 
   @Input() disputeType: SelectionTypes | undefined = undefined;
-  @Input() initialStepId: string = 'select';
-  @Input() firstOptionDescription = 'This is not mine';
-  @Input() secondOptionDescription = 'Account information is inaccurate';
+  @Input() initialStepId: string = "select";
+  @Input() firstOptionDescription = "This is not mine";
+  @Input() secondOptionDescription = "Account information is inaccurate";
   // using tradeline reasons as defaults
   @Input() firstOptionReasonPages = DISPUTE_REASONS_NOTMINE;
   @Input() secondOptionReasonPages = DISPUTE_REASONS_INACCURATE;
   @Input() processReasons = DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS;
   @Input() defaultReasonCard: IDisputeReasonCard | undefined;
-  @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> = new EventEmitter();
+  @Output() disputeProcessResult: EventEmitter<IDisputeProcessResult> =
+    new EventEmitter();
 
   // component props
-  @Input() disputeViewState: disputeViewState = 'select'; //disputeViewState[] = ['select']; // can override
+  @Input() disputeViewState: disputeViewState = "select"; //disputeViewState[] = ['select']; // can override
   showMaxError = false;
   maxSelections: number = 2;
   confirmed: boolean = false;
-  customInput: string = '';
+  customInput: string = "";
   customInputSelected = false;
   needsComment: boolean = false;
   hasComment: boolean | null = null;
@@ -64,20 +85,23 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private reasonPageService: DisputeReasonPageService,
+    private reasonPageService: DisputeReasonPageService
   ) {
     this.cardSelected$ = this.reasonPageService.cardSelected$
       .pipe(
         filter((c) => Object.keys(c).length > 0),
-        tap((c: IDisputeReasonCard) => this.addSelection(c)),
+        tap((c: IDisputeReasonCard) => this.addSelection(c))
       )
       .subscribe();
     this.paramsSub$ = this.route.queryParams.subscribe((params) => {
       this.disputeViewState = params.step;
-      if (this.disputeViewState === 'reason' || this.disputeViewState === 'select') {
+      if (
+        this.disputeViewState === "reason" ||
+        this.disputeViewState === "select"
+      ) {
         // reset everything if going back
         this.selections = [];
-        this.customInput = '';
+        this.customInput = "";
         this.customInputSelected = false;
         this.disputeType = undefined;
       }
@@ -96,7 +120,9 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.confirmSub$ = this.modal?.confirmed$.subscribe((val) => {
       this.confirmed = val;
-      val ? this.addSelection(this.pendingReasonCard) : (this.pendingReasonCard = undefined);
+      val
+        ? this.addSelection(this.pendingReasonCard)
+        : (this.pendingReasonCard = undefined);
     });
   }
 
@@ -104,6 +130,25 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.cardSelected$) this.cardSelected$.unsubscribe();
     if (this.confirmSub$) this.confirmSub$.unsubscribe();
     if (this.paramsSub$) this.paramsSub$.unsubscribe();
+  }
+
+  reasonsToPages(
+    reasonCards: IDisputeReasonCard[],
+    pageBreak: number
+  ): IReasonsToPage {
+    const cards = reasonCards.map((c, i) => {
+      return { ...c, index: i };
+    }); // layer in index to keep track
+    let data: { reasonCards: IDisputeReasonCard[] }[] = [];
+    let pages: any[] = [];
+    while (cards.length > 0) {
+      pages = [...pages, DisputeReasonPageComponent];
+      data =
+        cards.length < pageBreak * 2 && cards.length % pageBreak === 1
+          ? [...data, { reasonCards: cards.splice(0, cards.length) }] // don't leave a page with just one
+          : [...data, { reasonCards: cards.splice(0, pageBreak) }];
+    }
+    return { pages, data };
   }
 
   checkForCommentNeeded(): void {
@@ -143,14 +188,18 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.showMaxError = true;
       setTimeout(() => (this.showMaxError = false), 3000);
       return;
-    } else if (this.selections.length >= this.maxSelections && reason.allowInput) {
+    } else if (
+      this.selections.length >= this.maxSelections &&
+      reason.allowInput
+    ) {
       // will replace the existing one...as specified in the instructions
       this.removeAllSelections(this.selections);
       reason.selected = true;
       this.selections = [reason];
     } else {
       reason.selected = true; // flag it as selected
-      this.selections = this.selections.length > 0 ? [this.selections[0], reason] : [reason];
+      this.selections =
+        this.selections.length > 0 ? [this.selections[0], reason] : [reason];
     }
   }
 
@@ -175,7 +224,9 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // reset the static card selected status to false
-    const origIdx = this.reasonCards.findIndex((v) => v.reason.id === removed?.reason.id);
+    const origIdx = this.reasonCards.findIndex(
+      (v) => v.reason.id === removed?.reason.id
+    );
     this.reasonCards[origIdx].selected = false;
     this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
   }
@@ -183,29 +234,38 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   onRadioChanges(event: any): void {
     const value: SelectionTypes = event.target.value;
     this.disputeType = value;
-    this.maxSelections = value === 'not-mine' ? 1 : 2;
-    this.reasonCards = value === 'not-mine' ? this.firstOptionReasonPages : this.secondOptionReasonPages;
+    this.maxSelections = value === "not-mine" ? 1 : 2;
+    this.reasonCards =
+      value === "not-mine"
+        ? this.firstOptionReasonPages
+        : this.secondOptionReasonPages;
   }
 
   onTextChange(event: string, idx: number): void {
     this.customInput = event;
-    this.selections[idx]['customInput'] = event;
+    this.selections[idx]["customInput"] = event;
     this.hasComment = this.customInput.length > 0;
   }
 
   goToReasons(): void {
-    const url = this.router.createUrlTree([], { queryParams: { step: 'reason' } }).toString();
+    const url = this.router
+      .createUrlTree([], { queryParams: { step: "reason" } })
+      .toString();
     this.router.navigateByUrl(url);
   }
 
   goToSummary(): void {
-    const url = this.router.createUrlTree([], { queryParams: { step: 'summary' } }).toString();
+    const url = this.router
+      .createUrlTree([], { queryParams: { step: "summary" } })
+      .toString();
     this.checkForCommentNeeded();
     this.router.navigateByUrl(url);
   }
 
   parseIds(): [string, string] {
-    return this.selections.filter((v) => v.reason.id).map((v) => v.reason.id) as [string, string];
+    return this.selections
+      .filter((v) => v.reason.id)
+      .map((v) => v.reason.id) as [string, string];
   }
 
   parseReasons(ids: [string, string]): [IDisputeReason?, IDisputeReason?] {
@@ -230,18 +290,18 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getButtonConfig(): IFilledOnlyTextButtonConfig {
     let defaultConfig: IFilledOnlyTextButtonConfig = {
-      buttonSize: 'base',
-      backgroundColor: 'bg-indigo-800',
-      activeColor: 'bg-indigo-900',
-      color: 'text-white',
+      buttonSize: "base",
+      backgroundColor: "bg-indigo-800",
+      activeColor: "bg-indigo-900",
+      color: "text-white",
       full: false,
     };
 
     if (this.disputeType !== undefined) {
       return defaultConfig;
     } else {
-      defaultConfig.backgroundColor = 'bg-black';
-      defaultConfig.activeColor = 'bg-black';
+      defaultConfig.backgroundColor = "bg-black";
+      defaultConfig.activeColor = "bg-black";
       return defaultConfig;
     }
   }

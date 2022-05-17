@@ -33,14 +33,6 @@ export class KbaquestionsFormComponent extends BaseFormComponent implements Afte
   carouselXAxis: number = 0;
   tracker: any[] = [0];
 
-  public kbaConfig: IKbaMultipleChoiceConfig = {
-    size: 'sm',
-    type: 'text',
-    label: '',
-    placeholder: '',
-    autocomplete: 'off',
-  };
-
   constructor(fb: FormBuilder, private renderer: Renderer2) {
     super(fb, 'kba-form');
   }

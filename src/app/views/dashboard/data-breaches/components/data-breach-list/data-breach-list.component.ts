@@ -1,43 +1,36 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { dataBreachListContent } from '@views/dashboard/data-breaches/components/data-breach-list/content';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { IBreachCard } from '@shared/interfaces/breach-card.interface';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnDestroy,
+} from "@angular/core";
+import { DATA_BREACHES_CONTENT } from "../../data-breaches.content";
+import { DataBreachesViewService } from "../../data-breaches-view.service";
+import { IDataBreachesView } from "../../data-breaches.model";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'brave-data-breach-list',
-  templateUrl: './data-breach-list.component.html',
+  selector: "brave-data-breach-list",
+  templateUrl: "./data-breach-list.component.html",
 })
-export class DataBreachListComponent implements OnInit {
-  @Input() cards: IBreachCard[] = [];
+export class DataBreachListComponent implements OnDestroy {
   @Output() closeClick: EventEmitter<number> = new EventEmitter();
-  content = dataBreachListContent;
-  unreviewed: IBreachCard[] = [];
-  reviewed: IBreachCard[] = [];
-  isEmpty: boolean = false;
-  constructor(private router: Router) {}
+  DATA_BREACHES_CONTENT = DATA_BREACHES_CONTENT;
+  model: IDataBreachesView = {} as IDataBreachesView;
+  modelSub$: Subscription | undefined;
 
-  ngOnInit(): void {
-    this.cards.forEach((c) => {
-      if (c.reviewed) this.reviewed.push(c);
-      if (!c.reviewed) this.unreviewed.push(c);
+  constructor(public dataBreachesViewService: DataBreachesViewService) {
+    this.modelSub$ = this.dataBreachesViewService.model$.subscribe((res) => {
+      this.model = res;
     });
-    this.isEmpty = this.unreviewed.length === 0;
+  }
+
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 
   hideCard(idx: number): void {
     this.closeClick.emit(idx);
-    if (this.unreviewed.length === 1) {
-      this.unreviewed = [];
-      this.isEmpty = true;
-    } else {
-      this.unreviewed.splice(idx, 1);
-      this.unreviewed = [...this.unreviewed];
-      this.isEmpty = this.unreviewed.length === 0;
-    }
-  }
-
-  goToReport(): void {
-    this.router.navigate([routes.root.dashboard.report.full]);
+    this.dataBreachesViewService.updateReviewed(idx)
   }
 }
