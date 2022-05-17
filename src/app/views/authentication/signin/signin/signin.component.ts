@@ -31,7 +31,7 @@ export class SigninComponent {
     if (!user) return;
     try {
       const cognitorUser = await this.auth.signIn(user.username, user.password);
-      this.analytics.fireClickEvent(AnalyticClickEvents.UserLogIn, { google: true, mixpanel: true, brave: true });
+      this.analytics.fireClickEvent(AnalyticClickEvents.UserLogIn, { google: true, brave: true });
       if (cognitorUser?.challengeName === 'SMS_MFA' || cognitorUser.challengeName === 'SOFTWARE_TOKEN_MFA') {
       } else if (cognitorUser?.challengeName === 'NEW_PASSWORD_REQUIRED') {
         const { requiredAttributes } = cognitorUser?.challengeParam;

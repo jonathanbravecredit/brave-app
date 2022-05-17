@@ -10,7 +10,6 @@ import {
 import { BraveAnalyticsService } from '@shared/services/analytics/brave/brave-analytics.service';
 import { FacebookService } from '@shared/services/analytics/facebook/facebook.service';
 import { GoogleService } from '@shared/services/analytics/google/google.service';
-import { MixpanelService } from '@shared/services/analytics/mixpanel/mixpanel.service';
 const dayjs = require('dayjs');
 const weekOfYear = require('dayjs/plugin/weekOfYear');
 dayjs.extend(weekOfYear);
@@ -24,7 +23,6 @@ export class AnalyticsService {
   constructor(
     protected google: GoogleService,
     private facebook: FacebookService,
-    protected mixpanel: MixpanelService,
     private brave: BraveAnalyticsService,
     private router: Router,
   ) {
@@ -93,25 +91,19 @@ export class AnalyticsService {
       return; // don't fire on dev
     }
     this.google.fireUserTrackingEvent(userId);
-    this.mixpanel.fireUserTrackingEvent(userId);
   }
 
   fireLoginTrackingEvent(): void {
     if (this.disable) {
       return;
     }
-    this.mixpanel.fireLoginTrackingEvent();
   }
 
-  fireClickEvent(
-    event: AnalyticClickEvents,
-    config: IAnalyticsConfig = { google: true, mixpanel: true, brave: false },
-  ) {
+  fireClickEvent(event: AnalyticClickEvents, config: IAnalyticsConfig = { google: true, brave: false }) {
     if (this.disable) {
       return; // don't fire on dev
     }
     if (config.google) this.google.fireClickEvent(event);
-    if (config.mixpanel) this.mixpanel.fireClickEvent(event);
     if (config.brave) this.brave.fireClickEvent(event);
   }
 
@@ -120,7 +112,6 @@ export class AnalyticsService {
       return; // don't fire on dev
     }
     this.google.firePageViewEvent(event);
-    this.mixpanel.firePageViewEvent(event);
   }
 
   fireErrorEvent(event: AnalyticErrorEvents) {
@@ -128,14 +119,12 @@ export class AnalyticsService {
       return; // don't fire on dev
     }
     this.google.fireErrorEvent(event);
-    this.mixpanel.fireErrorEvent(event);
   }
 
   fireTimeTracking(page: string) {
     if (this.disable) {
       return; // don't fire on dev
     }
-    this.mixpanel.fireTimeTracking(page);
   }
 
   fireCompleteRegistration(amount: number, currency: string) {
@@ -149,17 +138,11 @@ export class AnalyticsService {
     if (this.disable) {
       return;
     }
-    const now = new Date();
-    const week = dayjs(new Date()).week();
-    const year = now.getFullYear();
-    const cohort = `${year}${week}`;
-    this.mixpanel.addToCohort(cohort);
   }
 
   incrementUserPageView(page: string) {
     if (this.disable) {
       return;
     }
-    this.mixpanel.incrementUserPageView(page);
   }
 }
