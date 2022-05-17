@@ -5,31 +5,38 @@
 // public dashboardService: DashboardService,
 // public progressTracker: ProgressTrackerService,
 
-import { IMergeReport } from '@bravecredit/brave-sdk';
-import { Initiative } from '@shared/interfaces/progress-tracker.interface';
-import { CreditReportStateModel } from '@store/credit-report';
-import { DashboardEnrolledComponent } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { IMergeReport } from "@bravecredit/brave-sdk";
+import { Initiative } from "@shared/interfaces/progress-tracker.interface";
+import { CreditReportStateModel } from "@store/credit-report";
+import { DashboardEnrolledComponent } from "@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component";
+import { BehaviorSubject, Observable, of, Subscription } from "rxjs";
 
 const setup = () => {
-  const storeMock = jasmine.createSpyObj('Store', ['select', 'selectSnapshot']);
-  const routerMock = jasmine.createSpyObj('Router', ['navigate']);
-  const creditMixServiceMock = jasmine.createSpyObj('CreditMixService', [
-    'getTradelineSummary',
-    'getRecommendations',
-    'mapCreditMixSnapshotStatus',
-    'getRecommendations',
+  const storeMock = jasmine.createSpyObj("Store", ["select", "selectSnapshot"]);
+  const routerMock = jasmine.createSpyObj("Router", ["navigate"]);
+  const creditMixServiceMock = jasmine.createSpyObj("CreditMixService", [
+    "getTradelineSummary",
+    "getRecommendations",
+    "mapCreditMixSnapshotStatus",
+    "getRecommendations",
   ]);
-  const creditUtilizationServiceMock = jasmine.createSpyObj('CreditUtilizationService', [
-    'getCreditUtilizationSnapshotStatus',
+  const creditUtilizationServiceMock = jasmine.createSpyObj(
+    "CreditUtilizationService",
+    ["getCreditUtilizationSnapshotStatus"]
+  );
+  const dashboardServiceMock = jasmine.createSpyObj(
+    "DashboardService",
+    ["getAdData", "syncDashboardStateToDB", "getUpdateMetrics"],
+    {
+      updatedOn$: new BehaviorSubject<string | null>(null),
+      dashReport$: new BehaviorSubject<IMergeReport | null>(null),
+      dashScoreSuppressed$: new BehaviorSubject<boolean>(false),
+      progressTrackerData$: new BehaviorSubject<Initiative | null>(null),
+    }
+  );
+  const progressTrackerMock = jasmine.createSpyObj("ProgressTrackerService", [
+    "findFutureScore",
   ]);
-  const dashboardServiceMock = jasmine.createSpyObj('DashboardService', ['getAdData', 'syncDashboardStateToDB'], {
-    updatedOn$: new BehaviorSubject<string | null>(null),
-    dashReport$: new BehaviorSubject<IMergeReport | null>(null),
-    dashScoreSuppressed$: new BehaviorSubject<boolean>(false),
-    progressTrackerData$: new BehaviorSubject<Initiative | null>(null),
-  });
-  const progressTrackerMock = jasmine.createSpyObj('ProgressTrackerService', ['findFutureScore']);
 
   const component = new DashboardEnrolledComponent(
     storeMock,
@@ -37,7 +44,7 @@ const setup = () => {
     creditMixServiceMock,
     creditUtilizationServiceMock,
     dashboardServiceMock,
-    progressTrackerMock,
+    progressTrackerMock
   );
 
   return {
@@ -51,7 +58,7 @@ const setup = () => {
   };
 };
 
-describe('DashboardEnrolledComponent', () => {
+describe("DashboardEnrolledComponent", () => {
   const {
     component,
     storeMock,
@@ -62,114 +69,114 @@ describe('DashboardEnrolledComponent', () => {
     progressTrackerMock,
   } = setup();
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should unsubscribe from routeSub$ on destroy', () => {
+  it("should unsubscribe from routeSub$ on destroy", () => {
     component.routeSub$ = new Subscription();
-    spyOn(component.routeSub$, 'unsubscribe');
+    spyOn(component.routeSub$, "unsubscribe");
     component.ngOnDestroy();
     expect(component.routeSub$.unsubscribe).toHaveBeenCalled();
   });
 
-  it('should unsubscribe from reportSub$ on destroy', () => {
+  it("should unsubscribe from reportSub$ on destroy", () => {
     component.reportSub$ = new Subscription();
-    spyOn(component.reportSub$, 'unsubscribe');
+    spyOn(component.reportSub$, "unsubscribe");
     component.ngOnDestroy();
     expect(component.reportSub$.unsubscribe).toHaveBeenCalled();
   });
 
-  it('should unsubscribe from initiative$ on destroy', () => {
+  it("should unsubscribe from initiative$ on destroy", () => {
     component.initiative$ = new Subscription();
-    spyOn(component.initiative$, 'unsubscribe');
+    spyOn(component.initiative$, "unsubscribe");
     component.ngOnDestroy();
     expect(component.initiative$.unsubscribe).toHaveBeenCalled();
   });
 
-  it('should set futureScore to 0 when refreshFutureScore is run and findFutureScore returns falsky and enrolledScore is falsy', () => {
+  it("should set futureScore to 0 when refreshFutureScore is run and findFutureScore returns falsky and enrolledScore is falsy", () => {
     progressTrackerMock.findFutureScore.and.returnValue(undefined);
     component.enrolledScore = undefined;
     component.refreshFutureScore();
     expect(component.futureScore).toEqual(0);
   });
 
-  it('should set futureScore to 50 when refreshFutureScore is run and findFutureScore returns 25 and enrolledScore is 25', () => {
+  it("should set futureScore to 50 when refreshFutureScore is run and findFutureScore returns 25 and enrolledScore is 25", () => {
     progressTrackerMock.findFutureScore.and.returnValue(25);
-    component.enrolledScore = '25';
+    component.enrolledScore = "25";
     component.refreshFutureScore();
     expect(component.futureScore).toEqual(50);
   });
 
   // ----------------------------------------------------------------------------------
 
-  it('should run subscribe on reportSub$ in subscribeToReportData', () => {
+  it("should run subscribe on reportSub$ in subscribeToReportData", () => {
     component.report$ = new Observable<CreditReportStateModel>();
-    spyOn(component.report$, 'subscribe');
+    spyOn(component.report$, "subscribe");
     component.subscribeToReportData();
     expect(component.report$.subscribe).toHaveBeenCalled();
   });
 
   // ----------------------------------------------------------------------------------
 
-  it('should run progressTrackerData$.next on setProgressTrackerDataInDashboardService if intiative', () => {
+  it("should run progressTrackerData$.next on setProgressTrackerDataInDashboardService if intiative", () => {
     component.initiative = {} as Initiative;
-    spyOn(dashboardServiceMock.progressTrackerData$, 'next');
+    spyOn(dashboardServiceMock.progressTrackerData$, "next");
     component.setProgressTrackerDataInDashboardService();
     expect(dashboardServiceMock.progressTrackerData$.next).toHaveBeenCalled();
   });
 
-  it('should run getAdData on setAdData', () => {
+  it("should run getAdData on setAdData", () => {
     component.setAdData();
     expect(dashboardServiceMock.getAdData).toHaveBeenCalled();
   });
 
-  it('should run syncDashboardStateToDB on onNegativeItemsClicked', () => {
+  it("should run syncDashboardStateToDB on onNegativeItemsClicked", () => {
     component.onNegativeItemsClicked();
     expect(dashboardServiceMock.syncDashboardStateToDB).toHaveBeenCalled();
   });
 
-  it('should run navigate on onNegativeItemsClicked', () => {
+  it("should run navigate on onNegativeItemsClicked", () => {
     component.onNegativeItemsClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run syncDashboardStateToDB on onDatabreachItemsClicked', () => {
+  it("should run syncDashboardStateToDB on onDatabreachItemsClicked", () => {
     component.onDatabreachItemsClicked();
     expect(dashboardServiceMock.syncDashboardStateToDB).toHaveBeenCalled();
   });
 
-  it('should run navigate on onDatabreachItemsClicked', () => {
+  it("should run navigate on onDatabreachItemsClicked", () => {
     component.onDatabreachItemsClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run navigate on onFullReportClicked', () => {
+  it("should run navigate on onFullReportClicked", () => {
     component.onFullReportClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run navigate on onDisputesClicked', () => {
+  it("should run navigate on onDisputesClicked", () => {
     component.onDisputesClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run navigate on onCreditUtilizationClicked', () => {
+  it("should run navigate on onCreditUtilizationClicked", () => {
     component.onCreditUtilizationClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run navigate on onCreditMixClicked', () => {
+  it("should run navigate on onCreditMixClicked", () => {
     component.onCreditMixClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run navigate on onReferralsClicked', () => {
+  it("should run navigate on onReferralsClicked", () => {
     component.onReferralsClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
-  it('should run navigate on onProgressTrackerClicked', () => {
+  it("should run navigate on onProgressTrackerClicked", () => {
     component.onProgressTrackerClicked();
     expect(routerMock.navigate).toHaveBeenCalled();
   });
