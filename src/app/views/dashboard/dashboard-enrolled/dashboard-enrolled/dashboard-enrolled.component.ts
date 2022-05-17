@@ -92,6 +92,7 @@ export class DashboardEnrolledComponent implements OnDestroy {
     });
     this.setProgressTrackerDataInDashboardService();
     this.setAdData();
+    this.setUpdateMetrics();
   }
 
   ngOnDestroy(): void {

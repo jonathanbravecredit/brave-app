@@ -203,6 +203,6 @@ export class DashboardService implements OnDestroy {
     const headers = new HttpHeaders({
       Authorization: `${token}`,
     });
-    return this.http.get<IUpdatesMetrics>(`${environment.api}/ads`, { headers }).toPromise(); //TODO Change to the api Jonathan Setup
+    return this.http.get<IUpdatesMetrics>(`${environment.api}/comparison`, { headers }).toPromise();
   }
 }
