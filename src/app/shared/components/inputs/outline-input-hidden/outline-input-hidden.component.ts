@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import {
-  IOutlineInputeConfig,
   OutlineInputComponent,
 } from '@shared/components/inputs/outline-input/outline-input.component';
 

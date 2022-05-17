@@ -1,4 +1,4 @@
-<form [formGroup]="parentForm">
+<form (keyup.enter)="submit(spinner)" [formGroup]="parentForm">
   <brave-outline-input
     [config]="emailConfig"
     (onComponentReady)="addChild('email', $event)"
@@ -22,7 +22,7 @@
 
   <div class="mt-2">
     <div class="flex justify-center items-center">
-      <brave-filled-spinning-button [disabled]="!parentForm.valid" (click)="signupClick.emit(signupUser(parentForm))"
+      <brave-filled-spinning-button #spinner [disabled]="!parentForm.valid" (click)="signupClick.emit(signupUser(parentForm))"
         >Sign Up</brave-filled-spinning-button
       >
     </div>

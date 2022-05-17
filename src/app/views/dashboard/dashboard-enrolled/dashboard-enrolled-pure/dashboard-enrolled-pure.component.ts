@@ -11,8 +11,8 @@ import {
   SNAPSHOT_SORT_ORDER,
 } from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
 import { IRecommendationText } from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { BehaviorSubject, forkJoin, combineLatest, Subscription } from 'rxjs';
-import { filter, skip, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CreditReportMetric } from '@bravecredit/brave-sdk';
 import { IUpdatesMetrics } from '../../../../shared/interfaces/dashboard.interface';
 
@@ -87,7 +87,10 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dashboardService.setUserName()
+    this.setWelcomeMessage()
+  }
 
   ngOnDestroy(): void {
     this.dashboardDataSub$?.unsubscribe();

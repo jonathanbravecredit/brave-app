@@ -60,6 +60,7 @@ export class DisputeButtonDirective implements OnDestroy {
     this.compRef = undefined;
   }
 
+
   subcribeToEvents(): void {
     this.closeClick$ = this.compRef?.instance.closeClick.subscribe(() => {
       this.closeModal();

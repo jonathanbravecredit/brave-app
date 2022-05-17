@@ -1,46 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
-const dayjs = require('dayjs');
+import { IProgressTrackerView } from "./../../progress-tracker.model";
+import { Component, OnDestroy } from "@angular/core";
+import { PROGRESS_TRACKER_CONTENT } from "../../progress-tracker.content";
+import { ProgressTrackerViewService } from "../../progress-tracker-view.service";
+import { Subscription } from "rxjs";
+const dayjs = require("dayjs");
 
 @Component({
-  selector: 'brave-future-score-card',
-  templateUrl: './future-score-card.component.html',
+  selector: "brave-future-score-card",
+  templateUrl: "./future-score-card.component.html",
 })
-export class FutureScoreCardComponent implements OnInit {
-  @Input() futureScore: number = 0;
-  @Input() dashScore: number | null = 0;
-  @Input() dashDelta: number | null = 0;
-  @Input() enrolledScore: string | null | undefined = '0';
-  @Input() enrolledOn: string | null | undefined;
-  scoreReview: string = '';
-  pointsDiff: number = 0;
-  monthYear: string = '';
+export class FutureScoreCardComponent implements OnDestroy {
+  PROGRESS_TRACKER_CONTENT = PROGRESS_TRACKER_CONTENT;
+  model: IProgressTrackerView = {} as IProgressTrackerView;
+  modelSub$: Subscription | undefined;
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.calculatePointsDiff();
-    this.scoreReview = this.getScoreReview();
-    this.monthYear = dayjs(this.enrolledOn).format('MMMM YYYY');
+  constructor(public progressTrackerViewService: ProgressTrackerViewService) {
+    this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
+      this.model = res;
+    });
   }
 
-  calculatePointsDiff() {
-    if (this.enrolledScore) {
-      this.pointsDiff = this.futureScore - +this.enrolledScore;
-    }
-  }
-
-  getScoreReview(): string {
-    switch (true) {
-      case this.futureScore <= 500:
-        return 'Very Poor';
-      case this.futureScore <= 600:
-        return 'Poor';
-      case this.futureScore <= 660:
-        return 'Fair';
-      case this.futureScore <= 780:
-        return 'Good';
-      default:
-        return 'Excellent';
-    }
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
   }
 }

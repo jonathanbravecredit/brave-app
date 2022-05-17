@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { Component, Input, ViewChild } from '@angular/core';
 import { OutlineSsnLastfourFormComponent } from "@shared/components/forms/outline-ssn-lastfour-form/outline-ssn-lastfour-form.component";
 import { KycBaseComponent } from "@views/onboarding/kyc-base/kyc-base.component";
 

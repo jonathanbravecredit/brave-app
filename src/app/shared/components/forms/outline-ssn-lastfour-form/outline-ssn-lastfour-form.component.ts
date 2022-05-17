@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
 import { Observable } from 'rxjs';
+import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
 
 @Component({
   selector: 'brave-outline-ssn-lastfour-form',
@@ -11,18 +11,7 @@ import { Observable } from 'rxjs';
 export class OutlineSsnLastfourFormComponent extends BaseFormComponent {
   values$: Observable<any>;
   status$: Observable<any>;
-  public lastfour: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: '',
-    mask: 'XXXX',
-    unmask: '0000',
-    maxLength: 4,
-    minLength: 4,
-    hidden: true,
-    placeholder: 'XXXX',
-    autocomplete: 'off',
-  };
+  @ViewChild("spinner") spinner: FilledSpinningButtonComponent | undefined;
 
   constructor(fb: FormBuilder) {
     super(fb, 'lastfour-form');

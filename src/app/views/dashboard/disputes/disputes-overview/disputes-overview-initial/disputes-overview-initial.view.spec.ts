@@ -1,17 +1,20 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IDispute } from '@shared/interfaces/disputes';
-import { DisputesToDisputesHistoricalPipe } from '@shared/pipes/disputes-to-disputes-historical/disputes-to-disputes-historical.pipe';
-import { DisputesToDisputesOverviewPipe } from '@shared/pipes/disputes-to-disputes-overview/disputes-to-disputes-overview.pipe';
-import { DisputeService } from '@shared/services/dispute/dispute.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { IDisputeHistorical } from '@views/dashboard/disputes/components/cards';
-import { BehaviorSubject, of } from 'rxjs';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
+import { ActivatedRoute, Router } from "@angular/router";
+import { IDispute } from "@shared/interfaces/disputes";
+import { DisputeService } from "@shared/services/dispute/dispute.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { TransunionService } from "@shared/services/transunion/transunion.service";
+import { IDisputeHistorical } from "@views/dashboard/disputes/components/cards";
+import { BehaviorSubject, of } from "rxjs";
 
-import { DisputesOverviewInitialView } from './disputes-overview-initial.view';
+import { DisputesOverviewInitialView } from "./disputes-overview-initial.view";
 
-describe('DisputesOverviewInitialView', () => {
+describe("DisputesOverviewInitialView", () => {
   let component: DisputesOverviewInitialView;
   let fixture: ComponentFixture<DisputesOverviewInitialView>;
   let routerMock: any;
@@ -22,17 +25,21 @@ describe('DisputesOverviewInitialView', () => {
   let routeMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('', ['navigate']);
-    interstitialMock = jasmine.createSpyObj('', ['openInterstitial', 'closeInterstitial', 'changeMessage']);
-    disputeServiceMock = jasmine.createSpyObj('', [''], {
+    routerMock = jasmine.createSpyObj("", ["navigate"]);
+    interstitialMock = jasmine.createSpyObj("", [
+      "openInterstitial",
+      "closeInterstitial",
+      "changeMessage",
+    ]);
+    disputeServiceMock = jasmine.createSpyObj("", [""], {
       currentDispute$: new BehaviorSubject<IDispute>({} as IDispute),
     });
-    transunionMock = jasmine.createSpyObj('', ['getInvestigationResults']);
-    routeMock = jasmine.createSpyObj('', [''], {
+    transunionMock = jasmine.createSpyObj("", ["getInvestigationResults"]);
+    routeMock = jasmine.createSpyObj("", [""], {
       data: of(),
     });
     await TestBed.configureTestingModule({
-      declarations: [DisputesOverviewInitialView, DisputesToDisputesHistoricalPipe, DisputesToDisputesOverviewPipe],
+      declarations: [DisputesOverviewInitialView],
       providers: [
         { provide: Router, useValue: routerMock },
         { provide: ActivatedRoute, useValue: routeMock },
@@ -49,12 +56,12 @@ describe('DisputesOverviewInitialView', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should unsubscribe routeSub$ on destroy', () => {
-    spyOn(component.routeSub$, 'unsubscribe' as never);
+  it("should unsubscribe routeSub$ on destroy", () => {
+    spyOn(component.routeSub$, "unsubscribe" as never);
 
     component.ngOnDestroy();
 
@@ -67,19 +74,23 @@ describe('DisputesOverviewInitialView', () => {
   //   }).toThrow();
   // }); //todo figure out how to fix this
 
-  it('should run interstitial.openInterstitial if dispute.disputeStatus does not match', () => {
+  it("should run interstitial.openInterstitial if dispute.disputeStatus does not match", () => {
     component.onViewDetailsClick({
-      dispute: { disputeId: 1, disputeStatus: 'test' },
+      dispute: { disputeId: 1, disputeStatus: "test" },
     } as unknown as IDisputeHistorical);
 
     expect(interstitialMock.openInterstitial).toHaveBeenCalled();
   });
 
-  it('should run getInvestigationResults if dispute.disputeStatus does not matches', fakeAsync(() => {
-    transunionMock.getInvestigationResults.and.returnValue({ success: true, error: '', data: '' });
+  it("should run getInvestigationResults if dispute.disputeStatus does not matches", fakeAsync(() => {
+    transunionMock.getInvestigationResults.and.returnValue({
+      success: true,
+      error: "",
+      data: "",
+    });
 
     component.onViewDetailsClick({
-      dispute: { disputeId: 1, disputeStatus: 'completedispute' },
+      dispute: { disputeId: 1, disputeStatus: "completedispute" },
     } as unknown as IDisputeHistorical);
 
     tick();
@@ -87,11 +98,15 @@ describe('DisputesOverviewInitialView', () => {
     expect(transunionMock.getInvestigationResults).toHaveBeenCalled();
   }));
 
-  it('should run router.navigate if unsucessful resp from getInvestigationResults', fakeAsync(() => {
-    transunionMock.getInvestigationResults.and.returnValue({ success: false, error: '', data: '' });
+  it("should run router.navigate if unsucessful resp from getInvestigationResults", fakeAsync(() => {
+    transunionMock.getInvestigationResults.and.returnValue({
+      success: false,
+      error: "",
+      data: "",
+    });
 
     component.onViewDetailsClick({
-      dispute: { disputeId: 1, disputeStatus: 'completedispute' },
+      dispute: { disputeId: 1, disputeStatus: "completedispute" },
     } as unknown as IDisputeHistorical);
 
     tick();

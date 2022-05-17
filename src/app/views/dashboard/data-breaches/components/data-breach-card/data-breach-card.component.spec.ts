@@ -1,19 +1,41 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
 
-import { DataBreachCardComponent } from './data-breach-card.component';
+import { DataBreachCardComponent } from "./data-breach-card.component";
+import { BehaviorSubject } from "rxjs";
+import { IDataBreachesView } from "../../data-breaches.model";
+import { DataBreachesViewService } from '../../data-breaches-view.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LinkifyPipe } from '../../../../../shared/pipes/linkify/linkify.pipe';
 
-describe('DataBreachCardComponent', () => {
+//public dataBreachesViewService: DataBreachesViewService
+
+describe("DataBreachCardComponent", () => {
   let component: DataBreachCardComponent;
   let fixture: ComponentFixture<DataBreachCardComponent>;
   let routerMock: any;
+  let dataBreachesViewServiceMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
+    dataBreachesViewServiceMock = jasmine.createSpyObj(
+      "DataBreachesViewService",
+      [""],
+      {
+        model$: new BehaviorSubject<IDataBreachesView>({} as IDataBreachesView),
+      }
+    );
 
     await TestBed.configureTestingModule({
-      declarations: [DataBreachCardComponent],
-      providers: [{ provide: Router, useValue: routerMock }],
+      imports: [BrowserAnimationsModule],
+      declarations: [DataBreachCardComponent, LinkifyPipe],
+      providers: [
+        { provide: Router, useValue: routerMock },
+        {
+          provide: DataBreachesViewService,
+          useValue: dataBreachesViewServiceMock,
+        },
+      ],
     }).compileComponents();
   });
 
@@ -23,12 +45,7 @@ describe('DataBreachCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
-  });
-
-  it('shound run navigate on goToReport', () => {
-    component.goToReport();
-    expect(routerMock.navigate).toHaveBeenCalled();
   });
 });

@@ -20,38 +20,38 @@
 
       <div *ngIf="isCreditCard" class="flex flex-row">
         <!-- credit balance  -->
-        <span class="brave-body1">Card Balance:&nbsp;</span>
+        <span class="brave-body1">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixCard.span1}}&nbsp;</span>
         <span class="brave-body1">{{ creditUtilization?.currentBalance | currency }}</span>
       </div>
 
       <div *ngIf="!isCreditCard" class="flex flex-row">
         <!-- credit balance  -->
-        <span class="brave-body1">Current Balance:&nbsp;</span>
+        <span class="brave-body1">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixCard.span2}}&nbsp;</span>
         <span class="brave-body1">{{ creditUtilization?.currentBalance | currency }}</span>
       </div>
 
       <div *ngIf="isCreditCard" class="flex flex-row">
         <!-- credit limit  -->
-        <span class="brave-body1">Credit Limit:&nbsp;</span>
+        <span class="brave-body1">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixCard.span3}}&nbsp;</span>
 
         <span class="brave-body1">{{ creditUtilization?.creditLimit | currency }}</span>
       </div>
 
       <div *ngIf="!isCreditCard" class="flex flex-row">
         <!-- credit limit  -->
-        <span class="brave-body1">Original Balance:&nbsp;</span>
+        <span class="brave-body1">{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixCard.span4}}&nbsp;</span>
 
         <span class="brave-body1">{{ creditUtilization?.config?.highestBalance | currency }}</span>
       </div>
 
       <div class="mt-2">
         <!-- buttons goes here -->
-        <brave-viewdetail-button #viewDetails>View Details</brave-viewdetail-button>
+        <brave-viewdetail-button #viewDetails>{{CREDIT_MIX_CONTENT.creditMixInitial.creditMixCard.component1}}</brave-viewdetail-button>
       </div>
     </div>
   </div>
 
-  <div *ngIf="viewDetails.open$ | async as openCarousel">
+  <div [@openClose]="(viewDetails.open$ | async) ? 'open' : 'closed'"  class="flex flex-col justify-evenly items-center overflow-hidden">
     <div class="flex flex-col w-full py-5 px-4">
       <div class="border-t border-blueGray-300"></div>
     </div>

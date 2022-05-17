@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
+import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
 
 @Component({
   selector: 'brave-outline-verificationcode-form',
@@ -9,14 +9,7 @@ import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/ou
   providers: [{ provide: 'name', useValue: 'code-form' }],
 })
 export class OutlineVerificationcodeFormComponent extends BaseFormComponent {
-  public codeConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    type: 'text',
-    label: 'Code',
-    placeholder: '5-digit Code',
-    autocomplete: 'off',
-  };
-
+  @ViewChild("spinner") spinner: FilledSpinningButtonComponent | undefined;
   constructor(fb: FormBuilder) {
     super(fb, 'code-form');
   }

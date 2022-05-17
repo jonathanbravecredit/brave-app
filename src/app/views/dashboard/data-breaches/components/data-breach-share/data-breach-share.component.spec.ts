@@ -1,14 +1,32 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DataBreachShareComponent } from './data-breach-share.component';
+import { DataBreachShareComponent } from "./data-breach-share.component";
+import { BehaviorSubject } from "rxjs";
+import { IDataBreachesView } from "../../data-breaches.model";
+import { DataBreachesViewService } from "../../data-breaches-view.service";
 
-describe('DataBreachShareComponent', () => {
+describe("DataBreachShareComponent", () => {
   let component: DataBreachShareComponent;
   let fixture: ComponentFixture<DataBreachShareComponent>;
+  let dataBreachesViewServiceMock: any;
 
   beforeEach(async () => {
+    dataBreachesViewServiceMock = jasmine.createSpyObj(
+      "DataBreachesViewService",
+      [""],
+      {
+        model$: new BehaviorSubject<IDataBreachesView>({} as IDataBreachesView),
+      }
+    );
+
     await TestBed.configureTestingModule({
       declarations: [DataBreachShareComponent],
+      providers: [
+        {
+          provide: DataBreachesViewService,
+          useValue: dataBreachesViewServiceMock,
+        },
+      ],
     }).compileComponents();
   });
 
@@ -18,7 +36,7 @@ describe('DataBreachShareComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

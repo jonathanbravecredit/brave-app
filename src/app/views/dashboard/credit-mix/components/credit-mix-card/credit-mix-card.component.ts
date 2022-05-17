@@ -4,16 +4,28 @@ import { TransunionUtil } from "@shared/utils/transunion/transunion";
 import { TradelineDetailsTableComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-details-table/tradeline-details-table.component";
 import { TradelinePaymentHistoryComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-payment-history/tradeline-payment-history.component";
 import { TradelineRemarksComponent } from "@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component";
+import { CREDIT_MIX_CONTENT } from "../../credit-mix.content";
 import {
   ICreditUtilization,
   TCreditUtilizationStatus,
 } from "@views/dashboard/credit-utilization/components/credit-utilization-card/interfaces";
+import { state, style, trigger, animate, transition } from '@angular/animations';
 
 @Component({
   selector: "brave-credit-mix-card",
   templateUrl: "./credit-mix-card.component.html",
+  animations: [
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.2s linear")]),
+      transition("open => closed", [animate("0.2s linear")]),
+    ]),
+  ],
 })
 export class CreditMixCardComponent implements OnInit {
+  CREDIT_MIX_CONTENT = CREDIT_MIX_CONTENT;
+
   @Input() status: TCreditUtilizationStatus = "good";
 
   @Input() creditUtilization: ICreditUtilization | undefined;
@@ -44,8 +56,7 @@ export class CreditMixCardComponent implements OnInit {
     this.isCreditCard =
       this.creditUtilization?.config?.accountTypeSymbol?.toLowerCase() === "r";
 
-    this.open =
-      this.creditUtilization?.openClosed?.toLowerCase() === "o";
+    this.open = this.creditUtilization?.openClosed?.toLowerCase() === "o";
 
     if (this.creditUtilization) {
       if (this.isCreditCard) {
