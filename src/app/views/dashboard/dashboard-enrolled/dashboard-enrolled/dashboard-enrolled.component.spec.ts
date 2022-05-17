@@ -10,64 +10,68 @@ import { Initiative } from "@shared/interfaces/progress-tracker.interface";
 import { CreditReportStateModel } from "@store/credit-report";
 import { DashboardEnrolledComponent } from "@views/dashboard/dashboard-enrolled/dashboard-enrolled/dashboard-enrolled.component";
 import { BehaviorSubject, Observable, of, Subscription } from "rxjs";
-
-const setup = () => {
-  const storeMock = jasmine.createSpyObj("Store", ["select", "selectSnapshot"]);
-  const routerMock = jasmine.createSpyObj("Router", ["navigate"]);
-  const creditMixServiceMock = jasmine.createSpyObj("CreditMixService", [
-    "getTradelineSummary",
-    "getRecommendations",
-    "mapCreditMixSnapshotStatus",
-    "getRecommendations",
-  ]);
-  const creditUtilizationServiceMock = jasmine.createSpyObj(
-    "CreditUtilizationService",
-    ["getCreditUtilizationSnapshotStatus"]
-  );
-  const dashboardServiceMock = jasmine.createSpyObj(
-    "DashboardService",
-    ["getAdData", "syncDashboardStateToDB", "getUpdateMetrics"],
-    {
-      updatedOn$: new BehaviorSubject<string | null>(null),
-      dashReport$: new BehaviorSubject<IMergeReport | null>(null),
-      dashScoreSuppressed$: new BehaviorSubject<boolean>(false),
-      progressTrackerData$: new BehaviorSubject<Initiative | null>(null),
-    }
-  );
-  const progressTrackerMock = jasmine.createSpyObj("ProgressTrackerService", [
-    "findFutureScore",
-  ]);
-
-  const component = new DashboardEnrolledComponent(
-    storeMock,
-    routerMock,
-    creditMixServiceMock,
-    creditUtilizationServiceMock,
-    dashboardServiceMock,
-    progressTrackerMock
-  );
-
-  return {
-    component,
-    storeMock,
-    routerMock,
-    creditMixServiceMock,
-    creditUtilizationServiceMock,
-    dashboardServiceMock,
-    progressTrackerMock,
-  };
-};
+import { TestBed } from "@angular/core/testing";
+import { ProgressTrackerService } from "../../../../shared/services/progress-tracker/progress-tracker-service.service";
+import { DashboardService } from "../../../../shared/services/dashboard/dashboard.service";
+import { CreditUtilizationService } from "../../../../shared/services/credit-utilization/credit-utilization.service";
+import { CreditMixService } from "../../credit-mix/credit-mix-service/credit-mix-service.service";
+import { Store } from "@ngxs/store";
+import { RouterEvent, Router } from "@angular/router";
 
 describe("DashboardEnrolledComponent", () => {
-  const {
-    component,
-    storeMock,
-    routerMock,
-    creditMixServiceMock,
-    creditUtilizationServiceMock,
-    dashboardServiceMock,
-    progressTrackerMock,
-  } = setup();
+  let component: DashboardEnrolledComponent;
+  let routerMock: any;
+  let storeMock: any;
+  let creditMixServiceMock: any;
+  let creditUtilizationServiceMock: any;
+  let dashboardServiceMock: any;
+  let progressTrackerMock: any;
+
+  beforeEach(() => {
+    storeMock = jasmine.createSpyObj("Store", ["select", "selectSnapshot"]);
+    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
+    creditMixServiceMock = jasmine.createSpyObj("CreditMixService", [
+      "getTradelineSummary",
+      "getRecommendations",
+      "mapCreditMixSnapshotStatus",
+      "getRecommendations",
+    ]);
+    creditUtilizationServiceMock = jasmine.createSpyObj(
+      "CreditUtilizationService",
+      ["getCreditUtilizationSnapshotStatus"]
+    );
+    dashboardServiceMock = jasmine.createSpyObj(
+      "DashboardService",
+      ["getAdData", "syncDashboardStateToDB", "getUpdateMetrics"],
+      {
+        updatedOn$: new BehaviorSubject<string | null>(null),
+        dashReport$: new BehaviorSubject<IMergeReport | null>(null),
+        dashScoreSuppressed$: new BehaviorSubject<boolean>(false),
+        progressTrackerData$: new BehaviorSubject<Initiative | null>(null),
+      }
+    );
+    progressTrackerMock = jasmine.createSpyObj("ProgressTrackerService", [
+      "findFutureScore",
+    ]);
+
+    TestBed.configureTestingModule({
+      declarations: [],
+      imports: [],
+      providers: [
+        { provide: Router, useValue: routerMock },
+        { provide: Store, useValue: storeMock },
+        { provide: CreditMixService, useValue: creditMixServiceMock },
+        {
+          provide: CreditUtilizationService,
+          useValue: creditUtilizationServiceMock,
+        },
+        { provide: DashboardService, useValue: dashboardServiceMock },
+        { provide: ProgressTrackerService, useValue: progressTrackerMock },
+        DashboardEnrolledComponent,
+      ],
+    });
+    component = TestBed.inject(DashboardEnrolledComponent);
+  });
 
   it("should create", () => {
     expect(component).toBeTruthy();
