@@ -34,7 +34,7 @@ export class KycBaseComponent {
 
   flattenAttributes(formValues: any, mapObj: Record<string, any>, inputType: string): FlatForm {
     let values: FlatForm = {};
-    if (!formValues) return values
+    if (!formValues) return values;
     Object.keys(formValues).forEach((key) => {
       if (mapObj[key]) {
         values[key] = formValues[key][`${inputType}`];

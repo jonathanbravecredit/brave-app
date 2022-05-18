@@ -45,13 +45,13 @@
           (onSubmit)="formSubmit.emit($event)"
           (onSubmitError)="formError.emit($event)"
         >
-        <brave-links-onlytext-button
-        (click)="backClick.emit()"
-        [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
-      >
-        <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
-      </brave-links-onlytext-button>
-      </brave-outline-verificationcode-form>
+          <brave-links-onlytext-button
+            (click)="backClick.emit()"
+            [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+          >
+            <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
+          </brave-links-onlytext-button>
+        </brave-outline-verificationcode-form>
       </div>
 
       <div class="py-3 pt-0">

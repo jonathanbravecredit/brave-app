@@ -1,4 +1,4 @@
-<form [formGroup]="parentForm">
+<form [formGroup]="parentForm" (ngSubmit)="submitForm()">
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-3">
       <brave-outline-input-code
@@ -15,21 +15,13 @@
       </div>
     </div>
   </div>
-</form>
 
-<div class="mt-5">
-  <div class="flex justify-between items-center">
-    <ng-content></ng-content>
-    <brave-filled-spinning-button
-    #spinner
-      [disabled]="!parentForm?.valid"
-      (click)="submitForm()"
-    >
-      <span class="flex items-center"
-        >Continue<span class="material-icons px-1"
-          >arrow_forward</span
-        ></span
-      >
-    </brave-filled-spinning-button>
+  <div class="mt-5">
+    <div class="flex flex-row-reverse justify-between items-center">
+      <brave-filled-spinning-button #spinner type="submit" [disabled]="!parentForm?.valid">
+        <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
+      </brave-filled-spinning-button>
+      <ng-content></ng-content>
+    </div>
   </div>
-</div>
+</form>

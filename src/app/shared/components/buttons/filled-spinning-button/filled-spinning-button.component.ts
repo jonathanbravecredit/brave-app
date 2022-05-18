@@ -11,6 +11,7 @@ export class FilledSpinningButtonComponent implements OnInit, OnChanges, OnDestr
   @Input() backgroundColor: string = 'bg-indigo-800';
   @Input() color: string = 'text-white';
   @Input() full: boolean = false;
+  @Input() type: string = 'button';
   @Output() onClick = new EventEmitter<any>();
 
   clicked: boolean = false;
