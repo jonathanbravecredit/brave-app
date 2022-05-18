@@ -1,26 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngxs/store';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
+import { Store } from "@ngxs/store";
 import {
   IBorrower,
   IMergeReport,
   IPublicPartition,
   ITradeLinePartition,
-} from '@shared/interfaces/merge-report.interface';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { PreferencesStateModel } from '@store/preferences';
-import * as PreferenceActions from '@store/preferences/preferences.actions';
-import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
-import { Observable, Subscription } from 'rxjs';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { ProgressTrackerViewService } from '../../../progress-tracker/progress-tracker-view.service';
-import { IProgressTrackerView } from '../../../progress-tracker/progress-tracker.model';
+} from "@shared/interfaces/merge-report.interface";
+import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
+import { PreferencesStateModel } from "@store/preferences";
+import * as PreferenceActions from "@store/preferences/preferences.actions";
+import { ICreditReportTradelinesCardGroup } from "@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component";
+import { Observable, Subscription } from "rxjs";
+import { TransunionService } from "@shared/services/transunion/transunion.service";
+import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.interface";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { ProgressTrackerViewService } from "../../../progress-tracker/progress-tracker-view.service";
+import { IProgressTrackerView } from "../../../progress-tracker/progress-tracker.model";
+import { ICircleProgressStep } from "../../../../../shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
+import { InitiativeTask } from "../../../../../shared/interfaces/progress-tracker.interface";
 
 @Component({
-  selector: 'brave-credit-report',
-  templateUrl: './credit-report.component.html',
+  selector: "brave-credit-report",
+  templateUrl: "./credit-report.component.html",
 })
 export class CreditReportComponent implements OnInit, OnDestroy {
   preferences$: Observable<PreferencesStateModel>;
@@ -41,6 +43,7 @@ export class CreditReportComponent implements OnInit, OnDestroy {
     this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
       this.model = res;
     });
+    if (this.model) this.checkInitiativeTasks();
   }
 
   ngOnInit(): void {
@@ -54,7 +57,17 @@ export class CreditReportComponent implements OnInit, OnDestroy {
   }
 
   checkInitiativeTasks() {
-    
+    this.model?.initiativeTasks?.forEach((t) => {
+      t.subTasks?.forEach((v) => {
+        if (v.taskId === "review_report" && v.taskStatus !== "complete") {
+          this.progressTrackerViewService.updateProgressTrackerData({
+            parentId: v.parentId,
+            taskId: v.taskId,
+            taskStatus: "complete",
+          });
+        }
+      });
+    });
   }
 
   /**
