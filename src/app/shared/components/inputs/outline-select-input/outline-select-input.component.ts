@@ -18,7 +18,6 @@ export class OutlineSelectInputComponent implements OnInit {
   private _focused: boolean = false;
   public selected: string | undefined;
   public isOpen: boolean = false;
-  focused: boolean = false;
 
   /**
    * @param Config Object to pass in component params
