@@ -1,4 +1,4 @@
-import { EventEmitter, NgZone } from '@angular/core';
+import { ApplicationRef, EventEmitter, NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
@@ -6,13 +6,13 @@ import { RenderedService, RenderedViews } from './rendered.service';
 
 describe('RenderedService', () => {
   let service: RenderedService;
-  let zoneMock: any;
+  let appRefMock: any;
 
   beforeEach(() => {
-    zoneMock = jasmine.createSpyObj('NgZone', [''], { onMicrotaskEmpty: new EventEmitter<any>() });
+    appRefMock = jasmine.createSpyObj('ApplicationRef', [''], { isStable: of(true) });
 
     TestBed.configureTestingModule({
-      providers: [{ provide: NgZone, useValue: zoneMock }],
+      providers: [{ provide: ApplicationRef, useValue: appRefMock }],
     });
     service = TestBed.inject(RenderedService);
   });
@@ -22,20 +22,19 @@ describe('RenderedService', () => {
   });
 
   it('should run tracker.add on track', () => {
-    spyOn(service.tracker, 'add')
-    service.track({tag: {} as RenderedViews, el: ''})
-    expect(service.tracker.add).toHaveBeenCalled()
-  })
+    spyOn(service.tracker, 'add');
+    service.track({ tag: {} as RenderedViews, el: '' });
+    expect(service.tracker.add).toHaveBeenCalled();
+  });
 
   it('should return undefined on track if no tag', () => {
-    let res = service.track({tag: null, el: ''})
-    expect(res).toBeUndefined()
-  })
+    let res = service.track({ tag: null, el: '' });
+    expect(res).toBeUndefined();
+  });
 
   it('should set checked to true on checkStatus', () => {
-    service.tracker = {size: 1} as Set<string>
-    service.checkStatus()
-    expect(service.checked).toBeTrue()
-  })
-
+    service.tracker = { size: 1 } as Set<string>;
+    service.checkStatus();
+    expect(service.checked).toBeTrue();
+  });
 });
