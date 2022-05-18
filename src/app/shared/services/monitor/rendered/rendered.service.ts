@@ -37,6 +37,6 @@ export class RenderedService implements OnDestroy {
 
   checkStatus(): void {
     this.checked = true;
-    if (this.tracker.size === 0) throw new Error('Missing at least 1 critical view rendered');
+    if (this.tracker.size === 0) console.warn('Missing at least 1 critical view rendered');
   }
 }
