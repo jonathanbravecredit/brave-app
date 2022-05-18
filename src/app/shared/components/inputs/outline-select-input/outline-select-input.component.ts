@@ -64,6 +64,36 @@ export class OutlineSelectInputComponent implements OnInit {
     this._focused = val;
   }
 
+  private get openOrFocused(): boolean {
+    return this.isOpen || this.focused;
+  }
+
+  private get touched(): boolean {
+    return this.componentFormGroup.controls.input.touched;
+  }
+
+  private get requiredAndTouched(): boolean {
+    return this.required && this.touched;
+  }
+
+  get highlight(): boolean {
+    return this.openOrFocused;
+  }
+
+  get default(): boolean {
+    if (this.selected && !this.openOrFocused) {
+      return true;
+    }
+    if (!this.requiredAndTouched && !this.openOrFocused) {
+      return true;
+    }
+    return false;
+  }
+
+  get warning(): boolean {
+    return !this.selected && !this.openOrFocused && this.requiredAndTouched;
+  }
+
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
   @Output()
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();

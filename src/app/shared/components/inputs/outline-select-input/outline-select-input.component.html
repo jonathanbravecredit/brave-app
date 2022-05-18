@@ -5,10 +5,9 @@
     >
     <div
       [ngClass]="{
-        'border-indigo-800': isOpen || focused,
-        'border-blueGray-300':
-          (selected && !isOpen) || (!isOpen && !(required && componentFormGroup.controls.input.touched)),
-        'border-red-500': required && componentFormGroup.controls.input.touched && !selected && !isOpen
+        'border-indigo-800': highlight,
+        'border-blueGray-300': default,
+        'border-red-500': warning
       }"
       class="relative text-sm px-1 py-1 bg-white rounded border outline-none w-full"
       (click)="toggleOpen($event)"
