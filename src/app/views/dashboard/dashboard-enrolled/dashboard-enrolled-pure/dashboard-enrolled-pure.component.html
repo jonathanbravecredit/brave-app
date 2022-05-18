@@ -1,5 +1,5 @@
 <ng-container *ngIf="dashboardData$ | async as data">
-  <h2 class="text-lg font-semibold">{{ welcome }}</h2>
+  <h2 class="text-lg font-semibold mb-4">{{ welcome }}</h2>
 
   <div
     *ngIf="initiative && data.dashScore && data.dashScore <= 675"
