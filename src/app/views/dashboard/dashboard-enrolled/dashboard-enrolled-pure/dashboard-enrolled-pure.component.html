@@ -94,9 +94,12 @@
     </div>
   </div>
 
-  <brave-links-onlytext-button id="dash-fullcr-btn" class="w-full" (click)="fullReportClicked.emit()">{{
-    content.b1
-  }}</brave-links-onlytext-button>
+  <div class="flex justify-center">
+    <brave-viewdetail-button id="dash-fullcr-btn" orientation="static" (click)="fullReportClicked.emit()">{{
+      content.b1
+    }}</brave-viewdetail-button>
+  </div>
+  <!-- <brave-links-onlytext-button  ></brave-links-onlytext-button> -->
 
   <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
   <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ViewDetailOrientation } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 
 export type ReportCardFieldTypes = 'string' | 'currency' | 'date';
@@ -42,6 +43,7 @@ export class CreditReportCardComponent implements OnInit {
   @Input() status: string = '';
   @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
   @Input() payStatusSymbol: string | undefined;
+  @Input() viewDetailOrientation: ViewDetailOrientation = 'horizontal-right';
   @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
 
   constructor() {}

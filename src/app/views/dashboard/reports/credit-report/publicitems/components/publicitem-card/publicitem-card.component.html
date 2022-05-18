@@ -15,5 +15,7 @@
       {{ firstFieldValue | currency }}
     </p>
   </div>
-  <brave-viewdetail-button (click)="viewDetailClick.emit()" orientation="horizontal-right">View Detail</brave-viewdetail-button>
+  <brave-viewdetail-button (click)="viewDetailClick.emit()" [orientation]="viewDetailOrientation"
+    >View Detail</brave-viewdetail-button
+  >
 </div>

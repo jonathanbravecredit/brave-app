@@ -30,19 +30,18 @@
         [status]="card.status"
         [payStatusSymbol]="card.tradeline?.Tradeline?.PayStatus?.symbol?.toString()"
         [tradeline]="card.tradeline!"
+        [viewDetailOrientation]="'static'"
         (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
       ></brave-credit-report-card>
     </ng-template>
     <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
     <div
       *ngIf="
-        report.hidden &&
-        isLast &&
-        (report.tradelines | filterArray: tu.queries.report.isNegativeAccount).length === 0
+        report.hidden && isLast && (report.tradelines | filterArray: tu.queries.report.isNegativeAccount).length === 0
       "
       class="my-8"
     >
-      <p class="brave-body2 text-center">We don’t see any delinquent accounts here!</p>
+      <p class="brave-body2 text-center">We don't see any delinquent accounts here!</p>
     </div>
   </div>
 </div>
@@ -58,9 +57,14 @@
       <div class="mt-4">
         <brave-viewdetail-button
           id="fullcr-personal-detail-btn"
-          orientation="horizontal-right"
+          orientation="static"
           (click)="viewPersonalItemDetailClick.emit(personalItems[0])"
-          ><span class="text-red-700">See an error?</span></brave-viewdetail-button
+          ><span class="flex text-red-700"
+            >See an error?
+            <span class="material-icons text-indigo-800" style="font-size: 20px; transform: rotate(90deg)"
+              >expand_less</span
+            ></span
+          ></brave-viewdetail-button
         >
       </div>
     </ng-container>
@@ -78,6 +82,7 @@
       [firstFieldName]="'Date Filed'"
       [firstFieldValue]="record.dateFiled || '--'"
       [firstFieldType]="'date'"
+      [viewDetailOrientation]="'static'"
       (viewDetailClick)="viewPublicItemDetailClick.emit(record.publicPartition)"
     ></brave-publicitem-card>
     <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>

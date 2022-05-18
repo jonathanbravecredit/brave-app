@@ -8,9 +8,7 @@
     </span>
     <div class="text-center mx-6 font-semibold text-lg">{{ subTask?.taskCard?.header }}</div>
     <div>
-      <span *ngIf="subTask?.taskCard?.metric" class="text-2xl text-blue-900 font-bold">{{
-        metric
-      }}</span>
+      <span *ngIf="subTask?.taskCard?.metric" class="text-2xl text-blue-900 font-bold">{{ metric }}</span>
       <p *ngIf="subTask?.taskCard?.metric" class="text-sm text-gray-500">Points*</p>
     </div>
   </div>
@@ -52,6 +50,4 @@
       arrow_forward_ios
     </span>
   </div>
-
-  <!-- <brave-viewdetail-button (viewDetailClick)="expanded = !expanded"></brave-viewdetail-button> -->
 </div>

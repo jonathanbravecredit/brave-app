@@ -1231,6 +1231,10 @@ select {
   cursor: pointer !important;
 }
 
+.brave-brighten {
+  filter: brightness(1.5);
+}
+
 .brave-primary-text-color {
   --tw-text-opacity: 1;
   color: rgba(17, 24, 39, var(--tw-text-opacity));
@@ -3291,6 +3295,14 @@ select {
   --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
   --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.blur {
+  --tw-blur: blur(8px);
+}
+
+.brightness-150 {
+  --tw-brightness: brightness(1.5);
 }
 
 .transition-all {
