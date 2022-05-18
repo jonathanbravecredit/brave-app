@@ -3,45 +3,39 @@
   class="hover:cursor-pointer relative {{
     size === 'full' ? 'w-full mx-auto' : ''
   }} flex bg-transparent font-sans text-sm text-indigo-800 font-bold text-left hover:cursor-pointer focus:outline-none"
-  (click)="open = !open; open$.next(open); viewDetailClick.emit(); navigate()"
+  (click)="open = !open; open$.next(open); viewDetailClick.emit()"
 >
-
-  <ng-container *ngIf="orientation === 'horizontal-right'" >
-
+  <ng-container *ngIf="orientation === 'horizontal-right'">
     <ng-container>
       <span *ngIf="open" class="material-icons" style="font-size: 20px; transform: rotate(270deg)">expand_less</span>
     </ng-container>
-  
+
     <span class="flex items-center mr-2">
       <p *ngIf="!open"><ng-container *ngTemplateOutlet="content"></ng-container></p>
       <p *ngIf="open">Close</p>
     </span>
-  
+
     <ng-container>
       <span *ngIf="!open" class="material-icons" style="font-size: 20px; transform: rotate(90deg)">expand_less</span>
     </ng-container>
-
   </ng-container>
 
-  <ng-container *ngIf="orientation === 'horizontal-left'" >
-
+  <ng-container *ngIf="orientation === 'horizontal-left'">
     <ng-container>
       <span *ngIf="!open" class="material-icons" style="font-size: 20px; transform: rotate(-90deg)">expand_less</span>
     </ng-container>
-    
+
     <span class="flex items-center mr-2">
       <p *ngIf="!open"><ng-container *ngTemplateOutlet="content"></ng-container></p>
       <p *ngIf="open">Close</p>
     </span>
-    
+
     <ng-container>
       <span *ngIf="open" class="material-icons" style="font-size: 20px; transform: rotate(-270deg)">expand_less</span>
     </ng-container>
-    
   </ng-container>
 
-  <ng-container *ngIf="orientation === 'vertical-top'" >
-    
+  <ng-container *ngIf="orientation === 'vertical-top'">
     <ng-container>
       <span *ngIf="!open" class="material-icons" style="font-size: 20px; transform: rotate(180deg)">expand_more</span>
       <span *ngIf="open" class="material-icons" style="font-size: 20px">expand_more</span>
@@ -51,27 +45,25 @@
       <p *ngIf="!open"><ng-container *ngTemplateOutlet="content"></ng-container></p>
       <p *ngIf="open">Close</p>
     </span>
-    
   </ng-container>
 
-  <ng-container *ngIf="orientation === 'vertical-bottom'" >
-
+  <ng-container *ngIf="orientation === 'vertical-bottom'">
     <span class="flex items-center mr-2">
       <p *ngIf="!open"><ng-container *ngTemplateOutlet="content"></ng-container></p>
       <p *ngIf="open">Close</p>
     </span>
-  
+
     <ng-container>
       <span *ngIf="!open" class="material-icons" style="font-size: 20px">expand_more</span>
       <span *ngIf="open" class="material-icons" style="font-size: 20px; transform: rotate(180deg)">expand_more</span>
     </ng-container>
-
   </ng-container>
 
-  <ng-container *ngIf="orientation === 'static'" >
+  <ng-container *ngIf="orientation === 'static'">
+    <div [ngClass]="{ 'brave-brighten': open }">
       <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
   </ng-container>
 
   <ng-template #content><ng-content></ng-content></ng-template>
-
 </button>
