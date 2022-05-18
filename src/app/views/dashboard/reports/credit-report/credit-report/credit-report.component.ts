@@ -17,8 +17,6 @@ import { ICreditScoreTracking } from "@shared/interfaces/credit-score-tracking.i
 import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 import { ProgressTrackerViewService } from "../../../progress-tracker/progress-tracker-view.service";
 import { IProgressTrackerView } from "../../../progress-tracker/progress-tracker.model";
-import { ICircleProgressStep } from "../../../../../shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
-import { InitiativeTask } from "../../../../../shared/interfaces/progress-tracker.interface";
 
 @Component({
   selector: "brave-credit-report",
@@ -42,8 +40,8 @@ export class CreditReportComponent implements OnInit, OnDestroy {
     this.preferences$ = this.creditReportService.preferences$;
     this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
       this.model = res;
+      this.checkInitiativeTasks();
     });
-    if (this.model) this.checkInitiativeTasks();
   }
 
   ngOnInit(): void {
