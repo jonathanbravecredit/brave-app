@@ -5,8 +5,9 @@
     >
     <div
       [ngClass]="{
-        'border-indigo-800': isOpen,
-        'border-blueGray-300': (selected && !isOpen) || (!isOpen && !(required && componentFormGroup.controls.input.touched)),
+        'border-indigo-800': isOpen || focused,
+        'border-blueGray-300':
+          (selected && !isOpen) || (!isOpen && !(required && componentFormGroup.controls.input.touched)),
         'border-red-500': required && componentFormGroup.controls.input.touched && !selected && !isOpen
       }"
       class="relative text-sm px-1 py-1 bg-white rounded border outline-none w-full"
@@ -19,8 +20,8 @@
         [autocomplete]="config?.autocomplete || 'off'"
         style="width: 0px; height: 0px"
         class="absolute"
-        (focus)="isOpen = true"
-        (blur)="isOpen = false"
+        (focus)="focused = true"
+        (blur)="focused = false"
       />
       <div class="flex justify-between items-center w-full hover:cursor-pointer">
         <span
