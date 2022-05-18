@@ -104,7 +104,6 @@ export class OutlineSelectInputComponent implements OnInit {
    * @param idx index of the select option clicked on
    */
   updateForm(idx: number): void {
-    console.log("HERE");
     this.componentFormGroup.setValue({ input: this.config.options[idx] });
   }
 }
