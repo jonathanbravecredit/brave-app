@@ -39,7 +39,7 @@
       <brave-snapshot-display-card
         braveAnalytics
         tendency="up"
-        label="update"
+        [label]="updatesMetrics?.negative_accounts?.delta === 'change' ? 'update' : 'no-label'"
         typeOfSnapshot="time"
         [title]="content.negativeAccountsTitle"
         [value]="metrics[0].metricValue || 0"
@@ -72,6 +72,7 @@
       <brave-snapshot-display-card
         tendency="no-tendency"
         title="Credit Utilization"
+        [label]="updatesMetrics?.credit_utilization?.delta === 'change' ? 'update' : 'no-label'"
         [rating]="metrics[3].metricValue?.toString() + '%'"
         [status]="metrics[3].metricStatus || 'default'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditUtilization"
@@ -83,8 +84,8 @@
       <brave-snapshot-display-card
         braveAnalytics
         title="Credit Mix"
+        [label]="updatesMetrics?.credit_mix?.delta === 'change' ? 'update' : 'no-label'"
         tendency="no-tendency"
-        label="new"
         [rating]="metrics[4].metricValue"
         [status]="metrics[4].metricStatus || 'default'"
         [analyticClickEvents]="AnalyticClickEvents.SnapshotCreditMix"
@@ -105,7 +106,7 @@
       [adsData]="adsData"
       braveAnalytics
       [analyticClickEvents]="AnalyticClickEvents.DashboardProduct"
-      [analyticConfig]="{ google: false, mixpanel: false, brave: true }"
+      [analyticConfig]="{ google: false, brave: true }"
     ></brave-dashboard-ads-carousel>
     <p
       class="mt-1 mb-2 text-center brave-body3 hover:cursor-pointer text-opacity-75 italic"
@@ -131,18 +132,22 @@
   <brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative && data.dashScore && data.dashScore <= 675">
     <div class="w-full max-w-xs">
       <h1 class="text-brave-blurple brave-h4 mb-6">First, let's learn about your credit goals</h1>
-<p>Brave Credit users who take the actions we suggest can grow their scores <span class="font-bold text-lg">70 points or more*</span></p>
-<p class="mt-6"><span class="font-bold text-lg">Click on your goal</span> so we can create your personalized plan:</p>
+      <p>
+        Brave Credit users who take the actions we suggest can grow their scores
+        <span class="font-bold text-lg">70 points or more*</span>
+      </p>
+      <p class="mt-6">
+        <span class="font-bold text-lg">Click on your goal</span> so we can create your personalized plan:
+      </p>
 
       <brave-goal-choice-parent [getInitiative]="true" (goalClick)="toggleGoalChoiceModel()"></brave-goal-choice-parent>
       <div class="mt-16">
-        <p style="font-size: 0.65rem;">
-          *Individual results will vary. Based on results of Brave Credit customers who reviewed their credit reports and
-          submitted disputes on their credit report information, or successfully completed a 12 month Credit Builder Account
-          from Self from 1/1/2020 to 10/31/2021. Making on-time payments of other accounts is critical to credit wellness and
-          growth
+        <p style="font-size: 0.65rem">
+          *Individual results will vary. Based on results of Brave Credit customers who reviewed their credit reports
+          and submitted disputes on their credit report information, or successfully completed a 12 month Credit Builder
+          Account from Self from 1/1/2020 to 10/31/2021. Making on-time payments of other accounts is critical to credit
+          wellness and growth
         </p>
-        
       </div>
     </div>
   </brave-base-modal>

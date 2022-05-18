@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ISubscriber, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
 import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
 import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import { state, style, trigger, animate, transition } from '@angular/animations';
 
 /**
  * @property {ITradelineDetailsConfig} config
@@ -16,6 +17,14 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
 @Component({
   selector: 'brave-tradeline-details',
   templateUrl: './tradeline-details.component.html',
+  animations: [
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.2s linear")]),
+      transition("open => closed", [animate("0.2s linear")]),
+    ]),
+  ],
 })
 export class TradelineDetailsComponent {
   /**

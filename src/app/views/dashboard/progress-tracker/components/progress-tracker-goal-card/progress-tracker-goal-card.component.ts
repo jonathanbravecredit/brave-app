@@ -7,7 +7,6 @@ import {
   animate,
   transition,
 } from "@angular/animations";
-import { ProgressTrackerService } from "@shared/services/progress-tracker/progress-tracker-service.service";
 import {
   InitiativePatchBody,
   InitiativeSubTask,
