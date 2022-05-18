@@ -1,60 +1,50 @@
-<div class="flex">
-  <!-- first three digits -->
-  <span *ngFor="let number of [0, 1, 2]" class="flex justify-center p-1">
-    <div style="position: relative">
-      <div
-        class="flex text-3xl w-4 h-full pt-1 justify-center items-center text-blueGray-600"
-      >
-        <p>&#42;</p>
+<form [formGroup]="parentForm" (ngSubmit)="submitForm()">
+  <div class="flex">
+    <!-- first three digits -->
+    <span *ngFor="let number of [0, 1, 2]" class="flex justify-center p-1">
+      <div style="position: relative">
+        <div class="flex text-3xl w-4 h-full pt-1 justify-center items-center text-blueGray-600">
+          <p>&#42;</p>
+        </div>
       </div>
-    </div>
-  </span>
+    </span>
 
-  <!-- hyphen -->
-  <span class="flex justify-center items-center -mt-2 p-1">&#8212; </span>
+    <!-- hyphen -->
+    <span class="flex justify-center items-center -mt-2 p-1">&#8212; </span>
 
-  <!-- second two digits -->
-  <span *ngFor="let number of [0, 1]" class="flex justify-center p-1">
-    <div style="position: relative">
-      <div
-        class="flex text-3xl w-4 h-full pt-1 justify-center items-center text-blueGray-600"
-      >
-        <p>&#42;</p>
+    <!-- second two digits -->
+    <span *ngFor="let number of [0, 1]" class="flex justify-center p-1">
+      <div style="position: relative">
+        <div class="flex text-3xl w-4 h-full pt-1 justify-center items-center text-blueGray-600">
+          <p>&#42;</p>
+        </div>
       </div>
-    </div>
-  </span>
+    </span>
 
-  <!-- hyphen -->
-  <span class="flex justify-center items-center -mt-2 p-1">&#8212; </span>
+    <!-- hyphen -->
+    <span class="flex justify-center items-center -mt-2 p-1">&#8212; </span>
 
-  <!-- last four to populate -->
-  <span class="flex flex-shrink border-0 rounded">
-    <form [formGroup]="parentForm" class="flex justify-center items-center">
-      <brave-outline-input-ssn
-        [required]="true"
-        [asteriskOverride]="true"
-        [minLength]="lastfour.minLength || 4"
-        [config]="lastfour"
-        (onComponentReady)="addChild('lastfour', $event)"
-      >
-      </brave-outline-input-ssn>
-    </form>
-  </span>
-</div>
-
-<div class="mt-5">
-  <div class="flex justify-between items-center">
-    <ng-content></ng-content>
-    <brave-filled-spinning-button
-    #spinner
-      [disabled]="!parentForm?.valid"
-      (click)="submitForm()"
-    >
-      <span class="flex items-center"
-        >Continue<span class="material-icons px-1"
-          >arrow_forward</span
-        ></span
-      >
-    </brave-filled-spinning-button>
+    <!-- last four to populate -->
+    <span class="flex flex-shrink border-0 rounded">
+      <div class="flex justify-center items-center">
+        <brave-outline-input-ssn
+          [required]="true"
+          [asteriskOverride]="true"
+          [minLength]="lastfour.minLength || 4"
+          [config]="lastfour"
+          (onComponentReady)="addChild('lastfour', $event)"
+        >
+        </brave-outline-input-ssn>
+      </div>
+    </span>
   </div>
-</div>
+
+  <div class="mt-5">
+    <div class="flex flex-row-reverse justify-between items-center">
+      <brave-filled-spinning-button #spinner type="submit" [disabled]="!parentForm?.valid">
+        <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
+      </brave-filled-spinning-button>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</form>

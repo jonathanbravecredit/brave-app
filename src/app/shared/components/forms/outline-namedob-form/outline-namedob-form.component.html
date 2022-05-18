@@ -1,4 +1,4 @@
-<form [formGroup]="parentForm" class="m-0 p-0">
+<form [formGroup]="parentForm" (ngSubmit)="submitForm()" class="m-0 p-0">
   <div class="py-3">
     <h6 class="brave-h6">Full Legal Name</h6>
   </div>
@@ -84,11 +84,11 @@
   </div>
 
   <div class="mt-5">
-    <div class="flex justify-between items-center">
-      <ng-content></ng-content>
-      <brave-filled-spinning-button #spinner [disabled]="!parentForm?.valid" (click)="submitForm()">
+    <div class="flex flex-row-reverse justify-between items-center">
+      <brave-filled-spinning-button #spinner type="submit" [disabled]="!parentForm?.valid">
         <span class="flex items-center">Continue<span class="material-icons px-1">arrow_forward</span></span>
       </brave-filled-spinning-button>
+      <ng-content></ng-content>
     </div>
   </div>
 </form>
