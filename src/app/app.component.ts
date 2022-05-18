@@ -10,6 +10,7 @@ import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { SafeListMonitoringService } from '@shared/services/safeListMonitoring/safe-list-monitoring.service';
 import { NavigatorService } from '@shared/services/navigator/navigator.service';
 import { BroadcastService } from '@shared/services/broadcast/broadcast.service';
+import { RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 
 @Component({
   selector: 'brave-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   title = 'brave-app';
   spinner$: Observable<boolean>;
   message$: Observable<string>;
+  public tag = RenderedViews.Main;
 
   // inject app monitoring services and auth service
   constructor(
