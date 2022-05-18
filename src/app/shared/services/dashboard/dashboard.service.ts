@@ -23,6 +23,7 @@ import { Initiative } from '@shared/interfaces/progress-tracker.interface';
 import { IReferral } from '@shared/interfaces/referrals.interface';
 import { CreditReportMetric } from '@bravecredit/brave-sdk';
 import { BraveUtil } from '@shared/utils/brave/brave';
+import { IUpdatesMetrics } from '../../interfaces/dashboard.interface';
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -195,5 +196,13 @@ export class DashboardService implements OnDestroy {
       Authorization: `${token}`,
     });
     return this.http.get<IAdData[]>(`${environment.api}/ads`, { headers }).toPromise();
+  }
+
+  async getUpdateMetrics(): Promise<IUpdatesMetrics> {
+    const token = await this.auth.getIdTokenJwtTokens();
+    const headers = new HttpHeaders({
+      Authorization: `${token}`,
+    });
+    return this.http.get<IUpdatesMetrics>(`${environment.api}/comparison`, { headers }).toPromise();
   }
 }

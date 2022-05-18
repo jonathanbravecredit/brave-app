@@ -14,6 +14,7 @@
   <!-- Student Loan Accounts -->
   <brave-forbearance-accounts
     [accounts]="tradelines | tradelineToAccountgroup: groups.InstallmentLoans"
+    [viewDetailOrientation]="'static'"
     (viewDetailClick)="viewDetailClick.emit($event)"
   >
     <div class="mb-4 flex items-center content-center">
@@ -27,6 +28,7 @@
   <!--  Mortgages-->
   <brave-forbearance-accounts
     [accounts]="tradelines | tradelineToAccountgroup: groups.Mortgages"
+    [viewDetailOrientation]="'static'"
     (viewDetailClick)="viewDetailClick.emit($event)"
   >
     <div class="mb-4 flex items-center content-center">

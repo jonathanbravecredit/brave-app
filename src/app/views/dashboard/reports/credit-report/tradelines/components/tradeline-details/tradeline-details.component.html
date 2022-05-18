@@ -7,29 +7,30 @@
     <brave-tradeline-details-table [config]="config"></brave-tradeline-details-table>
 
     <!-- ======= Payment History and Remarks ======== -->
-    <ng-container *ngIf="overrideOpen || (viewDetail.open$ | async) as open">
-      <div class="px-1">
-        <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
-        <brave-tradeline-remarks
-          [remarks]="config.remarks || 'None'"
-          [contactDetails]="tu.parsers.report.unparseSubscriber(subscriber, tu.queries.report.getCreditor(tradeline))"
-          [consumerStatement]="config.customerStatement || 'None'"
-          [showFooter]="!disableDispute"
-        ></brave-tradeline-remarks>
-      </div>
-      <ng-container *ngIf="featureFlags.disputes$ | async">
-        <div *ngIf="!disableDispute" class="flex justify-center mb-2">
-          <brave-filled-spinning-button
-            braveDisputeButton
-            [type]="'tradeline'"
-            [action]="'acknowledging'"
-            [tradeline]="config.tradeline"
-            >Dispute in a few clicks</brave-filled-spinning-button
-          >
+
+      <div [@openClose]="((viewDetail.open$ | async) || overrideOpen) ? 'open' : 'closed'"  class="flex flex-col justify-evenly items-center overflow-hidden">
+        <div class="px-1">
+          <brave-tradeline-payments [paymentHistory]="config.payStatusHistory"></brave-tradeline-payments>
+          <brave-tradeline-remarks
+            [remarks]="config.remarks || 'None'"
+            [contactDetails]="tu.parsers.report.unparseSubscriber(subscriber, tu.queries.report.getCreditor(tradeline))"
+            [consumerStatement]="config.customerStatement || 'None'"
+            [showFooter]="!disableDispute"
+          ></brave-tradeline-remarks>
         </div>
-      </ng-container>
+        <ng-container *ngIf="featureFlags.disputes$ | async">
+          <div *ngIf="!disableDispute" class="flex justify-center mb-2">
+            <brave-filled-spinning-button
+              braveDisputeButton
+              [type]="'tradeline'"
+              [action]="'acknowledging'"
+              [tradeline]="config.tradeline"
+              >Dispute in a few clicks</brave-filled-spinning-button
+            >
+          </div>
+        </ng-container>
+      </div>
     </ng-container>
-  </ng-container>
 
   <ng-template #noDetail>
     <div class="flex flex-col justify-center align-center"><p class="brave-body3">Missing account detail</p></div>

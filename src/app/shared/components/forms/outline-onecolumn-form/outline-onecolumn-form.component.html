@@ -1,4 +1,4 @@
-<form [formGroup]="parentForm">
+<form (keyup.enter)="submit(spinner)" [formGroup]="parentForm">
   <ng-container *ngFor="let config of configs; index as idx">
     <brave-outline-input
       *ngIf="config.name !== 'password'; else password"
@@ -25,11 +25,8 @@
 
   <div>
     <div class="flex justify-end items-end">
-      <brave-filled-spinning-button *ngIf="buttonOneText" (click)="buttonOneClick.emit()">{{
-        buttonOneText
-      }}</brave-filled-spinning-button>
-      <brave-filled-spinning-button *ngIf="buttonTwoText" (click)="submitForm()">{{
-        buttonTwoText
+      <brave-filled-spinning-button #spinner (click)="submitForm()">{{
+        buttonText
       }}</brave-filled-spinning-button>
     </div>
   </div>

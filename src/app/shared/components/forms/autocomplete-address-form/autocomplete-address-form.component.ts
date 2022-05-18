@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { autocompleteValidator } from '@shared/components/forms/autocomplete-address-form/autocomplete-address-form.validators';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import {
-  IOutlineInputeConfig,
-  OutlineInputComponent,
-} from '@shared/components/inputs/outline-input/outline-input.component';
-import { IOutlineSelectInputConfig } from '@shared/components/inputs/outline-select-input/outline-select-input.component';
+import { OutlineInputComponent } from '@shared/components/inputs/outline-input/outline-input.component';
 import { Observable } from 'rxjs';
+import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
 // DO NOT REMOVE BELOW REFERENCE!!!!
 /// <reference types="google.maps" />
 declare var google: any;
@@ -18,13 +16,13 @@ declare var google: any;
 })
 export class AutocompleteAddressFormComponent extends BaseFormComponent {
   @ViewChild(OutlineInputComponent) addressTwoInput: OutlineInputComponent | undefined;
+  @ViewChild('spinner') spinner: FilledSpinningButtonComponent | undefined;
+
   values$: Observable<any>;
   status$: Observable<any>;
 
- 
-
   constructor(fb: FormBuilder) {
-    super(fb, 'address-form');
+    super(fb, 'address-form', [autocompleteValidator]);
     this.values$ = this.parentForm.valueChanges;
     this.status$ = this.parentForm.statusChanges;
   }
@@ -36,7 +34,7 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
     let state = '';
     let zip = '';
     if (!place?.address_components || !place?.address_components.length) return;
-    for (const component of (place.address_components as unknown) as google.maps.GeocoderAddressComponent[]) {
+    for (const component of place.address_components as unknown as google.maps.GeocoderAddressComponent[]) {
       // @ts-ignore remove once typings fixed
       const componentType = component.types[0];
 
@@ -69,4 +67,3 @@ export class AutocompleteAddressFormComponent extends BaseFormComponent {
     this.parentForm.markAllAsTouched();
   }
 }
-

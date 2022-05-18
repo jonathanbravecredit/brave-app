@@ -11,6 +11,7 @@
       [initiative]="initiative"
       [initiativeSteps]="(progressTracker.initiativeSteps$ | async) || []"
       [futureScore]="futureScore"
+      [updatesMetrics]="updatesMetrics"
       (negativeItemsClicked)="onNegativeItemsClicked()"
       (forbearanceItemsClicked)="onForbearanceItemsClicked()"
       (databreachItemsClicked)="onDatabreachItemsClicked()"

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 export interface IOutlineSelectInputConfig {
   size: string;
@@ -15,6 +15,7 @@ export interface IOutlineSelectInputConfig {
 export class OutlineSelectInputComponent implements OnInit {
   private _required: boolean = false;
   private _asteriskOverride: boolean = false;
+  private _focused: boolean = false;
   public selected: string | undefined;
   public isOpen: boolean = false;
 
@@ -30,6 +31,8 @@ export class OutlineSelectInputComponent implements OnInit {
     autocomplete: 'off',
     options: ['one', 'two', 'three'],
   };
+
+  @Input() validators: ValidatorFn[] = [];
 
   /**
    * @input Flag to make the input field required for form to be valid
@@ -53,6 +56,44 @@ export class OutlineSelectInputComponent implements OnInit {
     this._asteriskOverride = !!value;
   }
 
+  get focused(): boolean {
+    return this._focused;
+  }
+
+  set focused(val: boolean) {
+    this._focused = val;
+  }
+
+  private get openOrFocused(): boolean {
+    return this.isOpen || this.focused;
+  }
+
+  private get touched(): boolean {
+    return this.componentFormGroup.controls.input.touched;
+  }
+
+  private get requiredAndTouched(): boolean {
+    return this.required && this.touched;
+  }
+
+  get highlight(): boolean {
+    return this.openOrFocused;
+  }
+
+  get default(): boolean {
+    if (this.selected && !this.openOrFocused) {
+      return true;
+    }
+    if (!this.requiredAndTouched && !this.openOrFocused) {
+      return true;
+    }
+    return false;
+  }
+
+  get warning(): boolean {
+    return !this.selected && !this.openOrFocused && this.requiredAndTouched;
+  }
+
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
   @Output()
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -66,12 +107,11 @@ export class OutlineSelectInputComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    const validators = [];
     if (this.required) {
-      validators.push(Validators.required);
+      this.validators.push(Validators.required);
     }
     this.componentFormGroup = this.fb.group({
-      input: [this.config.label, validators], // default to first item in array
+      input: [this.config.label, this.validators], // default to first item in array
     });
     this.componentFormGroup.controls.input.valueChanges.subscribe((value) => {
       this.selected = value;
@@ -79,7 +119,6 @@ export class OutlineSelectInputComponent implements OnInit {
     });
     this.onComponentReady.emit(this.componentFormGroup);
   }
-
   /**
    * Toggles open and close select options
    * @param e MouseEvent to stop propagation.

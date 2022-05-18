@@ -6,10 +6,19 @@ import { TradelinePaymentHistoryComponent } from '@views/dashboard/reports/credi
 import { TradelineRemarksComponent } from '@views/dashboard/reports/credit-report/tradelines/components/tradeline-remarks/tradeline-remarks.component';
 import { Observable, of } from 'rxjs';
 import { ICreditUtilization, TCreditUtilizationStatus } from './interfaces';
+import { state, style, trigger, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'brave-credit-utilization-card',
   templateUrl: './credit-utilization-card.component.html',
+  animations: [
+    trigger("openClose", [
+      state("closed", style({ height: "0" })),
+      state("open", style({ height: "*" })),
+      transition("closed => open", [animate("0.2s linear")]),
+      transition("open => closed", [animate("0.2s linear")]),
+    ]),
+  ],
 })
 export class CreditUtilizationCardComponent implements AfterViewInit, OnInit {
   @ViewChild(ViewdetailButtonComponent)

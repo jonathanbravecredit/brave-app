@@ -5,8 +5,9 @@
     >
     <div
       [ngClass]="{
-        'border-red-500': required && componentFormGroup.controls.input.touched && !selected && !isOpen,
-        'border-blueGray-300': !(required && componentFormGroup.controls.input.touched && !selected && !isOpen)
+        'border-indigo-800': highlight,
+        'border-blueGray-300': default,
+        'border-red-500': warning
       }"
       class="relative text-sm px-1 py-1 bg-white rounded border outline-none w-full"
       (click)="toggleOpen($event)"
@@ -18,6 +19,8 @@
         [autocomplete]="config?.autocomplete || 'off'"
         style="width: 0px; height: 0px"
         class="absolute"
+        (focus)="focused = true"
+        (blur)="focused = false"
       />
       <div class="flex justify-between items-center w-full hover:cursor-pointer">
         <span
@@ -53,7 +56,7 @@
         <li
           *ngFor="let opt of config.options; index as i"
           (click)="toggleOpen($event); updateForm(i)"
-          class="bg-white hover:bg-gray-50 hover:cursor-pointer my-2"
+          class="bg-white hover:bg-gray-50 hover:cursor-pointer py-2"
         >
           <div class="flex items-center">
             <span class="font-normal ml-3 block truncate"> {{ opt }}</span>
