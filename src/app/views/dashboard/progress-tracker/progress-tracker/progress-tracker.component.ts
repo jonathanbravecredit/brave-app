@@ -15,6 +15,7 @@ export class ProgressTrackerComponent implements OnDestroy {
     this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
       this.model = res;
     });
+    console.log('here', this.model)
   }
 
   ngOnDestroy(): void {

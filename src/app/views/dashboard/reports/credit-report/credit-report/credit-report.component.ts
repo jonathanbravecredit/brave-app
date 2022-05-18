@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import {
@@ -11,34 +11,50 @@ import { CreditreportService } from '@shared/services/creditreport/creditreport.
 import { PreferencesStateModel } from '@store/preferences';
 import * as PreferenceActions from '@store/preferences/preferences.actions';
 import { ICreditReportTradelinesCardGroup } from '@views/dashboard/reports/credit-report/credit-report-pure/credit-report-pure.component';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TransunionService } from '@shared/services/transunion/transunion.service';
 import { ICreditScoreTracking } from '@shared/interfaces/credit-score-tracking.interface';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { ProgressTrackerViewService } from '../../../progress-tracker/progress-tracker-view.service';
+import { IProgressTrackerView } from '../../../progress-tracker/progress-tracker.model';
 
 @Component({
   selector: 'brave-credit-report',
   templateUrl: './credit-report.component.html',
 })
-export class CreditReportComponent implements OnInit {
+export class CreditReportComponent implements OnInit, OnDestroy {
   preferences$: Observable<PreferencesStateModel>;
   creditReport$: Observable<IMergeReport>;
   scores: ICreditScoreTracking | undefined;
+  model: IProgressTrackerView = {} as IProgressTrackerView;
+  modelSub$: Subscription | undefined;
 
   constructor(
     private creditReportService: CreditreportService,
     private store: Store,
     private router: Router,
     private transunion: TransunionService,
+    public progressTrackerViewService: ProgressTrackerViewService
   ) {
     this.creditReport$ = this.creditReportService.tuReport$.asObservable();
     this.preferences$ = this.creditReportService.preferences$;
+    this.modelSub$ = progressTrackerViewService.model$.subscribe((res) => {
+      this.model = res;
+    });
   }
 
   ngOnInit(): void {
     this.transunion.getCreditScores().then((scores) => {
       this.scores = scores.data;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.modelSub$?.unsubscribe();
+  }
+
+  checkInitiativeTasks() {
+    
   }
 
   /**
