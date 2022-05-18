@@ -1,5 +1,6 @@
 import { ApplicationRef, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { environment } from '@environments/environment';
 
 export enum RenderedViews {
   Main = 'main',
@@ -8,6 +9,7 @@ export enum RenderedViews {
   Onboarding = 'onboarding',
   Suspended = 'suspended',
   Compliance = 'compliance',
+  App = 'app',
 }
 
 @Injectable({
@@ -37,6 +39,8 @@ export class RenderedService implements OnDestroy {
 
   checkStatus(): void {
     this.checked = true;
-    if (this.tracker.size === 0) console.warn('Missing at least 1 critical view rendered');
+    if (environment.production) {
+      if (this.tracker.size === 0) console.warn('Missing at least 1 critical view rendered');
+    }
   }
 }

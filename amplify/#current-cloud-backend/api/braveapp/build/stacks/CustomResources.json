@@ -115,7 +115,10 @@
                                 {
                                     "Effect": "Allow",
                                     "Action": [
-                                        "appsync:*"
+                                        "appsync:GraphQL",
+                                        "appsync:GetGraphqlApi",
+                                        "appsync:ListGraphqlApis",
+                                        "appsync:ListApiKeys"
                                     ],
                                     "Resource": [
                                         {
@@ -266,7 +269,10 @@
                                 {
                                     "Effect": "Allow",
                                     "Action": [
-                                        "appsync:*"
+                                        "appsync:GraphQL",
+                                        "appsync:GetGraphqlApi",
+                                        "appsync:ListGraphqlApis",
+                                        "appsync:ListApiKeys"
                                     ],
                                     "Resource": [
                                         {

@@ -55,6 +55,38 @@
       }
     }
   },
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-braveapp-staging-231918-authRole",
+      "UnauthRoleArn": "arn:aws:iam::795556747509:role/amplify-braveapp-staging-231918-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::795556747509:role/amplify-braveapp-staging-231918-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-braveapp-staging-231918-deployment",
+      "UnauthRoleName": "amplify-braveapp-staging-231918-unauthRole",
+      "StackName": "amplify-braveapp-staging-231918",
+      "StackId": "arn:aws:cloudformation:us-east-2:795556747509:stack/amplify-braveapp-staging-231918/77f847b0-c1c9-11ec-bbaf-06bf5661f0ae",
+      "AmplifyAppId": "d2stth1gmnn9f5"
+    },
+    "categories": {
+      "auth": {
+        "braveapp0ea8ea07": {}
+      },
+      "function": {
+        "S3Trigger3c67af6a": {
+          "deploymentBucketName": "amplify-braveapp-staging-231918-deployment",
+          "s3Key": "amplify-builds/S3Trigger3c67af6a-7979447a614d7439396a-build.zip"
+        },
+        "GraphQLResolverFunction": {
+          "deploymentBucketName": "amplify-braveapp-staging-231918-deployment",
+          "s3Key": "amplify-builds/GraphQLResolverFunction-55754b416c37716c3077-build.zip"
+        },
+        "PatchTransunionCustomResolver": {
+          "deploymentBucketName": "amplify-braveapp-staging-231918-deployment",
+          "s3Key": "amplify-builds/PatchTransunionCustomResolver-556e6233716b43684175-build.zip"
+        }
+      }
+    }
+  },
   "prod": {
     "awscloudformation": {
       "AuthRoleName": "amplify-braveapp-prod-115121-authRole",
