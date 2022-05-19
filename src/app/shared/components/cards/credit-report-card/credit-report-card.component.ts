@@ -46,6 +46,37 @@ export class CreditReportCardComponent implements OnInit {
   @Input() viewDetailOrientation: ViewDetailOrientation = 'horizontal-right';
   @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
 
+  get closed(): boolean {
+    return !this.isOpen;
+  }
+
+  get safe(): boolean {
+    return this.isOpen && this.payStatusSymbol?.toLowerCase() === 'c';
+  }
+
+  get danger(): boolean {
+    return (
+      this.payStatusSymbol === '1' ||
+      this.payStatusSymbol === '2' ||
+      this.payStatusSymbol === '3' ||
+      this.payStatusSymbol === '4' ||
+      this.payStatusSymbol === '7' ||
+      this.payStatusSymbol === '8R'
+    );
+  }
+
+  get critical(): boolean {
+    return this.payStatusSymbol === '9';
+  }
+
+  get default(): boolean {
+    if (!this.closed && !this.safe && !this.danger && !this.critical) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   constructor() {}
 
   ngOnInit(): void {}
