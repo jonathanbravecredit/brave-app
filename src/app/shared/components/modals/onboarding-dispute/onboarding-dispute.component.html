@@ -30,8 +30,8 @@
       <h2 class="text-lg font-semibold mb-2">{{ currentModalContent.title }}</h2>
       <p class="mb-4 text-sm" *ngFor="let text of currentModalContent.description">{{ text }}</p>
     </div>
-    <div class="border-t border-blueGray-300 p-5">
-      <div class="rounded-lg border border-blueGray-300 h-40 overflow-y-scroll">
+    <div class="border-t border-slate-300 p-5">
+      <div class="rounded-lg border border-slate-300 h-40 overflow-y-scroll">
         <h3 class="my-2 ml-6 text-xs font-bold">{{ currentModalContent.termsTitle }}</h3>
         <ul [ngClass]="{ 'list-none': currentStep === 0, 'list-disc': currentStep !== 0 }" class="ml-6">
           <li *ngFor="let term of currentModalContent.terms">

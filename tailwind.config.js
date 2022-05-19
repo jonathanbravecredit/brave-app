@@ -21,11 +21,6 @@ module.exports = {
       green: colors.emerald,
       yellow: colors.amber,
       purple: colors.violet,
-      blueGray: colors.slate,
-      coolGray: colors.gray,
-      gray: colors.zinc,
-      trueGray: colors.neutral,
-      warmGray: colors.stone,
     },
     backgroundColor: (theme) => ({
       ...theme('colors'),

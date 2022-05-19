@@ -1,7 +1,7 @@
 <form [formGroup]="componentFormGroup">
   <div class="mt-4">
     <div class="pl-1 mt-2">
-      <p class="font-sans mb-4 font-semibold text-base text-coolGray-700">
+      <p class="font-sans mb-4 font-semibold text-base text-gray-700">
         {{ question?.FullQuestionText }}
       </p>
       <fieldset>
@@ -25,7 +25,7 @@
                 }"
               />
               <span
-                class="font-sans text-sm text-coolGray-700 ml-4"
+                class="font-sans text-sm text-gray-700 ml-4"
                 [innerHTML]="choice?.AnswerChoiceText | linkify"
               ></span>
             </label>

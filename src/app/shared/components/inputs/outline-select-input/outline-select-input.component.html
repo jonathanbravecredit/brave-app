@@ -6,7 +6,7 @@
     <div
       [ngClass]="{
         'border-indigo-800': highlight,
-        'border-blueGray-300': default,
+        'border-slate-300': default,
         'border-red-500': warning
       }"
       class="relative text-sm px-1 py-1 bg-white rounded border outline-none w-full"
@@ -25,12 +25,12 @@
       <div class="flex justify-between items-center w-full hover:cursor-pointer">
         <span
           [ngClass]="{
-            'text-blueGray-300': selectInput.value === config.label,
-            'text-blueGray-600': selectInput.value !== config.label
+            'text-slate-300': selectInput.value === config.label,
+            'text-slate-600': selectInput.value !== config.label
           }"
           >{{ selectInput.value || 'Select item' }}</span
         >
-        <span class="material-icons text-blueGray-600">expand_more</span>
+        <span class="material-icons text-slate-600">expand_more</span>
       </div>
       <ul
         *ngIf="isOpen"
@@ -41,7 +41,7 @@
           -ml-1
           w-full
           bg-white
-          text-blueGray-600
+          text-slate-600
           shadow-lg
           max-h-56
           rounded-md

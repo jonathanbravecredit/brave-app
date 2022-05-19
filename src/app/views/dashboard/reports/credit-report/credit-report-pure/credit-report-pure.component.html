@@ -34,7 +34,7 @@
         (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
       ></brave-credit-report-card>
     </ng-template>
-    <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
+    <div *ngIf="isLast" class="border-t border-slate-300 my-2"></div>
     <div
       *ngIf="
         report.hidden && isLast && (report.tradelines | filterArray: tu.queries.report.isNegativeAccount).length === 0
@@ -85,6 +85,6 @@
       [viewDetailOrientation]="'static'"
       (viewDetailClick)="viewPublicItemDetailClick.emit(record.publicPartition)"
     ></brave-publicitem-card>
-    <div *ngIf="isLast" class="border-t border-blueGray-300 my-2"></div>
+    <div *ngIf="isLast" class="border-t border-slate-300 my-2"></div>
   </div>
 </div>
