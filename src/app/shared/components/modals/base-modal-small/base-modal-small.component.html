@@ -1,6 +1,16 @@
 <div
   *ngIf="showModal"
-  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
+  class="
+    overflow-x-hidden overflow-y-auto
+    fixed
+    inset-0
+    z-50
+    outline-none
+    focus:outline-none
+    justify-center
+    items-center
+    flex
+  "
 >
   <div class="relative w-auto mx-auto max-w-sm">
     <!--content-->
@@ -13,7 +23,18 @@
           {{ config.title }}
         </p>
         <button
-          class="ml-auto bg-transparent border-0 brave-primary-text-color float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+          class="
+            ml-auto
+            bg-transparent
+            border-0
+            brave-primary-text-color
+            float-right
+            text-3xl
+            leading-none
+            font-semibold
+            outline-none
+            focus:outline-none
+          "
           (click)="toggleModal(); closeModalClick.emit()"
         >
           <span class="material-icons-outlined"> close </span>
@@ -51,4 +72,4 @@
     </div>
   </div>
 </div>
-<div *ngIf="showModal" class="opacity-20 fixed inset-0 z-40 bg-black"></div>
+<div *ngIf="showModal" class="bg-black/20 fixed inset-0 z-40"></div>

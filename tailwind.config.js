@@ -3,14 +3,11 @@ const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ['./src/**/*.{html,ts}', './projects/**/*.{html,ts}'],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{html,ts}', './projects/**/*.{html,ts}'],
   theme: {
     colors: {
       ...colors,
+      current: 'currentColor',
       'brave-magenta': '#D714DB',
       'brave-blurple': '#222C9D',
       'brave-safe': '#4BD269',
@@ -21,6 +18,14 @@ module.exports = {
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
       'dk-gray': '#333333',
+      green: colors.emerald,
+      yellow: colors.amber,
+      purple: colors.violet,
+      blueGray: colors.slate,
+      coolGray: colors.gray,
+      gray: colors.zinc,
+      trueGray: colors.neutral,
+      warmGray: colors.stone,
     },
     backgroundColor: (theme) => ({
       ...theme('colors'),
@@ -140,20 +145,6 @@ module.exports = {
       },
     },
   },
-  variants: [
-    'responsive',
-    'group-hover',
-    'focus-within',
-    'first',
-    'last',
-    'odd',
-    'even',
-    'hover',
-    'focus',
-    'active',
-    'visited',
-    'disabled',
-  ],
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),

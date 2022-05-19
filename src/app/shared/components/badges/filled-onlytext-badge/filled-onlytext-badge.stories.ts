@@ -43,7 +43,7 @@ Primary.args = {
 export const Secondary = Template.bind({});
 const secondaryConfig: IFilledOnlytextBadgeConfig = {
   size: 'base',
-  backgroundColor: 'bg-lightBlue-100',
+  backgroundColor: 'bg-sky-100',
   color: 'text-indigo-800',
 };
 Secondary.args = {
@@ -64,7 +64,7 @@ export const Strong = Template.bind({});
 const strongConfig: IFilledOnlytextBadgeConfig = {
   size: 'base',
   backgroundColor: 'bg-indigo-800',
-  color: 'text-lightBlue-100',
+  color: 'text-sky-100',
 };
 Strong.args = {
   config: { ...strongConfig },

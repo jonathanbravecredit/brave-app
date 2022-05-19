@@ -20,7 +20,7 @@ const Template: Story<SpinnerComponent> = (args: any) => ({
     ...args,
   },
   template: `<div style="background-color: blue; width: 95vw; height: 95vh">
-              <div class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
+              <div class="w-full h-full fixed block top-0 left-0 bg-white/75 z-50">
                   <brave-spinner></brave-spinner>
               </div>
             </div>`,
