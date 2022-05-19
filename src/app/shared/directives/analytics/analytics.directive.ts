@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 import { IAnalyticsConfig } from '@shared/services/analytics/analytics/analytics.interfaces';
 import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
 import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
@@ -8,7 +8,7 @@ import { AnalyticClickEvents } from '@shared/services/analytics/analytics/consta
 })
 export class AnalyticsDirective {
   @Input() analyticClickEvents: AnalyticClickEvents = AnalyticClickEvents.UnknownClickEvent;
-  @Input() analyticConfig: IAnalyticsConfig = { google: true, mixpanel: true, brave: false };
+  @Input() analyticConfig: IAnalyticsConfig = { google: true, brave: false };
 
   constructor(private analytics: AnalyticsService) {}
 

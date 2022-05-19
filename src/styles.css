@@ -60,6 +60,10 @@
     cursor: pointer !important;
   }
 
+  .brave-brighten {
+    filter: brightness(1.5);
+  }
+
   .brave-primary-text-color {
     @apply text-coolGray-900;
   }

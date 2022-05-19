@@ -1,8 +1,6 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseFormComponent } from '@shared/components/forms/base-form/base-form.component';
-import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
-import { IOutlineSelectInputConfig } from '@shared/components/inputs/outline-select-input/outline-select-input.component';
 import { Observable } from 'rxjs';
 
 @Component({

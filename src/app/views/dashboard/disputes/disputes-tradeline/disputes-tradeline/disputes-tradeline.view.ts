@@ -47,7 +47,6 @@ export class DisputesTradelineView implements OnDestroy {
         if (success) {
           this.analytics.fireClickEvent(AnalyticClickEvents.DisputeSucessfullySubmited, {
             google: true,
-            mixpanel: true,
             brave: true,
           });
           this.viewDisplay = 'sent';

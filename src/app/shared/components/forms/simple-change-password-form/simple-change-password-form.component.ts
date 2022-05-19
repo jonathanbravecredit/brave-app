@@ -1,8 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  HostListener,
+} from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { BaseFormComponent } from "@shared/components/forms/base-form/base-form.component";
 import { IOutlineInputeConfig } from "@shared/components/inputs/outline-input/outline-input.component";
 import { Observable } from "rxjs";
+import { FilledSpinningButtonComponent } from "../../buttons/filled-spinning-button/filled-spinning-button.component";
+import { FilledOnlytextButtonComponent } from "../../buttons/filled-onlytext-button/filled-onlytext-button.component";
 
 export type ConfirmPasswordState = "init" | "invalid";
 export interface IConfirmPassword {

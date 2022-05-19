@@ -1,40 +1,57 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/outline-input.component';
-import { NewUser } from '@shared/services/auth/auth.service';
-import { SigninState } from '@views/authentication/signin/signin/signin.component';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ElementRef,
+} from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { IOutlineInputeConfig } from "@shared/components/inputs/outline-input/outline-input.component";
+import { NewUser } from "@shared/services/auth/auth.service";
+import { SigninState } from "@views/authentication/signin/signin/signin.component";
+import { FilledSpinningButtonComponent } from "../../buttons/filled-spinning-button/filled-spinning-button.component";
 
 @Component({
-  selector: 'brave-simple-signin-form',
-  templateUrl: './simple-signin-form.component.html',
+  selector: "brave-simple-signin-form",
+  templateUrl: "./simple-signin-form.component.html",
 })
 export class SimpleSigninFormComponent {
   @Output() forgotClick: EventEmitter<MouseEvent> = new EventEmitter();
   @Output() signinClick: EventEmitter<NewUser> = new EventEmitter();
 
-  @Input() viewState: SigninState = 'init';
-  @Input() message: string = '';
+  @Input() viewState: SigninState = "init";
+  @Input() message: string = "";
 
   parentForm: FormGroup;
   emailConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Email',
-    type: 'email',
-    placeholder: 'Email address',
-    autocomplete: 'email',
+    size: "sm",
+    label: "Email",
+    type: "email",
+    placeholder: "Email address",
+    autocomplete: "email",
   };
   passwordConfig: IOutlineInputeConfig = {
-    size: 'sm',
-    label: 'Password',
-    type: 'password',
-    placeholder: 'Password',
-    autocomplete: 'off',
+    size: "sm",
+    label: "Password",
+    type: "password",
+    placeholder: "Password",
+    autocomplete: "off",
   };
 
   constructor(fb: FormBuilder) {
     this.parentForm = fb.group({
-      name: ['simple-signin-form'],
+      name: ["simple-signin-form"],
     }); // simple parent form with name of form
+  }
+
+  submit(spinner: FilledSpinningButtonComponent) {
+    if (this.parentForm.valid) {
+      this.signinClick.emit(this.signinUser(this.parentForm));
+      spinner.clicked = true;
+      spinner.spinning = true;
+      spinner.refreshClass();
+    }
   }
 
   /**

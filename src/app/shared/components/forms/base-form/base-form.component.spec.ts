@@ -10,7 +10,11 @@ describe("BaseFormComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [BaseFormComponent],
-      providers: [FormBuilder, {provide: 'name', useValue: 'test'}],
+      providers: [
+        FormBuilder,
+        { provide: "name", useValue: "test" },
+        { provide: "validators", useValue: [] },
+      ],
     }).compileComponents();
   });
 

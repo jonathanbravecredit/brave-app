@@ -21,7 +21,7 @@ describe('AnalyticsDirective', () => {
     });
     it('should have a property called analyticConfig and set to default', () => {
       expect(h.hasProperty(directive, 'analyticConfig')).toEqual(true);
-      expect(directive.analyticConfig).toEqual({ google: true, mixpanel: true, brave: false });
+      expect(directive.analyticConfig).toEqual({ google: true, brave: false });
     });
     it('should have a method called onClick', () => {
       expect(h.hasMethod(directive, 'onClick')).toEqual(true);
@@ -33,7 +33,6 @@ describe('AnalyticsDirective', () => {
       directive.onClick();
       expect(serviceMock.fireClickEvent).toHaveBeenCalledWith(AnalyticClickEvents.UnknownClickEvent, {
         google: true,
-        mixpanel: true,
         brave: false,
       });
     });

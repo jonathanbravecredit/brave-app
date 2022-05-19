@@ -3,6 +3,7 @@ import { TradelineToDetailsPipe } from "@shared/pipes/tradeline-to-details/trade
 import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
 
 import { TradelineDetailsComponent } from "./tradeline-details.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //public featureFlags: FeatureFlagsService
 
@@ -14,6 +15,7 @@ describe("TradelineDetailsComponent", () => {
   beforeEach(async () => {
     featureFlagsMock = jasmine.createSpyObj("FeatureFlagsService", [""]);
     await TestBed.configureTestingModule({
+      imports: [BrowserAnimationsModule],
       declarations: [TradelineDetailsComponent, TradelineToDetailsPipe],
       providers: [{ provide: FeatureFlagsService, useValue: featureFlagsMock }],
     }).compileComponents();
