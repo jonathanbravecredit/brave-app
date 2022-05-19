@@ -1,12 +1,21 @@
 const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
+// to remove warnings until colors fully removed from tailwind
+delete colors['lightBlue'];
+delete colors['warmGray'];
+delete colors['trueGray'];
+delete colors['coolGray'];
+delete colors['blueGray'];
 
 module.exports = {
   content: ['./src/**/*.{html,ts}', './projects/**/*.{html,ts}'],
   theme: {
     colors: {
       ...colors,
+      green: colors.emerald,
+      yellow: colors.amber,
+      purple: colors.violet,
       current: 'currentColor',
       'brave-magenta': '#D714DB',
       'brave-blurple': '#222C9D',
@@ -18,9 +27,6 @@ module.exports = {
       'lt-gray': '#DADADA',
       'md-gray': '#4F4F4F',
       'dk-gray': '#333333',
-      green: colors.emerald,
-      yellow: colors.amber,
-      purple: colors.violet,
     },
     backgroundColor: (theme) => ({
       ...theme('colors'),
