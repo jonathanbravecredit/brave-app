@@ -1,5 +1,18 @@
 <div class="flex items-center">
-  <div class="h-4 w-4 bg-blue-500 rounded-full border-none" [ngClass]="status | snapshotStatus: 'background'"></div>
+  <div
+    class="ml-3 h-4 w-4 bg-blue-500 rounded-full border-none"
+    [ngClass]="{
+      'bg-gray-400': openClosed.toLowerCase() === 'c',
+      'bg-brave-safe': openClosed.toLowerCase() === 'o' && payStatusSymbol?.toLowerCase() === 'c',
+      'bg-brave-danger': payStatusSymbol === '1' ||
+      payStatusSymbol === '2' ||
+      payStatusSymbol === '3' ||
+      payStatusSymbol === '4' ||
+      payStatusSymbol === '7' ||
+      payStatusSymbol === '8R',
+      'bg-brave-critical': payStatusSymbol === '9'
+    }"
+  ></div>
   <span class="ml-3"
     >{{ creditorName | decode }}
     {{ openClosed.toLowerCase() === 'c' ? '(Closed)' : openClosed.toLowerCase() === 'o' ? '(Open)' : '' }}</span
