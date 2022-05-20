@@ -1,16 +1,22 @@
 const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme');
+// to remove warnings until colors fully removed from tailwind
+delete colors['lightBlue'];
+delete colors['warmGray'];
+delete colors['trueGray'];
+delete colors['coolGray'];
+delete colors['blueGray'];
 
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ['./src/**/*.{html,ts}', './projects/**/*.{html,ts}'],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{html,ts}', './projects/**/*.{html,ts}'],
   theme: {
     colors: {
       ...colors,
+      green: colors.emerald,
+      yellow: colors.amber,
+      purple: colors.violet,
+      current: 'currentColor',
       'brave-magenta': '#D714DB',
       'brave-blurple': '#222C9D',
       'brave-safe': '#4BD269',
@@ -140,20 +146,6 @@ module.exports = {
       },
     },
   },
-  variants: [
-    'responsive',
-    'group-hover',
-    'focus-within',
-    'first',
-    'last',
-    'odd',
-    'even',
-    'hover',
-    'focus',
-    'active',
-    'visited',
-    'disabled',
-  ],
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),

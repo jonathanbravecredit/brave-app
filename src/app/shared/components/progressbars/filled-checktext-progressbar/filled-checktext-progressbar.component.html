@@ -1,35 +1,38 @@
 <div>
   <div class="py-6">
     <div class="flex items-center">
-      <ng-container
-        *ngFor="let step of steps; index as i; first as isFirst; last as isLast"
-      >
+      <ng-container *ngFor="let step of steps; index as i; first as isFirst; last as isLast">
         <div
           [ngClass]="{
             rounded: isFirst,
-            'bg-lightBlue-100': i <= activatedStep,
-            'bg-coolGray-200': i > activatedStep
+            'bg-sky-100': i <= activatedStep,
+            'bg-gray-200': i > activatedStep
           }"
           class="flex-auto h-2 w-1/5 rounded-r-none transition duration-500 ease-in-out"
         ></div>
         <div class="flex items-center text-white relative">
           <div
             [ngClass]="{
-              'bg-lightBlue-100': i <= activatedStep,
-              'bg-coolGray-200': i > activatedStep
+              'bg-sky-100': i <= activatedStep,
+              'bg-gray-200': i > activatedStep
             }"
-            class="flex justify-center items-center text-center rounded-full transition duration-500 ease-in-out h-8 w-8 -ml-0.5"
+            class="
+              flex
+              justify-center
+              items-center
+              text-center
+              rounded-full
+              transition
+              duration-500
+              ease-in-out
+              h-8
+              w-8
+              -ml-0.5
+            "
           >
-            <span
-              class="material-icons text-coolGray-700"
-              *ngIf="i <= completedStep"
-              >done</span
-            >
+            <span class="material-icons text-gray-700" *ngIf="i <= completedStep">done</span>
           </div>
-          <div
-            
-            class="absolute top-0 -ml-12 text-center mt-9 w-32 font-sans text-xs text-coolGray-700"
-          >
+          <div class="absolute top-0 -ml-12 text-center mt-9 w-32 font-sans text-xs text-gray-700">
             <!-- {{ config.steps.length }} -->
             {{ step.name }}
           </div>
@@ -37,8 +40,8 @@
         <div
           *ngIf="isLast"
           [ngClass]="{
-            'bg-lightBlue-100': i <= activatedStep,
-            'bg-coolGray-200': i > activatedStep
+            'bg-sky-100': i <= activatedStep,
+            'bg-gray-200': i > activatedStep
           }"
           class="flex-auto h-2 w-1/5 rounded rounded-l-none transition duration-500 ease-in-out"
         ></div>

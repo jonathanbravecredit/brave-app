@@ -1,24 +1,38 @@
 <div *ngIf="label" class="flex align-center justify-between w-full">
-    <span class="text-xs text-dk-gray w-6/12 relative" [ngClass]="dynamicClass">{{ label }}
-      <span *ngIf="tooltip" class="absolute ml-1" style="top: -4px;" (click)='tooltipAction!()' [ngClass]="icon" [ngStyle]="iconStyle">info</span>
-    </span>
+  <span class="text-xs text-dk-gray w-6/12 relative" [ngClass]="dynamicClass"
+    >{{ label }}
+    <span
+      *ngIf="tooltip"
+      class="absolute ml-1"
+      style="top: -4px"
+      (click)="tooltipAction!()"
+      [ngClass]="icon"
+      [ngStyle]="iconStyle"
+      >info</span
+    >
+  </span>
   <ng-container *ngIf="!injected">
-    <span *ngIf="valueType === 'account'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    <span *ngIf="valueType === 'account'" class="text-xs text-dk-gray/75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value | accountNumberMask) }}
     </span>
-    <span *ngIf="valueType === 'currency'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
-      {{ value === undefined || value === null ? missing : value === '--' ? value : (value | currency: 'USD':'symbol':'1.0-0') }}
+    <span *ngIf="valueType === 'currency'" class="text-xs text-dk-gray/75 text-right w-6/12">
+      {{
+        value === undefined || value === null
+          ? missing
+          : value === '--'
+          ? value
+          : (value | currency: 'USD':'symbol':'1.0-0')
+      }}
     </span>
-    <span *ngIf="valueType === 'date'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    <span *ngIf="valueType === 'date'" class="text-xs text-dk-gray/75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value | date: 'shortDate') }}
     </span>
-    <span *ngIf="valueType === 'string'" class="text-xs text-dk-gray text-opacity-75 text-right w-6/12">
+    <span *ngIf="valueType === 'string'" class="text-xs text-dk-gray/75 text-right w-6/12">
       {{ value === undefined || value === null ? missing : value === '--' ? value : (value.toString() | decode) }}
-
     </span>
   </ng-container>
   <ng-container *ngIf="injected">
     <ng-content></ng-content>
   </ng-container>
 </div>
-<div *ngIf="enableSeparator" class="h-1 border-t mt-2 border-black opacity-50"></div>
+<div *ngIf="enableSeparator" class="h-1 border-t mt-2 border-black/50"></div>
