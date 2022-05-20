@@ -1,4 +1,4 @@
-<div class="m-1 p-4 rounded-lg border" [ngClass]="{ 'border-indigo-800': selected, 'border-blueGray-500': !selected }">
+<div class="m-1 p-4 rounded-lg border" [ngClass]="{ 'border-indigo-800': selected, 'border-slate-500': !selected }">
   <div>
     <div class="flex flex-row items-center">
       <span class="text-sm font-semibold">{{ label }}</span>
@@ -13,7 +13,7 @@
         #textArea
         [ngModel]="input"
         (ngModelChange)="textChange.emit($event)"
-        class="resize-none w-full rounded-sm h-32 text-xs bg-blueGray-300"
+        class="resize-none w-full rounded-sm h-32 text-xs bg-slate-300"
         placeholder="Add your reason to dispute here"
       ></textarea>
     </div>

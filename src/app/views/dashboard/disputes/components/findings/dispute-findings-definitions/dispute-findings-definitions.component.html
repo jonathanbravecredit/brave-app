@@ -11,7 +11,7 @@
     <div class="mt-4" *ngFor="let definition of definitions; let i = index">
       <p class="font-semibold text-sm">{{ definition.title }}:</p>
       <p class="text-xs mt-2">{{ definition.description }}</p>
-      <div class="h-1 border-t mt-4 border-black opacity-50" *ngIf="i !== definitions.length - 1"></div>
+      <div class="h-1 border-t mt-4 border-black/50" *ngIf="i !== definitions.length - 1"></div>
     </div>
   </div>
 </div>
