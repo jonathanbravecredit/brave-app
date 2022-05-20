@@ -5,7 +5,7 @@
     [dateReported]="config?.dateReported || ''"
     [currentBalance]="config?.currentBalance || 0"
     [openClosed]="config?.openClosed || ''"
-    [tradeline]="tradeline"
+    [payStatusSymbol]="tradeline?.Tradeline?.PayStatus?.symbol?.toString()"
   ></brave-tradeline-summary>
 </div>
 <brave-credit-utilization-fill-bar

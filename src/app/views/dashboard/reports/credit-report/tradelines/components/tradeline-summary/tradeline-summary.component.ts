@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITradeLinePartition } from "../../../../../../../shared/interfaces/merge-report.interface";
 
 @Component({
   selector: "brave-tradeline-summary",
   templateUrl: "./tradeline-summary.component.html",
 })
-export class TradelineSummaryComponent implements OnInit {
+export class TradelineSummaryComponent {
   /**
    * Raw payment status from Merge Report
    * @property {string} status
@@ -37,15 +36,7 @@ export class TradelineSummaryComponent implements OnInit {
    */
   @Input() openClosed: string = "";
 
-  @Input() tradeline: ITradeLinePartition | undefined | null =
-    {} as ITradeLinePartition;
-
-  payStatusSymbol: string | undefined;
+  @Input() payStatusSymbol: string | undefined;
 
   constructor() {}
-
-  ngOnInit() {
-    this.payStatusSymbol =
-      this.tradeline?.Tradeline?.PayStatus?.symbol?.toString();
-  }
 }
