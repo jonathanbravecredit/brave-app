@@ -68,8 +68,8 @@ Primary.args = {
 export const Secondary = Template.bind({});
 const secondaryConfig: IFilledOnlyTextButtonConfig = {
   buttonSize: 'base',
-  backgroundColor: 'bg-lightBlue-100',
-  activeColor: 'bg-lightBlue-200',
+  backgroundColor: 'bg-sky-100',
+  activeColor: 'bg-sky-200',
   color: 'text-indigo-800',
 };
 Secondary.args = {

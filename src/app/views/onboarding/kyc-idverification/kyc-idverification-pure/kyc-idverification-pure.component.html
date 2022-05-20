@@ -10,13 +10,13 @@
       <div class="py-3">
         <div class="text-base">
           <ng-container *ngIf="viewState === 'init'">
-            <p class="mb-6 text-blueGray-600">
+            <p class="mb-6 text-slate-600">
               Please enter the 5-digit code you just received on your cell phone in the box below.
             </p>
           </ng-container>
 
           <ng-container *ngIf="viewState === 'sent'">
-            <p class="mb-6 text-blueGray-600">
+            <p class="mb-6 text-slate-600">
               We have texted you a new code. Please enter the new code in the box below.
             </p>
           </ng-container>
@@ -34,7 +34,7 @@
       <!-- subheader -->
       <div class="py-3">
         <div class="text-sm">
-          <p class="mb-6 text-blueGray-600">Code will expire in 15 minutes.</p>
+          <p class="mb-6 text-slate-600">Code will expire in 15 minutes.</p>
         </div>
       </div>
 
@@ -47,7 +47,7 @@
         >
           <brave-links-onlytext-button
             (click)="backClick.emit()"
-            [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+            [config]="{ buttonSize: 'sm', color: 'text-slate-600' }"
           >
             <span class="flex items-center"> <span class="material-icons px-1">arrow_back</span>&nbsp;Back </span>
           </brave-links-onlytext-button>
@@ -58,7 +58,7 @@
         <div class="-ml-3">
           <brave-links-onlytext-button
             (click)="resendClick.emit()"
-            [config]="{ buttonSize: 'sm', color: 'text-blueGray-600' }"
+            [config]="{ buttonSize: 'sm', color: 'text-slate-600' }"
             ><span class="underline">Resend code</span></brave-links-onlytext-button
           >
         </div>

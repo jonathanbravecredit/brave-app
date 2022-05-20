@@ -1,6 +1,6 @@
 <form [formGroup]="componentFormGroup">
   <div class="mb-5 pt-0">
-    <label for="input_field" class="block mb-2.5 text-sm text-blueGray-600 whitespace-nowrap"
+    <label for="input_field" class="block mb-2.5 text-sm text-slate-600 whitespace-nowrap"
       >{{ config?.label }}<span *ngIf="required && !asteriskOverride" class="-mt-1">&#42;</span></label
     >
     <div class="flex">
@@ -20,16 +20,29 @@
         [ngClass]="{
           'border-red-500':
             required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
-          'border-blueGray-300': !(
+          'border-slate-300': !(
             required &&
             componentFormGroup.controls.input.touched &&
             !componentFormGroup.controls.input.valid
           )
         }"
-        class="text-base px-1 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded border outline-none focus:ring-0 focus:ring-indigo-800 w-full"
+        class="
+          text-base
+          px-1
+          py-1
+          placeholder-slate-300
+          text-slate-600
+          relative
+          bg-white
+          rounded
+          border
+          outline-none
+          focus:ring-0 focus:ring-indigo-800
+          w-full
+        "
       />
       <span
-        class="material-icons-outlined flex items-center ml-2 text-blueGray-600 hover:cursor-pointer"
+        class="material-icons-outlined flex items-center ml-2 text-slate-600 hover:cursor-pointer"
         (click)="hide = !hide"
         >{{ hide ? 'visibility_off' : 'visibility' }}
       </span>
