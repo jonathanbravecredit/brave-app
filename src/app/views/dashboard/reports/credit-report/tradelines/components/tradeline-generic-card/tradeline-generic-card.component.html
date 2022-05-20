@@ -20,19 +20,19 @@
   </div>
   <div class="flex justify-between mb-2">
     <p class="text-xs text-dk-gray">{{ content.p2 }}</p>
-    <p class="text-xs text-dk-gray text-opacity-75 text-right">
+    <p class="text-xs text-dk-gray/75 text-right">
       {{ (details.amountPastDue | currency: 'USD':'symbol':'1.0-0') || missing }}
     </p>
   </div>
   <div class="flex justify-between mb-2">
     <p class="text-xs text-dk-gray">{{ content.p3 }}</p>
-    <p class="text-xs text-dk-gray text-opacity-75 text-right">
+    <p class="text-xs text-dk-gray/75 text-right">
       {{ (details.currentBalance | currency: 'USD':'symbol':'1.0-0') || missing }}
     </p>
   </div>
   <div class="flex justify-between mb-2">
     <p class="text-xs text-dk-gray">{{ content.p4 }}</p>
-    <p class="text-xs text-dk-gray text-opacity-75 text-right">{{ details.disputeFlag || missing }}</p>
+    <p class="text-xs text-dk-gray/75 text-right">{{ details.disputeFlag || missing }}</p>
   </div>
 
   <ng-container *ngIf="canOpen">
