@@ -16,17 +16,17 @@
       [ngClass]="{
         'border-red-500':
           required && componentFormGroup.controls.input.touched && !componentFormGroup.controls.input.valid,
-        'border-blueGray-300': !(
+        'border-slate-300': !(
           required &&
           componentFormGroup.controls.input.touched &&
           !componentFormGroup.controls.input.valid
         )
       }"
       class="
-        text-sm text-blueGray-600
+        text-sm text-slate-600
         px-3
         py-1
-        placeholder-blueGray-300
+        placeholder-slate-300
         relative
         bg-white
         rounded
