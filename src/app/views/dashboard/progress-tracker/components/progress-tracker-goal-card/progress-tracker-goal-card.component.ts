@@ -65,7 +65,6 @@ export class ProgressTrackerGoalCardComponent implements OnInit {
     if (this.subTask) {
       this.metric = this.progressTrackerViewService.getMetric(this.subTask);
     }
-    console.log("here", this.subTask);
   }
 
   clickYes() {
