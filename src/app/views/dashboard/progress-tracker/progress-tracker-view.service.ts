@@ -19,6 +19,11 @@ export class ProgressTrackerViewService implements OnDestroy {
 
   initiativeSub$: Subscription;
 
+  managedTasks: { [key: string]: boolean } = {
+    review_report: true,
+    open_self_loan: true,
+  };
+
   constructor(
     private progressTrackerService: ProgressTrackerService,
     private dashboard: DashboardService
@@ -107,6 +112,10 @@ export class ProgressTrackerViewService implements OnDestroy {
       }
     }
     return "";
+  }
+
+  isManagedTask(taskId: string) {
+    return this.managedTasks[taskId] || false;
   }
 
   updateProgressTrackerData(body: InitiativePatchBody) {
