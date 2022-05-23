@@ -114,7 +114,8 @@ export class ProgressTrackerViewService implements OnDestroy {
     return "";
   }
 
-  isManagedTask(taskId: string) {
+  isManagedTask(taskId: string | undefined) {
+    if (!taskId) return false;
     return this.managedTasks[taskId] || false;
   }
 
