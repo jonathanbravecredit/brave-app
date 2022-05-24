@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ViewDetailOrientation } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
 import { IBorrower, IPublicPartition, ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
+import { TransunionUtil } from '@shared/utils/transunion/transunion';
+import _ from 'lodash';
 
 export type ReportCardFieldTypes = 'string' | 'currency' | 'date';
 
@@ -41,9 +43,10 @@ export class CreditReportCardComponent implements OnInit {
   @Input() thirdFieldValue: string = '';
   @Input() thirdFieldType: ReportCardFieldTypes = 'string';
   @Input() status: string = '';
-  @Input() tradeline: ITradeLinePartition = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
+  @Input() tradeline: ITradeLinePartition | undefined = {} as ITradeLinePartition; // bring the unmapped tradeline foreward
   @Input() payStatusSymbol: string | undefined;
   @Input() viewDetailOrientation: ViewDetailOrientation = 'horizontal-right';
+  @Input() autoMap: boolean = false;
   @Output() viewDetailClick: EventEmitter<void> = new EventEmitter();
 
   get closed(): boolean {
@@ -79,5 +82,16 @@ export class CreditReportCardComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.autoMap) {
+      this.mapTradelineToCreditReportCard(this.tradeline);
+    }
+  }
+
+  mapTradelineToCreditReportCard(tradeline: ITradeLinePartition | undefined): void {
+    if (!tradeline || !Object.keys(tradeline)) return;
+    const mapped = TransunionUtil.mappers.mapSingleTradelineToSummaryCard(tradeline);
+    const merged = _.merge(this, mapped);
+    Object.assign(this, merged);
+  }
 }

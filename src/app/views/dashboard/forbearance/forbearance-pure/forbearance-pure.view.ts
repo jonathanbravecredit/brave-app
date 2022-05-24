@@ -1,22 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CreditReportGroups } from '@shared/constants/credit-report';
-import { ITradeLinePartition } from '@shared/interfaces/merge-report.interface';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
-import { forbearanceAccountsContent } from '@views/dashboard/forbearance/forbearance-pure/content';
+import { ForbearanceViewModel } from '@views/dashboard/forbearance/forbearance.model';
+import { ForbearanceService } from '@views/dashboard/forbearance/forbearance.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'brave-forbearance-pure',
   templateUrl: './forbearance-pure.view.html',
 })
-export class ForbearancePureView implements OnInit {
-  @Input() tradelines: ITradeLinePartition[] = [];
-  @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
-  @Output() infoClick: EventEmitter<void> = new EventEmitter();
+export class ForbearancePureView {
+  public groups = CreditReportGroups;
+  public model: ForbearanceViewModel = {} as ForbearanceViewModel;
+  private serviceSub$: Subscription;
 
-  content = forbearanceAccountsContent;
-  groups = CreditReportGroups;
-  tu = TransunionUtil;
-  constructor() {}
+  constructor(private forbearanceService: ForbearanceService) {
+    this.serviceSub$ = this.forbearanceService.model$.subscribe((model) => {
+      this.model = model;
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.serviceSub$.unsubscribe();
+  }
 }

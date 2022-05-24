@@ -8,7 +8,7 @@ import { TransunionUtil } from '@shared/utils/transunion/transunion';
 })
 export class TradelineToAccountgroupPipe implements PipeTransform {
   tu = TransunionUtil;
-  transform(tradelines: ITradeLinePartition[], ...groups: CreditReportGroups[]): unknown {
+  transform(tradelines: ITradeLinePartition[], ...groups: CreditReportGroups[]): ITradeLinePartition[] {
     return this.tu.filters.filterTradelinesByCreditReportGroups(tradelines, groups);
   }
 }
