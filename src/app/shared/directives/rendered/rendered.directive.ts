@@ -1,14 +1,15 @@
-import { Directive, ElementRef } from '@angular/core';
-import { RenderedService } from '@shared/services/monitor/rendered/rendered.service';
+import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { RenderedService, RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 
 @Directive({
   selector: '[braveRendered]',
 })
-export class RenderedDirective {
+export class RenderedDirective implements OnInit {
+  @Input() tag: RenderedViews | undefined;
   constructor(private el: ElementRef, private rendered: RenderedService) {}
 
-  ngAfterViewInit() {
-    const tag = this.el.nativeElement.id || null;
+  ngOnInit() {
+    const tag = this.tag || null;
     const el = this.el;
     this.rendered.track({ tag, el });
   }
