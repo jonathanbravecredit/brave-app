@@ -144,6 +144,7 @@ export class TransunionMappers extends TransunionBase {
       thirdFieldName: 'Payment Status',
       thirdFieldValue: PayStatus?.description,
       status: status,
+      payStatusSymbol: PayStatus?.symbol?.toString(),
       positive: POSITIVE_PAY_STATUS_CODES[`${PayStatus?.symbol}`] || false,
       tradeline: tradeline,
     } as ICreditReportCardInputs;

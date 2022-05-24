@@ -21,6 +21,7 @@ export interface ICreditReportCardInputs {
   thirdFieldType: ReportCardFieldTypes;
   status: string;
   positive: boolean;
+  payStatusSymbol?: string;
   tradeline?: ITradeLinePartition;
   publicItem?: IPublicPartition;
   personalItem?: IBorrower;

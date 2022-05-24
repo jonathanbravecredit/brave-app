@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { ViewDetailOrientation } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { ITradeLinePartition } from '@shared/interfaces';
 import { ForbearanceService } from '@views/dashboard/forbearance/forbearance.service';
 import { FORBEARANCE_CONTENT } from '@views/dashboard/forbearance/forbearance.content';
 
-export type ForbearanceViewType = 'installment' | 'mortgage';
+export type ForbearanceViewType = 'installment' | 'mortgage' | 'unknown';
 
 @Component({
   selector: 'brave-forbearance-accounts',
@@ -13,11 +12,10 @@ export type ForbearanceViewType = 'installment' | 'mortgage';
 })
 export class ForbearanceAccountsComponent {
   @Input() tradelines: ITradeLinePartition[] = [];
-  @Input() viewType: ForbearanceViewType | undefined;
+  @Input() viewType: ForbearanceViewType = 'unknown';
   @Input() viewDetailOrientation: ViewDetailOrientation = 'horizontal-right';
 
   content = FORBEARANCE_CONTENT.accounts;
-  cards: ICreditReportCardInputs[] = [];
 
   constructor(private forbearanceService: ForbearanceService) {}
 
