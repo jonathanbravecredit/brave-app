@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { OnboardingService } from '@views/onboarding/onboarding.service';
-import { RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
+import { RenderedService, RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 
 // const terminationEvent = 'onpagehide' in self ? 'pagehide' : 'unload';
 
@@ -37,7 +37,12 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
   listener: any;
   public tag = RenderedViews.Onboarding;
 
-  constructor(private store: Store, private renderer: Renderer2, private onboardingService: OnboardingService) {
+  constructor(
+    private rendered: RenderedService,
+    private store: Store,
+    private renderer: Renderer2,
+    private onboardingService: OnboardingService,
+  ) {
     this.onboardingSub$ = this.onboarding$
       .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
       .subscribe((onboarding: OnboardingStateModel) => {
@@ -46,6 +51,7 @@ export class OnboardingComponent implements OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.rendered.checkStatus();
     this.listener = this.renderer.listen(window, 'beforeunload', (event: BeforeUnloadEvent) => {
       if (!this.onboarding.abandoned) {
         this.onboardingService.abandonOnboarding();
