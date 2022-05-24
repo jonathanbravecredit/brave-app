@@ -1,5 +1,14 @@
 <div class="flex items-center">
-  <div class="h-4 w-4 bg-blue-500 rounded-full border-none" [ngClass]="status | snapshotStatus: 'background'"></div>
+  <div
+    [ngClass]="{
+      'bg-gray-400': closed,
+      'bg-brave-safe': safe,
+      'bg-brave-danger': danger,
+      'bg-brave-critical': critical,
+      'bg-blue-500': default
+    }"
+    class="ml-3 h-4 w-4 rounded-full border-none"
+  ></div>
   <span class="ml-3"
     >{{ creditorName | decode }}
     {{ openClosed.toLowerCase() === 'c' ? '(Closed)' : openClosed.toLowerCase() === 'o' ? '(Open)' : '' }}</span
