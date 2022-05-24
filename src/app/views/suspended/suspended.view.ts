@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
+import { Component, AfterViewInit } from '@angular/core';
+import { RenderedService, RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
 
 @Component({
   selector: 'brave-suspended',
   templateUrl: './suspended.view.html',
 })
-export class SuspendedView implements OnInit {
+export class SuspendedView implements AfterViewInit {
   public tag = RenderedViews.Suspended;
-  constructor() {}
+  constructor(private rendered: RenderedService) {}
 
-  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.rendered.checkStatus();
+  }
 }
