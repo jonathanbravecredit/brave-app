@@ -1,25 +1,29 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ViewDetailOrientation } from '@shared/components/buttons/viewdetail-button/viewdetail-button.component';
-import { ICreditReportCardInputs } from '@shared/components/cards/credit-report-card/credit-report-card.component';
 import { ITradeLinePartition } from '@shared/interfaces';
-import { TransunionUtil } from '@shared/utils/transunion/transunion';
-import { forbearanceAccountsContent } from '@views/dashboard/forbearance/components/forbearance-accounts/content';
+import { ForbearanceService } from '@views/dashboard/forbearance/forbearance.service';
+import { FORBEARANCE_CONTENT } from '@views/dashboard/forbearance/forbearance.content';
+
+export type ForbearanceViewType = 'installment' | 'mortgage' | 'unknown';
 
 @Component({
   selector: 'brave-forbearance-accounts',
   templateUrl: './forbearance-accounts.component.html',
 })
-export class ForbearanceAccountsComponent implements OnInit {
-  @Input() accounts: any = [];
+export class ForbearanceAccountsComponent {
+  @Input() tradelines: ITradeLinePartition[] = [];
+  @Input() viewType: ForbearanceViewType = 'unknown';
   @Input() viewDetailOrientation: ViewDetailOrientation = 'horizontal-right';
-  @Output() viewDetailClick: EventEmitter<ITradeLinePartition> = new EventEmitter();
-  tu = TransunionUtil;
-  content = forbearanceAccountsContent;
-  counter = 0;
-  cards: ICreditReportCardInputs[] = [];
-  constructor() {}
 
-  ngOnInit(): void {
-    this.cards = this.tu.mappers.mapTradelineToSummaryCard(this.accounts);
+  content = FORBEARANCE_CONTENT.accounts;
+
+  constructor(private forbearanceService: ForbearanceService) {}
+
+  onViewDetail(tradeline: ITradeLinePartition | undefined): void {
+    if (!tradeline) {
+      console.error('No tradeline in forbearance account: ', tradeline);
+    } else {
+      this.forbearanceService.onViewDetail(tradeline);
+    }
   }
 }

@@ -1,14 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { forbearanceInfoContent } from '@views/dashboard/forbearance/components/forbearance-info/content';
+import { Component } from '@angular/core';
+import { FORBEARANCE_CONTENT } from '@views/dashboard/forbearance/forbearance.content';
 
 @Component({
   selector: 'brave-forbearance-info',
   templateUrl: './forbearance-info.component.html',
 })
-export class ForbearanceInfoComponent implements OnInit {
-  @Output() infoClick: EventEmitter<void> = new EventEmitter();
-  content = forbearanceInfoContent;
+export class ForbearanceInfoComponent {
+  content = FORBEARANCE_CONTENT.info;
   constructor() {}
-
-  ngOnInit(): void {}
 }
