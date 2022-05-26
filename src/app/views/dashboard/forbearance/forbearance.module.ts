@@ -14,6 +14,7 @@ import { ForbearanceBandComponent } from '@views/dashboard/forbearance/component
 import { ForbearanceAccountsComponent } from '@views/dashboard/forbearance/components/forbearance-accounts/forbearance-accounts.component';
 import { BaseExceptionView } from '@views/dashboard/exceptions/base-exception/base-exception/base-exception.view';
 import { BaseExceptionPureView } from '@views/dashboard/exceptions/base-exception/base-exception-pure/base-exception-pure.view';
+import { ForbearanceService } from '@views/dashboard/forbearance/forbearance.service';
 
 const modules = [CommonModule, SharedComponentsModule, SharedPipesModule, ForbearanceRoutingModule];
 const components = [
@@ -33,6 +34,7 @@ const pipes: [] = [];
 
 @NgModule({
   declarations: [...components, ...pipes],
+  providers: [ForbearanceService],
   imports: [...modules],
   exports: [...components],
 })

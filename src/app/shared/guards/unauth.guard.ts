@@ -12,7 +12,7 @@ export class UnauthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return Auth.currentAuthenticatedUser({ bypassCache: true })
+    return Auth.currentAuthenticatedUser()
       .then(() => {
         // this.router.navigate(['/userportal/stepone']);
         return false;

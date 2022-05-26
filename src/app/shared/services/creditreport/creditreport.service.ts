@@ -134,7 +134,7 @@ export class CreditreportService implements OnDestroy {
    * @returns {TransunionInput}
    */
   getTransunion(agencies: AgenciesStateModel): TransunionInput {
-    if (!agencies.transunion) return {} as TransunionInput;
+    if (!agencies?.transunion) return {} as TransunionInput;
     return agencies.transunion;
   }
 

@@ -11,16 +11,16 @@ export class AgenciesSelectors {
 
   @Selector([AgenciesState])
   static getTransunionRawQuestions(state: AgenciesStateModel): string {
-    return state.transunion?.currentRawQuestions || '';
+    return state?.transunion?.currentRawQuestions || '';
   }
 
   @Selector([AgenciesState])
   static getTransunionRawAuthDetails(state: AgenciesStateModel): string {
-    return state.transunion?.currentRawAuthDetails || '';
+    return state?.transunion?.currentRawAuthDetails || '';
   }
 
   @Selector([AgenciesState])
   static getTransunion(state: AgenciesStateModel): TransunionInput {
-    return state.transunion || ({} as TransunionInput);
+    return state?.transunion || ({} as TransunionInput);
   }
 }

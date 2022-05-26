@@ -122,6 +122,34 @@ export class TransunionMappers extends TransunionBase {
   }
 
   /**
+   * Map the tradeline object to the negative account object
+   * @param {ITradeLinePartition[]} tradeLines
+   * @returns
+   */
+  static mapSingleTradelineToSummaryCard(tradeline: ITradeLinePartition): ICreditReportCardInputs {
+    const firstField = this.getFirstFields(tradeline);
+    const secondField = this.getSecondFields(tradeline);
+    const { accountTypeSymbol, Tradeline: { creditorName, OpenClosed, PayStatus } = {} } = tradeline;
+    const status = PAY_STATUS_WARNINGS[`${PayStatus?.symbol}`] || 'brave-unknown';
+    return {
+      type: accountTypeSymbol,
+      creditorName: creditorName,
+      isOpen: `${OpenClosed?.symbol}`.toLowerCase() !== 'c',
+      firstFieldName: firstField.firstFieldName,
+      firstFieldValue: firstField.firstFieldValue,
+      firstFieldType: firstField.firstFieldType,
+      secondFieldName: secondField.secondFieldName,
+      secondFieldValue: secondField.secondFieldValue,
+      secondFieldType: secondField.secondFieldType,
+      thirdFieldName: 'Payment Status',
+      thirdFieldValue: PayStatus?.description,
+      status: status,
+      payStatusSymbol: PayStatus?.symbol?.toString(),
+      positive: POSITIVE_PAY_STATUS_CODES[`${PayStatus?.symbol}`] || false,
+      tradeline: tradeline,
+    } as ICreditReportCardInputs;
+  }
+  /**
    * Helper function to get the label and value for the first fields
    * @param {ITradeLinePartition | undefined} partition
    * @returns

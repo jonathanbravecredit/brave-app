@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 const dayjs = require('dayjs');
 import { Hub } from '@aws-amplify/core';
+import { Auth } from '@aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { Auth } from 'aws-amplify';
 
 export interface ISessionData {
   sessionId: string;
@@ -54,9 +54,7 @@ export class SessionService {
   }
 
   async checkIfUserSignedIn(): Promise<boolean> {
-    const user = await Auth.currentAuthenticatedUser({
-      bypassCache: true,
-    });
+    const user = await Auth.currentAuthenticatedUser();
     return !!user;
   }
 
