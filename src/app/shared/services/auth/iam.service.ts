@@ -1,6 +1,5 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Auth}  from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { AwsClient } from 'aws4fetch';
 // import { ISigV4Config, SigV4 } from '@shared/utils/signatureV4/signatureV4';
 

@@ -4,6 +4,8 @@ import { ITransunionKBAQuestion, ITransunionKBAQuestions } from '@shared/interfa
 import { IVerifyAuthenticationAnswer } from '@shared/interfaces/verify-authentication-answers.interface';
 import { OTPQuestion, OTPReponse, PassCodeQuestion } from '@shared/utils/transunion/constants';
 import { TransunionBase } from '@shared/utils/transunion/transunion-base';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
+import * as _ from 'lodash';
 import * as parser from 'fast-xml-parser';
 const he = require('he');
 const parserOptions = {
@@ -102,11 +104,9 @@ export class TransunionOnboardingParsers extends TransunionBase {
    * @returns
    */
   static parsePassCodeQuestion(questions: ITransunionKBAQuestions): ITransunionKBAQuestion | undefined {
-    const series: ITransunionKBAQuestion[] =
-      questions.ChallengeConfigurationType.MultiChoiceQuestion instanceof Array
-        ? questions.ChallengeConfigurationType.MultiChoiceQuestion
-        : new Array(questions.ChallengeConfigurationType.MultiChoiceQuestion);
-    return series.find(
+    const multi = _nest.find<ITransunionKBAQuestion | ITransunionKBAQuestion[]>(questions, 'MultiChoiceQuestion');
+    if (!multi) return;
+    return _.castArray(multi).find(
       (q) =>
         q.FullQuestionText === PassCodeQuestion.FullText ||
         q.FullQuestionText.indexOf(PassCodeQuestion.PartialOne) >= 0,

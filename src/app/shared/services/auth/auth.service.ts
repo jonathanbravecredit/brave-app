@@ -1,16 +1,12 @@
-import { Inject, Injectable } from "@angular/core";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
-import { ICredentials } from "@aws-amplify/core";
-import { Auth } from "aws-amplify";
-import { BehaviorSubject } from "rxjs";
-import {
-  CognitoUser,
-  CognitoUserSession,
-  ISignUpResult,
-} from "amazon-cognito-identity-js";
-import { Router } from "@angular/router";
-import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
-import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { Inject, Injectable } from '@angular/core';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { ICredentials } from '@aws-amplify/core';
+import { Auth } from '@aws-amplify/auth';
+import { BehaviorSubject } from 'rxjs';
+import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
+import { Router } from '@angular/router';
+import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
+import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 export interface NewUser {
   username: string;
@@ -18,19 +14,19 @@ export interface NewUser {
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
-  public email$: BehaviorSubject<string> = new BehaviorSubject("");
-  public static SIGN_IN = "signIn";
-  public static SIGN_OUT = "signOut";
+  public email$: BehaviorSubject<string> = new BehaviorSubject('');
+  public static SIGN_IN = 'signIn';
+  public static SIGN_OUT = 'signOut';
   public static FACEBOOK = CognitoHostedUIIdentityProvider.Facebook;
   public static GOOGLE = CognitoHostedUIIdentityProvider.Google;
 
   constructor(
     private router: Router,
     private interstitial: InterstitialService,
-    @Inject(Auth) private auth: typeof Auth
+    @Inject(Auth) private auth: typeof Auth,
   ) {}
 
   /**
@@ -85,10 +81,8 @@ export class AuthService {
    * @param {CognitoHostedUIIdentityProvider} provider
    * @returns
    */
-  socialSignIn(
-    provider: CognitoHostedUIIdentityProvider
-  ): Promise<ICredentials> {
-    window.sessionStorage.setItem("braveOAuthProvider", provider); // save for redirect back...Angular does not persist params on bootstrap
+  socialSignIn(provider: CognitoHostedUIIdentityProvider): Promise<ICredentials> {
+    window.sessionStorage.setItem('braveOAuthProvider', provider); // save for redirect back...Angular does not persist params on bootstrap
     return this.auth.federatedSignIn({
       provider: provider,
     });
@@ -116,14 +110,8 @@ export class AuthService {
    * @param pw
    * @returns
    */
-  forgotPasswordSubmit(
-    email: string,
-    code: string,
-    pw: string
-  ): Promise<any> | undefined {
-    return email && code && pw
-      ? this.auth.forgotPasswordSubmit(email.toLowerCase(), code, pw)
-      : undefined;
+  forgotPasswordSubmit(email: string, code: string, pw: string): Promise<any> | undefined {
+    return email && code && pw ? this.auth.forgotPasswordSubmit(email.toLowerCase(), code, pw) : undefined;
   }
 
   /**
@@ -169,9 +157,9 @@ export class AuthService {
     try {
       const user: CognitoUser = await this.auth.currentAuthenticatedUser();
       let session = user?.getSignInUserSession();
-      return session ? session.getIdToken().getJwtToken() : "";
+      return session ? session.getIdToken().getJwtToken() : '';
     } catch (err) {
-      return "";
+      return '';
     }
   }
 
@@ -196,11 +184,10 @@ export class AuthService {
     try {
       const user: CognitoUser = await this.auth.currentAuthenticatedUser();
       const attrs = await this.auth.userAttributes(user);
-      const email = attrs.filter((a) => a.Name.toLowerCase() === "email")[0]
-        ?.Value;
+      const email = attrs.filter((a) => a.Name.toLowerCase() === 'email')[0]?.Value;
       return email;
     } catch (err) {
-      return "";
+      return '';
     }
   }
 
@@ -213,11 +200,10 @@ export class AuthService {
     try {
       const user: CognitoUser = await this.auth.currentAuthenticatedUser();
       const attrs = await this.auth.userAttributes(user);
-      const email = attrs.filter((a) => a.Name.toLowerCase() === "sub")[0]
-        ?.Value;
+      const email = attrs.filter((a) => a.Name.toLowerCase() === 'sub')[0]?.Value;
       return email;
     } catch (err) {
-      return "";
+      return '';
     }
   }
 
@@ -249,7 +235,7 @@ export class AuthService {
   async verifyUserEmail(code: string): Promise<boolean> {
     this.interstitial.fetching$.next(true);
     try {
-      await this.auth.verifyCurrentUserAttributeSubmit("email", code);
+      await this.auth.verifyCurrentUserAttributeSubmit('email', code);
       this.interstitial.fetching$.next(false);
       return true;
     } catch (err) {
@@ -265,10 +251,7 @@ export class AuthService {
    * @param newPassword
    * @returns
    */
-  async resetPassword(
-    oldPassword: string,
-    newPassword: string
-  ): Promise<string> {
+  async resetPassword(oldPassword: string, newPassword: string): Promise<string> {
     this.interstitial.fetching$.next(true);
     try {
       const user = await this.auth.currentAuthenticatedUser();

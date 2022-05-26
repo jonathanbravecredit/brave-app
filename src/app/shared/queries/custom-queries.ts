@@ -1,5 +1,5 @@
 import { GetLastRefreshedQuery, GetOwnerQuery } from '@shared/queries';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from '@aws-amplify/api';
 
 /**
  * Owner is separate from user id
