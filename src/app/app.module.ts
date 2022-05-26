@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 
 /* Add Amplify imports */
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
-import Amplify from 'aws-amplify';
+import { Amplify } from '@aws-amplify/core';
 import awsconfig from '../aws-exports';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
