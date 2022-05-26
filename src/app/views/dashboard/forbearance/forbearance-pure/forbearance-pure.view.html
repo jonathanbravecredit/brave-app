@@ -2,7 +2,7 @@
   <brave-forbearance-header></brave-forbearance-header>
 </div>
 <div class="my-7">
-  <brave-forbearance-info (infoClick)="infoClick.emit()"></brave-forbearance-info>
+  <brave-forbearance-info></brave-forbearance-info>
 </div>
 <div class="my-8">
   <brave-forbearance-tips></brave-forbearance-tips>
@@ -13,28 +13,18 @@
 <div class="my-8">
   <!-- Student Loan Accounts -->
   <brave-forbearance-accounts
-    [accounts]="tradelines | tradelineToAccountgroup: groups.InstallmentLoans"
+    [tradelines]="model.tradelines | tradelineToAccountgroup: groups.InstallmentLoans"
+    [viewType]="'installment'"
     [viewDetailOrientation]="'static'"
-    (viewDetailClick)="viewDetailClick.emit($event)"
   >
-    <div class="mb-4 flex items-center content-center">
-      <span class="material-icons" style="color: #9b51e0">label</span>
-      <h6 class="brave-h6 ml-2">{{ content.h1 }}</h6>
-    </div>
-    <div class="border-t mb-4" style="border-color: #9b51e0"></div>
   </brave-forbearance-accounts>
 </div>
 <div class="my-8">
   <!--  Mortgages-->
   <brave-forbearance-accounts
-    [accounts]="tradelines | tradelineToAccountgroup: groups.Mortgages"
+    [tradelines]="model.tradelines | tradelineToAccountgroup: groups.Mortgages"
+    [viewType]="'mortgage'"
     [viewDetailOrientation]="'static'"
-    (viewDetailClick)="viewDetailClick.emit($event)"
   >
-    <div class="mb-4 flex items-center content-center">
-      <span class="material-icons" style="color: #56ccf2">label</span>
-      <h6 class="brave-h6 ml-2">{{ content.h2 }}</h6>
-    </div>
-    <div class="border-t mb-4" style="border-color: #56ccf2"></div>
   </brave-forbearance-accounts>
 </div>

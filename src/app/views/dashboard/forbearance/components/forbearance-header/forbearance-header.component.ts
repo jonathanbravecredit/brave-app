@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { forbearanceHeaderContent } from '@views/dashboard/forbearance/components/forbearance-header/content';
+import { Component } from '@angular/core';
+import { FORBEARANCE_CONTENT } from '@views/dashboard/forbearance/forbearance.content';
 
 @Component({
   selector: 'brave-forbearance-header',
   templateUrl: './forbearance-header.component.html',
 })
-export class ForbearanceHeaderComponent implements OnInit {
-  content = forbearanceHeaderContent;
+export class ForbearanceHeaderComponent {
+  content = FORBEARANCE_CONTENT.header;
   constructor() {}
-
-  ngOnInit(): void {}
 }
