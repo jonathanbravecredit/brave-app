@@ -1,7 +1,7 @@
 import { Component, OnDestroy, ApplicationRef } from '@angular/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { catchError, first, tap } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
