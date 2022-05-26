@@ -37,7 +37,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
     private store: Store,
     private kycService: KycService,
     private analytics: AnalyticsService,
-    private interstitial: InterstitialService
+    private interstitial: InterstitialService,
   ) {
     super();
   }
@@ -70,7 +70,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
    *   - send answer to TU
    *   - if response is unsuccessful or no data returned, bailout (with error)
    *   - else if successful and response in data is success, complete onboarding
-   *   - else the code is increect and display message to user...DO NOT increment pin (already done)
+   *   - else the code is incorrect and display message to user...DO NOT increment pin (already done)
    * @param code
    */
   async processRequest(code: string, newpin: boolean = false): Promise<void> {
@@ -93,9 +93,9 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
         const answer = this.kycService.getPassCodeAnswer(passcodeQuestion, code);
         const resp = await this.kycService.sendVerifyAuthenticationQuestions(appData, [answer]);
         if (!newpin) {
-          !resp.success
-            ? await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp)
-            : await this.handleResponse(resp);
+          resp.success
+            ? await this.handleResponse(resp)
+            : await this.bailOut<IVerifyAuthenticationQuestionsResult>(resp);
         } else {
           this.updateViewState('sent');
         }
@@ -136,7 +136,6 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
       await this.handleIncorrect(resp);
       return;
     }
-
     const { ResponseType, AuthenticationStatus } = data;
     const type = ResponseType.toLowerCase();
     const status = AuthenticationStatus.toLowerCase();
@@ -189,6 +188,7 @@ export class KycIdverificationComponent extends KycBaseComponent implements OnIn
 
   async handleInProgress(resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>): Promise<void> {
     await this.kycService.handleVerificationInProgressFlow(resp);
+    this.updateViewState('error'); // DO NOT increment up pin attempt...already handled above
     this.interstitial.fetching$.next(false);
   }
 
