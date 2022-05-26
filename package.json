@@ -34,8 +34,7 @@
     "build-storybook-big": "node --max_old_space_size=8192 ./node_modules/@storybook/angular/bin/index.js --quiet -p 6006 -c .storybook",
     "chromatic": "npx chromatic --project-token 897995d581ea -d storybook-static/",
     "build:stats": "ng build --stats-json",
-    "bundle-analyzer": "webpack-bundle-analyzer dist/brave-app/stats.json",
-    "run:bundle-analysis": "npm run build:stats && bundle-analyzer"
+    "analyze:bundle": "npm run build:stats && webpack-bundle-analyzer dist/brave-app/stats.json"
   },
   "private": true,
   "dependencies": {
