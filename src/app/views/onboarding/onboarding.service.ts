@@ -46,9 +46,7 @@ export class OnboardingService implements OnDestroy {
    * Returns the user id from the authenticated user
    */
   async getUserId(): Promise<string | undefined> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({
-      bypassCache: true,
-    });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser();
     const attrs = await Auth.userAttributes(user);
     const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     return id;

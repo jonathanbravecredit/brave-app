@@ -45,9 +45,7 @@ export class SigninRedirectComponent implements OnDestroy {
 
   async onboardUser(): Promise<void> {
     try {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       const isNew = await this.sync.isUserBrandNew(id);

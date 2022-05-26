@@ -237,9 +237,7 @@ export class SyncService implements OnDestroy {
   ): Promise<AppDataStateModel> {
     let userId: string;
     if (id === "") {
-      const creds: CognitoUser = await this.auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
+      const creds: CognitoUser = await this.auth.currentAuthenticatedUser();
       const attrs = await this.auth.userAttributes(creds);
       userId = attrs?.filter((a) => a.Name === "sub")[0]?.Value;
     } else {

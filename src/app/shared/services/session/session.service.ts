@@ -54,9 +54,7 @@ export class SessionService {
   }
 
   async checkIfUserSignedIn(): Promise<boolean> {
-    const user = await Auth.currentAuthenticatedUser({
-      bypassCache: true,
-    });
+    const user = await Auth.currentAuthenticatedUser();
     return !!user;
   }
 
