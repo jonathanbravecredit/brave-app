@@ -6,7 +6,7 @@ import { OnboardingStateModel } from '@store/onboarding';
 import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { AppDataStateModel } from '@store/app-data/app-data.model';
 import { Router } from '@angular/router';
 import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
