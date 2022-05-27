@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICredentials } from '@aws-amplify/core';
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { Subject, Observable } from 'rxjs';
 
 @Injectable({

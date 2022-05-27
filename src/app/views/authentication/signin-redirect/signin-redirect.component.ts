@@ -3,10 +3,9 @@ import { AuthService } from '@shared/services/auth/auth.service';
 import { SyncService } from '@shared/services/sync/sync.service';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { Router } from '@angular/router';
-import { Auth } from 'aws-amplify';
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { Auth, CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import { CognitoUser } from 'amazon-cognito-identity-js';
-import { async, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
@@ -45,9 +44,7 @@ export class SigninRedirectComponent implements OnDestroy {
 
   async onboardUser(): Promise<void> {
     try {
-      const creds: CognitoUser = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
+      const creds: CognitoUser = await Auth.currentAuthenticatedUser();
       const attrs = await Auth.userAttributes(creds);
       const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
       const isNew = await this.sync.isUserBrandNew(id);

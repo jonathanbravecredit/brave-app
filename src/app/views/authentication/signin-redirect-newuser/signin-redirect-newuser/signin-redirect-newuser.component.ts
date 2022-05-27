@@ -1,7 +1,7 @@
 import { Component, OnDestroy, ApplicationRef } from '@angular/core';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
 import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { catchError, first, tap } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
@@ -38,9 +38,7 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
   }
 
   async onboardUser(): Promise<void> {
-    const user: CognitoUser = await Auth.currentAuthenticatedUser({
-      bypassCache: true,
-    });
+    const user: CognitoUser = await Auth.currentAuthenticatedUser();
     const attrs = await Auth.userAttributes(user);
     const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
     await this.sync.initUser(id);

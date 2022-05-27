@@ -19,6 +19,15 @@
     </div>
   </div>
 
+  <div class="flex justify-center items-center mb-2 mt-8 w-full" *ngIf="showDisputeButton">
+    <brave-filled-onlytext-button
+      braveDisputeButton
+      [type]="'tradeline'"
+      [tradeline]="tradelineDetailsConfig?.tradeline"
+      >Dispute in a few clicks</brave-filled-onlytext-button
+    >
+  </div>
+
   <brave-account-detail
     [data]="tradelineDetailsConfig.tradeline | tradelineToPages"
     [pages]="tradelinepages"
