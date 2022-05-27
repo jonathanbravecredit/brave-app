@@ -1,22 +1,30 @@
 <div class="my-8">
-  <ng-content></ng-content>
+  <!-- installment loan label -->
+  <ng-container *ngIf="viewType === 'installment'">
+    <div class="mb-4 flex items-center content-center">
+      <span class="material-icons" style="color: #9b51e0">label</span>
+      <h6 class="brave-h6 ml-2">{{ content.h1 }}</h6>
+    </div>
+    <div class="border-t mb-4" style="border-color: #9b51e0"></div>
+  </ng-container>
+
+  <!-- mortgage label -->
+  <ng-container *ngIf="viewType === 'mortgage'">
+    <div class="mb-4 flex items-center content-center">
+      <span class="material-icons" style="color: #56ccf2">label</span>
+      <h6 class="brave-h6 ml-2">{{ content.h2 }}</h6>
+    </div>
+    <div class="border-t mb-4" style="border-color: #56ccf2"></div>
+  </ng-container>
+
   <!-- cards go here -->
-  <ng-container *ngIf="accounts.length; else noAccounts">
-    <ng-container *ngFor="let card of cards">
+  <ng-container *ngIf="tradelines.length; else noAccounts">
+    <ng-container *ngFor="let tradeline of tradelines">
       <brave-credit-report-card
-        [creditorName]="card.creditorName"
-        [isOpen]="card.isOpen"
-        [firstFieldName]="card.firstFieldName"
-        [firstFieldValue]="card.firstFieldValue.toString()"
-        [firstFieldType]="card.firstFieldType"
-        [secondFieldName]="card.secondFieldName"
-        [secondFieldValue]="card.secondFieldValue.toString()"
-        [secondFieldType]="card.secondFieldType"
-        [thirdFieldName]="card.thirdFieldName"
-        [thirdFieldValue]="card.thirdFieldValue.toString()"
-        [status]="card.status"
+        [autoMap]="true"
+        [tradeline]="tradeline"
         [viewDetailOrientation]="viewDetailOrientation"
-        (viewDetailClick)="viewDetailClick.emit(card.tradeline)"
+        (viewDetailClick)="onViewDetail(tradeline)"
       ></brave-credit-report-card>
     </ng-container>
   </ng-container>
