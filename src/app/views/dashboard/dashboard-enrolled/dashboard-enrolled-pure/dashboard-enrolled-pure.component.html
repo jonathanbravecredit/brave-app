@@ -6,7 +6,7 @@
     class="bg-gray-50 p-4 cursor-pointer"
     (click)="onProgressTrackerClicked.emit()"
   >
-    <h5 class="text-sm">{{ initiative?.initiativeTitle }}</h5>
+    <p class="brave-h5 text-sm">{{ initiative?.initiativeTitle }}</p>
     <brave-circle-checktext-progressbar [steps]="initiativeSteps"></brave-circle-checktext-progressbar>
   </div>
 
@@ -101,8 +101,8 @@
   </div>
   <!-- <brave-links-onlytext-button  ></brave-links-onlytext-button> -->
 
-  <h5 class="mb-2 font-semibold text-lg">{{ content.h2 }}</h5>
-  <h6 class="mb-4 text-sm">{{ content.h3 }}</h6>
+  <p class="mb-2 brave-h5 font-semibold text-lg">{{ content.h2 }}</p>
+  <p class="mb-4 brave-h6 text-sm">{{ content.h3 }}</p>
   <div class="mt-2 flex flex-col justify-center items-center">
     <brave-dashboard-ads-carousel
       *ngIf="adsData"
@@ -134,7 +134,7 @@
 
   <brave-base-modal [isModalActive]="modalOpen" *ngIf="!initiative && data.dashScore && data.dashScore <= 675">
     <div class="w-full max-w-xs">
-      <h1 class="text-brave-blurple brave-h4 mb-6">First, let's learn about your credit goals</h1>
+      <p class="text-brave-blurple brave-h4 mb-6">First, let's learn about your credit goals</p>
       <p>
         Brave Credit users who take the actions we suggest can grow their scores
         <span class="font-bold text-lg">70 points or more*</span>
