@@ -2,7 +2,7 @@
   type="button"
   class="hover:cursor-pointer relative {{
     size === 'full' ? 'w-full mx-auto' : ''
-  }} flex bg-transparent font-sans text-sm text-indigo-800 font-bold text-left hover:cursor-pointer focus:outline-none"
+  }} flex bg-transparent font-sans text-sm text-indigo-800 text-left hover:cursor-pointer font-bold focus:outline-none {{open ? 'brightness-100' : 'brightness-150'}}"
   (click)="open = !open; open$.next(open); viewDetailClick.emit()"
 >
   <ng-container *ngIf="orientation === 'horizontal-right'">
