@@ -77,7 +77,7 @@ export class KycPhonenumberComponent extends KycBaseComponent implements OnInit,
 
   handleError(errors: { [key: string]: AbstractControl }): void {
     const phoneNum = errors.phone.value.input;
-    if (phoneNum.length < 10) {
+    if (!phoneNum || phoneNum.length < 10) {
       this.phoneError = true;
     }
 
