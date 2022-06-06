@@ -27,6 +27,7 @@ import {
   DISPUTE_REASONS_INACCURATE,
   DEFAULT_TRADELINE_DISPUTE_PROCESS_REASONS,
 } from "@views/dashboard/disputes/disputes-tradeline/disputes-tradeline-pure/constants";
+import { remove } from "lodash";
 import { Subscription } from "rxjs";
 import { filter, tap } from "rxjs/operators";
 import { DisputeReasonPageComponent } from "../dispute-reason-page/dispute-reason-page.component";
@@ -213,7 +214,10 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   removeSelection(idx: number): void {
-    const removed = this.selections.splice(idx, 1).pop();
+    if (idx < 0) return;
+    const removed = this.selections[idx];
+    if (!removed || !removed.reason || !removed.reason.id) return;
+    this.selections.splice(idx, 1); // this mutates
     this.selections = [...this.selections];
 
     // if the one being removed is custom, reset to 2 max and they'll need to reconfirm again if they add it back
@@ -225,9 +229,9 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // reset the static card selected status to false
     const origIdx: number = this.reasonCards.findIndex(
-      (v) => v.reason.id === removed?.reason.id
+      (v) => v.reason.id === removed?.reason?.id
     );
-    if (origIdx !== -1) {
+    if(origIdx !== -1) {
       this.reasonCards[origIdx].selected = false;
       this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
     }
