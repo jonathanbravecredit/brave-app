@@ -1,24 +1,33 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { ICircleProgressStep } from '@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar';
-import { IAdData } from '@shared/interfaces/ads.interface';
-import { Initiative } from '@shared/interfaces/progress-tracker.interface';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-import { AnalyticClickEvents } from '@shared/services/analytics/analytics/constants';
-import { DashboardService, IDashboardData } from '@shared/services/dashboard/dashboard.service';
-import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from "@angular/core";
+import { ICircleProgressStep } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
+import { IAdData } from "@shared/interfaces/ads.interface";
+import { Initiative } from "@shared/interfaces/progress-tracker.interface";
+import { IReferral } from "@shared/interfaces/referrals.interface";
+import { AnalyticClickEvents } from "@shared/services/analytics/analytics/constants";
+import {
+  DashboardService,
+  IDashboardData,
+} from "@shared/services/dashboard/dashboard.service";
+import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
 import {
   dashboardEnrolledContent,
   SNAPSHOT_SORT_ORDER,
-} from '@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content';
-import { IRecommendationText } from '@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface';
-import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { CreditReportMetric } from '@bravecredit/brave-sdk';
-import { IUpdatesMetrics } from '../../../../shared/interfaces/dashboard.interface';
+} from "@views/dashboard/dashboard-enrolled/dashboard-enrolled-pure/content";
+import { IRecommendationText } from "@views/dashboard/credit-mix/interfaces/credit-mix-calc-obj.interface";
+import { BehaviorSubject, combineLatest, Subscription } from "rxjs";
+import { tap } from "rxjs/operators";
+import { CreditReportMetric } from "@bravecredit/brave-sdk";
+import { IUpdatesMetrics } from "../../../../shared/interfaces/dashboard.interface";
 
 @Component({
-  selector: 'brave-dashboard-enrolled-pure',
-  templateUrl: './dashboard-enrolled-pure.component.html',
+  selector: "brave-dashboard-enrolled-pure",
+  templateUrl: "./dashboard-enrolled-pure.component.html",
 })
 export class DashboardEnrolledPureComponent implements OnDestroy {
   modalOpen: boolean = true;
@@ -35,7 +44,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Input() initiative: Initiative | null = null;
   @Input() initiativeSteps: ICircleProgressStep[] = [];
   @Input() futureScore: number = 0;
-  @Input() updatesMetrics: IUpdatesMetrics | undefined
+  @Input() updatesMetrics: IUpdatesMetrics | undefined;
 
   @Output() negativeItemsClicked: EventEmitter<void> = new EventEmitter();
   @Output() forbearanceItemsClicked: EventEmitter<void> = new EventEmitter();
@@ -48,7 +57,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Output() onProgressTrackerClicked: EventEmitter<void> = new EventEmitter();
 
   public score: number = 4;
-  public welcome: string = '';
+  public welcome: string = "";
   public updatedAt: string = new Date().toISOString();
   public content = dashboardEnrolledContent;
   public forbearanceClicked: boolean = false;
@@ -57,7 +66,10 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   public dashboardData$ = new BehaviorSubject<IDashboardData | null>(null);
   public dashboardDataSub$: Subscription | undefined;
 
-  constructor(private dashboardService: DashboardService, public featureflags: FeatureFlagsService) {
+  constructor(
+    private dashboardService: DashboardService,
+    public featureflags: FeatureFlagsService
+  ) {
     this.dashboardDataSub$ = combineLatest([
       this.dashboardService.dashReport$,
       this.dashboardService.dashSnapshots$,
@@ -74,12 +86,11 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
             dashSnapshots: val[1],
             dashTrends: val[2],
             dashScores: val[3],
-            // dashScore: val[4], //TODO
-            dashScore: 500,
+            dashScore: val[4],
             dashScoreSuppressed: val[5],
             dashMetrics: this.sortMetrics(val[6]),
           });
-        }),
+        })
       )
       .subscribe();
 
@@ -89,8 +100,8 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dashboardService.setUserName()
-    this.setWelcomeMessage()
+    this.dashboardService.setUserName();
+    this.setWelcomeMessage();
   }
 
   ngOnDestroy(): void {
@@ -105,7 +116,9 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     this.modalOpen = !this.modalOpen;
   }
 
-  sortMetrics(metrics: CreditReportMetric<any, any>[] | null): CreditReportMetric<any, any>[] | null {
+  sortMetrics(
+    metrics: CreditReportMetric<any, any>[] | null
+  ): CreditReportMetric<any, any>[] | null {
     if (!metrics) return null;
     return metrics.sort((a, b) => {
       return SNAPSHOT_SORT_ORDER[a.metricId] - SNAPSHOT_SORT_ORDER[b.metricId];
