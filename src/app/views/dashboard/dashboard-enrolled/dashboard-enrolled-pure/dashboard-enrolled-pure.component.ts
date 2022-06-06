@@ -74,7 +74,8 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
             dashSnapshots: val[1],
             dashTrends: val[2],
             dashScores: val[3],
-            dashScore: val[4],
+            // dashScore: val[4], //TODO
+            dashScore: 500,
             dashScoreSuppressed: val[5],
             dashMetrics: this.sortMetrics(val[6]),
           });

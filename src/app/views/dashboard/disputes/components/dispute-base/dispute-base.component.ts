@@ -224,11 +224,13 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // reset the static card selected status to false
-    const origIdx = this.reasonCards.findIndex(
+    const origIdx: number = this.reasonCards.findIndex(
       (v) => v.reason.id === removed?.reason.id
     );
-    this.reasonCards[origIdx].selected = false;
-    this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
+    if (origIdx !== -1) {
+      this.reasonCards[origIdx].selected = false;
+      this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
+    }
   }
 
   onRadioChanges(event: any): void {
