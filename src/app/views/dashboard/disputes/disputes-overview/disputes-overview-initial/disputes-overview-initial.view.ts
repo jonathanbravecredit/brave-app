@@ -75,7 +75,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
       if (!success) {
         this.router.navigate([routes.root.dashboard.disputes.error.segment], {
           queryParams: {
-            code: error?.Code,
+            code: error?.Code || '197',
           },
         });
       }
