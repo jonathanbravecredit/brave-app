@@ -1,15 +1,15 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
-import { environment } from '@environments/environment';
-import { CURRENT_CAMPAIGN } from '@shared/constants/campaign';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { IamService } from '@shared/services/auth/iam.service';
-import { FeatureFlagsService } from '@shared/services/featureflags/feature-flags.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Injectable, OnDestroy } from "@angular/core";
+import { environment } from "@environments/environment";
+import { CURRENT_CAMPAIGN } from "@shared/constants/campaign";
+import { IReferral } from "@shared/interfaces/referrals.interface";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { IamService } from "@shared/services/auth/iam.service";
+import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
+import { BehaviorSubject, Subscription } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ReferralsService implements OnDestroy {
   campaign = CURRENT_CAMPAIGN;
@@ -23,7 +23,7 @@ export class ReferralsService implements OnDestroy {
     private feature: FeatureFlagsService,
     private http: HttpClient,
     private auth: AuthService,
-    private iam: IamService,
+    private iam: IamService
   ) {
     this.isActiveSub$ = this.feature.referrals$.subscribe((isActive) => {
       this.isActive = isActive;
@@ -35,14 +35,25 @@ export class ReferralsService implements OnDestroy {
     this.isActiveSub$?.unsubscribe();
   }
 
-  async validateReferralCode(referralCode: string | undefined): Promise<{ valid: boolean }> {
+  async validateReferralCode(
+    referralCode: string | undefined
+  ): Promise<{ valid: boolean }> {
     if (!referralCode) return { valid: false };
-    const url = `${environment.api}/referral/validation/${referralCode}`;
-    const referralValidationRequest = await this.iam.signRequest(url, 'POST', {}, JSON.stringify({}));
-    const data = await fetch(referralValidationRequest);
-    const parsed: { valid: boolean } = await data.json();
-    this.referredByCodeValid$.next(parsed.valid);
-    return parsed;
+    try {
+      const url = `${environment.api}/referral/validation/${referralCode}`;
+      const referralValidationRequest = await this.iam.signRequest(
+        url,
+        "POST",
+        {},
+        JSON.stringify({})
+      );
+      const data = await fetch(referralValidationRequest);
+      const parsed: { valid: boolean } = await data.json();
+      this.referredByCodeValid$.next(parsed.valid);
+      return parsed;
+    } catch (err) {
+      return { valid: false };
+    }
   }
 
   /**
@@ -61,13 +72,25 @@ export class ReferralsService implements OnDestroy {
    * @returns
    */
 
-  async createReferral(sub: string, referredByCode?: string | null): Promise<any> {
+  async createReferral(
+    sub: string,
+    referredByCode?: string | null
+  ): Promise<any> {
     if (!this.isActive) return;
     try {
       const url = `${environment.api}/referral`;
-      let body = { id: sub, campaign: this.campaign } as { id: string; campaign: string; referredByCode?: string };
+      let body = { id: sub, campaign: this.campaign } as {
+        id: string;
+        campaign: string;
+        referredByCode?: string;
+      };
       body = referredByCode ? { ...body, referredByCode } : body;
-      let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
+      let signedReq = await this.iam.signRequest(
+        url,
+        "POST",
+        {},
+        JSON.stringify(body)
+      );
       return await fetch(signedReq);
     } catch (err) {
       throw err;
