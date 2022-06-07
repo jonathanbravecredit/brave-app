@@ -161,7 +161,7 @@ export class CreditreportService implements OnDestroy {
    * @returns {ITradeLinePartition[]}
    */
   getTradeLinePartitions(): ITradeLinePartition[] {
-    return this.tuReport.TrueLinkCreditReportType.TradeLinePartition || [];
+    return this.tuReport?.TrueLinkCreditReportType?.TradeLinePartition || [];
   }
 
   /**

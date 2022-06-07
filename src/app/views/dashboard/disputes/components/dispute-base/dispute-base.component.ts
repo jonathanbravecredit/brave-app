@@ -213,7 +213,10 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   removeSelection(idx: number): void {
-    const removed = this.selections.splice(idx, 1).pop();
+    if (idx < 0) return;
+    const removed = this.selections[idx];
+    if (!removed || !removed.reason) return;
+    this.selections.splice(idx, 1); // this mutates
     this.selections = [...this.selections];
 
     // if the one being removed is custom, reset to 2 max and they'll need to reconfirm again if they add it back
@@ -224,11 +227,13 @@ export class DisputeBaseComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // reset the static card selected status to false
-    const origIdx = this.reasonCards.findIndex(
-      (v) => v.reason.id === removed?.reason.id
+    const origIdx: number = this.reasonCards.findIndex(
+      (v) => v.reason.id === removed?.reason?.id
     );
-    this.reasonCards[origIdx].selected = false;
-    this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
+    if (origIdx >= 0) {
+      this.reasonCards[origIdx].selected = false;
+      this.reasonPageService.cardDeselected$.next(this.reasonCards[origIdx]);
+    }
   }
 
   onRadioChanges(event: any): void {
