@@ -55,6 +55,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
   @Output() creditMixClicked: EventEmitter<void> = new EventEmitter();
   @Output() referralsClicked: EventEmitter<void> = new EventEmitter();
   @Output() onProgressTrackerClicked: EventEmitter<void> = new EventEmitter();
+  @Output() onWaitlistClicked: EventEmitter<void> = new EventEmitter();
 
   public score: number = 4;
   public welcome: string = "";

@@ -1,6 +1,8 @@
 <ng-container *ngIf="dashboardData$ | async as data">
   <h2 class="text-lg font-semibold mb-4">{{ welcome }}</h2>
 
+  <button (click)="onWaitlistClicked.emit()" class="text-lg">WISHLIST</button>
+
   <div
     *ngIf="initiative && data.dashScore && data.dashScore <= 675"
     class="bg-gray-50 p-4 cursor-pointer"
