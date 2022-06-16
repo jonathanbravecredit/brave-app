@@ -40,6 +40,7 @@ export class IamService {
           service: 'execute-api',
           region: 'us-east-2',
         };
+
         const aws = new AwsClient(opts);
 
         const request = aws.sign(url, {

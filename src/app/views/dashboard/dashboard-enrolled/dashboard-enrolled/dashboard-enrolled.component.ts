@@ -70,8 +70,9 @@ export class DashboardEnrolledComponent implements OnDestroy {
   initiative: Initiative | null = null;
   initiative$: Subscription | undefined;
 
-  enrolledScore: string | undefined = this.store?.selectSnapshot((state) => state?.appData)?.agencies?.transunion
-    ?.enrollVantageScore?.serviceProductValue;
+  enrolledScore: string | undefined = this.store?.selectSnapshot(
+    (state) => state?.appData
+  )?.agencies?.transunion?.enrollVantageScore?.serviceProductValue;
   // private initiativeSub$: Subscription | undefined;
   initiativeSteps: ICircleProgressStep[] = [];
   futureScore: number = 0;

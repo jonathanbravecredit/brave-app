@@ -360,7 +360,6 @@ export class KycService {
   async handleVerificationInProgressFlow(
     resp: ITUServiceResponse<IVerifyAuthenticationQuestionsResult | undefined>,
   ): Promise<void> {
-    debugger;
     if (!resp.success || !resp.data) {
       // TU response or BC technical error
       this.handleGetAuthenticationBailout<IVerifyAuthenticationQuestionsResult>(resp);

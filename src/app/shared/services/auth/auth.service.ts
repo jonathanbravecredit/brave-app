@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 import { CognitoUser, CognitoUserSession, ISignUpResult } from 'amazon-cognito-identity-js';
 import { Router } from '@angular/router';
 import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 
 export interface NewUser {
   username: string;
