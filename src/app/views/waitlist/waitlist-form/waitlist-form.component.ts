@@ -61,14 +61,21 @@ export class WaitlistFormComponent
   emailError: boolean = false;
   emailErrorSub: Subscription;
 
+  alreadyOnWaitlist: boolean = false;
+  alreadyOnWaitlistSub: Subscription;
+
   constructor(fb: FormBuilder, public WaitlistService: WaitlistService) {
     super(fb, "waitlist-form");
     this.emailErrorSub = WaitlistService.emailError.subscribe((v) => {
       this.emailError = v;
     });
+    this.alreadyOnWaitlistSub = WaitlistService.alreadyOnWaitlist.subscribe((v) => {
+      this.alreadyOnWaitlist = v;
+    });
   }
 
   ngOnDestroy(): void {
     this.emailErrorSub.unsubscribe();
+    this.alreadyOnWaitlistSub.unsubscribe();
   }
 }

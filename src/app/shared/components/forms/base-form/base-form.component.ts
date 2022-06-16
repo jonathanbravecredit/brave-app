@@ -103,7 +103,6 @@ export class BaseFormComponent {
 
   submitForm(): void {
     this.parentForm.markAllAsTouched();
-    console.log("here", this.parentForm.valid);
     this.parentForm.valid
       ? this.onSubmit.emit(this.parentForm)
       : this.onSubmitError.emit(this.parentForm.controls);

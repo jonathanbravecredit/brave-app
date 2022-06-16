@@ -1,14 +1,16 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { IFilledOnlyTextButtonConfig } from "../../../shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component";
 import { WaitlistService } from "../waitlist.service";
 import { FormGroup } from "@angular/forms";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "brave-waitlist-welcome",
   templateUrl: "./waitlist-welcome.component.html",
 })
-export class WaitlistWelcomeComponent {
-  submitted: boolean = true;
+export class WaitlistWelcomeComponent implements OnDestroy {
+  submitted: boolean = false;
+  submittedSub: Subscription;
 
   getStartedButtonConfig: IFilledOnlyTextButtonConfig = {
     buttonSize: "wide",
@@ -18,9 +20,17 @@ export class WaitlistWelcomeComponent {
     full: false,
   };
 
-  constructor(public WaitlistService: WaitlistService) {}
+  constructor(public WaitlistService: WaitlistService) {
+    this.submittedSub = WaitlistService.addedToWaitlist.subscribe((v) => {
+      this.submitted = v;
+    });
+  }
 
   waitlistSubmit(formGroup: FormGroup) {
     this.WaitlistService.waitlistFormSubmit(formGroup);
+  }
+
+  ngOnDestroy(): void {
+    this.submittedSub.unsubscribe();
   }
 }
