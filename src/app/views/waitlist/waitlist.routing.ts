@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { WaitlistComponent } from "./waitlist.component";
 import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 import { WaitlistWelcomeComponent } from "./waitlist-welcome/waitlist-welcome.component";
+import { AuthResolver } from "../../shared/resolvers/auth/auth.resolver";
 const waitlist = routes.root.waitlist;
 // our routing scheme ===> layout/view/subview/subview2...
 const WaitlistRoutes: Routes = [
@@ -12,6 +13,7 @@ const WaitlistRoutes: Routes = [
     children: [
       {
         path: `${waitlist.welcome.segment}`,
+        resolve: { data: AuthResolver },
         component: WaitlistWelcomeComponent,
       },
     ],

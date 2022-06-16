@@ -1,23 +1,38 @@
-import { Component, EventEmitter, Inject, Input, Output, OnInit, HostListener } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
-import { IOutlineInputeConfig } from '../../inputs/outline-input/outline-input.component';
-import { IOutlineSelectInputConfig } from '../../inputs/outline-select-input/outline-select-input.component';
-import { IKbaMultipleChoiceConfig } from '../../inputs/kba-multiplechoice-input/kba-multiplechoice-input.component';
-import { ViewChild } from '@angular/core';
-import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
-import * as configs from '@shared/components/forms/base-form/base-form.constants';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  Output,
+  OnInit,
+  HostListener,
+} from "@angular/core";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+} from "@angular/forms";
+import { BehaviorSubject } from "rxjs";
+import { IOutlineInputeConfig } from "../../inputs/outline-input/outline-input.component";
+import { IOutlineSelectInputConfig } from "../../inputs/outline-select-input/outline-select-input.component";
+import { IKbaMultipleChoiceConfig } from "../../inputs/kba-multiplechoice-input/kba-multiplechoice-input.component";
+import { ViewChild } from "@angular/core";
+import { FilledSpinningButtonComponent } from "../../buttons/filled-spinning-button/filled-spinning-button.component";
+import * as configs from "@shared/components/forms/base-form/base-form.constants";
 
 interface ISubmitError {
   [key: string]: AbstractControl;
 }
 
 @Component({
-  selector: 'brave-base-form',
-  template: '',
+  selector: "brave-base-form",
+  template: "",
 })
 export class BaseFormComponent {
-  @ViewChild(FilledSpinningButtonComponent) spinner: FilledSpinningButtonComponent | undefined;
+  @ViewChild(FilledSpinningButtonComponent) spinner:
+    | FilledSpinningButtonComponent
+    | undefined;
 
   @Input() hideHint: boolean = false;
 
@@ -25,7 +40,9 @@ export class BaseFormComponent {
   @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter();
   @Output() onSubmitError: EventEmitter<ISubmitError> = new EventEmitter();
 
-  @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  @HostListener("document:keydown.enter", ["$event"]) onKeydownHandler(
+    event: KeyboardEvent
+  ) {
     this.submitForm();
     if (this.parentForm.valid && this.spinner) {
       this.spinner.clicked = true;
@@ -52,12 +69,13 @@ export class BaseFormComponent {
   public codeConfig: IOutlineInputeConfig = configs.CODE_CONFIG;
   public passwordConfig: IOutlineInputeConfig = configs.PASSWORD_CONFIG;
   public newPasswordConfig: IOutlineInputeConfig = configs.NEW_PASSWORD_CONFIG;
-  public confirmPasswordConfig: IOutlineInputeConfig = configs.CONFIRM_PASSWORD_CONFIG;
+  public confirmPasswordConfig: IOutlineInputeConfig =
+    configs.CONFIRM_PASSWORD_CONFIG;
   public emailConfig: IOutlineInputeConfig = configs.EMAIL_CONFIG;
 
   haveError$ = new BehaviorSubject<boolean>(false);
   haveError: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string = "";
 
   get formValues(): any {
     return this.parentForm.value;
@@ -66,8 +84,8 @@ export class BaseFormComponent {
   parentForm: FormGroup = new FormGroup({});
   constructor(
     fb: FormBuilder,
-    @Inject('name') private name: string,
-    @Inject('validators') validators: ValidatorFn[] = [],
+    @Inject("name") private name: string,
+    @Inject("validators") validators: ValidatorFn[] = []
   ) {
     this.parentForm = fb.group({ name: [name] }, { validators });
     this.parentForm.valueChanges.subscribe((value) => {
@@ -85,7 +103,10 @@ export class BaseFormComponent {
 
   submitForm(): void {
     this.parentForm.markAllAsTouched();
-    this.parentForm.valid ? this.onSubmit.emit(this.parentForm) : this.onSubmitError.emit(this.parentForm.controls);
+    console.log("here", this.parentForm.valid);
+    this.parentForm.valid
+      ? this.onSubmit.emit(this.parentForm)
+      : this.onSubmitError.emit(this.parentForm.controls);
   }
 
   formatInputName(idx: number): string {

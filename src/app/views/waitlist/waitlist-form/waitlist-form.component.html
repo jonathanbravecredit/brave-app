@@ -1,0 +1,13 @@
+<form class="flex-col flex justify-center items-center">
+    <div class="mb-9">
+        <div class="flex">
+            <brave-outline-input (onComponentReady)="addChild('firstName', $event)" [required]="true" class="mr-6" [config]="firstNameConfig"></brave-outline-input>
+            <brave-outline-input (onComponentReady)="addChild('flastName', $event)" [required]="true" [config]="lastNameConfig"></brave-outline-input>
+        </div>
+        <p *ngIf="waitListWelcomeService.emailError" class="mb-5 text-lg text-red-700 font-bold">Please enter valid email.</p>
+        <brave-outline-input (onComponentReady)="addChild('email', $event)" [required]="true" [config]="emailConfig"></brave-outline-input>
+        <brave-outline-input (onComponentReady)="addChild('phoneNumber', $event)" [required]="true" [config]="phoneNumberConfig"></brave-outline-input>
+    </div>
+    <brave-filled-onlytext-button #spinner type="submit" [disabled]="!parentForm?.valid" (click)="submitForm()" [config]="signUpButtonConfig" class="mb-9">Sign Me Up</brave-filled-onlytext-button>
+    <p>By submitting my information, I agree to the <a href="https://www.app.brave.credit/legal/tos">Brave Credit Terms of Service</a>, <a href="https://www.app.brave.credit/legal/privacy">Privacy Policy</a>, and <a href="https://www.brave.credit/referral-promotion-terms">Referrals Terms</a></p>
+</form>
