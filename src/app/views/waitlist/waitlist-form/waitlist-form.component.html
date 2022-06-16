@@ -6,7 +6,7 @@
         </div>
         <p *ngIf="emailError" class="mb-5 text-lg text-red-700 font-bold">Please enter valid email.</p>
         <brave-outline-input (onComponentReady)="addChild('email', $event)" [required]="true" [config]="emailConfig"></brave-outline-input>
-        <brave-outline-input (onComponentReady)="addChild('phoneNumber', $event)" [required]="true" [config]="phoneNumberConfig"></brave-outline-input>
+        <brave-outline-input-phone (onComponentReady)="addChild('phoneNumber', $event)" [required]="true" [config]="phoneNumberConfig"></brave-outline-input-phone>
     </div>
     <p *ngIf="alreadyOnWaitlist">You are already on the waitlist.</p>
     <brave-filled-onlytext-button #spinner type="submit" [disabled]="!parentForm?.valid" (click)="submitForm()" [config]="signUpButtonConfig" class="mb-9">Sign Me Up</brave-filled-onlytext-button>

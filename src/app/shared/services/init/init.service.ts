@@ -1,34 +1,44 @@
-import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { OnboardingStateModel } from '@store/onboarding';
-import { OnboardingSelectors } from '@store/onboarding/onboarding.selectors';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from '@aws-amplify/auth';
-import { AppDataStateModel } from '@store/app-data/app-data.model';
-import { Router } from '@angular/router';
-import { AgenciesSelectors, AgenciesStateModel } from '@store/agencies';
-import { AppStatus } from '@shared/utils/brave/constants';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { Injectable } from "@angular/core";
+import { Store } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { filter } from "rxjs/operators";
+import { OnboardingStateModel } from "@store/onboarding";
+import { OnboardingSelectors } from "@store/onboarding/onboarding.selectors";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { Auth } from "@aws-amplify/auth";
+import { AppDataStateModel } from "@store/app-data/app-data.model";
+import { Router, ActivatedRoute } from "@angular/router";
+import { AgenciesSelectors, AgenciesStateModel } from "@store/agencies";
+import { AppStatus } from "@shared/utils/brave/constants";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class InitService {
   private data: AppDataStateModel | undefined;
   onboarding: OnboardingStateModel = {} as OnboardingStateModel;
-  private onboarding$: Observable<OnboardingStateModel> = this.store.select(OnboardingSelectors.getOnboarding);
+  private onboarding$: Observable<OnboardingStateModel> = this.store.select(
+    OnboardingSelectors.getOnboarding
+  );
   onboardingSub$: Subscription;
 
   private agencies: AgenciesStateModel = {} as AgenciesStateModel;
-  private agencies$: Observable<AgenciesStateModel> = this.store.select(AgenciesSelectors.getAgencies);
+  private agencies$: Observable<AgenciesStateModel> = this.store.select(
+    AgenciesSelectors.getAgencies
+  );
   agenciesSub$: Subscription;
 
-  constructor(private store: Store, private sync: SyncService, private router: Router) {
+  constructor(
+    private store: Store,
+    private sync: SyncService,
+    private router: Router
+  ) {
     this.onboardingSub$ = this.onboarding$
-      .pipe(filter((onboarding: OnboardingStateModel) => onboarding !== undefined))
+      .pipe(
+        filter((onboarding: OnboardingStateModel) => onboarding !== undefined)
+      )
       .subscribe((onboarding: OnboardingStateModel) => {
         this.onboarding = onboarding;
       });
@@ -61,11 +71,17 @@ export class InitService {
         status = await this.handleListeners(id);
         // if suspended, go to suspended page
         const isSuspended: AppStatus = this.data?.status as AppStatus;
+
+        const isAtWaitlist = this.router.url.indexOf("waitlist") >= 0;
+
         // go to onboarding if not onboarded, otherwise return true
-        status = await this.handleRouting(isOnboarded || false, isSuspended);
+        status = await this.handleRouting(
+          isOnboarded || false,
+          isAtWaitlist ? "waitlist" : isSuspended
+        );
         return status;
       } catch (err) {
-        console.log('error in resolver ===> ', err);
+        console.log("error in resolver ===> ", err);
         this.router.navigate([routes.root.auth.signin.full]); // need a please confirm account view
         return false;
       }
@@ -81,7 +97,7 @@ export class InitService {
       }
       return true;
     } catch (err) {
-      console.log('handleUser:error ===> ', err);
+      console.log("handleUser:error ===> ", err);
       return false;
     }
   }
@@ -91,12 +107,16 @@ export class InitService {
       await this.subscribeToListeners(id);
       return true;
     } catch (err) {
-      console.log('subscribeToListeners:error ==> ', err);
+      console.log("subscribeToListeners:error ==> ", err);
       return false;
     }
   }
 
-  async handleRouting(isOnboarded: boolean, status: AppStatus): Promise<boolean> {
+  async handleRouting(
+    isOnboarded: boolean,
+    status: AppStatus | "waitlist"
+  ): Promise<boolean> {
+    if (status === "waitlist") return false;
     if (status === AppStatus.Suspended) {
       this.router.navigate([routes.root.suspended.default.full]);
       return false;
@@ -120,7 +140,7 @@ export class InitService {
   async getUserId(): Promise<string | undefined> {
     const user: CognitoUser = await Auth.currentAuthenticatedUser();
     const attrs = await Auth.userAttributes(user);
-    const id = attrs?.filter((a) => a.Name === 'sub')[0]?.Value;
+    const id = attrs?.filter((a) => a.Name === "sub")[0]?.Value;
     return id;
   }
 
