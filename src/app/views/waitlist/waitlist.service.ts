@@ -8,17 +8,14 @@ import {
   NeverBounceResponse,
 } from "@shared/services/neverbounce/neverbounce.service";
 import { AuthService } from "@shared/services/auth/auth.service";
-import { AuthResolverResults } from "@shared/resolvers/auth/auth.resolver";
 import { IamService } from "../../shared/services/auth/iam.service";
-import { generate } from "generate-password";
 import { WaitlistFormModel } from "../../shared/interfaces/waitlist.interface";
 import { Waitlist } from "@bravecredit/brave-sdk/dist/models";
-
+import { InterstitialService } from "../../shared/services/interstitial/interstitial.service";
 @Injectable({
   providedIn: "root",
 })
 export class WaitlistService implements OnDestroy {
-  hasReferralCode: boolean = false;
   referralCode: string | null | undefined;
   routeSub$: Subscription | undefined;
   emailError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -33,41 +30,40 @@ export class WaitlistService implements OnDestroy {
     lastName: "",
     email: "",
     phone: "",
-    referralCode: "",
+    referredByCode: "",
   };
 
   constructor(
     private route: ActivatedRoute,
     private neverBounce: NeverbounceService,
     private iam: IamService,
-    private Auth: AuthService
+    private Auth: AuthService,
+    private InterstitialService: InterstitialService
   ) {
     this.subscribeToRouteDate();
-    if (this.hasReferralCode && this.referralCode) {
-      this.waitlistForm.referralCode = this.referralCode;
-    }
   }
 
   async waitlistFormSubmit(parentForm: FormGroup) {
     let { firstName, lastName, email, phoneNumber } = parentForm.value;
-    console.log("here", parentForm);
     this.waitlistForm.email = email.input;
     this.waitlistForm.firstName = firstName.input;
     this.waitlistForm.lastName = lastName.input;
     this.waitlistForm.phone = phoneNumber.input;
 
-    this.emailError.next(await this.checkIfEmailIsValid(email.input));
+    let isValid = await this.checkIfEmailIsValid(email.input);
+
+    if (!isValid) {
+      this.emailError.next(true);
+      this.InterstitialService.fetching$.next(false);
+      return;
+    }
 
     let isUser: boolean = await this.checkIfUser(email.input);
 
     if (!isUser) {
-      const password = generate({
-        length: 10,
-        numbers: true,
-      });
-      const signUpResp = await this.Auth.signUp({
-        username: email,
-        password: password,
+      await this.Auth.signUp({
+        username: email.input,
+        password: "Brave123$",
       });
     }
 
@@ -75,16 +71,19 @@ export class WaitlistService implements OnDestroy {
 
     if (waitlistCheckResponse) {
       this.alreadyOnWaitlist.next(true);
+      this.InterstitialService.fetching$.next(false);
     } else {
+      this.alreadyOnWaitlist.next(false);
       let addToWaitlistResult = await this.addRecordToWaitlist();
       this.addedToWaitlist.next(addToWaitlistResult);
+      this.InterstitialService.fetching$.next(false);
     }
   }
 
   async checkIfEmailIsValid(email: string): Promise<boolean> {
     const resp: Response = await this.neverBounce.validateEmail(email);
     const body: NeverBounceResponse = await resp.json();
-    return body.result.toLowerCase() === "valid" ? false : true;
+    return body.result.toLowerCase() === "valid" ? true : false;
   }
 
   async checkIfUser(email: string): Promise<boolean> {
@@ -120,9 +119,8 @@ export class WaitlistService implements OnDestroy {
   }
 
   subscribeToRouteDate(): void {
-    this.routeSub$ = this.route.data.subscribe((resp: any) => {
-      this.hasReferralCode = resp.data?.hasReferralCode;
-      this.referralCode = resp.data?.referralCode;
+    this.routeSub$ = this.route.queryParams.subscribe((resp: any) => {
+      this.waitlistForm.referredByCode = resp.referralCode;
     });
   }
 }

@@ -3,5 +3,5 @@ export interface WaitlistFormModel {
   lastName: string;
   email: string;
   phone: string;
-  referralCode: string
+  referredByCode: string;
 }

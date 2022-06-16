@@ -1,14 +1,14 @@
 <form class="flex-col flex justify-center items-center">
-    <div class="mb-9">
+    <div class="mb-5">
         <div class="flex">
             <brave-outline-input (onComponentReady)="addChild('firstName', $event)" [required]="true" class="mr-6" [config]="firstNameConfig"></brave-outline-input>
             <brave-outline-input (onComponentReady)="addChild('lastName', $event)" [required]="true" [config]="lastNameConfig"></brave-outline-input>
         </div>
-        <p *ngIf="emailError" class="mb-5 text-lg text-red-700 font-bold">Please enter valid email.</p>
         <brave-outline-input (onComponentReady)="addChild('email', $event)" [required]="true" [config]="emailConfig"></brave-outline-input>
+        <p *ngIf="emailError" class="-mt-5 text-sm text-red-700 font-bold">Please enter valid email.</p>
         <brave-outline-input-phone (onComponentReady)="addChild('phoneNumber', $event)" [required]="true" [config]="phoneNumberConfig"></brave-outline-input-phone>
     </div>
-    <p *ngIf="alreadyOnWaitlist">You are already on the waitlist.</p>
-    <brave-filled-onlytext-button #spinner type="submit" [disabled]="!parentForm?.valid" (click)="submitForm()" [config]="signUpButtonConfig" class="mb-9">Sign Me Up</brave-filled-onlytext-button>
+    <p *ngIf="alreadyOnWaitlist" class="-mt-5 text-sm text-red-700 font-bold">You are already on the waitlist.</p>
+    <brave-filled-spinning-button #spinner type="submit" [disabled]="!parentForm?.valid" (click)="submitForm()" color="text-white" backgroundColor="bg-fuchsia-500" class="mb-9 mt-4"><span class="text-lg">Sign Me Up</span></brave-filled-spinning-button>
     <p class="mb-6">By submitting my information, I agree to the <a href="https://www.app.brave.credit/legal/tos">Brave Credit Terms of Service</a>, <a href="https://www.app.brave.credit/legal/privacy">Privacy Policy</a>, and <a href="https://www.brave.credit/referral-promotion-terms">Referrals Terms</a></p>
 </form>

@@ -13,7 +13,6 @@ const WaitlistRoutes: Routes = [
     children: [
       {
         path: `${waitlist.welcome.segment}`,
-        resolve: { data: AuthResolver },
         component: WaitlistWelcomeComponent,
       },
     ],

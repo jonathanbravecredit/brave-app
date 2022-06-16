@@ -206,8 +206,4 @@ export class DashboardEnrolledComponent implements OnDestroy {
   onProgressTrackerClicked() {
     this.router.navigate([routes.root.dashboard.progresstracker.full]);
   }
-
-  onWaitlistClicked() {
-    this.router.navigate([routes.root.waitlist.welcome.full]); //TODO REMOVE
-  }
 }

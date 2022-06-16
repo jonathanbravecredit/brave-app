@@ -2,7 +2,7 @@
     <h1 class="brave-h3 my-8">Better credit with your friends</h1>
     <p class="mb-6"><span class="font-bold">Build better credit</span> with a one-of-a-kind secured card that pays itself off</p>
     <p class="mb-6"><span class="font-bold">Buy what you need</span> with 0% APR loans on card purchases you pay off over time alone or with friends</p>
-    <brave-filled-onlytext-button [config]="getStartedButtonConfig" class="mb-3 mt-3">Get Started</brave-filled-onlytext-button>
+    <brave-filled-onlytext-button (click)="goToForm()" [config]="getStartedButtonConfig" class="mb-3 mt-3">Get Started</brave-filled-onlytext-button>
 </div>
 
 <div class="bg-slate-50 flex flex-col justify-center items-center p-6">
