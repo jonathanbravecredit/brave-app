@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { IFilledOnlyTextButtonConfig } from "../../../shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component";
-import { WaitlistWelcomeService } from "./waitlist-welcome.service";
+import { WaitlistService } from "../waitlist.service";
+import { FormGroup } from "@angular/forms";
 
 @Component({
   selector: "brave-waitlist-welcome",
@@ -17,7 +18,9 @@ export class WaitlistWelcomeComponent {
     full: false,
   };
 
-  constructor(
-    public waitListWelcomeService: WaitlistWelcomeService,
-  ) {}
+  constructor(public WaitlistService: WaitlistService) {}
+
+  waitlistSubmit(formGroup: FormGroup) {
+    this.WaitlistService.waitlistFormSubmit(formGroup);
+  }
 }

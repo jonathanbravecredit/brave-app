@@ -4,7 +4,7 @@
             <brave-outline-input (onComponentReady)="addChild('firstName', $event)" [required]="true" class="mr-6" [config]="firstNameConfig"></brave-outline-input>
             <brave-outline-input (onComponentReady)="addChild('flastName', $event)" [required]="true" [config]="lastNameConfig"></brave-outline-input>
         </div>
-        <p *ngIf="waitListWelcomeService.emailError" class="mb-5 text-lg text-red-700 font-bold">Please enter valid email.</p>
+        <p *ngIf="emailError" class="mb-5 text-lg text-red-700 font-bold">Please enter valid email.</p>
         <brave-outline-input (onComponentReady)="addChild('email', $event)" [required]="true" [config]="emailConfig"></brave-outline-input>
         <brave-outline-input (onComponentReady)="addChild('phoneNumber', $event)" [required]="true" [config]="phoneNumberConfig"></brave-outline-input>
     </div>

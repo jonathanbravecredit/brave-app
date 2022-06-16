@@ -1,15 +1,19 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { BaseFormComponent } from "../../../shared/components/forms/base-form/base-form.component";
 import { FormBuilder } from "@angular/forms";
 import { IOutlineInputeConfig } from "../../../shared/components/inputs/outline-input/outline-input.component";
 import { IFilledOnlyTextButtonConfig } from "../../../shared/components/buttons/filled-onlytext-button/filled-onlytext-button.component";
-import { WaitlistWelcomeService } from "../waitlist-welcome/waitlist-welcome.service";
+import { WaitlistService } from "../waitlist.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "brave-waitlist-form",
   templateUrl: "./waitlist-form.component.html",
 })
-export class WaitlistFormComponent extends BaseFormComponent {
+export class WaitlistFormComponent
+  extends BaseFormComponent
+  implements OnDestroy
+{
   firstNameConfig: IOutlineInputeConfig = {
     size: "base",
     label: "First Name",
@@ -54,10 +58,17 @@ export class WaitlistFormComponent extends BaseFormComponent {
     full: false,
   };
 
-  constructor(
-    fb: FormBuilder,
-    public waitListWelcomeService: WaitlistWelcomeService
-  ) {
+  emailError: boolean = false;
+  emailErrorSub: Subscription;
+
+  constructor(fb: FormBuilder, public WaitlistService: WaitlistService) {
     super(fb, "waitlist-form");
+    this.emailErrorSub = WaitlistService.emailError.subscribe((v) => {
+      this.emailError = v;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.emailErrorSub.unsubscribe();
   }
 }
