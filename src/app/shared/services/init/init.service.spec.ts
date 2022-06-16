@@ -21,13 +21,9 @@ describe("InitService", () => {
 
   beforeEach(() => {
     _currentAuthenticatedUser = Auth.currentAuthenticatedUser;
-    Auth.currentAuthenticatedUser = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({}));
+    Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.resolve({}));
     _signUp = Auth.signUp;
-    Auth.signUp = jasmine
-      .createSpy()
-      .and.returnValue(Promise.resolve({} as any));
+    Auth.signUp = jasmine.createSpy().and.returnValue(Promise.resolve({} as any));
   });
 
   afterEach(() => {
@@ -133,6 +129,7 @@ describe("InitService", () => {
   it("should run handleRouting on resolver if id", fakeAsync(() => {
     let spy = spyOn(service, "getUserId");
     spy.and.returnValue(Promise.resolve("test"));
+    routerMock.url = "test";
     spyOn(service, "handleRouting");
     service.resolver();
     tick();
@@ -188,9 +185,7 @@ describe("InitService", () => {
   }));
 
   it("should return false on handleRouting if !isOnboarded", fakeAsync(() => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
-      Promise.resolve(new CogUser() as unknown as CognitoUser)
-    );
+    (Auth.currentAuthenticatedUser as any).and.returnValue(Promise.resolve(new CogUser() as unknown as CognitoUser));
     spyOn(service, "goToLastOnboarded");
     service.handleRouting(false, {} as AppStatus).then((res) => {
       expect(res).toBeFalse();
@@ -199,25 +194,19 @@ describe("InitService", () => {
   }));
 
   it("should run router.navigate on handleRouting if isOnboarded", () => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
-      Promise.resolve(new CogUser() as unknown as CognitoUser)
-    );
+    (Auth.currentAuthenticatedUser as any).and.returnValue(Promise.resolve(new CogUser() as unknown as CognitoUser));
     service.handleRouting(true, {} as AppStatus);
     expect(routerMock.navigate).toHaveBeenCalled();
   });
 
   it("should run currentAuthenticatedUser on getUserId", fakeAsync(() => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
-      Promise.resolve(new CogUser() as unknown as CognitoUser)
-    );
+    (Auth.currentAuthenticatedUser as any).and.returnValue(Promise.resolve(new CogUser() as unknown as CognitoUser));
     service.getUserId();
     expect(Auth.currentAuthenticatedUser).toHaveBeenCalled();
   }));
 
   it("should run userAttributes on getUserId", fakeAsync(() => {
-    (Auth.currentAuthenticatedUser as any).and.returnValue(
-      Promise.resolve(new CogUser() as unknown as CognitoUser)
-    );
+    (Auth.currentAuthenticatedUser as any).and.returnValue(Promise.resolve(new CogUser() as unknown as CognitoUser));
     spyOn(Auth, "userAttributes");
     service.getUserId();
     tick();

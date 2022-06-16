@@ -88,7 +88,7 @@ export class BaseFormComponent {
     @Inject("validators") validators: ValidatorFn[] = []
   ) {
     this.parentForm = fb.group({ name: [name] }, { validators });
-    this.parentForm.valueChanges.subscribe((value) => {
+    this.parentForm?.valueChanges.subscribe((value) => {
       this.onChanges.emit(value);
     });
   }

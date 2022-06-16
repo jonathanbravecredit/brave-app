@@ -73,7 +73,6 @@ export class InitService {
         const isSuspended: AppStatus = this.data?.status as AppStatus;
 
         const isAtWaitlist = this.router.url.indexOf("waitlist") >= 0;
-
         // go to onboarding if not onboarded, otherwise return true
         status = await this.handleRouting(
           isOnboarded || false,
