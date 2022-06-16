@@ -16,4 +16,5 @@ const sizeSpecificClass: Record<string, any> = {
   sm: 'text-xs px-4 py-2 hover:shadow-md',
   base: 'text-sm px-6 py-3 hover:shadow-lg',
   lg: 'text-base px-8 py-3 hover:shadow-lg',
+  wide: 'text-base px-12 py-4 hover:shadow-lg',
 };
