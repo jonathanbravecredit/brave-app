@@ -16,7 +16,7 @@ export interface IFilledOnlyTextButtonConfig {
 export class FilledOnlytextButtonComponent {
   /**
    * @param config Input objctfor button customization
-   * @param config.buttonSize 'sm', 'base', 'lg'
+   * @param config.buttonSize 'sm', 'base', 'lg', 'wide'
    * @param config.backgroundColor Any global color "e.g. bg-indigo-800"
    * @param config.activeColor Any global color "e.g. bg-indigo-900"
    * @param config.color Any global color
