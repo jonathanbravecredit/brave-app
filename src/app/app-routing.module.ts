@@ -25,6 +25,10 @@ const routes: Routes = [
     loadChildren: () => import('./views/compliance/compliance.module').then((m) => m.ComplianceModule),
   },
   {
+    path: 'waitlist',
+    loadChildren: () => import('./views/waitlist/waitlist.module').then((m) => m.WaitlistModule),
+  },
+  {
     path: 'suspended',
     loadChildren: () => import('./views/suspended/suspended.module').then((m) => m.SuspendedModule),
   },

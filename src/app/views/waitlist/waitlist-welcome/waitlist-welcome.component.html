@@ -1,0 +1,47 @@
+<div class="flex flex-col justify-center items-center p-6 text-center">
+    <h1 class="brave-h3 my-8">Better credit with your friends</h1>
+    <p class="mb-6"><span class="font-bold">Build better credit</span> with a one-of-a-kind secured card that pays itself off</p>
+    <p class="mb-6"><span class="font-bold">Buy what you need</span> with 0% APR loans on card purchases you pay off over time alone or with friends</p>
+    <brave-filled-onlytext-button (click)="goToForm()" [config]="getStartedButtonConfig" class="mb-3 mt-3">Get Started</brave-filled-onlytext-button>
+</div>
+
+<div class="bg-slate-50 flex flex-col justify-center items-center p-6">
+    <img class="mt-6 mb-9" style="height: 177px; width: 177px;" src="https://d3e1i93f88eoxl.cloudfront.net/plant.svg"/>
+    <h2 class="brave-h6 mb-9">Starting is as easy as making any purchase</h2>
+    <div class="flex justify-center items-center mb-9">
+        <img class="mr-12" style="height: 71px; min-width: 71px" src="https://d3e1i93f88eoxl.cloudfront.net/piggy.svg"/>
+        <p>Open your Brave secured card -- there's no credit check! Direct deposit at least $500 into the secured account, your monthly spending limit</p>
+    </div>
+    <div class="flex justify-center items-center">
+        <img class="mr-12" style="height: 71px; width: 71px" src="https://d3e1i93f88eoxl.cloudfront.net/wallet.svg"/>
+        <p>Make everyday purchases up to your limit. At the end of the month the card pays itself off with its security deposit</p>
+    </div>
+
+    <div class="mt-8 flex flex-col justify-center items-center relative">
+        <img style="width: 477px; margin-bottom: 21rem;" src="https://d3e1i93f88eoxl.cloudfront.net/family.svg"/>
+        <div class="bg-white px-6 py-9 flex flex-col justify-between items-center absolute top-64" style="width: 287px">
+            <h3 class="brave-h6 mb-9 text-2xl text-center">Pay off purchases over time</h3>
+            <p class="mb-9">As your score improves, we'll give you an <span class="italic">unsecured credit limit</span> you have available to spend on your card</p>
+            <p>You can use it to pay off larger purchases over time, at 0% interest alone or with friends!</p>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-col justify-center items-center relative pb-6 px-6">
+    <h1 class="brave-h3 mb-9 mt-12 text-center">Ready to get started?</h1>
+    <p class="mb-9 text-center">Sign up for the wait list and get $20 in your account after launch*. If friends sign up with your code you'll both get $20 as well!</p>
+    <p class="mb-9 text-center">Fill out the info below and we'll reach out when we launch</p>
+
+    <brave-waitlist-form (onSubmit)="waitlistSubmit($event)"></brave-waitlist-form>
+
+    <div *ngIf="submitted" class="flex justify-center items-center w-full absolute top-28">
+        <div class="text-white w-3/4 bg-indigo-800 flex flex-col justify-between text-center items-center pb-12 pt-6 px-7">
+            <div class="w-full flex justify-end cursor-pointer text-2xl" (click)="submitted = false">
+                X
+            </div>
+            <h1 class="brave-h3 mb-9 text-white mt-6">You're on the waitlist!</h1>
+            <p class="mb-9"><span class="font-bold">Check your email</span> for your unique referral code to share the waitlist with friends. Remember you can earn $20 deposited to your Brave account after launch for every friend that signs up for the account!</p>
+            <p>Other terms and conditions apply.</p>
+        </div>
+    </div>
+</div>
