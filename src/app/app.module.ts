@@ -1,17 +1,24 @@
-import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injectable, Inject, InjectionToken, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxsModule } from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { environment } from '@environments/environment';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  ErrorHandler,
+  Injectable,
+  Inject,
+  InjectionToken,
+  NgModule,
+} from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { NgxsModule } from "@ngxs/store";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
+import { environment } from "@environments/environment";
+import { NgxMaskModule, IConfig } from "ngx-mask";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
 
 /* Add Amplify imports */
-import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
-import { Amplify } from '@aws-amplify/core';
-import awsconfig from '../aws-exports';
+import { AmplifyUIAngularModule } from "@aws-amplify/ui-angular";
+import { Amplify } from "@aws-amplify/core";
+import awsconfig from "../aws-exports";
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
 
@@ -19,27 +26,32 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
 Amplify.configure(awsconfig);
 
 /* Add HammerJs for gesture support */
-import * as Hammer from 'hammerjs';
-import { HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import Rollbar from 'rollbar';
+import * as Hammer from "hammerjs";
+import {
+  HammerModule,
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+} from "@angular/platform-browser";
+import Rollbar from "rollbar";
 
 /* shared modules */
-import { ChartsModule } from 'ng2-charts';
-import { SharedComponentsModule } from '@shared/components/shared-components.module';
-import { SharedDirectivesModule } from '@shared/directives/shared-directives.module';
-import { SharedServicesModule } from '@shared/services/shared-services.module';
-import { SharedPipesModule } from '@shared/pipes/shared-pipes.module';
-import { ViewsModule } from '@views/views.module';
-import { AuthenticationModule } from '@views/authentication/authentication.module';
-import { OnboardingModule } from '@views/onboarding/onboarding.module';
-import { braveState } from '@store/index';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from "ng2-charts";
+import { SharedComponentsModule } from "@shared/components/shared-components.module";
+import { SharedDirectivesModule } from "@shared/directives/shared-directives.module";
+import { SharedServicesModule } from "@shared/services/shared-services.module";
+import { SharedPipesModule } from "@shared/pipes/shared-pipes.module";
+import { ViewsModule } from "@views/views.module";
+import { AuthenticationModule } from "@views/authentication/authentication.module";
+import { OnboardingModule } from "@views/onboarding/onboarding.module";
+import { braveState } from "@store/index";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { GlobalErrorHandler } from '@shared/services/monitor/global-error-handler.provider';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ServerErrorInterceptor } from '@shared/interceptors/server-error.interceptor';
-import { HttpInterceptorService } from '@shared/interceptors/http-interceptor.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { ServerErrorInterceptor } from "@shared/interceptors/server-error.interceptor";
+import { HttpInterceptorService } from "@shared/interceptors/http-interceptor.service";
 // import { LayoutsModule } from '@layouts/layouts.module';
+import { WaitlistModule } from "./views/waitlist/waitlist.module";
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -49,7 +61,7 @@ export class MyHammerConfig extends HammerGestureConfig {
 }
 
 const rollbarConfig = {
-  accessToken: '9e101810b0324ace8ac669db610f528f',
+  accessToken: "9e101810b0324ace8ac669db610f528f",
   captureUncaught: true,
   captureUnhandledRejections: true,
 };
@@ -71,7 +83,7 @@ export function rollbarFactory() {
   return new Rollbar(rollbarConfig);
 }
 
-export const RollbarService = new InjectionToken<Rollbar>('rollbar');
+export const RollbarService = new InjectionToken<Rollbar>("rollbar");
 
 @NgModule({
   declarations: [AppComponent],
@@ -99,14 +111,23 @@ export const RollbarService = new InjectionToken<Rollbar>('rollbar');
     OnboardingModule,
     ViewsModule,
     AppRoutingModule,
+    WaitlistModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
     { provide: RollbarService, useFactory: rollbarFactory },
-    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
