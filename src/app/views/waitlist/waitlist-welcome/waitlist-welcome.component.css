@@ -1,0 +1,9 @@
+@media (min-width: 375px) {
+    .my-small-class {
+    font-size: 2rem;
+   }
+}
+
+.defaultFontSize {
+    font-size: 1.25rem;
+}

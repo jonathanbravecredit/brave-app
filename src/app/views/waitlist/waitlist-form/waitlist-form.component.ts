@@ -10,10 +10,7 @@ import { Subscription } from "rxjs";
   selector: "brave-waitlist-form",
   templateUrl: "./waitlist-form.component.html",
 })
-export class WaitlistFormComponent
-  extends BaseFormComponent
-  implements OnDestroy
-{
+export class WaitlistFormComponent extends BaseFormComponent implements OnDestroy {
   firstNameConfig: IOutlineInputeConfig = {
     size: "base",
     label: "First Name",
@@ -72,6 +69,12 @@ export class WaitlistFormComponent
     this.alreadyOnWaitlistSub = WaitlistService.alreadyOnWaitlist.subscribe((v) => {
       this.alreadyOnWaitlist = v;
     });
+  }
+
+  submitForm(): void {
+    this.emailError = false;
+    this.alreadyOnWaitlist = false;
+    super.submitForm();
   }
 
   ngOnDestroy(): void {

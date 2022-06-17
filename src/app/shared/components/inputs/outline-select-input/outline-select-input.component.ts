@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 
 export interface IOutlineSelectInputConfig {
   size: string;
@@ -9,8 +9,11 @@ export interface IOutlineSelectInputConfig {
 }
 
 @Component({
-  selector: 'brave-outline-select-input',
-  templateUrl: './outline-select-input.component.html',
+  selector: "brave-outline-select-input",
+  templateUrl: "./outline-select-input.component.html",
+  host: {
+    "(document:click)": "closeOpen($event)",
+  },
 })
 export class OutlineSelectInputComponent implements OnInit {
   private _required: boolean = false;
@@ -26,10 +29,10 @@ export class OutlineSelectInputComponent implements OnInit {
    * @param config.options select options to choose from
    */
   @Input() config: IOutlineSelectInputConfig = {
-    size: 'base',
-    label: 'Input label',
-    autocomplete: 'off',
-    options: ['one', 'two', 'three'],
+    size: "base",
+    label: "Input label",
+    autocomplete: "off",
+    options: ["one", "two", "three"],
   };
 
   @Input() validators: ValidatorFn[] = [];
@@ -99,7 +102,7 @@ export class OutlineSelectInputComponent implements OnInit {
   onComponentReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   public componentFormGroup: FormGroup = new FormBuilder().group({
-    input: [''],
+    input: [""],
   });
   public locked: boolean = false;
   public hidden: boolean = false;
@@ -126,6 +129,12 @@ export class OutlineSelectInputComponent implements OnInit {
   toggleOpen(e: MouseEvent): void {
     e.stopPropagation();
     this.isOpen = !this.isOpen;
+    this.componentFormGroup.controls.input.markAsTouched();
+  }
+
+  closeOpen(e: MouseEvent): void {
+    e.stopPropagation();
+    this.isOpen = false;
     this.componentFormGroup.controls.input.markAsTouched();
   }
 

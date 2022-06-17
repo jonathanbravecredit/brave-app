@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
 @Component({
   selector: "brave-waitlist-welcome",
   templateUrl: "./waitlist-welcome.component.html",
+  styleUrls: ["./waitlist-welcome.component.css"],
 })
 export class WaitlistWelcomeComponent implements OnDestroy {
   submitted: boolean = false;
