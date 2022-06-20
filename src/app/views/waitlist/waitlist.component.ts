@@ -9,8 +9,4 @@ export class WaitlistComponent implements OnInit {
   constructor(public router: Router) {}
 
   ngOnInit(): void {}
-
-  routeToBrave(event: MouseEvent) {
-    this.router.navigate(["./dashboard/init"]);
-  }
 }
