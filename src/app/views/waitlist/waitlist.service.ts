@@ -3,10 +3,7 @@ import { Injectable, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Subscription, BehaviorSubject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import {
-  NeverbounceService,
-  NeverBounceResponse,
-} from "@shared/services/neverbounce/neverbounce.service";
+import { NeverbounceService, NeverBounceResponse } from "@shared/services/neverbounce/neverbounce.service";
 import { AuthService } from "@shared/services/auth/auth.service";
 import { IamService } from "../../shared/services/auth/iam.service";
 import { WaitlistFormModel } from "../../shared/interfaces/waitlist.interface";
@@ -19,12 +16,8 @@ export class WaitlistService implements OnDestroy {
   referralCode: string | null | undefined;
   routeSub$: Subscription | undefined;
   emailError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  alreadyOnWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-  addedToWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  alreadyOnWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  addedToWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   waitlistForm: WaitlistFormModel = {
     firstName: "",
     lastName: "",
@@ -63,7 +56,7 @@ export class WaitlistService implements OnDestroy {
     if (!isUser) {
       await this.Auth.signUp({
         username: email.input,
-        password: "Brave123$",
+        password: Math.random().toString(36).slice(-8),
       });
     }
 
@@ -104,12 +97,7 @@ export class WaitlistService implements OnDestroy {
 
   async addRecordToWaitlist(): Promise<boolean> {
     const url = `${environment.api}/waitlist/account`;
-    let signedReq = await this.iam.signRequest(
-      url,
-      "POST",
-      {},
-      JSON.stringify(this.waitlistForm)
-    );
+    let signedReq = await this.iam.signRequest(url, "POST", {}, JSON.stringify(this.waitlistForm));
     let resp = await fetch(signedReq);
     return resp.status === 200 ? true : false;
   }

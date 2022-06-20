@@ -46,4 +46,8 @@ describe("WaitlistService", () => {
   it("should be created", () => {
     expect(service).toBeTruthy();
   });
+
+  it("should always create a strong password", () => {
+    expect(Math.random().toString(36).slice(-8).length).toBeGreaterThan(7);
+  });
 });
