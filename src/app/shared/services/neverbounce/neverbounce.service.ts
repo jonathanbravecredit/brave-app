@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { GuestBase } from '@shared/utils/guest/guest';
-import { GuestService } from '@shared/services/auth/guest.service';
-import { IamService } from '@shared/services/auth/iam.service';
-import { environment } from '@environments/environment';
+import { Injectable } from "@angular/core";
+import { GuestBase } from "@shared/utils/guest/guest";
+import { GuestService } from "@shared/services/auth/guest.service";
+import { IamService } from "@shared/services/auth/iam.service";
+import { environment } from "@environments/environment";
 
 export interface NeverBounceResponse {
   status: string;
@@ -13,7 +13,7 @@ export interface NeverBounceResponse {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class NeverbounceService extends GuestBase {
   constructor(private iam: IamService) {
@@ -23,7 +23,7 @@ export class NeverbounceService extends GuestBase {
   async validateEmail(email: string): Promise<Response> {
     const url = `${environment.api}/validation`;
     let body = { email };
-    let signedReq = await this.iam.signRequest(url, 'POST', {}, JSON.stringify(body));
+    let signedReq = await this.iam.signRequest(url, "POST", {}, JSON.stringify(body));
     return await fetch(signedReq);
   }
 }
