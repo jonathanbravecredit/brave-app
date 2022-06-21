@@ -31,7 +31,7 @@ export class WaitlistService implements OnDestroy {
     private neverBounce: NeverbounceService,
     private iam: IamService,
     private Auth: AuthService,
-    private InterstitialService: InterstitialService
+    private InterstitialService: InterstitialService,
   ) {
     this.subscribeToRouteDate();
   }
@@ -74,12 +74,15 @@ export class WaitlistService implements OnDestroy {
   }
 
   async checkIfEmailIsValid(email: string): Promise<boolean> {
-    const resp: Response = await this.neverBounce.validateEmail(email);
+    if (!email) return false;
+    const resp: Response | null = await this.neverBounce.validateEmail(email);
+    if (!resp) return false;
     const body: NeverBounceResponse = await resp.json();
     return body.result.toLowerCase() === "valid" ? true : false;
   }
 
   async checkIfUser(email: string): Promise<boolean> {
+    if (!email) return false;
     const url = `${environment.api}/validation/account/${email}`;
     let signedReq = await this.iam.signRequest(url, "GET", {});
     let resp = await fetch(signedReq);
@@ -88,6 +91,7 @@ export class WaitlistService implements OnDestroy {
   }
 
   async checkIfUserOnWaitlist(email: string): Promise<null | Waitlist> {
+    if (!email) return null;
     const url = `${environment.api}/waitlist/account/${email}`;
     let signedReq = await this.iam.signRequest(url, "GET", {});
     let resp = await fetch(signedReq);

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Auth } from '@aws-amplify/auth';
-import { AwsClient } from 'aws4fetch';
+import { Injectable } from "@angular/core";
+import { Auth } from "@aws-amplify/auth";
+import { AwsClient } from "aws4fetch";
 // import { ISigV4Config, SigV4 } from '@shared/utils/signatureV4/signatureV4';
 
 interface IAWS4FetchOptions {
@@ -15,7 +15,7 @@ interface IAWS4FetchOptions {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class IamService {
   constructor() {}
@@ -37,8 +37,8 @@ export class IamService {
           accessKeyId: essentialCredentials.accessKeyId,
           secretAccessKey: essentialCredentials.secretAccessKey,
           sessionToken: essentialCredentials.sessionToken,
-          service: 'execute-api',
-          region: 'us-east-2',
+          service: "execute-api",
+          region: "us-east-2",
         };
 
         const aws = new AwsClient(opts);
