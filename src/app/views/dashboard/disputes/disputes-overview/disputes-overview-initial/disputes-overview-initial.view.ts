@@ -75,7 +75,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
           },
         });
       }
-    } else if (dispute.disputeStatus?.toLowerCase() !== DisputeStatus.Cancelled) {
+    } else if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete) {
       // do I need to set the current dispute
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage("gathering results");
