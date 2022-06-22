@@ -62,12 +62,8 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
     const dispute: IDispute = entity.dispute;
     const { disputeId } = dispute;
     this.disputeService.currentDispute$.next(dispute);
-    const { disputeInvestigationResults: irID, disputeCreditBureau: cbID } =
-      dispute;
-    if (
-      dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete &&
-      (!irID || !cbID)
-    ) {
+    const { disputeInvestigationResults: irID, disputeCreditBureau: cbID } = dispute;
+    if (dispute.disputeStatus?.toLowerCase() === DisputeStatus.Complete && (!irID || !cbID)) {
       // the results are not saved...can attempt to gather them again
       // TODO need to handle this case...complete but no id's
       const resp = await this.transunion.getInvestigationResults(disputeId);
@@ -75,19 +71,15 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
       if (!success) {
         this.router.navigate([routes.root.dashboard.disputes.error.segment], {
           queryParams: {
-            code: error?.Code || '197',
+            code: error?.Code || "197",
           },
         });
       }
-    } else {
+    } else if (dispute.disputeStatus?.toLowerCase() !== DisputeStatus.Cancelled) {
       // do I need to set the current dispute
       this.interstitial.openInterstitial();
       this.interstitial.changeMessage("gathering results");
-      this.router.navigate([
-        routes.root.dashboard.disputes.findings.segment,
-        irID,
-        cbID,
-      ]);
+      this.router.navigate([routes.root.dashboard.disputes.findings.segment, irID, cbID]);
     }
   }
 
@@ -99,8 +91,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
       hasHistorical: false,
     };
 
-    if (!disputes || !disputes.length || !disputes.filter(Boolean).length)
-      return dummy;
+    if (!disputes || !disputes.length || !disputes.filter(Boolean).length) return dummy;
     // go through the dispute input arrays
     const sorted = [...disputes].sort((a, b) => {
       const openedA = new Date(a?.openedOn || 0);
@@ -112,9 +103,7 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
     const dispute = sorted[0];
     const items = dispute ? JSON.parse(dispute.disputeItems) : null;
     const currentDisputeArr =
-      items instanceof Array
-        ? this.mapDisputeItem(items[0], dispute)
-        : this.mapDisputeItem(items, dispute);
+      items instanceof Array ? this.mapDisputeItem(items[0], dispute) : this.mapDisputeItem(items, dispute);
 
     // check if historical disputes present
     const historicalDisputeArr = sorted.slice(1);
@@ -126,15 +115,8 @@ export class DisputesOverviewInitialView implements OnInit, OnDestroy {
   }
 
   // TODO find better interface than any here...dispute items are stored as JSON string in DB
-  private mapDisputeItem(
-    item: any,
-    dispute: IDispute | null | undefined
-  ): IDisputeCurrent {
-    const cases = [
-      ParserTypes.Tradeline,
-      ParserTypes.PersonalItem,
-      ParserTypes.PublicItem,
-    ];
+  private mapDisputeItem(item: any, dispute: IDispute | null | undefined): IDisputeCurrent {
+    const cases = [ParserTypes.Tradeline, ParserTypes.PersonalItem, ParserTypes.PublicItem];
     for (let i = 0; i < cases.length; i++) {
       if (item[cases[i]] !== undefined) {
         return parsers[cases[i]](item, dispute);
