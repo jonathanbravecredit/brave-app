@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NewUser } from '@shared/services/auth/auth.service';
-import { SignupState } from '@views/authentication/signup/signup/signup.component';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { NewUser } from "@shared/services/auth/auth.service";
+import { SignupState } from "@views/authentication/signup/signup/signup.component";
 
 @Component({
-  selector: 'brave-signup-pure',
-  templateUrl: './signup-pure.component.html',
+  selector: "brave-signup-pure",
+  templateUrl: "./signup-pure.component.html",
 })
 export class SignupPureComponent {
-  @Input() viewState: SignupState = 'init';
-  @Input() message: string = '';
+  @Input() viewState: SignupState = "init";
+  @Input() message: string = "";
   @Input() hasReferralCode: boolean = false;
   @Input() validReferralCode: boolean = false;
   @Input() fetchingFinished: boolean = false;
