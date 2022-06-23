@@ -33,7 +33,7 @@ export class SignupComponent implements OnDestroy {
     private analytics: AnalyticsService,
     private interstitial: InterstitialService,
     private neverBounce: NeverbounceService,
-    private referral: ReferralsService,
+    private referral: ReferralsService
   ) {
     this.subscribeToRouteDate();
   }

@@ -1,16 +1,16 @@
-import { ApplicationRef } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from 'aws-amplify';
-import { of } from 'rxjs';
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import { ApplicationRef } from "@angular/core";
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { Auth } from "aws-amplify";
+import { of } from "rxjs";
+import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 
-import { SigninRedirectComponent } from './signin-redirect.component';
+import { SigninRedirectComponent } from "./signin-redirect.component";
 
-describe('SigninRedirectComponent', () => {
+describe("SigninRedirectComponent", () => {
   let component: SigninRedirectComponent;
   let fixture: ComponentFixture<SigninRedirectComponent>;
   let routerMock: any;
@@ -22,18 +22,18 @@ describe('SigninRedirectComponent', () => {
   let interstitialMock: any;
 
   beforeEach(async () => {
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
-    syncMock = jasmine.createSpyObj('SyncService', [
-      'initUser',
-      'isUserBrandNew',
-      'subscribeToListeners',
-      'onboardUser',
+    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
+    syncMock = jasmine.createSpyObj("SyncService", [
+      "initUser",
+      "isUserBrandNew",
+      "subscribeToListeners",
+      "onboardUser",
     ]);
-    authMock = jasmine.createSpyObj('AuthService', ['socialSignIn']);
-    interstitialMock = jasmine.createSpyObj('InterstitialService', [
-      'changeMessage',
-      'openInterstitial',
-      'closeInterstitial',
+    authMock = jasmine.createSpyObj("AuthService", ["socialSignIn"]);
+    interstitialMock = jasmine.createSpyObj("InterstitialService", [
+      "changeMessage",
+      "openInterstitial",
+      "closeInterstitial",
     ]);
 
     await TestBed.configureTestingModule({
@@ -58,17 +58,17 @@ describe('SigninRedirectComponent', () => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.resolve(true));
     Auth.userAttributes = jasmine
       .createSpy()
-      .and.returnValue(Promise.resolve([{ Name: 'sub', Value: '1' } as CognitoUserAttribute]));
+      .and.returnValue(Promise.resolve([{ Name: "sub", Value: "1" } as CognitoUserAttribute]));
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should run cleanUp if isNew is truthy', fakeAsync(() => {
+  it("should run cleanUp if isNew is truthy", fakeAsync(() => {
     syncMock.isUserBrandNew.and.returnValue(Promise.resolve(true));
 
-    spyOn(component, 'cleanUp');
+    spyOn(component, "cleanUp");
 
     component.onboardUser();
 
@@ -77,7 +77,7 @@ describe('SigninRedirectComponent', () => {
     expect(component.cleanUp).toHaveBeenCalled();
   }));
 
-  it('should run router.navigate if isNew is truthy', fakeAsync(() => {
+  it("should run router.navigate if isNew is truthy", fakeAsync(() => {
     syncMock.isUserBrandNew.and.returnValue(Promise.resolve(true));
 
     component.onboardUser();
@@ -87,7 +87,7 @@ describe('SigninRedirectComponent', () => {
     expect(routerMock.navigate).toHaveBeenCalled();
   }));
 
-  it('should run initUser if isNew is falsy', fakeAsync(() => {
+  it("should run initUser if isNew is falsy", fakeAsync(() => {
     syncMock.isUserBrandNew.and.returnValue(Promise.resolve(false));
 
     component.onboardUser();
@@ -97,7 +97,7 @@ describe('SigninRedirectComponent', () => {
     expect(syncMock.initUser).toHaveBeenCalled();
   }));
 
-  it('should run subscribeToListeners if isNew is falsy', fakeAsync(() => {
+  it("should run subscribeToListeners if isNew is falsy", fakeAsync(() => {
     syncMock.isUserBrandNew.and.returnValue(Promise.resolve(false));
 
     component.onboardUser();
@@ -107,7 +107,7 @@ describe('SigninRedirectComponent', () => {
     expect(syncMock.subscribeToListeners).toHaveBeenCalled();
   }));
 
-  it('should run onboardUser if isNew is falsy', fakeAsync(() => {
+  it("should run onboardUser if isNew is falsy", fakeAsync(() => {
     syncMock.isUserBrandNew.and.returnValue(Promise.resolve(false));
 
     component.onboardUser();
@@ -117,10 +117,10 @@ describe('SigninRedirectComponent', () => {
     expect(syncMock.onboardUser).toHaveBeenCalled();
   }));
 
-  it('should run cleanUp if isNew is falsy', fakeAsync(() => {
+  it("should run cleanUp if isNew is falsy", fakeAsync(() => {
     syncMock.isUserBrandNew.and.returnValue(Promise.resolve(false));
 
-    spyOn(component, 'cleanUp');
+    spyOn(component, "cleanUp");
 
     component.onboardUser();
 
@@ -129,9 +129,9 @@ describe('SigninRedirectComponent', () => {
     expect(component.cleanUp).toHaveBeenCalled();
   }));
 
-  it('should run get item if error in try catch', fakeAsync(() => {
+  it("should run get item if error in try catch", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    spyOn(window.sessionStorage, 'getItem');
+    spyOn(window.sessionStorage, "getItem");
     component.onboardUser();
 
     tick();
@@ -139,10 +139,10 @@ describe('SigninRedirectComponent', () => {
     expect(window.sessionStorage.getItem).toHaveBeenCalled();
   }));
 
-  it('should run set item if error in try catch and retries is null', fakeAsync(() => {
+  it("should run set item if error in try catch and retries is null", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    spyOn(window.sessionStorage, 'setItem');
-    let spy = spyOn(window.sessionStorage, 'getItem');
+    spyOn(window.sessionStorage, "setItem");
+    let spy = spyOn(window.sessionStorage, "getItem");
     spy.and.returnValue(null);
     component.onboardUser();
 
@@ -151,11 +151,11 @@ describe('SigninRedirectComponent', () => {
     expect(window.sessionStorage.setItem).toHaveBeenCalled();
   }));
 
-  it('should run set item if error in try catch and retries is truthy', fakeAsync(() => {
+  it("should run set item if error in try catch and retries is truthy", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    spyOn(window.sessionStorage, 'setItem');
-    let spy = spyOn(window.sessionStorage, 'getItem');
-    spy.and.returnValue('test');
+    spyOn(window.sessionStorage, "setItem");
+    let spy = spyOn(window.sessionStorage, "getItem");
+    spy.and.returnValue("test");
     component.onboardUser();
 
     tick();
@@ -163,10 +163,10 @@ describe('SigninRedirectComponent', () => {
     expect(window.sessionStorage.setItem).toHaveBeenCalled();
   }));
 
-  it('should run get item if error in try catch and retries is > 0', fakeAsync(() => {
+  it("should run get item if error in try catch and retries is > 0", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    let spy = spyOn(window.sessionStorage, 'getItem');
-    spy.and.returnValue('10');
+    let spy = spyOn(window.sessionStorage, "getItem");
+    spy.and.returnValue("10");
     component.onboardUser();
 
     tick();
@@ -174,10 +174,10 @@ describe('SigninRedirectComponent', () => {
     expect(window.sessionStorage.getItem).toHaveBeenCalled();
   }));
 
-  it('should run socialSignIn if error in try catch and retries is > 0 and providers is thruthy', fakeAsync(() => {
+  it("should run socialSignIn if error in try catch and retries is > 0 and providers is thruthy", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    let spy = spyOn(window.sessionStorage, 'getItem');
-    spy.and.returnValue('10');
+    let spy = spyOn(window.sessionStorage, "getItem");
+    spy.and.returnValue("10");
     component.onboardUser();
 
     tick();
@@ -185,11 +185,11 @@ describe('SigninRedirectComponent', () => {
     expect(authMock.socialSignIn).toHaveBeenCalled();
   }));
 
-  it('should run cleanUp if error in try catch and retries is not > 0', fakeAsync(() => {
+  it("should run cleanUp if error in try catch and retries is not > 0", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    spyOn(component, 'cleanUp')
-    let spy = spyOn(window.sessionStorage, 'getItem');
-    spy.and.returnValue('0');
+    spyOn(component, "cleanUp");
+    let spy = spyOn(window.sessionStorage, "getItem");
+    spy.and.returnValue("0");
     component.onboardUser();
 
     tick();
@@ -197,10 +197,10 @@ describe('SigninRedirectComponent', () => {
     expect(component.cleanUp).toHaveBeenCalled();
   }));
 
-  it('should run cleanUp if error in try catch and retries is not > 0', fakeAsync(() => {
+  it("should run cleanUp if error in try catch and retries is not > 0", fakeAsync(() => {
     Auth.currentAuthenticatedUser = jasmine.createSpy().and.returnValue(Promise.reject(new Error()));
-    let spy = spyOn(window.sessionStorage, 'getItem');
-    spy.and.returnValue('0');
+    let spy = spyOn(window.sessionStorage, "getItem");
+    spy.and.returnValue("0");
     component.onboardUser();
 
     tick();
@@ -208,13 +208,13 @@ describe('SigninRedirectComponent', () => {
     expect(routerMock.navigate).toHaveBeenCalled();
   }));
 
-  it('should run remove item on cleanUp', () => {
-    spyOn(window.sessionStorage, 'removeItem');
+  it("should run remove item on cleanUp", () => {
+    spyOn(window.sessionStorage, "removeItem");
     component.cleanUp();
     expect(window.sessionStorage.removeItem).toHaveBeenCalled();
   });
 
-  it('should run closeInterstitial on cleanUp', () => {
+  it("should run closeInterstitial on cleanUp", () => {
     component.cleanUp();
     expect(interstitialMock.closeInterstitial).toHaveBeenCalled();
   });

@@ -1,8 +1,8 @@
 // see: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SignUp.html
 export enum SignUpErrors {
-  UsernameExistsException = 'UsernameExistsException',
-  InvalidPasswordException = 'InvalidPasswordException',
-  NotAuthorizedException = 'NotAuthorizedException',
+  UsernameExistsException = "UsernameExistsException",
+  InvalidPasswordException = "InvalidPasswordException",
+  NotAuthorizedException = "NotAuthorizedException",
 }
 
 export const SignUpErrorDescriptions: Record<any, string> = {
