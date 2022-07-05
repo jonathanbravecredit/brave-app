@@ -8,7 +8,7 @@
   <div *ngFor="let negativeAccounts of model.negativeAccounts">
     <brave-account-summary-with-details
       [showConfirmButton]="false"
-      [showDisputeButton]="true"
+      [showDisputeButton]="false"
       [tradelineDetailsConfig]="negativeAccounts | tradelineToDetails"
     >
     </brave-account-summary-with-details>
