@@ -10,7 +10,6 @@ import { DisputeReconfirmFilter } from "@views/dashboard/disputes/disputes-recon
 import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 import { Router } from "@angular/router";
 import { IPersonalItemsDetailsConfig } from "@views/dashboard/reports/credit-report/personalitems/components/personalitems-details/interfaces";
-import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
 
 @Directive({
   selector: "[braveDisputeButton]",
