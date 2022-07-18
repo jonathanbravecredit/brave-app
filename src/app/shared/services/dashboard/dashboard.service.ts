@@ -39,7 +39,9 @@ export interface IDashboardData {
   dashMetrics: CreditReportMetric<any, any>[] | null;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class DashboardService implements OnDestroy {
   state: AppDataStateModel | undefined;
   state$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
@@ -66,8 +68,9 @@ export class DashboardService implements OnDestroy {
   updatedOn$ = new BehaviorSubject<string | null>(null);
   updatedOnSub$: Subscription | undefined;
 
-  winddownNotifiedSub$: Subscription | undefined;
+  winddownNotified = false;
   winddownNotified$ = new BehaviorSubject<boolean>(false);
+  winddownNotifiedSub$: Subscription | undefined;
 
   welcome: string = "";
   name: string | undefined;
@@ -80,7 +83,6 @@ export class DashboardService implements OnDestroy {
     private statesvc: StateService,
     private reportService: CreditreportService,
     private transunion: TransunionService,
-    private alerts: AlertsService,
     private broadcast: BroadcastService,
   ) {
     this.subscribeToObservables();
@@ -121,15 +123,12 @@ export class DashboardService implements OnDestroy {
     });
 
     this.winddownNotifiedSub$ = this.winddownNotified$.subscribe((notified) => {
-      console.log("is not notified: ", !notified);
       const data = {
         name: "winddown-notification",
-        component: NotificationModalComponent,
       };
-      if (!notified) {
-        this.alerts.unregigisterAllAlerts();
-        this.broadcast.broadcast(EventKeys.SHOWALERT, JSON.stringify(data));
-        // this.alert.onShowAlertEvent<any>(JSON.stringify(data), NotificationModalComponent);
+      if (!this.winddownNotified) {
+        this.broadcast.broadcast(EventKeys.SHOWNOTIFICATION, JSON.stringify(data));
+        this.winddownNotified = true;
         this.winddownNotified$.next(true);
       }
     });
