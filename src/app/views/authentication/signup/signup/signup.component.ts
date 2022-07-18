@@ -1,25 +1,25 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
-import { AuthService, NewUser } from '@shared/services/auth/auth.service';
-import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SignUpErrorDescriptions, SignUpErrors } from '@views/authentication/signup/signup/content';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
-import { NeverBounceResponse, NeverbounceService } from '@shared/services/neverbounce/neverbounce.service';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
-import { ReferralsService } from '@shared/services/referrals/referrals.service';
-import { Subscription } from 'rxjs';
-import { AuthResolverResults } from '@shared/resolvers/auth/auth.resolver';
+import { Component, OnDestroy } from "@angular/core";
+import { ActivatedRoute, NavigationEnd, Params, Router } from "@angular/router";
+import { AuthService, NewUser } from "@shared/services/auth/auth.service";
+import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { SignUpErrorDescriptions, SignUpErrors } from "@views/authentication/signup/signup/content";
+import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
+import { NeverBounceResponse, NeverbounceService } from "@shared/services/neverbounce/neverbounce.service";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
+import { ReferralsService } from "@shared/services/referrals/referrals.service";
+import { Subscription } from "rxjs";
+import { AuthResolverResults } from "@shared/resolvers/auth/auth.resolver";
 
-export type SignupState = 'init' | 'invalid';
+export type SignupState = "init" | "invalid";
 
 @Component({
-  selector: 'brave-signup',
-  templateUrl: './signup.component.html',
+  selector: "brave-signup",
+  templateUrl: "./signup.component.html",
 })
 export class SignupComponent implements OnDestroy {
-  viewState: SignupState = 'init';
-  message: string = '';
+  viewState: SignupState = "init";
+  message: string = "";
   hasReferralCode: boolean = false;
   referralCode: string | null | undefined;
   validReferralCode: boolean = false;
@@ -58,13 +58,13 @@ export class SignupComponent implements OnDestroy {
    * @returns Promise
    */
   async signUpWithCognito(user: NewUser): Promise<void> {
-    if (!user) return;
+    if (!user || !user.username) return;
 
     let isValid: boolean = false;
     try {
       const resp: Response = await this.neverBounce.validateEmail(user.username);
       const body: NeverBounceResponse = await resp.json();
-      isValid = body.result.toLowerCase() === 'valid' ? true : false;
+      isValid = body.result.toLowerCase() === "valid" ? true : false;
     } catch (err) {
       isValid = false;
     }
@@ -77,19 +77,19 @@ export class SignupComponent implements OnDestroy {
         this.router.navigate([routes.root.auth.thankyou.full]);
       } catch (err: any) {
         if (err.code === SignUpErrors.UsernameExistsException) {
-          this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
+          this.handleSignupError("invalid", SignUpErrorDescriptions[SignUpErrors.UsernameExistsException]);
         } else if (err.code === SignUpErrors.NotAuthorizedException) {
-          this.handleSignupError('invalid', err.message);
+          this.handleSignupError("invalid", err.message);
         } else if (err.code === SignUpErrors.InvalidPasswordException) {
-          this.handleSignupError('invalid', SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]);
+          this.handleSignupError("invalid", SignUpErrorDescriptions[SignUpErrors.InvalidPasswordException]);
         } else {
-          console.log('unknown error', err);
-          this.handleSignupError('invalid', 'Unknown signup error');
+          console.log("unknown error", err);
+          this.handleSignupError("invalid", "Unknown signup error");
         }
       }
     } else {
       this.interstitial.fetching$.next(false);
-      this.handleSignupError('invalid', 'Please use a valid email');
+      this.handleSignupError("invalid", "Please use a valid email");
     }
   }
 
@@ -100,16 +100,16 @@ export class SignupComponent implements OnDestroy {
   handleSignupError(viewState: SignupState, message: string): void {
     this.viewState = viewState;
     this.message = message || `Invalid sign up credentials`;
-    this.interstitial.fetching$.next(false)
+    this.interstitial.fetching$.next(false);
   }
 
   handleAnalytics(sub: string): void {
     try {
-      this.analytics.fireCompleteRegistration(0.0, 'USD');
+      this.analytics.fireCompleteRegistration(0.0, "USD");
       this.analytics.fireUserTrackingEvent(sub);
       this.analytics.addToCohort();
     } catch (err) {
-      console.log('mixpanel error: ', err);
+      console.log("mixpanel error: ", err);
     }
   }
 
@@ -118,7 +118,7 @@ export class SignupComponent implements OnDestroy {
       const code = this.referralCode;
       this.referral.createReferral(sub, code);
     } catch (err) {
-      console.log('create referral error');
+      console.log("create referral error");
     }
   }
   /**
@@ -166,6 +166,6 @@ export class SignupComponent implements OnDestroy {
   }
 
   goToReferralTerms(): void {
-    document.location.href = 'https://www.brave.credit/referral-promotion-terms';
+    document.location.href = "https://www.brave.credit/referral-promotion-terms";
   }
 }

@@ -1,29 +1,33 @@
-import * as DashboardActions from '@store/dashboard/dashboard.actions';
-import * as _ from 'lodash';
-const dayjs = require('dayjs');
-import { Injectable, OnDestroy } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { IMergeReport } from '@shared/interfaces';
-import { APIService, UpdateAppDataInput } from '@shared/services/aws/api.service';
-import { CreditreportService } from '@shared/services/creditreport/creditreport.service';
-import { StateService } from '@shared/services/state/state.service';
-import { TransunionService } from '@shared/services/transunion/transunion.service';
-import { dateDiffInDays } from '@shared/utils/dates';
-import { AppDataStateModel } from '@store/app-data';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
-import { DashboardStateModel } from '@store/dashboard/dashboard.model';
-import { IAdData } from '@shared/interfaces/ads.interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@environments/environment';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { IGetTrendingData, IProductTrendingData } from '@shared/interfaces/get-trending-data.interface';
-import { ParseRiskScorePipe } from '@shared/pipes/parse-risk-score/parse-risk-score.pipe';
-import { Initiative } from '@shared/interfaces/progress-tracker.interface';
-import { IReferral } from '@shared/interfaces/referrals.interface';
-import { CreditReportMetric } from '@bravecredit/brave-sdk';
-import { BraveUtil } from '@shared/utils/brave/brave';
-import { IUpdatesMetrics } from '../../interfaces/dashboard.interface';
+import * as DashboardActions from "@store/dashboard/dashboard.actions";
+import * as _ from "lodash";
+const dayjs = require("dayjs");
+import { Injectable, OnDestroy } from "@angular/core";
+import { Store } from "@ngxs/store";
+import { IMergeReport } from "@shared/interfaces";
+import { APIService, UpdateAppDataInput } from "@shared/services/aws/api.service";
+import { CreditreportService } from "@shared/services/creditreport/creditreport.service";
+import { StateService } from "@shared/services/state/state.service";
+import { TransunionService } from "@shared/services/transunion/transunion.service";
+import { dateDiffInDays } from "@shared/utils/dates";
+import { AppDataStateModel } from "@store/app-data";
+import { BehaviorSubject, Observable, of, Subscription } from "rxjs";
+import { filter, switchMap } from "rxjs/operators";
+import { DashboardStateModel } from "@store/dashboard/dashboard.model";
+import { IAdData } from "@shared/interfaces/ads.interface";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "@environments/environment";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { IGetTrendingData, IProductTrendingData } from "@shared/interfaces/get-trending-data.interface";
+import { ParseRiskScorePipe } from "@shared/pipes/parse-risk-score/parse-risk-score.pipe";
+import { Initiative } from "@shared/interfaces/progress-tracker.interface";
+import { IReferral } from "@shared/interfaces/referrals.interface";
+import { CreditReportMetric } from "@bravecredit/brave-sdk";
+import { BraveUtil } from "@shared/utils/brave/brave";
+import { IUpdatesMetrics } from "../../interfaces/dashboard.interface";
+import { NotificationModalComponent } from "@shared/components/modals/notification-modal/notification-modal.component";
+import { AlertsService } from "@shared/services/alerts/alerts.service";
+import { BroadcastService } from "@shared/services/broadcast/broadcast.service";
+import { EventKeys } from "@shared/services/broadcast/broadcast.model";
 
 export interface IDashboardData {
   dashReport: IMergeReport | null;
@@ -35,7 +39,9 @@ export interface IDashboardData {
   dashMetrics: CreditReportMetric<any, any>[] | null;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class DashboardService implements OnDestroy {
   state: AppDataStateModel | undefined;
   state$: BehaviorSubject<AppDataStateModel> = new BehaviorSubject({} as AppDataStateModel);
@@ -62,7 +68,11 @@ export class DashboardService implements OnDestroy {
   updatedOn$ = new BehaviorSubject<string | null>(null);
   updatedOnSub$: Subscription | undefined;
 
-  welcome: string = '';
+  winddownNotified = false;
+  winddownNotified$ = new BehaviorSubject<boolean>(false);
+  winddownNotifiedSub$: Subscription | undefined;
+
+  welcome: string = "";
   name: string | undefined;
 
   constructor(
@@ -73,6 +83,7 @@ export class DashboardService implements OnDestroy {
     private statesvc: StateService,
     private reportService: CreditreportService,
     private transunion: TransunionService,
+    private broadcast: BroadcastService,
   ) {
     this.subscribeToObservables();
   }
@@ -82,6 +93,7 @@ export class DashboardService implements OnDestroy {
     this.dashScoresSub$?.unsubscribe();
     this.tuReportSub$?.unsubscribe();
     this.updatedOnSub$?.unsubscribe();
+    this.winddownNotifiedSub$?.unsubscribe();
   }
 
   subscribeToObservables(): void {
@@ -108,6 +120,17 @@ export class DashboardService implements OnDestroy {
       const delta = this.calculateDelta(scores);
       this.dashScore$.next(score || 4);
       this.dashDelta$.next(delta || 0);
+    });
+
+    this.winddownNotifiedSub$ = this.winddownNotified$.subscribe((notified) => {
+      const data = {
+        name: "winddown-notification",
+      };
+      if (!this.winddownNotified) {
+        this.broadcast.broadcast(EventKeys.SHOWNOTIFICATION, JSON.stringify(data));
+        this.winddownNotified = true;
+        this.winddownNotified$.next(true);
+      }
     });
   }
 
@@ -139,7 +162,7 @@ export class DashboardService implements OnDestroy {
   }
 
   getWelcomeMessage(): string {
-    return this.name ? `Welcome back, ${this.name}` : '';
+    return this.name ? `Welcome back, ${this.name}` : "";
   }
 
   getLastUpdated(): string | undefined {

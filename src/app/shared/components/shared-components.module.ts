@@ -86,6 +86,7 @@ import { GoalChoiceParentComponent } from "./goals/goal-choice-parent/goal-choic
 import { GoalChoiceCardComponent } from "@shared/components/goals/goal-choice-card/goal-choice-card.component";
 import { OnboardingDisputeV2Component } from "./modals/onboarding-dispute-v2/onboarding-dispute-v2.component";
 import { SimpleChangePasswordFormComponent } from "./forms/simple-change-password-form/simple-change-password-form.component";
+import { NotificationModalComponent } from './modals/notification-modal/notification-modal.component';
 
 const components = [
   BaseFormComponent,
@@ -183,7 +184,7 @@ const pipes = [
     RouterModule,
     NgxMaskModule,
   ],
-  declarations: [...components, ...pipes],
+  declarations: [...components, ...pipes, NotificationModalComponent],
   exports: [...components, ...pipes],
 })
 export class SharedComponentsModule {}
