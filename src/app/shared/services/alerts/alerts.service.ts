@@ -22,9 +22,8 @@ export class AlertsService {
   }
 
   onShowAlertEvent<T>(data: string) {
-    const { name, position, text, timed, timeout, component } = JSON.parse(data) as IAlertModel;
-    let comp = component || FilledClosingAlertComponent;
-    let ref = this.modalService.appendModalToBody(comp || FilledClosingAlertComponent);
+    const { name, position, text, timed, timeout } = JSON.parse(data) as IAlertModel;
+    let ref = this.modalService.appendModalToBody(FilledClosingAlertComponent);
     this.registerAlert(name, ref);
     this.modalService.bindData(ref, { name, position, text, timed, timeout });
   }

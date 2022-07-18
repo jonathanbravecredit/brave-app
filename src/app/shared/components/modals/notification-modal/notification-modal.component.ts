@@ -15,9 +15,6 @@ export class NotificationModalComponent {
 
   closeClick() {
     this.closeClicked.emit();
-    const data = {
-      name: "winddown-notification",
-    };
-    this.broadcast.broadcast(EventKeys.HIDEALERT, JSON.stringify(data));
+    this.broadcast.broadcast(EventKeys.HIDENOTIFICATION, "winddown-notification");
   }
 }
