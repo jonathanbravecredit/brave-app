@@ -15,24 +15,16 @@ export class AlertsService {
   private eventHideSub$: Subscription;
   alertStack: { [key: string]: ComponentRef<any> }[] = [];
 
-  constructor(
-    private broadcastService: BroadcastService,
-    private modalService: ModalService
-  ) {
+  constructor(private broadcastService: BroadcastService, public modalService: ModalService) {
     _.bindAll(this, ["onShowAlertEvent", "onHideAlertEvent"]);
-    this.eventShowSub$ = this.broadcastService
-      .on(EventKeys.SHOWALERT)
-      .subscribe(this.onShowAlertEvent);
-    this.eventHideSub$ = this.broadcastService
-      .on(EventKeys.HIDEALERT)
-      .subscribe(this.onHideAlertEvent);
+    this.eventShowSub$ = this.broadcastService.on(EventKeys.SHOWALERT).subscribe(this.onShowAlertEvent);
+    this.eventHideSub$ = this.broadcastService.on(EventKeys.HIDEALERT).subscribe(this.onHideAlertEvent);
   }
 
-  onShowAlertEvent(data: string) {
-    const { name, position, text, timed, timeout } = JSON.parse(
-      data
-    ) as IAlertModel;
-    let ref = this.modalService.appendModalToBody(FilledClosingAlertComponent);
+  onShowAlertEvent<T>(data: string) {
+    const { name, position, text, timed, timeout, component } = JSON.parse(data) as IAlertModel;
+    let comp = component || FilledClosingAlertComponent;
+    let ref = this.modalService.appendModalToBody(comp || FilledClosingAlertComponent);
     this.registerAlert(name, ref);
     this.modalService.bindData(ref, { name, position, text, timed, timeout });
   }
@@ -53,6 +45,10 @@ export class AlertsService {
       }
       return !obj[alertName];
     });
+  }
+
+  unregigisterAllAlerts() {
+    this.alertStack = [];
   }
 
   ngOnDestroy(): void {

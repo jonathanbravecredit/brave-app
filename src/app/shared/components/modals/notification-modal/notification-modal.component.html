@@ -1,0 +1,15 @@
+<brave-base-modal #baseModal [hideCloseButton]="false">
+  <div class="flex flex-col items-center mt-4">
+    <p>
+      <strong>{{ content.bold1 }}</strong
+      >{{ content.p1 }}
+    </p>
+    <p>
+      <strong>{{ content.bold2 }}</strong
+      >{{ content.p2 }}
+    </p>
+    <p>{{ content.p3 }}</p>
+    <div>&nbsp;</div>
+    <brave-filled-onlytext-button (click)="closeClick()">I Understand</brave-filled-onlytext-button>
+  </div>
+</brave-base-modal>
