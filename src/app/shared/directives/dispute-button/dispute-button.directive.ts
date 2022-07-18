@@ -30,7 +30,6 @@ export class DisputeButtonDirective implements OnDestroy {
     private modalService: ModalService,
     private disputeService: DisputeService,
     private interstitial: InterstitialService,
-    private featureflag: FeatureFlagsService,
   ) {}
 
   ngOnDestroy(): void {
