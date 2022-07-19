@@ -10,6 +10,7 @@ const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.tz.setDefault("America/Los_Angeles");
 
 @Component({
   selector: "brave-dashboard",
