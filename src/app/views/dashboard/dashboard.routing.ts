@@ -26,8 +26,8 @@ const DashboardRoutes: Routes = [
     children: [
       {
         path: `${dashboard.init.segment}`,
-        // component: DashboardEnrolledComponent,
-        component: DashboardEnrolledClosedComponent,
+        component: DashboardEnrolledComponent,
+        // component: DashboardEnrolledClosedComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {

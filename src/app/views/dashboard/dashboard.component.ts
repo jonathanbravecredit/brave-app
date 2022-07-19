@@ -15,7 +15,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
 
-  siteClosed: boolean = true;
+  siteClosed: boolean = false;
 
   public tag = RenderedViews.Dashboard;
   constructor(
