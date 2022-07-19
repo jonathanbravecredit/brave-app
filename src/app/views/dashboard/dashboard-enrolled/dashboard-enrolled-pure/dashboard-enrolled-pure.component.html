@@ -1,12 +1,6 @@
 <ng-container *ngIf="dashboardData$ | async as data">
   <h2 class="text-lg font-semibold mb-4">{{ welcome }}</h2>
 
-
-  <div class="w-full mb-4 bg-fuchsia-500 text-white rounded-lg flex justify-center items-center p-2">
-    <p class="text-center text-sm">Unfortunately after 8/31 Brave Credit’s app will become inaccessible. To see read the full announcement <span (click)="toggleModal()" class="underline decoration-2 cursor-pointer">click here</span>.</p>
-  </div>
-
-
   <div
     *ngIf="initiative && data.dashScore && data.dashScore <= 675"
     class="bg-gray-50 p-4 cursor-pointer"
