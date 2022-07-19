@@ -1,34 +1,39 @@
-import { Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { RenderedService, RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
-import { BraveUtil } from '@shared/utils/brave/brave';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, AfterViewInit } from "@angular/core";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
+import { IDashboardResolver } from "@shared/resolvers/dashboard/dashboard.resolver";
+import { DashboardService } from "@shared/services/dashboard/dashboard.service";
+import { RenderedService, RenderedViews } from "@shared/services/monitor/rendered/rendered.service";
+import { BraveUtil } from "@shared/utils/brave/brave";
+import { Observable, Subscription } from "rxjs";
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 @Component({
-  selector: 'brave-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: "brave-dashboard",
+  templateUrl: "./dashboard.component.html",
 })
 export class DashboardComponent implements AfterViewInit, OnDestroy {
   securityFreeze$: Observable<boolean>;
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
 
-  siteClosed: boolean = false;
+  siteClosed: boolean = dayjs().isAfter(dayjs("2022-09-01"));
 
   public tag = RenderedViews.Dashboard;
   constructor(
     private rendered: RenderedService,
     private dashboardService: DashboardService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.showBack = this.router.url !== '/dashboard/init';
+        this.showBack = this.router.url !== "/dashboard/init";
       }
     });
   }
