@@ -14,6 +14,9 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   securityFreeze$: Observable<boolean>;
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
+
+  siteClosed: boolean = true;
+
   public tag = RenderedViews.Dashboard;
   constructor(
     private rendered: RenderedService,

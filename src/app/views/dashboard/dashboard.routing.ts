@@ -13,6 +13,7 @@ import { ActiveGuard } from '@shared/guards/active.guard';
 import { DashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
 import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
 import { NegativeAccountInitialComponent } from '@views/dashboard/negative-account/negative-account-initial/negative-account-initial.component';
+import { DashboardEnrolledClosedComponent } from "./dashboard-enrolled/dashboard-enrolled-closed/dashboard-enrolled-closed.component";
 
 const dashboard = routes.root.dashboard;
 
@@ -25,7 +26,8 @@ const DashboardRoutes: Routes = [
     children: [
       {
         path: `${dashboard.init.segment}`,
-        component: DashboardEnrolledComponent,
+        // component: DashboardEnrolledComponent,
+        component: DashboardEnrolledClosedComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
       {
