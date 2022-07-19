@@ -1,14 +1,16 @@
-import { Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { IDashboardResolver } from '@shared/resolvers/dashboard/dashboard.resolver';
-import { DashboardService } from '@shared/services/dashboard/dashboard.service';
-import { RenderedService, RenderedViews } from '@shared/services/monitor/rendered/rendered.service';
-import { BraveUtil } from '@shared/utils/brave/brave';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, AfterViewInit } from "@angular/core";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
+import { IDashboardResolver } from "@shared/resolvers/dashboard/dashboard.resolver";
+import { DashboardService } from "@shared/services/dashboard/dashboard.service";
+import { RenderedService, RenderedViews } from "@shared/services/monitor/rendered/rendered.service";
+import { BraveUtil } from "@shared/utils/brave/brave";
+import { Observable, Subscription } from "rxjs";
+import { EventKeys } from "../../shared/services/broadcast/broadcast.model";
+import { BroadcastService } from "../../shared/services/broadcast/broadcast.service";
 
 @Component({
-  selector: 'brave-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: "brave-dashboard",
+  templateUrl: "./dashboard.component.html",
 })
 export class DashboardComponent implements AfterViewInit, OnDestroy {
   securityFreeze$: Observable<boolean>;
@@ -20,12 +22,13 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
     private dashboardService: DashboardService,
     private router: Router,
     private route: ActivatedRoute,
+    public broadcastService: BroadcastService
   ) {
     this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.showBack = this.router.url !== '/dashboard/init';
+        this.showBack = this.router.url !== "/dashboard/init";
       }
     });
   }
@@ -51,5 +54,9 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
       if (referral) this.dashboardService.dashReferral$.next(referral);
     });
+  }
+
+  toggleModal() {
+    this.broadcastService.broadcast(EventKeys.SHOWNOTIFICATION, JSON.stringify({ name: "winddown-notification" }));
   }
 }

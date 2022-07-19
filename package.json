@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve",
+    "start": "node ./node_modules/@angular/cli/bin/ng serve",
     "startProd": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve --configuration production=true",
     "startDev": "ng serve -c=dev --port=4201",
     "startQA": "ng serve -c=qa --port=4202",
