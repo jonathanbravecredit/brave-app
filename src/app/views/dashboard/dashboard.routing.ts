@@ -17,9 +17,14 @@ import { DashboardEnrolledClosedComponent } from "./dashboard-enrolled/dashboard
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
+const advancedFormat = require("dayjs/plugin/advancedFormat");
+dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
+
 dayjs.tz.setDefault("America/Los_Angeles");
+
+let cutoff = dayjs.tz("2022-09-01", "America/Los_Angeles");
 
 const dashboard = routes.root.dashboard;
 
@@ -32,7 +37,7 @@ const DashboardRoutes: Routes = [
     children: [
       {
         path: `${dashboard.init.segment}`,
-        component: dayjs().isAfter(dayjs("2022-09-01")) ? DashboardEnrolledClosedComponent : DashboardEnrolledComponent,
+        component: dayjs(new Date()).isAfter(cutoff) ? DashboardEnrolledClosedComponent : DashboardEnrolledComponent,
         // component: DashboardEnrolledClosedComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },

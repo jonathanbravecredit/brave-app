@@ -5,11 +5,14 @@ import { DashboardService } from "@shared/services/dashboard/dashboard.service";
 import { RenderedService, RenderedViews } from "@shared/services/monitor/rendered/rendered.service";
 import { BraveUtil } from "@shared/utils/brave/brave";
 import { Observable, Subscription } from "rxjs";
-const dayjs = require("dayjs");
+const dayjs = require('dayjs');
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
+const advancedFormat = require("dayjs/plugin/advancedFormat");
+dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
+
 dayjs.tz.setDefault("America/Los_Angeles");
 
 @Component({
@@ -21,7 +24,8 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
 
-  siteClosed: boolean = dayjs().isAfter(dayjs("2022-09-01"));
+  cutoff = dayjs.tz('2022-09-01', 'America/Los_Angeles');
+  siteClosed: boolean = dayjs(new Date()).isAfter(this.cutoff);
 
   public tag = RenderedViews.Dashboard;
   constructor(
