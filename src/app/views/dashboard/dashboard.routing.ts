@@ -32,7 +32,7 @@ const DashboardRoutes: Routes = [
     children: [
       {
         path: `${dashboard.init.segment}`,
-        component: dayjs().isAfter(dayjs("2022-09-01")) ? DashboardEnrolledClosedComponent : DashboardEnrolledComponent,
+        component: dayjs().isAfter(dayjs("2022-08-31")) ? DashboardEnrolledClosedComponent : DashboardEnrolledComponent,
         // component: DashboardEnrolledClosedComponent,
         canActivate: [ActiveGuard, AuthGuard],
       },
