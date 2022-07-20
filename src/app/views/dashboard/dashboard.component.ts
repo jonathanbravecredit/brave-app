@@ -5,6 +5,9 @@ import { DashboardService } from "@shared/services/dashboard/dashboard.service";
 import { RenderedService, RenderedViews } from "@shared/services/monitor/rendered/rendered.service";
 import { BraveUtil } from "@shared/utils/brave/brave";
 import { Observable, Subscription } from "rxjs";
+import { EventKeys } from "../../shared/services/broadcast/broadcast.model";
+import { BroadcastService } from "../../shared/services/broadcast/broadcast.service";
+
 const dayjs = require('dayjs');
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -32,7 +35,8 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
     private rendered: RenderedService,
     private dashboardService: DashboardService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public broadcastService: BroadcastService
   ) {
     this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
@@ -64,5 +68,9 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
       if (trends) this.dashboardService.dashScores$.next(BraveUtil.parsers.parseTransunionTrendingData(trends));
       if (referral) this.dashboardService.dashReferral$.next(referral);
     });
+  }
+
+  toggleModal() {
+    this.broadcastService.broadcast(EventKeys.SHOWNOTIFICATION, JSON.stringify({ name: "winddown-notification" }));
   }
 }
