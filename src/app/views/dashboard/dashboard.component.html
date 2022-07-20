@@ -23,5 +23,5 @@
       <router-outlet></router-outlet>
     </div>
   </section>
-  <brave-bottom-navbar (navigationTo)="goToLink($event)"></brave-bottom-navbar>
+  <brave-bottom-navbar *ngIf="!siteClosed" (navigationTo)="goToLink($event)"></brave-bottom-navbar>
 </div>

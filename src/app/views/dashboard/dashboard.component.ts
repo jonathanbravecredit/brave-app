@@ -8,6 +8,16 @@ import { Observable, Subscription } from "rxjs";
 import { EventKeys } from "../../shared/services/broadcast/broadcast.model";
 import { BroadcastService } from "../../shared/services/broadcast/broadcast.service";
 
+const dayjs = require('dayjs');
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+const advancedFormat = require("dayjs/plugin/advancedFormat");
+dayjs.extend(advancedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault("America/Los_Angeles");
+
 @Component({
   selector: "brave-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -16,6 +26,10 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   securityFreeze$: Observable<boolean>;
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
+
+  cutoff = dayjs.tz('2022-09-01', 'America/Los_Angeles');
+  siteClosed: boolean = dayjs(new Date()).isAfter(this.cutoff);
+
   public tag = RenderedViews.Dashboard;
   constructor(
     private rendered: RenderedService,
