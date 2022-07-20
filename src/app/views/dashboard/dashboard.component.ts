@@ -21,7 +21,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
 
-  siteClosed: boolean = dayjs().isAfter(dayjs("2022-08-31"));
+  siteClosed: boolean = dayjs().isAfter(dayjs("2022-09-01"));
 
   public tag = RenderedViews.Dashboard;
   constructor(
