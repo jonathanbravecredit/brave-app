@@ -3,10 +3,7 @@ import { Injectable, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Subscription, BehaviorSubject } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import {
-  NeverbounceService,
-  NeverBounceResponse,
-} from "@shared/services/neverbounce/neverbounce.service";
+import { NeverbounceService, NeverBounceResponse } from "@shared/services/neverbounce/neverbounce.service";
 import { AuthService } from "@shared/services/auth/auth.service";
 import { IamService } from "../../shared/services/auth/iam.service";
 import { WaitlistFormModel } from "../../shared/interfaces/waitlist.interface";
@@ -19,12 +16,8 @@ export class WaitlistService implements OnDestroy {
   referralCode: string | null | undefined;
   routeSub$: Subscription | undefined;
   emailError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  alreadyOnWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-  addedToWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  alreadyOnWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  addedToWaitlist: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   waitlistForm: WaitlistFormModel = {
     firstName: "",
     lastName: "",
@@ -38,7 +31,7 @@ export class WaitlistService implements OnDestroy {
     private neverBounce: NeverbounceService,
     private iam: IamService,
     private Auth: AuthService,
-    private InterstitialService: InterstitialService
+    private InterstitialService: InterstitialService,
   ) {
     this.subscribeToRouteDate();
   }
@@ -81,12 +74,15 @@ export class WaitlistService implements OnDestroy {
   }
 
   async checkIfEmailIsValid(email: string): Promise<boolean> {
-    const resp: Response = await this.neverBounce.validateEmail(email);
+    if (!email) return false;
+    const resp: Response | null = await this.neverBounce.validateEmail(email);
+    if (!resp) return false;
     const body: NeverBounceResponse = await resp.json();
     return body.result.toLowerCase() === "valid" ? true : false;
   }
 
   async checkIfUser(email: string): Promise<boolean> {
+    if (!email) return false;
     const url = `${environment.api}/validation/account/${email}`;
     let signedReq = await this.iam.signRequest(url, "GET", {});
     let resp = await fetch(signedReq);
@@ -95,6 +91,7 @@ export class WaitlistService implements OnDestroy {
   }
 
   async checkIfUserOnWaitlist(email: string): Promise<null | Waitlist> {
+    if (!email) return null;
     const url = `${environment.api}/waitlist/account/${email}`;
     let signedReq = await this.iam.signRequest(url, "GET", {});
     let resp = await fetch(signedReq);
@@ -104,12 +101,7 @@ export class WaitlistService implements OnDestroy {
 
   async addRecordToWaitlist(): Promise<boolean> {
     const url = `${environment.api}/waitlist/account`;
-    let signedReq = await this.iam.signRequest(
-      url,
-      "POST",
-      {},
-      JSON.stringify(this.waitlistForm)
-    );
+    let signedReq = await this.iam.signRequest(url, "POST", {}, JSON.stringify(this.waitlistForm));
     let resp = await fetch(signedReq);
     return resp.status === 200 ? true : false;
   }
