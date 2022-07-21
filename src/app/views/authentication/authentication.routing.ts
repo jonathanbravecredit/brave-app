@@ -20,11 +20,11 @@ const AuthenticationRoutes: Routes = [
     path: '',
     component: AuthenticationComponent,
     children: [
-      {
-        path: `${routes.root.auth.signup.segment}`,
-        resolve: { data: AuthResolver },
-        component: SignupComponent,
-      },
+      // {
+      //   path: `${routes.root.auth.signup.segment}`,
+      //   resolve: { data: AuthResolver },
+      //   component: SignupComponent,
+      // },
       {
         path: `${routes.root.auth.signin.segment}`,
         component: SigninComponent,
@@ -41,26 +41,26 @@ const AuthenticationRoutes: Routes = [
         path: `${routes.root.auth.created.segment}`,
         component: SigninRedirectNewuserComponent,
       },
-      {
-        path: `${routes.root.auth.thankyou.segment}`,
-        component: SignupThankyouComponent,
-      },
-      {
-        path: `${routes.root.auth.name.segment}`,
-        component: SignupKnowyouComponent,
-      },
-      {
-        path: `${routes.root.auth.error.segment}`,
-        component: SignupErrorComponent,
-      },
-      {
-        path: `${routes.root.auth.invalid.segment}`,
-        component: SignupErrorValidationComponent,
-      },
-      {
-        path: `${routes.root.auth.resend.segment}`,
-        component: SignupResendComponent,
-      },
+      // {
+      //   path: `${routes.root.auth.thankyou.segment}`,
+      //   component: SignupThankyouComponent,
+      // },
+      // {
+      //   path: `${routes.root.auth.name.segment}`,
+      //   component: SignupKnowyouComponent,
+      // },
+      // {
+      //   path: `${routes.root.auth.error.segment}`,
+      //   component: SignupErrorComponent,
+      // },
+      // {
+      //   path: `${routes.root.auth.invalid.segment}`,
+      //   component: SignupErrorValidationComponent,
+      // },
+      // {
+      //   path: `${routes.root.auth.resend.segment}`,
+      //   component: SignupResendComponent,
+      // },
       {
         path: `${routes.root.auth.deactivated.segment}`,
         component: DeactivatedComponent,
