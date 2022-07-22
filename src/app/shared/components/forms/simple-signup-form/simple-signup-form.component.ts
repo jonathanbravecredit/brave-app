@@ -4,6 +4,7 @@ import { IOutlineInputeConfig } from '@shared/components/inputs/outline-input/ou
 import { NewUser } from '@shared/services/auth/auth.service';
 import { SignupState } from '@views/authentication/signup/signup/signup.component';
 import { FilledSpinningButtonComponent } from '../../buttons/filled-spinning-button/filled-spinning-button.component';
+import { IFilledOnlyTextButtonConfig } from "../../buttons/filled-onlytext-button/filled-onlytext-button.component";
 
 @Component({
   selector: 'brave-simple-signup-form',
@@ -29,6 +30,13 @@ export class SimpleSignupFormComponent {
     type: 'password',
     placeholder: 'Your new pasword',
     autocomplete: 'off',
+  };
+  buttonConfig: IFilledOnlyTextButtonConfig ={
+    buttonSize: 'lg',
+    backgroundColor: 'bg-indigo-800',
+    activeColor: 'bg-indigo-900',
+    color: 'text-white',
+    full: false,
   };
 
   constructor(fb: FormBuilder) {
