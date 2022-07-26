@@ -13,4 +13,5 @@ export interface IAlertModel {
   text: string;
   timed: boolean;
   timeout: number;
+  component?: any;
 }

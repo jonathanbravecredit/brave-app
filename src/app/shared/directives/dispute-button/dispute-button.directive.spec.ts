@@ -114,7 +114,7 @@ describe('DisputeButtonDirective', () => {
       });
     });
 
-    describe('onClick', () => {
+    xdescribe('onClick', () => {
       it('should call onUserConfirmation when action = "confirming"', () => {
         const spy1 = spyOn(directive, 'onUserConfirmation');
         const spy2 = spyOn(directive, 'openModal');
