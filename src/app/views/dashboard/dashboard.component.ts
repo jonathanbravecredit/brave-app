@@ -8,7 +8,7 @@ import { Observable, Subscription } from "rxjs";
 import { EventKeys } from "../../shared/services/broadcast/broadcast.model";
 import { BroadcastService } from "../../shared/services/broadcast/broadcast.service";
 
-const dayjs = require('dayjs');
+const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
 const advancedFormat = require("dayjs/plugin/advancedFormat");
@@ -27,7 +27,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   routeSub$: Subscription | undefined;
   showBack: boolean = false;
 
-  cutoff = dayjs.tz('2022-09-01', 'America/Los_Angeles');
+  cutoff = dayjs.tz("2022-08-22", "America/Los_Angeles");
   siteClosed: boolean = dayjs(new Date()).isAfter(this.cutoff);
 
   public tag = RenderedViews.Dashboard;
@@ -36,7 +36,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
     private dashboardService: DashboardService,
     private router: Router,
     private route: ActivatedRoute,
-    public broadcastService: BroadcastService
+    public broadcastService: BroadcastService,
   ) {
     this.subscribeToRouteData();
     this.securityFreeze$ = this.dashboardService.isCreditFreezeEnabled();
