@@ -16,5 +16,6 @@ export class DisputeCurrentCardComponent {
   events = AnalyticClickEvents;
 
   processingStatus = DisputeStatus.Processing;
+  cancelledStatus = DisputeStatus.Cancelled;
   constructor() {}
 }

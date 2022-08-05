@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NewUser } from '@shared/services/auth/auth.service';
-import { SigninState } from '@views/authentication/signin/signin/signin.component';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { NewUser } from "@shared/services/auth/auth.service";
+import { SigninState } from "@views/authentication/signin/signin/signin.component";
 
 @Component({
-  selector: 'brave-signin-pure',
-  templateUrl: './signin-pure.component.html',
+  selector: "brave-signin-pure",
+  templateUrl: "./signin-pure.component.html",
 })
 export class SigninPureComponent {
   @Output() clickGoogle: EventEmitter<void> = new EventEmitter();
@@ -12,8 +12,8 @@ export class SigninPureComponent {
   @Output() clickForgot: EventEmitter<void> = new EventEmitter();
   @Output() clickLogin: EventEmitter<NewUser> = new EventEmitter();
   @Output() clickGoToSignup: EventEmitter<void> = new EventEmitter();
-  @Input() viewState: SigninState = 'init';
-  @Input() message: string = '';
+  @Input() viewState: SigninState = "init";
+  @Input() message: string = "";
 
   constructor() {}
 }

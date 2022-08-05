@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { DOMHelper, Helper } from '@testing/index';
-import { SigninComponent } from './signin.component';
-import { ISignInCognitoUser } from './interfaces';
-import { AuthService, NewUser } from '@shared/services/auth/auth.service';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { BehaviorSubject, of } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SharedServicesModule } from '@shared/services/shared-services.module';
-import { AnalyticsService } from '@shared/services/analytics/analytics/analytics.service';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { DOMHelper, Helper } from "@testing/index";
+import { SigninComponent } from "./signin.component";
+import { ISignInCognitoUser } from "./interfaces";
+import { AuthService, NewUser } from "@shared/services/auth/auth.service";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { BehaviorSubject, of } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SharedServicesModule } from "@shared/services/shared-services.module";
+import { AnalyticsService } from "@shared/services/analytics/analytics/analytics.service";
 
 //    private route: ActivatedRoute,
 // private analytics: AnalyticsService,
 //    private auth: AuthService,
 // private interstitial: InterstitialService,
 
-describe('SigninComponent', () => {
+describe("SigninComponent", () => {
   let component: SigninComponent;
   let fixture: ComponentFixture<SigninComponent>;
   let dh: DOMHelper<SigninComponent>;
@@ -28,13 +28,13 @@ describe('SigninComponent', () => {
   let routeMock: any;
 
   beforeEach(async () => {
-    authServiceMock = jasmine.createSpyObj('AuthService', ['signIn', 'socialSignIn']);
-    interstitialServiceMock = jasmine.createSpyObj('InterstitialService', [''], {
+    authServiceMock = jasmine.createSpyObj("AuthService", ["signIn", "socialSignIn"]);
+    interstitialServiceMock = jasmine.createSpyObj("InterstitialService", [""], {
       fetching$: new BehaviorSubject<boolean>(false),
     });
-    routerMock = jasmine.createSpyObj('Router', ['navigate']);
-    analyticsMock = jasmine.createSpyObj('AnalyticsService', ['']);
-    routeMock = jasmine.createSpyObj('ActivatedRoute', ['']);
+    routerMock = jasmine.createSpyObj("Router", ["navigate"]);
+    analyticsMock = jasmine.createSpyObj("AnalyticsService", [""]);
+    routeMock = jasmine.createSpyObj("ActivatedRoute", [""]);
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
@@ -61,49 +61,49 @@ describe('SigninComponent', () => {
     routerMock.navigate.and.returnValue(null);
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  describe('Component attributes', () => {
+  describe("Component attributes", () => {
     beforeEach(() => {
       fixture.detectChanges();
     });
 
     it('should have an property called "viewState" and is set to a default', () => {
-      expect(h.hasProperty(component, 'viewState')).toBeTrue();
+      expect(h.hasProperty(component, "viewState")).toBeTrue();
     });
 
     it('should have an property called "message" and is set to a default', () => {
-      expect(h.hasProperty(component, 'message')).toBeTrue();
+      expect(h.hasProperty(component, "message")).toBeTrue();
     });
   });
 
-  describe('Method calls', () => {
+  describe("Method calls", () => {
     beforeEach(() => {
       fixture.detectChanges(); // need 2 calls bc renders after oninit
     });
-    it('should NOT call handleSigninError when user is valid', () => {
-      const mockUser: NewUser = { username: 'dummy', password: 'dummy' };
-      const spy = jasmine.createSpy('handleSigninError');
+    it("should NOT call handleSigninError when user is valid", () => {
+      const mockUser: NewUser = { username: "dummy", password: "dummy" };
+      const spy = jasmine.createSpy("handleSigninError");
       component.signInWithCognito(mockUser);
       expect(spy).not.toHaveBeenCalled();
     });
 
-    xit('should call handleSigninError when user is NOT valid', () => {
+    xit("should call handleSigninError when user is NOT valid", () => {
       const mockUser: NewUser = {} as NewUser;
-      const spy = jasmine.createSpy('handleSigninError');
+      const spy = jasmine.createSpy("handleSigninError");
       component.signInWithCognito(mockUser);
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should call Auth Service signIn when user is valid', () => {
-      const mockUser: NewUser = { username: 'dummy', password: 'dummy' };
+    it("should call Auth Service signIn when user is valid", () => {
+      const mockUser: NewUser = { username: "dummy", password: "dummy" };
       component.signInWithCognito(mockUser);
       expect(authServiceMock.signIn).toHaveBeenCalled();
     });
 
-    it('should call Auth Service socialSignin when calling signInWithFacebook or signInWithGoogle', () => {
+    it("should call Auth Service socialSignin when calling signInWithFacebook or signInWithGoogle", () => {
       component.signInWithFacebook();
       component.signInWithGoogle();
       expect(authServiceMock.socialSignIn).toHaveBeenCalledTimes(2);
@@ -111,20 +111,20 @@ describe('SigninComponent', () => {
 
     it("should call Router Navigate with '../forgot' route when calling goToForget", () => {
       component.goToForgot();
-      expect(routerMock.navigate).toHaveBeenCalledWith(['/auth/forgot']);
+      expect(routerMock.navigate).toHaveBeenCalledWith(["/auth/forgot"]);
     });
 
     it("should call Router Navigate with '/legal/privacy' route when calling goToPrivacy", () => {
       component.goToPrivacy();
-      expect(routerMock.navigate).toHaveBeenCalledWith(['/legal/privacy']);
+      expect(routerMock.navigate).toHaveBeenCalledWith(["/legal/privacy"]);
     });
     it("should call Router Navigate with '/legal/tos' route when calling goToTerms", () => {
       component.goToTerms();
-      expect(routerMock.navigate).toHaveBeenCalledWith(['/legal/tos']);
+      expect(routerMock.navigate).toHaveBeenCalledWith(["/legal/tos"]);
     });
     it("should call Router Navigate with '/auth/signup' route when calling goToSignup", () => {
       component.goToSignup();
-      expect(routerMock.navigate).toHaveBeenCalledWith(['/auth/signup']);
+      expect(routerMock.navigate).toHaveBeenCalledWith(["/auth/signup"]);
     });
   });
 });

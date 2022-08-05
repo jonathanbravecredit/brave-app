@@ -1,6 +1,6 @@
 <brave-dispute-regular-card
   (viewDetailsClick)="viewDetailsClick.emit()"
-  [hideViewDetails]="this.status === processingStatus"
+  [hideViewDetails]="this.status === processingStatus || this.status === cancelledStatus"
   braveAnalytics
   [analyticClickEvents]="events.DisputeInvestigationResults"
   [analyticConfig]="{ google: false, brave: true }"

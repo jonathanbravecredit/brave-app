@@ -33,6 +33,10 @@ export class IamService {
         return Promise.resolve(cred);
       })
       .then((essentialCredentials) => {
+        if (!essentialCredentials) Promise.reject("Error:Missing essential credentials");
+        const { accessKeyId: keyId, secretAccessKey: key, sessionToken: token } = essentialCredentials;
+        if (!keyId || !key || !token) Promise.reject("Error:Missing essential credentials");
+
         let opts: IAWS4FetchOptions = {
           accessKeyId: essentialCredentials.accessKeyId,
           secretAccessKey: essentialCredentials.secretAccessKey,
@@ -40,7 +44,6 @@ export class IamService {
           service: "execute-api",
           region: "us-east-2",
         };
-
         const aws = new AwsClient(opts);
 
         const request = aws.sign(url, {

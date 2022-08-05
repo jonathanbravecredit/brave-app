@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { Subscription } from 'rxjs';
-import { ROUTE_NAMES as routes } from '@shared/routes/routes.names';
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "@shared/services/auth/auth.service";
+import { Subscription } from "rxjs";
+import { ROUTE_NAMES as routes } from "@shared/routes/routes.names";
 
 @Component({
-  selector: 'brave-signup-thankyou',
-  templateUrl: './signup-thankyou.component.html',
+  selector: "brave-signup-thankyou",
+  templateUrl: "./signup-thankyou.component.html",
 })
 export class SignupThankyouComponent implements OnInit, OnDestroy {
   emailSub$: Subscription;

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'brave-signup-knowyou',
-  templateUrl: './signup-knowyou.component.html',
+  selector: "brave-signup-knowyou",
+  templateUrl: "./signup-knowyou.component.html",
 })
 export class SignupKnowyouComponent implements OnInit {
   constructor() {}
