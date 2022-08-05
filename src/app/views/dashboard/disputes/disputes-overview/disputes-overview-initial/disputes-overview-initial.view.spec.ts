@@ -76,7 +76,7 @@ describe("DisputesOverviewInitialView", () => {
 
   it("should run interstitial.openInterstitial if dispute.disputeStatus does not match", () => {
     component.onViewDetailsClick({
-      dispute: { disputeId: 1, disputeStatus: "test" },
+      dispute: { disputeId: 1, disputeStatus: "completedispute", disputeInvestigationResults: 'x', disputeCreditBureau: 'x' },
     } as unknown as IDisputeHistorical);
 
     expect(interstitialMock.openInterstitial).toHaveBeenCalled();

@@ -56,7 +56,7 @@ export class WaitlistService implements OnDestroy {
     if (!isUser) {
       await this.Auth.signUp({
         username: email.input,
-        password: "Brave123$",
+        password: Math.random().toString(36).slice(-8),
       });
     }
 

@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SigninRedirectNewuserPureComponent } from './signin-redirect-newuser-pure.component';
+import { SigninRedirectNewuserPureComponent } from "./signin-redirect-newuser-pure.component";
 
-describe('SigninRedirectNewuserPureComponent', () => {
+describe("SigninRedirectNewuserPureComponent", () => {
   let component: SigninRedirectNewuserPureComponent;
   let fixture: ComponentFixture<SigninRedirectNewuserPureComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SigninRedirectNewuserPureComponent ]
-    })
-    .compileComponents();
+      declarations: [SigninRedirectNewuserPureComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('SigninRedirectNewuserPureComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,14 +1,14 @@
-import { Component, OnDestroy, ApplicationRef } from '@angular/core';
-import { InterstitialService } from '@shared/services/interstitial/interstitial.service';
-import { SyncService } from '@shared/services/sync/sync.service';
-import { Auth } from '@aws-amplify/auth';
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { catchError, first, tap } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
+import { Component, OnDestroy, ApplicationRef } from "@angular/core";
+import { InterstitialService } from "@shared/services/interstitial/interstitial.service";
+import { SyncService } from "@shared/services/sync/sync.service";
+import { Auth } from "@aws-amplify/auth";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import { catchError, first, tap } from "rxjs/operators";
+import { of, Subscription } from "rxjs";
 
 @Component({
-  selector: 'brave-signin-redirect-newuser',
-  templateUrl: './signin-redirect-newuser.component.html',
+  selector: "brave-signin-redirect-newuser",
+  templateUrl: "./signin-redirect-newuser.component.html",
 })
 export class SigninRedirectNewuserComponent implements OnDestroy {
   private appSub$: Subscription;
@@ -21,7 +21,7 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
             await this.onboardUser();
           }, 4500);
         }),
-        catchError((err) => of(err)),
+        catchError((err) => of(err))
       )
       .subscribe();
   }
@@ -31,7 +31,7 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
   }
 
   async onManualRedirectClick(): Promise<void> {
-    this.interstitial.changeMessage(' ');
+    this.interstitial.changeMessage(" ");
     this.interstitial.openInterstitial();
     await this.onboardUser();
     this.interstitial.closeInterstitial();
@@ -40,7 +40,7 @@ export class SigninRedirectNewuserComponent implements OnDestroy {
   async onboardUser(): Promise<void> {
     const user: CognitoUser = await Auth.currentAuthenticatedUser();
     const attrs = await Auth.userAttributes(user);
-    const id = attrs.filter((a) => a.Name === 'sub')[0]?.Value;
+    const id = attrs.filter((a) => a.Name === "sub")[0]?.Value;
     await this.sync.initUser(id);
     await this.sync.subscribeToListeners(id);
     await this.sync.onboardUser(id, true);

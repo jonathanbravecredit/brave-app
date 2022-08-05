@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   BaseModalSmallComponent,
   IBaseModalSmallConfig,
-} from '@shared/components/modals/base-modal-small/base-modal-small.component';
-import { P1, P2, P3 } from '@views/authentication/signup-error-validation/constants';
+} from "@shared/components/modals/base-modal-small/base-modal-small.component";
+import { P1, P2, P3 } from "@views/authentication/signup-error-validation/constants";
 
 @Component({
-  selector: 'brave-signup-error-validation',
-  templateUrl: './signup-error-validation.component.html',
+  selector: "brave-signup-error-validation",
+  templateUrl: "./signup-error-validation.component.html",
 })
 export class SignupErrorValidationComponent implements OnInit {
   @ViewChild(BaseModalSmallComponent) modal: BaseModalSmallComponent | undefined;
@@ -16,10 +16,10 @@ export class SignupErrorValidationComponent implements OnInit {
   p1 = P1;
   p2 = P2;
   p3 = P3;
-  link = 'https://www.transunion.com';
+  link = "https://www.transunion.com";
   constructor() {
     this.config = {
-      title: '',
+      title: "",
       enableButtonOne: false,
       enableButtonTwo: false,
     };
