@@ -1,19 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnDestroy, Output } from "@angular/core";
 import { ICircleProgressStep } from "@shared/components/progressbars/circle-checktext-progressbar/circle-checktext-progressbar";
 import { IAdData } from "@shared/interfaces/ads.interface";
 import { Initiative } from "@shared/interfaces/progress-tracker.interface";
 import { IReferral } from "@shared/interfaces/referrals.interface";
 import { AnalyticClickEvents } from "@shared/services/analytics/analytics/constants";
-import {
-  DashboardService,
-  IDashboardData,
-} from "@shared/services/dashboard/dashboard.service";
+import { DashboardService, IDashboardData } from "@shared/services/dashboard/dashboard.service";
 import { FeatureFlagsService } from "@shared/services/featureflags/feature-flags.service";
 import {
   dashboardEnrolledContent,
@@ -68,7 +59,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
 
   constructor(
     private dashboardService: DashboardService,
-    public featureflags: FeatureFlagsService
+    public featureflags: FeatureFlagsService,
   ) {
     this.dashboardDataSub$ = combineLatest([
       this.dashboardService.dashReport$,
@@ -116,9 +107,7 @@ export class DashboardEnrolledPureComponent implements OnDestroy {
     this.modalOpen = !this.modalOpen;
   }
 
-  sortMetrics(
-    metrics: CreditReportMetric<any, any>[] | null
-  ): CreditReportMetric<any, any>[] | null {
+  sortMetrics(metrics: CreditReportMetric<any, any>[] | null): CreditReportMetric<any, any>[] | null {
     if (!metrics) return null;
     return metrics.sort((a, b) => {
       return SNAPSHOT_SORT_ORDER[a.metricId] - SNAPSHOT_SORT_ORDER[b.metricId];
