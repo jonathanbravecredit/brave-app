@@ -24,7 +24,7 @@ dayjs.extend(timezone);
 
 dayjs.tz.setDefault("America/Los_Angeles");
 
-let cutoff = dayjs.tz("2022-08-22", "America/Los_Angeles");
+let cutoff = dayjs.tz("2022-08-23", "America/Los_Angeles");
 
 const dashboard = routes.root.dashboard;
 
