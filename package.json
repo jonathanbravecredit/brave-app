@@ -61,7 +61,7 @@
     "aws4fetch": "^1.0.13",
     "chart.js": "^2.9.4",
     "dayjs": "^1.10.7",
-    "fast-xml-parser": "^3.21.1",
+    "fast-xml-parser": "^4.2.4",
     "generate-password": "^1.7.0",
     "hammerjs": "^2.0.8",
     "he": "^1.2.0",
